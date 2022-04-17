@@ -19,7 +19,7 @@ import config
 if config.prefix == "+":
     raise ValueError("prefix cannot be '+'")
 
-def _getfile(x, mode):
+def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
 
 def _update_db():
@@ -31,10 +31,11 @@ def load():
     with _getfile("data.json", "r") as f:
         _cmds.update(json.load(f))
     for name, d in _cmds.items():
-        async def inner(ctx: Context, *s, output=d["output"]):
-            await ctx.channel.send(output)
-        c = command(name, *d["aliases"], flag=d["flag"])(inner)
+        async def inner(ctx: Context, *s, output: str=d["output"]):
+            await ctx.channel.send(output.format(user=ctx.author.display_name))
+        c = Command(name=name, aliases=d["aliases"], func=inner, flag=d["flag"])
         c.enabled = d["enabled"]
+        TConn.add_command(c)
     with _getfile("disabled", "r") as f:
         for disabled in f.readlines():
             TConn.commands[disabled].enabled = False
@@ -43,8 +44,32 @@ def add_cmd(name: str, aliases: list[str], source: str, flag: str, output: str):
     _cmds[name] = {"aliases": aliases, "enabled": True, "source": source, "flag": flag, "output": output}
     _update_db()
 
+def wrapper(func: Callable, force_argcount: bool):
+    async def caller(ctx: Context, *args):
+        co = func.__code__
+        req = co.co_argcount
+        if func.__defaults__:
+            req -= len(func.__defaults__)
+        if req > (len(args) + 1): # missing args; don't count ctx
+            names = co.co_varnames[1+len(args):req]
+            if len(names) == 1:
+                await ctx.channel.send(f"Error: Missing required argument {names[0]!r}")
+                return
+            else:
+                await ctx.channel.send(f"Error: Missing required arguments {names!r}")
+                return
+        if co.co_flags & 0x04: # function supports *args, don't check further
+            await func(ctx, *args)
+            return
+        if (len(args) + 1) > co.co_argcount and force_argcount: # too many args and we enforce it
+            await ctx.channel.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
+            return
+        await func(ctx, *(args[:co.co_argcount-1])) # truncate args to the max we allow
+
+    return caller
+
 class Command(t_cmds.Command):
-    def __init__(self, name: str, func: Callable, flag=None, **attrs):
+    def __init__(self, name: str, func: Callable, flag="", **attrs):
         super().__init__(name, func, **attrs)
         self.flag = flag
         self.enabled = True
@@ -58,9 +83,9 @@ class Command(t_cmds.Command):
             
         await super().invoke(context, index=index)
 
-def command(name, *aliases, flag=None):
+def command(name, *aliases, flag="", force_argcount=False):
     def inner(func):
-        cmd = Command(name=name, aliases=list(aliases), func=func, flag=flag)
+        cmd = Command(name=name, aliases=list(aliases), func=wrapper(func, force_argcount), flag=flag)
         TConn.add_command(cmd)
         return cmd
     return inner
@@ -70,11 +95,11 @@ DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners
 
 _cmds: dict[str, dict[str, list[str] | bool | None]] = {} # internal json
 
-@command("test")
+#@command("test")
 async def testcmd(ctx: Context, *args, **kwargs):
     await ctx.channel.send(f"Received {args}, {kwargs}")
 
-@command("command") # TODO: perms
+@command("command", flag="m") # TODO: perms
 async def command_cmd(ctx: Context, action: str = "", flag: str = "", name: str = "", *args: str):
     """Syntax: command <action> [+<flag>] <name> <output>"""
     if flag.startswith("+"):
@@ -199,24 +224,104 @@ async def command_cmd(ctx: Context, action: str = "", flag: str = "", name: str 
         case _:
             await ctx.channel.send(f"Unrecognized action {action}.")
 
-#@command("kills", discord=True, twitch=True)
-async def kills(arg=None):
-    msg = "A20 Heart kills in 2022: Total: {4} - Ironclad: {0} - Silent: {1} - Defect: {2} - Watcher: {3}"
+@command("kills")
+async def kills_cmd(ctx: Context):
+    msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("kills", "r") as f:
-        i, s, d, w = (int(x) for x in f.read().split())
-    if not arg:
-        return msg.format(i, s, d, w, sum(i, s, d, w))
-    if arg.lower() in ("ironclad", "ic", "i"):
-        i += 1
-    if arg.lower() in ("silent", "s"):
-        s += 1
-    if arg.lower() in ("defect", "d"):
-        d += 1
-    if arg.lower() in ("watcher", "w"):
-        w += 1
-    with _getfile("kills", "w") as f:
-        f.write(f"{i} {s} {d} {w}")
-    return "[Increased] " + msg.format(i, s, d, w, sum(i, s, d, w))
+        kills = [int(x) for x in f.read().split()]
+    await ctx.channel.send(msg.format(kills, sum(kills)))
+
+@command("losses")
+async def losses_cmd(ctx: Context):
+    msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
+    with _getfile("losses", "r") as f:
+        losses = [int(x) for x in f.read().split()]
+    await ctx.channel.send(msg.format(losses, sum(losses)))
+
+@command("streak")
+async def streak_cmd(ctx: Context):
+    msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
+    with _getfile("streak", "r") as f:
+        streak = [int(x) for x in f.read().split()]
+    await ctx.channel.send(msg.format(streak))
+
+@command("pb")
+async def pb_cmd(ctx: Context):
+    msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
+    with _getfile("pb", "r") as f:
+        pb = [int(x) for x in f.read().split()]
+    await ctx.channel.send(msg.format(pb))
+
+async def edit_counts(ctx: Context, arg: str, *, add: bool):
+    if arg.lower().startswith("i"):
+        i = 0
+    elif arg.lower().startswith("s"):
+        i = 1
+    elif arg.lower().startswith("d"):
+        i = 2
+    elif arg.lower().startswith("w"):
+        i = 3
+    else:
+        await ctx.channel.send(f"Unrecognized character {arg}")
+        return
+
+    with _getfile("kills", "r") as f:
+        kills = [int(x) for x in f.read().split()]
+    with _getfile("losses", "r") as f:
+        losses = [int(x) for x in f.read().split()]
+    with _getfile("streak", "r") as f:
+        streak = [int(x) for x in f.read().split()]
+    cur = streak.pop(0)
+    with _getfile("pb", "r") as f:
+        pb = [int(x) for x in f.read().split()]
+    rot = pb.pop(0)
+
+    pb_changed = False
+
+    if add:
+        kills[i] += 1
+        streak[i] += 1
+        cur += 1
+        if cur > rot:
+            rot = cur
+            pb_changed = True
+        if streak[i] > pb[i]:
+            pb[i] = streak[i]
+            pb_changed = True
+
+        with _getfile("kills", "w") as f:
+            f.write(" ".join(str(x) for x in kills))
+        if pb_changed:
+            with _getfile("pb", "w") as f:
+                f.write(f"{rot} {pb[0]} {pb[1]} {pb[2]} {pb[3]}")
+
+    else:
+        losses[i] += 1
+        streak[i] = 0
+        cur = 0
+
+        with _getfile("losses", "w") as f:
+            f.write(" ".join(str(x) for x in losses))
+
+    with _getfile("streak", "w") as f:
+        f.write(f"{cur} {streak[0]} {streak[1]} {streak[2]} {streak[3]}")
+
+    d = ("Ironclad", "Silent", "Defect", "Watcher")
+
+    if pb_changed:
+        await ctx.channel.send(f"[NEW PB ATTAINED] Win recorded for the {d[i]}")
+    elif add:
+        await ctx.channel.send(f"Win recorded for the {d[i]}")
+    else:
+        await ctx.channel.send(f"Loss recorded for the {d[i]}")
+
+@command("win")
+async def win_cmd(ctx: Context, arg: str):
+    await edit_counts(ctx, arg, add=True)
+
+@command("loss")
+async def loss_cmd(ctx: Context, arg: str):
+    await edit_counts(ctx, arg, add=False)
 
 load()
 
