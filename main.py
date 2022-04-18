@@ -11,13 +11,12 @@ import os
 
 from twitchio.ext import commands as t_cmds
 from twitchio.ext.commands import Context
+from twitchio.channel import Channel
+from twitchio.chatter import Chatter
 from discord.ext import commands as d_cmds
 import flask
 
 import config
-
-if config.prefix == "+":
-    raise ValueError("prefix cannot be '+'")
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
@@ -90,24 +89,37 @@ def command(name, *aliases, flag="", force_argcount=False):
         return cmd
     return inner
 
-TConn = t_cmds.Bot(token=config.oauth, prefix=config.prefix, initial_channels=["faelyka"], case_insensitive=True)
+class TwitchConn(t_cmds.Bot):
+    async def event_raw_usernotice(self, channel: Channel, tags: dict):
+        user = Chatter(tags=tags["badges"], name=tags["user"], channel=channel, bot=self, websocket=self._connection)
+        match tags["msg-id"]:
+            case "sub" | "resub":
+                self.run_event("subscription", user, channel, tags)
+            case "subgift" | "anonsubgift" | "submysterygift" | "giftpaidupgrade" | "rewardgift" | "anongiftpaidupgrade":
+                self.run_event("gift_sub", user, channel, tags)
+            case "raid":
+                self.run_event("raid", user, channel, tags)
+            case "unraid":
+                self.run_event("unraid", user, channel, tags)
+            case "ritual":
+                self.run_event("ritual", user, channel, tags)
+            case "bitsbadgetier":
+                self.run_event("bits_badge", user, channel, tags)
+
+TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=["faelyka"], case_insensitive=True)
 DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 _cmds: dict[str, dict[str, list[str] | bool | None]] = {} # internal json
 
-#@command("test")
-async def testcmd(ctx: Context, *args, **kwargs):
-    await ctx.channel.send(f"Received {args}, {kwargs}")
-
 @command("command", flag="m") # TODO: perms
-async def command_cmd(ctx: Context, action: str = "", flag: str = "", name: str = "", *args: str):
+async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str = "", *args: str):
     """Syntax: command <action> [+<flag>] <name> <output>"""
     if flag.startswith("+"):
         flag = flag[1:]
     else: # no flag
-        args = (name, *args)
-        name = flag
-        flag = None
+        args = (flag, *args)
+        flag = ""
+    args = list(args)
     msg = " ".join(args)
     if not action or not name:
         await ctx.channel.send("Missing args")
@@ -200,7 +212,7 @@ async def command_cmd(ctx: Context, action: str = "", flag: str = "", name: str 
                 f.writelines(disabled)
             await ctx.channel.send(f"Command {name} has been disabled")
 
-        case "alias": # TODO: unalias
+        case "alias":
             if name not in cmds and args[0] in cmds:
                 await ctx.channel.send(f"Error: use 'alias {args[0]} {name}'")
                 return
@@ -219,6 +231,20 @@ async def command_cmd(ctx: Context, action: str = "", flag: str = "", name: str 
             for arg in args:
                 TConn._command_aliases[arg] = name
             _cmds[name]["aliases"] = args
+            _update_db()
+
+        case "unalias":
+            if name not in TConn._command_aliases:
+                await ctx.channel.send("Error: not an alias")
+                return
+            if name not in _cmds:
+                await ctx.channel.send("Error: cannot unalias built-in commands")
+                return
+            if flag:
+                await ctx.channel.send("Error: cannot specify flag for aliases")
+                return
+            fn = TConn._command_aliases.pop(name)
+            _cmds[fn]["aliases"].remove(name)
             _update_db()
 
         case _:
