@@ -5,16 +5,18 @@
 from __future__ import annotations
 
 from typing import Callable
+import datetime
 import random
 import json
 import os
 
-from twitchio.ext import commands as t_cmds
-from twitchio.ext.commands import Context
+from twitchio.ext.commands import Context, Bot, Command
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
-from discord.ext import commands as d_cmds
-import flask
+from twitchio.errors import HTTPException
+from twitchio.models import Stream
+#from discord.ext import commands as d_cmds
+#import flask
 
 import config
 
@@ -79,7 +81,7 @@ def wrapper(func: Callable, force_argcount: bool):
 
     return caller
 
-class Command(t_cmds.Command):
+class Command(Command): # TODO: cooldowns
     def __init__(self, name: str, func: Callable, flag="", **attrs):
         super().__init__(name, func, **attrs)
         self.flag = flag
@@ -94,14 +96,14 @@ class Command(t_cmds.Command):
             
         await super().invoke(context, index=index)
 
-def command(name, *aliases, flag="", force_argcount=False):
+def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False):
     def inner(func):
         cmd = Command(name=name, aliases=list(aliases), func=wrapper(func, force_argcount), flag=flag)
         TConn.add_command(cmd)
         return cmd
     return inner
 
-class TwitchConn(t_cmds.Bot):
+class TwitchConn(Bot):
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags["badges"], name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
@@ -110,7 +112,7 @@ class TwitchConn(t_cmds.Bot):
             case "subgift" | "anonsubgift" | "submysterygift" | "giftpaidupgrade" | "rewardgift" | "anongiftpaidupgrade":
                 self.run_event("gift_sub", user, channel, tags)
             case "raid":
-                self.run_event("raid", user, channel, tags)
+                self.run_event("raid", user, channel, int(tags["msg-param-viewerCount"]))
             case "unraid":
                 self.run_event("unraid", user, channel, tags)
             case "ritual":
@@ -118,8 +120,24 @@ class TwitchConn(t_cmds.Bot):
             case "bitsbadgetier":
                 self.run_event("bits_badge", user, channel, tags)
 
+    async def event_ritual(self, user: Chatter, channel: Channel, tags: dict):
+        if tags["msg-param-ritual-name"] == "new_chatter":
+            self.run_event("new_chatter", user, channel, tags["message"])
+
+    async def event_new_chatter(self, user: Chatter, channel: Channel, message: str):
+        if "youtube" in message.lower() or "yt" in message.lower():
+            await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
+
+    async def event_raid(self, user: Chatter, channel: Channel, viewer_count: int):
+        if viewer_count < 10:
+            return
+        chan = await self.fetch_channel(user.id)
+        await channel.send(f"Welcome along {user.display_name} with your {viewer_count} friends! "
+                           f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
+                           f"last I checked, they were playing some {chan.game_name}!")
+
 TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
-DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
+#DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 _cmds: dict[str, dict[str, list[str] | bool | None]] = {} # internal json
 
@@ -281,13 +299,41 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
         case _:
             await ctx.channel.send(f"Unrecognized action {action}.")
 
+@command("support", "so")
+async def shoutout(ctx: Context, name: str):
+    try:
+        chan = await ctx.bot.fetch_channel(name)
+    except IndexError as e:
+        await ctx.channel.send(e.args[0])
+        return
+    except HTTPException as e:
+        await ctx.channel.send(e.message)
+        return
+
+    msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} !"]
+
+    live: list[Stream] = await ctx.bot.fetch_streams([chan.user.id])
+    if live:
+        stream = live[0]
+        game = stream.game_name
+        viewers = stream.viewer_count
+        started_at = stream.started_at
+        # somehow, doing now() - started_at triggers an error due to conflicting timestamps
+        td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - started_at.timestamp()))
+        msg.append(f"They are currently live with {viewers} viewers playing {game}! They have been live for {str(td).partition('.')[0]}!")
+
+    else:
+        msg.append(f"Last time they were live, they were seen playing {chan.game_name}!")
+
+    await ctx.channel.send(" ".join(msg))
+
 @command("wall")
 async def wall_card(ctx: Context):
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
         await ctx.channel.send("Error: could not fetch data.")
     for p in ("", "1_", "2_"):
-        with open(os.path.join(config.STS_path, f"{p}STSPlayer"), "r") as f:
+        with open(os.path.join(config.STS_path, "preferences", f"{p}STSPlayer"), "r") as f:
             d = json.load(f)
         if "ladder" not in d["name"].lower():
             continue
@@ -306,7 +352,7 @@ async def dig_cmd(ctx: Context):
         line = random.choice(f.readlines())
     await ctx.channel.send(f"{ctx.author.display_name} has dug up {line}")
 
-@command("kills")
+@command("kills") # TODO: Read game files for this
 async def kills_cmd(ctx: Context):
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("kills", "r") as f:
