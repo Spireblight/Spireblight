@@ -10,7 +10,7 @@ import random
 import json
 import os
 
-from twitchio.ext.commands import Context, Bot, Command
+from twitchio.ext.commands import Context, Bot, Command, Cooldown, Bucket
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
@@ -20,6 +20,9 @@ from twitchio.models import Stream
 
 import config
 
+_DEFAULT_BURST = 2
+_DEFAULT_RATE  = 5.0
+
 _consts = {
     "discord": "https://discord.gg/9XYVCSY",
 }
@@ -28,6 +31,30 @@ _perms = {
     "": "Everyone",
     "m": "Moderator",
 }
+
+_defaults = {
+    "aliases": [],
+    "flag": "",
+    "burst": _DEFAULT_BURST,
+    "rate": _DEFAULT_RATE,
+    "source": "T",
+    "enabled": True,
+    "output": "<UNDEFINED>",
+}
+
+def _check_json():
+    changed = False
+    with _getfile("data.json", "r") as f:
+        d = json.load(f)
+    for key in d:
+        for name in _defaults:
+            if name not in d[key]:
+                d[key][name] = _defaults[name]
+                changed = True
+
+    if changed:
+        with _getfile("data.json", "w") as f:
+            json.dump(d, f)
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
@@ -46,15 +73,14 @@ def load():
     with _getfile("data.json", "r") as f:
         _cmds.update(json.load(f))
     for name, d in _cmds.items():
-        c = Command(name=name, aliases=d["aliases"], func=_create_cmd(d["output"]), flag=d["flag"])
+        c = command(name, *d["aliases"], flag=d["flag"], burst=d["burst"], rate=d["rate"])(_create_cmd(d["output"]))
         c.enabled = d["enabled"]
-        TConn.add_command(c)
     with _getfile("disabled", "r") as f:
         for disabled in f.readlines():
             TConn.commands[disabled].enabled = False
 
-def add_cmd(name: str, aliases: list[str], source: str, flag: str, output: str):
-    _cmds[name] = {"aliases": aliases, "enabled": True, "source": source, "flag": flag, "output": output}
+def add_cmd(name: str, aliases: list[str], source: str, flag: str, burst: int, rate: float, output: str):
+    _cmds[name] = {"aliases": aliases, "enabled": True, "source": source, "flag": flag, "burst": burst, "rate": rate, "output": output}
     _update_db()
 
 def wrapper(func: Callable, force_argcount: bool):
@@ -81,7 +107,7 @@ def wrapper(func: Callable, force_argcount: bool):
 
     return caller
 
-class Command(Command): # TODO: cooldowns
+class Command(Command):
     def __init__(self, name: str, func: Callable, flag="", **attrs):
         super().__init__(name, func, **attrs)
         self.flag = flag
@@ -96,9 +122,11 @@ class Command(Command): # TODO: cooldowns
             
         await super().invoke(context, index=index)
 
-def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False):
+def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE):
     def inner(func):
-        cmd = Command(name=name, aliases=list(aliases), func=wrapper(func, force_argcount), flag=flag)
+        wrapped = wrapper(func, force_argcount)
+        wrapped.__cooldowns__ = [Cooldown(burst, rate, Bucket.default)]
+        cmd = Command(name=name, aliases=list(aliases), func=wrapped, flag=flag)
         TConn.add_command(cmd)
         return cmd
     return inner
@@ -147,8 +175,9 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
     if flag.startswith("+"):
         flag = flag[1:]
     else: # no flag
-        args = (flag, *args)
-        flag = ""
+        if flag:
+            args = (flag, *args)
+            flag = ""
     if flag not in _perms:
         await ctx.channel.send("Error: flag not recognized")
         return
@@ -168,7 +197,7 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             if name in cmds:
                 await ctx.channel.send(f"Error: command {name} already exists!")
                 return
-            add_cmd(name, (), "T", flag, msg)
+            add_cmd(name, (), "T", flag, _DEFAULT_BURST, _DEFAULT_RATE, msg)
             command(name, flag=flag)(_create_cmd(msg))
             await ctx.channel.send(f"Command {name} added! Permission: {_perms[flag]}")
 
@@ -248,7 +277,12 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
 
         case "alias":
             if not args:
-                await ctx.channel.send("Error: no alias specified.")
+                if name not in _cmds and name in aliases:
+                    await ctx.channel.send(f"Alias {name} is bound to {aliases[name]}.")
+                elif _cmds[name]['aliases']:
+                    await ctx.channel.send(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
+                else:
+                    await ctx.channel.send(f"Command {name} does not have any aliases.")
                 return
             if name not in cmds and args[0] in cmds:
                 await ctx.channel.send(f"Error: use 'alias {args[0]} {name}' instead.")
@@ -267,8 +301,13 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 return
             for arg in args:
                 aliases[arg] = name
-            _cmds[name]["aliases"] = args
+            _cmds[name]["aliases"].extend(args)
             _update_db()
+            if len(args) == 1:
+                await ctx.channel.send(f"{args[0]} has been aliased to {name}.")
+            else:
+                await ctx.channel.send(f"Command {name} now has aliases {', '.join(args)}")
+            await ctx.channel.send(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
 
         case "unalias":
             if not args:
@@ -296,6 +335,52 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             _cmds[name]["aliases"].remove(name)
             _update_db()
 
+        case "cooldown" | "cd":
+            if not args:
+                if name not in cmds and name not in aliases:
+                    await ctx.channel.send(f"Error: command {name} does not exist.")
+                else:
+                    if name in aliases:
+                        name = aliases[name]
+                    cd = cmds[name]._cooldowns[0]
+                    await ctx.channel.send(f"Command {name} has a cooldown of {cd._per/cd._rate}s.")
+                return
+            if name in aliases:
+                await ctx.channel.send(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
+                return
+            if name not in cmds:
+                await ctx.channel.send(f"Error: command {name} does not exist.")
+                return
+            if flag:
+                await ctx.channel.send("Error: flag-specific cooldown is not supported.")
+                return
+            cd: Cooldown = cmds[name]._cooldowns.pop()
+            try:
+                burst = int(args[0])
+            except ValueError:
+                try:
+                    rate = float(args[0])
+                except ValueError:
+                    await ctx.channel.send("Error: invalid argument.")
+                    return
+                else:
+                    burst = cd._rate # _rate is actually the burst, it's weird
+            else:
+                try:
+                    rate = float(args[1])
+                except IndexError:
+                    rate = cd._per
+                except ValueError:
+                    await ctx.channel.send("Error: invalid argument.")
+                    return
+
+            cmds[name]._cooldowns.append(Cooldown(burst, rate, cd.bucket))
+            if name in _cmds:
+                _cmds[name]["burst"] = burst
+                _cmds[name]["rate"] = rate
+                _update_db()
+            await ctx.channel.send(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
+
         case _:
             await ctx.channel.send(f"Unrecognized action {action}.")
 
@@ -310,7 +395,7 @@ async def shoutout(ctx: Context, name: str):
         await ctx.channel.send(e.message)
         return
 
-    msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} !"]
+    msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} -"]
 
     live: list[Stream] = await ctx.bot.fetch_streams([chan.user.id])
     if live:
@@ -320,10 +405,10 @@ async def shoutout(ctx: Context, name: str):
         started_at = stream.started_at
         # somehow, doing now() - started_at triggers an error due to conflicting timestamps
         td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - started_at.timestamp()))
-        msg.append(f"They are currently live with {viewers} viewers playing {game}! They have been live for {str(td).partition('.')[0]}!")
+        msg.append(f"they are currently live with {viewers} viewers playing {game}! They have been live for {str(td).partition('.')[0]}")
 
     else:
-        msg.append(f"Last time they were live, they were seen playing {chan.game_name}!")
+        msg.append(f"last time they were live, they were seen playing {chan.game_name}!")
 
     await ctx.channel.send(" ".join(msg))
 
@@ -332,6 +417,7 @@ async def wall_card(ctx: Context):
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
         await ctx.channel.send("Error: could not fetch data.")
+        return
     for p in ("", "1_", "2_"):
         with open(os.path.join(config.STS_path, "preferences", f"{p}STSPlayer"), "r") as f:
             d = json.load(f)
@@ -450,6 +536,8 @@ async def win_cmd(ctx: Context, arg: str):
 @command("loss", flag="m")
 async def loss_cmd(ctx: Context, arg: str):
     await edit_counts(ctx, arg, add=False)
+
+_check_json()
 
 load()
 
