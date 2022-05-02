@@ -65,7 +65,7 @@ def _update_db():
 
 def _create_cmd(output):
     async def inner(ctx: Context, *s, output: str=output):
-        await ctx.channel.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
+        await ctx.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
     return inner
 
 def load():
@@ -92,16 +92,16 @@ def wrapper(func: Callable, force_argcount: bool):
         if req > (len(args) + 1): # missing args; don't count ctx
             names = co.co_varnames[1+len(args):req]
             if len(names) == 1:
-                await ctx.channel.send(f"Error: Missing required argument {names[0]!r}")
+                await ctx.send(f"Error: Missing required argument {names[0]!r}")
                 return
             else:
-                await ctx.channel.send(f"Error: Missing required arguments {names!r}")
+                await ctx.send(f"Error: Missing required arguments {names!r}")
                 return
         if co.co_flags & 0x04: # function supports *args, don't check further
             await func(ctx, *args)
             return
         if (len(args) + 1) > co.co_argcount and force_argcount: # too many args and we enforce it
-            await ctx.channel.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
+            await ctx.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
             return
         await func(ctx, *(args[:co.co_argcount-1])) # truncate args to the max we allow
 
@@ -174,17 +174,16 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
     """Syntax: command <action> <name> [+<flag>] <output>"""
     if flag.startswith("+"):
         flag = flag[1:]
-    else: # no flag
-        if flag:
-            args = (flag, *args)
-            flag = ""
+    elif flag:
+        args = (flag, *args)
+        flag = ""
     if flag not in _perms:
-        await ctx.channel.send("Error: flag not recognized")
+        await ctx.send("Error: flag not recognized.")
         return
     args = list(args)
     msg = " ".join(args)
     if not action or not name:
-        await ctx.channel.send("Missing args")
+        await ctx.send("Missing args.")
         return
     name = name.lstrip(config.prefix)
     cmds: dict[str, Command] = TConn.commands
@@ -192,56 +191,56 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
     match action:
         case "add":
             if name in aliases:
-                await ctx.channel.send(f"Error: {name} is an alias to {aliases[name]}. Use 'unalias {aliases[name]} {name}' first.")
+                await ctx.send(f"Error: {name} is an alias to {aliases[name]}. Use 'unalias {aliases[name]} {name}' first.")
                 return
             if name in cmds:
-                await ctx.channel.send(f"Error: command {name} already exists!")
+                await ctx.send(f"Error: command {name} already exists!")
                 return
             add_cmd(name, (), "T", flag, _DEFAULT_BURST, _DEFAULT_RATE, msg)
             command(name, flag=flag)(_create_cmd(msg))
-            await ctx.channel.send(f"Command {name} added! Permission: {_perms[flag]}")
+            await ctx.send(f"Command {name} added! Permission: {_perms[flag]}")
 
         case "edit":
             if name in aliases:
-                await ctx.channel.send(f"Error: cannot edit alias. Use 'edit {aliases[name]}' instead.")
+                await ctx.send(f"Error: cannot edit alias. Use 'edit {aliases[name]}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist!")
+                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if name not in _cmds:
-                await ctx.channel.send(f"Error: cannot edit built-in command {name}.")
+                await ctx.send(f"Error: cannot edit built-in command {name}.")
                 return
             _cmds[name]["output"] = msg
             if flag:
                 _cmds[name]["flag"] = flag
             _update_db()
             cmds[name]._callback = _create_cmd(msg)
-            await ctx.channel.send(f"Command {name} edited successfully! Permission: {_perms[flag]}")
+            await ctx.send(f"Command {name} edited successfully! Permission: {_perms[flag]}")
 
         case "remove" | "delete":
             if name in aliases:
-                await ctx.channel.send(f"Error: cannot delete alias. Use 'remove {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
+                await ctx.send(f"Error: cannot delete alias. Use 'remove {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist!")
+                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if name not in _cmds:
-                await ctx.channel.send(f"Error: cannot delete built-in command {name}.")
+                await ctx.send(f"Error: cannot delete built-in command {name}.")
                 return
             del _cmds[name]
             _update_db()
             TConn.remove_command(name)
-            await ctx.channel.send(f"Command {name} has been deleted.")
+            await ctx.send(f"Command {name} has been deleted.")
 
         case "enable":
             if name in aliases:
-                await ctx.channel.send(f"Error: cannot enable alias. Use 'enable {aliases[name]}' instead.")
+                await ctx.send(f"Error: cannot enable alias. Use 'enable {aliases[name]}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist!")
+                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if cmds[name].enabled:
-                await ctx.channel.send(f"Command {name} is already disabled.")
+                await ctx.send(f"Command {name} is already disabled.")
                 return
             cmds[name].enabled = True
             if name in _cmds:
@@ -252,17 +251,17 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             disabled.remove(name)
             with _getfile("disabled", "w") as f:
                 f.writelines(disabled)
-            await ctx.channel.send(f"Command {name} has been enabled.")
+            await ctx.send(f"Command {name} has been enabled.")
 
         case "disable":
             if name in aliases:
-                await ctx.channel.send(f"Error: cannot disable alias. Use 'disable {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
+                await ctx.send(f"Error: cannot disable alias. Use 'disable {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist!")
+                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if not cmds[name].enabled:
-                await ctx.channel.send(f"Command {name} is already disabled.")
+                await ctx.send(f"Command {name} is already disabled.")
                 return
             cmds[name].enabled = False
             if name in _cmds:
@@ -273,63 +272,63 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             disabled.append(name)
             with _getfile("disabled", "w") as f:
                 f.writelines(disabled)
-            await ctx.channel.send(f"Command {name} has been disabled.")
+            await ctx.send(f"Command {name} has been disabled.")
 
         case "alias":
             if not args:
                 if name not in _cmds and name in aliases:
-                    await ctx.channel.send(f"Alias {name} is bound to {aliases[name]}.")
+                    await ctx.send(f"Alias {name} is bound to {aliases[name]}.")
                 elif _cmds[name]['aliases']:
-                    await ctx.channel.send(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
+                    await ctx.send(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
                 else:
-                    await ctx.channel.send(f"Command {name} does not have any aliases.")
+                    await ctx.send(f"Command {name} does not have any aliases.")
                 return
             if name not in cmds and args[0] in cmds:
-                await ctx.channel.send(f"Error: use 'alias {args[0]} {name}' instead.")
+                await ctx.send(f"Error: use 'alias {args[0]} {name}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist.")
+                await ctx.send(f"Error: command {name} does not exist.")
                 return
             if name not in _cmds:
-                await ctx.channel.send("Error: cannot alias built-in commands.")
+                await ctx.send("Error: cannot alias built-in commands.")
                 return
             if flag:
-                await ctx.channel.send("Error: cannot specify flag for aliases.")
+                await ctx.send("Error: cannot specify flag for aliases.")
                 return
             if set(args) & cmds.keys():
-                await ctx.channel.send(f"Error: aliases {set(args) & cmds.keys()} already exist as commands.")
+                await ctx.send(f"Error: aliases {set(args) & cmds.keys()} already exist as commands.")
                 return
             for arg in args:
                 aliases[arg] = name
             _cmds[name]["aliases"].extend(args)
             _update_db()
             if len(args) == 1:
-                await ctx.channel.send(f"{args[0]} has been aliased to {name}.")
+                await ctx.send(f"{args[0]} has been aliased to {name}.")
             else:
-                await ctx.channel.send(f"Command {name} now has aliases {', '.join(args)}")
-            await ctx.channel.send(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
+                await ctx.send(f"Command {name} now has aliases {', '.join(args)}")
+            await ctx.send(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
 
         case "unalias":
             if not args:
-                await ctx.channel.send("Error: no alias specified.")
+                await ctx.send("Error: no alias specified.")
                 return
             if name not in cmds and args[0] in cmds:
-                await ctx.channel.send(f"Error: use 'unalias {args[0]} {name}' instead.")
+                await ctx.send(f"Error: use 'unalias {args[0]} {name}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist.")
+                await ctx.send(f"Error: command {name} does not exist.")
                 return
             if args[0] not in aliases:
-                await ctx.channel.send("Error: not an alias.")
+                await ctx.send("Error: not an alias.")
                 return
             if name not in _cmds:
-                await ctx.channel.send("Error: cannot unalias built-in commands.")
+                await ctx.send("Error: cannot unalias built-in commands.")
                 return
             if flag:
-                await ctx.channel.send("Error: cannot specify flag for aliases.")
+                await ctx.send("Error: cannot specify flag for aliases.")
                 return
             if aliases[args[0]] != name:
-                await ctx.channel.send(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]]}).")
+                await ctx.send(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]]}).")
                 return
             del aliases[args[0]]
             _cmds[name]["aliases"].remove(name)
@@ -338,21 +337,21 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
         case "cooldown" | "cd":
             if not args:
                 if name not in cmds and name not in aliases:
-                    await ctx.channel.send(f"Error: command {name} does not exist.")
+                    await ctx.send(f"Error: command {name} does not exist.")
                 else:
                     if name in aliases:
                         name = aliases[name]
                     cd = cmds[name]._cooldowns[0]
-                    await ctx.channel.send(f"Command {name} has a cooldown of {cd._per/cd._rate}s.")
+                    await ctx.send(f"Command {name} has a cooldown of {cd._per/cd._rate}s.")
                 return
             if name in aliases:
-                await ctx.channel.send(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
+                await ctx.send(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
                 return
             if name not in cmds:
-                await ctx.channel.send(f"Error: command {name} does not exist.")
+                await ctx.send(f"Error: command {name} does not exist.")
                 return
             if flag:
-                await ctx.channel.send("Error: flag-specific cooldown is not supported.")
+                await ctx.send("Error: flag-specific cooldown is not supported.")
                 return
             cd: Cooldown = cmds[name]._cooldowns.pop()
             try:
@@ -361,7 +360,7 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 try:
                     rate = float(args[0])
                 except ValueError:
-                    await ctx.channel.send("Error: invalid argument.")
+                    await ctx.send("Error: invalid argument.")
                     return
                 else:
                     burst = cd._rate # _rate is actually the burst, it's weird
@@ -371,7 +370,7 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 except IndexError:
                     rate = cd._per
                 except ValueError:
-                    await ctx.channel.send("Error: invalid argument.")
+                    await ctx.send("Error: invalid argument.")
                     return
 
             cmds[name]._cooldowns.append(Cooldown(burst, rate, cd.bucket))
@@ -379,20 +378,20 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 _cmds[name]["burst"] = burst
                 _cmds[name]["rate"] = rate
                 _update_db()
-            await ctx.channel.send(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
+            await ctx.send(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
 
         case _:
-            await ctx.channel.send(f"Unrecognized action {action}.")
+            await ctx.send(f"Unrecognized action {action}.")
 
 @command("support", "so")
 async def shoutout(ctx: Context, name: str):
     try:
         chan = await ctx.bot.fetch_channel(name)
     except IndexError as e:
-        await ctx.channel.send(e.args[0])
+        await ctx.send(e.args[0])
         return
     except HTTPException as e:
-        await ctx.channel.send(e.message)
+        await ctx.send(e.message)
         return
 
     msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} -"]
@@ -410,13 +409,13 @@ async def shoutout(ctx: Context, name: str):
     else:
         msg.append(f"last time they were live, they were seen playing {chan.game_name}!")
 
-    await ctx.channel.send(" ".join(msg))
+    await ctx.send(" ".join(msg))
 
 @command("wall")
 async def wall_card(ctx: Context):
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
-        await ctx.channel.send("Error: could not fetch data.")
+        await ctx.send("Error: could not fetch data.")
         return
     for p in ("", "1_", "2_"):
         with open(os.path.join(config.STS_path, "preferences", f"{p}STSPlayer"), "r") as f:
@@ -426,45 +425,45 @@ async def wall_card(ctx: Context):
         card = d["NOTE_CARD"]
         upgrade_count = int(d["NOTE_UPGRADE"])
         if card == "Searing Blow":
-            await ctx.channel.send(msg.format(card, f"+{upgrade_count}" if upgrade_count else ""))
+            await ctx.send(msg.format(card, f"+{upgrade_count}" if upgrade_count else ""))
         else:
-            await ctx.channel.send(msg.format(card, "+" if upgrade_count else ""))
+            await ctx.send(msg.format(card, "+" if upgrade_count else ""))
         return
-    await ctx.channel.send("Error: could not find Ladder savefile.")
+    await ctx.send("Error: could not find Ladder savefile.")
 
 @command("dig")
 async def dig_cmd(ctx: Context):
     with open("dig_entries.txt", "r") as f:
         line = random.choice(f.readlines())
-    await ctx.channel.send(f"{ctx.author.display_name} has dug up {line}")
+    await ctx.send(f"{ctx.author.display_name} has dug up {line}")
 
 @command("kills") # TODO: Read game files for this
 async def kills_cmd(ctx: Context):
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
-    await ctx.channel.send(msg.format(kills, sum(kills)))
+    await ctx.send(msg.format(kills, sum(kills)))
 
 @command("losses")
 async def losses_cmd(ctx: Context):
     msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
-    await ctx.channel.send(msg.format(losses, sum(losses)))
+    await ctx.send(msg.format(losses, sum(losses)))
 
 @command("streak")
 async def streak_cmd(ctx: Context):
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("streak", "r") as f:
         streak = [int(x) for x in f.read().split()]
-    await ctx.channel.send(msg.format(streak))
+    await ctx.send(msg.format(streak))
 
 @command("pb")
 async def pb_cmd(ctx: Context):
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("pb", "r") as f:
         pb = [int(x) for x in f.read().split()]
-    await ctx.channel.send(msg.format(pb))
+    await ctx.send(msg.format(pb))
 
 async def edit_counts(ctx: Context, arg: str, *, add: bool):
     if arg.lower().startswith("i"):
@@ -476,7 +475,7 @@ async def edit_counts(ctx: Context, arg: str, *, add: bool):
     elif arg.lower().startswith("w"):
         i = 3
     else:
-        await ctx.channel.send(f"Unrecognized character {arg}")
+        await ctx.send(f"Unrecognized character {arg}")
         return
 
     with _getfile("kills", "r") as f:
@@ -523,11 +522,11 @@ async def edit_counts(ctx: Context, arg: str, *, add: bool):
     d = ("Ironclad", "Silent", "Defect", "Watcher")
 
     if pb_changed:
-        await ctx.channel.send(f"[NEW PB ATTAINED] Win recorded for the {d[i]}")
+        await ctx.send(f"[NEW PB ATTAINED] Win recorded for the {d[i]}")
     elif add:
-        await ctx.channel.send(f"Win recorded for the {d[i]}")
+        await ctx.send(f"Win recorded for the {d[i]}")
     else:
-        await ctx.channel.send(f"Loss recorded for the {d[i]}")
+        await ctx.send(f"Loss recorded for the {d[i]}")
 
 @command("win", flag="m") # TODO: add a manual time check for "this was last updated by X n seconds ago, do you wish to do this"
 async def win_cmd(ctx: Context, arg: str):
