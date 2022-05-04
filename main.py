@@ -24,6 +24,8 @@ import config
 _DEFAULT_BURST = 2
 _DEFAULT_RATE  = 5.0
 
+_json_indent = 4
+
 _consts = {
     "discord": "https://discord.gg/9XYVCSY",
 }
@@ -55,7 +57,7 @@ def _check_json():
 
     if changed:
         with _getfile("data.json", "w") as f:
-            json.dump(d, f)
+            json.dump(d, f, indent=_json_indent)
 
 async def _get_savefile_as_json(ctx: Context) -> dict:
     if not config.STS_path:
@@ -87,7 +89,7 @@ def _getfile(x: str, mode: str):
 
 def _update_db():
     with _getfile("data.json", "w") as f:
-        json.dump(_cmds, f)
+        json.dump(_cmds, f, indent=_json_indent)
 
 def _create_cmd(output):
     async def inner(ctx: Context, *s, output: str=output):
@@ -465,7 +467,52 @@ async def neowbonus(ctx: Context):
 
     d = j["NeowBonusLog"]
 
-    # TODO
+    if d["cardsUpgraded"]:
+        pos = f"upgraded {' and '.join(d['cardsUpgraded'])}"
+
+    elif d["cardsRemoved"]:
+        pos = f"removed {' and '.join(d['cardsRemoved'])}"
+
+    elif d["cardsObtained"]:
+        if d["cardsTransformed"]:
+            pos = f"transformed {' and '.join(d['cardsTransformed'])} into {' and '.join(d['cardsObtained'])}"
+        else:
+            pos = f"obtained {' and '.join(d['cardsObtained'])}"
+
+    elif d["relicsObtained"]:
+        if j["neow_bonus"] == "BOSS_RELIC":
+            pos = f"swapped our Starter relic for {d['relicsObtained'][0]}"
+        else:
+            pos = f"obtained {d['relicsObtained'][0]}"
+
+    elif d["maxHpGained"]:
+        pos = f"gained {d['maxHpGained']} max HP"
+
+    elif d["goldGained"]:
+        pos = f"gained {d['goldGained']} gold"
+
+    else:
+        pos = "got no bonus? If this is wrong, ping @FaeLyka"
+
+
+    if d["damageTaken"]:
+        neg = f"took {d['damageTaken']} damage"
+
+    elif d["goldLost"]:
+        neg = f"lost {d['goldLost']} gold"
+
+    elif d["maxHpLost"]:
+        neg = f"lost {d['maxHpLost']} max HP"
+
+    else:
+        neg = None
+
+    if neg is None:
+        msg = f"We {pos}."
+    else:
+        msg = f"We {neg}, and then {pos}."
+
+    await ctx.send(msg)
 
 @command("wall")
 async def wall_card(ctx: Context):
