@@ -7,6 +7,7 @@ from __future__ import annotations
 from typing import Callable
 import datetime
 import random
+import base64
 import json
 import os
 
@@ -55,6 +56,31 @@ def _check_json():
     if changed:
         with _getfile("data.json", "w") as f:
             json.dump(d, f)
+
+async def _get_savefile_as_json(ctx: Context) -> dict:
+    if not config.STS_path:
+        await ctx.send("Could not find game files.")
+        return
+
+    possible = None
+    for file in os.listdir(os.path.join(config.STS_path, "saves")):
+        if file.endswith(".autosave"):
+            if possible is None:
+                possible = file
+            else:
+                await ctx.send("Multiple savefiles detected. Please delete or rename extraneous ones.")
+                return
+
+    if possible is None:
+        await ctx.send("Not in a run.")
+        return
+
+    with open(os.path.join(config.STS_path, "saves", possible)) as f:
+        decoded = base64.b64decode(f.read())
+        arr = bytearray()
+        for i, char in enumerate(decoded):
+            arr.append(char ^ b"key"[i % 3])
+        return json.loads(arr)
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
@@ -410,6 +436,36 @@ async def shoutout(ctx: Context, name: str):
         msg.append(f"last time they were live, they were seen playing {chan.game_name}!")
 
     await ctx.send(" ".join(msg))
+
+@command("bluekey", "sapphirekey", "key")
+async def bluekey(ctx: Context):
+    j = await _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    if not j["has_sapphire_key"]:
+        await ctx.send("We do not have the Sapphire key.")
+        return
+
+    if "BlueKeyRelicSkippedLog" not in j:
+        await ctx.send("RunHistoryPlus is not running; cannot get data.")
+        return
+
+    await ctx.send(f"We skipped {j['BlueKeyRelicSkippedLog']['relicID']} on floor {j['BlueKeyRelicSkippedLog']['floor']} for the Sapphire key.")
+
+@command("neow", "neowbonus")
+async def neowbonus(ctx: Context):
+    j = await _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    if "NeowBonusLog" not in j:
+        await ctx.send("RunHistoryPlus is not running; cannot get data.")
+        return
+
+    d = j["NeowBonusLog"]
+
+    # TODO
 
 @command("wall")
 async def wall_card(ctx: Context):
