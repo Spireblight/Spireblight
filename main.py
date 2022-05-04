@@ -453,7 +453,7 @@ async def bluekey(ctx: Context):
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
 
-    await ctx.send(f"We skipped {j['BlueKeyRelicSkippedLog']['relicID']} on floor {j['BlueKeyRelicSkippedLog']['floor']} for the Sapphire key.")
+    await ctx.send(f"We skipped {j['BlueKeyRelicSkippedLog']['relicID']} on floor {j['BlueKeyRelicSkippedLog']['floor']+1} for the Sapphire key.")
 
 @command("neow", "neowbonus")
 async def neowbonus(ctx: Context):
@@ -513,6 +513,34 @@ async def neowbonus(ctx: Context):
         msg = f"We {neg}, and then {pos}."
 
     await ctx.send(msg)
+
+@command("seed", "currentseed")
+async def seed_cmd(ctx: Context):
+    j = _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
+
+    # this is a bit weird, but lets us convert a negative number, if any, into a positive one
+    num = int.from_bytes(j["seed"].to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
+    s = []
+
+    while num:
+        num, i = divmod(num, 35)
+        s.append(c[i])
+
+    s.reverse() # everything's backwards, for some reason... but this works
+
+    await ctx.send(f"Current seed: {''.join(s)}")
+
+@command("shopremoval", "cardremoval", "removal")
+async def shop_removal_cost(ctx: Context):
+    j = _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    await ctx.send(f"Current card removal cost: {j['purgeCost']}")
 
 @command("wall")
 async def wall_card(ctx: Context):
