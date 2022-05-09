@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from typing import Callable
 import datetime
+import asyncio
 import random
 import base64
 import json
@@ -198,16 +199,8 @@ TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[c
 _cmds: dict[str, dict[str, list[str] | bool | None]] = {} # internal json
 
 @command("command", flag="m") # TODO: perms
-async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str = "", *args: str):
+async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str):
     """Syntax: command <action> <name> [+<flag>] <output>"""
-    if flag.startswith("+"):
-        flag = flag[1:]
-    elif flag:
-        args = (flag, *args)
-        flag = ""
-    if flag not in _perms:
-        await ctx.send("Error: flag not recognized.")
-        return
     args = list(args)
     msg = " ".join(args)
     if not action or not name:
@@ -218,17 +211,29 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
     aliases = ctx.bot._command_aliases
     match action:
         case "add":
+            if not args:
+                await ctx.send("Error: no output provided.")
+                return
             if name in aliases:
                 await ctx.send(f"Error: {name} is an alias to {aliases[name]}. Use 'unalias {aliases[name]} {name}' first.")
                 return
             if name in cmds:
                 await ctx.send(f"Error: command {name} already exists!")
                 return
+            flag = ""
+            if args[0].startswith("+"):
+                flag, *args = args
+            if flag not in _perms:
+                await ctx.send("Error: flag not recognized.")
+                return
             add_cmd(name, (), "T", flag, _DEFAULT_BURST, _DEFAULT_RATE, msg)
             command(name, flag=flag)(_create_cmd(msg))
             await ctx.send(f"Command {name} added! Permission: {_perms[flag]}")
 
         case "edit":
+            if not args:
+                await ctx.send("Error: no output provided.")
+                return
             if name in aliases:
                 await ctx.send(f"Error: cannot edit alias. Use 'edit {aliases[name]}' instead.")
                 return
@@ -239,6 +244,12 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 await ctx.send(f"Error: cannot edit built-in command {name}.")
                 return
             _cmds[name]["output"] = msg
+            flag = ""
+            if args[0].startswith("+"):
+                flag, *args = args
+            if flag not in _perms:
+                await ctx.send("Error: flag not recognized.")
+                return
             if flag:
                 _cmds[name]["flag"] = flag
             _update_db()
@@ -320,9 +331,6 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             if name not in _cmds:
                 await ctx.send("Error: cannot alias built-in commands.")
                 return
-            if flag:
-                await ctx.send("Error: cannot specify flag for aliases.")
-                return
             if set(args) & cmds.keys():
                 await ctx.send(f"Error: aliases {set(args) & cmds.keys()} already exist as commands.")
                 return
@@ -352,9 +360,6 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
             if name not in _cmds:
                 await ctx.send("Error: cannot unalias built-in commands.")
                 return
-            if flag:
-                await ctx.send("Error: cannot specify flag for aliases.")
-                return
             if aliases[args[0]] != name:
                 await ctx.send(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]]}).")
                 return
@@ -377,9 +382,6 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", flag: str 
                 return
             if name not in cmds:
                 await ctx.send(f"Error: command {name} does not exist.")
-                return
-            if flag:
-                await ctx.send("Error: flag-specific cooldown is not supported.")
                 return
             cd: Cooldown = cmds[name]._cooldowns.pop()
             try:
