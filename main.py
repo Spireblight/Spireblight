@@ -103,8 +103,7 @@ def _update_db():
 def _update_timers():
     timers_temp = {}
     for name, timer in _timers.items():
-        l = [c.name for c in timer.commands]
-        timers_temp[name] = {"interval": timer.interval, "commands": l}
+        timers_temp[name] = {"interval": timer.interval, "commands": timer.commands}
     with _getfile("timers.json", "w") as f:
         json.dump(timers_temp, f, indent=_json_indent)
 
