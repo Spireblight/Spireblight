@@ -25,6 +25,9 @@ import config
 
 TConn: TwitchConn = None
 _to_add_commands = []
+_cache = {"live": (datetime.datetime.now(), False)}
+
+_cache_timeout = 3600
 
 _DEFAULT_BURST = 2
 _DEFAULT_RATE  = 5.0
@@ -88,10 +91,10 @@ async def _get_savefile_as_json(ctx: Context) -> dict:
 
     with open(os.path.join(config.STS_path, "saves", possible)) as f:
         decoded = base64.b64decode(f.read())
-        arr = bytearray()
-        for i, char in enumerate(decoded):
-            arr.append(char ^ b"key"[i % 3])
-        return json.loads(arr)
+    arr = bytearray()
+    for i, char in enumerate(decoded):
+        arr.append(char ^ b"key"[i % 3])
+    return json.loads(arr)
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
@@ -203,6 +206,8 @@ class TwitchConn(Bot):
 
     async def event_ready(self):
         self._connection._actions["NOTICE"] = self._notice
+        live = await self.fetch_streams(user_logins=[config.channel])
+        _cache["live"] = (datetime.datetime.now(), bool(live))
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags["badges"], name=tags["login"], channel=channel, bot=self, websocket=self._connection)
@@ -291,7 +296,11 @@ class Timer:
         while True:
             assert isinstance(self._interval, int)
             await asyncio.sleep(self._interval)
-            if self._running and self.commands:
+            last = _cache["live"][0]
+            if (datetime.datetime.now() - last).seconds > _cache_timeout:
+                live = await TConn.fetch_streams(user_logins=[config.channel])
+                _cache["live"] = (datetime.datetime.now(), bool(live))
+            if self._running and self.commands and _cache["live"][1]:
                 name = self.commands.pop(0)
                 message = _FakeMessage(f"{config.prefix}{name}")
                 ctx = await TConn.get_context(message)
@@ -527,7 +536,7 @@ async def timer_cmd(ctx: Context, action: str = "", name: str = "", *args: str):
                 await ctx.send(f"Error: Timer {name} already exists.")
                 return
             interval = _DEFAULT_INTERVAL
-            if args and args[0].isdigit():
+            if args and args[0].isdecimal():
                 interval = int(args[0])
             _timers[name] = Timer(name, interval)
             m, s = divmod(interval, 60)
@@ -898,11 +907,11 @@ async def edit_counts(ctx: Context, arg: str, *, add: bool):
     d = ("Ironclad", "Silent", "Defect", "Watcher")
 
     if pb_changed:
-        await ctx.send(f"[NEW PB ATTAINED] Win recorded for the {d[i]}")
+        await ctx.send(f"[NEW PB ATTAINED] Win #{kills[i]} recorded for the {d[i]}. Total wins: {sum(kills)}")
     elif add:
-        await ctx.send(f"Win recorded for the {d[i]}")
+        await ctx.send(f"Win #{kills[i]} recorded for the {d[i]}. Total wins: {sum(kills)}")
     else:
-        await ctx.send(f"Loss recorded for the {d[i]}")
+        await ctx.send(f"Loss #{losses[i]} recorded for the {d[i]}. Total losses: {sum(losses)}")
 
 @command("win", flag="m", burst=1, rate=60.0) # 1:60.0 means we can't accidentally do it twice in a row
 async def win_cmd(ctx: Context, arg: str):
