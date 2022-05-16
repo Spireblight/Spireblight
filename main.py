@@ -782,6 +782,14 @@ async def shop_removal_cost(ctx: Context):
 
     await ctx.send(f"Current card removal cost: {j['purgeCost']}")
 
+@command("potionchance", "potion") # unsure, need to test this
+async def potion_chance(ctx: Context):
+    j = await _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
+
 #@command("skipped", "skippedboss", "bossrelics")
 async def skipped_boss_relics(ctx: Context):
     j = await _get_savefile_as_json(ctx)
