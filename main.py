@@ -29,8 +29,8 @@ _cache = {"live": (datetime.datetime.now(), False)}
 
 _cache_timeout = 3600
 
-_DEFAULT_BURST = 2
-_DEFAULT_RATE  = 5.0
+_DEFAULT_BURST = 1
+_DEFAULT_RATE  = 3.0
 _DEFAULT_INTERVAL = 900
 
 _json_indent = 4
@@ -44,32 +44,8 @@ _perms = {
     "m": "Moderator",
 }
 
-_defaults = {
-    "aliases": [],
-    "flag": "",
-    "burst": _DEFAULT_BURST,
-    "rate": _DEFAULT_RATE,
-    "source": "T",
-    "enabled": True,
-    "output": "<UNDEFINED>",
-}
-
 _timers: dict[str, Timer] = {}
 _created_timers: set[str] = set()
-
-def _check_json():
-    changed = False
-    with _getfile("data.json", "r") as f:
-        d = json.load(f)
-    for key in d:
-        for name in _defaults:
-            if name not in d[key]:
-                d[key][name] = _defaults[name]
-                changed = True
-
-    if changed:
-        with _getfile("data.json", "w") as f:
-            json.dump(d, f, indent=_json_indent)
 
 async def _get_savefile_as_json(ctx: Context) -> dict:
     if not config.STS_path:
@@ -94,7 +70,10 @@ async def _get_savefile_as_json(ctx: Context) -> dict:
     arr = bytearray()
     for i, char in enumerate(decoded):
         arr.append(char ^ b"key"[i % 3])
-    return json.loads(arr)
+    j = json.loads(arr)
+    if "basemod:mod_saves" not in j: # make sure thsi key exists
+        j["basemod:mod_saves"] = {}
+    return j
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
@@ -127,8 +106,14 @@ def load():
     with _getfile("data.json", "r") as f:
         _cmds.update(json.load(f))
     for name, d in _cmds.items():
-        c = command(name, *d["aliases"], flag=d["flag"], burst=d["burst"], rate=d["rate"])(_create_cmd(d["output"]))
-        c.enabled = d["enabled"]
+        c = command(
+            name,
+            *d.get("aliases", []),
+            flag=d.get("flag", ""),
+            burst=d.get("burst", _DEFAULT_BURST),
+            rate=d.get("rate", _DEFAULT_RATE)
+        )(_create_cmd(d["output"]))
+        c.enabled = d.get("enabled", True)
     with _getfile("disabled", "r") as f:
         for disabled in f.readlines():
             TConn.commands[disabled].enabled = False
@@ -140,8 +125,18 @@ def load():
             t.add_command(c, allow_duplicate=True)
         _timers[name] = t
 
-def add_cmd(name: str, aliases: list[str], source: str, flag: str, burst: int, rate: float, output: str):
-    _cmds[name] = {"aliases": aliases, "enabled": True, "source": source, "flag": flag, "burst": burst, "rate": rate, "output": output}
+def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: str = None, burst: int = None, rate: float = None, output: str):
+    _cmds[name] = {"output": output}
+    if aliases is not None:
+        _cmds[name]["aliases"] = aliases
+    if source is not None:
+        _cmds[name]["source"] = source
+    if flag is not None:
+        _cmds[name]["flag"] = flag
+    if burst is not None:
+        _cmds[name]["burst"] = burst
+    if rate is not None:
+        _cmds[name]["rate"] = rate
     _update_db()
 
 def wrapper(func: Callable, force_argcount: bool):
@@ -337,7 +332,10 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             if flag not in _perms:
                 await ctx.send("Error: flag not recognized.")
                 return
-            add_cmd(name, (), "T", flag, _DEFAULT_BURST, _DEFAULT_RATE, msg)
+            if flag:
+                add_cmd(name, flag=flag, output=msg)
+            else:
+                add_cmd(name, output=msg)
             command(name, flag=flag)(_create_cmd(msg))
             await ctx.send(f"Command {name} added! Permission: {_perms[flag]}")
 
@@ -930,8 +928,6 @@ async def win_cmd(ctx: Context, arg: str):
 @command("loss", flag="m", burst=1, rate=60.0)
 async def loss_cmd(ctx: Context, arg: str):
     await edit_counts(ctx, arg, add=False)
-
-_check_json()
 
 async def main():
     global TConn
