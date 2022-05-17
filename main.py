@@ -689,11 +689,13 @@ async def bluekey(ctx: Context):
         await ctx.send("We do not have the Sapphire key.")
         return
 
-    if "BlueKeyRelicSkippedLog" not in j:
+    if "BlueKeyRelicSkippedLog" not in j["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
 
-    await ctx.send(f"We skipped {j['BlueKeyRelicSkippedLog']['relicID']} on floor {j['BlueKeyRelicSkippedLog']['floor']+1} for the Sapphire key.")
+    d = j["basemod:mod_saves"]["BlueKeyRelicSkippedLog"]
+
+    await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']+1} for the Sapphire key.")
 
 @command("neow", "neowbonus")
 async def neowbonus(ctx: Context):
@@ -701,11 +703,11 @@ async def neowbonus(ctx: Context):
     if j is None:
         return
 
-    if "NeowBonusLog" not in j:
+    if "NeowBonusLog" not in j["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
 
-    d = j["NeowBonusLog"]
+    d = j["basemod:mod_saves"]["NeowBonusLog"]
 
     if d["cardsUpgraded"]:
         pos = f"upgraded {' and '.join(d['cardsUpgraded'])}"
