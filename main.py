@@ -140,22 +140,49 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
     _update_db()
 
 def wrapper(func: Callable, force_argcount: bool):
-    async def caller(ctx: Context, *args):
-        if req > len(args):
-            names = co.co_varnames[1+len(args):req]
+    async def caller(ctx: Context, *args: str):
+        new_args = []
+        for i, arg in enumerate(args, 1): # parse annotations
+            if (var := co.co_varnames[i]) in func.__annotations__:
+                expected = func.__annotations__[var]
+                if expected == int:
+                    try:
+                        arg = int(arg)
+                    except ValueError:
+                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be an integer.")
+                        return
+                elif expected == float:
+                    try:
+                        arg = float(arg)
+                    except ValueError:
+                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be a floating point number.")
+                        return
+                elif expected == bool:
+                    if arg.lower() in ("yes", "on", "true", "1"):
+                        arg = True
+                    elif arg.lower() in ("no", "off", "false", "0"):
+                        arg = False
+                    else:
+                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be parsable as a boolean value.")
+                        return
+                elif expected != str:
+                    await ctx.send(f"Warning: Unhandled type {expected!r} for argument #{i} ({var!r}) - please ping @FaeLyka")
+            new_args.append(arg)
+
+        if req > len(new_args):
+            names = co.co_varnames[len(new_args):req]
             if len(names) == 1:
                 await ctx.send(f"Error: Missing required argument {names[0]!r}")
-                return
             else:
                 await ctx.send(f"Error: Missing required arguments {names!r}")
-                return
-        if co.co_flags & 0x04: # function supports *args, don't check further
-            await func(ctx, *args)
             return
-        if (len(args) + 1) > co.co_argcount and force_argcount: # too many args and we enforce it
+        if co.co_flags & 0x04: # function supports *args, don't check further
+            await func(ctx, *new_args)
+            return
+        if (len(new_args) + 1) > co.co_argcount and force_argcount: # too many args and we enforce it
             await ctx.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
             return
-        await func(ctx, *(args[:co.co_argcount-1])) # truncate args to the max we allow
+        await func(ctx, *(new_args[:co.co_argcount-1])) # truncate args to the max we allow
 
     co = func.__code__
     req = co.co_argcount - 1
@@ -205,7 +232,7 @@ class TwitchConn(Bot):
         _cache["live"] = (datetime.datetime.now(), bool(live))
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
-        user = Chatter(tags=tags["badges"], name=tags["login"], channel=channel, bot=self, websocket=self._connection)
+        user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
             case "sub" | "resub":
                 self.run_event("subscription", user, channel, tags)
@@ -518,6 +545,8 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
                 _cmds[name]["rate"] = rate
                 _update_db()
             await ctx.send(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
+            if name not in _cmds:
+                await ctx.send("Warning: settings on built-in commands do not persist past a restart.")
 
         case _:
             await ctx.send(f"Unrecognized action {action}.")
@@ -780,15 +809,49 @@ async def shop_removal_cost(ctx: Context):
     if j is None:
         return
 
-    await ctx.send(f"Current card removal cost: {j['purgeCost']}")
+    await ctx.send(f"Current card removal cost: {j['purgeCost']} (removed {j['metric_purchased_purges']} card{'' if j['metric_purchased_purges'] == 1 else 's'})")
 
-@command("potionchance", "potion") # unsure, need to test this
+@command("potionchance", "potion")
 async def potion_chance(ctx: Context):
     j = await _get_savefile_as_json(ctx)
     if j is None:
         return
 
     await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
+
+@command("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+async def event_likelihood(ctx: Context):
+    j = await _get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    elite, hallway, shop, chest = j["event_chances"]
+    # XXX: elite likelihood is only for the "Deadly Events" custom modifier
+
+    await ctx.send(
+        f"Event type likelihood: "
+        f"Normal fight: {hallway:.0%} - "
+        f"Shop: {shop:.0%} - "
+        f"Treasure: {chest:.0%} - "
+        f"Event: {hallway+shop+chest:.0%} - "
+        f"See {config.prefix}eventrng for more information."
+    )
+
+@command("eventrng")
+async def event_rng_caveat(ctx: Context):
+    await ctx.send(
+        "Pseudo-Random Number Generator calls to determine the type of event "
+        "is non-random, and depends on the current state of the pRNG when the "
+        "room is entered, which is affected by things like previous events. "
+        "As such, the likelihood of any given type being picked is weighted "
+        "related to previous event rooms. This is why fights are more likely - "
+        "or, in some cases, guaranteed - to happen after a Shrine-type event, "
+        "even if the likelihood is technically lower."
+    )
+
+@command("relic")
+async def relic_info(ctx: Context, index: int):
+    pass
 
 #@command("skipped", "skippedboss", "bossrelics")
 async def skipped_boss_relics(ctx: Context):
@@ -824,7 +887,7 @@ async def wall_card(ctx: Context):
         return
     await ctx.send("Error: could not find Ladder savefile.")
 
-@command("dig")
+@command("dig", burst=5, rate=2.0)
 async def dig_cmd(ctx: Context):
     with open("dig_entries.txt", "r") as f:
         line = random.choice(f.readlines())
@@ -848,14 +911,14 @@ async def losses_cmd(ctx: Context):
 async def streak_cmd(ctx: Context):
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("streak", "r") as f:
-        streak = [int(x) for x in f.read().split()]
+        streak = f.read().split()
     await ctx.send(msg.format(streak))
 
 @command("pb")
 async def pb_cmd(ctx: Context):
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("pb", "r") as f:
-        pb = [int(x) for x in f.read().split()]
+        pb = f.read().split()
     await ctx.send(msg.format(pb))
 
 async def edit_counts(ctx: Context, arg: str, *, add: bool):
