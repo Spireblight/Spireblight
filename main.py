@@ -10,6 +10,7 @@ import asyncio
 import random
 import base64
 import json
+import re
 import os
 
 from twitchio.ext.commands import Context, Bot, Cooldown, Bucket
@@ -27,7 +28,7 @@ TConn: TwitchConn = None
 _to_add_commands = []
 _cache = {"live": (datetime.datetime.now(), False)}
 
-_cache_timeout = 3600
+_cache_timeout = 1800
 
 _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
@@ -97,6 +98,19 @@ def _create_cmd(output):
             name = ctx.author.name
         await ctx.send(output.format(user=name, text=" ".join(s), words=s, **_consts))
     return inner
+
+def _get_relic(relic: str) -> str:
+    if " " not in relic:
+        maybe_relic = re.match(r"([A-Z]\S+)([A-Z]\S+)", relic)
+        if maybe_relic is not None:
+            relic = " ".join(maybe_relic.groups())
+
+    relic = relic.replace("Egg 2", "Egg")
+    relic = relic.replace("Greaves", "Boots")
+    relic = relic.replace("Captains", "Captain's")
+    relic = relic.replace("Slavers", "Slaver's")
+
+    return relic
 
 def load():
     _cmds.clear()
@@ -220,8 +234,8 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
         return cmd
     return inner
 
-class TwitchConn(Bot):
-    async def _notice(self, parsed):
+class TwitchConn(Bot): # add !nloth to see what relic was given up to N'Loth
+    async def _notice(self, parsed): # use PubSub/EventSub instead
         match parsed["msg-id"]:
             case "delete_message_success":
                 self.run_event("message_delete", parsed["target-user-id"])
@@ -272,13 +286,13 @@ def get_timer(name=None) -> Timer | None:
 
     return _timers.get(name)
 
-class _FakeMessage:
+class _FakeMessage: # TODO: use get_channel() instead
     def __init__(self, text: str):
         self.content = text
         self.channel = Channel(config.channel, TConn._connection)
         self.author = PartialChatter(TConn._connection, name=config.channel, channel=config.channel, message=self)
 
-class Timer:
+class Timer: # Routines ext instead
     def __init__(self, name: str, interval: int):
         self.name = name
         self._interval = interval
@@ -851,21 +865,47 @@ async def event_rng_caveat(ctx: Context):
 
 @command("relic")
 async def relic_info(ctx: Context, index: int):
-    pass
+    j = await _get_savefile_as_json(ctx)
+    if j is None:
+        return
 
-#@command("skipped", "skippedboss", "bossrelics")
+    l: list[str] = j["relics"]
+
+    if index > len(l):
+        await ctx.send(f"We only have {len(l)} relics!")
+        return
+
+    relic = _get_relic(l[index-1])
+
+    await ctx.send(f"The relic at position {index} is {relic}.")
+
+@command("skipped", "skippedboss", "bossrelics")
 async def skipped_boss_relics(ctx: Context):
     j = await _get_savefile_as_json(ctx)
     if j is None:
         return
 
-    l = list(j["metric_boss_relics"])
-    while len(l) < 2:
-        l.append(None)
+    l: list[dict] = j["metric_boss_relics"]
 
-    act1, act2 = l
+    if not l:
+        await ctx.send("We have not picked any boss relics yet.")
+        return
 
-    # TODO
+    template = "We picked {1} at the end of Act {0}, and skipped {2} and {3}."
+    msg = []
+    i = 1
+    for item in l:
+        msg.append(
+            template.format(
+                i,
+                _get_relic(item["picked"]),
+                _get_relic(item["not_picked"][0]),
+                _get_relic(item["not_picked"][1]),
+            )
+        )
+        i += 1
+
+    await ctx.send(" ".join(msg))
 
 @command("wall")
 async def wall_card(ctx: Context):
