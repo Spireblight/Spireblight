@@ -15,8 +15,9 @@ import os
 
 from twitchio.ext.commands import Context, Bot, Cooldown, Bucket
 from twitchio.ext.commands import Command as _TCommand
+from twitchio.ext.routines import routine
 from twitchio.channel import Channel
-from twitchio.chatter import Chatter, PartialChatter
+from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream
 #from discord.ext import commands as d_cmds
@@ -24,7 +25,6 @@ from twitchio.models import Stream
 
 import config
 
-TConn: TwitchConn = None
 _to_add_commands = []
 _cache = {"live": (datetime.datetime.now(), False)}
 
@@ -41,8 +41,7 @@ _perms = {
     "m": "Moderator",
 }
 
-_timers: dict[str, Timer] = {}
-_created_timers: set[str] = set()
+_cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 
 async def _get_savefile_as_json(ctx: Context) -> dict:
     if not config.STS_path:
@@ -99,13 +98,6 @@ def _update_db():
     with _getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.json_indent)
 
-def _update_timers():
-    timers_temp = {}
-    for name, timer in _timers.items():
-        timers_temp[name] = {"interval": timer.interval, "commands": timer.commands}
-    with _getfile("timers.json", "w") as f:
-        json.dump(timers_temp, f, indent=config.json_indent)
-
 def _create_cmd(output):
     async def inner(ctx: Context, *s, output: str=output):
         try:
@@ -136,9 +128,6 @@ def _get_name(name: str) -> str:
 
 def load():
     _cmds.clear()
-    for timer in _timers.values():
-        timer.stop()
-    _timers.clear()
     with _getfile("data.json", "r") as f:
         _cmds.update(json.load(f))
     for name, d in _cmds.items():
@@ -153,13 +142,6 @@ def load():
     with _getfile("disabled", "r") as f:
         for disabled in f.readlines():
             TConn.commands[disabled].enabled = False
-    with _getfile("timers.json", "r") as f:
-        timers_temp = json.load(f)
-    for name, values in timers_temp.items():
-        t = Timer(name, values["interval"])
-        for c in values["commands"]:
-            t.add_command(c, allow_duplicate=True)
-        _timers[name] = t
 
 def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: str = None, burst: int = None, rate: float = None, output: str):
     _cmds[name] = {"output": output}
@@ -256,10 +238,7 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
         wrapped = wrapper(func, force_argcount)
         wrapped.__cooldowns__ = [Cooldown(burst, rate, Bucket.default)]
         cmd = Command(name=name, aliases=list(aliases), func=wrapped, flag=flag)
-        if TConn is None:
-            _to_add_commands.append(cmd)
-        else:
-            TConn.add_command(cmd)
+        TConn.add_command(cmd)
         return cmd
     return inner
 
@@ -301,73 +280,26 @@ class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
                            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
                            f"last I checked, they were playing some {chan.game_name}!")
 
-#TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
+TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
 #DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
-def get_timer(name=None) -> Timer | None:
-    if name is None:
-        return list(_timers)
+async def _timer(cmds: list[str]):
+    cmd = cmds.pop(0)
+    if cmds not in _cmds and cmd not in TConn.commands:
+        return
+    if TConn.commands[cmd].disabled:
+        cmds.append(cmd) # in case it becomes enabled again
+        return
+    # TODO: Check live status using EventSub/PubSub
+    chan = TConn.get_channel(config.channel)
+    if not chan:
+        return
+    # don't use the actual command, just send the raw output
+    await chan.send(_cmds[cmd]["output"].format(**_consts))
+    cmds.append(cmd)
 
-    return _timers.get(name)
-
-class _FakeMessage: # TODO: use get_channel() instead
-    def __init__(self, text: str):
-        self.content = text
-        self.channel = Channel(config.channel, TConn._connection)
-        self.author = PartialChatter(TConn._connection, name=config.channel, channel=config.channel, message=self)
-
-class Timer: # Routines ext instead
-    def __init__(self, name: str, interval: int):
-        self.name = name
-        self._interval = interval
-        self._running = False
-        self.commands: list[str] = []
-
-    def add_command(self, name: str, *, allow_duplicate: bool) -> bool:
-        """Add a command to the timer. Return True if the command was added."""
-        cmd = TConn.get_command(name)
-        if cmd is not None and not cmd.required:
-            if cmd not in self.commands or allow_duplicate:
-                self.commands.append(name)
-                return True
-
-        return False
-
-    def remove_command(self, name: str) -> int:
-        if name in self.commands:
-            self.commands.remove(name)
-        return self.commands.count(name)
-
-    @property
-    def interval(self):
-        return self._interval
-
-    @property
-    def running(self):
-        return self._running
-
-    def stop(self):
-        self._running = False
-
-    async def start(self):
-        if self._running:
-            raise RuntimeError(f"Timer {self.name} is already running!")
-        self._running = True
-        while True:
-            assert isinstance(self._interval, int)
-            await asyncio.sleep(self._interval)
-            last = _cache["live"][0]
-            if (datetime.datetime.now() - last).seconds > config.cache_timeout:
-                live = await TConn.fetch_streams(user_logins=[config.channel])
-                _cache["live"] = (datetime.datetime.now(), bool(live))
-            if self._running and self.commands and _cache["live"][1]:
-                name = self.commands.pop(0)
-                message = _FakeMessage(f"{config.prefix}{name}")
-                ctx = await TConn.get_context(message)
-                await ctx.command.invoke(ctx)
-                self.commands.append(name)
-
-_cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
+_global_timer = routine(seconds=config.global_interval)(_timer)
+_sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
 @command("command", flag="m")
 async def command_cmd(ctx: Context, action: str, name: str, *args: str):
@@ -575,130 +507,6 @@ async def command_cmd(ctx: Context, action: str, name: str, *args: str):
         case _:
             await ctx.send(f"Unrecognized action {action}.")
 
-@command("timer", flag="m")
-async def timer_cmd(ctx: Context, action: str, name: str, *args: str):
-    timer = get_timer(name)
-    match action:
-        case "create":
-            if timer:
-                await ctx.send(f"Error: Timer {name} already exists.")
-                return
-            interval = _DEFAULT_INTERVAL
-            if args and args[0].isdecimal():
-                interval = int(args[0])
-            _timers[name] = Timer(name, interval)
-            m, s = divmod(interval, 60)
-            await ctx.send(f"Created timer {name} with an interval of {m}m {s}s. This will take effect the next time the bot is launched.")
-
-            _update_timers()
-            _created_timers.add(name)
-
-        case "add":
-            if timer is None:
-                await ctx.send(f"Error: Timer {name} does not exist. Use 'create {name} <interval>' instead.")
-                return
-            if not args:
-                await ctx.send("Error: Syntax is 'add <name> <commands>'.")
-                return
-            added = []
-            for c in args:
-                allow_duplicate = False
-                if c.startswith("="):
-                    c = c[1:]
-                    allow_duplicate = True
-                if timer.add_command(c, allow_duplicate=allow_duplicate):
-                    added.append(c)
-
-            s = set(args) - set(added)
-
-            if added:
-                await ctx.send(f"Commands have been added to timer {name}! Don't forget to 'start {name}' if you haven't.")
-            if s:
-                await ctx.send(
-                    f"Warning: Commands {', '.join(s)} were not added. Commands requiring additional parameters cannot be on a timer. "
-                    f"Additionally, duplicate commands must be preceded by '=', such as 'add {name} ={s.pop()}'. Use 'status {name}' to see which commands are already in."
-                )
-            if name in _created_timers:
-                await ctx.send("Warning: Timer has been recently created. It will not run until the bot is restarted.")
-
-            _update_timers()
-
-        case "remove":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            if not args:
-                await ctx.send(f"Error: Syntax is 'remove {name} <commands>'. Use 'delete {name}' to delete the timer itself.")
-                return
-            count = 0
-            for c in args:
-                count += timer.remove_command(c)
-            if not count:
-                await ctx.send(f"All matching commands have been successfully removed from timer {name}.")
-            else:
-                await ctx.send(f"The first instance of each command has been removed. There are still {count} duplicates present. Use 'status {name}' for information.")
-            _update_timers()
-
-        case "delete":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            if args:
-                await ctx.send(f"Error: Syntax is 'delete {name}'. Use 'remove {name} <commands>' to remove individual commands.")
-                return
-            if timer.running:
-                timer.stop()
-            del _timers[name]
-            _update_timers()
-
-        case "status" | "stat" | "stats" | "state":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            await ctx.send(
-                f"Timer {name} is currently {'running' if timer.running else 'stopped'} on a {timer.interval}s interval. Commands: {', '.join(c.name for c in timer.commands)}"
-            )
-
-        case "start":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            if not timer.running:
-                if name in _created_timers:
-                    await ctx.send("Error: cannot start a recently-created timer. Please restart the bot to start it.")
-                else:
-                    await ctx.send(f"Timer {name} has been started with an interval of {timer.interval}s and {len(timer.commands)} commands.")
-                    timer._running = True
-            else:
-                await ctx.send(f"Timer {name} is already running!")
-
-        case "stop":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            if not timer.running:
-                await ctx.send(f"Timer {name} is not running.")
-            else:
-                timer.stop()
-                await ctx.send(f"Timer {name} has been stopped.")
-
-        case "interval":
-            if timer is None:
-                await ctx.send(f"Timer {name} does not exist.")
-                return
-            if not args:
-                await ctx.send("Error: No interval provided.")
-                return
-            if not args[0].isdigit():
-                await ctx.send("Error: Interval must be a positive integer.")
-                return
-            timer._interval = int(args[0])
-            await ctx.send(f"Interval set to {args[0]}s! It will take effect after the end of the current interval.")
-            _update_timers()
-
-        case _:
-            await ctx.send(f"Error: unrecognized action {action}.")
-
 @command("support", "shoutout", "so")
 async def shoutout(ctx: Context, name: str):
     try:
@@ -726,6 +534,15 @@ async def shoutout(ctx: Context, name: str):
         msg.append(f"last time they were live, they were seen playing {chan.game_name}!")
 
     await ctx.send(" ".join(msg))
+
+@command("title")
+async def stream_title(ctx: Context):
+    live: list[Stream] = await ctx.bot.fetch_streams(user_logins=[config.channel])
+
+    if live:
+        await ctx.send(live[0].title)
+    else:
+        await ctx.send("Could not connect to the Twitch API.")
 
 @command("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: Context):
@@ -1039,23 +856,9 @@ async def win_cmd(ctx: Context, arg: str):
 async def loss_cmd(ctx: Context, arg: str):
     await edit_counts(ctx, arg, add=False)
 
-async def main():
-    global TConn
-    TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
-    for cmd in _to_add_commands:
-        TConn.add_command(cmd)
-    load()
-    aws = [TConn.connect()]
-    for timer in _timers.values():
-        aws.append(timer.start())
-    try:
-        await asyncio.gather(*aws)
-    finally:
-        await TConn.close()
+if config.global_commands:
+    _global_timer.start(config.global_commands)
+if config.sponsored_commands:
+    _sponsored_timer.start(config.sponsored_commands)
 
-asyncio.run(main())
-
-#async def main():
-#    await asyncio.gather(TConn.run(), DConn.start(config.token))
-
-#asyncio.run(main())
+TConn.run()
