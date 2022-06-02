@@ -28,13 +28,9 @@ TConn: TwitchConn = None
 _to_add_commands = []
 _cache = {"live": (datetime.datetime.now(), False)}
 
-_cache_timeout = 1800
-
 _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
 _DEFAULT_INTERVAL = 900
-
-_json_indent = 4
 
 _consts = {
     "discord": "https://discord.gg/9XYVCSY",
@@ -72,23 +68,43 @@ async def _get_savefile_as_json(ctx: Context) -> dict:
     for i, char in enumerate(decoded):
         arr.append(char ^ b"key"[i % 3])
     j = json.loads(arr)
-    if "basemod:mod_saves" not in j: # make sure thsi key exists
+    if "basemod:mod_saves" not in j: # make sure this key exists
         j["basemod:mod_saves"] = {}
     return j
+
+def _get_sanitizer(ctx: Context, name: str, args: list[str], mapping: dict):
+    async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
+        """Verify that user input is sane. Return True if input is sane."""
+
+        if require_args and not args:
+            await ctx.send("Error: no output provided.")
+            return False
+
+        if in_mapping and name not in mapping:
+            await ctx.send(f"Error: command {name} does not exist!")
+            return False
+
+        if not in_mapping and name in mapping:
+            await ctx.send(f"Error: command {name} already exists!")
+            return False
+
+        return True
+
+    return _sanitize
 
 def _getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
 
 def _update_db():
     with _getfile("data.json", "w") as f:
-        json.dump(_cmds, f, indent=_json_indent)
+        json.dump(_cmds, f, indent=config.json_indent)
 
 def _update_timers():
     timers_temp = {}
     for name, timer in _timers.items():
         timers_temp[name] = {"interval": timer.interval, "commands": timer.commands}
     with _getfile("timers.json", "w") as f:
-        json.dump(timers_temp, f, indent=_json_indent)
+        json.dump(timers_temp, f, indent=config.json_indent)
 
 def _create_cmd(output):
     async def inner(ctx: Context, *s, output: str=output):
@@ -99,18 +115,24 @@ def _create_cmd(output):
         await ctx.send(output.format(user=name, text=" ".join(s), words=s, **_consts))
     return inner
 
-def _get_relic(relic: str) -> str:
-    if " " not in relic:
-        maybe_relic = re.match(r"([A-Z]\S+)([A-Z]\S+)", relic)
-        if maybe_relic is not None:
-            relic = " ".join(maybe_relic.groups())
+def _get_name(name: str) -> str:
+    if " " not in name:
+        maybe_name = re.match(r"([A-Z]\S+)([A-Z]\S+)", name)
+        if maybe_name is not None:
+            name = " ".join(maybe_name.groups())
 
-    relic = relic.replace("Egg 2", "Egg")
-    relic = relic.replace("Greaves", "Boots")
-    relic = relic.replace("Captains", "Captain's")
-    relic = relic.replace("Slavers", "Slaver's")
+    # relics
+    name = name.replace("Egg 2", "Egg")
+    name = name.replace("Greaves", "Boots")
+    name = name.replace("Captains", "Captain's")
+    name = name.replace("Slavers", "Slaver's")
 
-    return relic
+    # cards
+    if "+" in name:
+        if not name.startswith("Searing"):
+            name = name[:-1] # remove the number at the end
+
+    return name
 
 def load():
     _cmds.clear()
@@ -156,8 +178,15 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
 def wrapper(func: Callable, force_argcount: bool):
     async def caller(ctx: Context, *args: str):
         new_args = []
-        for i, arg in enumerate(args, 1): # parse annotations
-            if (var := co.co_varnames[i]) in func.__annotations__:
+        multiple = (co.co_flags & 0x04) # whether *args is supported
+        for i, arg in enumerate(args, 1):
+            if i < co.co_argcount:
+                var = co.co_varnames[i]
+            elif multiple: # all from here on will match the same type -- typically str, but could be something else
+                var = co.co_varnames[co.co_argcount]
+            else: # no *args and reached max argcount; no point in continuing
+                break
+            if var in func.__annotations__:
                 expected = func.__annotations__[var]
                 if expected == int:
                     try:
@@ -172,9 +201,9 @@ def wrapper(func: Callable, force_argcount: bool):
                         await ctx.send(f"Error: Argument #{i} ({var!r}) must be a floating point number.")
                         return
                 elif expected == bool:
-                    if arg.lower() in ("yes", "on", "true", "1"):
+                    if arg.lower() in ("yes", "y", "on", "true", "1"):
                         arg = True
-                    elif arg.lower() in ("no", "off", "false", "0"):
+                    elif arg.lower() in ("no", "n", "off", "false", "0"):
                         arg = False
                     else:
                         await ctx.send(f"Error: Argument #{i} ({var!r}) must be parsable as a boolean value.")
@@ -190,13 +219,13 @@ def wrapper(func: Callable, force_argcount: bool):
             else:
                 await ctx.send(f"Error: Missing required arguments {names!r}")
             return
-        if co.co_flags & 0x04: # function supports *args, don't check further
+        if multiple: # function supports *args, don't check further
             await func(ctx, *new_args)
             return
-        if (len(new_args) + 1) > co.co_argcount and force_argcount: # too many args and we enforce it
+        if len(new_args) != len(args) and force_argcount: # too many args and we enforce it
             await ctx.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
             return
-        await func(ctx, *(new_args[:co.co_argcount-1])) # truncate args to the max we allow
+        await func(ctx, *new_args)
 
     co = func.__code__
     req = co.co_argcount - 1
@@ -234,14 +263,9 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
         return cmd
     return inner
 
-class TwitchConn(Bot): # add !nloth to see what relic was given up to N'Loth
-    async def _notice(self, parsed): # use PubSub/EventSub instead
-        match parsed["msg-id"]:
-            case "delete_message_success":
-                self.run_event("message_delete", parsed["target-user-id"])
-
+class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
+    # add !nloth to see what relic was given up to N'Loth
     async def event_ready(self):
-        self._connection._actions["NOTICE"] = self._notice
         live = await self.fetch_streams(user_logins=[config.channel])
         _cache["live"] = (datetime.datetime.now(), bool(live))
 
@@ -333,7 +357,7 @@ class Timer: # Routines ext instead
             assert isinstance(self._interval, int)
             await asyncio.sleep(self._interval)
             last = _cache["live"][0]
-            if (datetime.datetime.now() - last).seconds > _cache_timeout:
+            if (datetime.datetime.now() - last).seconds > config.cache_timeout:
                 live = await TConn.fetch_streams(user_logins=[config.channel])
                 _cache["live"] = (datetime.datetime.now(), bool(live))
             if self._running and self.commands and _cache["live"][1]:
@@ -346,26 +370,20 @@ class Timer: # Routines ext instead
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 
 @command("command", flag="m")
-async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str):
+async def command_cmd(ctx: Context, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+<flag>] <output>"""
     args = list(args)
     msg = " ".join(args)
-    if not action or not name:
-        await ctx.send("Missing args.")
-        return
     name = name.lstrip(config.prefix)
     cmds: dict[str, Command] = TConn.commands
     aliases = ctx.bot._command_aliases
+    sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
         case "add":
-            if not args:
-                await ctx.send("Error: no output provided.")
+            if not await sanitizer(in_mapping=False):
                 return
             if name in aliases:
                 await ctx.send(f"Error: {name} is an alias to {aliases[name]}. Use 'unalias {aliases[name]} {name}' first.")
-                return
-            if name in cmds:
-                await ctx.send(f"Error: command {name} already exists!")
                 return
             flag = ""
             if args[0].startswith("+"):
@@ -381,14 +399,10 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             await ctx.send(f"Command {name} added! Permission: {_perms[flag]}")
 
         case "edit":
-            if not args:
-                await ctx.send("Error: no output provided.")
+            if not await sanitizer():
                 return
             if name in aliases:
                 await ctx.send(f"Error: cannot edit alias. Use 'edit {aliases[name]}' instead.")
-                return
-            if name not in cmds:
-                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if name not in _cmds:
                 await ctx.send(f"Error: cannot edit built-in command {name}.")
@@ -407,11 +421,10 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             await ctx.send(f"Command {name} edited successfully! Permission: {_perms[flag]}")
 
         case "remove" | "delete":
+            if not await sanitizer(require_args=False):
+                return
             if name in aliases:
                 await ctx.send(f"Error: cannot delete alias. Use 'remove {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
-                return
-            if name not in cmds:
-                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if name not in _cmds:
                 await ctx.send(f"Error: cannot delete built-in command {name}.")
@@ -422,11 +435,10 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             await ctx.send(f"Command {name} has been deleted.")
 
         case "enable":
+            if not await sanitizer(require_args=False):
+                return
             if name in aliases:
                 await ctx.send(f"Error: cannot enable alias. Use 'enable {aliases[name]}' instead.")
-                return
-            if name not in cmds:
-                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if cmds[name].enabled:
                 await ctx.send(f"Command {name} is already disabled.")
@@ -443,11 +455,10 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             await ctx.send(f"Command {name} has been enabled.")
 
         case "disable":
+            if not await sanitizer(require_args=False):
+                return
             if name in aliases:
                 await ctx.send(f"Error: cannot disable alias. Use 'disable {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
-                return
-            if name not in cmds:
-                await ctx.send(f"Error: command {name} does not exist!")
                 return
             if not cmds[name].enabled:
                 await ctx.send(f"Command {name} is already disabled.")
@@ -463,7 +474,7 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
                 f.writelines(disabled)
             await ctx.send(f"Command {name} has been disabled.")
 
-        case "alias":
+        case "alias": # cannot sanely sanitize this
             if not args:
                 if name not in _cmds and name in aliases:
                     await ctx.send(f"Alias {name} is bound to {aliases[name]}.")
@@ -518,6 +529,8 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             _update_db()
 
         case "cooldown" | "cd":
+            if not await sanitizer(require_args=False):
+                return
             if not args:
                 if name not in cmds and name not in aliases:
                     await ctx.send(f"Error: command {name} does not exist.")
@@ -529,9 +542,6 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
                 return
             if name in aliases:
                 await ctx.send(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
-                return
-            if name not in cmds:
-                await ctx.send(f"Error: command {name} does not exist.")
                 return
             cd: Cooldown = cmds[name]._cooldowns.pop()
             try:
@@ -566,10 +576,7 @@ async def command_cmd(ctx: Context, action: str = "", name: str = "", *args: str
             await ctx.send(f"Unrecognized action {action}.")
 
 @command("timer", flag="m")
-async def timer_cmd(ctx: Context, action: str = "", name: str = "", *args: str):
-    if not action or not name:
-        await ctx.send("Missing args.")
-        return
+async def timer_cmd(ctx: Context, action: str, name: str, *args: str):
     timer = get_timer(name)
     match action:
         case "create":
@@ -756,12 +763,6 @@ async def neowbonus(ctx: Context):
     elif d["cardsRemoved"]:
         pos = f"removed {' and '.join(d['cardsRemoved'])}"
 
-    elif d["cardsObtained"]:
-        if d["cardsTransformed"]:
-            pos = f"transformed {' and '.join(d['cardsTransformed'])} into {' and '.join(d['cardsObtained'])}"
-        else:
-            pos = f"obtained {' and '.join(d['cardsObtained'])}"
-
     elif d["relicsObtained"]:
         if j["neow_bonus"] == "BOSS_RELIC":
             pos = f"swapped our Starter relic for {d['relicsObtained'][0]}"
@@ -773,6 +774,12 @@ async def neowbonus(ctx: Context):
 
     elif d["goldGained"]:
         pos = f"gained {d['goldGained']} gold"
+
+    elif d["cardsObtained"]: # TODO: handle curse-as-negative
+        if d["cardsTransformed"]:
+            pos = f"transformed {' and '.join(d['cardsTransformed'])} into {' and '.join(d['cardsObtained'])}"
+        else:
+            pos = f"obtained {' and '.join(d['cardsObtained'])}"
 
     else:
         pos = "got no bonus? If this is wrong, ping @FaeLyka"
@@ -840,7 +847,7 @@ async def event_likelihood(ctx: Context):
         return
 
     elite, hallway, shop, chest = j["event_chances"]
-    # XXX: elite likelihood is only for the "Deadly Events" custom modifier
+    # elite likelihood is only for the "Deadly Events" custom modifier
 
     await ctx.send(
         f"Event type likelihood: "
@@ -875,7 +882,7 @@ async def relic_info(ctx: Context, index: int):
         await ctx.send(f"We only have {len(l)} relics!")
         return
 
-    relic = _get_relic(l[index-1])
+    relic = _get_name(l[index-1])
 
     await ctx.send(f"The relic at position {index} is {relic}.")
 
@@ -898,9 +905,9 @@ async def skipped_boss_relics(ctx: Context):
         msg.append(
             template.format(
                 i,
-                _get_relic(item["picked"]),
-                _get_relic(item["not_picked"][0]),
-                _get_relic(item["not_picked"][1]),
+                _get_name(item["picked"]),
+                _get_name(item["not_picked"][0]),
+                _get_name(item["not_picked"][1]),
             )
         )
         i += 1
