@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from typing import Callable
 import datetime
-import asyncio
+import logging
 import random
 import base64
 import json
@@ -25,12 +25,39 @@ from twitchio.models import Stream
 
 import config
 
-_to_add_commands = []
-_cache = {"live": (datetime.datetime.now(), False)}
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter("{asctime} :: {levelname:>8} - {message}", "(%Y-%m-%d %H:%M:%S)", "{")
+
+h_debug = logging.FileHandler("debug.log")
+h_debug.setLevel(logging.DEBUG)
+h_debug.setFormatter(formatter)
+
+logger.addHandler(h_debug)
+
+h_info = logging.FileHandler("info.log")
+h_info.setLevel(logging.INFO)
+h_info.setFormatter(formatter)
+
+logger.addHandler(h_info)
+
+h_rest = logging.FileHandler("error.log")
+h_rest.setLevel(logging.ERROR)
+h_rest.setFormatter(formatter)
+
+logger.addHandler(h_rest)
+
+h_console = logging.StreamHandler()
+h_console.setLevel(logging.WARNING)
+h_console.setFormatter(formatter)
+
+logger.addHandler(h_console)
+
+logger.info("Starting the bot.")
 
 _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
-_DEFAULT_INTERVAL = 900
 
 _consts = {
     "discord": "https://discord.gg/9XYVCSY",
@@ -55,6 +82,7 @@ async def _get_savefile_as_json(ctx: Context) -> dict:
                 possible = file
             else:
                 await ctx.send("Multiple savefiles detected. Please delete or rename extraneous ones.")
+                logger.warning("Found multiple savefiles - please delete or rename extraneous ones.")
                 return
 
     if possible is None:
@@ -100,11 +128,7 @@ def _update_db():
 
 def _create_cmd(output):
     async def inner(ctx: Context, *s, output: str=output):
-        try:
-            name = ctx.author.display_name
-        except AttributeError: # this fails for timers
-            name = ctx.author.name
-        await ctx.send(output.format(user=name, text=" ".join(s), words=s, **_consts))
+        await ctx.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
     return inner
 
 def _get_name(name: str) -> str:
@@ -216,6 +240,8 @@ def wrapper(func: Callable, force_argcount: bool):
 
     caller.__required__ = req
 
+    logger.debug(f"Creating wrapped command {func.__name__}")
+
     return caller
 
 class Command(_TCommand):
@@ -231,6 +257,7 @@ class Command(_TCommand):
         if "m" in self.flag:
             if not context.author.is_mod:
                 return
+        logger.debug(f"Invoking command {self.name} by {context.author.display_name}")
         await super().invoke(context, index=index)
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE):
@@ -244,10 +271,6 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
 
 class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
     # add !nloth to see what relic was given up to N'Loth
-    async def event_ready(self):
-        live = await self.fetch_streams(user_logins=[config.channel])
-        _cache["live"] = (datetime.datetime.now(), bool(live))
-
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
