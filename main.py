@@ -61,11 +61,13 @@ _DEFAULT_RATE  = 3.0
 
 _consts = {
     "discord": "https://discord.gg/9XYVCSY",
+    "prefix": config.prefix,
 }
 
 _perms = {
     "": "Everyone",
     "m": "Moderator",
+    "e": "Editor",
 }
 
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
@@ -254,8 +256,11 @@ class Command(_TCommand):
     async def invoke(self, context: Context, *, index=0):
         if not self.enabled:
             return
+        is_editor = (context.author.name in config.editors)
+        if "e" in self.flag and not is_editor:
+            return
         if "m" in self.flag:
-            if not context.author.is_mod:
+            if not is_editor and not context.author.is_mod:
                 return
         logger.debug(f"Invoking command {self.name} by {context.author.display_name}")
         await super().invoke(context, index=index)
@@ -275,7 +280,14 @@ class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
             case "sub" | "resub":
-                self.run_event("subscription", user, channel, tags)
+                total = int(tags["msg-param-cumulative-months"])
+                consecutive = int(tags["msg-param-streak-months"])
+                if not int(tags["msg-param-should-share-streak"]):
+                    consecutive = None
+                subtype: str = tags["msg-param-sub-plan"]
+                if subtype.isdigit():
+                    subtype = f"Tier {subtype[0]}"
+                self.run_event("subscription", user, channel, total, consecutive, subtype)
             case "subgift" | "anonsubgift" | "submysterygift" | "giftpaidupgrade" | "rewardgift" | "anongiftpaidupgrade":
                 self.run_event("gift_sub", user, channel, tags)
             case "raid":
@@ -286,6 +298,9 @@ class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
                 self.run_event("ritual", user, channel, tags)
             case "bitsbadgetier":
                 self.run_event("bits_badge", user, channel, tags)
+
+    async def event_subscription(self, user: Chatter, channel: Channel, total: int, consecutive: int | None, subtype: str):
+        pass
 
     async def event_ritual(self, user: Chatter, channel: Channel, tags: dict):
         if tags["msg-param-ritual-name"] == "new_chatter":
@@ -307,18 +322,32 @@ TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[c
 #DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 async def _timer(cmds: list[str]):
-    cmd = cmds.pop(0)
-    if cmds not in _cmds and cmd not in TConn.commands:
-        return
-    if TConn.commands[cmd].disabled:
-        cmds.append(cmd) # in case it becomes enabled again
-        return
+    cmd = None
+    i = 0
+    while cmd is not None:
+        i += 1
+        if i > len(cmds):
+            logger.error("Timer has only non-existent or disabled commands!")
+            return
+        maybe_cmd = cmds.pop(0)
+        if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
+            i -= 1 # we're not adding it back, so it's fine
+            continue
+        if TConn.commands[maybe_cmd].disabled:
+            cmds.append(maybe_cmd) # in case it gets enabled again
+            continue
+        cmd = maybe_cmd
     # TODO: Check live status using EventSub/PubSub
     chan = TConn.get_channel(config.channel)
     if not chan:
         return
     # don't use the actual command, just send the raw output
-    await chan.send(_cmds[cmd]["output"].format(**_consts))
+    msg: str = _cmds[cmd]["output"]
+    try:
+        msg = msg.format(**_consts)
+    except KeyError:
+        logger.error(f"Timer-command {cmd} needs non-constant formatting. Sending raw line.")
+    await chan.send(msg)
     cmds.append(cmd)
 
 _global_timer = routine(seconds=config.global_interval)(_timer)
