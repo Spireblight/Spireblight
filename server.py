@@ -558,6 +558,17 @@ async def seed_cmd(ctx: Context):
 
     await ctx.send(f"Current seed: {''.join(s)}{' (set manually)' if j['seed_set'] else ''}")
 
+@command("seeded", "isthisseeded")
+async def is_seeded(ctx: Context):
+    j = await get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    if j["seed_set"]:
+        await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
+    else:
+        await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
+
 @command("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: Context):
     j = await get_savefile_as_json(ctx)
