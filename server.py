@@ -16,13 +16,13 @@ from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream
-#from discord.ext import commands as d_cmds
-#import flask
 
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
 from save import get_savefile_as_json, Savefile
+
+from typehints import ContextType
 
 import config
 
@@ -46,7 +46,7 @@ _perms = {
 
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 
-def _get_sanitizer(ctx: Context, name: str, args: list[str], mapping: dict):
+def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
         """Verify that user input is sane. Return True if input is sane."""
 
@@ -74,7 +74,7 @@ def _update_db():
         json.dump(_cmds, f, indent=config.json_indent)
 
 def _create_cmd(output):
-    async def inner(ctx: Context, *s, output: str=output):
+    async def inner(ctx: ContextType, *s, output: str=output):
         await ctx.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
     return inner
 
@@ -141,7 +141,7 @@ def with_savefile(name: str, *aliases: str, **kwargs):
     """Decorator for commands that require a save."""
     def inner(func):
         cmd = command(name, *aliases, **kwargs)(func, wrapped_args=1)
-        async def deco(ctx: Context, *args):
+        async def deco(ctx: ContextType, *args):
             save = await get_savefile_as_json(ctx)
             if save is None:
                 return
@@ -229,7 +229,7 @@ _global_timer = routine(seconds=config.global_interval)(_timer)
 _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
 @command("command", flag="m")
-async def command_cmd(ctx: Context, action: str, name: str, *args: str):
+async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+<flag>] <output>"""
     args = list(args)
     msg = " ".join(args)
@@ -435,7 +435,7 @@ async def command_cmd(ctx: Context, action: str, name: str, *args: str):
             await ctx.send(f"Unrecognized action {action}.")
 
 @command("support", "shoutout", "so")
-async def shoutout(ctx: Context, name: str):
+async def shoutout(ctx: ContextType, name: str):
     try:
         chan = await ctx.bot.fetch_channel(name)
     except IndexError as e:
@@ -463,8 +463,8 @@ async def shoutout(ctx: Context, name: str):
     await ctx.send(" ".join(msg))
 
 @command("title")
-async def stream_title(ctx: Context):
-    live: list[Stream] = await ctx.bot.fetch_streams(user_logins=[config.channel])
+async def stream_title(ctx: ContextType):
+    live: list[Stream] = await TConn.fetch_streams(user_logins=[config.channel])
 
     if live:
         await ctx.send(live[0].title)
@@ -472,7 +472,7 @@ async def stream_title(ctx: Context):
         await ctx.send("Could not connect to the Twitch API.")
 
 @with_savefile("bluekey", "sapphirekey", "key")
-async def bluekey(ctx: Context, j: Savefile):
+async def bluekey(ctx: ContextType, j: Savefile):
     if not j["has_sapphire_key"]:
         await ctx.send("We do not have the Sapphire key.")
         return
@@ -486,7 +486,7 @@ async def bluekey(ctx: Context, j: Savefile):
     await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']+1} for the Sapphire key.")
 
 @with_savefile("neow", "neowbonus")
-async def neowbonus(ctx: Context, j: Savefile):
+async def neowbonus(ctx: ContextType, j: Savefile):
     if "NeowBonusLog" not in j["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
@@ -541,7 +541,7 @@ async def neowbonus(ctx: Context, j: Savefile):
     await ctx.send(msg)
 
 @with_savefile("seed", "currentseed")
-async def seed_cmd(ctx: Context, j: Savefile):
+async def seed_cmd(ctx: ContextType, j: Savefile):
     c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
     # this is a bit weird, but lets us convert a negative number, if any, into a positive one
@@ -557,26 +557,26 @@ async def seed_cmd(ctx: Context, j: Savefile):
     await ctx.send(f"Current seed: {''.join(s)}{' (set manually)' if j['seed_set'] else ''}")
 
 @with_savefile("seeded", "isthisseeded")
-async def is_seeded(ctx: Context, j: Savefile):
+async def is_seeded(ctx: ContextType, j: Savefile):
     if j["seed_set"]:
         await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
 @with_savefile("boss", "actboss")
-async def actboss(ctx: Context, j: Savefile):
+async def actboss(ctx: ContextType, j: Savefile):
     await ctx.send(f"The upcoming act boss is {j['boss']}.")
 
 @with_savefile("shopremoval", "cardremoval", "removal")
-async def shop_removal_cost(ctx: Context, j: Savefile):
+async def shop_removal_cost(ctx: ContextType, j: Savefile):
     await ctx.send(f"Current card removal cost: {j['purgeCost']} (removed {j['metric_purchased_purges']} card{'' if j['metric_purchased_purges'] == 1 else 's'})")
 
 @with_savefile("potionchance", "potion")
-async def potion_chance(ctx: Context, j: Savefile):
+async def potion_chance(ctx: ContextType, j: Savefile):
     await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
 
 @with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
-async def event_likelihood(ctx: Context, j: Savefile):
+async def event_likelihood(ctx: ContextType, j: Savefile):
     elite, hallway, shop, chest = j["event_chances"]
     # elite likelihood is only for the "Deadly Events" custom modifier
 
@@ -590,7 +590,7 @@ async def event_likelihood(ctx: Context, j: Savefile):
     )
 
 @command("eventrng")
-async def event_rng_caveat(ctx: Context):
+async def event_rng_caveat(ctx: ContextType):
     await ctx.send(
         "Pseudo-Random Number Generator calls to determine the type of event "
         "is non-random, and depends on the current state of the pRNG when the "
@@ -602,7 +602,7 @@ async def event_rng_caveat(ctx: Context):
     )
 
 @with_savefile("relic")
-async def relic_info(ctx: Context, j: Savefile, index: int):
+async def relic_info(ctx: ContextType, j: Savefile, index: int):
     l: list[str] = j["relics"]
 
     if index > len(l):
@@ -614,7 +614,7 @@ async def relic_info(ctx: Context, j: Savefile, index: int):
     await ctx.send(f"The relic at position {index} is {relic}.")
 
 @with_savefile("skipped", "skippedboss", "bossrelics")
-async def skipped_boss_relics(ctx: Context, j: Savefile):
+async def skipped_boss_relics(ctx: ContextType, j: Savefile):
     l: list[dict] = j["metric_boss_relics"]
 
     if not l:
@@ -638,7 +638,7 @@ async def skipped_boss_relics(ctx: Context, j: Savefile):
     await ctx.send(" ".join(msg))
 
 @command("wall")
-async def wall_card(ctx: Context): # FIXME: Needs data from remote
+async def wall_card(ctx: ContextType): # FIXME: Needs data from remote
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
         await ctx.send("Error: could not fetch data.")
@@ -658,40 +658,40 @@ async def wall_card(ctx: Context): # FIXME: Needs data from remote
     await ctx.send("Error: could not find Ladder savefile.")
 
 @command("dig", burst=5, rate=2.0)
-async def dig_cmd(ctx: Context):
+async def dig_cmd(ctx: ContextType):
     with open("dig_entries.txt", "r") as f:
         line = random.choice(f.readlines())
     await ctx.send(f"{ctx.author.display_name} has dug up {line}")
 
 @command("kills") # TODO: Read game files for this
-async def kills_cmd(ctx: Context):
+async def kills_cmd(ctx: ContextType):
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
     await ctx.send(msg.format(kills, sum(kills)))
 
 @command("losses")
-async def losses_cmd(ctx: Context):
+async def losses_cmd(ctx: ContextType):
     msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
     await ctx.send(msg.format(losses, sum(losses)))
 
 @command("streak")
-async def streak_cmd(ctx: Context):
+async def streak_cmd(ctx: ContextType):
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("streak", "r") as f:
         streak = f.read().split()
     await ctx.send(msg.format(streak))
 
 @command("pb")
-async def pb_cmd(ctx: Context):
+async def pb_cmd(ctx: ContextType):
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("pb", "r") as f:
         pb = f.read().split()
     await ctx.send(msg.format(pb))
 
-async def edit_counts(ctx: Context, arg: str, *, add: bool):
+async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
     if arg.lower().startswith("i"):
         i = 0
     elif arg.lower().startswith("s"):
@@ -755,11 +755,11 @@ async def edit_counts(ctx: Context, arg: str, *, add: bool):
         await ctx.send(f"Loss #{losses[i]} recorded for the {d[i]}. Total losses: {sum(losses)}")
 
 @command("win", flag="m", burst=1, rate=60.0) # 1:60.0 means we can't accidentally do it twice in a row
-async def win_cmd(ctx: Context, arg: str):
+async def win_cmd(ctx: ContextType, arg: str):
     await edit_counts(ctx, arg, add=True)
 
 @command("loss", flag="m", burst=1, rate=60.0)
-async def loss_cmd(ctx: Context, arg: str):
+async def loss_cmd(ctx: ContextType, arg: str):
     await edit_counts(ctx, arg, add=False)
 
 if config.global_commands:
