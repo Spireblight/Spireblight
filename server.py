@@ -22,6 +22,7 @@ from twitchio.models import Stream
 #from discord.ext import commands as d_cmds
 #import flask
 
+from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
 from save import get_savefile_as_json
@@ -134,7 +135,7 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
     def inner(func):
         wrapped = wrapper(func, force_argcount)
         wrapped.__cooldowns__ = [Cooldown(burst, rate, Bucket.default)]
-        cmd = Command(name=name, aliases=list(aliases), func=wrapped, flag=flag)
+        cmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
         TConn.add_command(cmd)
         return cmd
     return inner
@@ -224,7 +225,7 @@ async def command_cmd(ctx: Context, action: str, name: str, *args: str):
     args = list(args)
     msg = " ".join(args)
     name = name.lstrip(config.prefix)
-    cmds: dict[str, Command] = TConn.commands
+    cmds: dict[str, TwitchCommand] = TConn.commands
     aliases = ctx.bot._command_aliases
     sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
@@ -568,6 +569,14 @@ async def is_seeded(ctx: Context):
         await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
+
+@command("boss", "actboss")
+async def actboss(ctx: Context):
+    j = await get_savefile_as_json(ctx)
+    if j is None:
+        return
+
+    await ctx.send(f"The upcoming act boss is {j['boss']}.")
 
 @command("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: Context):
