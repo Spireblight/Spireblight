@@ -6,7 +6,6 @@ from __future__ import annotations
 
 from typing import Callable
 import datetime
-import logging
 import random
 import base64
 import json
@@ -23,38 +22,15 @@ from twitchio.models import Stream
 #from discord.ext import commands as d_cmds
 #import flask
 
+from twitch import TwitchCommand
+from logger import logger
+from save import get_savefile_as_json
+
 import config
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter("{asctime} :: {levelname:>8} - {message}", "(%Y-%m-%d %H:%M:%S)", "{")
-
-h_debug = logging.FileHandler("debug.log")
-h_debug.setLevel(logging.DEBUG)
-h_debug.setFormatter(formatter)
-
-logger.addHandler(h_debug)
-
-h_info = logging.FileHandler("info.log")
-h_info.setLevel(logging.INFO)
-h_info.setFormatter(formatter)
-
-logger.addHandler(h_info)
-
-h_rest = logging.FileHandler("error.log")
-h_rest.setLevel(logging.ERROR)
-h_rest.setFormatter(formatter)
-
-logger.addHandler(h_rest)
-
-h_console = logging.StreamHandler()
-h_console.setLevel(logging.WARNING)
-h_console.setFormatter(formatter)
-
-logger.addHandler(h_console)
-
 logger.info("Starting the bot.")
+
+# Twitch bot server defined here - process started in webpage.py
 
 _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
@@ -71,35 +47,6 @@ _perms = {
 }
 
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
-
-async def _get_savefile_as_json(ctx: Context) -> dict:
-    if not config.STS_path:
-        await ctx.send("Could not find game files.")
-        return
-
-    possible = None
-    for file in os.listdir(os.path.join(config.STS_path, "saves")):
-        if file.endswith(".autosave"):
-            if possible is None:
-                possible = file
-            else:
-                await ctx.send("Multiple savefiles detected. Please delete or rename extraneous ones.")
-                logger.warning("Found multiple savefiles - please delete or rename extraneous ones.")
-                return
-
-    if possible is None:
-        await ctx.send("Not in a run.")
-        return
-
-    with open(os.path.join(config.STS_path, "saves", possible)) as f:
-        decoded = base64.b64decode(f.read())
-    arr = bytearray()
-    for i, char in enumerate(decoded):
-        arr.append(char ^ b"key"[i % 3])
-    j = json.loads(arr)
-    if "basemod:mod_saves" not in j: # make sure this key exists
-        j["basemod:mod_saves"] = {}
-    return j
 
 def _get_sanitizer(ctx: Context, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -182,88 +129,6 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
     if rate is not None:
         _cmds[name]["rate"] = rate
     _update_db()
-
-def wrapper(func: Callable, force_argcount: bool):
-    async def caller(ctx: Context, *args: str):
-        new_args = []
-        multiple = (co.co_flags & 0x04) # whether *args is supported
-        for i, arg in enumerate(args, 1):
-            if i < co.co_argcount:
-                var = co.co_varnames[i]
-            elif multiple: # all from here on will match the same type -- typically str, but could be something else
-                var = co.co_varnames[co.co_argcount]
-            else: # no *args and reached max argcount; no point in continuing
-                break
-            if var in func.__annotations__:
-                expected = func.__annotations__[var]
-                if expected == int:
-                    try:
-                        arg = int(arg)
-                    except ValueError:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be an integer.")
-                        return
-                elif expected == float:
-                    try:
-                        arg = float(arg)
-                    except ValueError:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be a floating point number.")
-                        return
-                elif expected == bool:
-                    if arg.lower() in ("yes", "y", "on", "true", "1"):
-                        arg = True
-                    elif arg.lower() in ("no", "n", "off", "false", "0"):
-                        arg = False
-                    else:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be parsable as a boolean value.")
-                        return
-                elif expected != str:
-                    await ctx.send(f"Warning: Unhandled type {expected!r} for argument #{i} ({var!r}) - please ping @FaeLyka")
-            new_args.append(arg)
-
-        if req > len(new_args):
-            names = co.co_varnames[len(new_args):req]
-            if len(names) == 1:
-                await ctx.send(f"Error: Missing required argument {names[0]!r}")
-            else:
-                await ctx.send(f"Error: Missing required arguments {names!r}")
-            return
-        if multiple: # function supports *args, don't check further
-            await func(ctx, *new_args)
-            return
-        if len(new_args) != len(args) and force_argcount: # too many args and we enforce it
-            await ctx.send(f"Error: too many arguments (maximum {co.co_argcount - 1})")
-            return
-        await func(ctx, *new_args)
-
-    co = func.__code__
-    req = co.co_argcount - 1
-    if func.__defaults__:
-        req -= len(func.__defaults__)
-
-    caller.__required__ = req
-
-    logger.debug(f"Creating wrapped command {func.__name__}")
-
-    return caller
-
-class Command(_TCommand):
-    def __init__(self, name: str, func: Callable, flag="", **attrs):
-        super().__init__(name, func, **attrs)
-        self.flag = flag
-        self.required = func.__required__
-        self.enabled = True
-
-    async def invoke(self, context: Context, *, index=0):
-        if not self.enabled:
-            return
-        is_editor = (context.author.name in config.editors)
-        if "e" in self.flag and not is_editor:
-            return
-        if "m" in self.flag:
-            if not is_editor and not context.author.is_mod:
-                return
-        logger.debug(f"Invoking command {self.name} by {context.author.display_name}")
-        await super().invoke(context, index=index)
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE):
     def inner(func):
@@ -598,7 +463,7 @@ async def stream_title(ctx: Context):
 
 @command("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -616,7 +481,7 @@ async def bluekey(ctx: Context):
 
 @command("neow", "neowbonus")
 async def neowbonus(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -675,7 +540,7 @@ async def neowbonus(ctx: Context):
 
 @command("seed", "currentseed")
 async def seed_cmd(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -695,7 +560,7 @@ async def seed_cmd(ctx: Context):
 
 @command("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -703,7 +568,7 @@ async def shop_removal_cost(ctx: Context):
 
 @command("potionchance", "potion")
 async def potion_chance(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -711,7 +576,7 @@ async def potion_chance(ctx: Context):
 
 @command("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
 async def event_likelihood(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -741,7 +606,7 @@ async def event_rng_caveat(ctx: Context):
 
 @command("relic")
 async def relic_info(ctx: Context, index: int):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -757,7 +622,7 @@ async def relic_info(ctx: Context, index: int):
 
 @command("skipped", "skippedboss", "bossrelics")
 async def skipped_boss_relics(ctx: Context):
-    j = await _get_savefile_as_json(ctx)
+    j = await get_savefile_as_json(ctx)
     if j is None:
         return
 
@@ -913,4 +778,8 @@ if config.global_commands:
 if config.sponsored_commands:
     _sponsored_timer.start(config.sponsored_commands)
 
-TConn.run()
+async def Twitch_startup(app):
+    await TConn.connect()
+
+async def Twitch_cleanup(app):
+    await TConn.close()
