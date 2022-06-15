@@ -6,11 +6,11 @@ from logger import logger
 
 __all__ = ["wrapper"]
 
-def wrapper(func: Callable, force_argcount: bool):
+def wrapper(func: Callable, force_argcount: bool, wrapped_args: int):
     async def caller(ctx: Context, *args: str):
         new_args = []
         multiple = (co.co_flags & 0x04) # whether *args is supported
-        for i, arg in enumerate(args, 1):
+        for i, arg in enumerate(args, wrapped_args + 1):
             if i < co.co_argcount:
                 var = co.co_varnames[i]
             elif multiple: # all from here on will match the same type -- typically str, but could be something else
@@ -59,7 +59,7 @@ def wrapper(func: Callable, force_argcount: bool):
         await func(ctx, *new_args)
 
     co = func.__code__
-    req = co.co_argcount - 1
+    req = co.co_argcount - 1 - wrapped_args
     if func.__defaults__:
         req -= len(func.__defaults__)
 

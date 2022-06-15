@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 
 import base64
 import json
@@ -10,6 +10,8 @@ from logger import logger
 from webpage import router
 
 import config
+
+Savefile = dict[str, Any] # this lets us change this later on
 
 current_savefile: Optional[str] = None
 
@@ -27,7 +29,7 @@ async def receive_save(req: Request):
     file = post.get("savefile")
     # TODO
 
-async def get_savefile_as_json(ctx: Context) -> dict:
+async def get_savefile_as_json(ctx: Context) -> Savefile:
     if current_savefile is None:
         await ctx.send("Not in a run.")
         return

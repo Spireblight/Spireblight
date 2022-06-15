@@ -4,16 +4,13 @@
 
 from __future__ import annotations
 
-from typing import Callable
 import datetime
 import random
-import base64
 import json
 import re
 import os
 
 from twitchio.ext.commands import Context, Bot, Cooldown, Bucket
-from twitchio.ext.commands import Command as _TCommand
 from twitchio.ext.routines import routine
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
@@ -25,13 +22,13 @@ from twitchio.models import Stream
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
-from save import get_savefile_as_json
+from save import get_savefile_as_json, Savefile
 
 import config
 
 logger.info("Starting the bot.")
 
-# Twitch bot server defined here - process started in webpage.py
+# Twitch bot server defined here - process started in main.py
 
 _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
@@ -132,12 +129,24 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
     _update_db()
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE):
-    def inner(func):
-        wrapped = wrapper(func, force_argcount)
+    def inner(func, wrapped_args=0):
+        wrapped = wrapper(func, force_argcount, wrapped_args)
         wrapped.__cooldowns__ = [Cooldown(burst, rate, Bucket.default)]
         cmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
         TConn.add_command(cmd)
         return cmd
+    return inner
+
+def with_savefile(name: str, *aliases: str, **kwargs):
+    """Decorator for commands that require a save."""
+    def inner(func):
+        cmd = command(name, *aliases, **kwargs)(func, wrapped_args=1)
+        async def deco(ctx: Context, *args):
+            save = await get_savefile_as_json(ctx)
+            if save is None:
+                return
+            return cmd(ctx, save, *args)
+        return deco
     return inner
 
 class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
@@ -462,12 +471,8 @@ async def stream_title(ctx: Context):
     else:
         await ctx.send("Could not connect to the Twitch API.")
 
-@command("bluekey", "sapphirekey", "key")
-async def bluekey(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("bluekey", "sapphirekey", "key")
+async def bluekey(ctx: Context, j: Savefile):
     if not j["has_sapphire_key"]:
         await ctx.send("We do not have the Sapphire key.")
         return
@@ -480,12 +485,8 @@ async def bluekey(ctx: Context):
 
     await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']+1} for the Sapphire key.")
 
-@command("neow", "neowbonus")
-async def neowbonus(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("neow", "neowbonus")
+async def neowbonus(ctx: Context, j: Savefile):
     if "NeowBonusLog" not in j["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
@@ -539,12 +540,8 @@ async def neowbonus(ctx: Context):
 
     await ctx.send(msg)
 
-@command("seed", "currentseed")
-async def seed_cmd(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("seed", "currentseed")
+async def seed_cmd(ctx: Context, j: Savefile):
     c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
     # this is a bit weird, but lets us convert a negative number, if any, into a positive one
@@ -559,47 +556,27 @@ async def seed_cmd(ctx: Context):
 
     await ctx.send(f"Current seed: {''.join(s)}{' (set manually)' if j['seed_set'] else ''}")
 
-@command("seeded", "isthisseeded")
-async def is_seeded(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("seeded", "isthisseeded")
+async def is_seeded(ctx: Context, j: Savefile):
     if j["seed_set"]:
         await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
-@command("boss", "actboss")
-async def actboss(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("boss", "actboss")
+async def actboss(ctx: Context, j: Savefile):
     await ctx.send(f"The upcoming act boss is {j['boss']}.")
 
-@command("shopremoval", "cardremoval", "removal")
-async def shop_removal_cost(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("shopremoval", "cardremoval", "removal")
+async def shop_removal_cost(ctx: Context, j: Savefile):
     await ctx.send(f"Current card removal cost: {j['purgeCost']} (removed {j['metric_purchased_purges']} card{'' if j['metric_purchased_purges'] == 1 else 's'})")
 
-@command("potionchance", "potion")
-async def potion_chance(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("potionchance", "potion")
+async def potion_chance(ctx: Context, j: Savefile):
     await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
 
-@command("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
-async def event_likelihood(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+async def event_likelihood(ctx: Context, j: Savefile):
     elite, hallway, shop, chest = j["event_chances"]
     # elite likelihood is only for the "Deadly Events" custom modifier
 
@@ -624,12 +601,8 @@ async def event_rng_caveat(ctx: Context):
         "even if the likelihood is technically lower."
     )
 
-@command("relic")
-async def relic_info(ctx: Context, index: int):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("relic")
+async def relic_info(ctx: Context, j: Savefile, index: int):
     l: list[str] = j["relics"]
 
     if index > len(l):
@@ -640,12 +613,8 @@ async def relic_info(ctx: Context, index: int):
 
     await ctx.send(f"The relic at position {index} is {relic}.")
 
-@command("skipped", "skippedboss", "bossrelics")
-async def skipped_boss_relics(ctx: Context):
-    j = await get_savefile_as_json(ctx)
-    if j is None:
-        return
-
+@with_savefile("skipped", "skippedboss", "bossrelics")
+async def skipped_boss_relics(ctx: Context, j: Savefile):
     l: list[dict] = j["metric_boss_relics"]
 
     if not l:
@@ -669,7 +638,7 @@ async def skipped_boss_relics(ctx: Context):
     await ctx.send(" ".join(msg))
 
 @command("wall")
-async def wall_card(ctx: Context):
+async def wall_card(ctx: Context): # FIXME: Needs data from remote
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
         await ctx.send("Error: could not fetch data.")
