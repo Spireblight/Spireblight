@@ -44,4 +44,7 @@ import sys # TODO: Make this into a proper argparse thing
 if "--webonly" not in sys.argv:
     import server
     webpage.on_startup.append(server.Twitch_startup)
+    webpage.on_startup.append(server.Discord_startup)
+
     webpage.on_cleanup.append(server.Twitch_cleanup)
+    webpage.on_cleanup.append(server.Discord_cleanup)

@@ -3,10 +3,9 @@ from typing import Optional, Any
 import base64
 import json
 
-from twitchio.ext.commands import Context
 from aiohttp.web import Request, HTTPUnauthorized, HTTPBadRequest
 
-from logger import logger
+from typehints import ContextType
 from webpage import router
 
 import config
@@ -29,7 +28,7 @@ async def receive_save(req: Request):
     file = post.get("savefile")
     # TODO
 
-async def get_savefile_as_json(ctx: Context) -> Savefile:
+async def get_savefile_as_json(ctx: ContextType) -> Savefile:
     if current_savefile is None:
         await ctx.send("Not in a run.")
         return

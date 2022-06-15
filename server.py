@@ -10,16 +10,19 @@ import json
 import re
 import os
 
-from twitchio.ext.commands import Context, Bot, Cooldown, Bucket
+from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
 from twitchio.ext.routines import routine
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream
 
+from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot
+
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
+from disc import DiscordCommand
 from save import get_savefile_as_json, Savefile
 
 from typehints import ContextType
@@ -128,13 +131,17 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
         _cmds[name]["rate"] = rate
     _update_db()
 
-def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE):
+def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
     def inner(func, wrapped_args=0):
         wrapped = wrapper(func, force_argcount, wrapped_args)
-        wrapped.__cooldowns__ = [Cooldown(burst, rate, Bucket.default)]
-        cmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
-        TConn.add_command(cmd)
-        return cmd
+        wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
+        wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
+        if twitch:
+            tcmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
+            TConn.add_command(tcmd)
+        if discord:
+            dcmd = DiscordCommand(wrapped, name=name, aliases=list(aliases))
+            DConn.add_command(dcmd)
     return inner
 
 def with_savefile(name: str, *aliases: str, **kwargs):
@@ -149,7 +156,7 @@ def with_savefile(name: str, *aliases: str, **kwargs):
         return deco
     return inner
 
-class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
+class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
     # add !nloth to see what relic was given up to N'Loth
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
@@ -194,7 +201,7 @@ class TwitchConn(Bot): # use PubSub/EventSub for notice stuff
                            f"last I checked, they were playing some {chan.game_name}!")
 
 TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
-#DConn = d_cmds.Bot(config.prefix, case_insensitive=True, owner_ids=config.owners)
+DConn = DBot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 async def _timer(cmds: list[str]):
     cmd = None
@@ -228,7 +235,7 @@ async def _timer(cmds: list[str]):
 _global_timer = routine(seconds=config.global_interval)(_timer)
 _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
-@command("command", flag="m")
+@command("command", flag="m", discord=False)
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+<flag>] <output>"""
     args = list(args)
@@ -402,7 +409,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name in aliases:
                 await ctx.send(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
                 return
-            cd: Cooldown = cmds[name]._cooldowns.pop()
+            cd: TCooldown = cmds[name]._cooldowns.pop()
             try:
                 burst = int(args[0])
             except ValueError:
@@ -422,7 +429,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                     await ctx.send("Error: invalid argument.")
                     return
 
-            cmds[name]._cooldowns.append(Cooldown(burst, rate, cd.bucket))
+            cmds[name]._cooldowns.append(TCooldown(burst, rate, cd.bucket))
             if name in _cmds:
                 _cmds[name]["burst"] = burst
                 _cmds[name]["rate"] = rate
@@ -772,3 +779,9 @@ async def Twitch_startup(app):
 
 async def Twitch_cleanup(app):
     await TConn.close()
+
+async def Discord_startup(app):
+    await DConn.start(config.token)
+
+async def Discord_cleanup(app):
+    await DConn.close()
