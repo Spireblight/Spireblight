@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from twitchio.ext.commands import Context
 
@@ -6,7 +6,9 @@ from logger import logger
 
 __all__ = ["wrapper"]
 
-def wrapper(func: Callable, force_argcount: bool, wrapped_args: int):
+def wrapper(func: Callable, force_argcount: bool, wrapped_args: int, name: Optional[str]):
+    if name is None:
+        name = func.__name__
     async def caller(ctx: Context, *args: str):
         new_args = []
         multiple = (co.co_flags & 0x04) # whether *args is supported
@@ -64,7 +66,8 @@ def wrapper(func: Callable, force_argcount: bool, wrapped_args: int):
         req -= len(func.__defaults__)
 
     caller.__required__ = req
+    caller.__name__ = name
 
-    logger.debug(f"Creating wrapped command {func.__name__}")
+    logger.debug(f"Creating wrapped command {name}")
 
     return caller

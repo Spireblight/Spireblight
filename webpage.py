@@ -27,7 +27,7 @@ aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
 
 @router.get("/")
 @aiohttp_jinja2.template("main.html")
-async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 0}):
+async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 1800000000}): # XXX: DO NOT PUSH THIS
     if _cache["video_id"] is None or _cache["last"] + config.cache_timeout < time.time():
         data = None
         async with ClientSession() as session:
@@ -39,12 +39,3 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
             _cache["last"] = time.time()
 
     return _cache
-
-import sys # TODO: Make this into a proper argparse thing
-if "--webonly" not in sys.argv:
-    import server
-    webpage.on_startup.append(server.Twitch_startup)
-    webpage.on_startup.append(server.Discord_startup)
-
-    webpage.on_cleanup.append(server.Twitch_cleanup)
-    webpage.on_cleanup.append(server.Discord_cleanup)

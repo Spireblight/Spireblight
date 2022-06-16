@@ -17,7 +17,8 @@ from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream
 
-from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot
+import discord
+from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
 
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -29,7 +30,9 @@ from typehints import ContextType
 
 import config
 
-logger.info("Starting the bot.")
+TConn: TwitchConn = None
+
+logger.info("Setting up")
 
 # Twitch bot server defined here - process started in main.py
 
@@ -48,6 +51,8 @@ _perms = {
 }
 
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
+
+_to_add_twitch: list[TwitchCommand] = []
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -133,21 +138,25 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
     def inner(func, wrapped_args=0):
-        wrapped = wrapper(func, force_argcount, wrapped_args)
+        wrapped = wrapper(func, force_argcount, wrapped_args, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
         wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
             tcmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
-            TConn.add_command(tcmd)
+            if TConn is None:
+                _to_add_twitch.append(tcmd)
+            else:
+                TConn.add_command(tcmd)
         if discord:
-            dcmd = DiscordCommand(wrapped, name=name, aliases=list(aliases))
+            dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases))(wrapped)
             DConn.add_command(dcmd)
+        return tcmd
     return inner
 
 def with_savefile(name: str, *aliases: str, **kwargs):
     """Decorator for commands that require a save."""
     def inner(func):
-        cmd = command(name, *aliases, **kwargs)(func, wrapped_args=1)
+        cmd = command(name, *aliases, discord=False, **kwargs)(func, wrapped_args=1)
         async def deco(ctx: ContextType, *args):
             save = await get_savefile_as_json(ctx)
             if save is None:
@@ -157,7 +166,6 @@ def with_savefile(name: str, *aliases: str, **kwargs):
     return inner
 
 class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
-    # add !nloth to see what relic was given up to N'Loth
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
@@ -200,7 +208,19 @@ class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
                            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
                            f"last I checked, they were playing some {chan.game_name}!")
 
-TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
+class DiscordConn(DBot):
+    async def on_message(self, message: discord.Message):
+        if message.author == self.user:
+            return
+        if message.content.startswith(config.prefix) or isinstance(message.channel, discord.DMChannel):
+            content = message.content.lstrip(config.prefix).split()
+            if not content:
+                return
+            ctx = await self.get_context(message)
+            cmd: DiscordCommand = self.get_command(content[0])
+            if cmd:
+                await cmd(ctx, *content[1:])
+
 DConn = DBot(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 async def _timer(cmds: list[str]):
@@ -620,7 +640,7 @@ async def relic_info(ctx: ContextType, j: Savefile, index: int):
 
     await ctx.send(f"The relic at position {index} is {relic}.")
 
-@with_savefile("skipped", "skippedboss", "bossrelics")
+@with_savefile("skipped", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, j: Savefile):
     l: list[dict] = j["metric_boss_relics"]
 
@@ -769,19 +789,24 @@ async def win_cmd(ctx: ContextType, arg: str):
 async def loss_cmd(ctx: ContextType, arg: str):
     await edit_counts(ctx, arg, add=False)
 
-if config.global_commands:
-    _global_timer.start(config.global_commands)
-if config.sponsored_commands:
-    _sponsored_timer.start(config.sponsored_commands)
+async def Twitch_startup():
+    global TConn
+    if config.global_commands:
+        _global_timer.start(config.global_commands)
+    if config.sponsored_commands:
+        _sponsored_timer.start(config.sponsored_commands)
 
-async def Twitch_startup(app):
+    TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
+    for cmd in _to_add_twitch:
+        TConn.add_command(cmd)
+    load()
     await TConn.connect()
 
-async def Twitch_cleanup(app):
+async def Twitch_cleanup():
     await TConn.close()
 
-async def Discord_startup(app):
+async def Discord_startup():
     await DConn.start(config.token)
 
-async def Discord_cleanup(app):
+async def Discord_cleanup():
     await DConn.close()
