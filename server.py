@@ -40,7 +40,7 @@ _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
 
 _consts = {
-    "discord": "https://discord.gg/9XYVCSY",
+    "discord": "https://discord.gg/trXhSbA",
     "prefix": config.prefix,
 }
 
