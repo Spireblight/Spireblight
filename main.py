@@ -5,7 +5,7 @@ from aiohttp import web
 from webpage import webpage, router, setup_redirects
 from logger import logger
 
-import server, commands, save # just make sure they're imported
+import server
 
 logger.info("Starting the bot")
 

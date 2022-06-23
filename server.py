@@ -1,7 +1,5 @@
 # (c) Anilyka Barry, 2022
 
-# TODO: Split cmds into separate module (package?) for easy reload
-
 from __future__ import annotations
 
 import datetime

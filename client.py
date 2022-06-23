@@ -7,12 +7,14 @@ import os
 import config
 
 async def main():
-    has_save = False # whether the server has a save file
+    print("Client running. Will periodically check for the savefile and send it over!")
+    has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
     possible = None
     timeout = 1
     while True:
         time.sleep(timeout)
+        timeout = 1
         if possible is None:
             for file in os.listdir(os.path.join(config.STS_path, "saves")):
                 if file.endswith(".autosave"):
@@ -48,6 +50,7 @@ async def main():
                             has_save = True
         except ClientError:
             timeout = 10 # give it a bit of time
+            print("Error: Server is offline! Retrying in 10s")
             continue
 
 if __name__ == "__main__":
