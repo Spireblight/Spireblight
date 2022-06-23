@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Callable, Coroutine, Optional
 
 from twitchio.ext.commands import Context
 
@@ -6,13 +6,21 @@ from logger import logger
 
 __all__ = ["wrapper"]
 
-def wrapper(func: Callable, force_argcount: bool, wrapped_args: int, name: Optional[str]):
+def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Coroutine], name: Optional[str]):
     if name is None:
         name = func.__name__
     async def caller(ctx: Context, *args: str):
+        wrapped_args = None
+        if wrapper_func is not None:
+            try:
+                wrapped_args: list = await wrapper_func(ctx)
+            except ValueError:
+                return
         new_args = []
+        if wrapped_args is not None:
+            new_args.extend(wrapped_args)
         multiple = (co.co_flags & 0x04) # whether *args is supported
-        for i, arg in enumerate(args, wrapped_args + 1):
+        for i, arg in enumerate(args, 1):
             if i < co.co_argcount:
                 var = co.co_varnames[i]
             elif multiple: # all from here on will match the same type -- typically str, but could be something else
@@ -61,7 +69,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapped_args: int, name: Optio
         await func(ctx, *new_args)
 
     co = func.__code__
-    req = co.co_argcount - 1 - wrapped_args
+    req = co.co_argcount - 1
     if func.__defaults__:
         req -= len(func.__defaults__)
 

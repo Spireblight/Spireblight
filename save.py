@@ -3,7 +3,7 @@ from typing import Optional, Any
 import base64
 import json
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPBadRequest
+from aiohttp.web import Request, HTTPUnauthorized, HTTPBadRequest, Response
 
 from typehints import ContextType
 from webpage import router
@@ -26,7 +26,17 @@ async def receive_save(req: Request):
     post = await req.post()
 
     file = post.get("savefile")
-    # TODO
+    content = file.file.read()
+    content = content.decode("utf-8", "xmlcharrefreplace")
+
+    global current_savefile # done here just so it passed preliminary checks
+
+    if not content:
+        current_savefile = None
+        return Response()
+
+    current_savefile = content
+    return Response()
 
 async def get_savefile_as_json(ctx: ContextType) -> Savefile:
     if current_savefile is None:

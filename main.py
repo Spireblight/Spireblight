@@ -18,7 +18,7 @@ async def main():
     import sys
     if "--webonly" not in sys.argv:
         tasks.add(loop.create_task(server.Twitch_startup()))
-        tasks.add(loop.create_task(server.Discord_startup()))
+        #tasks.add(loop.create_task(server.Discord_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 
@@ -29,7 +29,7 @@ async def main():
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         await server.Twitch_cleanup()
-        await server.Discord_cleanup()
+        #await server.Discord_cleanup()
         loop.close()
 
 asyncio.run(main()) # XXX: figure out why Discord doesn't see anything?

@@ -137,8 +137,8 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
     _update_db()
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
-    def inner(func, wrapped_args=0):
-        wrapped = wrapper(func, force_argcount, wrapped_args, name)
+    def inner(func, wrapper_func=None):
+        wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
         wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
@@ -156,13 +156,12 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
 def with_savefile(name: str, *aliases: str, **kwargs):
     """Decorator for commands that require a save."""
     def inner(func):
-        cmd = command(name, *aliases, discord=False, **kwargs)(func, wrapped_args=1)
-        async def deco(ctx: ContextType, *args):
-            save = await get_savefile_as_json(ctx)
-            if save is None:
-                return
-            return cmd(ctx, save, *args)
-        return deco
+        async def _savefile_get(ctx) -> list:
+            res = await get_savefile_as_json(ctx)
+            if res is None:
+                raise ValueError("No savefile")
+            return [res]
+        return command(name, *aliases, discord=False, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
 
 class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
@@ -209,6 +208,9 @@ class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
                            f"last I checked, they were playing some {chan.game_name}!")
 
 class DiscordConn(DBot):
+    async def on_ready(self, *args):
+        print("Ready")
+
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
@@ -221,7 +223,7 @@ class DiscordConn(DBot):
             if cmd:
                 await cmd(ctx, *content[1:])
 
-DConn = DBot(config.prefix, case_insensitive=True, owner_ids=config.owners)
+DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 async def _timer(cmds: list[str]):
     cmd = None
