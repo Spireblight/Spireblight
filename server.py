@@ -42,6 +42,7 @@ _DEFAULT_RATE  = 3.0
 _consts = {
     "discord": "https://discord.gg/trXhSbA",
     "prefix": config.prefix,
+    "website": config.website_url,
 }
 
 _perms = {

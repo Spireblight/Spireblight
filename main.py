@@ -2,7 +2,7 @@ import asyncio
 
 from aiohttp import web
 
-from webpage import webpage, router
+from webpage import webpage, router, setup_redirects
 from logger import logger
 
 import server, commands, save # just make sure they're imported
@@ -10,6 +10,7 @@ import server, commands, save # just make sure they're imported
 logger.info("Starting the bot")
 
 async def main():
+    setup_redirects()
     webpage.add_routes(router)
     loop = asyncio.get_event_loop()
 
