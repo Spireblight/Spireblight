@@ -256,7 +256,7 @@ async def _timer(cmds: list[str]):
 _global_timer = routine(seconds=config.global_interval)(_timer)
 _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
-@command("command", flag="m", discord=False)
+@command("command", flag="me", discord=False)
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+<flag>] <output>"""
     args = list(args)
@@ -782,11 +782,11 @@ async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
     else:
         await ctx.send(f"Loss #{losses[i]} recorded for the {d[i]}. Total losses: {sum(losses)}")
 
-@command("win", flag="m", burst=1, rate=60.0) # 1:60.0 means we can't accidentally do it twice in a row
+@command("win", flag="me", burst=1, rate=60.0) # 1:60.0 means we can't accidentally do it twice in a row
 async def win_cmd(ctx: ContextType, arg: str):
     await edit_counts(ctx, arg, add=True)
 
-@command("loss", flag="m", burst=1, rate=60.0)
+@command("loss", flag="me", burst=1, rate=60.0)
 async def loss_cmd(ctx: ContextType, arg: str):
     await edit_counts(ctx, arg, add=False)
 

@@ -12,6 +12,10 @@ async def main():
     last = 0
     possible = None
     timeout = 1
+    if not config.website_url or not config.secret:
+        print("Config is not complete")
+        time.sleep(3)
+        return
     while True:
         time.sleep(timeout)
         timeout = 1
