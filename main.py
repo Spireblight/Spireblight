@@ -1,4 +1,9 @@
+import logging
 import asyncio
+import sys
+
+if "--debug" in sys.argv:
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format="{asctime} :: {levelname}:{name} - {message}", datefmt="(%Y-%m-%d %H:%M:%S)", style="{")
 
 from aiohttp import web
 
@@ -19,7 +24,7 @@ async def main():
     import sys
     if "--webonly" not in sys.argv:
         tasks.add(loop.create_task(server.Twitch_startup()))
-        #tasks.add(loop.create_task(server.Discord_startup()))
+        tasks.add(loop.create_task(server.Discord_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 
@@ -30,7 +35,7 @@ async def main():
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         await server.Twitch_cleanup()
-        #await server.Discord_cleanup()
+        await server.Discord_cleanup()
         loop.close()
 
-asyncio.run(main()) # XXX: figure out why Discord doesn't see anything?
+asyncio.run(main()) # TODO: Signal handlers and stuff

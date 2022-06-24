@@ -64,5 +64,5 @@ def setup_redirects():
                 j[name] = 0
             j[name] += 1
             with open(os.path.join("data", "redirects.json"), "w") as fw:
-                json.dump(j, fw)
+                json.dump(j, fw, indent=config.json_indent)
             raise web.HTTPFound(url)

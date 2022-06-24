@@ -29,6 +29,7 @@ from typehints import ContextType
 import config
 
 TConn: TwitchConn = None
+DConn: DiscordConn = None
 
 logger.info("Setting up")
 
@@ -52,6 +53,7 @@ _perms = {
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 
 _to_add_twitch: list[TwitchCommand] = []
+_to_add_discord: list[DiscordCommand] = []
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -148,7 +150,10 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
                 TConn.add_command(tcmd)
         if discord:
             dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases))(wrapped)
-            DConn.add_command(dcmd)
+            if DConn is None:
+                _to_add_discord.append(dcmd)
+            else:
+                DConn.add_command(dcmd)
         return tcmd
     return inner
 
@@ -221,8 +226,6 @@ class DiscordConn(DBot):
             cmd: DiscordCommand = self.get_command(content[0])
             if cmd:
                 await cmd(ctx, *content[1:])
-
-DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners)
 
 async def _timer(cmds: list[str]):
     cmd = None
@@ -807,6 +810,10 @@ async def Twitch_cleanup():
     await TConn.close()
 
 async def Discord_startup():
+    global DConn
+    DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners)
+    for cmd in _to_add_discord:
+        DConn.add_command(cmd)
     await DConn.start(config.token)
 
 async def Discord_cleanup():
