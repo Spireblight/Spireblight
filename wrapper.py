@@ -75,6 +75,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
 
     caller.__required__ = req
     caller.__name__ = name
+    caller.__doc__ = func.__doc__
 
     logger.debug(f"Creating wrapped command {name}")
 

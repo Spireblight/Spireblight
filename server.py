@@ -18,6 +18,10 @@ from twitchio.models import Stream
 import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
 
+from aiohttp_jinja2 import template
+from aiohttp.web import Request
+
+from webpage import router
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
@@ -149,7 +153,7 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
             else:
                 TConn.add_command(tcmd)
         if discord:
-            dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases))(wrapped)
+            dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases), flag=flag)(wrapped)
             if DConn is None:
                 _to_add_discord.append(dcmd)
             else:
@@ -212,9 +216,6 @@ class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
                            f"last I checked, they were playing some {chan.game_name}!")
 
 class DiscordConn(DBot):
-    async def on_ready(self, *args):
-        print("Ready")
-
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
@@ -261,7 +262,7 @@ _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
 @command("command", flag="me", discord=False)
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
-    """Syntax: command <action> <name> [+<flag>] <output>"""
+    """Syntax: command <action> <name> <output>"""
     args = list(args)
     msg = " ".join(args)
     name = name.lstrip(config.prefix)
@@ -417,6 +418,12 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             del aliases[args[0]]
             _cmds[name]["aliases"].remove(name)
             _update_db()
+            await ctx.send(f"Alias {args[0]} has been removed from command {name}.")
+
+        case "info":
+            if not await sanitizer(require_args=False):
+                return
+            await ctx.send(f"Full information about this command can be viewed at {config.website_url}/commands/{name}")
 
         case "cooldown" | "cd":
             if not await sanitizer(require_args=False):
@@ -467,6 +474,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
 @command("support", "shoutout", "so")
 async def shoutout(ctx: ContextType, name: str):
+    """Give a shoutout to a fellow streamer."""
     try:
         chan = await ctx.bot.fetch_channel(name)
     except IndexError as e:
@@ -495,6 +503,7 @@ async def shoutout(ctx: ContextType, name: str):
 
 @command("title")
 async def stream_title(ctx: ContextType):
+    """Display the current stream title."""
     live: list[Stream] = await TConn.fetch_streams(user_logins=[config.channel])
 
     if live:
@@ -504,6 +513,7 @@ async def stream_title(ctx: ContextType):
 
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, j: Savefile):
+    """Display what was skipped for the Sapphire key."""
     if not j["has_sapphire_key"]:
         await ctx.send("We do not have the Sapphire key.")
         return
@@ -518,6 +528,7 @@ async def bluekey(ctx: ContextType, j: Savefile):
 
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, j: Savefile):
+    """Display what the Neow bonus was."""
     if "NeowBonusLog" not in j["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
@@ -573,6 +584,7 @@ async def neowbonus(ctx: ContextType, j: Savefile):
 
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, j: Savefile):
+    """Display the run's current seed."""
     c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
     # this is a bit weird, but lets us convert a negative number, if any, into a positive one
@@ -589,6 +601,7 @@ async def seed_cmd(ctx: ContextType, j: Savefile):
 
 @with_savefile("seeded", "isthisseeded")
 async def is_seeded(ctx: ContextType, j: Savefile):
+    """Display whether the current run is seeded."""
     if j["seed_set"]:
         await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
     else:
@@ -596,18 +609,22 @@ async def is_seeded(ctx: ContextType, j: Savefile):
 
 @with_savefile("boss", "actboss")
 async def actboss(ctx: ContextType, j: Savefile):
+    """Display the upcoming act boss."""
     await ctx.send(f"The upcoming act boss is {j['boss']}.")
 
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, j: Savefile):
+    """Display the current shop removal cost."""
     await ctx.send(f"Current card removal cost: {j['purgeCost']} (removed {j['metric_purchased_purges']} card{'' if j['metric_purchased_purges'] == 1 else 's'})")
 
 @with_savefile("potionchance", "potion")
 async def potion_chance(ctx: ContextType, j: Savefile):
+    """Display the current potion drop chance."""
     await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
 
 @with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
 async def event_likelihood(ctx: ContextType, j: Savefile):
+    """Display current event chances for the various possibilities in ? rooms."""
     elite, hallway, shop, chest = j["event_chances"]
     # elite likelihood is only for the "Deadly Events" custom modifier
 
@@ -620,20 +637,9 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
         f"See {config.prefix}eventrng for more information."
     )
 
-@command("eventrng")
-async def event_rng_caveat(ctx: ContextType):
-    await ctx.send(
-        "Pseudo-Random Number Generator calls to determine the type of event "
-        "is non-random, and depends on the current state of the pRNG when the "
-        "room is entered, which is affected by things like previous events. "
-        "As such, the likelihood of any given type being picked is weighted "
-        "related to previous event rooms. This is why fights are more likely - "
-        "or, in some cases, guaranteed - to happen after a Shrine-type event, "
-        "even if the likelihood is technically lower."
-    )
-
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, j: Savefile, index: int):
+    """Display information about the current relics."""
     l: list[str] = j["relics"]
 
     if index > len(l):
@@ -646,6 +652,7 @@ async def relic_info(ctx: ContextType, j: Savefile, index: int):
 
 @with_savefile("skipped", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, j: Savefile):
+    """Display the boss relics that were taken and skipped."""
     l: list[dict] = j["metric_boss_relics"]
 
     if not l:
@@ -670,6 +677,7 @@ async def skipped_boss_relics(ctx: ContextType, j: Savefile):
 
 @command("wall")
 async def wall_card(ctx: ContextType): # FIXME: Needs data from remote
+    """Fetch the card in the wall for the ladder savefile."""
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
     if not config.STS_path:
         await ctx.send("Error: could not fetch data.")
@@ -690,12 +698,14 @@ async def wall_card(ctx: ContextType): # FIXME: Needs data from remote
 
 @command("dig", burst=5, rate=2.0)
 async def dig_cmd(ctx: ContextType):
+    """Dig! Dig! Dig! Just like the Shovel in the game, you get a random relic! What will it be?"""
     with open("dig_entries.txt", "r") as f:
         line = random.choice(f.readlines())
     await ctx.send(f"{ctx.author.display_name} has dug up {line}")
 
 @command("kills") # TODO: Read game files for this
 async def kills_cmd(ctx: ContextType):
+    """Display the cumulative number of wins for the year-long challenge."""
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
@@ -703,6 +713,7 @@ async def kills_cmd(ctx: ContextType):
 
 @command("losses")
 async def losses_cmd(ctx: ContextType):
+    """Display the cumulative number of losses for the year-long challenge."""
     msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
     with _getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
@@ -710,6 +721,7 @@ async def losses_cmd(ctx: ContextType):
 
 @command("streak")
 async def streak_cmd(ctx: ContextType):
+    """Display Baalor's current streak for Ascension 20 Heart kills."""
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("streak", "r") as f:
         streak = f.read().split()
@@ -717,6 +729,7 @@ async def streak_cmd(ctx: ContextType):
 
 @command("pb")
 async def pb_cmd(ctx: ContextType):
+    """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with _getfile("pb", "r") as f:
         pb = f.read().split()
@@ -787,11 +800,68 @@ async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
 
 @command("win", flag="me", burst=1, rate=60.0) # 1:60.0 means we can't accidentally do it twice in a row
 async def win_cmd(ctx: ContextType, arg: str):
+    """Register a win for a given character."""
     await edit_counts(ctx, arg, add=True)
 
 @command("loss", flag="me", burst=1, rate=60.0)
 async def loss_cmd(ctx: ContextType, arg: str):
+    """Register a loss for a given character."""
     await edit_counts(ctx, arg, add=False)
+
+@router.get("/commands")
+@template("commands.jinja2")
+async def commands_page(req: Request):
+    d = {"prefix": config.prefix, "commands": []}
+    cmds = set()
+    cmds.update(TConn.commands)
+    cmds.update(DConn.all_commands)
+    d["commands"].extend(cmds)
+    d["commands"].sort()
+    return d
+
+@router.get("/commands/{name}")
+@template("command_single.jinja2")
+async def individual_cmd(req: Request):
+    name = req.match_info["name"]
+    d = {"name": name}
+    tcmd: TwitchCommand = TConn.get_command(name)
+    dcmd: DiscordCommand = DConn.get_command(name)
+    cmd = (tcmd or dcmd)
+    if name in _cmds:
+        d["builtin"] = False
+        d["output"] = _cmds[name]["output"]
+        try:
+            d["output"] = d["output"].format(user="<username>", text="<text>", words="<words>", **_consts)
+        except KeyError:
+            pass
+        d["has_link"] = ("://" in d["output"])
+        if d["has_link"]:
+            try:
+                d["link"] = d["output"][d["output"].index("https://"):]
+            except ValueError:
+                try:
+                    d["link"] = d["output"][d["output"].index("http://"):]
+                except ValueError:
+                    d["has_link"] = False
+        if d["has_link"]:
+            d["after"] = ""
+            if " " in d["link"]:
+                d["after"] = d["link"][d["link"].index(" "):]
+                d["link"] = d["link"][:d["link"].index(" ")]
+            d["output"] = d["output"][:len(d["output"])-len(d["link"])-len(d["after"])]
+        d["enabled"] = _cmds[name].get("enabled", True)
+        d["aliases"] = ", ".join(_cmds[name].get("aliases", []))
+    else:
+        d["builtin"] = True
+        d["fndoc"] = cmd.__doc__
+        d["enabled"] = ("Yes" if cmd.enabled else "No")
+
+    d["twitch"] = ("No" if tcmd is None else "Yes")
+    d["discord"] = ("No" if dcmd is None else "Yes")
+
+    d["permissions"] = ", ".join(_perms[x] for x in cmd.flag) or _perms[""]
+
+    return d
 
 async def Twitch_startup():
     global TConn

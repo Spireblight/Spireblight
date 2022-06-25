@@ -1,0 +1,29 @@
+<body>
+    <h1>Command: {{ name }}</h1>
+    <p>
+    {% if builtin %}
+        This is a built-in command. It does calculations when it is called. This is what it does:
+        <br>
+        {{ fndoc }}
+    {% else %}
+        Output: {{ output }}
+    {% endif %}
+    {% if has_link %}
+    <a href="{{ link }}">{{ link }}</a> {{ after }}
+    {% endif %}
+    <br>
+    Enabled: {{ enabled }}
+    <br>
+    {% if aliases %}
+    Aliases: {{ aliases }}
+    <br>
+    {% endif %}
+    Permission: {{ permissions }}
+    <br>
+    Usable on Twitch: {{ twitch }}
+    <br>
+    Usable on Discord: {{ discord }}
+    </p>
+    <div>
+    <a href="/commands">Back to all commands.</a>
+</body>
