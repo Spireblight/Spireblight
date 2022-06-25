@@ -19,7 +19,7 @@ import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
 
 from aiohttp_jinja2 import template
-from aiohttp.web import Request
+from aiohttp.web import Request, HTTPNotFound
 
 from webpage import router
 from wrapper import wrapper
@@ -827,28 +827,21 @@ async def individual_cmd(req: Request):
     tcmd: TwitchCommand = TConn.get_command(name)
     dcmd: DiscordCommand = DConn.get_command(name)
     cmd = (tcmd or dcmd)
+    if cmd is None:
+        raise HTTPNotFound()
     if name in _cmds:
         d["builtin"] = False
-        d["output"] = _cmds[name]["output"]
+        output = _cmds[name]["output"]
         try:
-            d["output"] = d["output"].format(user="<username>", text="<text>", words="<words>", **_consts)
+            output = d["output"].format(user="<username>", text="<text>", words="<words>", **_consts)
         except KeyError:
             pass
-        d["has_link"] = ("://" in d["output"])
-        if d["has_link"]:
-            try:
-                d["link"] = d["output"][d["output"].index("https://"):]
-            except ValueError:
-                try:
-                    d["link"] = d["output"][d["output"].index("http://"):]
-                except ValueError:
-                    d["has_link"] = False
-        if d["has_link"]:
-            d["after"] = ""
-            if " " in d["link"]:
-                d["after"] = d["link"][d["link"].index(" "):]
-                d["link"] = d["link"][:d["link"].index(" ")]
-            d["output"] = d["output"][:len(d["output"])-len(d["link"])-len(d["after"])]
+        out = []
+        for word in output.split():
+            if word.startswith("http"):
+                word = f'<a href="{word}">{word}</a>'
+            out.append(word)
+        d["output"] = " ".join(out)
         d["enabled"] = _cmds[name].get("enabled", True)
         d["aliases"] = ", ".join(_cmds[name].get("aliases", []))
     else:
