@@ -28,7 +28,7 @@ _query_params = {
 aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
 
 @router.get("/")
-@aiohttp_jinja2.template("main.jinja2")
+@aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
 async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 1800000000}): # XXX: DO NOT PUSH THIS
     if _cache["video_id"] is None or _cache["last"] + config.cache_timeout < time.time():
         data = None

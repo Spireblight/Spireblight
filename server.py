@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime
 import random
 import json
+import sys
 import re
 import os
 
@@ -31,6 +32,11 @@ from save import get_savefile_as_json, Savefile
 from typehints import ContextType
 
 import config
+
+__version__ = "0.2"
+__author__ = "Anilyka 'FaeLyka' Barry"
+__github__ = "https://github.com/Vgr255/TwitchCordBot"
+__botname__ = "Faelorbot"
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None
@@ -420,11 +426,6 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             _update_db()
             await ctx.send(f"Alias {args[0]} has been removed from command {name}.")
 
-        case "info":
-            if not await sanitizer(require_args=False):
-                return
-            await ctx.send(f"Full information about this command can be viewed at {config.website_url}/commands/{name}")
-
         case "cooldown" | "cd":
             if not await sanitizer(require_args=False):
                 return
@@ -471,6 +472,24 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
         case _:
             await ctx.send(f"Unrecognized action {action}.")
+
+@command("help")
+async def help_cmd(ctx: ContextType, name: str = ""):
+    """Find help on the various commands in the bot."""
+    if not name:
+        await ctx.send(f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
+                       f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, and "
+                       f"my source code is available at {__github__} . The website is {config.website_url}")
+        return
+
+    tcmd = TConn.get_command(name)
+    dcmd = DConn.get_command(name)
+    cmd = (tcmd or dcmd)
+    if cmd:
+        await ctx.send(f"Full information about this command can be viewed at {config.website_url}/commands/{cmd.name}")
+        return
+
+    await ctx.send(f"Could not find matching command. You may view all existing commands here: {config.website_url}/commands")
 
 @command("support", "shoutout", "so")
 async def shoutout(ctx: ContextType, name: str):
@@ -703,7 +722,7 @@ async def dig_cmd(ctx: ContextType):
         line = random.choice(f.readlines())
     await ctx.send(f"{ctx.author.display_name} has dug up {line}")
 
-@command("kills") # TODO: Read game files for this
+@command("kills", "wins") # TODO: Read game files for this
 async def kills_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
