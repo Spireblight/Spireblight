@@ -30,6 +30,7 @@ from disc import DiscordCommand
 from save import get_savefile_as_json, Savefile
 
 from typehints import ContextType
+import events
 
 import config
 
@@ -49,7 +50,7 @@ _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
 
 _consts = {
-    "discord": "https://discord.gg/trXhSbA",
+    "discord": config.discord_invite_link,
     "prefix": config.prefix,
     "website": config.website_url,
 }
@@ -221,6 +222,14 @@ class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
                            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
                            f"last I checked, they were playing some {chan.game_name}!")
 
+    def __getattr__(self, name: str):
+        if name.startswith("event_"): # calling events -- insert our own event system in
+            name = name[6:]
+            evt = events.get(name)
+            if evt is not None:
+                return evt.invoke
+        raise AttributeError(name)
+
 class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
@@ -233,6 +242,15 @@ class DiscordConn(DBot):
             cmd: DiscordCommand = self.get_command(content[0])
             if cmd:
                 await cmd(ctx, *content[1:])
+
+    def dispatch(self, name, /, *args, **kwargs):
+        evt = events.get(name)
+        if evt is not None:
+            self.add_listener(evt.invoke, name)
+        value = super().dispatch(name, *args, **kwargs)
+        if evt is not None:
+            self.remove_listener(evt.invoke, name)
+        return value
 
 async def _timer(cmds: list[str]):
     cmd = None
@@ -263,8 +281,10 @@ async def _timer(cmds: list[str]):
     await chan.send(msg)
     cmds.append(cmd)
 
-_global_timer = routine(seconds=config.global_interval)(_timer)
-_sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
+if config.global_interval:
+    _global_timer = routine(seconds=config.global_interval)(_timer)
+if config.sponsored_interval:
+    _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
 @command("command", flag="me", discord=False)
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -877,9 +897,9 @@ async def individual_cmd(req: Request):
 
 async def Twitch_startup():
     global TConn
-    if config.global_commands:
+    if config.global_interval and config.global_commands:
         _global_timer.start(config.global_commands)
-    if config.sponsored_commands:
+    if config.sponsored_interval and config.sponsored_commands:
         _sponsored_timer.start(config.sponsored_commands)
 
     TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
@@ -893,7 +913,7 @@ async def Twitch_cleanup():
 
 async def Discord_startup():
     global DConn
-    DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners)
+    DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners, help_command=None)
     for cmd in _to_add_discord:
         DConn.add_command(cmd)
     await DConn.start(config.token)
