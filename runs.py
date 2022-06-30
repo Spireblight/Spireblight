@@ -4,9 +4,9 @@ from aiohttp.web import Request
 
 from webpage import router
 
-from gamedata import get_node
+from gamedata import get_nodes
 
-class RunParser:
+class RunParser: # TODO: cache
     def __init__(self, data: dict[str, Any]):
         self.data = data
 
@@ -23,8 +23,7 @@ class RunParser:
 
     @property
     def path(self):
-        for i, node in enumerate(self.data["path_taken"], 1):
-            yield get_node(self, node, i)
+        return get_nodes(self)
 
 @router.post("/sync/run")
 async def receive_run(req: Request):
