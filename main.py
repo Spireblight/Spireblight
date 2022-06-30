@@ -10,7 +10,7 @@ from aiohttp import web
 from webpage import webpage, router, setup_redirects
 from logger import logger
 
-import server
+import server, runs
 
 logger.info("Starting the bot")
 

@@ -22,7 +22,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
-from webpage import router
+from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
@@ -33,11 +33,6 @@ from typehints import ContextType
 import events
 
 import config
-
-__version__ = "0.2"
-__author__ = "Anilyka 'FaeLyka' Barry"
-__github__ = "https://github.com/Vgr255/TwitchCordBot"
-__botname__ = "Faelorbot"
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None

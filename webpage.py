@@ -13,6 +13,11 @@ import config
 
 __all__ = ["webpage", "router", "setup_redirects"]
 
+__version__ = "0.2"
+__author__ = "Anilyka 'FaeLyka' Barry"
+__github__ = "https://github.com/Vgr255/TwitchCordBot"
+__botname__ = "Faelorbot"
+
 webpage = web.Application(logger=logger)
 
 router = web.RouteTableDef()
@@ -25,7 +30,11 @@ _query_params = {
     "maxResults": "1",
 }
 
-aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
+env = aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
+env.globals["author"] = __author__
+env.globals["github"] = __github__
+env.globals["version"] = __version__
+env.globals["config"] = config
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm

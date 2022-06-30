@@ -1,0 +1,10 @@
+{% extends "base.jinja2" %}
+{% block content %}
+    {% for node in parser.path %}
+    <img src="/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
+    {% if node.room_type == "Boss Chest" %}
+    <br>
+    {% endif %}
+    {% endfor %}
+    <br>
+{% endblock %}

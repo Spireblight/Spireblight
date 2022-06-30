@@ -1,8 +1,18 @@
 from typing import Generator
 
-__all__ = ["get_nodes", "get_node"]
+__all__ = ["get_nodes", "get_node", "get_character"]
 
 # TODO: Handle the website display part, figure out details of these classes later
+
+_chars = {"THE_SILENT": "Silent"}
+
+def get_character(x):
+    if "character_chosen" in x.data:
+        c = _chars.get(x.data["character_chosen"])
+        if c is None:
+            return x.data["character_chosen"].title()
+
+    raise ValueError
 
 class NodeData:
     """Contain relevant information for Spire nodes.
@@ -62,6 +72,46 @@ class NodeData:
 
         return self
 
+    def description(self, to_append: dict[int, list[str]] = None) -> str:
+        text = []
+        if to_append is None:
+            to_append = {}
+        text.extend(to_append.get(0, ()))
+        text.append(f"{self.room_type}")
+
+        text.extend(to_append.get(1, ()))
+        text.append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
+
+        text.extend(to_append.get(2, ()))
+        text.append(self.name)
+
+        text.extend(to_append.get(3, ()))
+        if self.potions:
+            text.append("Potions obtained:")
+            text.extend(self.potions)
+
+        text.extend(to_append.get(4, ()))
+        if self.relics:
+            text.append("Relics obtained:")
+            text.extend(self.relics)
+
+        text.extend(to_append.get(5, ()))
+        if self.picked:
+            text.append("Picked:")
+            text.extend(self.picked)
+
+        if self.skipped:
+            text.append("Skipped:")
+            text.extend(self.skipped)
+
+        text.extend(to_append.get(6, ()))
+
+        return "\n".join(text)
+
+    @property
+    def name(self) -> str:
+        return "<unknown>"
+
     @property
     def floor(self) -> int:
         if self._floor is None:
@@ -98,7 +148,7 @@ class NodeData:
     def skipped(self) -> list[str]:
         ret = []
         for cards in self._cards:
-            ret.extend(cards["skipped"])
+            ret.extend(cards["not_picked"])
         return ret
 
     @property
@@ -177,6 +227,15 @@ class EncounterBase(NodeData):
 
         return super().from_parser(parser, floor, damage, *extra)
 
+    def description(self, to_append: dict[int, list[str]] = None) -> str:
+        if to_append is None:
+            to_append = {}
+        if 3 not in to_append:
+            to_append[3] = []
+        to_append[3].append(f"{self.damage} damage")
+        to_append[3].append(f"{self.turns} turns")
+        return super().description(to_append)
+
     @property
     def name(self) -> str:
         return self._damage["enemies"]
@@ -190,49 +249,49 @@ class EncounterBase(NodeData):
         return int(self._damage["turns"])
 
 class NormalEncounter(EncounterBase):
-    room_type = "combat"
+    room_type = "Enemy"
     map_icon = "fight_normal.png"
 
 class EventEncounter(EncounterBase):
-    room_type = "combat (event)"
+    room_type = "Unknown (Enemy)"
     map_icon = "event_fight.png"
 
 class Treasure(NodeData):
-    room_type = "treasure chest"
+    room_type = "Treasure"
     map_icon = "treasure_chest.png"
 
 class EventTreasure(Treasure):
-    room_type = "treasure chest (event)"
+    room_type = "Unknown (Treasure)"
     map_icon = "event_chest.png"
 
 class EliteEncounter(EncounterBase):
-    room_type = "elite"
+    room_type = "Elite"
     map_icon = "fight_elite.png"
 
 class EventElite(EliteEncounter):
-    room_type = "elite (event)"
+    room_type = "Unknown (Elite)"
     map_icon = "event.png"
 
 class Event(NodeData):
-    room_type = "event"
+    room_type = "Unknown"
     map_icon = "event.png"
 
 class Merchant(NodeData):
-    room_type = "merchant"
+    room_type = "Merchant"
     map_icon = "shop.png"
 
 class EventMerchant(Merchant):
-    room_type = "merchant (event)"
+    room_type = "Unknown (Merchant)"
     map_icon = "event_shop.png"
 
 class Campfire(NodeData):
-    room_type = "rest site"
+    room_type = "Rest"
     map_icon = "rest.png"
 
 class Boss(EncounterBase):
-    room_type = "boss"
-    map_icon = "boss.png"
+    room_type = "Boss"
+    map_icon = "boss_node.png"
 
 class BossChest(NodeData):
-    room_type = "boss chest"
+    room_type = "Boss Chest"
     map_icon = "boss_chest.png"
