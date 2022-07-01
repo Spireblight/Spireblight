@@ -83,7 +83,8 @@ class NodeData:
         text.append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
 
         text.extend(to_append.get(2, ()))
-        text.append(self.name)
+        if self.name:
+            text.append(self.name)
 
         text.extend(to_append.get(3, ()))
         if self.potions:
@@ -98,11 +99,11 @@ class NodeData:
         text.extend(to_append.get(5, ()))
         if self.picked:
             text.append("Picked:")
-            text.extend(self.picked)
+            text.extend(f"- {x}" for x in self.picked)
 
         if self.skipped:
             text.append("Skipped:")
-            text.extend(self.skipped)
+            text.extend(f"- {x}" for x in self.skipped)
 
         text.extend(to_append.get(6, ()))
 
@@ -110,7 +111,7 @@ class NodeData:
 
     @property
     def name(self) -> str:
-        return "<unknown>"
+        return ""
 
     @property
     def floor(self) -> int:
@@ -259,6 +260,41 @@ class EventEncounter(EncounterBase):
 class Treasure(NodeData):
     room_type = "Treasure"
     map_icon = "treasure_chest.png"
+
+    def __init__(self, has_blue_key: bool, relic: str):
+        super().__init__()
+        self._bluekey = False
+        self._key_relic = relic
+
+    def description(self, to_append: dict[int, list[str]] = None) -> str:
+        if to_append is None:
+            to_append = {}
+        if self.blue_key:
+            if 5 not in to_append:
+                to_append[5] = []
+            to_append[5].append(f"Skipped {self.key_relic} for the Sapphire key.")
+        return super().description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser, floor: int, *extra):
+        has_blue_key = False
+        relic = ""
+        d = parser.data.get("basemod:mod_saves", ())
+        if "BlueKeyRelicSkippedLog" in d: # XXX: check how savefiles do it
+            if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
+                relic = d["BlueKeyRelicSkippedLog"]["relicID"]
+                has_blue_key = True
+        return super().from_parser(parser, floor, has_blue_key, relic, *extra)
+
+    @property
+    def blue_key(self) -> bool:
+        return self._bluekey
+
+    @property
+    def key_relic(self) -> str | None:
+        if not self.blue_key:
+            return None
+        return self._key_relic
 
 class EventTreasure(Treasure):
     room_type = "Unknown (Treasure)"

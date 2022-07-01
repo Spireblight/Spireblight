@@ -7,7 +7,7 @@ from datetime import datetime
 import json
 import os
 
-from aiohttp.web import Request, Response, FileResponse, HTTPNotFound
+from aiohttp.web import Request, Response, HTTPNotFound
 
 import aiohttp_jinja2
 
@@ -46,6 +46,10 @@ class RunParser:
     def path(self):
         return get_nodes(self)
 
+    @property
+    def relics(self):
+        return self.data["relics"]
+
 def _update_cache():
     for file in os.listdir(os.path.join("data", "runs")):
         if file not in _cache:
@@ -76,13 +80,6 @@ async def run_single(req: Request):
         raise HTTPNotFound()
 
     return {"parser": parser}
-
-@router.get("/icons/{name}")
-def icons_get(req: Request) -> FileResponse:
-    file = f"icons{os.sep}{req.match_info['name']}"
-    if os.path.exists(file):
-        return FileResponse(file)
-    raise HTTPNotFound()
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:

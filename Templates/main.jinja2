@@ -1,6 +1,11 @@
-<body>
+{% extends "base.jinja2" %}
+{% block title %}
+Baalorlord
+{% endblock %}
+{% block content %}
     <h1>Welcome to Baalorlord's WIP website</h1>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <div><br>
-    <a href="/commands">View all of the bot commands.</a>
-</body>
+    <br>
+    <a href="/commands">View all of the bot commands.</a><br>
+    <a href="/runs">Entire run history</a>
+{% endblock %}
