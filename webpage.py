@@ -1,3 +1,4 @@
+import datetime
 import time
 import json
 import os
@@ -14,7 +15,7 @@ import config
 __all__ = ["webpage", "router", "setup_redirects"]
 
 __version__ = "0.2"
-__author__ = "Anilyka 'FaeLyka' Barry"
+__author__ = "Anilyka Barry"
 __github__ = "https://github.com/Vgr255/TwitchCordBot"
 __botname__ = "Faelorbot"
 
@@ -30,11 +31,25 @@ _query_params = {
     "maxResults": "1",
 }
 
+_start_time = datetime.datetime.utcnow()
+
+def uptime() -> str:
+    delta = (datetime.datetime.utcnow() - _start_time)
+    minutes, seconds = divmod(delta.seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    return f"{delta.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
+
+def now() -> str:
+    return datetime.datetime.utcnow().isoformat(" ", "seconds")
+
 env = aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
 env.globals["author"] = __author__
 env.globals["github"] = __github__
 env.globals["version"] = __version__
 env.globals["config"] = config
+env.globals["uptime"] = uptime
+env.globals["start"] = _start_time.isoformat(" ", "seconds")
+env.globals["now"] = now
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
@@ -59,6 +74,9 @@ async def redirected_totals(req: web.Request):
     for name, count in j.items():
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
+
+router.static("/icons", os.path.join(os.getcwd(), "icons"))
+router.static("/relics", os.path.join(os.getcwd(), "relics"))
 
 def setup_redirects():
     with open(os.path.join("data", "redirects")) as f:
