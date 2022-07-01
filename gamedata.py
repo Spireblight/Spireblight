@@ -1,16 +1,37 @@
 from typing import Generator
 
-__all__ = ["get_nodes", "get_node", "get_character"]
+__all__ = ["get_nodes", "get_node", "get_character", "get_seed"]
 
 # TODO: Handle the website display part, figure out details of these classes later
 
 _chars = {"THE_SILENT": "Silent"}
 
+def get_seed(parser):
+    c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
+
+    try:
+        seed = int(parser["seed"]) # might be stored as a str
+    except KeyError:
+        seed = int(parser["seed_played"])
+
+    # this is a bit weird, but lets us convert a negative number, if any, into a positive one
+    num = int.from_bytes(seed.to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
+    s = []
+
+    while num:
+        num, i = divmod(num, 35)
+        s.append(c[i])
+
+    s.reverse() # everything's backwards, for some reason... but this works
+
+    return "".join(s)
+
 def get_character(x):
     if "character_chosen" in x.data:
         c = _chars.get(x.data["character_chosen"])
         if c is None:
-            return x.data["character_chosen"].title()
+            c = x.data["character_chosen"].title()
+        return c
 
     raise ValueError
 
@@ -27,6 +48,7 @@ class NodeData:
 
     room_type = "<UNDEFINED>"
     map_icon = "<UNDEFINED>"
+    end_of_line = False
 
     def __init__(self):
         if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
@@ -38,6 +60,8 @@ class NodeData:
         self._cards = []
         self._relics = []
         self._potions = []
+        self._usedpotions = []
+        self._cache = {}
 
     @classmethod
     def from_parser(cls, parser, floor: int, *extra):
@@ -54,9 +78,22 @@ class NodeData:
 
         self = cls(*extra)
         self._floor = floor
-        self._maxhp = data[prefix + "max_hp_per_floor"][floor - 1]
-        self._curhp = data[prefix + "current_hp_per_floor"][floor - 1]
-        self._gold = data[prefix + "gold_per_floor"][floor - 1]
+        try:
+            self._maxhp = data[prefix + "max_hp_per_floor"][floor - 1]
+            self._curhp = data[prefix + "current_hp_per_floor"][floor - 1]
+            self._gold = data[prefix + "gold_per_floor"][floor - 1]
+            if "potion_use_per_floor" in data: # run file
+                self._usedpotions.extend(data["potion_use_per_floor"][floor - 1])
+            elif "PotionUseLog" in data: # savefile
+                self._usedpotions.extend(data["PotionUseLog"][floor - 1])
+        except IndexError:
+            self._maxhp = data[prefix + "max_hp_per_floor"][floor - 2]
+            self._curhp = data[prefix + "current_hp_per_floor"][floor - 2]
+            self._gold = data[prefix + "gold_per_floor"][floor - 2]
+            if "potion_use_per_floor" in data:
+                self._usedpotions.extend(data["potion_use_per_floor"][floor - 2])
+            elif "PotionUseLog" in data:
+                self._usedpotions.extend(data["PotionUseLog"][floor - 2])
 
         for cards in data[prefix + "card_choices"]:
             if cards["floor"] == floor:
@@ -72,10 +109,13 @@ class NodeData:
 
         return self
 
-    def description(self, to_append: dict[int, list[str]] = None) -> str:
-        text = []
-        if to_append is None:
-            to_append = {}
+    def description(self) -> str:
+        if "description" not in self._cache:
+            self._cache["description"] = self._description({})
+        return self._cache["description"]
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        text = [f"Floor {self.floor}"]
         text.extend(to_append.get(0, ()))
         text.append(f"{self.room_type}")
 
@@ -89,7 +129,11 @@ class NodeData:
         text.extend(to_append.get(3, ()))
         if self.potions:
             text.append("Potions obtained:")
-            text.extend(self.potions)
+            text.extend(f"- {x}" for x in self.potions)
+
+        if self.used_potions:
+            text.append("Potions used:")
+            text.extend(f"- {x}" for x in self.used_potions)
 
         text.extend(to_append.get(4, ()))
         if self.relics:
@@ -160,6 +204,10 @@ class NodeData:
     def potions(self) -> list[str]:
         return self._potions
 
+    @property
+    def used_potions(self) -> list[str]:
+        return self._usedpotions
+
 def get_node(parser, floor: int) -> NodeData:
     for node in get_nodes(parser):
         if node.floor == floor:
@@ -200,7 +248,12 @@ def get_nodes(parser) -> Generator[NodeData, None, None]:
             case ("B", "BOSS"):
                 cls = Boss
             case (None, None):
-                cls = BossChest
+                if floor < 50: # kind of a hack for the first two acts
+                    cls = BossChest
+                elif len(parser.data[prefix + "max_hp_per_floor"]) < floor:
+                    cls = Victory
+                else:
+                    cls = Act4Transition
             case (a, b):
                 raise ValueError(f"Error: the combination of map node {b!r} and content {a!r} is undefined")
 
@@ -228,14 +281,12 @@ class EncounterBase(NodeData):
 
         return super().from_parser(parser, floor, damage, *extra)
 
-    def description(self, to_append: dict[int, list[str]] = None) -> str:
-        if to_append is None:
-            to_append = {}
+    def _description(self, to_append: dict[int, list[str]]) -> str:
         if 3 not in to_append:
             to_append[3] = []
         to_append[3].append(f"{self.damage} damage")
         to_append[3].append(f"{self.turns} turns")
-        return super().description(to_append)
+        return super()._description(to_append)
 
     @property
     def name(self) -> str:
@@ -266,23 +317,25 @@ class Treasure(NodeData):
         self._bluekey = False
         self._key_relic = relic
 
-    def description(self, to_append: dict[int, list[str]] = None) -> str:
-        if to_append is None:
-            to_append = {}
+    def _description(self, to_append: dict[int, list[str]]) -> str:
         if self.blue_key:
             if 5 not in to_append:
                 to_append[5] = []
             to_append[5].append(f"Skipped {self.key_relic} for the Sapphire key.")
-        return super().description(to_append)
+        return super()._description(to_append)
 
     @classmethod
     def from_parser(cls, parser, floor: int, *extra):
         has_blue_key = False
         relic = ""
         d = parser.data.get("basemod:mod_saves", ())
-        if "BlueKeyRelicSkippedLog" in d: # XXX: check how savefiles do it
+        if "BlueKeyRelicSkippedLog" in d:
             if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
                 relic = d["BlueKeyRelicSkippedLog"]["relicID"]
+                has_blue_key = True
+        elif "blue_key_relic_skipped_log" in parser.data:
+            if parser.data["blue_key_relic_skipped_log"]["floor"] == floor:
+                relic = parser.data["blue_key_relic_skipped_log"]["relicID"]
                 has_blue_key = True
         return super().from_parser(parser, floor, has_blue_key, relic, *extra)
 
@@ -331,3 +384,13 @@ class Boss(EncounterBase):
 class BossChest(NodeData):
     room_type = "Boss Chest"
     map_icon = "boss_chest.png"
+    end_of_line = True
+
+class Act4Transition(NodeData):
+    room_type = "Transition into Act 4"
+    map_icon = "event.png"
+    end_of_line = True
+
+class Victory(NodeData):
+    room_type = "Victory!"
+    map_icon = "event.png"

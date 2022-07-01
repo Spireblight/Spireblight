@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Generator
 
 from datetime import datetime
 
@@ -13,7 +13,7 @@ import aiohttp_jinja2
 
 from webpage import router
 
-from gamedata import get_nodes, get_character
+from gamedata import NodeData, get_nodes, get_character, get_seed
 
 _cache: dict[str, RunParser] = {}
 
@@ -22,9 +22,15 @@ class RunParser:
         self.data = data
         self.filename = filename
         self.name, _, ext = filename.partition(".")
+        self._cache = {}
+        self._pathed = False
 
     def __getitem__(self, item: str) -> Any:
         return self.data[item]
+
+    @property
+    def character(self) -> str:
+        return get_character(self)
 
     @property
     def display_name(self) -> str:
@@ -32,7 +38,7 @@ class RunParser:
             ts = int(self.name)
         except ValueError:
             return self.name
-        return f"({get_character(self)} {'victory' if self.won else 'loss'}) {datetime.fromtimestamp(ts).isoformat(' ')}"
+        return f"({self.character} {'victory' if self.won else 'loss'}) {datetime.fromtimestamp(ts).isoformat(' ')}"
 
     @property
     def won(self) -> bool:
@@ -43,8 +49,38 @@ class RunParser:
         return self.data.get("killed_by")
 
     @property
-    def path(self):
-        return get_nodes(self)
+    def score(self) -> int:
+        return int(self.data["score"])
+
+    @property
+    def run_length(self) -> str:
+        seconds = self.data["playtime"]
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        if hours:
+            return f"{hours}:{minutes:>02}:{seconds:>02}"
+        return f"{minutes:>02}:{seconds:>02}"
+
+    @property
+    def seed(self) -> int:
+        if "seed" not in self._cache:
+            self._cache["seed"] = get_seed(self)
+        return self._cache["seed"]
+
+    @property
+    def path(self) -> Generator[NodeData, None, None]:
+        """Return the run's path. This is cached."""
+        if not self._pathed:
+            if "path" in self._cache:
+                raise RuntimeError("Called RunParser.path while it's generating")
+            self._cache["path"] = []
+            for node in get_nodes(self):
+                self._cache["path"].append(node)
+                yield node
+            self._pathed = True
+            return
+
+        yield from self._cache["path"] # generator so that it's a consistent type
 
     @property
     def relics(self):

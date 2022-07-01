@@ -3,9 +3,22 @@
 Run: {{ parser.display_name }}
 {% endblock %}
 {% block content %}
+    <h1>{{ parser.character }}</h1>
+    {% if parser.won %}
+    Victory
+    {% else %}
+    Killed by {{ parser.killed_by }}
+    {% endif %}
+    <br>
+    Run duration: {{ parser.run_length }}
+    <br>
+    Seed: {{ parser.seed }}
+    <br>
+    Score: {{ parser.score }}
+    <br><br>
     {% for node in parser.path %}
     <img src="/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
-    {% if node.room_type == "Boss Chest" %}
+    {% if node.end_of_line %}
     <br>
     {% endif %}
     {% endfor %}
@@ -14,4 +27,8 @@ Run: {{ parser.display_name }}
     <img src="/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
     {% endfor %}
     <br>
+{% endblock %}
+{% block footer %}
+<a href="/runs">Back to all runs</a><br>
+{{ super() }}
 {% endblock %}

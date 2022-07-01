@@ -22,6 +22,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
+from gamedata import get_seed
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -619,19 +620,7 @@ async def neowbonus(ctx: ContextType, j: Savefile):
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, j: Savefile):
     """Display the run's current seed."""
-    c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
-
-    # this is a bit weird, but lets us convert a negative number, if any, into a positive one
-    num = int.from_bytes(j["seed"].to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
-    s = []
-
-    while num:
-        num, i = divmod(num, 35)
-        s.append(c[i])
-
-    s.reverse() # everything's backwards, for some reason... but this works
-
-    await ctx.send(f"Current seed: {''.join(s)}{' (set manually)' if j['seed_set'] else ''}")
+    await ctx.send(f"Current seed: {get_seed(j)}{' (set manually)' if j['seed_set'] else ''}")
 
 @with_savefile("seeded", "isthisseeded")
 async def is_seeded(ctx: ContextType, j: Savefile):
