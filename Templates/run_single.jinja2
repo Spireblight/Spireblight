@@ -18,7 +18,7 @@ Run: {{ parser.display_name }}
     <br><br>
     {% for node in parser.path %}
     <img src="/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
-    {% if node.end_of_line %}
+    {% if node.end_of_act %}
     <br>
     {% endif %}
     {% endfor %}
@@ -27,8 +27,9 @@ Run: {{ parser.display_name }}
     <img src="/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
     {% endfor %}
     <br>
+    <img src="/runs/{{ parser.name }}/plot?view=max_hp:Max HP,current_hp:Current HP&title=Progression of HP during the run&label=HP" alt="Progression of HP during the run">
+    <img src="/runs/{{ parser.name }}/plot?view=gold:Gold&title=Progression of gold during the run&label=Gold" alt="Progression of gold during the run">
 {% endblock %}
 {% block footer %}
 <a href="/runs">Back to all runs</a><br>
-{{ super() }}
 {% endblock %}

@@ -48,9 +48,9 @@ class NodeData:
 
     room_type = "<UNDEFINED>"
     map_icon = "<UNDEFINED>"
-    end_of_line = False
+    end_of_act = False
 
-    def __init__(self):
+    def __init__(self): # TODO: Keep track of the deck per node
         if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
         self._floor = None
@@ -90,10 +90,6 @@ class NodeData:
             self._maxhp = data[prefix + "max_hp_per_floor"][floor - 2]
             self._curhp = data[prefix + "current_hp_per_floor"][floor - 2]
             self._gold = data[prefix + "gold_per_floor"][floor - 2]
-            if "potion_use_per_floor" in data:
-                self._usedpotions.extend(data["potion_use_per_floor"][floor - 2])
-            elif "PotionUseLog" in data:
-                self._usedpotions.extend(data["PotionUseLog"][floor - 2])
 
         for cards in data[prefix + "card_choices"]:
             if cards["floor"] == floor:
@@ -384,12 +380,12 @@ class Boss(EncounterBase):
 class BossChest(NodeData):
     room_type = "Boss Chest"
     map_icon = "boss_chest.png"
-    end_of_line = True
+    end_of_act = True
 
 class Act4Transition(NodeData):
     room_type = "Transition into Act 4"
     map_icon = "event.png"
-    end_of_line = True
+    end_of_act = True
 
 class Victory(NodeData):
     room_type = "Victory!"

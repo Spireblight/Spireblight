@@ -5,9 +5,11 @@ from typing import Any, Generator
 from datetime import datetime
 
 import json
+import io
 import os
 
-from aiohttp.web import Request, Response, HTTPNotFound
+from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden
+from matplotlib import pyplot as plt
 
 import aiohttp_jinja2
 
@@ -116,6 +118,73 @@ async def run_single(req: Request):
         raise HTTPNotFound()
 
     return {"parser": parser}
+
+@router.get("/runs/{name}/{type}")
+async def run_chart(req: Request) -> Response:
+    name = req.match_info["name"]
+    parser = _cache.get(f"{name}.run") # most common case
+    if parser is None:
+        _update_cache()
+        parser = _cache.get(f"{name}.run") # try again, just in case
+        if parser is None: # okay, iterate through everything
+            for run_parser in _cache.values():
+                if run_parser.name == name:
+                    parser = run_parser
+                    break
+
+    if parser is None:
+        raise HTTPNotFound()
+
+    totals: dict[str, list[int]] = {}
+    names = {}
+    ends = []
+    floors = []
+    for x in req.query["view"].split(","):
+        arg, _, name = x.partition(":")
+        if arg.startswith("_"):
+            raise HTTPForbidden()
+        totals[arg] = []
+        names[arg] = name
+
+    for node in parser.path:
+        floors.append(node.floor)
+        if node.end_of_act:
+            ends.append(node.floor)
+        for name, d in totals.items():
+            d.append(getattr(node, name, 0))
+
+    fig, ax = plt.subplots()
+    match req.match_info["type"]:
+        case "plot":
+            func = ax.plot
+        case "scatter":
+            func = ax.scatter
+        case "bar":
+            func = ax.bar
+        case "stem":
+            func = ax.stem
+        case x:
+            raise HTTPNotFound()
+
+    for num in ends:
+        plt.axvline(num, color="black", linestyle="dashed")
+
+    for name, d in totals.items():
+        func(floors, d, label=names[name])
+    ax.legend()
+
+    plt.xlabel("Floor")
+    if "label" in req.query:
+        plt.ylabel(req.query["label"])
+    plt.xlim(left=0)
+    plt.ylim(bottom=0)
+    if "title" in req.query:
+        plt.suptitle(req.query["title"])
+
+    with io.BytesIO() as file:
+        plt.savefig(file, format="png", transparent=True)
+
+        return Response(body=file.getvalue(), content_type="image/png")
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:
