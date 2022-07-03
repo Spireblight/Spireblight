@@ -1,7 +1,10 @@
-<body>
+{% extends "base.jinja2" %}
+{% block title %}
+Commands
+{% endblock %}
+{% block content %}
     <h1>List of all commands current existing in the bot:</h1>
     {% for name in commands %}
         <a href="/commands/{{ name }}">{{ prefix }}{{ name }}</a><br>
     {% endfor %}
-    <br><a href="/">Return to the main page.</a>
-</body>
+{% endblock %}

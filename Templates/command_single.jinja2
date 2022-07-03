@@ -1,4 +1,8 @@
-<body>
+{% extends "base.jinja2" %}
+{% block title %}
+{{ name }}
+{% endblock %}
+{% block content %}
     <h1>Command: {{ name }}</h1>
     <p>
     {% if builtin %}
@@ -6,7 +10,7 @@
         <br>
         {{ fndoc }}
     {% else %}
-        Output: {{ output }}
+        Output: {{ output|safe }}
     {% endif %}
     <br>
     Enabled: {{ enabled }}
@@ -20,6 +24,7 @@
     Usable on Twitch: {{ twitch }}
     <br>
     Usable on Discord: {{ discord }}
-    </p>
-    <a href="/commands">Back to all commands.</a>
-</body>
+{% endblock %}
+{% block footer %}
+<a href="/commands">Back to all commands</a><br>
+{% endblock %}
