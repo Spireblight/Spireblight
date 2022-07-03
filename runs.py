@@ -15,20 +15,15 @@ import aiohttp_jinja2
 
 from webpage import router
 
-from gamedata import NodeData, get_nodes, get_character, get_seed
+from gamedata import FileParser, get_character
 
 _cache: dict[str, RunParser] = {}
 
-class RunParser:
+class RunParser(FileParser):
     def __init__(self, filename: str, data: dict[str, Any]):
-        self.data = data
+        super().__init__(data)
         self.filename = filename
         self.name, _, ext = filename.partition(".")
-        self._cache = {}
-        self._pathed = False
-
-    def __getitem__(self, item: str) -> Any:
-        return self.data[item]
 
     @property
     def character(self) -> str:
@@ -36,18 +31,18 @@ class RunParser:
 
     @property
     def display_name(self) -> str:
-        try:
-            ts = int(self.name)
-        except ValueError:
-            return self.name
-        return f"({self.character} {'victory' if self.won else 'loss'}) {datetime.fromtimestamp(ts).isoformat(' ')}"
+        return f"({self.character} {'victory' if self.won else 'loss'}) {self.timestamp}"
+
+    @property
+    def timestamp(self) -> str:
+        return datetime.fromtimestamp(self.data["timestamp"]).isoformat(" ")
 
     @property
     def won(self) -> bool:
         return self.data["victory"]
 
     @property
-    def killed_by(self) -> str:
+    def killed_by(self) -> str | None:
         return self.data.get("killed_by")
 
     @property
@@ -62,27 +57,6 @@ class RunParser:
         if hours:
             return f"{hours}:{minutes:>02}:{seconds:>02}"
         return f"{minutes:>02}:{seconds:>02}"
-
-    @property
-    def seed(self) -> int:
-        if "seed" not in self._cache:
-            self._cache["seed"] = get_seed(self)
-        return self._cache["seed"]
-
-    @property
-    def path(self) -> Generator[NodeData, None, None]:
-        """Return the run's path. This is cached."""
-        if not self._pathed:
-            if "path" in self._cache:
-                raise RuntimeError("Called RunParser.path while it's generating")
-            self._cache["path"] = []
-            for node in get_nodes(self):
-                self._cache["path"].append(node)
-                yield node
-            self._pathed = True
-            return
-
-        yield from self._cache["path"] # generator so that it's a consistent type
 
     @property
     def relics(self):
@@ -139,12 +113,14 @@ async def run_chart(req: Request) -> Response:
     names = {}
     ends = []
     floors = []
+    if "view" not in req.query:
+        raise HTTPForbidden()
     for x in req.query["view"].split(","):
         arg, _, name = x.partition(":")
         if arg.startswith("_"):
             raise HTTPForbidden()
         totals[arg] = []
-        names[arg] = name
+        names[arg] = name if name else arg
 
     for node in parser.path:
         floors.append(node.floor)
@@ -185,6 +161,10 @@ async def run_chart(req: Request) -> Response:
         plt.savefig(file, format="png", transparent=True)
 
         return Response(body=file.getvalue(), content_type="image/png")
+
+@router.get("/runs/compare")
+async def compare_runs(req: Request) -> Response:
+    pass
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:

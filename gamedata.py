@@ -1,12 +1,48 @@
-from typing import Generator
+from __future__ import annotations
 
-__all__ = ["get_nodes", "get_node", "get_character", "get_seed"]
+from typing import Any, Generator
+
+__all__ = ["FileParser", "get_nodes", "get_node", "get_character", "get_seed"]
 
 # TODO: Handle the website display part, figure out details of these classes later
 
-_chars = {"THE_SILENT": "Silent"}
+class FileParser:
+    def __init__(self, data: dict[str, Any]):
+        self.data = data
+        self._cache = {}
+        self._pathed = False
 
-def get_seed(parser):
+    def __getitem__(self, item: str) -> Any:
+        return self.data[item]
+
+    def __contains__(self, item: str) -> bool:
+        return item in self.data
+
+    def get(self, item: str, default=None):
+        return self.data.get(item, default)
+
+    @property
+    def seed(self) -> int:
+        if "seed" not in self._cache:
+            self._cache["seed"] = get_seed(self)
+        return self._cache["seed"]
+
+    @property
+    def path(self) -> Generator[NodeData, None, None]:
+        """Return the run's path. This is cached."""
+        if not self._pathed:
+            if "path" in self._cache:
+                raise RuntimeError("Called RunParser.path while it's generating")
+            self._cache["path"] = []
+            for node in get_nodes(self):
+                self._cache["path"].append(node)
+                yield node
+            self._pathed = True
+            return
+
+        yield from self._cache["path"] # generator so that it's a consistent type
+
+def get_seed(parser: FileParser):
     c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
     try:
@@ -26,11 +62,13 @@ def get_seed(parser):
 
     return "".join(s)
 
-def get_character(x):
-    if "character_chosen" in x.data:
-        c = _chars.get(x.data["character_chosen"])
+_chars = {"THE_SILENT": "Silent"}
+
+def get_character(x: FileParser):
+    if "character_chosen" in x:
+        c = _chars.get(x["character_chosen"])
         if c is None:
-            c = x.data["character_chosen"].title()
+            c = x["character_chosen"].title()
         return c
 
     raise ValueError
@@ -64,42 +102,41 @@ class NodeData:
         self._cache = {}
 
     @classmethod
-    def from_parser(cls, parser, floor: int, *extra):
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
         """Create a NodeData instance from a parser and floor number.
 
         This is the recommended way to create NodeData instances. All
         subclasses should call it to create a new instance. Extra arguments
         will be passed to `__init__` for instance creation."""
 
-        data: dict = parser.data
         prefix = ""
-        if "victory" not in data: # this is a save file
+        if "victory" not in parser: # this is a save file
             prefix = "metric_"
 
         self = cls(*extra)
         self._floor = floor
         try:
-            self._maxhp = data[prefix + "max_hp_per_floor"][floor - 1]
-            self._curhp = data[prefix + "current_hp_per_floor"][floor - 1]
-            self._gold = data[prefix + "gold_per_floor"][floor - 1]
-            if "potion_use_per_floor" in data: # run file
-                self._usedpotions.extend(data["potion_use_per_floor"][floor - 1])
-            elif "PotionUseLog" in data: # savefile
-                self._usedpotions.extend(data["PotionUseLog"][floor - 1])
+            self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 1]
+            self._curhp = parser[prefix + "current_hp_per_floor"][floor - 1]
+            self._gold = parser[prefix + "gold_per_floor"][floor - 1]
+            if "potion_use_per_floor" in parser: # run file
+                self._usedpotions.extend(parser["potion_use_per_floor"][floor - 1])
+            elif "PotionUseLog" in parser: # savefile
+                self._usedpotions.extend(parser["PotionUseLog"][floor - 1])
         except IndexError:
-            self._maxhp = data[prefix + "max_hp_per_floor"][floor - 2]
-            self._curhp = data[prefix + "current_hp_per_floor"][floor - 2]
-            self._gold = data[prefix + "gold_per_floor"][floor - 2]
+            self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
+            self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
+            self._gold = parser[prefix + "gold_per_floor"][floor - 2]
 
-        for cards in data[prefix + "card_choices"]:
+        for cards in parser[prefix + "card_choices"]:
             if cards["floor"] == floor:
                 self._cards.append(cards)
 
-        for relic in data[prefix + "relics_obtained"]:
+        for relic in parser[prefix + "relics_obtained"]:
             if relic["floor"] == floor:
                 self._relics.append(relic["key"])
 
-        for potion in data[prefix + "potions_obtained"]:
+        for potion in parser[prefix + "potions_obtained"]:
             if potion["floor"] == floor:
                 self._potions.append(potion["key"])
 
@@ -204,18 +241,18 @@ class NodeData:
     def used_potions(self) -> list[str]:
         return self._usedpotions
 
-def get_node(parser, floor: int) -> NodeData:
+def get_node(parser: FileParser, floor: int) -> NodeData:
     for node in get_nodes(parser):
         if node.floor == floor:
             return node
     raise IndexError(f"We did not reach floor {floor}")
 
-def get_nodes(parser) -> Generator[NodeData, None, None]:
+def get_nodes(parser: FileParser) -> Generator[NodeData, None, None]:
     prefix = ""
-    if "victory" not in parser.data:
+    if "victory" not in parser:
         prefix = "metric_"
-    on_map = iter(parser.data[prefix + "path_taken"])
-    for floor, actual in enumerate(parser.data[prefix + "path_per_floor"], 1):
+    on_map = iter(parser[prefix + "path_taken"])
+    for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
         node = [actual, None]
         if node[0] is not None:
             node[1] = next(on_map)
@@ -246,7 +283,7 @@ def get_nodes(parser) -> Generator[NodeData, None, None]:
             case (None, None):
                 if floor < 50: # kind of a hack for the first two acts
                     cls = BossChest
-                elif len(parser.data[prefix + "max_hp_per_floor"]) < floor:
+                elif len(parser[prefix + "max_hp_per_floor"]) < floor:
                     cls = Victory
                 else:
                     cls = Act4Transition
@@ -264,12 +301,11 @@ class EncounterBase(NodeData):
 
     @classmethod
     def from_parser(cls, parser, floor: int, *extra):
-        data: dict = parser.data
         prefix = ""
-        if "victory" not in data: # this is a save file
+        if "victory" not in parser: # this is a save file
             prefix = "metric_"
 
-        for damage in data[prefix + "damage_taken"]:
+        for damage in parser[prefix + "damage_taken"]:
             if damage["floor"] == floor:
                 break
         else:
@@ -324,14 +360,14 @@ class Treasure(NodeData):
     def from_parser(cls, parser, floor: int, *extra):
         has_blue_key = False
         relic = ""
-        d = parser.data.get("basemod:mod_saves", ())
+        d = parser.get("basemod:mod_saves", ())
         if "BlueKeyRelicSkippedLog" in d:
             if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
                 relic = d["BlueKeyRelicSkippedLog"]["relicID"]
                 has_blue_key = True
-        elif "blue_key_relic_skipped_log" in parser.data:
-            if parser.data["blue_key_relic_skipped_log"]["floor"] == floor:
-                relic = parser.data["blue_key_relic_skipped_log"]["relicID"]
+        elif "blue_key_relic_skipped_log" in parser:
+            if parser["blue_key_relic_skipped_log"]["floor"] == floor:
+                relic = parser["blue_key_relic_skipped_log"]["relicID"]
                 has_blue_key = True
         return super().from_parser(parser, floor, has_blue_key, relic, *extra)
 
