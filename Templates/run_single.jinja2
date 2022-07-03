@@ -29,8 +29,12 @@ Run: {{ parser.display_name }}
     <img src="/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
     {% endfor %}
     <br>
-    <img src="/runs/{{ parser.name }}/plot?view=max_hp:Max HP,current_hp:Current HP&title=Progression of HP during the run&label=HP" alt="Progression of HP during the run">
-    <img src="/runs/{{ parser.name }}/plot?view=gold:Gold&title=Progression of gold during the run&label=Gold" alt="Progression of gold during the run">
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp:Max HP,current_hp:Current HP&title=Progression of HP during the run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold:Gold&title=Progression of gold during the run&label=Gold&type=embed" title="Progression of gold during the run" width=670 height=500>
+    <!--
+    <img src="/runs/{{ parser.name }}/plot?view=max_hp:Max HP,current_hp:Current HP&title=Progression of HP during the run&label=HP&type=image" alt="Progression of HP during the run">
+    <img src="/runs/{{ parser.name }}/plot?view=gold:Gold&title=Progression of gold during the run&label=Gold&type=image" alt="Progression of gold during the run">
+    -->
 {% endblock %}
 {% block footer %}
 <a href="/runs">Back to all runs</a><br>
