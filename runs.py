@@ -9,7 +9,7 @@ import time
 import io
 import os
 
-from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden
+from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnauthorized, HTTPNotImplemented
 from matplotlib import pyplot as plt
 
 import aiohttp_jinja2
@@ -20,8 +20,15 @@ from webpage import router
 
 import config
 
+__all__ = ["get_latest_run"]
+
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
+
+def get_latest_run():
+    _update_cache()
+    latest = max(_ts_cache)
+    return _ts_cache[latest]
 
 class RunParser(FileParser):
     def __init__(self, filename: str, data: dict[str, Any]):
@@ -188,4 +195,25 @@ async def compare_runs(req: Request):
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:
-    pass
+    pw = req.query.get("key")
+    if pw is None:
+        raise HTTPUnauthorized(reason="No API key provided")
+    if not config.secret:
+        raise HTTPNotImplemented(reason="No API key present in config")
+    if pw != config.secret:
+        raise HTTPForbidden(reason="Invalid API key provided")
+
+    post = await req.post()
+
+    file = post.get("run")
+    content = file.file.read()
+    content = content.decode("utf-8", "xmlcharrefreplace")
+
+    name = post.get("name")
+    with open(os.path.join("data", "runs", name), "w") as f:
+        f.write(content)
+    data = json.loads(content)
+    _cache[name] = parser = RunParser(name, data)
+    _ts_cache[parser.timestamp] = parser
+
+    return Response()

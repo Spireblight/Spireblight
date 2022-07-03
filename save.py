@@ -3,7 +3,7 @@ from typing import Optional, Any
 import base64
 import json
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPBadRequest, HTTPNotImplemented, Response
+from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, Response
 
 from typehints import ContextType
 from webpage import router
@@ -22,7 +22,7 @@ async def receive_save(req: Request):
     if not config.secret:
         raise HTTPNotImplemented(reason="No API key present in config")
     if pw != config.secret:
-        raise HTTPBadRequest(reason="Invalid API key provided")
+        raise HTTPForbidden(reason="Invalid API key provided")
 
     post = await req.post()
 

@@ -29,6 +29,7 @@ from twitch import TwitchCommand
 from logger import logger
 from disc import DiscordCommand
 from save import get_savefile_as_json, Savefile
+from runs import get_latest_run
 
 from typehints import ContextType
 import events
@@ -698,7 +699,12 @@ async def skipped_boss_relics(ctx: ContextType, j: Savefile):
 
     await ctx.send(" ".join(msg))
 
-@command("wall")
+@command("lastrun", "last")
+async def get_last_run(ctx: ContextType):
+    latest = get_latest_run()
+    await ctx.send(f"The last run's history can be viewed at {config.website_url}/runs/{latest.name}")
+
+#@command("wall")
 async def wall_card(ctx: ContextType): # FIXME: Needs data from remote
     """Fetch the card in the wall for the ladder savefile."""
     msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"

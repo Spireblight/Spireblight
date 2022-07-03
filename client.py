@@ -10,6 +10,8 @@ async def main():
     print("Client running. Will periodically check for the savefile and send it over!")
     has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
+    with open("last_run") as f:
+        last_run = f.read().strip()
     possible = None
     timeout = 1
     if not config.website_url or not config.secret:
@@ -35,6 +37,14 @@ async def main():
             except OSError:
                 possible = None
 
+        to_send = []
+        for path, folders, files in os.walk(os.path.join(config.STS_path, "runs")):
+            for folder in folders:
+                for p1, d1, f1 in os.walk(os.path.join(path, folder)):
+                    for file in f1:
+                        if file > last_run:
+                            to_send.append((p1, file))
+
         try:
             if possible is None and has_save: # server has a save, but we don't (anymore)
                 async with ClientSession() as session:
@@ -52,6 +62,22 @@ async def main():
                         if resp.ok:
                             last = cur
                             has_save = True
+
+            if to_send:
+                all_sent = True
+                async with ClientSession() as session:
+                    for path, file in to_send:
+                        with open(os.path.join(path, file)) as f:
+                            content = f.read()
+                        content = content.encode("utf-8", "xmlcharrefreplace")
+                        async with session.post(f"{config.website_url}/sync/run", data={"run": content, "name": file}, params={"key": config.secret}) as resp:
+                            if not resp.ok:
+                                all_sent = False
+                if all_sent:
+                    last_run = max(to_send)
+                    with open("last_run", "w") as f:
+                        f.write(last_run)
+
         except ClientError:
             timeout = 10 # give it a bit of time
             print("Error: Server is offline! Retrying in 10s")
