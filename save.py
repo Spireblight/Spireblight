@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Any
 
 import base64
 import json
@@ -6,13 +6,29 @@ import json
 from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, Response
 
 from typehints import ContextType
+from gamedata import FileParser
 from webpage import router
 
 import config
 
-Savefile = dict[str, Any] # this lets us change this later on
+__all__ = ["get_savefile"]
 
-current_savefile: Optional[str] = None
+class Savefile(FileParser):
+    def update_data(self, data: dict[str, Any] | None, character: str):
+        self.data = data
+        self._pathed = False
+        if not character:
+            self._character = None
+            self._cache.clear()
+        else:
+            self._character = character
+            self._cache.pop("path")
+
+    @property
+    def prefix(self) -> str:
+        return "metric_"
+
+_savefile = Savefile(None)
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
@@ -29,26 +45,27 @@ async def receive_save(req: Request):
     file = post.get("savefile")
     content = file.file.read()
     content = content.decode("utf-8", "xmlcharrefreplace")
+    name = post.get("character")
+    name = name.file.read()
+    name = name.decode("utf-8", "xmlcharrefreplace")
 
-    global current_savefile # done here just so it passed preliminary checks
+    j = None
+    if content:
+        decoded = base64.b64decode(content)
+        arr = bytearray()
+        for i, char in enumerate(decoded):
+            arr.append(char ^ b"key"[i % 3])
+        j = json.loads(arr)
+        if "basemod:mod_saves" not in j: # make sure this key exists
+            j["basemod:mod_saves"] = {}
 
-    if not content:
-        current_savefile = None
-        return Response()
+    _savefile.update_data(j, name)
 
-    current_savefile = content
     return Response()
 
-async def get_savefile_as_json(ctx: ContextType) -> Savefile:
-    if current_savefile is None:
+async def get_savefile(ctx: ContextType) -> Savefile:
+    if _savefile.character is None:
         await ctx.send("Not in a run.")
         return
 
-    decoded = base64.b64decode(current_savefile)
-    arr = bytearray()
-    for i, char in enumerate(decoded):
-        arr.append(char ^ b"key"[i % 3])
-    j = json.loads(arr)
-    if "basemod:mod_saves" not in j: # make sure this key exists
-        j["basemod:mod_saves"] = {}
-    return j
+    return _savefile

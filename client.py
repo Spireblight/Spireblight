@@ -48,7 +48,7 @@ async def main():
         try:
             if possible is None and has_save: # server has a save, but we don't (anymore)
                 async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": b""}, params={"key": config.secret}) as resp:
+                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret}) as resp:
                         if resp.ok:
                             has_save = False
 
@@ -57,8 +57,9 @@ async def main():
                 with open(os.path.join(config.STS_path, "saves", possible)) as f:
                     content = f.read()
                 content = content.encode("utf-8", "xmlcharrefreplace")
+                char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
                 async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": content}, params={"key": config.secret}) as resp:
+                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret}) as resp:
                         if resp.ok:
                             last = cur
                             has_save = True

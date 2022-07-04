@@ -2,15 +2,258 @@ from __future__ import annotations
 
 from typing import Any, Generator
 
-__all__ = ["FileParser", "get_nodes", "get_node", "get_character", "get_seed"]
+__all__ = ["FileParser", "get_nodes", "get_node"]
 
 # TODO: Handle the website display part, figure out details of these classes later
+
+class NeowBonus:
+    def __init__(self, parser: FileParser):
+        self.parser = parser
+
+    @property
+    def mod_data(self) -> dict[str, Any] | None:
+        if "basemod:mod_saves" in self.parser:
+            return self.parser["basemod:mod_saves"].get("NeowBonusLog")
+        return self.parser.get("neow_bonus_log")
+
+    @property
+    def current_hp(self) -> int:
+        return self.get_hp()[0]
+
+    @property
+    def max_hp(self) -> int:
+        return self.get_hp()[1]
+
+    @property
+    def gold(self) -> int:
+        return self.get_gold()
+
+    @property
+    def floor(self) -> int:
+        return 0
+
+    def get_hp(self) -> tuple[int, int]:
+        """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
+        if self.parser.character is None:
+            return 0, 0
+
+        match self.parser.character:
+            case "Ironclad":
+                base = 80
+                bonus = 8
+            case "Silent":
+                base = 70
+                bonus = 6
+            case "Defect":
+                base = 75
+                bonus = 7
+            case "Watcher":
+                base = 72
+                bonus = 7
+            case a:
+                raise ValueError(f"I don't know how to handle {a}")
+
+        if self.parser["ascension_level"] >= 14: # lower max HP
+            base -= 4
+            if self.parser.character == "Ironclad":
+                base -= 1 # 5 total
+
+        cur = base
+
+        if self.parser["ascension_level"] >= 6: # take damage
+            cur -= (cur // 10)
+
+        if self.mod_data is not None:
+            cur -= self.mod_data["damageTaken"]
+            cur += self.mod_data["maxHpGained"]
+            base -= self.mod_data["maxHpLost"]
+            base += self.mod_data["maxHpGained"]
+            return (cur, base)
+
+        match self.parser["neow_cost"]:
+            case "TEN_PERCENT_HP_LOSS": # actually hardcoded
+                base -= bonus
+                if cur > base:
+                    cur = base
+            case "PERCENT_DAMAGE":
+                cur -= (cur // 10) * 3
+
+        match self.parser["neow_bonus"]:
+            case "TEN_PERCENT_HP_BONUS":
+                base += bonus
+                cur += bonus
+            case "TWENTY_PERCENT_HP_BONUS":
+                base += (bonus * 2)
+                cur += (bonus * 2)
+
+        return (cur, base)
+
+    def get_gold(self) -> int:
+        base = 99
+        if self.mod_data is not None:
+            base += (self.mod_data["goldGained"] - self.mod_data["goldLost"])
+            if "Old Coin" in self.mod_data["relicsObtained"]:
+                base += 300
+            return base
+
+        if self.parser["neow_cost"] == "NO_GOLD":
+            base = 0
+
+        match self.parser["neow_bonus"]:
+            case "HUNDRED_GOLD":
+                base += 100
+            case "TWO_FIFTY_GOLD":
+                base += 255
+            case "ONE_RARE_RELIC":
+                if self.parser["relics"][1] == "Old Coin": # this can break if N'loth is involved
+                    base += 300
+
+        return base
+
+    # options 1 & 2
+
+    def bonus_THREE_CARDS(self):
+        prefix = self.parser.prefix
+        for cards in self.parser[prefix + "card_choices"]:
+            if cards["floor"] == 0:
+                if cards["picked"]:
+                    return f"picked {cards['picked']} over {' and '.join(cards['not_picked'])}"
+                return f"were offered {', '.join(cards['not_picked'])} but skipped them all"
+
+        raise ValueError("That is not the right bonus??")
+
+    bonus_RANDOM_COLORLESS = bonus_THREE_CARDS
+
+    def bonus_RANDOM_COMMON_RELIC(self):
+        if self.mod_data is not None:
+            return f"picked a random Common relic, and got {self.mod_data['relicsObtained'][0]}"
+        return "picked a random Common relic"
+
+    def bonus_REMOVE_CARD(self):
+        if self.mod_data is not None:
+            return f"removed {self.mod_data['cardsRemoved'][0]}"
+        return "removed a card"
+
+    def bonus_TRANSFORM_CARD(self):
+        if self.mod_data is not None:
+            return f"transformed {self.mod_data['cardsTransformed'][0]} into {self.mod_data['cardsObtained'][0]}"
+        return "transformed a card"
+
+    def bonus_UPGRADE_CARD(self):
+        if self.mod_data is not None:
+            return f"upgraded {self.mod_data['cardsUpgraded'][0]}"
+        return "upgraded a card"
+
+    def bonus_THREE_ENEMY_KILL(self):
+        return "got Neow's Lament to get three fights with enemies having 1 HP"
+
+    def bonus_THREE_SMALL_POTIONS(self):
+        potions = []
+        skipped = []
+        prefix = self.parser.prefix
+        for potion in self.parser[prefix + "potions_obtained"]:
+            if potion["floor"] == 0:
+                potions.append(potion)
+        if self.mod_data is not None:
+            if "basemod:mod_saves" in self.parser:
+                s = self.parser["basemod:mod_saves"]["RewardsSkippedLog"]
+            else:
+                s = self.parser["rewards_skipped"]
+            for skip in s:
+                if skip["floor"] == 0:
+                    skipped.extend(skip["potions"])
+        if skipped:
+            return f"got {' and '.join(potions)}, and skipped {' and '.join(skipped)}"
+        return f"got {' and '.join(potions)}"
+
+    def bonus_TEN_PERCENT_HP_BONUS(self):
+        if self.mod_data is not None:
+            return f"gained {self.mod_data['maxHpGained']} Max HP"
+        return "gained 10% Max HP"
+
+    def bonus_ONE_RANDOM_RARE_CARD(self):
+        if self.mod_data is not None:
+            return f"picked a random Rare card, and got {self.mod_data['cardsObtained'][0]}"
+        return "picked a random Rare card"
+
+    def bonus_HUNDRED_GOLD(self):
+        return "got 100 gold"
+
+    # option 3
+
+    def bonus_TWO_FIFTY_GOLD(self):
+        return "got 250 gold"
+
+    def bonus_TWENTY_PERCENT_HP_BONUS(self):
+        if self.mod_data is not None:
+            return f"gained {self.mod_data['maxHpGained']} Max HP"
+        return "gained 20% Max HP"
+
+    bonus_RANDOM_COLORLESS_2 = bonus_THREE_CARDS
+    bonus_THREE_RARE_CARDS = bonus_THREE_CARDS
+
+    def bonus_REMOVE_TWO(self):
+        if self.mod_data is not None:
+            return f"removed {' and '.join(self.mod_data['cardsRemoved'])}"
+        return "removed two cards"
+
+    def bonus_TRANSFORM_TWO_CARDS(self):
+        if self.mod_data is not None:
+            return f"transformed {' and '.join(self.mod_data['cardsTransformed'])} into {' and '.join(self.mod_data['cardsObtained'])}"
+        return "transformed two cards"
+
+    def bonus_ONE_RARE_RELIC(self):
+        if self.mod_data is not None:
+            return f"picked a random Rare relic and got {self.mod_data['relicsObtained'][0]}"
+        return "obtained a random Rare relic"
+
+    # option 4
+
+    def bonus_BOSS_RELIC(self):
+        if self.mod_data is not None:
+            return f"swapped our starter relic for {self.mod_data['relicsObtained'][0]}"
+        return f"swapped our starter relic for {self.parser['relics'][0]}" # N'loth can mess with this
+
+    # costs for option 3
+
+    def cost_CURSE(self):
+        if self.mod_data is not None:
+            return f"got cursed with {self.mod_data['cardsObtained'][0]}"
+        return "got a random curse"
+
+    def cost_NO_GOLD(self):
+        return "lost all gold"
+
+    def cost_TEN_PERCENT_HP_LOSS(self):
+        if self.mod_data is not None:
+            return f"lost {self.mod_data['maxHpLost']} Max HP"
+        return "lost 10% Max HP"
+
+    def cost_PERCENT_DAMAGE(self):
+        if self.mod_data is not None:
+            return f"took {self.mod_data['damageTaken']} damage"
+        return "took damage (current HP / 10, rounded down, * 3)"
+
+    def as_str(self) -> str:
+        neg = getattr(self, f"cost_{self.parser['neow_cost']}", None)
+        pos = getattr(self, f"bonus_{self.parser['neow_bonus']}")
+
+        if neg is None:
+            msg = f"We {pos()}."
+        else:
+            msg = f"We {neg()}, and then {pos()}."
+
+        return msg
+
+_chars = {"THE_SILENT": "Silent"}
 
 class FileParser:
     def __init__(self, data: dict[str, Any]):
         self.data = data
+        self.neow_bonus = NeowBonus(self)
         self._cache = {}
         self._pathed = False
+        self._character: str | None = None
 
     def __getitem__(self, item: str) -> Any:
         return self.data[item]
@@ -22,9 +265,41 @@ class FileParser:
         return self.data.get(item, default)
 
     @property
+    def prefix(self) -> str:
+        return ""
+
+    @property
+    def character(self) -> str | None:
+        if self._character is None:
+            return None
+
+        c = _chars.get(self._character)
+        if c is None:
+            c = self._character.title()
+        return c
+
+    @property
     def seed(self) -> int:
         if "seed" not in self._cache:
-            self._cache["seed"] = get_seed(self)
+            c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
+
+            try:
+                seed = int(self["seed"]) # might be stored as a str
+            except KeyError:
+                seed = int(self["seed_played"])
+
+            # this is a bit weird, but lets us convert a negative number, if any, into a positive one
+            num = int.from_bytes(seed.to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
+            s = []
+
+            while num:
+                num, i = divmod(num, 35)
+                s.append(c[i])
+
+            s.reverse() # everything's backwards, for some reason... but this works
+
+            self._cache["seed"] = "".join(s)
+
         return self._cache["seed"]
 
     @property
@@ -41,37 +316,6 @@ class FileParser:
             return
 
         yield from self._cache["path"] # generator so that it's a consistent type
-
-def get_seed(parser: FileParser):
-    c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
-
-    try:
-        seed = int(parser["seed"]) # might be stored as a str
-    except KeyError:
-        seed = int(parser["seed_played"])
-
-    # this is a bit weird, but lets us convert a negative number, if any, into a positive one
-    num = int.from_bytes(seed.to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
-    s = []
-
-    while num:
-        num, i = divmod(num, 35)
-        s.append(c[i])
-
-    s.reverse() # everything's backwards, for some reason... but this works
-
-    return "".join(s)
-
-_chars = {"THE_SILENT": "Silent"}
-
-def get_character(x: FileParser):
-    if "character_chosen" in x:
-        c = _chars.get(x["character_chosen"])
-        if c is None:
-            c = x["character_chosen"].title()
-        return c
-
-    raise ValueError
 
 class NodeData:
     """Contain relevant information for Spire nodes.
@@ -109,9 +353,7 @@ class NodeData:
         subclasses should call it to create a new instance. Extra arguments
         will be passed to `__init__` for instance creation."""
 
-        prefix = ""
-        if "victory" not in parser: # this is a save file
-            prefix = "metric_"
+        prefix = parser.prefix
 
         self = cls(*extra)
         self._floor = floor
@@ -248,9 +490,7 @@ def get_node(parser: FileParser, floor: int) -> NodeData:
     raise IndexError(f"We did not reach floor {floor}")
 
 def get_nodes(parser: FileParser) -> Generator[NodeData, None, None]:
-    prefix = ""
-    if "victory" not in parser:
-        prefix = "metric_"
+    prefix = parser.prefix
     on_map = iter(parser[prefix + "path_taken"])
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
         node = [actual, None]
@@ -301,10 +541,7 @@ class EncounterBase(NodeData):
 
     @classmethod
     def from_parser(cls, parser, floor: int, *extra):
-        prefix = ""
-        if "victory" not in parser: # this is a save file
-            prefix = "metric_"
-
+        prefix = parser.prefix
         for damage in parser[prefix + "damage_taken"]:
             if damage["floor"] == floor:
                 break

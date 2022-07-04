@@ -17,6 +17,8 @@ Run: {{ parser.display_name }}
     Seed: {{ parser.seed }}
     <br>
     Score: {{ parser.score }}
+    <br>
+    Neow Bonus: {{ parser.neow_bonus.as_str() }}
     <br><br>
     {% for node in parser.path %}
     <img src="/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
@@ -28,6 +30,8 @@ Run: {{ parser.display_name }}
     {% for relic in parser.relics %}
     <img src="/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
     {% endfor %}
+    <br>
+    Tip: the graphs below can be interacted with, using the buttons in the bottom left!
     <br>
     <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp:Max HP,current_hp:Current HP&title=Progression of HP during the run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
     <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold:Gold&title=Progression of gold during the run&label=Gold&type=embed" title="Progression of gold during the run" width=670 height=500>

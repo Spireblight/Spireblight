@@ -22,13 +22,12 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
-from gamedata import get_seed
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
 from disc import DiscordCommand
-from save import get_savefile_as_json, Savefile
+from save import get_savefile, Savefile
 from runs import get_latest_run
 
 from typehints import ContextType
@@ -169,7 +168,7 @@ def with_savefile(name: str, *aliases: str, **kwargs):
     """Decorator for commands that require a save."""
     def inner(func):
         async def _savefile_get(ctx) -> list:
-            res = await get_savefile_as_json(ctx)
+            res = await get_savefile(ctx)
             if res is None:
                 raise ValueError("No savefile")
             return [res]
@@ -565,63 +564,12 @@ async def bluekey(ctx: ContextType, j: Savefile):
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, j: Savefile):
     """Display what the Neow bonus was."""
-    if "NeowBonusLog" not in j["basemod:mod_saves"]:
-        await ctx.send("RunHistoryPlus is not running; cannot get data.")
-        return
 
-    d = j["basemod:mod_saves"]["NeowBonusLog"]
-
-    if d["cardsUpgraded"]:
-        pos = f"upgraded {' and '.join(d['cardsUpgraded'])}"
-
-    elif d["cardsRemoved"]:
-        pos = f"removed {' and '.join(d['cardsRemoved'])}"
-
-    elif d["relicsObtained"]:
-        if j["neow_bonus"] == "BOSS_RELIC":
-            pos = f"swapped our Starter relic for {d['relicsObtained'][0]}"
-        else:
-            pos = f"obtained {d['relicsObtained'][0]}"
-
-    elif d["maxHpGained"]:
-        pos = f"gained {d['maxHpGained']} max HP"
-
-    elif d["goldGained"]:
-        pos = f"gained {d['goldGained']} gold"
-
-    elif d["cardsObtained"]: # TODO: handle curse-as-negative
-        if d["cardsTransformed"]:
-            pos = f"transformed {' and '.join(d['cardsTransformed'])} into {' and '.join(d['cardsObtained'])}"
-        else:
-            pos = f"obtained {' and '.join(d['cardsObtained'])}"
-
-    else:
-        pos = "got no bonus? If this is wrong, ping @FaeLyka"
-
-
-    if d["damageTaken"]:
-        neg = f"took {d['damageTaken']} damage"
-
-    elif d["goldLost"]:
-        neg = f"lost {d['goldLost']} gold"
-
-    elif d["maxHpLost"]:
-        neg = f"lost {d['maxHpLost']} max HP"
-
-    else:
-        neg = None
-
-    if neg is None:
-        msg = f"We {pos}."
-    else:
-        msg = f"We {neg}, and then {pos}."
-
-    await ctx.send(msg)
 
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, j: Savefile):
     """Display the run's current seed."""
-    await ctx.send(f"Current seed: {get_seed(j)}{' (set manually)' if j['seed_set'] else ''}")
+    await ctx.send(f"Current seed: {j.seed}{' (set manually)' if j['seed_set'] else ''}")
 
 @with_savefile("seeded", "isthisseeded")
 async def is_seeded(ctx: ContextType, j: Savefile):

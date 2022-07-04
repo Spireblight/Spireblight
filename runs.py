@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 import aiohttp_jinja2
 import mpld3
 
-from gamedata import FileParser, get_character
+from gamedata import FileParser
 from webpage import router
 
 import config
@@ -37,10 +37,7 @@ class RunParser(FileParser):
         super().__init__(data)
         self.filename = filename
         self.name, _, ext = filename.partition(".")
-
-    @property
-    def character(self) -> str:
-        return get_character(self)
+        self._character = data["character_chosen"]
 
     @property
     def display_name(self) -> str:
@@ -130,6 +127,13 @@ async def run_chart(req: Request) -> Response:
         totals[arg] = []
         names[arg] = name if name else arg
 
+    for name, d in totals.items():
+        val = getattr(parser.neow_bonus, name)
+        if val is not None:
+            if not floors:
+                floors.append(0)
+            d.append(val)
+
     for node in parser.path:
         floors.append(node.floor)
         if node.end_of_act:
@@ -169,20 +173,22 @@ async def run_chart(req: Request) -> Response:
 
     if req.query["type"] == "embed":
         value: str = mpld3.fig_to_html(fig)
+        plt.close(fig)
         value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
         return Response(body=value, content_type="text/html")
 
     elif req.query["type"] == "image":
         with io.BytesIO() as file:
             plt.savefig(file, format="png", transparent=True)
+            plt.close(fig)
 
             return Response(body=file.getvalue(), content_type="image/png")
 
-@router.get("/runs/compare")
+@router.get("/compare")
 async def compare_choose(req: Request):
     pass
 
-@router.get("/runs/compare/view")
+@router.get("/compare/view")
 async def compare_runs(req: Request):
     start = req.query.get("start", 0)
     end = req.query.get("end", time.time())
@@ -210,6 +216,8 @@ async def receive_run(req: Request) -> Response:
     content = content.decode("utf-8", "xmlcharrefreplace")
 
     name = post.get("name")
+    name = name.file.read()
+    name = name.decode("utf-8", "xmlcharrefreplace")
     with open(os.path.join("data", "runs", name), "w") as f:
         f.write(content)
     data = json.loads(content)
