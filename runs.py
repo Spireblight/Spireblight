@@ -29,6 +29,10 @@ _variables_map = {
     "current_hp": "Current HP",
     "max_hp": "Max HP",
     "gold": "Gold",
+    "floor_time": "Time spent in the floor (seconds)",
+    "card_count": "Number of cards in the deck",
+    "relic_count": "Number of relics",
+    "potion_count": "Number of potions",
 }
 
 def get_latest_run():
@@ -174,7 +178,7 @@ async def run_chart(req: Request) -> Response:
             plt.axvline(num, color="black", linestyle="dashed")
 
     for name, d in totals.items():
-        func(floors, d, label=_variables_map[name])
+        func(floors, d, label=_variables_map.get(name, name))
     ax.legend()
 
     plt.xlabel("Floor")

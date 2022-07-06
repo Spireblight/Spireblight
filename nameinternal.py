@@ -5,25 +5,25 @@ from events import add_listener
 
 __all__ = ["get_relic", "get_card", "get_potion"]
 
-_cache = {}
+_cache: dict[str, dict[str, str]] = {}
 
-def _get_name(x: str, d: str) -> str:
-    return _cache[d].get(x, {}).get("NAME", "<Unknown>")
+def _get_name(x: str, d: str, default: str) -> str:
+    return _cache[d].get(x, {}).get("NAME", default)
 
-def get_relic(name: str) -> str:
-    return _get_name(name, "relics")
+def get_relic(name: str, default: str = "<Unknown Relic>") -> str:
+    return _get_name(name, "relics", default)
 
-def get_card(name: str) -> str:
+def get_card(name: str, default: str = "<Unknown Card>") -> str:
     if name == "Singing Bowl":
-        return "Gained +2 Max HP"
+        return "Gain +2 Max HP"
     name, plus, upgrades = name.partition("+")
-    val = _get_name(name, "cards")
-    if upgrades not in ("1", ""):
+    val = _get_name(name, "cards", default)
+    if upgrades not in ("1", ""): # Searing Blow
         return f"{val}+{upgrades}"
     return f"{val}{plus}"
 
-def get_potion(name: str) -> str:
-    return _get_name(name, "potions")
+def get_potion(name: str, default: str = "<Unknown Potion>") -> str:
+    return _get_name(name, "potions", default)
 
 @add_listener("setup_init")
 async def load():

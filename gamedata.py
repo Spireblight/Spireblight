@@ -34,6 +34,10 @@ class NeowBonus:
     def floor(self) -> int:
         return 0
 
+    @property
+    def floor_time(self) -> int:
+        return 0
+
     def get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
         if self.parser.character is None:
@@ -42,16 +46,12 @@ class NeowBonus:
         match self.parser.character:
             case "Ironclad":
                 base = 80
-                bonus = 8
             case "Silent":
                 base = 70
-                bonus = 6
             case "Defect":
                 base = 75
-                bonus = 7
             case "Watcher":
                 base = 72
-                bonus = 7
             case a:
                 raise ValueError(f"I don't know how to handle {a}")
 
@@ -59,6 +59,8 @@ class NeowBonus:
             base -= 4
             if self.parser.character == "Ironclad":
                 base -= 1 # 5 total
+
+        bonus = base // 10
 
         cur = base
 
@@ -105,7 +107,7 @@ class NeowBonus:
             case "HUNDRED_GOLD":
                 base += 100
             case "TWO_FIFTY_GOLD":
-                base += 255
+                base += 250
             case "ONE_RARE_RELIC":
                 if self.parser["relics"][1] == "Old Coin": # this can break if N'loth is involved
                     base += 300
@@ -118,7 +120,7 @@ class NeowBonus:
         prefix = self.parser.prefix
         for cards in self.parser[prefix + "card_choices"]:
             if cards["floor"] == 0:
-                if cards["picked"]:
+                if cards["picked"] != "SKIP":
                     return f"picked {get_card(cards['picked'])} over {' and '.join(get_card(x) for x in cards['not_picked'])}"
                 return f"were offered {', '.join(get_card(x) for x in cards['not_picked'])} but skipped them all"
 
@@ -155,7 +157,7 @@ class NeowBonus:
         prefix = self.parser.prefix
         for potion in self.parser[prefix + "potions_obtained"]:
             if potion["floor"] == 0:
-                potions.append(get_potion(potion))
+                potions.append(get_potion(potion["key"]))
         if self.mod_data is not None:
             if "basemod:mod_saves" in self.parser:
                 s = self.parser["basemod:mod_saves"]["RewardsSkippedLog"]
@@ -165,8 +167,8 @@ class NeowBonus:
                 if skip["floor"] == 0:
                     skipped.extend(get_potion(x) for x in skip["potions"])
         if skipped:
-            return f"got {' and '.join(get_potion(x) for x in potions)}, and skipped {' and '.join(get_potion(x) for x in skipped)}"
-        return f"got {' and '.join(get_potion(x) for x in potions)}"
+            return f"got {' and '.join(potions)}, and skipped {' and '.join(skipped)}"
+        return f"got {' and '.join(potions)}"
 
     def bonus_TEN_PERCENT_HP_BONUS(self):
         if self.mod_data is not None:
@@ -247,9 +249,62 @@ class NeowBonus:
 
         return msg
 
+    def card_delta(self) -> int:
+        num = 10
+        if self.parser.character == "Silent":
+            num += 2
+
+        if self.parser["ascension_level"] >= 10:
+            num += 1
+
+        prefix = self.parser.prefix
+        for cards in self.parser[prefix + "card_choices"]:
+            if cards["floor"] == 0:
+                if cards["picked"] != "SKIP":
+                    num += 1
+
+        if self.parser["neow_cost"] == "CURSE":
+            num += 1
+
+        match self.parser["neow_bonus"]:
+            case "REMOVE_CARD":
+                num -= 1
+            case "REMOVE_TWO":
+                num -= 2
+            case "ONE_RANDOM_RARE_CARD":
+                num += 1
+
+        return num
+
+    def relic_delta(self) -> int:
+        num = 1
+        if self.parser["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
+            num += 1
+        return num
+
+    def potion_delta(self) -> int:
+        num = 0
+        prefix = self.parser.prefix
+        for potion in self.parser[prefix + "potions_obtained"]:
+            if potion["floor"] == 0:
+                num += 1
+        return num
+
+    @property
+    def card_count(self) -> int:
+        return self.card_delta()
+
+    @property
+    def relic_count(self) -> int:
+        return self.relic_delta()
+
+    @property
+    def potion_count(self) -> int:
+        return self.potion_delta()
+
 _chars = {"THE_SILENT": "Silent"}
 
-class FileParser:
+class FileParser: # TODO: relics hover
     def __init__(self, data: dict[str, Any]):
         self.data = data
         self.neow_bonus = NeowBonus(self)
@@ -311,7 +366,27 @@ class FileParser:
             if "path" in self._cache:
                 raise RuntimeError("Called RunParser.path while it's generating")
             self._cache["path"] = []
+            if "basemod:mod_saves" in self:
+                floor_time = self["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
+            else:
+                floor_time = self.get("floor_exit_playtime", ())
+            prev = 0
+            card_count = self.neow_bonus.card_delta()
+            relic_count = self.neow_bonus.relic_delta()
+            potion_count = self.neow_bonus.potion_delta()
             for node in get_nodes(self):
+                try:
+                    t = floor_time[node.floor - 1]
+                except IndexError:
+                    t = 0
+                card_count += node.card_delta
+                node._card_count = card_count
+                relic_count += node.relic_delta
+                node._relic_count = relic_count
+                potion_count += node.potion_delta
+                node._potion_count = potion_count
+                node._floor_time = t - prev
+                prev = t
                 self._cache["path"].append(node)
                 yield node
             self._pathed = True
@@ -341,10 +416,15 @@ class NodeData:
         self._maxhp = None
         self._curhp = None
         self._gold = None
+        self._floor_time = None
+        self._card_count = None
+        self._relic_count = None
+        self._potion_count = None
         self._cards = []
         self._relics = []
         self._potions = []
         self._usedpotions = []
+        self._discarded = []
         self._cache = {}
 
     @classmethod
@@ -365,12 +445,17 @@ class NodeData:
             self._gold = parser[prefix + "gold_per_floor"][floor - 1]
             if "potion_use_per_floor" in parser: # run file
                 self._usedpotions.extend(get_potion(x) for x in parser["potion_use_per_floor"][floor - 1])
-            elif "PotionUseLog" in parser: # savefile
+            elif "PotionUseLog" in parser.get("basemod:mod_saves", ()): # savefile
                 self._usedpotions.extend(get_potion(x) for x in parser["PotionUseLog"][floor - 1])
         except IndexError:
             self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
             self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
             self._gold = parser[prefix + "gold_per_floor"][floor - 2]
+
+        try:
+            self._discarded.extend(parser.get("potion_discard_per_floor", ())[floor - 1])
+        except IndexError:
+            pass
 
         for cards in parser[prefix + "card_choices"]:
             if cards["floor"] == floor:
@@ -484,6 +569,42 @@ class NodeData:
     @property
     def used_potions(self) -> list[str]:
         return self._usedpotions
+
+    @property
+    def floor_time(self) -> int:
+        if self._floor_time is None:
+            return 0
+        return self._floor_time
+
+    @property
+    def card_delta(self) -> int:
+        return len(self.picked)
+
+    @property
+    def relic_delta(self) -> int:
+        return len(self.relics)
+
+    @property
+    def potion_delta(self) -> int:
+        return len(self.potions) - len(self.used_potions) - len(self._discarded)
+
+    @property
+    def card_count(self) -> int:
+        if self._card_count is None:
+            return 0
+        return self._card_count
+
+    @property
+    def relic_count(self) -> int:
+        if self._relic_count is None:
+            return 1
+        return self._relic_count
+
+    @property
+    def potion_count(self) -> int:
+        if self._potion_count is None:
+            return 0
+        return self._potion_count
 
 def get_node(parser: FileParser, floor: int) -> NodeData:
     for node in get_nodes(parser):
@@ -632,27 +753,167 @@ class EventElite(EliteEncounter):
     room_type = "Unknown (Elite)"
     map_icon = "event.png"
 
-class Event(NodeData):
+class Event(NodeData): # TODO: cards, relics, and potions obtained, delta might not get updated
     room_type = "Unknown"
     map_icon = "event.png"
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        return super().from_parser(parser, floor, *extra)
 
 class Merchant(NodeData):
     room_type = "Merchant"
     map_icon = "shop.png"
+
+    def __init__(self, bought: dict[str, list[str]], purged: str | None, contents: dict[str, list[str]] | None):
+        super().__init__()
+        self._bought = bought
+        self._purged = purged
+        self._contents = contents
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if self.purged:
+            if 5 not in to_append:
+                to_append[5] = []
+            to_append[5].append(f"* Removed {self.purged}")
+        if self.contents:
+            if 6 not in to_append:
+                to_append[6] = []
+            to_append[6].append("Skipped:")
+            if self.contents["relics"]:
+                to_append[6].append("* Relics")
+                to_append[6].extend(f"  - {x}" for x in self.contents["relics"])
+            if self.contents["cards"]:
+                to_append[6].append("* Cards")
+                to_append[6].extend(f"  - {x}" for x in self.contents["cards"])
+            if self.contents["potions"]:
+                to_append[6].append("* Potions")
+                to_append[6].extend(f"  - {x}" for x in self.contents["potions"])
+        return super()._description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        bought = {"cards": [], "relics": [], "potions": []}
+        purged = None
+        contents = None
+        for i, purchased in enumerate(parser[parser.prefix + "item_purchase_floors"]):
+            if purchased == floor:
+                value = parser[parser.prefix + "items_purchased"][i]
+                card = get_card(value, None)
+                relic = get_relic(value, None)
+                potion = get_potion(value, None)
+                if card is not None:
+                    bought["cards"].append(card)
+                elif relic is not None:
+                    bought["relics"].append(relic)
+                elif potion is not None:
+                    bought["potions"].append(potion)
+
+        try:
+            index = parser[parser.prefix + "items_purged_floors"].index(floor)
+        except ValueError:
+            pass
+        else:
+            purged = get_card(parser[parser.prefix + "items_purged"][index])
+
+        d = ()
+        if "shop_contents" in parser:
+            d = parser["shop_contents"]
+        elif "basemod:mod_saves" in parser:
+            d = parser["basemod:mod_saves"].get("ShopContentsLog", ())
+        if d:
+            contents = {"relics": [], "cards": [], "potions": []}
+        for data in d:
+            if data["floor"] == floor:
+                for relic in data["relics"]:
+                    contents["relics"].append(get_relic(relic))
+                for card in data["cards"]:
+                    contents["cards"].append(get_card(card))
+                for potion in data["potions"]:
+                    contents["potions"].append(get_potion(potion))
+
+        return super().from_parser(parser, floor, bought, purged, contents, *extra)
+
+    @property
+    def picked(self) -> list[str]:
+        return super().picked + self.bought["cards"]
+
+    @property
+    def relics(self) -> list[str]:
+        return super().relics + self.bought["relics"]
+
+    @property
+    def potions(self) -> list[str]:
+        return super().potions + self.bought["potions"]
+
+    @property
+    def bought(self) -> dict[str, list[str]]:
+        return self._bought
+
+    @property
+    def purged(self) -> str | None:
+        return self._purged
+
+    @property
+    def contents(self) -> dict[str, list[str]] | None:
+        return self._contents
+
+    @property
+    def card_delta(self) -> int:
+        return super().card_delta - (self.purged is not None)
 
 class EventMerchant(Merchant):
     room_type = "Unknown (Merchant)"
     map_icon = "event_shop.png"
 
 class Campfire(NodeData):
-    room_type = "Rest"
+    room_type = "Rest Site"
     map_icon = "rest.png"
+
+    def __init__(self, key: str, data: str | None):
+        super().__init__()
+        self._key = key
+        self._data = data
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 4 not in to_append:
+            to_append[4] = []
+        to_append[4].append(self.action)
+        return super()._description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        key = None
+        data = None
+        for rest in parser[parser.prefix + "campfire_choices"]:
+            if rest["floor"] == floor:
+                key = rest["key"]
+                data = rest.get("data")
+        return super().from_parser(parser, floor, key, data, *extra)
+
+    @property
+    def action(self) -> str:
+        match self._key:
+            case "REST":
+                return "Rested"
+            case "RECALL":
+                return "Got the Ruby key"
+            case "SMITH":
+                return f"Upgraded {get_card(self._data)}"
+            case "LIFT":
+                return f"Lifted for additional strength (Total: {self._data})"
+            case "DIG":
+                return "Dug!"
+            case "PURGE":
+                return f"Toked {get_card(self._data)}"
+            case a:
+                return f"Did {a!r} with {self._data!r}, but I'm not sure what this means"
 
 class Boss(EncounterBase):
     room_type = "Boss"
     map_icon = "boss_node.png"
 
-class BossChest(NodeData):
+class BossChest(NodeData): # TODO: Boss relics obtained and skipped
     room_type = "Boss Chest"
     map_icon = "boss_chest.png"
     end_of_act = True
@@ -665,3 +926,30 @@ class Act4Transition(NodeData):
 class Victory(NodeData):
     room_type = "Victory!"
     map_icon = "event.png"
+
+    def __init__(self, score: int | None, data: list[str]):
+        self._score = score
+        self._data = data
+        super().__init__()
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if self.score:
+            if 6 not in to_append:
+                to_append[6] = []
+            to_append[6].extend(self.score_breakdown)
+            to_append[6].append(f"Score: {self.score}")
+        return super()._description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        score = parser.get("score", 0)
+        breakdown = parser.get("score_breakdown", [])
+        return super().from_parser(parser, floor, score, breakdown, *extra)
+
+    @property
+    def score(self) -> int:
+        return self._score
+
+    @property
+    def score_breakdown(self) -> list[str]:
+        return self._data
