@@ -7,16 +7,15 @@ if "--debug" in sys.argv:
 
 from aiohttp import web
 
-from webpage import webpage, router, setup_redirects
+from webpage import webpage
 from logger import logger
 
-import server
+import server, events
 
 logger.info("Starting the bot")
 
 async def main():
-    setup_redirects()
-    webpage.add_routes(router)
+    await events.invoke("setup_init")
     loop = asyncio.get_event_loop()
 
     tasks = set()
@@ -24,7 +23,8 @@ async def main():
     import sys
     if "--webonly" not in sys.argv:
         tasks.add(loop.create_task(server.Twitch_startup()))
-        tasks.add(loop.create_task(server.Discord_startup()))
+        if "--nodiscord" not in sys.argv:
+            tasks.add(loop.create_task(server.Discord_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 
@@ -34,8 +34,10 @@ async def main():
         pass
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
-        await server.Twitch_cleanup()
-        await server.Discord_cleanup()
+        if "--webonly" not in sys.argv:
+            await server.Twitch_cleanup()
+            if "--nodiscord" not in sys.argv:
+                await server.Discord_cleanup()
         loop.close()
 
 asyncio.run(main()) # TODO: Signal handlers and stuff

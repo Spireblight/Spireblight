@@ -10,6 +10,8 @@ import jinja2
 
 from logger import logger
 
+import events
+
 import config
 
 __all__ = ["webpage", "router", "setup_redirects"]
@@ -79,7 +81,9 @@ async def redirected_totals(req: web.Request):
 router.static("/icons", os.path.join(os.getcwd(), "icons"))
 router.static("/relics", os.path.join(os.getcwd(), "relics"))
 
-def setup_redirects():
+@events.add_listener("setup_init")
+async def setup_redirects():
+    webpage.add_routes(router)
     with open(os.path.join("data", "redirects")) as f:
         data = f.readlines()
     for line in data:

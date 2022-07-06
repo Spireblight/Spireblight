@@ -25,6 +25,12 @@ __all__ = ["get_latest_run"]
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
 
+_variables_map = {
+    "current_hp": "Current HP",
+    "max_hp": "Max HP",
+    "gold": "Gold",
+}
+
 def get_latest_run():
     _update_cache()
     latest = max(_ts_cache)
@@ -98,13 +104,24 @@ def _get_parser(name) -> RunParser | None:
 
     return parser
 
+def _truthy(x: str | None) -> bool:
+    if x and x.lower() in ("1", "true", "yes"):
+        return True
+    return False
+
+def _falsey(x: str | None) -> bool:
+    if x and x.lower() in ("0", "false", "no"):
+        return False
+    return True
+
 @router.get("/runs/{name}")
 @aiohttp_jinja2.template("run_single.jinja2")
 async def run_single(req: Request):
     parser = _get_parser(req.match_info["name"])
     if parser is None:
         raise HTTPNotFound()
-    return {"parser": parser}
+    embed = _falsey(req.query.get("embed"))
+    return {"parser": parser, "embed": embed}
 
 @router.get("/runs/{name}/{type}")
 async def run_chart(req: Request) -> Response:
@@ -113,19 +130,16 @@ async def run_chart(req: Request) -> Response:
         raise HTTPNotFound()
 
     totals: dict[str, list[int]] = {}
-    names = {}
     ends = []
     floors = []
     if "view" not in req.query:
         raise HTTPForbidden()
     if req.query.get("type") not in ("image", "embed"):
         raise HTTPForbidden()
-    for x in req.query["view"].split(","):
-        arg, _, name = x.partition(":")
+    for arg in req.query["view"].split(","):
         if arg.startswith("_"):
             raise HTTPForbidden()
         totals[arg] = []
-        names[arg] = name if name else arg
 
     for name, d in totals.items():
         val = getattr(parser.neow_bonus, name)
@@ -151,7 +165,7 @@ async def run_chart(req: Request) -> Response:
             func = ax.bar
         case "stem":
             func = ax.stem
-        case x:
+        case _:
             raise HTTPNotFound()
 
     # this doesn't work well with embedding
@@ -160,7 +174,7 @@ async def run_chart(req: Request) -> Response:
             plt.axvline(num, color="black", linestyle="dashed")
 
     for name, d in totals.items():
-        func(floors, d, label=names[name])
+        func(floors, d, label=_variables_map[name])
     ax.legend()
 
     plt.xlabel("Floor")
@@ -185,19 +199,25 @@ async def run_chart(req: Request) -> Response:
             return Response(body=file.getvalue(), content_type="image/png")
 
 @router.get("/compare")
+@aiohttp_jinja2.template("runs_compare.jinja2")
 async def compare_choose(req: Request):
-    pass
+    context = {}
+    return context
 
 @router.get("/compare/view")
 async def compare_runs(req: Request):
-    start = req.query.get("start", 0)
-    end = req.query.get("end", time.time())
+    try:
+        start = int(req.query.get("start", 0))
+        end = int(req.query.get("end", time.time()))
+        score = int(req.query.get("score", 0))
+    except ValueError:
+        raise HTTPForbidden(reason="'start', 'end', 'score' params must be integers if present")
+
     char = req.query.get("character")
+    victory = _truthy(req.query.get("victory"))
     relics = req.query.get("relics")
     if relics is not None:
         relics = relics.split(",")
-    victory = req.query.get("victory")
-    score = req.query.get("score", 0)
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:

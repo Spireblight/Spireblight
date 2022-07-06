@@ -11,9 +11,27 @@ from webpage import router
 
 import config
 
-__all__ = ["get_savefile"]
+__all__ = ["get_savefile", "Savefile"]
+
+_savefile = None
 
 class Savefile(FileParser):
+    """Hold data related to the ongoing run.
+
+    API information: This should never be instantiated by custom code. There
+    is only ever one savefile in memory, and it can be accessed by get_savefile().
+
+    The 'data' instance attribute may occasionally be None, which means that no
+    run is currently ongoing. However, if that were to be the case, then
+    get_savefile() will return None instead.
+
+    """
+
+    def __init__(self):
+        if _savefile is not None:
+            raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
+        super().__init__(None)
+
     def update_data(self, data: dict[str, Any] | None, character: str):
         self.data = data
         self._pathed = False
@@ -28,7 +46,7 @@ class Savefile(FileParser):
     def prefix(self) -> str:
         return "metric_"
 
-_savefile = Savefile(None)
+_savefile = Savefile()
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
@@ -63,9 +81,10 @@ async def receive_save(req: Request):
 
     return Response()
 
-async def get_savefile(ctx: ContextType) -> Savefile:
+async def get_savefile(ctx: ContextType | None = None) -> Savefile:
     if _savefile.character is None:
-        await ctx.send("Not in a run.")
+        if ctx is not None:
+            await ctx.send("Not in a run.")
         return
 
     return _savefile

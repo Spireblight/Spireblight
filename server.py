@@ -22,6 +22,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
+from nameinternal import get_relic
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -94,25 +95,6 @@ def _create_cmd(output):
         await ctx.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
     return inner
 
-def _get_name(name: str) -> str:
-    if " " not in name:
-        maybe_name = re.match(r"([A-Z]\S+)([A-Z]\S+)", name)
-        if maybe_name is not None:
-            name = " ".join(maybe_name.groups())
-
-    # relics
-    name = name.replace("Egg 2", "Egg")
-    name = name.replace("Greaves", "Boots")
-    name = name.replace("Captains", "Captain's")
-    name = name.replace("Slavers", "Slaver's")
-
-    # cards
-    if "+" in name:
-        if not name.startswith("Searing"):
-            name = name[:-1] # remove the number at the end
-
-    return name
-
 def load():
     _cmds.clear()
     with _getfile("data.json", "r") as f:
@@ -175,7 +157,7 @@ def with_savefile(name: str, *aliases: str, **kwargs):
         return command(name, *aliases, discord=False, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
 
-class TwitchConn(TBot): # use PubSub/EventSub for notice stuff
+class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
@@ -498,8 +480,11 @@ async def help_cmd(ctx: ContextType, name: str = ""):
                        f"my source code is available at {__github__} . The website is {config.website_url}")
         return
 
-    tcmd = TConn.get_command(name)
-    dcmd = DConn.get_command(name)
+    tcmd = dcmd = None
+    if TConn is not None:
+        tcmd = TConn.get_command(name)
+    if DConn is not None:
+        dcmd = DConn.get_command(name)
     cmd = (tcmd or dcmd)
     if cmd:
         await ctx.send(f"Full information about this command can be viewed at {config.website_url}/commands/{cmd.name}")
@@ -507,7 +492,7 @@ async def help_cmd(ctx: ContextType, name: str = ""):
 
     await ctx.send(f"Could not find matching command. You may view all existing commands here: {config.website_url}/commands")
 
-@command("support", "shoutout", "so")
+@command("support", "shoutout", "so", discord=False)
 async def shoutout(ctx: ContextType, name: str):
     """Give a shoutout to a fellow streamer."""
     try:
@@ -564,7 +549,7 @@ async def bluekey(ctx: ContextType, j: Savefile):
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, j: Savefile):
     """Display what the Neow bonus was."""
-
+    await ctx.send(j.neow_bonus.as_str())
 
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, j: Savefile):
@@ -618,7 +603,7 @@ async def relic_info(ctx: ContextType, j: Savefile, index: int):
         await ctx.send(f"We only have {len(l)} relics!")
         return
 
-    relic = _get_name(l[index-1])
+    relic = get_relic(l[index-1])
 
     await ctx.send(f"The relic at position {index} is {relic}.")
 
@@ -638,9 +623,9 @@ async def skipped_boss_relics(ctx: ContextType, j: Savefile):
         msg.append(
             template.format(
                 i,
-                _get_name(item["picked"]),
-                _get_name(item["not_picked"][0]),
-                _get_name(item["not_picked"][1]),
+                get_relic(item["picked"]),
+                get_relic(item["not_picked"][0]),
+                get_relic(item["not_picked"][1]),
             )
         )
         i += 1
@@ -790,8 +775,10 @@ async def loss_cmd(ctx: ContextType, arg: str):
 async def commands_page(req: Request):
     d = {"prefix": config.prefix, "commands": []}
     cmds = set()
-    cmds.update(TConn.commands)
-    cmds.update(DConn.all_commands)
+    if TConn is not None:
+        cmds.update(TConn.commands)
+    if DConn is not None:
+        cmds.update(DConn.all_commands)
     d["commands"].extend(cmds)
     d["commands"].sort()
     return d
@@ -801,8 +788,11 @@ async def commands_page(req: Request):
 async def individual_cmd(req: Request):
     name = req.match_info["name"]
     d = {"name": name}
-    tcmd: TwitchCommand = TConn.get_command(name)
-    dcmd: DiscordCommand = DConn.get_command(name)
+    tcmd = dcmd = None
+    if TConn is not None:
+        tcmd: TwitchCommand = TConn.get_command(name)
+    if DConn is not None:
+        dcmd: DiscordCommand = DConn.get_command(name)
     cmd = (tcmd or dcmd)
     if cmd is None:
         raise HTTPNotFound()
