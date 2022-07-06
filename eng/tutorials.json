@@ -1,0 +1,233 @@
+{
+  "Discard Tip": {
+    "TEXT": [
+      "If your draw pile is empty, the discard pile is shuffled into the draw pile. NL NL Click to view the cards in your discard pile.",
+      "If your draw pile is empty, the discard pile is shuffled into the draw pile. NL NL View the cards in your discard pile."
+    ],
+    "LABEL": [
+      "Discard Pile"
+    ]
+  },
+  "Draw Tip": {
+    "TEXT": [
+      "At the start of each turn, NL #b",
+      " cards are drawn from here. NL NL Click to view the cards in your draw pile (shuffled).",
+      " cards are drawn from here. NL NL Click to view the cards in your draw pile.",
+      " cards are drawn from here. NL NL View the cards in your draw pile (shuffled).",
+      " cards are drawn from here. NL NL View the cards in your draw pile."
+    ],
+    "LABEL": [
+      "Draw Pile"
+    ]
+  },
+  "End Turn Tip": {
+    "TEXT": [
+      "Pressing this button will end your turn. NL NL You will discard your hand, enemies will take their turn, you will draw ",
+      " cards, then it will be your turn again."
+    ],
+    "LABEL": [
+      "End Turn"
+    ]
+  },
+  "Energy Panel Tip": {
+    "TEXT": [
+      "Your current energy count. Cards require energy to play."
+    ],
+    "LABEL": [
+      "Energy"
+    ]
+  },
+  "Energy Tip": {
+    "TEXT": [
+      "Cards require energy to play! NL This orb on the bottom left indicates how much energy you have remaining for the turn."
+    ],
+    "LABEL": [
+      "Energy Cost"
+    ]
+  },
+  "Exhaust Tip": {
+    "TEXT": [
+      "Click to view cards Exhausted this combat.",
+      "View cards Exhausted this combat."
+    ],
+    "LABEL": [
+      "Exhausted Cards"
+    ]
+  },
+  "FTUE Tips": {
+    "TEXT": [],
+    "LABEL": [
+      "Tip: ",
+      "Got It"
+    ]
+  },
+  "Main Tutorial": {
+    "TEXT": [
+      "Defeat enemies by playing cards from your hand! NL NL Cards require #yEnergy to play. NL Once you are out, end your turn. NL NL At the start of your turn, new cards are drawn and your #yEnergy is replenished.",
+      "Play defensive cards to gain #yBlock when enemies are about to attack you. NL NL #yBlock reduces incoming attack damage but NL #rwears #roff at the start of your next turn.",
+      "During your turn, you can observe an enemy's #yIntent above them. NL NL If an enemy is intent on attacking you, be sure to gain some #yBlock!"
+    ],
+    "LABEL": [
+      "Next",
+      "I'm Ready!",
+      "Tutorial",
+      "(Page ",
+      " of 3)"
+    ]
+  },
+  "Options Tip": {
+    "TEXT": [
+      "Gameplay data and error logs are sent to Mega Crit for game balancing purposes. NL NL Personally identifying information is NOT collected.",
+      "Slay the Spire runs the fastest when running in true fullscreen. Recommended for macOS as the Dock and Menubar are hidden. NL NOTE: On PC, alt-tabbing back to Slay the Spire may not work with fullscreen.",
+      "As Slay the Spire isn't a demanding game, we recommend Borderless Fullscreen for fast alt-tab. Works best on PC.",
+      "Note: If VSync is on, the Max Framerate cannot go above your monitor refresh rate.",
+      "Controller support incomplete for this screen.",
+      "Changes which monitor is utilized when Fullscreen."
+    ],
+    "LABEL": [
+      "Metrics",
+      "Fullscreen",
+      "Borderless Fullscreen",
+      "Max Framerate",
+      "Fullscreen Monitor"
+    ]
+  },
+  "Player Tips": {
+    "TEXT": [
+      "This card applies a Power to you when used. NL Powers are passive abilities that remain for the duration of the combat.",
+      "Cards require energy to play! NL This orb on the bottom left indicates how much energy you have remaining for the turn.",
+      "My #rHand #ris #rFull!",
+      "#rMaximum Orb capacity has been met.",
+      "I have no Orb slots."
+    ],
+    "LABEL": [
+      "Power Cards",
+      "Energy Cost"
+    ]
+  },
+  "Potion Panel Tip": {
+    "TEXT": [
+      "Throw this potion at your enemy.",
+      "Consume this potion.",
+      "Discard this potion. NL #r(cannot #rbe #rundone)"
+    ],
+    "LABEL": [
+      "Throw",
+      "Drink",
+      "Discard"
+    ]
+  },
+  "Potion Tip": {
+    "TEXT": [
+      "Drink or throw potions during combat! NL Potions stay with you between rooms."
+    ],
+    "LABEL": [
+      "Potions"
+    ]
+  },
+  "Random Tips": {
+    "TEXT": [
+      "Engage with other players to discover new and effective strategies.",
+      "There is always a rest site before a boss.",
+      "Spend gold at shops! (Tip paid for by Merchant)",
+      "Take a break every now and then.",
+      "Percentage-based calculations always round down at the end.",
+      "During combat, you can view the contents of your draw and discard piles.",
+      "There is no limit to how many relics you can carry.",
+      "Chests will always drop a relic.",
+      "Every path you take will always have at least 1 treasure room.",
+      "Elite enemies will always drop a relic.",
+      "You will never see the same relic twice in one run.",
+      "Uncommon cards have a blue frame and banner.",
+      "Rare cards have a golden frame and banner.",
+      "The rarity of a card is visible on the card itself.",
+      "It is not always wise to add cards to your deck.",
+      "Cards exhausted during combat are not removed from your deck.",
+      "You can only have up to 10 cards in your hand.",
+      "Status cards go away at the end of combat.",
+      "Curses cannot be upgraded. Why would you?",
+      "Upgraded cards may appear in rewards past Act 1.",
+      "Unknown rooms may contain treasures, monsters, shops, or events.",
+      "The Merchant doesn't offer refunds. He is a jerk.",
+      "The card removal service increases in price whenever you use it.",
+      "The card removal service can only be used once at each shop.",
+      "Damage from potions, relics, and powers are not considered attack damage.",
+	    "Effects that generate random cards during combat will never heal you."
+    ],
+    "LABEL": [
+      "You can discard potions to make room for others."
+    ]
+  },
+  "PC Tips": {
+    "TEXT": [
+      "You can right click cards on the card reward screen to see extra info.",
+      "Useful information can be revealed by hovering over most objects.",
+      "Right click will release any cards you are dragging.",
+      "Hover over an enemy to see their name and Power information.",
+      "Use the scroll wheel or click and drag the screen to scroll.",
+      "If you can inspect an item, your cursor will become a magnifying glass.",
+      "Use the scrollwheel or click and drag to scroll maps, card screens, and others."
+    ],
+    "LABEL": [
+    ]
+  },
+  "Relic Tip": {
+    "TEXT": [
+      "Relics found throughout the Spire grant unique bonuses and remain throughout your run. NL They can be found by defeating powerful foes or within chests.",
+      "This relic remains to be seen.",
+      "This relic is used up."
+    ],
+    "LABEL": [
+      "Relics",
+      "Unknown",
+      "This relic has yet to be unlocked.",
+      "Locked"
+    ]
+  },
+  "Rewards Tip": {
+    "TEXT": [
+      "Don't forget your rewards! NL Just click on them to pick them up.",
+      "Don't forget your rewards!"
+    ],
+    "LABEL": [
+      "Rewards"
+    ]
+  },
+  "Shop Tip": {
+    "TEXT": [
+      "Remove a card from your deck. The cost of this service increases by #b",
+      " for the rest of this run."
+    ],
+    "LABEL": [
+      "Card Removal Service"
+    ]
+  },
+  "Shuffle Tip": {
+    "TEXT": [
+      "NL If there are no cards to draw, your discard pile is shuffled into the draw pile."
+    ],
+    "LABEL": [
+      "No More Cards?"
+    ]
+  },
+  "Top Panel Tips": {
+    "TEXT": [
+      "Opens the game menu. NL NL Change or update your graphics, audio, and gameplay preferences here.",
+      "View all of the cards in your deck.",
+      "View this current dungeon's map.",
+      "If you run out of HP, you die.",
+      "Shows how much gold you are carrying. Gold is the currency within the Spire.",
+      "",
+      "",
+      "Elapsed time for this run."
+    ],
+    "LABEL": [
+      "Settings",
+      "Deck",
+      "Map",
+      "Hit Points (HP)",
+      "Money Pouch",
+      "Run Timer"
+    ]
+  }
+}

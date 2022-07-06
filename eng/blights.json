@@ -1,0 +1,98 @@
+{
+  "DeadlyEnemies": {
+    "NAME": "Spear of Blight",
+    "DESCRIPTION": [
+      "Enemies deal #b",
+	  "% more damage."
+    ]
+  },
+  "ToughEnemies": {
+    "NAME": "Shield of Blight",
+     "DESCRIPTION": [
+      "Enemies have #b",
+	  "% more HP."
+    ]
+  },
+  "TimeMaze": {
+    "NAME": "Time Maze",
+     "DESCRIPTION": [
+      "You cannot play more than #b",
+      " cards per turn.",
+	  "I can only play up to NL #r"
+    ]
+  },
+  "TwistingMind": {
+    "NAME": "Twisting Mind",
+     "DESCRIPTION": [
+      "At the end of your turn, add #b",
+	  " random Status card to the top of your draw pile.",
+	  ""
+    ]
+  },
+  "Accursed": {
+    "NAME": "Accursed",
+     "DESCRIPTION": [
+      "Whenever you defeat a Boss, obtain #b",
+	  " random #yCurses.",
+	  ""
+    ]
+  },
+  "Scatterbrain": {
+    "NAME": "Scatterbrain",
+     "DESCRIPTION": [
+      "Draw #b",
+	  " less card a turn.",
+	  ""
+    ]
+  },
+  "MimicInfestation": {
+    "NAME": "Mimic Infestation",
+     "DESCRIPTION": [
+      "Treasure rooms in future acts are replaced by Elites. Elites no longer drop relics."
+    ]
+  },
+  "FullBelly": {
+    "NAME": "Muzzle",
+     "DESCRIPTION": [
+      "You can no longer increase your Max HP. All healing is halved."
+    ]
+  },
+  "GrotesqueTrophy": {
+    "NAME": "Grotesque Trophy",
+     "DESCRIPTION": [
+      "Upon pickup, obtain #b",
+	  " #rPrides.",
+	  "Your Pride is twisted..."
+    ]
+  },
+  "BlightedDurian": {
+    "NAME": "Post-Durian",
+     "DESCRIPTION": [
+      "Lose #b",
+	  "% of your Max HP."
+    ]
+  },
+  "VoidEssence": {
+    "NAME": "Void Essence",
+     "DESCRIPTION": [
+      "Gain #b",
+      " less [E] at the start of each turn."
+    ]
+  },
+  "GraspOfShadows": {
+    "NAME": "Hauntings",
+     "DESCRIPTION": [
+      "Enemies start combat with #b",
+	  " #yIntangible."
+    ]
+  },
+  "MetallicRebirth": {
+    "NAME": "Ancient Augmentation",
+     "DESCRIPTION": [
+      "Enemies start combat with #b",
+	  " #yArtifact, #b",
+	  " #yPlated #yArmor, and #b",
+	  " #yRegenerate."
+    ]
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "Allstar": {
+    "NAME": "All Star",
+    "DESCRIPTION": "Start with 5 colorless cards."
+  },
+  "Binary": {
+    "NAME": "Binary",
+    "DESCRIPTION": "Card rewards contain only 2 cards."
+  },
+  "Brewmaster": {
+    "NAME": "[DEPRECATED] Brewmaster",
+    "DESCRIPTION": "Start with 5 copies of Alchemize and the White Beast Statue."
+  },
+  "Cursed Run": {
+    "NAME": "Cursed Run",
+    "DESCRIPTION": "Whenever you defeat a Boss, become Cursed. Your starting relic is replaced with Cursed Key, Darkstone Periapt, and Du-Vu Doll."
+  },
+  "Diverse": {
+    "NAME": "Diverse",
+    "DESCRIPTION": "Cards are not restricted by your character."
+  },
+  "Red Cards": {
+    "NAME": "Red Cards",
+    "DESCRIPTION": "Red cards now appear in rewards and shops."
+  },
+  "Green Cards": {
+    "NAME": "Green Cards",
+    "DESCRIPTION": "Green cards now appear in rewards and shops."
+  },
+  "Blue Cards": {
+    "NAME": "Blue Cards",
+    "DESCRIPTION": "Blue cards now appear in rewards and shops."
+  },
+  "Purple Cards": {
+    "NAME": "Purple Cards",
+    "DESCRIPTION": "Purple cards now appear in rewards and shops."
+  },
+  "Colorless Cards": {
+    "NAME": "Colorless Cards",
+    "DESCRIPTION": "Colorless cards now appear in rewards."
+  },
+  "Draft": {
+    "NAME": "Draft",
+    "DESCRIPTION": "Draft a custom starting deck of cards."
+  },
+  "Elite Swarm": {
+    "NAME": "Big Game Hunter",
+    "DESCRIPTION": "Elite enemies are now swarming the Spire and drop better rewards."
+  },
+  "Endless": {
+    "NAME": "Endless",
+    "DESCRIPTION": "Winning will return you to Act 1 with the same deck. But beware, the blight eventually consumes all..."
+  },
+  "Blight Chests": {
+    "NAME": "Blight Chests",
+    "DESCRIPTION": "Boss chests contain blights after beating Act 3 on Endless."
+  },
+  "Stunted Growth": {
+    "NAME": "Stunted Growth",
+    "DESCRIPTION": "Enemies no longer drop card rewards after beating Act 3 on Endless."
+  },
+  "Heirloom": {
+    "NAME": "Heirloom",
+    "DESCRIPTION": "Start with 1 Rare relic."
+  },
+  "Hoarder": {
+    "NAME": "Hoarder",
+    "DESCRIPTION": "Whenever you add a card to your deck, add two additional copies. You can no longer remove cards from your deck at the Merchant."
+  },
+  "Inception": {
+    "NAME": "Inception",
+    "DESCRIPTION": "Replaces your starting relic with Unceasing Top."
+  },
+  "Insanity": {
+    "NAME": "Insanity",
+    "DESCRIPTION": "Start with a random deck of 50 cards."
+  },
+  "Lethality": {
+    "NAME": "Lethality",
+    "DESCRIPTION": "You start each combat with +3 Strength. All enemies start combat with +3 Strength."
+  },
+  "Midas": {
+    "NAME": "Midas",
+    "DESCRIPTION": "Enemies drop 200% more gold, but you can no longer Smith at Rest Sites."
+  },
+  "My True Form": {
+    "NAME": "My True Form",
+    "DESCRIPTION": "Start with a copy of Demon Form, Wraith Form, Echo Form, and Deva Form."
+  },
+  "Night Terrors": {
+    "NAME": "Night Terrors",
+    "DESCRIPTION": "Resting at Rest Sites heals 100% of your HP, but costs 5 Max HP."
+  },
+  "One Hit Wonder": {
+    "NAME": "One Hit Wonder",
+    "DESCRIPTION": "Start the game with 1 Max HP."
+  },
+  "Praise Snecko": {
+    "NAME": "Praise Snecko",
+    "DESCRIPTION": "Replaces your starting relic with Snecko Eye."
+  },
+  "Shiny": {
+    "NAME": "Shiny",
+    "DESCRIPTION": "Starting deck is replaced with 1 of every rare card."
+  },
+  "Specialized": {
+    "NAME": "Specialized",
+    "DESCRIPTION": "Start with 5 copies of a single card."
+  },
+  "Starter Deck": {
+    "NAME": "Starter Deck",
+    "DESCRIPTION": "Start with Busted Crown and Binary, so enemies no longer drop cards."
+  },
+  "Terminal": {
+    "NAME": "Terminal",
+    "DESCRIPTION": "Whenever you enter a new room, lose 1 Max HP. Start each combat with 5 Plated Armor."
+  },
+  "Time Dilation": {
+    "NAME": "Time Dilation",
+    "DESCRIPTION": "All enemies start with the Slow debuff."
+  },
+  "Uncertain Future": {
+    "NAME": "Certain Future",
+    "DESCRIPTION": "The map contains only one path."
+  },
+  "Vintage": {
+    "NAME": "Vintage",
+    "DESCRIPTION": "Normal Enemies drop relics instead of cards."
+  },
+  "SealedDeck": {
+    "NAME": "Sealed Deck",
+    "DESCRIPTION": "Craft a deck from 30 random cards."
+  },
+  "Flight": {
+    "NAME": "Flight",
+    "DESCRIPTION": "You may ignore paths when choosing the next room to travel to."
+  },
+  "Chimera": {
+    "NAME": "Chimera",
+    "DESCRIPTION": "Your starting deck is a fusion of all characters."
+  },
+  "NeowTime": {
+    "NAME": "Neow Time",
+    "DESCRIPTION": "Receive 3 blessings and 1 blight from Neow."
+  },
+  "IntelligentEnemies": {
+    "NAME": "Intelligent Enemies",
+    "DESCRIPTION": "All enemies have more challenging movesets and abilities."
+  },
+  "Careless": {
+    "NAME": "Careless",
+    "DESCRIPTION": "At the start of every turn, discard the top card of your draw pile."
+  },
+  "ControlledChaos": {
+    "NAME": "Controlled Chaos",
+    "DESCRIPTION": "Start with Frozen Eye. At the start of your turn, add 10 random cards to the bottom of your draw pile."
+  },
+  "MonsterHunter": {
+    "NAME": "[DEPRECATED] Colossus",
+    "DESCRIPTION": "Enemies have bonus HP but drop better rewards."
+  },
+  "DeadlyEvents": {
+    "NAME": "Deadly Events",
+    "DESCRIPTION": "? rooms can now contain Elites but are also more likely to contain Treasure rooms."
+  },
+  "Daily Mods": {
+    "NAME": "Daily Mods",
+    "DESCRIPTION": "Embark on a run with exactly 3 random Daily Mods."
+  },
+  "The Ending": {
+    "NAME": "The Ending",
+    "DESCRIPTION": "Enables the Final Act."
+  }
+}

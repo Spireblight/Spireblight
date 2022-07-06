@@ -1,0 +1,180 @@
+{
+  "Alchemist": {
+    "NAME": "Alchemist",
+    "DESCRIPTIONS": [
+      "Bought 5 potions."
+    ]
+  },
+  "Ascension": {
+    "NAME": "Ascension",
+    "DESCRIPTIONS": [
+      "+5% score per Ascension Level."
+    ]
+  },
+  "Beyond Elites Killed": {
+    "NAME": "Beyond Elites Killed",
+    "DESCRIPTIONS": []
+  },
+  "Beyond Perfect": {
+    "NAME": "Beyond Perfect",
+    "DESCRIPTIONS": [
+      "Defeat 3 bosses without taking damage."
+    ]
+  },
+  "Bosses Slain": {
+    "NAME": "Bosses Slain",
+    "DESCRIPTIONS": []
+  },
+  "Champion": {
+    "NAME": "Champion",
+    "DESCRIPTIONS": [
+      "Defeat an Elite without taking damage."
+    ]
+  },
+  "Cheater": {
+    "NAME": "Cheater",
+    "DESCRIPTIONS": [
+      "Caught cheating. If caught twice, your score will never upload to the Leaderboards."
+    ]
+  },
+  "City Elites Killed": {
+    "NAME": "City Elites Killed",
+    "DESCRIPTIONS": []
+  },
+  "Collector": {
+    "NAME": "Collector",
+    "DESCRIPTIONS": [
+      "Have 4 copies of any non-starter card."
+    ]
+  },
+  "Combo": {
+    "NAME": "C-c-c-combo",
+    "DESCRIPTIONS": [
+      "Play 20 cards in a single turn."
+    ]
+  },
+  "Curses": {
+    "NAME": "Curses!",
+    "DESCRIPTIONS": [
+      "Your deck contains 5 curses."
+    ]
+  },
+  "Encyclopedian": {
+    "NAME": "Encyclopedian",
+    "DESCRIPTIONS": [
+      "Deck size of at least 50 cards."
+    ]
+  },
+  "Exordium Elites Killed": {
+    "NAME": "Exordium Elites Killed",
+    "DESCRIPTIONS": []
+  },
+  "Heartbreaker": {
+    "NAME": "Heartbreaker",
+    "DESCRIPTIONS": [
+      "Defeat the Heart."
+    ]
+  },
+  "Highlander": {
+    "NAME": "Highlander",
+    "DESCRIPTIONS": [
+      "Your deck contains no duplicates (excluding starter cards)."
+    ]
+  },
+  "I Like Gold": {
+    "NAME": "I Like Gold",
+    "DESCRIPTIONS": [
+      "Accrued 3,000 gold."
+    ]
+  },
+  "Librarian": {
+    "NAME": "Librarian",
+    "DESCRIPTIONS": [
+      "Deck size of at least 35 cards."
+    ]
+  },
+  "Light Speed": {
+    "NAME": "Light Speed",
+    "DESCRIPTIONS": [
+      "Victory in under 45 minutes."
+    ]
+  },
+  "Minimalist": {
+    "NAME": "Minimalist",
+    "DESCRIPTIONS": [
+      "Removed 5+ cards from your deck."
+    ]
+  },
+  "Money Money": {
+    "NAME": "Money Money",
+    "DESCRIPTIONS": [
+      "Accrued 1,000 gold."
+    ]
+  },
+  "Mystery Machine": {
+    "NAME": "Mystery Machine",
+    "DESCRIPTIONS": [
+      "Traveled to 15+ ? rooms."
+    ]
+  },
+  "On My Own Terms": {
+    "NAME": "On My Own Terms",
+    "DESCRIPTIONS": [
+      "Killed yourself."
+    ]
+  },
+  "Overkill": {
+    "NAME": "Overkill",
+    "DESCRIPTIONS": [
+      "Deal 99 damage with a single attack."
+    ]
+  },
+  "Pauper": {
+    "NAME": "Pauper",
+    "DESCRIPTIONS": [
+      "Have 0 rare cards."
+    ]
+  },
+  "Perfect": {
+    "NAME": "Perfect",
+    "DESCRIPTIONS": [
+      "Defeat a Boss without taking damage."
+    ]
+  },
+  "Poopy": {
+    "NAME": "Poopy",
+    "DESCRIPTIONS": [
+      "Received the Spirit Poop."
+    ]
+  },
+  "Raining Money": {
+    "NAME": "Raining Money",
+    "DESCRIPTIONS": [
+      "Accrued 2,000 gold."
+    ]
+  },
+  "Shiny": {
+    "NAME": "I Like Shiny",
+    "DESCRIPTIONS": [
+      "Have 25+ relics."
+    ]
+  },
+  "Speedster": {
+    "NAME": "Speedster",
+    "DESCRIPTIONS": [
+      "Victory in under 60 minutes."
+    ]
+  },
+  "Stuffed": {
+    "NAME": "Stuffed",
+    "DESCRIPTIONS": [
+      "Increased your Max HP by 30+."
+    ]
+  },
+  "Well Fed": {
+    "NAME": "Well Fed",
+    "DESCRIPTIONS": [
+      "Increased your Max HP by 15+."
+    ]
+  }
+}
