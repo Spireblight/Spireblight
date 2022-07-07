@@ -23,14 +23,14 @@ Run: {{ parser.display_name }}
     Hover over any map node or relic to see their stats!
     <br><br>
     {% for node in parser.path %}
-    <img src="/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
+    <img src="/static/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
     {% if node.end_of_act %}
     <br>
     {% endif %}
     {% endfor %}
     <br>
     {% for relic in parser.relics %}
-    <img src="/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
+    <img src="/static/relics/{{ relic }}.png" alt="" style="width:80px;height:80px;">
     {% endfor %}
     <br>
     {% if embed %}
