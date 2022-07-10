@@ -15,6 +15,7 @@ from matplotlib import pyplot as plt
 import aiohttp_jinja2
 import mpld3
 
+from nameinternal import get_all_relics, get_all_cards
 from gamedata import FileParser
 from webpage import router
 
@@ -136,10 +137,10 @@ async def run_chart(req: Request) -> Response:
     totals: dict[str, list[int]] = {}
     ends = []
     floors = []
-    if "view" not in req.query:
+    if "view" not in req.query or "type" not in req.query:
         raise HTTPForbidden()
-    if req.query.get("type") not in ("image", "embed"):
-        raise HTTPForbidden()
+    if req.query["type"] not in ("image", "embed"):
+        raise HTTPNotImplemented(reason=f"Display type {req.query['type']} is undefined")
     for arg in req.query["view"].split(","):
         if arg.startswith("_"):
             raise HTTPForbidden()
@@ -205,11 +206,16 @@ async def run_chart(req: Request) -> Response:
 @router.get("/compare")
 @aiohttp_jinja2.template("runs_compare.jinja2")
 async def compare_choose(req: Request):
-    context = {}
-    return context
+    return {
+        "characters": ("Ironclad", "Silent", "Defect", "Watcher"),
+        "relics": get_all_relics(),
+        "cards": get_all_cards(),
+    }
 
 @router.get("/compare/view")
+@aiohttp_jinja2.template("compare_single.jinja2")
 async def compare_runs(req: Request):
+    context = {}
     try:
         start = int(req.query.get("start", 0))
         end = int(req.query.get("end", time.time()))
@@ -217,11 +223,13 @@ async def compare_runs(req: Request):
     except ValueError:
         raise HTTPForbidden(reason="'start', 'end', 'score' params must be integers if present")
 
-    char = req.query.get("character")
+    chars = req.query.getall("character", [])
     victory = _truthy(req.query.get("victory"))
-    relics = req.query.get("relics")
-    if relics is not None:
-        relics = relics.split(",")
+    loss = _falsey(req.query.get("loss"))
+    relics = req.query.getall("relic", [])
+    cards = req.query.getall("card", [])
+
+    return context
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:
