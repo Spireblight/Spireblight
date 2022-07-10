@@ -965,6 +965,10 @@ class Victory(NodeData):
         return super().from_parser(parser, floor, score, breakdown, *extra)
 
     @property
+    def floor_time(self) -> int:
+        return 0
+
+    @property
     def score(self) -> int:
         return self._score
 

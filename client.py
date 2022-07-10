@@ -38,12 +38,14 @@ async def main():
                 possible = None
 
         to_send = []
+        files = []
         for path, folders, files in os.walk(os.path.join(config.STS_path, "runs")):
             for folder in folders:
                 for p1, d1, f1 in os.walk(os.path.join(path, folder)):
                     for file in f1:
                         if file > last_run:
                             to_send.append((p1, file))
+                            files.append(file)
 
         try:
             all_sent = True
@@ -57,7 +59,7 @@ async def main():
                             if not resp.ok:
                                 all_sent = False
                 if all_sent:
-                    last_run = max(to_send)
+                    last_run = max(files)
                     with open("last_run", "w") as f:
                         f.write(last_run)
 
