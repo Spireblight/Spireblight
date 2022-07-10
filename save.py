@@ -3,7 +3,7 @@ from typing import Any
 import base64
 import json
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, Response
+from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, Response, FileField
 
 from typehints import ContextType
 from gamedata import FileParser
@@ -34,7 +34,7 @@ class Savefile(FileParser):
         super().__init__(None)
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
-        if data is None and has_run == "true":
+        if data is None and has_run == "true" and self.data is not None:
             maybe_run = get_latest_run()
             if maybe_run["seed_played"] == self["metric_seed_played"]:
                 # optimize save -> run node generation
@@ -67,11 +67,17 @@ async def receive_save(req: Request):
 
     post = await req.post()
 
-    file = post.get("savefile")
-    content = file.file.read()
-    content = content.decode("utf-8", "xmlcharrefreplace")
+    content = post.get("savefile")
+    if isinstance(content, FileField):
+        content = content.file.read()
+    if isinstance(content, bytes):
+        content = content.decode("utf-8", "xmlcharrefreplace")
+
     name = post.get("character")
-    name = name.decode("utf-8", "xmlcharrefreplace")
+    if isinstance(name, FileField):
+        name = name.file.read()
+    if isinstance(name, bytes):
+        name = name.decode("utf-8", "xmlcharrefreplace")
 
     j = None
     if content:

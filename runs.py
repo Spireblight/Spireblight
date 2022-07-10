@@ -9,7 +9,7 @@ import time
 import io
 import os
 
-from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnauthorized, HTTPNotImplemented
+from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnauthorized, HTTPNotImplemented, FileField
 from matplotlib import pyplot as plt
 
 import aiohttp_jinja2
@@ -243,12 +243,18 @@ async def receive_run(req: Request) -> Response:
 
     post = await req.post()
 
-    file = post.get("run")
-    content = file.file.read()
-    content = content.decode("utf-8", "xmlcharrefreplace")
+    content = post.get("run")
+    if isinstance(content, FileField):
+        content = content.file.read()
+    if isinstance(content, bytes):
+        content = content.decode("utf-8", "xmlcharrefreplace")
 
     name = post.get("name")
-    name = name.decode("utf-8", "xmlcharrefreplace")
+    if isinstance(name, FileField):
+        name = name.file.read()
+    if isinstance(name, bytes):
+        name = name.decode("utf-8", "xmlcharrefreplace")
+
     with open(os.path.join("data", "runs", name), "w") as f:
         f.write(content)
     data = json.loads(content)
