@@ -46,26 +46,8 @@ async def main():
                             to_send.append((p1, file))
 
         try:
-            if possible is None and has_save: # server has a save, but we don't (anymore)
-                async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret}) as resp:
-                        if resp.ok:
-                            has_save = False
-
-            if possible is not None and cur != last:
-                content = ""
-                with open(os.path.join(config.STS_path, "saves", possible)) as f:
-                    content = f.read()
-                content = content.encode("utf-8", "xmlcharrefreplace")
-                char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret}) as resp:
-                        if resp.ok:
-                            last = cur
-                            has_save = True
-
-            if to_send:
-                all_sent = True
+            all_sent = True
+            if to_send: # send runs first so savefile can seemlessly transfer its cache
                 async with ClientSession() as session:
                     for path, file in to_send:
                         with open(os.path.join(path, file)) as f:
@@ -78,6 +60,24 @@ async def main():
                     last_run = max(to_send)
                     with open("last_run", "w") as f:
                         f.write(last_run)
+
+            if possible is None and has_save: # server has a save, but we don't (anymore)
+                async with ClientSession() as session:
+                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret, "has_run": str(all_sent).lower()}) as resp:
+                        if resp.ok:
+                            has_save = False
+
+            if possible is not None and cur != last:
+                content = ""
+                with open(os.path.join(config.STS_path, "saves", possible)) as f:
+                    content = f.read()
+                content = content.encode("utf-8", "xmlcharrefreplace")
+                char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
+                async with ClientSession() as session:
+                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret, "has_run": "false"}) as resp:
+                        if resp.ok:
+                            last = cur
+                            has_save = True
 
         except ClientError:
             timeout = 10 # give it a bit of time

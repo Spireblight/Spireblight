@@ -8,6 +8,7 @@ from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImpleme
 from typehints import ContextType
 from gamedata import FileParser
 from webpage import router
+from runs import get_latest_run
 
 import config
 
@@ -32,7 +33,13 @@ class Savefile(FileParser):
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
         super().__init__(None)
 
-    def update_data(self, data: dict[str, Any] | None, character: str):
+    def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
+        if data is None and has_run == "true":
+            maybe_run = get_latest_run()
+            if maybe_run["seed_played"] == self["metric_seed_played"]:
+                # optimize save -> run node generation
+                maybe_run._cache["old_path"] = self._cache["path"]
+
         self.data = data
         self._pathed = False
         if not character:
@@ -40,7 +47,7 @@ class Savefile(FileParser):
             self._cache.clear()
         else:
             self._character = character
-            self._cache.pop("path")
+            self._cache["old_path"] = self._cache.pop("path")
 
     @property
     def prefix(self) -> str:
@@ -77,7 +84,7 @@ async def receive_save(req: Request):
         if "basemod:mod_saves" not in j: # make sure this key exists
             j["basemod:mod_saves"] = {}
 
-    _savefile.update_data(j, name)
+    _savefile.update_data(j, name, req.query["has_run"])
 
     return Response()
 

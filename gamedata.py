@@ -374,18 +374,23 @@ class FileParser: # TODO: relics hover
             card_count = self.neow_bonus.card_delta()
             relic_count = self.neow_bonus.relic_delta()
             potion_count = self.neow_bonus.potion_delta()
-            for node in get_nodes(self):
+            for node, cached in get_nodes(self, self._cache.pop("old_path", None)):
                 try:
                     t = floor_time[node.floor - 1]
                 except IndexError:
                     t = 0
-                card_count += node.card_delta
-                node._card_count = card_count
-                relic_count += node.relic_delta
-                node._relic_count = relic_count
-                potion_count += node.potion_delta
-                node._potion_count = potion_count
-                node._floor_time = t - prev
+                if cached: # don't recompute the deltas -- just grab their cached counts
+                    card_count = node.card_count
+                    relic_count = node.relic_count
+                    potion_count = node.potion_count
+                else:
+                    card_count += node.card_delta
+                    node._card_count = card_count
+                    relic_count += node.relic_delta
+                    node._relic_count = relic_count
+                    potion_count += node.potion_delta
+                    node._potion_count = potion_count
+                    node._floor_time = t - prev
                 prev = t
                 self._cache["path"].append(node)
                 yield node
@@ -607,15 +612,28 @@ class NodeData:
         return self._potion_count
 
 def get_node(parser: FileParser, floor: int) -> NodeData:
-    for node in get_nodes(parser):
+    for node, cached in get_nodes(parser, None):
         if node.floor == floor:
             return node
     raise IndexError(f"We did not reach floor {floor}")
 
-def get_nodes(parser: FileParser) -> Generator[NodeData, None, None]:
+def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
     prefix = parser.prefix
     on_map = iter(parser[prefix + "path_taken"])
+    # maybe_cached will not be None if this is a savefile we're iterating through
+    # which means we already know previous floors, so just use that.
+    # to be safe, regenerate the last floor, since it might have changed
+    # (e.g. the last time we saw it, we were in-combat, and now we're out of it)
+    # this is also used for run files for which we had the savefile
+    if maybe_cached is not None:
+        maybe_cached.pop()
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+        if maybe_cached:
+            maybe_node = maybe_cached.pop(0)
+            if floor == maybe_node.floor: # if it's not, then something's wrong. just regen it
+                yield maybe_node, True
+                continue
+
         node = [actual, None]
         if node[0] is not None:
             node[1] = next(on_map)
@@ -653,7 +671,7 @@ def get_nodes(parser: FileParser) -> Generator[NodeData, None, None]:
             case (a, b):
                 raise ValueError(f"Error: the combination of map node {b!r} and content {a!r} is undefined")
 
-        yield cls.from_parser(parser, floor)
+        yield cls.from_parser(parser, floor), False
 
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
