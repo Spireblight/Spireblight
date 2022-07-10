@@ -224,10 +224,12 @@ class DiscordConn(DBot):
     def dispatch(self, name, /, *args, **kwargs):
         evt = events.get(name)
         if evt is not None:
-            self.add_listener(evt.invoke, name)
+            for event in evt:
+                self.add_listener(event, name)
         value = super().dispatch(name, *args, **kwargs)
         if evt is not None:
-            self.remove_listener(evt.invoke, name)
+            for event in evt:
+                self.remove_listener(event, name)
         return value
 
 async def _timer(cmds: list[str]):
