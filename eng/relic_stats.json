@@ -1,0 +1,623 @@
+{
+    "HEADER": {
+      "TEXT": [
+        "Stats"
+      ]
+    },
+    "EXTENDED": {
+      "TEXT": [
+        " NL Per turn: ",
+        " NL Per combat: ",
+        "Floor obtained: "
+      ]
+    },
+    "OPTION": {
+      "TEXT": [
+        "Enable per combat and per turn stat reporting for combat relics",
+        "Enable integration with the Slay the Relics mod",
+        "Display floor obtained for all relics",
+        "Display joke stats"
+      ]
+    },
+    "ERROR": {
+      "TEXT": [
+        "Stats unknown"
+      ]
+    },
+    "Snecko Eye": {
+      "TEXT": [
+        "Card cost counts: NL 0 energy: ",
+        " NL 1 energy: ",
+        " NL 2 energy: ",
+        " NL 3 energy: ",
+        " NL Average discount: "
+      ]
+    },
+    "CeramicFish": {
+      "TEXT": [
+        "Gold earned: "
+      ]
+    },
+    "MawBank": {
+      "TEXT": [
+        "Gold earned: "
+      ]
+    },
+    "Toy Ornithopter": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Burning Blood": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Eternal Feather": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "MealTicket": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "SsserpentHead": {
+      "TEXT": [
+        "Gold earned: "
+      ]
+    },
+    "Golden Idol": {
+      "TEXT": [
+        "Extra gold dropped: "
+      ]
+    },
+    "Bloody Idol": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "FaceOfCleric": {
+      "TEXT": [
+        "Max HP gained: "
+      ]
+    },
+    "Black Star": {
+      "TEXT": [
+        "Extra relics: "
+      ]
+    },
+    "Blood Vial": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Juzu Bracelet": {
+      "TEXT": [
+        "Combats avoided: "
+      ]
+    },
+    "Ectoplasm": {
+      "TEXT": [
+        "Gold lost: "
+      ]
+    },
+    "Sozu": {
+      "TEXT": [
+        "Potions lost: "
+      ]
+    },
+    "Boot": {
+      "TEXT": [
+        "Damage added: "
+      ]
+    },
+    "PreservedInsect": {
+      "TEXT": [
+        "HP removed: "
+      ]
+    },
+    "Meat on the Bone": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Pantograph": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Torii": {
+      "TEXT": [
+        "Damage prevented: "
+      ]
+    },
+    "TungstenRod": {
+      "TEXT": [
+        "Damage prevented: "
+      ]
+    },
+    "Mercury Hourglass": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "StoneCalendar": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "Darkstone Periapt": {
+      "TEXT": [
+        "Max HP gained: "
+      ]
+    },
+    "Singing Bowl": {
+      "TEXT": [
+        "Max HP gained: "
+      ]
+    },
+    "Shuriken": {
+      "TEXT": [
+        "Strength gained: "
+      ]
+    },
+    "Kunai": {
+      "TEXT": [
+        "Dexterity gained: "
+      ]
+    },
+    "Ornamental Fan": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "Mark of the Bloom": {
+      "TEXT": [
+        "Healing prevented: "
+      ]
+    },
+    "Art of War": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Nunchaku": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Snake Skull": {
+      "TEXT": [
+        "Poison applied: "
+      ]
+    },
+    "Letter Opener": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "Sundial": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Charon's Ashes": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "CloakClasp": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "Pocketwatch": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Tingsha": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "Tough Bandages": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "VioletLotus": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "TheAbacus": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "Dead Branch": {
+      "TEXT": [
+        "Cards generated: "
+      ]
+    },
+    "Unceasing Top": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "FrozenCore": {
+      "TEXT": [
+        "Frost orbs channeled: "
+      ]
+    },
+    "HoveringKite": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Runic Cube": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Strange Spoon": {
+      "TEXT": [
+        "Cards recycled: "
+      ]
+    },
+    "Nloth's Gift": {
+      "TEXT": [
+        "Extra rare cards: "
+      ]
+    },
+    "Self Forming Clay": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "Necronomicon": {
+      "TEXT": [
+        "Attacks played twice: "
+      ]
+    },
+    "Medical Kit": {
+      "TEXT": [
+        "Status cards exhausted: "
+      ]
+    },
+    "Blue Candle": {
+      "TEXT": [
+        "Curses exhausted: "
+      ]
+    },
+    "Orichalcum": {
+      "TEXT": [
+        "Block gained: "
+      ]
+    },
+    "Pen Nib": {
+      "TEXT": [
+        "Attacks doubled: "
+      ]
+    },
+    "Smiling Mask": {
+      "TEXT": [
+        "Gold saved: "
+      ]
+    },
+    "Gremlin Horn": {
+      "TEXT": [
+        "Cards drawn: ",
+        " NL Energy gained: ",
+        " NL Cards per combat: ",
+        " NL Energy per combat: "
+      ]
+    },
+    "InkBottle": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Bird Faced Urn": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Champion Belt": {
+      "TEXT": [
+        "Weak applied: "
+      ]
+    },
+    "Ginger": {
+      "TEXT": [
+        "Weak prevented: "
+      ]
+    },
+    "Turnip": {
+      "TEXT": [
+        "Frail prevented: "
+      ]
+    },
+    "Prayer Wheel": {
+      "TEXT": [
+        "Extra card rewards: "
+      ]
+    },
+    "Inserter": {
+      "TEXT": [
+        "Orb slots created: "
+      ]
+    },
+    "HandDrill": {
+      "TEXT": [
+        "Vulnerable applied: "
+      ]
+    },
+    "OrangePellets": {
+      "TEXT": [
+        "Debuffs cleared: "
+      ]
+    },
+    "WarpedTongs": {
+      "TEXT": [
+        "Cards upgraded: "
+      ]
+    },
+    "Shovel": {
+      "TEXT": [
+        "Relics dug: "
+      ]
+    },
+    "Centennial Puzzle": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Happy Flower": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Dream Catcher": {
+      "TEXT": [
+        "Extra card rewards: "
+      ]
+    },
+    "Peace Pipe": {
+      "TEXT": [
+        "Cards toked: "
+      ]
+    },
+    "Lizard Tail": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Question Card": {
+      "TEXT": [
+        "Extra card options: "
+      ]
+    },
+    "Tiny Chest": {
+      "TEXT": [
+        "Chests created: "
+      ]
+    },
+    "Busted Crown": {
+      "TEXT": [
+        "Card options lost: "
+      ]
+    },
+    "Cursed Key": {
+      "TEXT": [
+        "Curses created: "
+      ]
+    },
+    "Chemical X": {
+      "TEXT": [
+        "X-Cost cards played: "
+      ]
+    },
+    "Yang": {
+      "TEXT": [
+        "Temp. dexterity gained: "
+      ]
+    },
+    "Cables": {
+      "TEXT": [
+        "Orbs triggered: ",
+        " NL Lightning orbs: ",
+        " NL Frost orbs: ",
+        " NL Dark orbs: ",
+        " NL Plasma orbs: "
+      ]
+    },
+    "Emotion Chip": {
+      "TEXT": [
+        "Orbs triggered: ",
+        " NL Lightning orbs: ",
+        " NL Frost orbs: ",
+        " NL Dark orbs: ",
+        " NL Plasma orbs: "
+      ]
+    },
+    "Melange": {
+      "TEXT": [
+        "Cards scried: "
+      ]
+    },
+    "GoldenEye": {
+      "TEXT": [
+        "Extra cards scried: "
+      ]
+    },
+    "Regal Pillow": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Lee's Waffle": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Mummified Hand": {
+      "TEXT": [
+        "Energy discounted: "
+      ]
+    },
+    "Magic Flower": {
+      "TEXT": [
+        "HP healed: "
+      ]
+    },
+    "Bronze Scales": {
+      "TEXT": [
+        "Damage dealt: "
+      ]
+    },
+    "Pandora's Box": {
+      "TEXT": [
+        "Cards obtained: ",
+        "Unknown"
+      ]
+    },
+    "Astrolabe": {
+      "TEXT": [
+        "Cards obtained: ",
+        "Unknown"
+      ]
+    },
+    "Whetstone": {
+      "TEXT": [
+        "Cards upgraded: ",
+        "Unknown"
+      ]
+    },
+    "War Paint": {
+      "TEXT": [
+        "Cards upgraded: ",
+        "Unknown"
+      ]
+    },
+    "Bag of Preparation": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Gambling Chip": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Ring of the Snake": {
+      "TEXT": [
+        "Cards drawn: "
+      ]
+    },
+    "Frozen Eye": {
+      "TEXT": [
+        "Time spent viewing draw order: "
+      ]
+    },
+    "FossilizedHelix": {
+      "TEXT": [
+        "Damage prevented: "
+      ]
+    },
+    "Ancient Tea Set": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "Membership Card": {
+      "TEXT": [
+        "Gold saved: ",
+        " NL (Includes the Courier and Membership Card)"
+      ]
+    },
+    "Girya": {
+      "TEXT": [
+        "Times lifted: "
+      ]
+    },
+    "WingedGreaves": {
+      "TEXT": [
+        "Charges used: "
+      ]
+    },
+    "Omamori": {
+      "TEXT": [
+        "Charges used: "
+      ]
+    },
+    "Matryoshka": {
+      "TEXT": [
+        "Charges used: "
+      ]
+    },
+    "Bottled Flame": {
+      "TEXT": [
+        "Card bottled: ",
+        "Unknown"
+      ]
+    },
+    "Bottled Tornado": {
+      "TEXT": [
+        "Card bottled: ",
+        "Unknown"
+      ]
+    },
+    "Bottled Lightning": {
+      "TEXT": [
+        "Card bottled: ",
+        "Unknown"
+      ]
+    },
+    "Nilry's Codex": {
+      "TEXT": [
+        "Common cards picked: ",
+        " NL Uncommon cards picked: ",
+        " NL Rare cards picked: ",
+        " NL Cards skipped: "
+      ]
+    },
+    "Cauldron": {
+      "TEXT": [
+        "Potions picked up: "
+      ]
+    },
+    "HolyWater": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "PureWater": {
+      "TEXT": [
+        "Energy gained: "
+      ]
+    },
+    "White Beast Statue": {
+      "TEXT": [
+        "Expected extra potions: "
+      ]
+    },
+    "Calipers": {
+      "TEXT": [
+        "Block retained: "
+      ]
+    },
+    "Ice Cream": {
+      "TEXT": [
+        "Energy retained: "
+      ]
+    },
+    "The Specimen": {
+      "TEXT": [
+        "Relevant poison applied: "
+      ]
+    }
+  }
