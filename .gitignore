@@ -1,5 +1,4 @@
 config.py
 *.pyc
 data/
-*.log
 last_run
