@@ -94,7 +94,7 @@ def _update_cache():
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
     _update_cache()
-    return {"runs": reversed(p for t, p in sorted(_ts_cache))} # return most recent runs at the top
+    return {"runs": reversed([p for t, p in sorted(_ts_cache)])} # return most recent runs at the top
 
 def _get_parser(name) -> RunParser | None:
     parser = _cache.get(f"{name}.run") # most common case
