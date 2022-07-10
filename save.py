@@ -71,7 +71,6 @@ async def receive_save(req: Request):
     content = file.file.read()
     content = content.decode("utf-8", "xmlcharrefreplace")
     name = post.get("character")
-    name = name.file.read()
     name = name.decode("utf-8", "xmlcharrefreplace")
 
     j = None

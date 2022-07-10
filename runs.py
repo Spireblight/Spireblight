@@ -248,7 +248,6 @@ async def receive_run(req: Request) -> Response:
     content = content.decode("utf-8", "xmlcharrefreplace")
 
     name = post.get("name")
-    name = name.file.read()
     name = name.decode("utf-8", "xmlcharrefreplace")
     with open(os.path.join("data", "runs", name), "w") as f:
         f.write(content)
