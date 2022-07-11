@@ -3,6 +3,20 @@
 Run: {{ parser.display_name }}
 {% endblock %}
 {% block content %}
+    <script type="text/javascript">
+    document.onkeydown = function(evt) {
+        {% if "prev" in parser.matched %}
+        if (evt.key === "ArrowLeft") {
+            window.location.href = "/runs/{{ parser.matched['prev'].name }}";
+        }
+        {% endif %}
+        {% if "next" in parser.matched %}
+        if (evt.key === "ArrowRight") {
+            window.location.href = "/runs/{{ parser.matched['next'].name }}";
+        }
+        {% endif %}
+    }
+    </script>
     <h1>{{ parser.character }}</h1>
     {% if "prev" in parser.matched %}
     <a href="/runs/{{ parser.matched['prev'].name }}"><<< Previous run -</a>
