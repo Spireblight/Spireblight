@@ -18,6 +18,7 @@ import mpld3
 from nameinternal import get_all_relics, get_all_cards
 from gamedata import FileParser
 from webpage import router
+from logger import logger
 
 import config
 
@@ -48,6 +49,7 @@ class RunParser(FileParser):
         super().__init__(data)
         self.filename = filename
         self.name, _, ext = filename.partition(".")
+        self.matched: dict[str, FileParser] = {}
         self._character = data["character_chosen"]
 
     @property
@@ -84,11 +86,43 @@ class RunParser(FileParser):
         return self.data["relics"]
 
 def _update_cache():
+    start = time.time()
+    prev = None
+    prev_char: dict[str, RunParser | None] = {"Ironclad": None, "Silent": None, "Defect": None, "Watcher": None}
+    prev_win = None
+    prev_loss = None
     for file in os.listdir(os.path.join("data", "runs")):
         if file not in _cache:
             with open(os.path.join("data", "runs", file)) as f:
                 _cache[file] = parser = RunParser(file, json.load(f))
                 _ts_cache[parser.timestamp] = parser
+        cur = _cache[file]
+        if prev is not None:
+            if "prev" not in cur.matched:
+                prev.matched["next"] = cur
+                cur.matched["prev"] = prev
+            if "prev_char" not in cur.matched and (c := prev_char[cur.character]) is not None:
+                c.matched["next_char"] = cur
+                cur.matched["prev_char"] = c
+            prev_char[cur.character] = cur
+            if cur.won:
+                if "prev_win" not in cur.matched and prev_win is not None:
+                    prev_win.matched["next_win"] = cur
+                    cur.matched["prev_win"] = prev_win
+                prev_win = cur
+            else:
+                if "prev_loss" not in cur.matched and prev_loss is not None:
+                    prev_loss.matched["next_loss"] = cur
+                    cur.matched["prev_loss"] = prev_loss
+                prev_loss = cur
+        prev = cur
+
+    # I don't actually know how long this cache updating is going to take...
+    # I think it's as optimized as I could make it while still being safe,
+    # but it's possible it still takes some time. I'm not going to focus on
+    # that for now, but logging the update time everytime, in case it turns
+    # out to be a bottleneck. We only want to actually update new runs.
+    logger.info(f"Updated run parser cache in {time.time() - start}s")
 
 @router.get("/runs")
 @aiohttp_jinja2.template("runs.jinja2")
