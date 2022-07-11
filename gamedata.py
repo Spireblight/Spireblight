@@ -393,11 +393,11 @@ class FileParser: # TODO: relics hover
                     relic_count = node.relic_count
                     potion_count = node.potion_count
                 else:
-                    card_count += node.card_delta
+                    card_count += node.card_delta()
                     node._card_count = card_count
-                    relic_count += node.relic_delta
+                    relic_count += node.relic_delta()
                     node._relic_count = relic_count
-                    potion_count += node.potion_delta
+                    potion_count += node.potion_delta()
                     node._potion_count = potion_count
                     node._floor_time = t - prev
                 prev = t
@@ -590,17 +590,20 @@ class NodeData:
             return 0
         return self._floor_time
 
-    @property
     def card_delta(self) -> int:
         return len(self.picked)
 
-    @property
     def relic_delta(self) -> int:
         return len(self.relics)
 
-    @property
     def potion_delta(self) -> int:
-        return len(self.potions) - len(self.used_potions) - len(self._discarded)
+        # Note: this assumes Ascension 11+, and no potion belt.
+        # I'm hoping to use a RunHistoryPlus field, but for now, this is a hack
+        # (some runs will be wrong, but they will be less wrong than otherwise)
+        count = len(self.potions)
+        if "Entropic Brew" in self.used_potions:
+            count += 2
+        return count - len(self.used_potions) - len(self._discarded)
 
     @property
     def card_count(self) -> int:
@@ -618,7 +621,7 @@ class NodeData:
     def potion_count(self) -> int:
         if self._potion_count is None:
             return 0
-        return max(self._potion_count, 0)
+        return self._potion_count
 
 def get_node(parser: FileParser, floor: int) -> NodeData:
     for node, cached in get_nodes(parser, None):
@@ -750,13 +753,13 @@ class Treasure(NodeData):
         d = parser.get("basemod:mod_saves", ())
         if "BlueKeyRelicSkippedLog" in d:
             if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
-                relic = d["BlueKeyRelicSkippedLog"]["relicID"]
+                relic = get_relic(d["BlueKeyRelicSkippedLog"]["relicID"])
                 has_blue_key = True
         elif "blue_key_relic_skipped_log" in parser:
             if parser["blue_key_relic_skipped_log"]["floor"] == floor:
-                relic = parser["blue_key_relic_skipped_log"]["relicID"]
+                relic = get_relic(parser["blue_key_relic_skipped_log"]["relicID"])
                 has_blue_key = True
-        return super().from_parser(parser, floor, has_blue_key, get_relic(relic), *extra)
+        return super().from_parser(parser, floor, has_blue_key, relic, *extra)
 
     @property
     def blue_key(self) -> bool:
@@ -885,9 +888,8 @@ class Merchant(NodeData):
     def contents(self) -> dict[str, list[str]] | None:
         return self._contents
 
-    @property
     def card_delta(self) -> int:
-        return super().card_delta - (self.purged is not None)
+        return super().card_delta() - (self.purged is not None)
 
 class EventMerchant(Merchant):
     room_type = "Unknown (Merchant)"
