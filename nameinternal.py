@@ -11,7 +11,7 @@ def _get_name(x: str, d: str, default: str) -> str:
     return _cache[d].get(x, {}).get("NAME", default)
 
 def _get_all(d: str) -> dict[str, str]:
-    return {b["NAME"]: a for a, b in _cache[d].items() if "DEPRECATED" not in b["NAME"]}
+    return {b["NAME"]: a for a, b in _cache[d].items()}
 
 def get_relic(name: str, default: str = "<Unknown Relic>") -> str:
     return _get_name(name, "relics", default)

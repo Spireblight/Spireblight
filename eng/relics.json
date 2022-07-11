@@ -180,13 +180,6 @@
       " cards."
     ]
   },
-  "Chameleon Ring": {
-    "NAME": "Chameleon Ring",
-    "FLAVOR": "Deprecated",
-    "DESCRIPTIONS": [
-      "You can now #yBrew at Rest Sites."
-    ]
-  },
   "Champion Belt": {
     "NAME": "Champion Belt",
     "FLAVOR": "Only the greatest may wear this belt.",
@@ -260,29 +253,6 @@
     "FLAVOR": "The branch of a tree from a forgotten era.",
     "DESCRIPTIONS": [
       "Whenever you #yExhaust a card, add a random card into your hand."
-    ]
-  },
-  "Derp Rock": {
-    "NAME": "Derp Rock",
-    "FLAVOR": "Placeholder",
-    "DESCRIPTIONS": [
-      "At the start of your turn, gain #b",
-      " Charge. NL (Cannot be removed or transformed.)"
-    ]
-  },
-  "Discerning Monocle": {
-    "NAME": "Discerning Monocle",
-    "FLAVOR": "A very dapper looking monocle indeed.",
-    "DESCRIPTIONS": [
-      "Merchant prices are reduced by #b20%"
-    ]
-  },
-  "Dodecahedron": {
-    "NAME": "DEPRECATED Runic Dodecahedron",
-    "FLAVOR": "The runes are indecipherable.",
-    "DESCRIPTIONS": [
-      "If your HP is full, gain ",
-      "[E] at the start of your turn."
     ]
   },
   "Dream Catcher": {
@@ -447,13 +417,6 @@
       " damage to ALL enemies."
     ]
   },
-  "Living Blade": {
-    "NAME": "Living Blade",
-    "FLAVOR": "DEPRECATED",
-    "DESCRIPTIONS": [
-      "You can get any number of any card."
-    ]
-  },
   "Lizard Tail": {
     "NAME": "Lizard Tail",
     "FLAVOR": "A fake tail to trick enemies during combat.",
@@ -579,13 +542,6 @@
     "FLAVOR": "Ooooh...",
     "DESCRIPTIONS": [
       "At the start of each combat, #yChannel #b1 #yPlasma."
-    ]
-  },
-  "Nullstone Periapt": {
-    "NAME": "Nullstone Periapt",
-    "FLAVOR": "DEPRECATED.",
-    "DESCRIPTIONS": [
-      "Negate the next debuff you receive from an enemy. NL Recharges in #b10 turns."
     ]
   },
   "Odd Mushroom": {
@@ -723,13 +679,6 @@
       "Future card rewards have #b1 additional card to choose from."
     ]
   },
-  "Red Circlet": {
-    "NAME": "Red Circlet",
-    "FLAVOR": "You ran out of relics. Impressive!",
-    "DESCRIPTIONS": [
-      "Looks very pretty."
-    ]
-  },
   "Red Mask": {
     "NAME": "Red Mask",
     "FLAVOR": "This very stylish looking mask belongs to the leader of the Red Mask Bandits. Technically that makes you the leader now?",
@@ -756,7 +705,7 @@
   },
   "Ring of the Serpent": {
     "NAME": "Ring of the Serpent",
-	"FLAVOR": "Your ring has morphed and changed forms.",
+	  "FLAVOR": "Your ring has morphed and changed forms.",
     "DESCRIPTIONS": [
       "Replaces #gRing #gof #gthe #gSnake. ",
       "At the start of your turn, draw #b1 additional card."
@@ -898,68 +847,6 @@
     "FLAVOR": "A little bit of bad can do a lot of good...",
     "DESCRIPTIONS": [
       "At the start of each combat, #yChannel #b1 #yDark."
-    ]
-  },
-  "Test 1": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "Test 2": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      ""
-    ]
-  },
-  "Test 3": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      ""
-    ]
-  },
-  "Test 4": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      ""
-    ]
-  },
-  "Test 5": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      "",
-      ""
-    ]
-  },
-  "Test 6": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      "",
-      "",
-      ""
-    ]
-  },
-  "Test 7": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      ""
-    ]
-  },
-  "Test 8": {
-    "NAME": "",
-    "FLAVOR": "",
-    "DESCRIPTIONS": [
-      ""
     ]
   },
   "The Courier": {
@@ -1391,13 +1278,6 @@
     "FLAVOR": "Once exhausted, appears to refill itself in a different color.",
     "DESCRIPTIONS": [
       "Whenever you play #b10 cards, draw #b1 card."
-    ]
-  },
-  "Yin": {
-    "NAME": "DEPRECATED Yin",
-    "FLAVOR": "You cannot have light without dark. Or can you?",
-    "DESCRIPTIONS": [
-      "Whenever you play a #ySkill, gain #b1 temporary #yStrength."
     ]
   },
   "Yang": {
