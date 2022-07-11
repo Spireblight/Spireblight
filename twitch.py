@@ -19,10 +19,13 @@ class TwitchCommand(Command):
     async def invoke(self, context: Context, *, index=0):
         if not self.enabled:
             return
-        is_editor = (context.author.name in config.editors)
-        if "e" in self.flag and not is_editor:
-            return
-        if "m" in self.flag and not context.author.is_mod:
-            return
+        if self.flag:
+            is_editor = (context.author.name in config.editors)
+            if self.flag and (
+                (not context.author.is_broadcaster) and
+                ("e" in self.flag and not is_editor) and
+                ("m" in self.flag and not context.author.is_mod)
+            ):
+                return
         logger.debug(f"Invoking command {self.name} by {context.author.display_name}")
         await super().invoke(context, index=index)

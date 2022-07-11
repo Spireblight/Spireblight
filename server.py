@@ -154,7 +154,7 @@ def with_savefile(name: str, *aliases: str, **kwargs):
             if res is None:
                 raise ValueError("No savefile")
             return [res]
-        return command(name, *aliases, discord=False, **kwargs)(func, wrapper_func=_savefile_get)
+        return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
 
 class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
@@ -204,7 +204,7 @@ class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
         if name.startswith("event_"): # calling events -- insert our own event system in
             name = name[6:]
             evt = events.get(name)
-            if evt is not None:
+            if evt is not None: # THIS IS A LIST!!!!
                 return evt.invoke
         raise AttributeError(name)
 
@@ -494,11 +494,11 @@ async def help_cmd(ctx: ContextType, name: str = ""):
 
     await ctx.send(f"Could not find matching command. You may view all existing commands here: {config.website_url}/commands")
 
-@command("support", "shoutout", "so", discord=False)
+@command("support", "shoutout", "so")
 async def shoutout(ctx: ContextType, name: str):
     """Give a shoutout to a fellow streamer."""
     try:
-        chan = await ctx.bot.fetch_channel(name)
+        chan = await TConn.fetch_channel(name)
     except IndexError as e:
         await ctx.send(e.args[0])
         return
@@ -508,7 +508,7 @@ async def shoutout(ctx: ContextType, name: str):
 
     msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} -"]
 
-    live: list[Stream] = await ctx.bot.fetch_streams([chan.user.id])
+    live: list[Stream] = await TConn.fetch_streams([chan.user.id])
     if live:
         stream = live[0]
         game = stream.game_name
@@ -546,7 +546,7 @@ async def bluekey(ctx: ContextType, j: Savefile):
 
     d = j["basemod:mod_saves"]["BlueKeyRelicSkippedLog"]
 
-    await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']+1} for the Sapphire key.")
+    await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']} for the Sapphire key.")
 
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, j: Savefile):

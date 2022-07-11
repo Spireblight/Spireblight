@@ -321,6 +321,15 @@ class FileParser: # TODO: relics hover
     def get(self, item: str, default=None):
         return self.data.get(item, default)
 
+    def get_boss_chest(self) -> dict[str, str | list[str]]:
+        if "boss_chest_iter" not in self._cache:
+            self._cache["boss_chest_iter"] = iter(self[self.prefix + "boss_relics"])
+
+        try:
+            return next(self._cache["boss_chest_iter"])
+        except StopIteration:
+            raise RuntimeError("No more boss chests")
+
     @property
     def prefix(self) -> str:
         return ""
@@ -336,7 +345,7 @@ class FileParser: # TODO: relics hover
         return c
 
     @property
-    def seed(self) -> int:
+    def seed(self) -> str:
         if "seed" not in self._cache:
             c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
@@ -451,7 +460,7 @@ class NodeData:
             if "potion_use_per_floor" in parser: # run file
                 self._usedpotions.extend(get_potion(x) for x in parser["potion_use_per_floor"][floor - 1])
             elif "PotionUseLog" in parser.get("basemod:mod_saves", ()): # savefile
-                self._usedpotions.extend(get_potion(x) for x in parser["PotionUseLog"][floor - 1])
+                self._usedpotions.extend(get_potion(x) for x in parser["basemod:mod_saves"]["PotionUseLog"][floor - 1])
         except IndexError:
             self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
             self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
@@ -463,7 +472,7 @@ class NodeData:
             pass
 
         for cards in parser[prefix + "card_choices"]:
-            if cards["floor"] == floor:
+            if cards["floor"] == floor and cards not in self._cards:
                 self._cards.append(cards)
 
         for relic in parser[prefix + "relics_obtained"]:
@@ -609,7 +618,7 @@ class NodeData:
     def potion_count(self) -> int:
         if self._potion_count is None:
             return 0
-        return self._potion_count
+        return max(self._potion_count, 0)
 
 def get_node(parser: FileParser, floor: int) -> NodeData:
     for node, cached in get_nodes(parser, None):
@@ -763,7 +772,7 @@ class EventTreasure(Treasure):
     room_type = "Unknown (Treasure)"
     map_icon = "event_chest.png"
 
-class EliteEncounter(EncounterBase):
+class EliteEncounter(EncounterBase): # XXX: There is no way to know which elite dropped the emerald key
     room_type = "Elite"
     map_icon = "fight_elite.png"
 
@@ -817,14 +826,14 @@ class Merchant(NodeData):
         for i, purchased in enumerate(parser[parser.prefix + "item_purchase_floors"]):
             if purchased == floor:
                 value = parser[parser.prefix + "items_purchased"][i]
-                card = get_card(value, None)
-                relic = get_relic(value, None)
-                potion = get_potion(value, None)
-                if card is not None:
+                card = get_card(value, "")
+                relic = get_relic(value, "")
+                potion = get_potion(value, "")
+                if card:
                     bought["cards"].append(card)
-                elif relic is not None:
+                elif relic:
                     bought["relics"].append(relic)
-                elif potion is not None:
+                elif potion:
                     bought["potions"].append(potion)
 
         try:
@@ -931,10 +940,38 @@ class Boss(EncounterBase):
     room_type = "Boss"
     map_icon = "boss_node.png"
 
-class BossChest(NodeData): # TODO: Boss relics obtained and skipped
+class BossChest(NodeData):
     room_type = "Boss Chest"
     map_icon = "boss_chest.png"
     end_of_act = True
+
+    def __init__(self, picked: str | None, skipped: list[str]):
+        super().__init__()
+        if picked is not None:
+            self._relics.append(picked)
+        self._skipped = skipped
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 5 not in to_append:
+            to_append[5] = []
+        to_append[5].append("Boss relics skipped:")
+        to_append[5].extend(f"- {x}" for x in self.skipped_relics)
+        return super()._description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        boss_relics = parser.get_boss_chest()
+        picked = None
+        skipped = []
+        if boss_relics["picked"] != "SKIP":
+            picked = get_relic(boss_relics["picked"])
+        for relic in boss_relics["not_picked"]:
+            skipped.append(get_relic(relic))
+        return super().from_parser(parser, floor, picked, skipped, *extra)
+
+    @property
+    def skipped_relics(self) -> list[str]:
+        return self._skipped
 
 class Act4Transition(NodeData):
     room_type = "Transition into Act 4"
