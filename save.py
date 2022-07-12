@@ -47,7 +47,9 @@ class Savefile(FileParser):
             self._cache.clear()
         else:
             self._character = character
-            self._cache["old_path"] = self._cache.pop("path")
+            if "path" in self._cache:
+                self._cache["old_path"] = self._cache.pop("path")
+            self._cache.pop("relics", None) # because N'loth and Boss relic starter upgrade, we need to regen it everytime
 
     @property
     def prefix(self) -> str:

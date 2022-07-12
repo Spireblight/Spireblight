@@ -3,7 +3,7 @@ import os
 
 from events import add_listener
 
-__all__ = ["get_relic", "get_all_relics", "get_card", "get_all_cards", "get_potion", "get_all_potions"]
+__all__ = ["get_relic", "get_all_relics", "get_card", "get_all_cards", "get_potion", "get_all_potions", "get_event", "get_all_events", "get_relic_stats"]
 
 _cache: dict[str, dict[str, str]] = {}
 
@@ -34,8 +34,17 @@ def get_all_cards() -> dict[str, str]:
 def get_potion(name: str, default: str = "<Unknown Potion>") -> str:
     return _get_name(name, "potions", default)
 
-def get_potions() -> dict[str, str]:
+def get_all_potions() -> dict[str, str]:
     return _get_all("potions")
+
+def get_event(name: str, default: str = "<Unknown Event>") -> str:
+    return _get_name(name, "events", default)
+
+def get_all_events() -> dict[str, str]:
+    return _get_all("events")
+
+def get_relic_stats(name: str) -> list[str]:
+    return _cache["relic_stats"][name]["TEXT"]
 
 @add_listener("setup_init")
 async def load():

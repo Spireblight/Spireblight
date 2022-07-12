@@ -4,7 +4,7 @@ Runs
 {% endblock %}
 {% block content %}
     <h1>Run history</h1>
-    <a href="/compare">Compare data between runs</a><br>
+    <!--<a href="/compare">Compare data between runs</a><br>-->
     {% for obj in runs %}
     <a href="/runs/{{ obj.name }}">{{ obj.display_name }}</a><br>
     {% endfor %}

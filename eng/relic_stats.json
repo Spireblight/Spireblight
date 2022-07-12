@@ -1,36 +1,11 @@
 {
-    "HEADER": {
-      "TEXT": [
-        "Stats"
-      ]
-    },
-    "EXTENDED": {
-      "TEXT": [
-        " NL Per turn: ",
-        " NL Per combat: ",
-        "Floor obtained: "
-      ]
-    },
-    "OPTION": {
-      "TEXT": [
-        "Enable per combat and per turn stat reporting for combat relics",
-        "Enable integration with the Slay the Relics mod",
-        "Display floor obtained for all relics",
-        "Display joke stats"
-      ]
-    },
-    "ERROR": {
-      "TEXT": [
-        "Stats unknown"
-      ]
-    },
     "Snecko Eye": {
       "TEXT": [
-        "Card cost counts: NL 0 energy: ",
-        " NL 1 energy: ",
-        " NL 2 energy: ",
-        " NL 3 energy: ",
-        " NL Average discount: "
+        "Card cost counts:\n0 energy: ",
+        "1 energy: ",
+        "2 energy: ",
+        "3 energy: ",
+        "Average discount: "
       ]
     },
     "CeramicFish": {
@@ -311,9 +286,7 @@
     "Gremlin Horn": {
       "TEXT": [
         "Cards drawn: ",
-        " NL Energy gained: ",
-        " NL Cards per combat: ",
-        " NL Energy per combat: "
+        "Energy gained: "
       ]
     },
     "InkBottle": {
@@ -429,19 +402,19 @@
     "Cables": {
       "TEXT": [
         "Orbs triggered: ",
-        " NL Lightning orbs: ",
-        " NL Frost orbs: ",
-        " NL Dark orbs: ",
-        " NL Plasma orbs: "
+        "Lightning orbs: ",
+        "Frost orbs: ",
+        "Dark orbs: ",
+        "Plasma orbs: "
       ]
     },
     "Emotion Chip": {
       "TEXT": [
         "Orbs triggered: ",
-        " NL Lightning orbs: ",
-        " NL Frost orbs: ",
-        " NL Dark orbs: ",
-        " NL Plasma orbs: "
+        "Lightning orbs: ",
+        "Frost orbs: ",
+        "Dark orbs: ",
+        "Plasma orbs: "
       ]
     },
     "Melange": {
@@ -481,26 +454,22 @@
     },
     "Pandora's Box": {
       "TEXT": [
-        "Cards obtained: ",
-        "Unknown"
+        "Cards obtained: "
       ]
     },
     "Astrolabe": {
       "TEXT": [
-        "Cards obtained: ",
-        "Unknown"
+        "Cards obtained: "
       ]
     },
     "Whetstone": {
       "TEXT": [
-        "Cards upgraded: ",
-        "Unknown"
+        "Cards upgraded: "
       ]
     },
     "War Paint": {
       "TEXT": [
-        "Cards upgraded: ",
-        "Unknown"
+        "Cards upgraded: "
       ]
     },
     "Bag of Preparation": {
@@ -536,7 +505,7 @@
     "Membership Card": {
       "TEXT": [
         "Gold saved: ",
-        " NL (Includes the Courier and Membership Card)"
+        "(Includes the Courier and Membership Card)"
       ]
     },
     "Girya": {
@@ -561,28 +530,25 @@
     },
     "Bottled Flame": {
       "TEXT": [
-        "Card bottled: ",
-        "Unknown"
+        "Card bottled: "
       ]
     },
     "Bottled Tornado": {
       "TEXT": [
-        "Card bottled: ",
-        "Unknown"
+        "Card bottled: "
       ]
     },
     "Bottled Lightning": {
       "TEXT": [
-        "Card bottled: ",
-        "Unknown"
+        "Card bottled: "
       ]
     },
     "Nilry's Codex": {
       "TEXT": [
         "Common cards picked: ",
-        " NL Uncommon cards picked: ",
-        " NL Rare cards picked: ",
-        " NL Cards skipped: "
+        "Uncommon cards picked: ",
+        "Rare cards picked: ",
+        "Cards skipped: "
       ]
     },
     "Cauldron": {

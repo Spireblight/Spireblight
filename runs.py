@@ -81,22 +81,21 @@ class RunParser(FileParser):
             return f"{hours}:{minutes:>02}:{seconds:>02}"
         return f"{minutes:>02}:{seconds:>02}"
 
-    @property
-    def relics(self):
-        return self.data["relics"]
-
 def _update_cache():
     start = time.time()
-    prev = None
-    prev_char: dict[str, RunParser | None] = {"Ironclad": None, "Silent": None, "Defect": None, "Watcher": None}
-    prev_win = None
-    prev_loss = None
     for file in os.listdir(os.path.join("data", "runs")):
         if file not in _cache:
             with open(os.path.join("data", "runs", file)) as f:
                 _cache[file] = parser = RunParser(file, json.load(f))
                 _ts_cache[parser.timestamp] = parser
-        cur = _cache[file]
+
+    prev = None
+    prev_char: dict[str, RunParser | None] = {"Ironclad": None, "Silent": None, "Defect": None, "Watcher": None}
+    prev_win = None
+    prev_loss = None
+
+    for t in sorted(_ts_cache):
+        cur = _ts_cache[t]
         if prev is not None:
             if "prev" not in cur.matched:
                 prev.matched["next"] = cur

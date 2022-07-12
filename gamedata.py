@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Generator
 
-from nameinternal import get_relic, get_card, get_potion
+from nameinternal import get_relic, get_card, get_potion, get_event, get_relic_stats
 
 __all__ = ["FileParser", "get_nodes", "get_node"]
 
@@ -290,6 +290,12 @@ class NeowBonus:
                 num += 1
         return num
 
+    def fights_delta(self) -> int:
+        return 0
+
+    def turns_delta(self) -> int:
+        return 0
+
     @property
     def card_count(self) -> int:
         return self.card_delta()
@@ -302,9 +308,17 @@ class NeowBonus:
     def potion_count(self) -> int:
         return self.potion_delta()
 
+    @property
+    def fights_count(self) -> int:
+        return self.fights_delta()
+
+    @property
+    def turns_count(self) -> int:
+        return self.turns_delta()
+
 _chars = {"THE_SILENT": "Silent"}
 
-class FileParser: # TODO: relics hover
+class FileParser:
     def __init__(self, data: dict[str, Any]):
         self.data = data
         self.neow_bonus = NeowBonus(self)
@@ -325,10 +339,10 @@ class FileParser: # TODO: relics hover
         if "boss_chest_iter" not in self._cache:
             self._cache["boss_chest_iter"] = iter(self[self.prefix + "boss_relics"])
 
-        try:
+        try: # with a savefile, it's possible to try to get the same floor twice, which will the last one
             return next(self._cache["boss_chest_iter"])
         except StopIteration:
-            raise RuntimeError("No more boss chests")
+            return self[self.prefix + "boss_relics"][-1]
 
     @property
     def prefix(self) -> str:
@@ -343,6 +357,18 @@ class FileParser: # TODO: relics hover
         if c is None:
             c = self._character.title()
         return c
+
+    @property
+    def relics(self) -> Generator[RelicData, None, None]:
+        if "relics" not in self._cache:
+            self._cache["relics"] = []
+            for relic in self.data["relics"]:
+                value = RelicData(self, relic)
+                self._cache["relics"].append(value)
+                yield value
+            return
+
+        yield from self._cache["relics"]
 
     @property
     def seed(self) -> str:
@@ -383,6 +409,8 @@ class FileParser: # TODO: relics hover
             card_count = self.neow_bonus.card_delta()
             relic_count = self.neow_bonus.relic_delta()
             potion_count = self.neow_bonus.potion_delta()
+            fights_count = self.neow_bonus.fights_delta()
+            turns_count = self.neow_bonus.turns_delta()
             for node, cached in get_nodes(self, self._cache.pop("old_path", None)):
                 try:
                     t = floor_time[node.floor - 1]
@@ -392,6 +420,8 @@ class FileParser: # TODO: relics hover
                     card_count = node.card_count
                     relic_count = node.relic_count
                     potion_count = node.potion_count
+                    fights_count = node.fights_count
+                    turns_count = node.turns_count
                 else:
                     card_count += node.card_delta()
                     node._card_count = card_count
@@ -399,6 +429,10 @@ class FileParser: # TODO: relics hover
                     node._relic_count = relic_count
                     potion_count += node.potion_delta()
                     node._potion_count = potion_count
+                    fights_count += node.fights_delta()
+                    node._fights_count = fights_count
+                    turns_count += node.turns_delta()
+                    node._turns_count = turns_count
                     node._floor_time = t - prev
                 prev = t
                 self._cache["path"].append(node)
@@ -407,6 +441,82 @@ class FileParser: # TODO: relics hover
             return
 
         yield from self._cache["path"] # generator so that it's a consistent type
+
+class RelicData:
+    """Contain information for Spire relics."""
+
+    def __init__(self, parser: FileParser, relic: str):
+        self.parser = parser
+        self._relic = relic
+        self._description = None
+
+    def description(self) -> str:
+        if self._description is None:
+            desc = [self.name]
+            obtained: NodeData = self.parser.neow_bonus
+            for node in self.parser.path:
+                if self.name in node.relics:
+                    obtained = node
+            if obtained is not None:
+                desc.append(f"Obtained on floor {obtained.floor}")
+                desc.extend(self.get_details(obtained, node)) # node will be the last node
+            self._description = "\n".join(desc)
+        return self._description
+
+    def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
+        desc = ["Stats:"]
+        try:
+            text = get_relic_stats(self._relic)
+        except KeyError: # no stats for these:
+            return []
+        stats = None
+        if "basemod:mod_saves" in self.parser:
+            stats = self.parser["basemod:mod_saves"].get(f"stats_{self._relic}")
+        elif "relic_stats" in self.parser:
+            stats = self.parser["relic_stats"].get(self._relic)
+        if stats is None:
+            return []
+
+        if self._relic == "White Beast Statue":
+            # if this is a savefile, only the last number matters. run files should be unaffected
+            stats = [stats[-1]]
+
+        if isinstance(stats, int):
+            desc.append(text[0] + str(stats))
+            desc.extend(text[1:])
+        elif isinstance(stats, float): # only Frozen Eye
+            desc.append(f"{text[0]}{stats:.2f}s")
+        elif isinstance(stats, str): # bottles
+            desc.append(text[0] + get_card(stats))
+        elif isinstance(stats, list):
+            if not stats: # e.g. Whetstone upgrading nothing
+                desc.append(f"{text[0]}<nothing>")
+            elif isinstance(stats[0], str):
+                stats = [get_card(x) for x in stats]
+                desc.append(text[0] + ", ".join(stats))
+            else:
+                text_iter = iter(text)
+                for stat in stats:
+                    stat_str = str(stat)
+                    if isinstance(stat, float):
+                        stat_str = f"{stat:.2f}"
+                    desc.append(next(text_iter) + stat_str)
+                    num = stat / (last.turns_count - obtained.turns_count)
+                    desc.append(f"Per turn: {num:.2f}")
+                    num = stat / (last.fights_count - obtained.fights_count)
+                    desc.append(f"Per combat: {num:.2f}")
+        else:
+            desc.append(f"Unable to parse stats for {self.name}")
+
+        return desc
+
+    @property
+    def image(self) -> str:
+        return f"{self._relic}.png"
+
+    @property
+    def name(self) -> str:
+        return get_relic(self._relic)
 
 class NodeData:
     """Contain relevant information for Spire nodes.
@@ -434,6 +544,8 @@ class NodeData:
         self._card_count = None
         self._relic_count = None
         self._potion_count = None
+        self._fights_count = None
+        self._turns_count = None
         self._cards = []
         self._relics = []
         self._potions = []
@@ -503,6 +615,7 @@ class NodeData:
             text.append(self.name)
 
         text.extend(to_append.get(3, ()))
+        text.extend(to_append.get(7, ()))
         if self.potions:
             text.append("Potions obtained:")
             text.extend(f"- {x}" for x in self.potions)
@@ -605,6 +718,12 @@ class NodeData:
             count += 2
         return count - len(self.used_potions) - len(self._discarded)
 
+    def fights_delta(self) -> int:
+        return 0
+
+    def turns_delta(self) -> int:
+        return 0
+
     @property
     def card_count(self) -> int:
         if self._card_count is None:
@@ -622,6 +741,18 @@ class NodeData:
         if self._potion_count is None:
             return 0
         return self._potion_count
+
+    @property
+    def fights_count(self) -> int:
+        if self._fights_count is None:
+            return 1
+        return self._fights_count
+
+    @property
+    def turns_count(self) -> int:
+        if self._turns_count is None:
+            return 1
+        return self._turns_count
 
 def get_node(parser: FileParser, floor: int) -> NodeData:
     for node, cached in get_nodes(parser, None):
@@ -668,7 +799,7 @@ def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Genera
             case ("T", "?"):
                 cls = EventTreasure
             case ("?", "?"):
-                cls = Event
+                cls = EventNode # not actually a NodeData subclass, but it returns one
             case ("R", "R"):
                 cls = Campfire
             case ("B", "BOSS"):
@@ -683,7 +814,12 @@ def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Genera
             case (a, b):
                 raise ValueError(f"Error: the combination of map node {b!r} and content {a!r} is undefined")
 
-        yield cls.from_parser(parser, floor), False
+        try:
+            value: NodeData = cls.from_parser(parser, floor)
+        except ValueError: # this can happen for savefiles if we're on the latest floor
+            continue
+        else:
+            yield value, False
 
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
@@ -699,7 +835,7 @@ class EncounterBase(NodeData):
             if damage["floor"] == floor:
                 break
         else:
-            raise ValueError(f"no fight happened on floor {floor}")
+            raise ValueError("no fight result yet")
 
         return super().from_parser(parser, floor, damage, *extra)
 
@@ -709,6 +845,12 @@ class EncounterBase(NodeData):
         to_append[3].append(f"{self.damage} damage")
         to_append[3].append(f"{self.turns} turns")
         return super()._description(to_append)
+
+    def fights_delta(self) -> int:
+        return 1
+
+    def turns_delta(self) -> int:
+        return self.turns
 
     @property
     def name(self) -> str:
@@ -783,13 +925,135 @@ class EventElite(EliteEncounter):
     room_type = "Unknown (Elite)"
     map_icon = "event.png"
 
-class Event(NodeData): # TODO: cards, relics, and potions obtained, delta might not get updated
+class EventNode:
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra) -> NodeData:
+        events = []
+        for event in parser[parser.prefix + "event_choices"]:
+            if event["floor"] == floor:
+                events.append(event)
+        if not events:
+            raise ValueError("no event data")
+        if events[0]["event_name"] == "Colosseum":
+            return Colosseum.from_parser(parser, floor, events, *extra)
+        if len(events) != 1:
+            raise ValueError("could not figure out what to do with this")
+        event = events[0]
+        return Event.from_parser(parser, floor, event, *extra)
+
+class Event(NodeData): # TODO: not all deltas will get updated
     room_type = "Unknown"
     map_icon = "event.png"
 
+    def __init__(self, event: dict[str, Any]):
+        super().__init__()
+        self._event = event
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 3 not in to_append:
+            to_append[3] = []
+        to_append[3].append(f"Option taken: {self.choice}")
+        return super()._description(to_append)
+
+    @property
+    def name(self) -> str:
+        return get_event(self._event["event_name"])
+
+    @property
+    def choice(self) -> str:
+        return self._event["player_choice"]
+
+    @property
+    def damage_healed(self) -> int:
+        return self._event["damage_healed"]
+
+    @property
+    def damage_taken(self) -> int:
+        return self._event["damage_taken"]
+
+    @property
+    def max_hp_gained(self) -> int:
+        return self._event["max_hp_gain"]
+
+    @property
+    def max_hp_lost(self) -> int:
+        return self._event["max_hp_loss"]
+
+    @property
+    def gold_gained(self) -> int:
+        return self._event["gold_gain"]
+
+    @property
+    def gold_loss(self) -> int:
+        return self._event["gold_loss"]
+
+    @property
+    def cards_obtained(self) -> list[str]:
+        if "cards_obtained" not in self._event:
+            return []
+        return [get_card(x) for x in self._event["cards_obtained"]]
+
+    @property
+    def cards_transformed(self) -> list[str]:
+        if "cards_transformed" not in self._event:
+            return []
+        return [get_card(x) for x in self._event["cards_transformed"]]
+
+    @property
+    def cards_removed(self) -> list[str]:
+        if "cards_removed" not in self._event:
+            return []
+        return [get_card(x) for x in self._event["cards_removed"]]
+
+    @property
+    def relics_obtained(self) -> list[str]:
+        if "relics_obtained" not in self._event:
+            return []
+        return [get_relic(x) for x in self._event["relics_obtained"]]
+
+    @property
+    def relics(self) -> list[str]:
+        return super().relics + self.relics_obtained
+
+class Colosseum(Event):
+    def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]]):
+        event = {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Fought Taskmaster + Nob",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Colosseum",
+            "gold_loss": 0,
+        }
+        if len(events) == 1:
+            event["player_choice"] = "Escaped"
+        super().__init__(event)
+        self._damages = damages
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 7 not in to_append:
+            to_append[7] = []
+        for i, dmg in enumerate(self._damages, 1):
+            to_append[7].append(f"Fight {i} ({dmg['enemies']}):")
+            to_append[7].append(f"{dmg['damage']} damage")
+            to_append[7].append(f"{dmg['turns']}")
+        return super()._description(to_append)
+
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
-        return super().from_parser(parser, floor, *extra)
+        dmg = []
+        for damage in parser[parser.prefix + "damage_taken"]:
+            if damage["floor"] == floor:
+                dmg.append(damage)
+        return super(Event, cls).from_parser(parser, floor, dmg, *extra)
+
+    def fights_delta(self) -> int:
+        return len(self._damages)
+
+    def turns_delta(self) -> int:
+        return sum(d["turns"] for d in self._damages)
 
 class Merchant(NodeData):
     room_type = "Merchant"
