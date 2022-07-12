@@ -10,8 +10,11 @@ async def main():
     print("Client running. Will periodically check for the savefile and send it over!")
     has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
-    with open("last_run") as f:
-        last_run = f.read().strip()
+    try:
+        with open("last_run") as f:
+            last_run = f.read().strip()
+    except OSError:
+        last_run = ""
     possible = None
     timeout = 1
     if not config.website_url or not config.secret:
