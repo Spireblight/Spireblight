@@ -6,7 +6,6 @@ import datetime
 import random
 import json
 import sys
-import re
 import os
 
 from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
@@ -31,7 +30,7 @@ from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run
 
-from typehints import ContextType
+from typehints import ContextType, CommandType
 import events
 
 import config
@@ -55,7 +54,7 @@ _consts = {
 _perms = {
     "": "Everyone",
     "m": "Moderator",
-    "e": "Editor",
+    "e": "Editor", # this has no effect in discord
 }
 
 _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
@@ -204,8 +203,11 @@ class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
         if name.startswith("event_"): # calling events -- insert our own event system in
             name = name[6:]
             evt = events.get(name)
-            if evt is not None: # THIS IS A LIST!!!!
-                return evt.invoke
+            if evt:
+                async def invoke(*args, **kwargs):
+                    for e in evt:
+                        e.invoke(args, kwargs)
+                return invoke
         raise AttributeError(name)
 
 class DiscordConn(DBot):
@@ -266,25 +268,44 @@ if config.global_interval:
 if config.sponsored_interval:
     _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
 
-@command("command", flag="me", discord=False)
+@command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> <output>"""
     args = list(args)
     msg = " ".join(args)
     name = name.lstrip(config.prefix)
-    cmds: dict[str, TwitchCommand] = TConn.commands
-    aliases = ctx.bot._command_aliases
+    cmds: dict[str, list[CommandType]] = {}
+    if TConn is not None:
+        for cname, cmd in TConn.commands.items():
+            cmds[cname] = [cmd]
+    if DConn is not None:
+        for cmd in DConn.commands:
+            if cmd.name not in cmds:
+                cmds[cmd.name] = []
+            cmds[cmd.name].append(cmd)
+    aliases: dict[str, list[CommandType]] = {}
+    if TConn is not None:
+        for alias, cmd in TConn._command_aliases.items():
+            aliases[alias] = [cmd]
+    if DConn is not None:
+        for dcmd in DConn.commands:
+            for alias in dcmd.aliases:
+                if alias not in aliases:
+                    aliases[alias] = []
+                aliases[alias].append(dcmd)
+
     sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
         case "add":
             if not await sanitizer(in_mapping=False):
                 return
             if name in aliases:
-                await ctx.send(f"Error: {name} is an alias to {aliases[name]}. Use 'unalias {aliases[name]} {name}' first.")
+                await ctx.send(f"Error: {name} is an alias to {aliases[name][0].name}. Use 'unalias {aliases[name][0].name} {name}' first.")
                 return
             flag = ""
             if args[0].startswith("+"):
                 flag, *args = args
+            flag = flag[1:]
             if flag not in _perms:
                 await ctx.send("Error: flag not recognized.")
                 return
@@ -299,7 +320,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer():
                 return
             if name in aliases:
-                await ctx.send(f"Error: cannot edit alias. Use 'edit {aliases[name]}' instead.")
+                await ctx.send(f"Error: cannot edit alias. Use 'edit {aliases[name][0].name}' instead.")
                 return
             if name not in _cmds:
                 await ctx.send(f"Error: cannot edit built-in command {name}.")
@@ -314,33 +335,38 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if flag:
                 _cmds[name]["flag"] = flag
             _update_db()
-            cmds[name]._callback = _create_cmd(msg)
+            for cmd in cmds[name]:
+                cmd._callback = _create_cmd(msg)
             await ctx.send(f"Command {name} edited successfully! Permission: {_perms[flag]}")
 
         case "remove" | "delete":
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.send(f"Error: cannot delete alias. Use 'remove {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
+                await ctx.send(f"Error: cannot delete alias. Use 'remove {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead.")
                 return
             if name not in _cmds:
                 await ctx.send(f"Error: cannot delete built-in command {name}.")
                 return
             del _cmds[name]
             _update_db()
-            TConn.remove_command(name)
+            if TConn is not None:
+                TConn.remove_command(name)
+            if DConn is not None:
+                DConn.remove_command(name)
             await ctx.send(f"Command {name} has been deleted.")
 
         case "enable":
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.send(f"Error: cannot enable alias. Use 'enable {aliases[name]}' instead.")
+                await ctx.send(f"Error: cannot enable alias. Use 'enable {aliases[name][0].name}' instead.")
                 return
-            if cmds[name].enabled:
+            if all(cmds[name]):
                 await ctx.send(f"Command {name} is already disabled.")
                 return
-            cmds[name].enabled = True
+            for cmd in cmds[name]:
+                cmd.enabled = True
             if name in _cmds:
                 _cmds[name]["enabled"] = True
                 _update_db()
@@ -355,12 +381,13 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.send(f"Error: cannot disable alias. Use 'disable {aliases[name]}' or 'unalias {aliases[name]} {name}' instead.")
+                await ctx.send(f"Error: cannot disable alias. Use 'disable {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead.")
                 return
-            if not cmds[name].enabled:
+            if not all(cmds[name]):
                 await ctx.send(f"Command {name} is already disabled.")
                 return
-            cmds[name].enabled = False
+            for cmd in cmds[name]:
+                cmd.enabled = False
             if name in _cmds:
                 _cmds[name]["enabled"] = False
                 _update_db()
@@ -374,7 +401,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case "alias": # cannot sanely sanitize this
             if not args:
                 if name not in _cmds and name in aliases:
-                    await ctx.send(f"Alias {name} is bound to {aliases[name]}.")
+                    await ctx.send(f"Alias {name} is bound to {aliases[name][0].name}.")
                 elif _cmds[name]['aliases']:
                     await ctx.send(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
                 else:
@@ -393,7 +420,10 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.send(f"Error: aliases {set(args) & cmds.keys()} already exist as commands.")
                 return
             for arg in args:
-                aliases[arg] = name
+                if TConn is not None:
+                    TConn._command_aliases[arg] = name
+                if DConn is not None:
+                    DConn.get_command(name).aliases.append(arg)
             _cmds[name]["aliases"].extend(args)
             _update_db()
             if len(args) == 1:
@@ -405,6 +435,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case "unalias":
             if not args:
                 await ctx.send("Error: no alias specified.")
+                return
+            if len(args) > 1:
+                await ctx.send("Can only remove one alias at a time.")
                 return
             if name not in cmds and args[0] in cmds:
                 await ctx.send(f"Error: use 'unalias {args[0]} {name}' instead.")
@@ -418,15 +451,22 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name not in _cmds:
                 await ctx.send("Error: cannot unalias built-in commands.")
                 return
-            if aliases[args[0]] != name:
-                await ctx.send(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]]}).")
+            if aliases[args[0]][0].name != name:
+                await ctx.send(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]][0].name}).")
                 return
-            del aliases[args[0]]
+            if TConn is not None:
+                TConn._command_aliases.pop(args[0], None)
+            if DConn is not None:
+                dcmd: DiscordCommand = DConn.get_command(name)
+                if args[0] in dcmd.aliases:
+                    dcmd.aliases.remove(args[0])
             _cmds[name]["aliases"].remove(name)
             _update_db()
             await ctx.send(f"Alias {args[0]} has been removed from command {name}.")
 
         case "cooldown" | "cd":
+            await ctx.send("Cooldown cannot be changed currently")
+            return
             if not await sanitizer(require_args=False):
                 return
             if not args:

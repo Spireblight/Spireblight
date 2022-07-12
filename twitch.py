@@ -16,16 +16,19 @@ class TwitchCommand(Command):
         self.required = func.__required__
         self.enabled = True
 
+    def __bool__(self):
+        return self.enabled
+
     async def invoke(self, context: Context, *, index=0):
         if not self.enabled:
             return
         if self.flag:
             is_editor = (context.author.name in config.editors)
-            if self.flag and (
+            if (
                 (not context.author.is_broadcaster) and
                 ("e" in self.flag and not is_editor) and
                 ("m" in self.flag and not context.author.is_mod)
             ):
                 return
-        logger.debug(f"Invoking command {self.name} by {context.author.display_name}")
+        logger.debug(f"Invoking Twitch command {self.name} by {context.author.display_name}")
         await super().invoke(context, index=index)

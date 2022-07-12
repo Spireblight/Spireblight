@@ -22,7 +22,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
         if wrapped_args is not None:
             new_args.extend(wrapped_args)
         multiple = (co.co_flags & 0x04) # whether *args is supported
-        annotations = inspect.get_annotations(func)
+        annotations = inspect.get_annotations(func, eval_str=True)
         for i, arg in enumerate(args, 1):
             if i < co.co_argcount:
                 var = co.co_varnames[i]
