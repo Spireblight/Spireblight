@@ -8,6 +8,8 @@ This needs Python 3.10 and the following libraries:
 - discord
 - aiohttp
 - aiohttp_jinja2
+- matplotlib
+- mpld3
 
 The data folder has a bunch of stuff to make the bot run. data.json contains most of the commands
 
@@ -36,4 +38,4 @@ The client side should run client.py. Client only needs the aiohttp library. Con
 - website_url (should be the same as the server's website_url - this is where the savefile will be sent)
 - secret (needs to be identical to the server's secret for savefile syncing to work)
 
-For any issues, feel free to open an issue. I accept PRs as well.
+For any issues, feel free to open an issue or submit a PR.
