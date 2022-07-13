@@ -952,7 +952,7 @@ class EventNode:
         event = events[0]
         for dmg in parser[parser.prefix + "damage_taken"]:
             if dmg["floor"] == floor:
-                return EventFight.from_parser(parser, floor, event, dmg, *extra)
+                return EventFight.from_parser(parser, floor, event, *extra)
         return Event.from_parser(parser, floor, event, *extra)
 
 class Event(NodeData):
@@ -964,7 +964,7 @@ class Event(NodeData):
         self._event = event
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 3 not in to_append:
+        if 7 not in to_append:
             to_append[7] = []
         to_append[7].append(f"Option taken:\n- {self.choice}")
         for x in ("damage_healed", "damage_taken", "max_hp_gained", "max_hp_lost", "gold_gained", "gold_lost"):
@@ -1053,6 +1053,10 @@ class EventFight(Event, EncounterBase):
     This does *not* work for the Colosseum fight (use Colosseum instead)
 
     """
+
+    def __init__(self, damage: dict[str, Any], event: dict[str, Any], *extra):
+        # swap the argument ordering around, as EncounterBase inserts damage first
+        super().__init__(event, damage, *extra)
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
         if 3 not in to_append:
