@@ -499,7 +499,7 @@ class RelicData:
                 desc.append(f"{text[0]}<nothing>")
             elif isinstance(stats[0], str):
                 stats = [get_card(x) for x in stats]
-                desc.append(f"{text[0]}\n{'\n- '.join(stats)}")
+                desc.append(f"{text[0]}\n- "+ "\n- ".join(stats))
             else:
                 text_iter = iter(text)
                 for stat in stats:
