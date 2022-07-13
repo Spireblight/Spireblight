@@ -29,6 +29,8 @@ class Savefile(FileParser):
 
     """
 
+    prefix = "metric_"
+
     def __init__(self):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
@@ -51,10 +53,6 @@ class Savefile(FileParser):
             if "path" in self._cache:
                 self._cache["old_path"] = self._cache.pop("path")
             self._cache.pop("relics", None) # because N'loth and Boss relic starter upgrade, we need to regen it everytime
-
-    @property
-    def prefix(self) -> str:
-        return "metric_"
 
 _savefile = Savefile()
 

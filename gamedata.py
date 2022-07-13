@@ -325,6 +325,8 @@ class NeowBonus:
 _chars = {"THE_SILENT": "Silent"}
 
 class FileParser:
+    prefix = ""
+
     def __init__(self, data: dict[str, Any]):
         self.data = data
         self.neow_bonus = NeowBonus(self)
@@ -349,10 +351,6 @@ class FileParser:
             return next(self._cache["boss_chest_iter"])
         except StopIteration:
             return self[self.prefix + "boss_relics"][-1]
-
-    @property
-    def prefix(self) -> str:
-        return ""
 
     @property
     def character(self) -> str | None:

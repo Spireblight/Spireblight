@@ -691,8 +691,10 @@ async def get_last(ctx: ContextType, arg: str = ""):
             match a:
                 case "win" | "victory" | "w":
                     won = True
+                    char = b
                 case "loss" | "death" | "l":
                     won = False
+                    char = b
                 case _:
                     char = a
                     match b:
@@ -711,7 +713,8 @@ async def get_last(ctx: ContextType, arg: str = ""):
         case "watcher" | "wa":
             char = "Watcher"
         case _:
-            char = char.capitalize() # might be a mod character
+            if char is not None:
+                char = char.capitalize() # might be a mod character
 
     return await _last_run(ctx, char, won)
 
