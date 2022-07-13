@@ -196,7 +196,7 @@ async def run_chart(req: Request) -> Response:
         totals[arg] = []
 
     for name, d in totals.items():
-        val = getattr(parser.neow_bonus, name)
+        val = getattr(parser.neow_bonus, name, None)
         if val is not None:
             if not floors:
                 floors.append(0)

@@ -675,12 +675,18 @@ async def skipped_boss_relics(ctx: ContextType, j: Savefile):
     await ctx.send(" ".join(msg))
 
 @command("last")
-async def get_last(ctx: ContextType, arg: str = ""):
+async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
     """Get the last run/win/loss."""
     char = None
     won = None
-    value = arg.lower().split(None, 1)
+    value = None
+    if arg2:
+        value = [arg1.lower(), arg2.lower()]
+    elif arg1:
+        value = [arg1.lower()]
     match value:
+        case None:
+            pass # nothing to worry about
         case ["win"] | ["victory"] | ["w"]:
             won = True
         case ["loss"] | ["death"] | ["l"]:
