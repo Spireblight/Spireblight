@@ -453,12 +453,14 @@ class RelicData:
     def description(self) -> str:
         if self._description is None:
             desc = [self.name]
+            # NeowBonus isn't quite NodeData, but it has a similar-enough signature to just work
             obtained: NodeData = self.parser.neow_bonus
+            node = None
             for node in self.parser.path:
                 if self.name in node.relics:
                     obtained = node
-            if obtained is not None:
-                desc.append(f"Obtained on floor {obtained.floor}")
+            desc.append(f"Obtained on floor {obtained.floor}")
+            if node is not None:
                 desc.extend(self.get_details(obtained, node)) # node will be the last node
             self._description = "\n".join(desc)
         return self._description
@@ -467,7 +469,7 @@ class RelicData:
         desc = ["Stats:"]
         try:
             text = get_relic_stats(self._relic)
-        except KeyError: # no stats for these:
+        except KeyError: # no stats for these
             return []
         stats = None
         if "basemod:mod_saves" in self.parser:
@@ -485,7 +487,11 @@ class RelicData:
             desc.append(text[0] + str(stats))
             desc.extend(text[1:])
         elif isinstance(stats, float): # only Frozen Eye
-            desc.append(f"{text[0]}{stats:.2f}s")
+            minutes, seconds = divmod(stats, 60)
+            if minutes:
+                desc.append(f"{text[0]}{minutes:.0f}m {seconds:.2f}s")
+            else:
+                desc.append(f"{text[0]}{seconds:.2f}s")
         elif isinstance(stats, str): # bottles
             desc.append(text[0] + get_card(stats))
         elif isinstance(stats, list):
@@ -493,7 +499,7 @@ class RelicData:
                 desc.append(f"{text[0]}<nothing>")
             elif isinstance(stats[0], str):
                 stats = [get_card(x) for x in stats]
-                desc.append(text[0] + ", ".join(stats))
+                desc.append(f"{text[0]}\n{'\n- '.join(stats)}")
             else:
                 text_iter = iter(text)
                 for stat in stats:
@@ -771,15 +777,16 @@ def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Genera
     if maybe_cached is not None:
         maybe_cached.pop()
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+        # make sure we step through the iterator even if it's cached
+        node = [actual, None]
+        if node[0] is not None:
+            node[1] = next(on_map)
+
         if maybe_cached:
             maybe_node = maybe_cached.pop(0)
             if floor == maybe_node.floor: # if it's not, then something's wrong. just regen it
                 yield maybe_node, True
                 continue
-
-        node = [actual, None]
-        if node[0] is not None:
-            node[1] = next(on_map)
 
         match node:
             case ("M", "M"):
@@ -949,10 +956,10 @@ class Event(NodeData): # TODO: not all deltas will get updated
         super().__init__()
         self._event = event
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
+    def _description(self, to_append: dict[int, list[str]]) -> str: # TODO
         if 3 not in to_append:
             to_append[3] = []
-        to_append[3].append(f"Option taken: {self.choice}")
+        to_append[3].append(f"Option taken:\n- {self.choice}")
         return super()._description(to_append)
 
     @property

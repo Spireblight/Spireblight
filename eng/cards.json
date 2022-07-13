@@ -70,7 +70,13 @@
   },
   "All Out Attack": {
     "NAME": "All-Out Attack",
-    "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Discard 1 card at random."
+    "DESCRIPTION": "Deal {} damage to ALL enemies. Discard 1 card at random.",
+    "CHARACTER": "Silent",
+    "RARITY": "Uncommon",
+    "TYPE": "Attack",
+    "ENERGY_BASE": 1,
+    "VALUE_BASE": [10],
+    "VALUE_UPGRADE": [14]
   },
   "Amplify": {
     "NAME": "Amplify",

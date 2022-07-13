@@ -8,6 +8,7 @@ from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImpleme
 from typehints import ContextType
 from gamedata import FileParser
 from webpage import router
+from logger import logger
 from runs import get_latest_run
 
 import config
@@ -92,6 +93,7 @@ async def receive_save(req: Request):
             j["basemod:mod_saves"] = {}
 
     _savefile.update_data(j, name, req.query["has_run"])
+    logger.debug("Received savefile. Updated data.")
 
     return Response()
 

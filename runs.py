@@ -90,7 +90,7 @@ def _update_cache():
                 _ts_cache[parser.timestamp] = parser
 
     prev = None
-    prev_char: dict[str, RunParser | None] = {"Ironclad": None, "Silent": None, "Defect": None, "Watcher": None}
+    prev_char: dict[str, RunParser | None] = {}
     prev_win = None
     prev_loss = None
 
@@ -100,6 +100,8 @@ def _update_cache():
             if "prev" not in cur.matched:
                 prev.matched["next"] = cur
                 cur.matched["prev"] = prev
+            if cur.character not in prev_char:
+                prev_char[cur.character] = None
             if "prev_char" not in cur.matched and (c := prev_char[cur.character]) is not None:
                 c.matched["next_char"] = cur
                 cur.matched["prev_char"] = c
@@ -294,5 +296,7 @@ async def receive_run(req: Request) -> Response:
     if name not in _cache:
         _cache[name] = parser = RunParser(name, data)
         _ts_cache[parser.timestamp] = parser
+
+    logger.debug("Received run history file. Updated data.")
 
     return Response()

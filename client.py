@@ -52,7 +52,7 @@ async def main():
 
         try:
             all_sent = True
-            if to_send: # send runs first so savefile can seemlessly transfer its cache
+            if to_send: # send runs first so savefile can seamlessly transfer its cache
                 async with ClientSession() as session:
                     for path, file in to_send:
                         with open(os.path.join(path, file)) as f:
