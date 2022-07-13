@@ -177,6 +177,14 @@ async def run_single(req: Request):
     embed = _falsey(req.query.get("embed"))
     return {"parser": parser, "embed": embed}
 
+@router.get("/runs/{name}/raw")
+async def run_raw_json(req: Request) -> Response:
+    parser = _get_parser(req.match_info["name"])
+    if parser is None:
+        raise HTTPNotFound()
+
+    return Response(text=json.dumps(parser.data, indent=4))
+
 @router.get("/runs/{name}/{type}")
 async def run_chart(req: Request) -> Response:
     parser = _get_parser(req.match_info["name"])
