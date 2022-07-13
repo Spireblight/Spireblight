@@ -13,15 +13,19 @@ def _get_name(x: str, d: str, default: str) -> str:
 def _get_all(d: str) -> dict[str, str]:
     return {b["NAME"]: a for a, b in _cache[d].items()}
 
-def get_relic(name: str, default: str = "<Unknown Relic>") -> str:
+def get_relic(name: str, default: str | None = None) -> str:
+    if default is None:
+        default = f"<Unknown Relic {name}>"
     return _get_name(name, "relics", default)
 
 def get_all_relics() -> dict[str, str]:
     return _get_all("relics")
 
-def get_card(name: str, default: str = "<Unknown Card>") -> str:
+def get_card(name: str, default: str | None = None) -> str:
     if name == "Singing Bowl":
         return "Gain +2 Max HP"
+    if default is None:
+        default = f"<Unknown Card {name}>"
     name, plus, upgrades = name.partition("+")
     val = _get_name(name, "cards", default)
     if upgrades not in ("1", ""): # Searing Blow
@@ -31,13 +35,17 @@ def get_card(name: str, default: str = "<Unknown Card>") -> str:
 def get_all_cards() -> dict[str, str]:
     return _get_all("cards")
 
-def get_potion(name: str, default: str = "<Unknown Potion>") -> str:
+def get_potion(name: str, default: str | None = None) -> str:
+    if default is None:
+        default = f"<Unknown Potion {name}>"
     return _get_name(name, "potions", default)
 
 def get_all_potions() -> dict[str, str]:
     return _get_all("potions")
 
-def get_event(name: str, default: str = "<Unknown Event>") -> str:
+def get_event(name: str, default: str | None = None) -> str:
+    if default is None:
+        default = f"<Unknown Event {name}>"
     return _get_name(name, "events", default)
 
 def get_all_events() -> dict[str, str]:

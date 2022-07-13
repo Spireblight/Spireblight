@@ -5,6 +5,17 @@ Index
 {% block content %}
     <h1>Welcome to Baalorlord's WIP website</h1>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+    <div id="twitch_frame"></div>
+    <script type="text/javascript">
+    var options = {
+        width: 560,
+        height: 315,
+        channel: "{{ config.channel }}"
+    };
+    var player = new Twitch.Player("twitch_frame", options);
+    player.setVolume(0.5);
+    </script>
 {% endblock %}
 {% block footer %}
     <a href="/commands">View all of the bot commands.</a><br>

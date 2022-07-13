@@ -52,8 +52,8 @@ class NeowBonus:
                 base = 75
             case "Watcher":
                 base = 72
-            case a:
-                raise ValueError(f"I don't know how to handle {a}")
+            case _:
+                return 0, 0 # modded character, let's just not
 
         if self.parser["ascension_level"] >= 14: # lower max HP
             base -= 4
