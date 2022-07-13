@@ -4,7 +4,7 @@ from typing import Any, Generator
 
 from nameinternal import get_relic, get_card, get_potion, get_event, get_relic_stats
 
-__all__ = ["FileParser", "get_nodes", "get_node"]
+__all__ = ["FileParser"]
 
 # TODO: Handle the website display part, figure out details of these classes later
 
@@ -415,7 +415,7 @@ class FileParser:
             potion_count = self.neow_bonus.potion_delta()
             fights_count = self.neow_bonus.fights_delta()
             turns_count = self.neow_bonus.turns_delta()
-            for node, cached in get_nodes(self, self._cache.pop("old_path", None)):
+            for node, cached in _get_nodes(self, self._cache.pop("old_path", None)):
                 try:
                     t = floor_time[node.floor - 1]
                 except IndexError:
@@ -723,6 +723,7 @@ class NodeData:
         # Note: this assumes Ascension 11+, and no potion belt.
         # I'm hoping to use a RunHistoryPlus field, but for now, this is a hack
         # (some runs will be wrong, but they will be less wrong than otherwise)
+        # Once we keep track of deck per node, just add 1 potion per Alchemize
         count = len(self.potions)
         if "Entropic Brew" in self.used_potions:
             count += 2
@@ -764,13 +765,8 @@ class NodeData:
             return 1
         return self._turns_count
 
-def get_node(parser: FileParser, floor: int) -> NodeData:
-    for node, cached in get_nodes(parser, None):
-        if node.floor == floor:
-            return node
-    raise IndexError(f"We did not reach floor {floor}")
-
-def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
+def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
+    """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
     prefix = parser.prefix
     on_map = iter(parser[prefix + "path_taken"])
     # maybe_cached will not be None if this is a savefile we're iterating through
@@ -853,6 +849,8 @@ class EncounterBase(NodeData):
     def _description(self, to_append: dict[int, list[str]]) -> str:
         if 3 not in to_append:
             to_append[3] = []
+        if self.name != self.fought:
+            to_append[3].append(f"Fought {self.fought}")
         to_append[3].append(f"{self.damage} damage")
         to_append[3].append(f"{self.turns} turns")
         return super()._description(to_append)
@@ -865,6 +863,10 @@ class EncounterBase(NodeData):
 
     @property
     def name(self) -> str:
+        return self._damage["enemies"]
+
+    @property
+    def fought(self) -> str:
         return self._damage["enemies"]
 
     @property
@@ -951,7 +953,7 @@ class EventNode:
             raise ValueError("could not figure out what to do with this")
         event = events[0]
         for dmg in parser[parser.prefix + "damage_taken"]:
-            if dmg["floor"] == floor:
+            if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
                 return EventFight.from_parser(parser, floor, event, *extra)
         return Event.from_parser(parser, floor, event, *extra)
 
@@ -979,6 +981,12 @@ class Event(NodeData):
                 to_append[7].append(f"{name}:")
                 to_append[7].extend(f"- {card}" for card in val)
         return super()._description(to_append)
+
+    def potion_delta(self) -> int:
+        value = super().potion_delta()
+        if self._event["event_name"] == "WeMeetAgain" and self.choice == "Gave Potion":
+            value -= 1
+        return value
 
     @property
     def name(self) -> str:
@@ -1057,16 +1065,6 @@ class EventFight(Event, EncounterBase):
     def __init__(self, damage: dict[str, Any], event: dict[str, Any], *extra):
         # swap the argument ordering around, as EncounterBase inserts damage first
         super().__init__(event, damage, *extra)
-
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 3 not in to_append:
-            to_append[3] = []
-        to_append[3].append(f"Fought {self.fought}")
-        return super()._description(to_append)
-
-    @property
-    def fought(self) -> str:
-        return self._damage["enemies"]
 
 class Colosseum(Event):
     def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]], *extra):
