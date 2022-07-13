@@ -36,7 +36,7 @@ class Savefile(FileParser):
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if data is None and has_run == "true" and self.data is not None:
-            maybe_run = get_latest_run()
+            maybe_run = get_latest_run(None, None)
             if maybe_run["seed_played"] == self["metric_seed_played"]:
                 # optimize save -> run node generation
                 maybe_run._cache["old_path"] = self._cache["path"]

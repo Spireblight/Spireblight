@@ -965,7 +965,7 @@ class Event(NodeData):
         super().__init__(*extra)
         self._event = event
 
-    def _description(self, to_append: dict[int, list[str]]) -> str: # TODO
+    def _description(self, to_append: dict[int, list[str]]) -> str:
         if 3 not in to_append:
             to_append[7] = []
         to_append[7].append(f"Option taken:\n- {self.choice}")
