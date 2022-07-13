@@ -19,7 +19,7 @@ Run: {{ parser.display_name }}
     </script>
     <h1>{{ parser.character }}</h1>
     {% if parser.character not in ("Ironclad", "Silent", "Defect", "Watcher") %}
-    <b>This is a modded character. Not all data will be accurate.</b>
+    <b>This is a modded character. Not all data will be accurate.</b><br>
     {% endif %}
     {% if "prev" in parser.matched %}
     <a href="/runs/{{ parser.matched['prev'].name }}"><<< Previous run -</a>

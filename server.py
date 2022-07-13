@@ -674,10 +674,76 @@ async def skipped_boss_relics(ctx: ContextType, j: Savefile):
 
     await ctx.send(" ".join(msg))
 
-@command("lastrun", "last")
+@command("last")
+async def get_last(ctx: ContextType, arg: str = ""):
+    """Get the last run/win/loss."""
+    char = None
+    won = None
+    value = arg.lower().split(None, 1)
+    match value:
+        case ["win"] | ["victory"] | ["w"]:
+            won = True
+        case ["loss"] | ["death"] | ["l"]:
+            won = False
+        case [a]:
+            char = a
+        case [a, b]:
+            match a:
+                case "win" | "victory" | "w":
+                    won = True
+                case "loss" | "death" | "l":
+                    won = False
+                case _:
+                    char = a
+                    match b:
+                        case "win" | "victory" | "w":
+                            won = True
+                        case "loss" | "death" | "l":
+                            won = False
+
+    match char:
+        case "ironclad" | "ic" | "i":
+            char = "Ironclad"
+        case "silent" | "s":
+            char = "Silent"
+        case "defect" | "d":
+            char = "Defect"
+        case "watcher" | "wa":
+            char = "Watcher"
+        case _:
+            char = char.capitalize() # might be a mod character
+
+    return await _last_run(ctx, char, won)
+
+@command("lastrun")
 async def get_last_run(ctx: ContextType):
-    latest = get_latest_run()
-    await ctx.send(f"The last run's history can be viewed at {config.website_url}/runs/{latest.name}")
+    """Get the last run."""
+    await _last_run(ctx, None, None)
+
+@command("lastwin", "lastvictory")
+async def get_last_win(ctx: ContextType):
+    """Get the last win."""
+    await _last_run(ctx, None, True)
+
+@command("lastloss", "lastdeath")
+async def get_last_loss(ctx: ContextType):
+    """Get the last loss."""
+    await _last_run(ctx, None, False)
+
+async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
+    try:
+        latest = get_latest_run(character, arg)
+    except KeyError:
+        await ctx.send(f"Could not understand character {character}.")
+        return
+    value = "run"
+    if character is not None:
+        value = f"{character} run"
+    if arg:
+        value = f"winning {value}"
+    elif arg is not None:
+        value = f"lost {value}"
+    await ctx.send(f"The last {value}'s history can be viewed at {config.website_url}/runs/{latest.name}")
 
 #@command("wall")
 async def wall_card(ctx: ContextType): # FIXME: Needs data from remote

@@ -37,10 +37,24 @@ _variables_map = {
     "potion_count": "Number of potions",
 }
 
-def get_latest_run():
+def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
-    latest = max(_ts_cache)
-    return _ts_cache[latest]
+    latest = _ts_cache[max(_ts_cache)]
+    key = "prev"
+    if character is not None:
+        key = "prev_char"
+        while latest.character != character:
+            latest = latest.matched["prev"]
+
+    if victory is not None:
+        if victory:
+            while not latest.won:
+                latest = latest.matched[key]
+        else:
+            while latest.won:
+                latest = latest.matched[key]
+
+    return latest
 
 class RunParser(FileParser):
     def __init__(self, filename: str, data: dict[str, Any]):

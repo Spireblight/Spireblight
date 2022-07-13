@@ -20,11 +20,17 @@ class NeowBonus:
 
     @property
     def current_hp(self) -> int:
-        return self.get_hp()[0]
+        try:
+            return self.get_hp()[0]
+        except ValueError: # modded character; we don't have the data
+            raise AttributeError("current_hp")
 
     @property
     def max_hp(self) -> int:
-        return self.get_hp()[1]
+        try:
+            return self.get_hp()[1]
+        except ValueError:
+            raise AttributeError("max_hp")
 
     @property
     def gold(self) -> int:
@@ -52,8 +58,8 @@ class NeowBonus:
                 base = 75
             case "Watcher":
                 base = 72
-            case _:
-                return 0, 0 # modded character, let's just not
+            case a:
+                raise ValueError(f"I don't know how to handle {a}")
 
         if self.parser["ascension_level"] >= 14: # lower max HP
             base -= 4
@@ -831,8 +837,8 @@ def get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Genera
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
 
-    def __init__(self, damage: dict):
-        super().__init__()
+    def __init__(self, damage: dict, *extra):
+        super().__init__(*extra)
         self._damage = damage
 
     @classmethod
@@ -883,8 +889,8 @@ class Treasure(NodeData):
     room_type = "Treasure"
     map_icon = "treasure_chest.png"
 
-    def __init__(self, has_blue_key: bool, relic: str):
-        super().__init__()
+    def __init__(self, has_blue_key: bool, relic: str, *extra):
+        super().__init__(*extra)
         self._bluekey = has_blue_key
         self._key_relic = relic
 
@@ -946,20 +952,34 @@ class EventNode:
         if len(events) != 1:
             raise ValueError("could not figure out what to do with this")
         event = events[0]
+        for dmg in parser[parser.prefix + "damage_taken"]:
+            if event["event_name"] == dmg["enemies"]:
+                return EventFight.from_parser(parser, floor, event, dmg, *extra)
         return Event.from_parser(parser, floor, event, *extra)
 
-class Event(NodeData): # TODO: not all deltas will get updated
+class Event(NodeData):
     room_type = "Unknown"
     map_icon = "event.png"
 
-    def __init__(self, event: dict[str, Any]):
-        super().__init__()
+    def __init__(self, event: dict[str, Any], *extra):
+        super().__init__(*extra)
         self._event = event
 
     def _description(self, to_append: dict[int, list[str]]) -> str: # TODO
         if 3 not in to_append:
-            to_append[3] = []
-        to_append[3].append(f"Option taken:\n- {self.choice}")
+            to_append[7] = []
+        to_append[7].append(f"Option taken:\n- {self.choice}")
+        for x in ("damage_healed", "damage_taken", "max_hp_gained", "max_hp_lost", "gold_gained", "gold_lost"):
+            val = getattr(self, x)
+            if val:
+                name = x.replace("_", " ").capitalize().replace("hp", "HP")
+                to_append[7].append(f"{name}: {val}")
+        for x in ("cards_transformed", "cards_obtained", "cards_removed"):
+            val = getattr(self, x)
+            if val:
+                name = x.replace("_", " ").capitalize()
+                to_append[7].append(f"{name}:")
+                to_append[7].extend(f"- {card}" for card in val)
         return super()._description(to_append)
 
     @property
@@ -991,20 +1011,20 @@ class Event(NodeData): # TODO: not all deltas will get updated
         return self._event["gold_gain"]
 
     @property
-    def gold_loss(self) -> int:
+    def gold_lost(self) -> int:
         return self._event["gold_loss"]
-
-    @property
-    def cards_obtained(self) -> list[str]:
-        if "cards_obtained" not in self._event:
-            return []
-        return [get_card(x) for x in self._event["cards_obtained"]]
 
     @property
     def cards_transformed(self) -> list[str]:
         if "cards_transformed" not in self._event:
             return []
         return [get_card(x) for x in self._event["cards_transformed"]]
+
+    @property
+    def cards_obtained(self) -> list[str]:
+        if "cards_obtained" not in self._event:
+            return []
+        return [get_card(x) for x in self._event["cards_obtained"]]
 
     @property
     def cards_removed(self) -> list[str]:
@@ -1022,8 +1042,16 @@ class Event(NodeData): # TODO: not all deltas will get updated
     def relics(self) -> list[str]:
         return super().relics + self.relics_obtained
 
+class EventFight(Event, EncounterBase):
+    """This is a subclass for fights that happen in events.
+
+    This works for Dead Adventurer, Masked Bandits, etc.
+    This does *not* work for the Colosseum fight (use Colosseum instead)
+
+    """
+
 class Colosseum(Event):
-    def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]]):
+    def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]], *extra):
         event = {
             "damage_healed": 0,
             "gold_gain": 0,
@@ -1036,7 +1064,7 @@ class Colosseum(Event):
         }
         if len(events) == 1:
             event["player_choice"] = "Escaped"
-        super().__init__(event)
+        super().__init__(event, *extra)
         self._damages = damages
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
@@ -1045,7 +1073,7 @@ class Colosseum(Event):
         for i, dmg in enumerate(self._damages, 1):
             to_append[7].append(f"Fight {i} ({dmg['enemies']}):")
             to_append[7].append(f"{dmg['damage']} damage")
-            to_append[7].append(f"{dmg['turns']}")
+            to_append[7].append(f"{dmg['turns']} turns")
         return super()._description(to_append)
 
     @classmethod
@@ -1066,8 +1094,8 @@ class Merchant(NodeData):
     room_type = "Merchant"
     map_icon = "shop.png"
 
-    def __init__(self, bought: dict[str, list[str]], purged: str | None, contents: dict[str, list[str]] | None):
-        super().__init__()
+    def __init__(self, bought: dict[str, list[str]], purged: str | None, contents: dict[str, list[str]] | None, *extra):
+        super().__init__(*extra)
         self._bought = bought
         self._purged = purged
         self._contents = contents
@@ -1170,8 +1198,8 @@ class Campfire(NodeData):
     room_type = "Rest Site"
     map_icon = "rest.png"
 
-    def __init__(self, key: str, data: str | None):
-        super().__init__()
+    def __init__(self, key: str, data: str | None, *extra):
+        super().__init__(*extra)
         self._key = key
         self._data = data
 
@@ -1218,8 +1246,8 @@ class BossChest(NodeData):
     map_icon = "boss_chest.png"
     end_of_act = True
 
-    def __init__(self, picked: str | None, skipped: list[str]):
-        super().__init__()
+    def __init__(self, picked: str | None, skipped: list[str], *extra):
+        super().__init__(*extra)
         if picked is not None:
             self._relics.append(picked)
         self._skipped = skipped
@@ -1255,10 +1283,10 @@ class Victory(NodeData):
     room_type = "Victory!"
     map_icon = "event.png"
 
-    def __init__(self, score: int | None, data: list[str]):
+    def __init__(self, score: int | None, data: list[str], *extra):
         self._score = score
         self._data = data
-        super().__init__()
+        super().__init__(*extra)
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
         if self.score:
