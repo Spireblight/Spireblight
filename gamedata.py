@@ -951,7 +951,7 @@ class EventNode:
             raise ValueError("could not figure out what to do with this")
         event = events[0]
         for dmg in parser[parser.prefix + "damage_taken"]:
-            if event["event_name"] == dmg["enemies"]:
+            if dmg["floor"] == floor:
                 return EventFight.from_parser(parser, floor, event, dmg, *extra)
         return Event.from_parser(parser, floor, event, *extra)
 
@@ -1054,6 +1054,16 @@ class EventFight(Event, EncounterBase):
 
     """
 
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 3 not in to_append:
+            to_append[3] = []
+        to_append[3].append(f"Fought {self.fought}")
+        return super()._description(to_append)
+
+    @property
+    def fought(self) -> str:
+        return self._damage["enemies"]
+
 class Colosseum(Event):
     def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]], *extra):
         event = {
@@ -1072,12 +1082,12 @@ class Colosseum(Event):
         self._damages = damages
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 7 not in to_append:
-            to_append[7] = []
+        if 3 not in to_append:
+            to_append[3] = []
         for i, dmg in enumerate(self._damages, 1):
-            to_append[7].append(f"Fight {i} ({dmg['enemies']}):")
-            to_append[7].append(f"{dmg['damage']} damage")
-            to_append[7].append(f"{dmg['turns']} turns")
+            to_append[3].append(f"Fight {i} ({dmg['enemies']}):")
+            to_append[3].append(f"{dmg['damage']} damage")
+            to_append[3].append(f"{dmg['turns']} turns")
         return super()._description(to_append)
 
     @classmethod
