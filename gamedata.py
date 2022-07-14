@@ -7,7 +7,7 @@ from aiohttp.web import Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFoun
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
-from nameinternal import get_relic, get_card, get_potion, get_event, get_relic_stats
+from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats
 from logger import logger
 
 import config
@@ -248,6 +248,49 @@ class NeowBonus:
 
         return base
 
+    def get_cards(self) -> list[str]:
+        cards = []
+        if self.parser["ascension_level"] >= 10:
+            cards.append("AscendersBane")
+
+        match self.parser.character:
+            case "Ironclad":
+                cards.extend(("Strike_R",) * 5)
+                cards.extend(("Defend_R",) * 4)
+                cards.append("Bash")
+            case "Silent":
+                cards.extend(("Strike_G",) * 5)
+                cards.extend(("Defend_G",) * 5)
+                cards.append("Neutralize")
+                cards.append("Survivor")
+            case "Defect":
+                cards.extend(("Strike_B",) * 4)
+                cards.extend(("Defend_B",) * 4)
+                cards.append("Zap")
+                cards.append("Dualcast")
+            case "Watcher":
+                cards.extend(("Strike_P",) * 4)
+                cards.extend(("Defend_P",) * 4)
+                cards.append("Vigilance")
+                cards.append("Eruption")
+            case a:
+                raise ValueError(f"I don't know how to handle {a!r}")
+
+        if self.mod_data is not None:
+            for x in self.mod_data["cardsTransformed"] + self.mod_data["cardsRemoved"]:
+                cards.remove(x)
+            for x in self.mod_data["cardsObtained"]:
+                cards.append(x)
+            for x in self.mod_data["cardsUpgraded"]:
+                index = cards.index(x)
+                cards.insert(index, f"{x}+1")
+        for x in self.parser[self.parser.prefix + "card_choices"]:
+            if x["floor"] == 0:
+                if cards["picked"] != "SKIP":
+                    cards.append(x["picked"])
+
+        return cards
+
     # options 1 & 2
 
     def bonus_THREE_CARDS(self):
@@ -383,6 +426,13 @@ class NeowBonus:
 
         return msg
 
+    @property
+    def cards(self) -> list[str]:
+        try:
+            return [get_card(x) for x in self.get_cards()]
+        except ValueError:
+            return []
+
     def card_delta(self) -> int:
         num = 10
         if self.parser.character == "Silent":
@@ -496,35 +546,54 @@ class FileParser:
         return c
 
     @property
-    def keys(self) -> list[tuple[str, str | int]]:
-        if "keys" not in self._cache:
-            self._cache["keys"] = []
-            if "basemod:mod_saves" in self: # savefile
-                if self["has_ruby_key"]:
-                    for choice in self["metric_campfire_choices"]:
-                        if choice["key"] == "RECALL":
-                            self._cache["keys"].append(("Ruby Key", choice["floor"]))
-                if self["has_emerald_key"]:
-                    floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
-                    self._cache["keys"].append(("Emerald Key", floor))
-                if self["has_sapphire_key"]:
-                    floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
-                    if floor is None:
-                        floor = "<Unknown Floor>"
-                    else:
-                        floor = floor["floor"]
-                    self._cache["keys"].append(("Sapphire Key", floor))
-
-            else:
-                for choice in self["campfire_choices"]:
+    def keys(self) -> Generator[tuple[str, str | int], None, None]:
+        if "basemod:mod_saves" in self: # savefile
+            if self["has_ruby_key"]:
+                for choice in self["metric_campfire_choices"]:
                     if choice["key"] == "RECALL":
-                        self._cache["keys"].append(("Ruby Key", choice["floor"]))
-                if "green_key_taken_log" in self:
-                    self._cache["keys"].append(("Emerald Key", self["green_key_taken_log"]))
-                if "blue_key_relic_skipped_log" in self:
-                    self._cache["keys"].append(("Sapphire Key", self["blue_key_relic_skipped_log"]["floor"]))
+                        yield ("Ruby Key", choice["floor"])
+            if self["has_emerald_key"]:
+                floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
+                yield ("Emerald Key", floor)
+            if self["has_sapphire_key"]:
+                floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
+                if floor is None:
+                    floor = "<Unknown Floor>"
+                else:
+                    floor = floor["floor"]
+                yield ("Sapphire Key", floor)
 
-        return self._cache["keys"]
+        else:
+            for choice in self["campfire_choices"]:
+                if choice["key"] == "RECALL":
+                    yield ("Ruby Key", choice["floor"])
+            if "green_key_taken_log" in self:
+                yield ("Emerald Key", self["green_key_taken_log"])
+            if "blue_key_relic_skipped_log" in self:
+                yield ("Sapphire Key", self["blue_key_relic_skipped_log"]["floor"])
+
+    def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
+        if "master_deck" in self:
+            for x in self["master_deck"]:
+                yield get_card(x), get_card_metadata(x)
+            return
+
+        for x in self["cards"]:
+            card = get_card(x["id"])
+            if x["upgrades"]:
+                if x["upgrades"] > 1:
+                    card = f"{card}+{x['upgrades']}"
+                else:
+                    card = f"{card}+"
+
+            yield card, get_card_metadata(x["id"])
+
+    def cards_as_html(self) -> Generator[str, None, None]:
+        pass
+
+    @property
+    def cards(self) -> list[str]:
+        return [a for a, b in self._get_cards()]
 
     @property
     def relics(self) -> Generator[RelicData, None, None]:

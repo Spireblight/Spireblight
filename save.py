@@ -3,10 +3,12 @@ from typing import Any
 import base64
 import json
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, Response, FileField
+from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, HTTPNotFound, Response, FileField
+
+import aiohttp_jinja2
 
 from typehints import ContextType
-from gamedata import FileParser
+from gamedata import FileParser, generate_graph
 from webpage import router
 from logger import logger
 from runs import get_latest_run
@@ -54,7 +56,47 @@ class Savefile(FileParser):
                 self._cache["old_path"] = self._cache.pop("path")
             self._cache.pop("relics", None) # because N'loth and Boss relic starter upgrade, we need to regen it everytime
 
+    @property
+    def display_name(self) -> str:
+        return f"Current {self.character} run"
+
+    @property
+    def current_health(self) -> int:
+        return self["current_health"]
+
+    @property
+    def max_health(self) -> int:
+        return self["max_health"]
+
+    @property
+    def current_gold(self) -> int:
+        return self["gold"]
+
+    @property
+    def current_purge(self) -> int:
+        return self["purgeCost"]
+
+    @property
+    def purge_totals(self) -> int:
+        return self["metric_purchased_purges"]
+
+    @property
+    def current_floor(self) -> int:
+        return self["metric_floor_reached"]
+
 _savefile = Savefile()
+
+@router.get("/current")
+@aiohttp_jinja2.template("savefile.jinja2")
+async def current_run(req: Request):
+    return {"parser": _savefile}
+
+@router.get("/current/{type}")
+async def save_chart(req: Request) -> Response:
+    if _savefile.character is None:
+        raise HTTPNotFound()
+
+    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string, force=True)
 
 @router.post("/sync/save")
 async def receive_save(req: Request):

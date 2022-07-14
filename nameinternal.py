@@ -3,7 +3,7 @@ import os
 
 from events import add_listener
 
-__all__ = ["get_relic", "get_all_relics", "get_card", "get_all_cards", "get_potion", "get_all_potions", "get_event", "get_all_events", "get_relic_stats"]
+__all__ = ["get_relic", "get_all_relics", "get_card", "get_card_metadata", "get_all_cards", "get_potion", "get_all_potions", "get_event", "get_all_events", "get_relic_stats"]
 
 _cache: dict[str, dict[str, str]] = {}
 
@@ -31,6 +31,9 @@ def get_card(name: str, default: str | None = None) -> str:
     if upgrades not in ("1", ""): # Searing Blow
         return f"{val}+{upgrades}"
     return f"{val}{plus}"
+
+def get_card_metadata(name: str) -> dict[str, str]:
+    return _cache["cards"][name.partition("+")[0]]
 
 def get_all_cards() -> dict[str, str]:
     return _get_all("cards")

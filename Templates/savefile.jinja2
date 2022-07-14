@@ -1,0 +1,48 @@
+{% extends "base.jinja2" %}
+<!-- Refresh the page every 15 seconds; savefile gets regularly updated.
+     Actual code will properly cache the savefile and serve latest -->
+{% block meta %}http-equiv="refresh" content="15"{% endblock %}
+{% block title %}
+Current run visualization
+{% endblock %}
+{% block content %}
+{% if parser.character is not None %}
+    <h1>{{ parser.character }}</h1>
+    <img src="/current/plot?view=max_hp,current_hp&title=Progression of HP so far&label=HP&type=image" style="float:right" alt="Progression of HP so far">
+    <img src="/current/plot?view=gold&title=Progression of gold so far&type=image" style="float:right;clear:right" alt="Progression of gold so far">
+    {% if parser.character not in ("Ironclad", "Silent", "Defect", "Watcher") %}
+    <b>This is a modded character. Not all data will be accurate.</b><br>
+    {% endif %}
+    Seed: {{ parser.seed }}
+    <br>
+    Current health: <p style="color:#AF0000">{{ parser.current_health }}/{{ parser.max_health }}</p>
+    <br>
+    Current gold: <p style="color:#CECE1E">{{ parser.current_gold }}</p>
+    <br>
+    Current floor: {{ parser.current_floor }}
+    <br>
+    Current removal cost: <p style="color:#CECE1E">{{ parser.current_purge }}</p> ({{ parser.purge_totals }} cards removed)
+    <br>
+    Neow Bonus: {{ parser.neow_bonus.as_str() }}
+    <br>
+    Hover over any map node or relic to see their stats!
+    <br><br>
+    {% for node in parser.path %}
+    <img src="/static/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
+    {% if node.end_of_act %}
+    <br>
+    {% endif %}
+    {% endfor %}
+    <br>
+    {% for relic in parser.relics %}
+    <img src="/static/relics/{{ relic.image }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
+    {% endfor %}
+    <br>
+    {% for key, floor in parser.keys %}
+    <img src="/static/relics/{{ key }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
+    {% endfor %}
+    <br>
+{% else %}
+<p>No run is currently going on! Stick around until Baalor starts a run. You may need to wait until after he picked a Neow bonus to see anything.</p>
+{% endif %}
+{% endblock %}

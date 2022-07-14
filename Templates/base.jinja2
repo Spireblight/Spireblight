@@ -10,7 +10,10 @@ Software version: {{ version }}
 
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <style>
+        .card { font-family: 'Kreon', serif; }
+        </style>
+        <meta charset="UTF-8" {% block meta %}{% endblock %}>
         {% block head %}
         <title>{% block title %}{% endblock %} - Baalorlord's website</title>
         {% endblock %}

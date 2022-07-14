@@ -614,7 +614,7 @@ async def actboss(ctx: ContextType, j: Savefile):
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, j: Savefile):
     """Display the current shop removal cost."""
-    await ctx.send(f"Current card removal cost: {j['purgeCost']} (removed {j['metric_purchased_purges']} card{'' if j['metric_purchased_purges'] == 1 else 's'})")
+    await ctx.send(f"Current card removal cost: {j.current_purge} (removed {j.purge_totals} card{'' if j.purge_totals == 1 else 's'})")
 
 @with_savefile("potionchance", "potion")
 async def potion_chance(ctx: ContextType, j: Savefile):
@@ -639,15 +639,12 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, j: Savefile, index: int):
     """Display information about the current relics."""
-    l: list[str] = j["relics"]
-
+    l = list(j.relics)
     if index > len(l):
         await ctx.send(f"We only have {len(l)} relics!")
         return
 
-    relic = get_relic(l[index-1])
-
-    await ctx.send(f"The relic at position {index} is {relic}.")
+    await ctx.send(f"The relic at position {index} is {l[index-1].name}.")
 
 @with_savefile("skipped", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, j: Savefile):
