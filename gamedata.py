@@ -389,7 +389,7 @@ class FileParser:
                 if "green_key_taken_log" in self:
                     self._cache["keys"].append(("Emerald Key", self["green_key_taken_log"]))
                 if "blue_key_relic_skipped_log" in self:
-                    self._cache["keys"].append(("Sapphire Key", self["blue_key_relic_skipped_log"]))
+                    self._cache["keys"].append(("Sapphire Key", self["blue_key_relic_skipped_log"]["floor"]))
 
         return self._cache["keys"]
 

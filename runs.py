@@ -19,6 +19,7 @@ from nameinternal import get_all_relics, get_all_cards
 from gamedata import FileParser
 from webpage import router
 from logger import logger
+from events import add_listener
 
 import config
 
@@ -95,6 +96,10 @@ class RunParser(FileParser):
         if hours:
             return f"{hours}:{minutes:>02}:{seconds:>02}"
         return f"{minutes:>02}:{seconds:>02}"
+
+@add_listener("setup_init")
+async def _setup_cache():
+    _update_cache()
 
 def _update_cache():
     start = time.time()
@@ -328,6 +333,7 @@ async def receive_run(req: Request) -> Response:
     if name not in _cache:
         _cache[name] = parser = RunParser(name, data)
         _ts_cache[parser.timestamp] = parser
+        _update_cache()
 
     logger.debug("Received run history file. Updated data.")
 

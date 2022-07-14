@@ -79,7 +79,7 @@ Run: {{ parser.display_name }}
     {% endfor %}
     <br>
     {% for key, floor in parser.keys %}
-    <img src="/static/relics/{{ key }}.png" alt="Gotten on {{ floor }}" title="Gotten on {{ floor }}" style="width:80px;height:80px">
+    <img src="/static/relics/{{ key }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
     {% endfor %}
     <br>
     {% if embed %}
