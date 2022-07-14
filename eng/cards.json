@@ -83,26 +83,30 @@
     "DESCRIPTION": "This turn, your next Power card is played twice.",
     "UPGRADE_DESCRIPTION": "This turn, your next !M! Power cards are played twice.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Anger": {
     "NAME": "Anger",
     "DESCRIPTION": "Deal !D! damage. NL Add a copy of this card into your discard pile.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Apotheosis": {
     "NAME": "Apotheosis",
     "DESCRIPTION": "Upgrade ALL your cards for the rest of combat. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Armaments": {
     "NAME": "Armaments",
     "DESCRIPTION": "Gain !B! Block. NL Upgrade a card in your hand for the rest of combat.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Upgrade all cards in your hand for the rest of combat.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "AscendersBane": {
     "NAME": "Ascender's Bane",
@@ -113,266 +117,309 @@
     "NAME": "Auto-Shields",
     "DESCRIPTION": "If you have no Block, gain !B! Block.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Backflip": {
     "NAME": "Backflip",
     "DESCRIPTION": "Gain !B! Block. NL Draw 2 cards.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Backstab": {
     "NAME": "Backstab",
     "DESCRIPTION": "Innate. NL Deal !D! damage. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Ball Lightning": {
     "NAME": "Ball Lightning",
     "DESCRIPTION": "Deal !D! damage. Channel !M! Lightning.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Bandage Up": {
     "NAME": "Bandage Up",
     "DESCRIPTION": "Heal !M! HP. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Bane": {
     "NAME": "Bane",
     "DESCRIPTION": "Deal !D! damage. NL If the enemy has Poison, deal !D! damage again.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Barrage": {
     "NAME": "Barrage",
     "DESCRIPTION": "Deal !D! damage for each Channeled Orb.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Barricade": {
     "NAME": "Barricade",
     "DESCRIPTION": "Block is not removed at the start of your turn.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Bash": {
     "NAME": "Bash",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Vulnerable.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Battle Trance": {
     "NAME": "Battle Trance",
     "DESCRIPTION": "Draw !M! cards. NL You cannot draw additional cards this turn.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Beam Cell": {
     "NAME": "Beam Cell",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Vulnerable.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Berserk": {
     "NAME": "Berserk",
     "DESCRIPTION": "Gain !M! Vulnerable. NL At the start of your turn, gain [R].",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Biased Cognition": {
     "NAME": "Biased Cognition",
     "DESCRIPTION": "Gain !M! Focus. NL At the start of your turn, lose 1 Focus.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Bite": {
     "NAME": "Bite",
     "DESCRIPTION": "Deal !D! damage. NL Heal !M! HP.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "Blade Dance": {
     "NAME": "Blade Dance",
     "DESCRIPTION": "Add !M! *Shivs into your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Blind": {
     "NAME": "Blind",
     "DESCRIPTION": "Apply !M! Weak.",
     "UPGRADE_DESCRIPTION": "Apply !M! Weak to ALL enemies.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Blizzard": {
     "NAME": "Blizzard",
     "DESCRIPTION": "Deal damage equal to !M! times the number of Frost Channeled this combat to ALL enemies.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Blood for Blood": {
     "NAME": "Blood for Blood",
     "DESCRIPTION": "Costs 1 less [R] NL for each time you lose HP this combat. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Bloodletting": {
     "NAME": "Bloodletting",
     "DESCRIPTION": "Lose 3 HP. NL Gain [R] [R].",
     "UPGRADE_DESCRIPTION": "Lose 3 HP. NL Gain [R] [R] [R].",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Bludgeon": {
     "NAME": "Bludgeon",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Blur": {
     "NAME": "Blur",
     "DESCRIPTION": "Gain !B! Block. NL Block is not removed at the start of your next turn.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Body Slam": {
     "NAME": "Body Slam",
     "DESCRIPTION": "Deal damage equal to your Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "BootSequence": {
     "NAME": "Boot Sequence",
     "DESCRIPTION": "Innate. NL Gain !B! Block. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Bouncing Flask": {
     "NAME": "Bouncing Flask",
     "DESCRIPTION": "Apply 3 Poison to a random enemy !M! times.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Brutality": {
     "NAME": "Brutality",
     "DESCRIPTION": "At the start of your turn, lose 1 HP and draw 1 card.",
     "UPGRADE_DESCRIPTION": "Innate. NL At the start of your turn, lose 1 HP and draw 1 card.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Buffer": {
     "NAME": "Buffer",
     "DESCRIPTION": "Prevent the next time you would lose HP.",
     "UPGRADE_DESCRIPTION": "Prevent the next !M! times you would lose HP.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Bullet Time": {
     "NAME": "Bullet Time",
     "DESCRIPTION": "You cannot draw additional cards this turn. Reduce the cost of all cards in your hand to 0 this turn.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Burn": {
     "NAME": "Burn",
     "DESCRIPTION": "Unplayable. NL At the end of your turn, take 2 damage.",
     "UPGRADE_DESCRIPTION": "Unplayable. NL At the end of your turn, take 4 damage.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Status"
   },
   "Burning Pact": {
     "NAME": "Burning Pact",
     "DESCRIPTION": "Exhaust 1 card. NL Draw !M! cards.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Burst": {
     "NAME": "Burst",
     "DESCRIPTION": "This turn, your next Skill is played twice.",
     "UPGRADE_DESCRIPTION": "This turn, your next !M! Skills are played twice.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Calculated Gamble": {
     "NAME": "Calculated Gamble",
     "DESCRIPTION": "Discard your hand, NL then draw that many cards. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Discard your hand, NL then draw that many cards.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Caltrops": {
     "NAME": "Caltrops",
     "DESCRIPTION": "Whenever you are attacked, deal !M! damage back.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Capacitor": {
     "NAME": "Capacitor",
     "DESCRIPTION": "Gain !M! Orb slots.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Carnage": {
     "NAME": "Carnage",
     "DESCRIPTION": "Ethereal. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Catalyst": {
     "NAME": "Catalyst",
     "DESCRIPTION": "Double the enemy's Poison. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Triple the enemy's Poison. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Chaos": {
     "NAME": "Chaos",
     "DESCRIPTION": "Channel !M! random Orb{plural1}.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Chill": {
     "NAME": "Chill",
     "DESCRIPTION": "Channel !M! Frost for each enemy in combat. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Innate. NL Channel !M! Frost for each enemy in combat. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Choke": {
     "NAME": "Choke",
     "DESCRIPTION": "Deal !D! damage. NL Whenever you play a card this turn, the enemy loses !M! HP.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Chrysalis": {
     "NAME": "Chrysalis",
     "DESCRIPTION": "Shuffle !M! random Skills into your draw pile. They cost 0 this combat. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Clash": {
     "NAME": "Clash",
     "DESCRIPTION": "Can only be played if every card in your hand is an Attack. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Cleave": {
     "NAME": "Cleave",
     "DESCRIPTION": "Deal !D! damage to ALL enemies.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Cloak And Dagger": {
     "NAME": "Cloak and Dagger",
     "DESCRIPTION": "Gain !B! Block. NL Add !M! *Shiv{plural1} into your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Clothesline": {
     "NAME": "Clothesline",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Weak.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Clumsy": {
     "NAME": "Clumsy",
@@ -383,109 +430,127 @@
     "NAME": "Cold Snap",
     "DESCRIPTION": "Deal !D! damage. Channel !M! Frost.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Combust": {
     "NAME": "Combust",
     "DESCRIPTION": "At the end of your turn, lose 1 HP and deal !M! damage to ALL enemies.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Concentrate": {
     "NAME": "Concentrate",
     "DESCRIPTION": "Discard !M! cards. NL Gain [G] [G].",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Conserve Battery": {
     "NAME": "Charge Battery",
     "DESCRIPTION": "Gain !B! Block. NL Next turn, gain [B].",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Consume": {
     "NAME": "Consume",
     "DESCRIPTION": "Gain !M! Focus. NL Lose 1 Orb slot.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Coolheaded": {
     "NAME": "Coolheaded",
     "DESCRIPTION": "Channel 1 Frost. NL Draw !M! card{plural1}.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Corpse Explosion": {
     "NAME": "Corpse Explosion",
     "DESCRIPTION": "Apply !M! Poison. NL When the enemy dies, deal damage equal to its Max HP to ALL enemies.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Corruption": {
     "NAME": "Corruption",
     "DESCRIPTION": "Skills cost 0. NL Whenever you play a Skill, Exhaust it.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Creative AI": {
     "NAME": "Creative AI",
     "DESCRIPTION": "At the start of your turn, add a random Power card into your hand.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Crippling Poison": {
     "NAME": "Crippling Cloud",
     "DESCRIPTION": "Apply !M! Poison and 2 Weak to ALL enemies. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Dagger Spray": {
     "NAME": "Dagger Spray",
     "DESCRIPTION": "Deal !D! damage to ALL enemies twice.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Dagger Throw": {
     "NAME": "Dagger Throw",
     "DESCRIPTION": "Deal !D! damage. NL Draw 1 card. NL Discard 1 card.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Dark Embrace": {
     "NAME": "Dark Embrace",
     "DESCRIPTION": "Whenever a card is Exhausted, NL draw 1 card.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Dark Shackles": {
     "NAME": "Dark Shackles",
     "DESCRIPTION": "Enemy loses !M! Strength this turn. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Darkness": {
     "NAME": "Darkness",
     "DESCRIPTION": "Channel !M! Dark.",
     "UPGRADE_DESCRIPTION": "Channel !M! Dark. NL Trigger the passive ability of all Dark orbs.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Dash": {
     "NAME": "Dash",
     "DESCRIPTION": "Gain !B! Block. NL Deal !D! damage.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Dazed": {
     "NAME": "Dazed",
     "DESCRIPTION": "Unplayable. NL Ethereal.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Status"
   },
   "Deadly Poison": {
     "NAME": "Deadly Poison",
     "DESCRIPTION": "Apply !M! Poison.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Decay": {
     "NAME": "Decay",
@@ -496,100 +561,116 @@
     "NAME": "Deep Breath",
     "DESCRIPTION": "Shuffle your discard pile into your draw pile. NL Draw !M! card{plural1}.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Defend_B": {
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Defect",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Defend_G": {
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Silent",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Defend_R": {
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Defend_P": {
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Deflect": {
     "NAME": "Deflect",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Defragment": {
     "NAME": "Defragment",
     "DESCRIPTION": "Gain !M! Focus.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Demon Form": {
     "NAME": "Demon Form",
     "DESCRIPTION": "At the start of your turn, gain !M! Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Die Die Die": {
     "NAME": "Die Die Die",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Disarm": {
     "NAME": "Disarm",
     "DESCRIPTION": "Enemy loses !M! Strength. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Distraction": {
     "NAME": "Distraction",
     "DESCRIPTION": "Add a random Skill into your hand. NL It costs 0 this turn. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Dodge and Roll": {
     "NAME": "Dodge and Roll",
     "DESCRIPTION": "Gain !B! Block. NL Next turn, gain !B! Block.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Doom and Gloom": {
     "NAME": "Doom and Gloom",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Channel !M! Dark.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Doppelganger": {
     "NAME": "Doppelganger",
     "DESCRIPTION": "Next turn, draw X cards and gain X [G]. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Next turn, draw X+1 cards and gain X+1 [G]. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Double Energy": {
     "NAME": "Double Energy",
     "DESCRIPTION": "Double your Energy. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Double your Energy.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Double Tap": {
     "NAME": "Double Tap",
     "DESCRIPTION": "This turn, your next Attack is played twice.",
     "UPGRADE_DESCRIPTION": "This turn, your next !M! Attacks are played twice.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Doubt": {
     "NAME": "Doubt",
@@ -600,333 +681,387 @@
     "NAME": "Dramatic Entrance",
     "DESCRIPTION": "Innate. NL Deal !D! damage to ALL enemies. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Dropkick": {
     "NAME": "Dropkick",
     "DESCRIPTION": "Deal !D! damage. NL If the enemy has Vulnerable, NL gain [R] and NL draw 1 card.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Dual Wield": {
     "NAME": "Dual Wield",
     "DESCRIPTION": "Choose an Attack or Power card. Add a copy of that card into your hand.",
     "UPGRADE_DESCRIPTION": "Choose an Attack or Power card. Add 2 copies of that card into your hand.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Dualcast": {
     "NAME": "Dualcast",
     "DESCRIPTION": "Evoke your next Orb twice.",
     "CHARACTER": "Defect",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Echo Form": {
     "NAME": "Echo Form",
     "DESCRIPTION": "Ethereal. The first card you play each turn is played twice.",
     "DESCRIPTION_UPGRADE": "The first card you play each turn is played twice.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Electrodynamics": {
     "NAME": "Electrodynamics",
     "DESCRIPTION": "Lightning now hits ALL enemies. NL Channel !M! Lightning.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Endless Agony": {
     "NAME": "Endless Agony",
     "DESCRIPTION": "Deal !D! damage. NL Whenever you draw this card, add a copy of it into your hand. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Enlightenment": {
     "NAME": "Enlightenment",
     "DESCRIPTION": "Reduce the cost of all cards in your hand to 1 this turn.",
     "UPGRADE_DESCRIPTION": "Reduce the cost of all cards in your hand to 1 this combat.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Entrench": {
     "NAME": "Entrench",
     "DESCRIPTION": "Double your Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Envenom": {
     "NAME": "Envenom",
     "DESCRIPTION": "Whenever an Attack deals unblocked damage, apply 1 Poison.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Escape Plan": {
     "NAME": "Escape Plan",
     "DESCRIPTION": "Draw 1 card. NL If you draw a Skill, gain !B! Block.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Eviscerate": {
     "NAME": "Eviscerate",
     "DESCRIPTION": "Costs 1 less Energy for each card discarded this turn. NL Deal !D! damage 3 times.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Evolve": {
     "NAME": "Evolve",
     "DESCRIPTION": "Whenever you draw a Status card, draw !M! card.",
     "UPGRADE_DESCRIPTION": "Whenever you draw a Status card, draw !M! cards.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Exhume": {
     "NAME": "Exhume",
     "DESCRIPTION": "Put a card from your exhaust pile into your hand. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Expertise": {
     "NAME": "Expertise",
     "DESCRIPTION": "Draw cards until you have !M! in your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "FTL": {
     "NAME": "FTL",
     "DESCRIPTION": "Deal !D! damage. If you have played less than !M! cards this turn, draw 1 card.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Feed": {
     "NAME": "Feed",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, raise your Max HP by !M!. Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Feel No Pain": {
     "NAME": "Feel No Pain",
     "DESCRIPTION": "Whenever a card is Exhausted, NL gain !M! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Fiend Fire": {
     "NAME": "Fiend Fire",
     "DESCRIPTION": "Exhaust your hand. NL Deal !D! damage for each card Exhausted. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Finesse": {
     "NAME": "Finesse",
     "DESCRIPTION": "Gain !B! Block. NL Draw 1 card.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Finisher": {
     "NAME": "Finisher",
     "DESCRIPTION": "Deal !D! damage for each Attack played this turn.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Fire Breathing": {
     "NAME": "Fire Breathing",
     "DESCRIPTION": "Whenever you draw a Status or Curse card, deal !M! damage to ALL enemies.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Fission": {
     "NAME": "Fission",
     "DESCRIPTION": "Remove all your Orbs. Gain [B] and draw !M! card for each Orb removed. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Evoke all your Orbs. Gain [B] and draw !M! card for each Orb Evoked. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Flame Barrier": {
     "NAME": "Flame Barrier",
     "DESCRIPTION": "Gain !B! Block. NL Whenever you are attacked this turn, deal !M! damage back.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Flash of Steel": {
     "NAME": "Flash of Steel",
     "DESCRIPTION": "Deal !D! damage. NL Draw 1 card.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Flechettes": {
     "NAME": "Flechettes",
     "DESCRIPTION": "Deal !D! damage for each Skill in your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Flex": {
     "NAME": "Flex",
     "DESCRIPTION": "Gain !M! Strength. NL At the end of this turn, lose !M! Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Flying Knee": {
     "NAME": "Flying Knee",
     "DESCRIPTION": "Deal !D! damage. NL Next turn, gain [G].",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Footwork": {
     "NAME": "Footwork",
     "DESCRIPTION": "Gain !M! Dexterity.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Force Field": {
     "NAME": "Force Field",
     "DESCRIPTION": "Costs 1 less [B] for each Power card played this combat. NL Gain !B! Block.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Fusion": {
     "NAME": "Fusion",
     "DESCRIPTION": "Channel !M! Plasma.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Gash": {
     "NAME": "Claw",
     "DESCRIPTION": "Deal !D! damage. NL Increase the damage of ALL Claw cards by !M! this combat.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Genetic Algorithm": {
     "NAME": "Genetic Algorithm",
     "DESCRIPTION": "Gain !B! Block. Permanently increase this card's Block by !M!. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Ghostly": {
     "NAME": "Apparition",
     "DESCRIPTION": "Ethereal. NL Gain 1 Intangible. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Gain 1 Intangible. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "Ghostly Armor": {
     "NAME": "Ghostly Armor",
     "DESCRIPTION": "Ethereal. NL Gain !B! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Glacier": {
     "NAME": "Glacier",
     "DESCRIPTION": "Gain !B! Block. NL Channel !M! Frost.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Glass Knife": {
     "NAME": "Glass Knife",
     "DESCRIPTION": "Deal !D! damage twice. Decrease the damage of this card by 2 this combat.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Go for the Eyes": {
     "NAME": "Go for the Eyes",
     "DESCRIPTION": "Deal !D! damage. NL If the enemy intends to attack, apply !M! Weak.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Good Instincts": {
     "NAME": "Good Instincts",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Grand Finale": {
     "NAME": "Grand Finale",
     "DESCRIPTION": "Can only be played if there are no cards in your draw pile. NL Deal !D! damage to ALL enemies.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Havoc": {
     "NAME": "Havoc",
     "DESCRIPTION": "Play the top card of your draw pile and Exhaust it.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Headbutt": {
     "NAME": "Headbutt",
     "DESCRIPTION": "Deal !D! damage. NL Put a card from your discard pile on top of your draw pile.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Heatsinks": {
     "NAME": "Heatsinks",
     "DESCRIPTION": "Whenever you play a Power card, draw !M! card{plural1}.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Heavy Blade": {
     "NAME": "Heavy Blade",
     "DESCRIPTION": "Deal !D! damage. NL Strength affects this card !M! times.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Heel Hook": {
     "NAME": "Heel Hook",
     "DESCRIPTION": "Deal !D! damage. NL If the enemy has Weak, NL gain [G] and NL draw 1 card.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Hello World": {
     "NAME": "Hello World",
     "DESCRIPTION": "At the start of your turn, add a random Common card into your hand.",
     "UPGRADE_DESCRIPTION": "Innate. NL At the start of your turn, add a random Common card into your hand.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Hemokinesis": {
     "NAME": "Hemokinesis",
     "DESCRIPTION": "Lose !M! HP. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Hologram": {
     "NAME": "Hologram",
     "DESCRIPTION": "Gain !B! Block. NL Put a card from your discard pile into your hand. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Put a card from your discard pile into your hand.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Hyperbeam": {
     "NAME": "Hyperbeam",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Lose !M! Focus.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Immolate": {
     "NAME": "Immolate",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Add a *Burn into your discard pile.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Impervious": {
     "NAME": "Impervious",
     "DESCRIPTION": "Gain !B! Block. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Infernal Blade": {
     "NAME": "Infernal Blade",
     "DESCRIPTION": "Add a random Attack into your hand. NL It costs 0 this turn. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Infinite Blades": {
     "NAME": "Infinite Blades",
     "DESCRIPTION": "At the start of your turn, add a *Shiv into your hand.",
     "UPGRADE_DESCRIPTION": "Innate. NL At the start of your turn, add a *Shiv into your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Inflame": {
     "NAME": "Inflame",
     "DESCRIPTION": "Gain !M! Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Injury": {
     "NAME": "Injury",
@@ -937,149 +1072,173 @@
     "NAME": "Intimidate",
     "DESCRIPTION": "Apply !M! Weak to ALL enemies. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Iron Wave": {
     "NAME": "Iron Wave",
     "DESCRIPTION": "Gain !B! Block. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "J.A.X.": {
     "NAME": "J.A.X.",
     "DESCRIPTION": "Lose 3 HP. NL Gain !M! Strength.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "Jack Of All Trades": {
     "NAME": "Jack of All Trades",
     "DESCRIPTION": "Add !M! random Colorless card{plural1} into your hand. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Juggernaut": {
     "NAME": "Juggernaut",
     "DESCRIPTION": "Whenever you gain Block, deal !M! damage to a random enemy.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Leap": {
     "NAME": "Leap",
     "DESCRIPTION": "Gain !B! Block.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Leg Sweep": {
     "NAME": "Leg Sweep",
     "DESCRIPTION": "Apply !M! Weak. NL Gain !B! Block.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Limit Break": {
     "NAME": "Limit Break",
     "DESCRIPTION": "Double your Strength. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Double your Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Lockon": {
     "NAME": "Bullseye",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Lock-On.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Loop": {
     "NAME": "Loop",
     "DESCRIPTION": "At the start of your turn, trigger the passive ability of your next Orb.",
     "UPGRADE_DESCRIPTION": "At the start of your turn, trigger the passive ability of your next Orb !M! times.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Machine Learning": {
     "NAME": "Machine Learning",
     "DESCRIPTION": "At the start of your turn, draw !M! additional card.",
     "UPGRADE_DESCRIPTION": "Innate. NL At the start of your turn, draw !M! additional card.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Study": {
     "NAME": "Study",
     "DESCRIPTION": "At the end of your turn, shuffle an *Insight into your draw pile.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Madness": {
     "NAME": "Madness",
     "DESCRIPTION": "Reduce the cost of a random card in your hand to 0 this combat. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Magnetism": {
     "NAME": "Magnetism",
     "DESCRIPTION": "At the start of your turn, add a random Colorless card into your hand.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Malaise": {
     "NAME": "Malaise",
     "DESCRIPTION": "Enemy loses X Strength. Apply X Weak. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Enemy loses X+1 Strength. Apply X+1 Weak. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Master of Strategy": {
     "NAME": "Master of Strategy",
     "DESCRIPTION": "Draw !M! cards. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Masterful Stab": {
     "NAME": "Masterful Stab",
     "DESCRIPTION": "Costs 1 additional [G] NL for each time you lose HP this combat. NL Deal !D! damage.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Mayhem": {
     "NAME": "Mayhem",
     "DESCRIPTION": "At the start of your turn, play the top card of your draw pile.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Melter": {
     "NAME": "Melter",
     "DESCRIPTION": "Remove all Block from the enemy. NL Deal !D! damage.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Metallicize": {
     "NAME": "Metallicize",
     "DESCRIPTION": "At the end of your turn, gain !M! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Metamorphosis": {
     "NAME": "Metamorphosis",
     "DESCRIPTION": "Shuffle !M! random Attacks into your draw pile. They cost 0 this combat. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Meteor Strike": {
     "NAME": "Meteor Strike",
     "DESCRIPTION": "Deal !D! damage. NL Channel !M! Plasma.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Mind Blast": {
     "NAME": "Mind Blast",
     "DESCRIPTION": "Innate. NL Deal damage equal to the number of cards in your draw pile.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Multi-Cast": {
     "NAME": "Multi-Cast",
     "DESCRIPTION": "Evoke your next Orb X times.",
     "UPGRADE_DESCRIPTION": "Evoke your next Orb X+1 times.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Necronomicurse": {
     "NAME": "Necronomicurse",
@@ -1090,13 +1249,15 @@
     "NAME": "Neutralize",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Weak.",
     "CHARACTER": "Silent",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Night Terror": {
     "NAME": "Nightmare",
     "DESCRIPTION": "Choose a card. NL Next turn, add !M! copies of that card into your hand. Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Normality": {
     "NAME": "Normality",
@@ -1107,20 +1268,23 @@
     "NAME": "Noxious Fumes",
     "DESCRIPTION": "At the start of your turn, apply !M! Poison to ALL enemies.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Offering": {
     "NAME": "Offering",
     "DESCRIPTION": "Lose 6 HP. NL Gain [R] [R]. NL Draw !M! cards. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Outmaneuver": {
     "NAME": "Outmaneuver",
     "DESCRIPTION": "Next turn, NL gain [G] [G].",
     "UPGRADE_DESCRIPTION": "Next turn, NL gain [G] [G] [G].",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Pain": {
     "NAME": "Pain",
@@ -1131,13 +1295,15 @@
     "NAME": "Panacea",
     "DESCRIPTION": "Gain !M! Artifact. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Panache": {
     "NAME": "Panache",
     "DESCRIPTION": "Every time you play 5 cards in a single turn, deal !M! damage to ALL enemies.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Parasite": {
     "NAME": "Parasite",
@@ -1148,128 +1314,149 @@
     "NAME": "Perfected Strike",
     "DESCRIPTION": "Deal !D! damage. NL Deals !M! additional damage for ALL your cards containing \"Strike\".",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Phantasmal Killer": {
     "NAME": "Phantasmal Killer",
     "DESCRIPTION": "Next turn, your Attacks deal double damage.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "PiercingWail": {
     "NAME": "Piercing Wail",
     "DESCRIPTION": "ALL enemies lose !M! Strength this turn. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Poisoned Stab": {
     "NAME": "Poisoned Stab",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Poison.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Pommel Strike": {
     "NAME": "Pommel Strike",
     "DESCRIPTION": "Deal !D! damage. NL Draw !M! card{plural2}.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Power Through": {
     "NAME": "Power Through",
     "DESCRIPTION": "Add 2 *Wounds into your hand. NL Gain !B! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Predator": {
     "NAME": "Predator",
     "DESCRIPTION": "Deal !D! damage. NL Next turn, draw 2 additional cards.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Prepared": {
     "NAME": "Prepared",
     "DESCRIPTION": "Draw !M! card{plural1}. NL Discard !M! card{plural2}.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Pummel": {
     "NAME": "Pummel",
     "DESCRIPTION": "Deal !D! damage !M! times. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Purity": {
     "NAME": "Purity",
     "DESCRIPTION": "Exhaust up to !M! cards in your hand. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Quick Slash": {
     "NAME": "Quick Slash",
     "DESCRIPTION": "Deal !D! damage. NL Draw 1 card.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Rage": {
     "NAME": "Rage",
     "DESCRIPTION": "Whenever you play an Attack this turn, gain !M! Block.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Rainbow": {
     "NAME": "Rainbow",
     "DESCRIPTION": "Channel 1 Lightning. NL Channel 1 Frost. NL Channel 1 Dark. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Channel 1 Lightning. NL Channel 1 Frost. NL Channel 1 Dark.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Rampage": {
     "NAME": "Rampage",
     "DESCRIPTION": "Deal !D! damage. NL Increase this card's damage by !M! this combat.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Reaper": {
     "NAME": "Reaper",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. Heal HP equal to unblocked damage. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Reboot": {
     "NAME": "Reboot",
     "DESCRIPTION": "Shuffle ALL your cards into your draw pile. NL Draw !M! cards. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Rebound": {
     "NAME": "Rebound",
     "DESCRIPTION": "Deal !D! damage. NL Put the next card you play this turn on top of your draw pile.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Reckless Charge": {
     "NAME": "Reckless Charge",
     "DESCRIPTION": "Deal !D! damage. NL Shuffle a *Dazed into your draw pile.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Recycle": {
     "NAME": "Recycle",
     "DESCRIPTION": "Exhaust a card. Gain Energy equal to its cost.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Redo": {
     "NAME": "Recursion",
     "DESCRIPTION": "Evoke your next Orb. NL Channel the Orb that was just Evoked.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Reflex": {
     "NAME": "Reflex",
     "DESCRIPTION": "Unplayable. NL If this card is discarded from your hand, draw !M! cards.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Regret": {
     "NAME": "Regret",
@@ -1280,106 +1467,123 @@
     "NAME": "Reinforced Body",
     "DESCRIPTION": "Gain !B! Block X times.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Reprogram": {
     "NAME": "Reprogram",
     "DESCRIPTION": "Lose !M! Focus. NL Gain !M! Strength. NL Gain !M! Dexterity.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Riddle With Holes": {
     "NAME": "Riddle with Holes",
     "DESCRIPTION": "Deal !D! damage 5 times.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Rip and Tear": {
     "NAME": "Rip and Tear",
     "DESCRIPTION": "Deal !D! damage to a random enemy twice.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Rupture": {
     "NAME": "Rupture",
     "DESCRIPTION": "Whenever you lose HP from a card, NL gain !M! Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Sadistic Nature": {
     "NAME": "Sadistic Nature",
     "DESCRIPTION": "Whenever you apply a debuff to an enemy, they take !M! damage.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Scrape": {
     "NAME": "Scrape",
     "DESCRIPTION": "Deal !D! damage. NL Draw !M! cards. NL Discard all cards drawn this way that do not cost 0.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Searing Blow": {
     "NAME": "Searing Blow",
     "DESCRIPTION": "Deal !D! damage. NL Can be Upgraded any number of times.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Second Wind": {
     "NAME": "Second Wind",
     "DESCRIPTION": "Exhaust all non-Attack cards in your hand. Gain !B! Block for each card Exhausted.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Secret Technique": {
     "NAME": "Secret Technique",
     "DESCRIPTION": "Put a Skill from your draw pile into your hand. NL Exhaust.",
     "DESCRIPTION_UPGRADE": "Put a Skill from your draw pile into your hand.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Secret Weapon": {
     "NAME": "Secret Weapon",
     "DESCRIPTION": "Put an Attack from your draw pile into your hand. NL Exhaust.",
     "DESCRIPTION_UPGRADE": "Put an Attack from your draw pile into your hand.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Seeing Red": {
     "NAME": "Seeing Red",
     "DESCRIPTION": "Gain [R] [R]. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Seek": {
     "NAME": "Seek",
     "DESCRIPTION": "Put !M! card{plural1} from your draw pile into your hand. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Self Repair": {
     "NAME": "Self Repair",
     "DESCRIPTION": "At the end of combat, heal !M! HP.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Sentinel": {
     "NAME": "Sentinel",
     "DESCRIPTION": "Gain !B! Block. NL If this card is Exhausted, NL gain [R] [R].",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL If this card is Exhausted, NL gain [R] [R] [R].",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Setup": {
     "NAME": "Setup",
     "DESCRIPTION": "Put a card from your hand on top of your draw pile. NL It costs 0 until played.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Sever Soul": {
     "NAME": "Sever Soul",
     "DESCRIPTION": "Exhaust all non-Attack cards in your hand. NL Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Shame": {
     "NAME": "Shame",
@@ -1389,313 +1593,364 @@
   "Shiv": {
     "NAME": "Shiv",
     "DESCRIPTION": "Deal !D! damage. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "Shockwave": {
     "NAME": "Shockwave",
     "DESCRIPTION": "Apply !M! Weak and Vulnerable to ALL enemies. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Shrug It Off": {
     "NAME": "Shrug It Off",
     "DESCRIPTION": "Gain !B! Block. NL Draw 1 card.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Skewer": {
     "NAME": "Skewer",
     "DESCRIPTION": "Deal !D! damage X times.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Skim": {
     "NAME": "Skim",
     "DESCRIPTION": "Draw !M! cards.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Slice": {
     "NAME": "Slice",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Slimed": {
     "NAME": "Slimed",
     "DESCRIPTION": "Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Status"
   },
   "Spot Weakness": {
     "NAME": "Spot Weakness",
     "DESCRIPTION": "If the enemy intends to attack, gain !M! Strength.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Stack": {
     "NAME": "Stack",
     "DESCRIPTION": "Gain Block equal to the number of cards in your discard pile.",
     "DESCRIPTION_UPGRADE": "Gain Block equal to the number of cards in your discard pile +3.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Static Discharge": {
     "NAME": "Static Discharge",
     "DESCRIPTION": "Whenever you receive unblocked attack damage, Channel !M! Lightning.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Steam": {
     "NAME": "Steam Barrier",
     "DESCRIPTION": "Gain !B! Block. Decrease this card's Block by 1 this combat.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Steam Power": {
     "NAME": "Overclock",
     "DESCRIPTION": "Draw !M! cards. NL Add a *Burn into your discard pile.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Storm": {
     "NAME": "Storm",
     "DESCRIPTION": "Whenever you play a Power card, Channel 1 Lightning.",
     "UPGRADE_DESCRIPTION": "Innate. NL Whenever you play a Power card, Channel 1 Lightning.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Storm of Steel": {
     "NAME": "Storm of Steel",
     "DESCRIPTION": "Discard your hand. NL Add 1 *Shiv into your hand for each card discarded.",
     "UPGRADE_DESCRIPTION": "Discard your hand. NL Add 1 *Shiv+ into your hand for each card discarded.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Streamline": {
     "NAME": "Streamline",
     "DESCRIPTION": "Deal !D! damage. NL Reduce this card's cost by !M! this combat.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Strike_B": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Defect",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Strike_G": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Silent",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Strike_R": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Strike_P": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Watcher",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "Sucker Punch": {
     "NAME": "Sucker Punch",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Weak.",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Sunder": {
     "NAME": "Sunder",
     "DESCRIPTION": "Deal !D! damage. NL If this kills an enemy, gain 3 Energy.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Survivor": {
     "NAME": "Survivor",
     "DESCRIPTION": "Gain !B! Block. NL Discard 1 card.",
     "CHARACTER": "Silent",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Sweeping Beam": {
     "NAME": "Sweeping Beam",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Draw !M! card.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Swift Strike": {
     "NAME": "Swift Strike",
     "DESCRIPTION": "Deal !D! damage.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Sword Boomerang": {
     "NAME": "Sword Boomerang",
     "DESCRIPTION": "Deal !D! damage to a random enemy !M! times.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Tactician": {
     "NAME": "Tactician",
     "DESCRIPTION": "Unplayable. NL If this card is discarded from your hand, gain [G].",
     "UPGRADE_DESCRIPTION": "Unplayable. NL If this card is discarded from your hand, gain [G] [G].",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Tempest": {
     "NAME": "Tempest",
     "DESCRIPTION": "Channel X Lightning. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Channel X+1 Lightning. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Terror": {
     "NAME": "Terror",
     "DESCRIPTION": "Apply 99 Vulnerable. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "The Bomb": {
     "NAME": "The Bomb",
     "DESCRIPTION": "At the end of 3 turns, deal !M! damage to ALL enemies.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Thinking Ahead": {
     "NAME": "Thinking Ahead",
     "DESCRIPTION": "Draw 2 cards. NL Put a card from your hand on top of your draw pile. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Draw 2 cards. NL Put a card from your hand on top of your draw pile.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Thunder Strike": {
     "NAME": "Thunder Strike",
     "DESCRIPTION": "Deal !D! damage to a random enemy for each Lightning Channeled this combat.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Thunderclap": {
     "NAME": "Thunderclap",
     "DESCRIPTION": "Deal !D! damage and apply 1 Vulnerable to ALL enemies.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Tools of the Trade": {
     "NAME": "Tools of the Trade",
     "DESCRIPTION": "At the start of your turn, draw 1 card and discard 1 card.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Transmutation": {
     "NAME": "Transmutation",
     "DESCRIPTION": "Add X random Colorless cards into your hand. They cost 0 this turn. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Add X random Upgraded Colorless cards into your hand. They cost 0 this turn. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Trip": {
     "NAME": "Trip",
     "DESCRIPTION": "Apply !M! Vulnerable.",
     "UPGRADE_DESCRIPTION": "Apply !M! Vulnerable to ALL enemies.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "True Grit": {
     "NAME": "True Grit",
     "DESCRIPTION": "Gain !B! Block. NL Exhaust 1 card at random.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Exhaust 1 card.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Turbo": {
     "NAME": "TURBO",
     "DESCRIPTION": "Gain {} Energy. NL Add a *Void into your discard pile.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Twin Strike": {
     "NAME": "Twin Strike",
     "DESCRIPTION": "Deal !D! damage twice.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Underhanded Strike": {
     "NAME": "Sneaky Strike",
     "DESCRIPTION": "Deal !D! damage. NL If you have discarded a card this turn, NL gain [G] [G].",
     "CHARACTER": "Silent",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Undo": {
     "NAME": "Equilibrium",
     "DESCRIPTION": "Gain !B! Block. NL Retain your hand this turn.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Unload": {
     "NAME": "Unload",
     "DESCRIPTION": "Deal !D! damage. NL Discard all non-Attack cards in your hand.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Uppercut": {
     "NAME": "Uppercut",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! Weak. NL Apply !M! Vulnerable.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Venomology": {
     "NAME": "Alchemize",
     "DESCRIPTION": "Obtain a random potion. NL Exhaust.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Void": {
     "NAME": "Void",
     "DESCRIPTION": "Unplayable. NL Ethereal. NL Whenever this card is drawn, lose 1 Energy.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Status"
   },
   "Warcry": {
     "NAME": "Warcry",
     "DESCRIPTION": "Draw !M! card{plural1]. NL Put a card from your hand onto the top of your draw pile. NL Exhaust.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Well Laid Plans": {
     "NAME": "Well-Laid Plans",
     "DESCRIPTION": "At the end of your turn, Retain up to !M! card{plural1}.",
     "CHARACTER": "Silent",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Whirlwind": {
     "NAME": "Whirlwind",
     "DESCRIPTION": "Deal !D! damage to ALL enemies X times.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "White Noise": {
     "NAME": "White Noise",
     "DESCRIPTION": "Add a random Power card into your hand. NL It costs 0 this turn. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Wild Strike": {
     "NAME": "Wild Strike",
     "DESCRIPTION": "Deal !D! damage. NL Shuffle a *Wound into your draw pile.",
     "CHARACTER": "Ironclad",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Wound": {
     "NAME": "Wound",
     "DESCRIPTION": "Unplayable.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Status"
   },
   "Wraith Form v2": {
     "NAME": "Wraith Form",
     "DESCRIPTION": "Gain !M! Intangible. NL At the end of your turn, lose 1 Dexterity.",
     "CHARACTER": "Silent",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Writhe": {
     "NAME": "Writhe",
@@ -1706,24 +1961,28 @@
     "NAME": "Zap",
     "DESCRIPTION": "Channel !M! Lightning.",
     "CHARACTER": "Defect",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Core Surge": {
     "NAME": "Core Surge",
     "DESCRIPTION": "Deal !D! damage. NL Gain !M! Artifact. NL Exhaust.",
     "CHARACTER": "Defect",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Compile Driver": {
     "NAME": "Compile Driver",
     "DESCRIPTION": "Deal !D! damage. NL Draw !M! card for each unique Orb you have.",
     "CHARACTER": "Defect",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "RitualDagger": {
     "NAME": "Ritual Dagger",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, permanently increase this card's damage by !M!. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "Pride": {
     "NAME": "Pride",
@@ -1734,95 +1993,110 @@
     "NAME": "Panic Button",
     "DESCRIPTION": "Gain !B! Block. You cannot gain Block from cards for !M! turns. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "HandOfGreed": {
     "NAME": "Hand of Greed",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, gain !M! Gold.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "Violence": {
     "NAME": "Violence",
     "DESCRIPTION": "Put !M! random Attacks from your draw pile into your hand. NL Exhaust.",
     "CHARACTER": "Colorless",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Impatience": {
     "NAME": "Impatience",
     "DESCRIPTION": "If you have no Attacks in your hand, draw !M! cards.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Forethought": {
     "NAME": "Forethought",
     "DESCRIPTION": "Put a card from your hand to the bottom of your draw pile. It costs 0 until played.",
     "UPGRADE_DESCRIPTION": "Put any number of cards from your hand to the bottom of your draw pile. They cost 0 until played.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Discovery": {
     "NAME": "Discovery",
     "DESCRIPTION": "Choose 1 of 3 random cards to add into your hand. It costs 0 this turn. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Choose 1 of 3 random cards to add into your hand. It costs 0 this turn.",
     "CHARACTER": "Colorless",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Nirvana": {
     "NAME": "Nirvana",
     "DESCRIPTION": "Whenever you Scry, gain !M! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "EmptyFist": {
     "NAME": "Empty Fist",
     "DESCRIPTION": "Deal !D! damage. NL Exit your Stance.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "EmptyBody": {
     "NAME": "Empty Body",
     "DESCRIPTION": "Gain !B! Block. NL Exit your Stance.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "WreathOfFlame": {
     "NAME": "Wreath of Flame",
     "DESCRIPTION": "Your next Attack deals !M! additional damage.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "FearNoEvil": {
     "NAME": "Fear No Evil",
     "DESCRIPTION": "Deal !D! damage. NL If the enemy intends to Attack, enter Calm.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "MentalFortress": {
     "NAME": "Mental Fortress",
     "DESCRIPTION": "Whenever you change Stances, gain !M! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Collect": {
     "NAME": "Collect",
     "DESCRIPTION": "Put a *Miracle+ into your hand at the start of your next X turns. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Put a *Miracle+ into your hand at the start of your next X+1 turns. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "ForeignInfluence": {
     "NAME": "Foreign Influence",
     "DESCRIPTION": "Choose 1 of 3 Attacks of any color to add into your hand. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Choose 1 of 3 Attacks of any color to add into your hand. NL It costs 0 this turn. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "FlurryOfBlows": {
     "NAME": "Flurry of Blows",
     "DESCRIPTION": "Deal !D! damage. NL Whenever you change Stances, return this from the discard pile to your hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Wrath": {
     "NAME": "Wrath",
@@ -1836,347 +2110,404 @@
     "NAME": "Consecrate",
     "DESCRIPTION": "Deal !D! damage to ALL enemies.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Blasphemy": {
     "NAME": "Blasphemy",
     "DESCRIPTION": "Enter Divinity. NL Die next turn. NL Exhaust.",
 	  "UPGRADE_DESCRIPTION": "Retain. NL Enter Divinity. NL Die next turn. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Ragnarok": {
     "NAME": "Ragnarok",
     "DESCRIPTION": "Deal !D! damage to a random enemy !M! times.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "EmptyMind": {
     "NAME": "Empty Mind",
     "DESCRIPTION": "Draw !M! cards. NL Exit your Stance.",
     "UPGRADE_DESCRIPTION": "Draw !M! cards. NL Exit your Stance.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Judgement": {
     "NAME": "Judgment",
     "DESCRIPTION": "If the enemy has !M! or less HP, set their NL HP to 0.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Pray": {
     "NAME": "Pray",
     "DESCRIPTION": "Gain !M! Mantra. NL Shuffle an *Insight into your draw pile.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Conclude": {
     "NAME": "Conclude",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL End your turn.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "LessonLearned": {
     "NAME": "Lesson Learned",
     "DESCRIPTION": "Deal !D! damage. NL If Fatal, Upgrade a random card in your deck. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "CutThroughFate": {
     "NAME": "Cut Through Fate",
     "DESCRIPTION": "Deal !D! damage. NL Scry !M!. NL Draw 1 card.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "ThirdEye": {
     "NAME": "Third Eye",
     "DESCRIPTION": "Gain !B! Block. NL Scry !M!.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "SignatureMove": {
     "NAME": "Signature Move",
     "DESCRIPTION": "Can only be played if this is the only Attack in your hand. NL Deal !D! damage.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Worship": {
     "NAME": "Worship",
     "DESCRIPTION": "Gain !M! Mantra.",
     "UPGRADE_DESCRIPTION": "Retain. NL Gain !M! Mantra.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Fasting2": {
     "NAME": "Fasting",
     "DESCRIPTION": "Gain !M! Strength. NL Gain !M! Dexterity. NL Gain 1 less [W] at the start of each turn.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "DevaForm": {
     "NAME": "Deva Form",
     "DESCRIPTION": "Ethereal. NL At the start of your turn, gain [W] NL and increase this gain by !M!.",
     "UPGRADE_DESCRIPTION": "At the start of your turn, gain [W] NL and increase this gain by !M!.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Wireheading": {
     "NAME": "Foresight",
     "DESCRIPTION": "At the start of your turn, Scry !M!.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "ReachHeaven": {
     "NAME": "Reach Heaven",
     "DESCRIPTION": "Deal !D! damage. NL Shuffle a NL *Through *Violence into your draw pile.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "ThroughViolence": {
     "NAME": "Through Violence",
     "DESCRIPTION": "Retain. NL Deal !D! damage. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "Meditate": {
     "NAME": "Meditate",
     "DESCRIPTION": "Put a card from your discard pile into your hand and Retain it. NL Enter Calm. NL End your turn.",
     "UPGRADE_DESCRIPTION": "Put 2 cards from your discard pile into your hand and Retain them. NL Enter Calm. NL End your turn.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Miracle": {
     "NAME": "Miracle",
     "DESCRIPTION": "Retain. NL Gain [W]. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Retain. NL Gain [W] [W]. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "Vault": {
     "NAME": "Vault",
     "DESCRIPTION": "Take an extra turn after this one. NL End your turn. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "CarveReality": {
     "NAME": "Carve Reality",
     "DESCRIPTION": "Deal !D! damage. NL Add a *Smite into your hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Smite": {
     "NAME": "Smite",
     "DESCRIPTION": "Retain. NL Deal !D! damage. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "Insight": {
     "NAME": "Insight",
     "DESCRIPTION": "Retain. NL Draw !M! cards. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "DeceiveReality": {
     "NAME": "Deceive Reality",
     "DESCRIPTION": "Gain !B! Block. NL Add a *Safety into NL your hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Safety": {
     "NAME": "Safety",
     "DESCRIPTION": "Retain. NL Gain !B! Block. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "WindmillStrike": {
     "NAME": "Windmill Strike",
     "DESCRIPTION": "Retain. NL Deal !D! damage. NL When Retained, increase its damage by !M! this combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Establishment": {
     "NAME": "Establishment",
     "DESCRIPTION": "Whenever a card is Retained, reduce its cost by !M! this combat.",
 	  "UPGRADE_DESCRIPTION": "Innate. NL Whenever a card is Retained, reduce its cost by !M! this combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "Evaluate": {
     "NAME": "Evaluate",
     "DESCRIPTION": "Gain !B! Block. NL Shuffle an *Insight into your draw pile.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Shuffle an *Insight+ into your draw pile.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Devotion": {
     "NAME": "Devotion",
     "DESCRIPTION": "At the start of your turn, gain !M! Mantra.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "DeusExMachina": {
     "NAME": "Deus Ex Machina",
     "DESCRIPTION": "Unplayable. NL When you draw this card, add !M! *Miracles to your hand and Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "TalkToTheHand": {
     "NAME": "Talk to the Hand",
     "DESCRIPTION": "Deal !D! damage. NL Whenever you attack this enemy, gain !M! Block. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "BattleHymn": {
     "NAME": "Battle Hymn",
     "DESCRIPTION": "At the start of each turn, add a *Smite into your hand.",
 	  "UPGRADE_DESCRIPTION": "Innate. NL At the start of each turn, add a *Smite into your hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Prostrate": {
     "NAME": "Prostrate",
     "DESCRIPTION": "Gain !M! Mantra. NL Gain !B! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Eruption": {
     "NAME": "Eruption",
     "DESCRIPTION": "Deal !D! damage. NL Enter Wrath.",
     "CHARACTER": "Watcher",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Attack"
   },
   "ClearTheMind": {
     "NAME": "Tranquility",
     "DESCRIPTION": "Retain. NL Enter Calm. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "WaveOfTheHand": {
     "NAME": "Wave of the Hand",
     "DESCRIPTION": "Whenever you gain Block this turn, apply !M! Weak to ALL enemies.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "SpiritShield": {
     "NAME": "Spirit Shield",
     "DESCRIPTION": "Gain !M! Block for each card in your hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Vigilance": {
     "NAME": "Vigilance",
     "DESCRIPTION": "Gain !B! Block. NL Enter Calm.",
     "CHARACTER": "Watcher",
-    "RARITY": "Starter"
+    "RARITY": "Starter",
+    "TYPE": "Skill"
   },
   "Crescendo": {
     "NAME": "Crescendo",
     "DESCRIPTION": "Retain. NL Enter Wrath. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "FollowUp": {
     "NAME": "Follow-Up",
     "DESCRIPTION": "Deal !D! damage. NL If the last card played this combat was an Attack, gain [W].",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Perseverance": {
     "NAME": "Perseverance",
     "DESCRIPTION": "Retain. NL Gain !B! Block. NL When Retained, increase its Block by !M! this combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "CrushJoints": {
     "NAME": "Crush Joints",
     "DESCRIPTION": "Deal !D! damage. NL If the last card played this combat was a Skill, apply !M! Vulnerable.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "SashWhip": {
     "NAME": "Sash Whip",
     "DESCRIPTION": "Deal !D! damage. NL If the last card played this combat was an Attack, apply !M! Weak.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Sanctity": {
     "NAME": "Sanctity",
     "DESCRIPTION": "Gain !B! Block. NL If the last card played this combat was a Skill, draw !M! cards.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Omniscience": {
     "NAME": "Omniscience",
     "DESCRIPTION": "Choose a card in your draw pile. NL Play the chosen card twice and exhaust it. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Scrawl": {
     "NAME": "Scrawl",
     "DESCRIPTION": "Draw cards until your hand is full. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Swivel": {
     "NAME": "Swivel",
     "DESCRIPTION": "Gain !B! Block. NL The next Attack you play costs 0.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Protect": {
     "NAME": "Protect",
     "DESCRIPTION": "Retain. NL Gain !B! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "FlyingSleeves": {
     "NAME": "Flying Sleeves",
     "DESCRIPTION": "Retain. NL Deal !D! damage twice.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "MasterReality": {
     "NAME": "Master Reality",
     "DESCRIPTION": "Whenever a card is created during combat, Upgrade it.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Power"
   },
   "BowlingBash": {
     "NAME": "Bowling Bash",
     "DESCRIPTION": "Deal !D! damage for each enemy in combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "SandsOfTime": {
     "NAME": "Sands of Time",
     "DESCRIPTION": "Retain. NL Deal !D! damage. NL When Retained, lower its cost by 1 this combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Brilliance": {
     "NAME": "Brilliance",
     "DESCRIPTION": "Deal !D! damage. NL Deals additional damage equal to Mantra gained this combat.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Attack"
   },
   "JustLucky": {
     "NAME": "Just Lucky",
     "DESCRIPTION": "Scry !M!. NL Gain !B! Block. NL Deal !D! damage.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Attack"
   },
   "Weave": {
     "NAME": "Weave",
     "DESCRIPTION": "Deal !D! damage. NL Whenever you Scry, return this from the discard pile to your Hand.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Adaptation": {
     "NAME": "Rushdown",
     "DESCRIPTION": "Whenever you enter Wrath, draw !M! cards.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   },
   "Wish": {
     "NAME": "Wish",
     "DESCRIPTION": "Choose one: NL Gain !B! Plated Armor, !D! Strength, or !M! Gold. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "CurseOfTheBell": {
     "NAME": "Curse of the Bell",
@@ -2187,98 +2518,115 @@
     "NAME": "Inner Peace",
     "DESCRIPTION": "If you are in Calm, draw !M! cards, otherwise enter Calm.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "Tantrum": {
     "NAME": "Tantrum",
     "DESCRIPTION": "Deal !D! damage NL !M! times. NL Enter Wrath. NL Shuffle this card into your draw pile.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Alpha": {
     "NAME": "Alpha",
     "DESCRIPTION": "Shuffle a *Beta into your draw pile. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Innate. NL Shuffle a *Beta into your draw pile. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Beta": {
     "NAME": "Beta",
     "DESCRIPTION": "Shuffle an *Omega into your draw pile. NL Exhaust.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Skill"
   },
   "Omega": {
     "NAME": "Omega",
     "DESCRIPTION": "At the end of your turn, deal !M! damage to ALL enemies.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Power"
   },
   "Vengeance": {
     "NAME": "Simmering Fury",
     "DESCRIPTION": "At the start of your next turn, enter Wrath and draw !M! cards.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "PathToVictory": {
     "NAME": "Pressure Points",
     "DESCRIPTION": "Apply !M! *Mark. NL ALL enemies lose HP equal to their *Mark.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "Wallop": {
     "NAME": "Wallop",
     "DESCRIPTION": "Deal !D! damage. NL Gain Block equal to unblocked damage dealt.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Halt": {
     "NAME": "Halt",
     "DESCRIPTION": "Gain !B! Block. NL If you are in Wrath, gain !M! additional Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Common"
+    "RARITY": "Common",
+    "TYPE": "Skill"
   },
   "WheelKick": {
     "NAME": "Wheel Kick",
     "DESCRIPTION": "Deal !D! damage. NL Draw !M! cards.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Attack"
   },
   "Indignation": {
     "NAME": "Indignation",
     "DESCRIPTION": "If you are in Wrath, apply !M! Vulnerable to ALL enemies, otherwise enter Wrath.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Skill"
   },
   "BecomeAlmighty": {
     "NAME": "Become Almighty",
     "DESCRIPTION": "Gain !M! Strength.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Power"
   },
   "LiveForever": {
     "NAME": "Live Forever",
     "DESCRIPTION": "Gain !M! *Plated *Armor.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Power"
   },
   "FameAndFortune": {
     "NAME": "Fame and Fortune",
     "DESCRIPTION": "Gain !M! Gold.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Power"
   },
   "ConjureBlade": {
     "NAME": "Conjure Blade",
     "DESCRIPTION": "Shuffle an *Expunger into your draw pile. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Shuffle an *Expunger with X+1 into your draw pile. NL Exhaust.",
     "CHARACTER": "Watcher",
-    "RARITY": "Rare"
+    "RARITY": "Rare",
+    "TYPE": "Skill"
   },
   "Expunger": {
     "NAME": "Expunger",
     "DESCRIPTION": "Deal !D! damage X times.",
-    "CHARACTER": "Special"
+    "CHARACTER": "Special",
+    "TYPE": "Attack"
   },
   "LikeWater": {
     "NAME": "Like Water",
     "DESCRIPTION": "At the end of your turn, if you are in Calm, gain !M! Block.",
     "CHARACTER": "Watcher",
-    "RARITY": "Uncommon"
+    "RARITY": "Uncommon",
+    "TYPE": "Power"
   }
 }
