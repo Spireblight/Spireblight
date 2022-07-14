@@ -65,6 +65,7 @@ class RunParser(FileParser):
         self.name, _, ext = filename.partition(".")
         self.matched: dict[str, FileParser] = {}
         self._character = data["character_chosen"]
+        self._graph_cache: dict[tuple[str, str], str] = {}
 
     @property
     def display_name(self) -> str:
@@ -203,6 +204,14 @@ async def run_chart(req: Request) -> Response:
             raise HTTPForbidden()
         totals[arg] = []
 
+    if req.query["type"] == "embed":
+        to_cache = (req.match_info["type"], req.query_string)
+        # we cache (type, query) as these dictate 100% of what happens below.
+        # it wouldn't be cached if the query string was in a different order,
+        # but that won't happen with our own code, so safe (and better) to cache it
+        if to_cache in parser._graph_cache:
+            return Response(body=parser._graph_cache[to_cache], content_type="text/html")
+
     for name, d in totals.items():
         val = getattr(parser.neow_bonus, name, None)
         if val is not None:
@@ -251,6 +260,7 @@ async def run_chart(req: Request) -> Response:
         value: str = mpld3.fig_to_html(fig)
         plt.close(fig)
         value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+        parser._graph_cache[to_cache] = value
         return Response(body=value, content_type="text/html")
 
     elif req.query["type"] == "image":
