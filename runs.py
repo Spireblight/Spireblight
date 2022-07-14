@@ -6,17 +6,14 @@ from datetime import datetime
 
 import json
 import time
-import io
 import os
 
 from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnauthorized, HTTPNotImplemented, FileField
-from matplotlib import pyplot as plt
 
 import aiohttp_jinja2
-import mpld3
 
 from nameinternal import get_all_relics, get_all_cards
-from gamedata import FileParser
+from gamedata import FileParser, generate_graph
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -27,16 +24,6 @@ __all__ = ["get_latest_run"]
 
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
-
-_variables_map = {
-    "current_hp": "Current HP",
-    "max_hp": "Max HP",
-    "gold": "Gold",
-    "floor_time": "Time spent in the floor (seconds)",
-    "card_count": "Number of cards in the deck",
-    "relic_count": "Number of relics",
-    "potion_count": "Number of potions",
-}
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
@@ -66,7 +53,6 @@ class RunParser(FileParser):
         self.name, _, ext = filename.partition(".")
         self.matched: dict[str, FileParser] = {}
         self._character = data["character_chosen"]
-        self._graph_cache: dict[tuple[str, str], str] = {}
 
     @property
     def display_name(self) -> str:
@@ -197,83 +183,7 @@ async def run_chart(req: Request) -> Response:
     if parser is None:
         raise HTTPNotFound()
 
-    totals: dict[str, list[int]] = {}
-    ends = []
-    floors = []
-    if "view" not in req.query or "type" not in req.query:
-        raise HTTPForbidden()
-    if req.query["type"] not in ("image", "embed"):
-        raise HTTPNotImplemented(reason=f"Display type {req.query['type']} is undefined")
-    for arg in req.query["view"].split(","):
-        if arg.startswith("_"):
-            raise HTTPForbidden()
-        totals[arg] = []
-
-    if req.query["type"] == "embed":
-        to_cache = (req.match_info["type"], req.query_string)
-        # we cache (type, query) as these dictate 100% of what happens below.
-        # it wouldn't be cached if the query string was in a different order,
-        # but that won't happen with our own code, so safe (and better) to cache it
-        if to_cache in parser._graph_cache:
-            return Response(body=parser._graph_cache[to_cache], content_type="text/html")
-
-    for name, d in totals.items():
-        val = getattr(parser.neow_bonus, name, None)
-        if val is not None:
-            if not floors:
-                floors.append(0)
-            d.append(val)
-
-    for node in parser.path:
-        floors.append(node.floor)
-        if node.end_of_act:
-            ends.append(node.floor)
-        for name, d in totals.items():
-            d.append(getattr(node, name, 0))
-
-    fig, ax = plt.subplots()
-    match req.match_info["type"]:
-        case "plot":
-            func = ax.plot
-        case "scatter":
-            func = ax.scatter
-        case "bar":
-            func = ax.bar
-        case "stem":
-            func = ax.stem
-        case _:
-            raise HTTPNotFound()
-
-    # this doesn't work well with embedding
-    if req.query["type"] != "embed":
-        for num in ends:
-            plt.axvline(num, color="black", linestyle="dashed")
-
-    for name, d in totals.items():
-        func(floors, d, label=_variables_map.get(name, name))
-    ax.legend()
-
-    plt.xlabel("Floor")
-    if "label" in req.query:
-        plt.ylabel(req.query["label"])
-    plt.xlim(left=0)
-    plt.ylim(bottom=0)
-    if "title" in req.query: # doesn't appear to work with mpld3
-        plt.suptitle(req.query["title"])
-
-    if req.query["type"] == "embed":
-        value: str = mpld3.fig_to_html(fig)
-        plt.close(fig)
-        value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
-        parser._graph_cache[to_cache] = value
-        return Response(body=value, content_type="text/html")
-
-    elif req.query["type"] == "image":
-        with io.BytesIO() as file:
-            plt.savefig(file, format="png", transparent=True)
-            plt.close(fig)
-
-            return Response(body=file.getvalue(), content_type="image/png")
+    return generate_graph(parser, req.match_info["type"], req.query, req.query_string)
 
 @router.get("/compare")
 @aiohttp_jinja2.template("runs_compare.jinja2")

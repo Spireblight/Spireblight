@@ -1,12 +1,111 @@
 from __future__ import annotations
 
 from typing import Any, Generator
+import io
+
+from aiohttp.web import Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
+from matplotlib import pyplot as plt
+from multidict import MultiDictProxy
+from mpld3 import fig_to_html
 
 from nameinternal import get_relic, get_card, get_potion, get_event, get_relic_stats
 
-__all__ = ["FileParser"]
+import config
+
+__all__ = ["FileParser", "generate_graph"]
 
 # TODO: Handle the website display part, figure out details of these classes later
+
+_variables_map = {
+    "current_hp": "Current HP",
+    "max_hp": "Max HP",
+    "gold": "Gold",
+    "floor_time": "Time spent in the floor (seconds)",
+    "card_count": "Number of cards in the deck",
+    "relic_count": "Number of relics",
+    "potion_count": "Number of potions",
+}
+
+def generate_graph(parser: FileParser, display_type: str, params: MultiDictProxy[str], unique_str: str) -> Response:
+    if "view" not in params or "type" not in params:
+        raise HTTPForbidden()
+    if params["type"] not in ("image", "embed"):
+        raise HTTPNotImplemented(reason=f"Display type {params['type']} is undefined")
+
+    totals: dict[str, list[int]] = {}
+    ends = []
+    floors = []
+    for arg in params["view"].split(","):
+        if arg.startswith("_"):
+            raise HTTPForbidden()
+        totals[arg] = []
+
+    if params["type"] == "embed":
+        to_cache = (display_type, unique_str)
+        # we cache (type, query) as these dictate 100% of what happens below.
+        # it wouldn't be cached if the query string was in a different order,
+        # but that won't happen with our own code, so safe (and better) to cache it
+        if to_cache in parser._graph_cache:
+            return Response(body=parser._graph_cache[to_cache], content_type="text/html")
+
+    for name, d in totals.items():
+        val = getattr(parser.neow_bonus, name, None)
+        if val is not None:
+            if not floors:
+                floors.append(0)
+            d.append(val)
+
+    for node in parser.path:
+        floors.append(node.floor)
+        if node.end_of_act:
+            ends.append(node.floor)
+        for name, d in totals.items():
+            d.append(getattr(node, name, 0))
+
+    fig, ax = plt.subplots()
+    match display_type:
+        case "plot":
+            func = ax.plot
+        case "scatter":
+            func = ax.scatter
+        case "bar":
+            func = ax.bar
+        case "stem":
+            func = ax.stem
+        case _:
+            raise HTTPNotFound()
+
+    # this doesn't work well with embedding
+    if params["type"] != "embed":
+        for num in ends:
+            plt.axvline(num, color="black", linestyle="dashed")
+
+    for name, d in totals.items():
+        func(floors, d, label=_variables_map.get(name, name))
+    ax.legend()
+
+    plt.xlabel("Floor")
+    if "label" in params:
+        plt.ylabel(params["label"])
+    plt.xlim(left=0)
+    plt.ylim(bottom=0)
+    if "title" in params: # doesn't appear to work with mpld3
+        plt.suptitle(params["title"])
+
+    match params["type"]:
+        case "embed":
+            value: str = fig_to_html(fig)
+            plt.close(fig)
+            value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+            parser._graph_cache[to_cache] = value
+            return Response(body=value, content_type="text/html")
+
+        case "image":
+            with io.BytesIO() as file:
+                plt.savefig(file, format="png", transparent=True)
+                plt.close(fig)
+
+                return Response(body=file.getvalue(), content_type="image/png")
 
 class NeowBonus:
     def __init__(self, parser: FileParser):
@@ -333,6 +432,7 @@ class FileParser:
         self._cache = {}
         self._pathed = False
         self._character: str | None = None
+        self._graph_cache: dict[tuple[str, str], str] = {}
 
     def __getitem__(self, item: str) -> Any:
         return self.data[item]
