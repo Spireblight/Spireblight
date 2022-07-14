@@ -587,6 +587,8 @@ class NodeData:
         self._potion_count = None
         self._fights_count = None
         self._turns_count = None
+        self._skipped_relics = None
+        self._skipped_potions = None
         self._cards = []
         self._relics = []
         self._potions = []
@@ -636,6 +638,17 @@ class NodeData:
             if potion["floor"] == floor:
                 self._potions.append(get_potion(potion["key"]))
 
+        if "basemod:mod_saves" in parser:
+            skipped = parser["basemod:mod_saves"].get("RewardsSkippedLog")
+        else:
+            skipped = parser.get("rewards_skipped")
+
+        if skipped:
+            for choice in skipped:
+                if choice["floor"] == floor:
+                    self._skipped_relics = [get_relic(x) for x in choice["relics"]]
+                    self._skipped_potions = [get_potion(x) for x in choice["potions"]]
+
         return self
 
     def description(self) -> str:
@@ -665,10 +678,18 @@ class NodeData:
             text.append("Potions used:")
             text.extend(f"- {x}" for x in self.used_potions)
 
+        if self.skipped_potions:
+            text.append("Potions skipped:")
+            text.extend(f"- {x}" for x in self.skipped_potions)
+
         text.extend(to_append.get(4, ()))
         if self.relics:
             text.append("Relics obtained:")
             text.extend(f"- {x}" for x in self.relics)
+
+        if self.skipped_relics:
+            text.append("Relics skipped:")
+            text.extend(f"- {x}" for x in self.skipped_relics)
 
         text.extend(to_append.get(5, ()))
         if self.picked:
@@ -731,12 +752,24 @@ class NodeData:
         return self._relics
 
     @property
+    def skipped_relics(self) -> list[str]:
+        if self._skipped_relics is None:
+            return []
+        return self._skipped_relics
+
+    @property
     def potions(self) -> list[str]:
         return self._potions
 
     @property
     def used_potions(self) -> list[str]:
         return self._usedpotions
+
+    @property
+    def skipped_potions(self) -> list[str]:
+        if self._skipped_potions is None:
+            return []
+        return self._skipped_potions
 
     @property
     def floor_time(self) -> int:
