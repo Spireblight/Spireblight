@@ -5,10 +5,10 @@ import io
 
 from aiohttp.web import Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt
-from multidict import MultiDictProxy
 from mpld3 import fig_to_html
 
 from nameinternal import get_relic, get_card, get_potion, get_event, get_relic_stats
+from logger import logger
 
 import config
 
@@ -21,15 +21,39 @@ _variables_map = {
     "max_hp": "Max HP",
     "gold": "Gold",
     "floor_time": "Time spent in the floor (seconds)",
-    "card_count": "Number of cards in the deck",
-    "relic_count": "Number of relics",
-    "potion_count": "Number of potions",
+    "card_count": "Cards in the deck",
+    "relic_count": "Relics",
+    "potion_count": "Potions",
 }
 
-def generate_graph(parser: FileParser, display_type: str, params: MultiDictProxy[str], unique_str: str) -> Response:
+def generate_graph(parser: FileParser, display_type: str, params: dict[str, str], unique_str: str, *, force: bool = False) -> Response:
+    """Generate a graph for various stats. This iterates through all floors.
+
+    :param: parser <FileParser>
+        Parser to iterate through its floors and generate data from the nodes.
+    :param: display_type <str>
+        One of {plot, bar, scatter, stem}, to determine the type of graph to generate.
+    :param: params <abc.Mapping[str, str]>
+        :key: type [required]
+            One of {embed, image}, to determine which format the graph will be.
+        :key: view [required]
+            Comma-separated string of data points to get. Must not start with '_'.
+        :key: label [optional]
+            Name of the Y-axis. If not present and 'view' has only one data point,
+            uses the formatted version of that instead.
+        :key: title [optional]
+            Name of the graph. This doesn't work with 'type=embed' due to limitations.
+    :param: unique_str <str>
+        A unique string used for caching. Two different graphs can never have the same
+        unique string, but identical graphs can have different unique strings.
+    :param: force <Optional[bool]>
+        If True, will forcibly regenerate the graph, even if it is present in the cache.
+
+    """
+
     if "view" not in params or "type" not in params:
         raise HTTPForbidden()
-    if params["type"] not in ("image", "embed"):
+    if params["type"] not in ("embed", "image"):
         raise HTTPNotImplemented(reason=f"Display type {params['type']} is undefined")
 
     totals: dict[str, list[int]] = {}
@@ -39,13 +63,15 @@ def generate_graph(parser: FileParser, display_type: str, params: MultiDictProxy
         if arg.startswith("_"):
             raise HTTPForbidden()
         totals[arg] = []
+        if arg not in _variables_map:
+            logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
 
     if params["type"] == "embed":
         to_cache = (display_type, unique_str)
-        # we cache (type, query) as these dictate 100% of what happens below.
-        # it wouldn't be cached if the query string was in a different order,
-        # but that won't happen with our own code, so safe (and better) to cache it
-        if to_cache in parser._graph_cache:
+        # we use unique_str to cache, as it will never be the same for different graphs.
+        # (it could sometimes be different for identical graphs, but that isn't likely)
+        # in practice, this is just the URL query string. don't check cache if force=True
+        if not force and to_cache in parser._graph_cache:
             return Response(body=parser._graph_cache[to_cache], content_type="text/html")
 
     for name, d in totals.items():
@@ -87,6 +113,9 @@ def generate_graph(parser: FileParser, display_type: str, params: MultiDictProxy
     plt.xlabel("Floor")
     if "label" in params:
         plt.ylabel(params["label"])
+    elif len(totals) == 1:
+        label = tuple(totals)[0]
+        plt.ylabel(_variables_map.get(label, label))
     plt.xlim(left=0)
     plt.ylim(bottom=0)
     if "title" in params: # doesn't appear to work with mpld3
@@ -451,6 +480,10 @@ class FileParser:
             return next(self._cache["boss_chest_iter"])
         except StopIteration:
             return self[self.prefix + "boss_relics"][-1]
+
+    @property
+    def display_name(self) -> str:
+        return ""
 
     @property
     def character(self) -> str | None:
