@@ -3,10 +3,10 @@
      Actual code will properly cache the savefile and serve latest -->
 {% block meta %}http-equiv="refresh" content="15"{% endblock %}
 {% block title %}
-Current run visualization
+{{ parser.display_name }}
 {% endblock %}
 {% block content %}
-{% if parser.character is not None %}
+{% if parser.in_game %}
     <h1>{{ parser.character }}</h1>
     <img src="/current/plot?view=max_hp,current_hp&title=Progression of HP so far&label=HP&type=image" style="float:right" alt="Progression of HP so far">
     <img src="/current/plot?view=gold&title=Progression of gold so far&type=image" style="float:right;clear:right" alt="Progression of gold so far">

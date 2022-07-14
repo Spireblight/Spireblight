@@ -57,6 +57,10 @@ class Savefile(FileParser):
             self._cache.pop("relics", None) # because N'loth and Boss relic starter upgrade, we need to regen it everytime
 
     @property
+    def in_game(self) -> bool:
+        return self.character is not None
+
+    @property
     def display_name(self) -> str:
         return f"Current {self.character} run"
 
