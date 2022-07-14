@@ -363,6 +363,37 @@ class FileParser:
         return c
 
     @property
+    def keys(self) -> list[tuple[str, str | int]]:
+        if "keys" not in self._cache:
+            self._cache["keys"] = []
+            if "basemod:mod_saves" in self: # savefile
+                if self["has_ruby_key"]:
+                    for choice in self["metric_campfire_choices"]:
+                        if choice["key"] == "RECALL":
+                            self._cache["keys"].append(("Ruby Key", choice["floor"]))
+                if self["has_emerald_key"]:
+                    floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
+                    self._cache["keys"].append(("Emerald Key", floor))
+                if self["has_sapphire_key"]:
+                    floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
+                    if floor is None:
+                        floor = "<Unknown Floor>"
+                    else:
+                        floor = floor["floor"]
+                    self._cache["keys"].append(("Sapphire Key", floor))
+
+            else:
+                for choice in self["campfire_choices"]:
+                    if choice["key"] == "RECALL":
+                        self._cache["keys"].append(("Ruby Key", choice["floor"]))
+                if "green_key_taken_log" in self:
+                    self._cache["keys"].append(("Emerald Key", self["green_key_taken_log"]))
+                if "blue_key_relic_skipped_log" in self:
+                    self._cache["keys"].append(("Sapphire Key", self["blue_key_relic_skipped_log"]))
+
+        return self._cache["keys"]
+
+    @property
     def relics(self) -> Generator[RelicData, None, None]:
         if "relics" not in self._cache:
             self._cache["relics"] = []
@@ -836,7 +867,7 @@ class EncounterBase(NodeData):
         self._damage = damage
 
     @classmethod
-    def from_parser(cls, parser, floor: int, *extra):
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
         prefix = parser.prefix
         for damage in parser[prefix + "damage_taken"]:
             if damage["floor"] == floor:
@@ -930,9 +961,32 @@ class EventTreasure(Treasure):
     room_type = "Unknown (Treasure)"
     map_icon = "event_chest.png"
 
-class EliteEncounter(EncounterBase): # XXX: There is no way to know which elite dropped the emerald key
+class EliteEncounter(EncounterBase):
     room_type = "Elite"
     map_icon = "fight_elite.png"
+
+    def __init__(self, damage: dict, has_key: bool, *extra):
+        super().__init__(damage, *extra)
+        self._has_key = has_key
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 5 not in to_append:
+            to_append[5] = []
+        to_append[5].append("Got the Emerald Key.")
+        return super()._description(to_append)
+
+    @classmethod
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
+        if "basemod:mod_saves" in parser:
+            key_floor = parser["basemod:mod_saves"].get("greenKeyTakenLog")
+        else:
+            key_floor = parser.get("green_key_taken_log")
+        has_key = (key_floor is not None and key_floor == floor)
+        return super().from_parser(parser, floor, has_key, *extra)
+
+    @property
+    def has_key(self) -> bool:
+        return self._has_key
 
 class EventElite(EliteEncounter):
     room_type = "Unknown (Elite)"

@@ -78,6 +78,10 @@ Run: {{ parser.display_name }}
     <img src="/static/relics/{{ relic.image }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
     {% endfor %}
     <br>
+    {% for key, floor in parser.keys %}
+    <img src="/static/relics/{{ key }}.png" alt="Gotten on {{ floor }}" title="Gotten on {{ floor }}" style="width:80px;height:80px">
+    {% endfor %}
+    <br>
     {% if embed %}
     Tip: the graphs below can be interacted with, using the buttons in the bottom left!
     <br>
