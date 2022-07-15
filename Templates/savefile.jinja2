@@ -28,7 +28,7 @@
     Potion drop change: {{ parser.potion_chance }}%
     <br>
     Neow Bonus: {{ parser.neow_bonus.as_str() }}
-    <br>
+    <br><br>
     Hover over any map node or relic to see their stats!
     <br><br>
     {% for node in parser.path %}
@@ -44,6 +44,10 @@
     <br>
     {% for key, floor in parser.keys %}
     <img src="/static/relics/{{ key | urlencode }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
+    {% endfor %}
+    <br>
+    {% for card_data in parser.cards_as_html() %}
+    {{ card_data | safe }}
     {% endfor %}
     <br>
 {% else %}

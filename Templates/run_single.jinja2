@@ -64,7 +64,7 @@ Run: {{ parser.display_name }}
     Score: {{ parser.score }}
     <br>
     Neow Bonus: {{ parser.neow_bonus.as_str() }}
-    <br>
+    <br><br>
     Hover over any map node or relic to see their stats!
     <br><br>
     {% if redirect %}
@@ -91,7 +91,8 @@ Run: {{ parser.display_name }}
     {% endfor %}
     <br>
     {% if embed %}
-    Tip: the graphs below can be interacted with, using the buttons in the bottom left!
+    <br>
+    <b>Tip: the graphs below can be interacted with, using the buttons in the bottom left!</b>
     <br>
     <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
     <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=embed" title="Progression of gold during the run" width=670 height=500>
