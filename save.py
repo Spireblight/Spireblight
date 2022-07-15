@@ -132,6 +132,12 @@ async def current_run(req: Request):
 
     return context
 
+@router.get("/current/raw")
+async def current_as_raw(req: Request):
+    if _savefile.character is None:
+        raise HTTPNotFound()
+    return Response(text=json.dumps(_savefile.data, indent=4))
+
 @router.get("/current/{type}")
 async def save_chart(req: Request) -> Response:
     if _savefile.character is None:
