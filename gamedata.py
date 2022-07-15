@@ -563,7 +563,7 @@ class FileParser:
                     if choice["key"] == "RECALL":
                         yield ("Ruby Key", choice["floor"])
             if self["has_emerald_key"]:
-                floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
+                floor = self["basemod:mod_saves"].get("GreenKeyTakenLog", "<Unknown floor>")
                 yield ("Emerald Key", floor)
             if self["has_sapphire_key"]:
                 floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
