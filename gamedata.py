@@ -1088,7 +1088,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
     # to be safe, regenerate the last floor, since it might have changed
     # (e.g. the last time we saw it, we were in-combat, and now we're out of it)
     # this is also used for run files for which we had the savefile
-    if maybe_cached is not None:
+    if maybe_cached:
         maybe_cached.pop()
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
         # make sure we step through the iterator even if it's cached
