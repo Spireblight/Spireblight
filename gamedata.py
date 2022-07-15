@@ -601,7 +601,7 @@ class FileParser:
             '</svg>{count}{card_name}</span>'
         )
         content = {}
-        order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Curse")
+        order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
         content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], "Special": []} for x in order}
         for name, metadata in self._get_cards():
             ctype = metadata.get("TYPE")
@@ -637,9 +637,11 @@ class FileParser:
             for as_html in final[i::step]:
                 yield as_html
             yield "<br>"
+
     @property
-    def cards(self) -> list[str]:
-        return [a for a, b in self._get_cards()]
+    def cards(self) -> Generator[str, None, None]:
+        for a, b in self._get_cards():
+            yield a
 
     @property
     def relics(self) -> Generator[RelicData, None, None]:
