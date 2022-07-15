@@ -15,16 +15,6 @@ Run: {{ parser.display_name }}
             window.location.href = "/runs/{{ parser.matched['next'].name }}";
         }
         {% endif %}
-        {% if "prev_char" in parser.matched %}
-        if (evt.key === "ArrowDown") {
-            window.location.href = "/runs/{{ parser.matched['prev_char'].name }}";
-        }
-        {% endif %}
-        {% if "next_char" in parser.matched %}
-        if (evt.key === "ArrowUp") {
-            window.location.href = "/runs/{{ parser.matched['next_char'].name }}";
-        }
-        {% endif %}
     }
     </script>
     <h1>{{ parser.character }}</h1>
