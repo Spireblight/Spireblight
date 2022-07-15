@@ -161,13 +161,18 @@ class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
             case "sub" | "resub":
-                total = int(tags["msg-param-cumulative-months"])
-                consecutive = int(tags["msg-param-streak-months"])
-                if not int(tags["msg-param-should-share-streak"]):
-                    consecutive = None
-                subtype: str = tags["msg-param-sub-plan"]
-                if subtype.isdigit():
-                    subtype = f"Tier {subtype[0]}"
+                total = 0
+                consecutive = None
+                subtype = ""
+                try:
+                    total = int(tags["msg-param-cumulative-months"])
+                    if int(tags["msg-param-should-share-streak"]):
+                        consecutive = int(tags["msg-param-streak-months"])
+                    subtype: str = tags["msg-param-sub-plan"]
+                    if subtype.isdigit():
+                        subtype = f"Tier {subtype[0]}"
+                except (KeyError, ValueError):
+                    pass
                 self.run_event("subscription", user, channel, total, consecutive, subtype)
             case "subgift" | "anonsubgift" | "submysterygift" | "giftpaidupgrade" | "rewardgift" | "anongiftpaidupgrade":
                 self.run_event("gift_sub", user, channel, tags)
