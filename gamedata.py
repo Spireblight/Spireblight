@@ -602,12 +602,12 @@ class FileParser:
         )
         content = {}
         order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
-        content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], "Special": []} for x in order}
+        content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], None: []} for x in order}
         for name, metadata in self._get_cards():
             ctype = metadata.get("TYPE")
             rarity = metadata.get("RARITY")
-            if rarity in ("Starter", None):
-                rarity = "Special"
+            if rarity  == "Starter":
+                rarity = None
             if name not in content:
                 content[name] = {"count": 0, "character": metadata["CHARACTER"], "rarity": rarity, "card_type": ctype}
             content[name]["count"] += 1
@@ -618,15 +618,15 @@ class FileParser:
         final = []
 
         for char in order:
-            for rarity in ("Rare", "Uncommon", "Common", "Special"):
+            for rarity in ("Rare", "Uncommon", "Common", None):
                 content_order[char][rarity].sort(key=lambda x: x[0])
                 for name, ctype, count in content_order[char][rarity]:
                     format_map = {
                         "color": ' style="color:#146214"' if "+" in name else "", # make it green when upgraded
                         "website": config.website_url,
-                        "character": char,
+                        "character": char if char != "Special" else "Colorless",
                         "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
-                        "banner": rarity,
+                        "banner": rarity or "Common",
                         "count": f"{count}x " if count > 1 else "",
                         "card_name": name,
                     }
