@@ -1261,9 +1261,10 @@ class EliteEncounter(EncounterBase):
         self._has_key = has_key
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 5 not in to_append:
-            to_append[5] = []
-        to_append[5].append("Got the Emerald Key.")
+        if self.has_key:
+            if 5 not in to_append:
+                to_append[5] = []
+            to_append[5].append("Got the Emerald Key.")
         return super()._description(to_append)
 
     @classmethod
@@ -1612,13 +1613,6 @@ class BossChest(NodeData):
         if picked is not None:
             self._relics.append(picked)
         self._skipped = skipped
-
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 5 not in to_append:
-            to_append[5] = []
-        to_append[5].append("Boss relics skipped:")
-        to_append[5].extend(f"- {x}" for x in self.skipped_relics)
-        return super()._description(to_append)
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
