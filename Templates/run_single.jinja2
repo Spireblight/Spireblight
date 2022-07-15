@@ -79,29 +79,29 @@ Run: {{ parser.display_name }}
     {% endfor %}
     <br>
     {% for relic in parser.relics %}
-    <img src="/static/relics/{{ relic.image }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
+    <img src="/static/relics/{{ relic.image | urlencode }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
     {% endfor %}
     <br>
     {% for key, floor in parser.keys %}
-    <img src="/static/relics/{{ key }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
+    <img src="/static/relics/{{ key | urlencode }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
     {% endfor %}
     <br>
     {% if embed %}
     Tip: the graphs below can be interacted with, using the buttons in the bottom left!
     <br>
-    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression of HP during the run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
-    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold&title=Progression of gold during the run&type=embed" title="Progression of gold during the run" width=670 height=500>
-    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=card_count&title=Card count during the run&type=embed" title="Card count during the run" width=670 height=500>
-    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic count during the run&type=embed" title="Relic count during the run" width=670 height=500>
-    <embed type="text/html" src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion count during the run&type=embed" title="Potion count during the run" width=670 height=500>
-    <embed type="text/html" src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time spent on each floor&type=embed" title="Time spent on each floor" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=embed" title="Progression of gold during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=card_count&title=Card+count+during+the+run&type=embed" title="Card count during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=embed" title="Relic count during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=embed" title="Potion count during the run" width=670 height=500>
+    <embed type="text/html" src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=embed" title="Time spent on each floor" width=670 height=500>
     {% else %}
-    <img src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression of HP during the run&label=HP&type=image" alt="Progression of HP during the run">
-    <img src="/runs/{{ parser.name }}/plot?view=gold&title=Progression of gold during the run&type=image" alt="Progression of gold during the run">
-    <img src="/runs/{{ parser.name }}/plot?view=card_count&title=Card count during the run&type=image" alt="Card count during the run">
-    <img src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic count during the run&type=image" alt="Relic count during the run">
-    <img src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion count during the run&type=image" alt="Potion count during the run">
-    <img src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time spent on each floor&type=image" alt="Time spent on each floor">
+    <img src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=image" alt="Progression of HP during the run">
+    <img src="/runs/{{ parser.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=image" alt="Progression of gold during the run">
+    <img src="/runs/{{ parser.name }}/plot?view=card_count&title=Card+count+during+the+run&type=image" alt="Card count during the run">
+    <img src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=image" alt="Relic count during the run">
+    <img src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=image" alt="Potion count during the run">
+    <img src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=image" alt="Time spent on each floor">
     {% endif %}
 {% endblock %}
 {% block footer %}

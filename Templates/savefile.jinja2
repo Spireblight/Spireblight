@@ -8,8 +8,8 @@
 {% block content %}
 {% if parser.in_game %}
     <h1>{{ parser.character }}</h1>
-    <img src="/current/plot?view=max_hp,current_hp&title=Progression of HP so far&label=HP&type=image" style="float:right" alt="Progression of HP so far">
-    <img src="/current/plot?view=gold&title=Progression of gold so far&type=image" style="float:right;clear:right" alt="Progression of gold so far">
+    <img src="/current/plot?view=max_hp,current_hp&title=Progression+of+HP+so+far&label=HP&type=image" style="float:right" alt="Progression of HP so far">
+    <img src="/current/plot?view=gold&title=Progression+of+gold+so+far&type=image" style="float:right;clear:right" alt="Progression of gold so far">
     {% if parser.character not in ("Ironclad", "Silent", "Defect", "Watcher") %}
     <b>This is a modded character. Not all data will be accurate.</b><br>
     {% endif %}
@@ -39,11 +39,11 @@
     {% endfor %}
     <br>
     {% for relic in parser.relics %}
-    <img src="/static/relics/{{ relic.image }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
+    <img src="/static/relics/{{ relic.image | urlencode }}" alt="{{ relic.description() }}" title="{{ relic.description() }}" style="width:80px;height:80px;">
     {% endfor %}
     <br>
     {% for key, floor in parser.keys %}
-    <img src="/static/relics/{{ key }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
+    <img src="/static/relics/{{ key | urlencode }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
     {% endfor %}
     <br>
 {% else %}

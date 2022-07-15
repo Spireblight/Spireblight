@@ -68,7 +68,9 @@ class Savefile(FileParser):
 
     @property
     def display_name(self) -> str:
-        return f"Current {self.character} run"
+        if self.character is not None:
+            return f"Current {self.character} run"
+        return "Slay the Spire follow-along"
 
     @property
     def current_health(self) -> int:
