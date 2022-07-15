@@ -67,6 +67,10 @@ class Savefile(FileParser):
         return self.character is not None
 
     @property
+    def timestamp(self) -> int:
+        return self["save_date"]
+
+    @property
     def display_name(self) -> str:
         if self.character is not None:
             return f"Current {self.character} run"
@@ -115,19 +119,24 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("savefile.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
+    context = {"parser": _savefile, "redirect": redirect, "force": False}
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
             raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
-    return {"parser": _savefile, "redirect": redirect}
+    if _savefile._last != _savefile.timestamp:
+        context["force"] = True
+    _savefile._last = _savefile.timestamp
+
+    return context
 
 @router.get("/current/{type}")
 async def save_chart(req: Request) -> Response:
     if _savefile.character is None:
         raise HTTPNotFound()
 
-    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string, force=True)
+    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string, force=_truthy(req.query.get("force")))
 
 @router.post("/sync/save")
 async def receive_save(req: Request):

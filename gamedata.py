@@ -58,6 +58,8 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
     if params["type"] not in ("embed", "image"):
         raise HTTPNotImplemented(reason=f"Display type {params['type']} is undefined")
 
+    to_cache = (display_type, params["type"], unique_str)
+
     totals: dict[str, list[int]] = {}
     ends = []
     floors = []
@@ -68,13 +70,13 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
         if arg not in _variables_map:
             logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
 
-    if params["type"] == "embed":
-        to_cache = (display_type, unique_str)
-        # we use unique_str to cache, as it will never be the same for different graphs.
-        # (it could sometimes be different for identical graphs, but that isn't likely)
-        # in practice, this is just the URL query string. don't check cache if force=True
-        if not force and to_cache in parser._graph_cache:
+    # we use unique_str to cache, as it will never be the same for different graphs.
+    # (it could sometimes be different for identical graphs, but that isn't likely)
+    # in practice, this is just the URL query string. don't check cache if force=True
+    if not force and to_cache in parser._graph_cache:
+        if params["type"] == "embed":
             return Response(body=parser._graph_cache[to_cache], content_type="text/html")
+        return Response(body=parser._graph_cache[to_cache], content_type="image/png")
 
     for name, d in totals.items():
         val = getattr(parser.neow_bonus, name, None)
@@ -135,8 +137,10 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
             with io.BytesIO() as file:
                 plt.savefig(file, format="png", transparent=True)
                 plt.close(fig)
+                value = file.getvalue()
 
-                return Response(body=file.getvalue(), content_type="image/png")
+            parser._graph_cache[to_cache] = value
+            return Response(body=file.getvalue(), content_type="image/png")
 
 class NeowBonus:
     def __init__(self, parser: FileParser):
@@ -534,6 +538,10 @@ class FileParser:
             return self[self.prefix + "boss_relics"][-1]
 
     @property
+    def timestamp(self) -> int:
+        raise NotImplementedError
+
+    @property
     def display_name(self) -> str:
         return ""
 
@@ -792,9 +800,9 @@ class RelicData:
                     if isinstance(stat, float):
                         stat_str = f"{stat:.2f}"
                     desc.append(next(text_iter) + stat_str)
-                    num = stat / (last.turns_count - obtained.turns_count)
+                    num = stat / max((last.turns_count - obtained.turns_count), 1)
                     desc.append(f"Per turn: {num:.2f}")
-                    num = stat / (last.fights_count - obtained.fights_count)
+                    num = stat / max((last.fights_count - obtained.fights_count), 1)
                     desc.append(f"Per combat: {num:.2f}")
         else:
             desc.append(f"Unable to parse stats for {self.name}")
