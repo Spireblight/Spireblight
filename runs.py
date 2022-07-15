@@ -167,7 +167,8 @@ async def run_single(req: Request):
     if parser is None:
         raise HTTPNotFound()
     embed = _falsey(req.query.get("embed"))
-    return {"parser": parser, "embed": embed}
+    redirect = _truthy(req.query.get("redirect"))
+    return {"parser": parser, "embed": embed, "redirect": redirect}
 
 @router.get("/runs/{name}/raw")
 async def run_raw_json(req: Request) -> Response:

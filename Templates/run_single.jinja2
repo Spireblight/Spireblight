@@ -67,6 +67,10 @@ Run: {{ parser.display_name }}
     <br>
     Hover over any map node or relic to see their stats!
     <br><br>
+    {% if redirect %}
+    This is the run history of the run that just ended! <a href="/current?redirect=true">Return to the game follow-along for the next run.</a>
+    <br><br>
+    {% endif %}
     {% for node in parser.path %}
     <img src="/static/icons/{{ node.map_icon }}" alt="{{ node.description() }}" title="{{ node.description() }}" style="width:48px;height:48px;">
     {% if node.end_of_act %}
@@ -102,7 +106,7 @@ Run: {{ parser.display_name }}
 {% endblock %}
 {% block footer %}
 {% if embed %}
-<a href="/runs/{{ parser.name }}?embed=false">Graphs not loading? Click here!</a>
+<a href="/runs/{{ parser.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
 <br>
 {% endif %}
 <a href="/runs">Back to all runs</a><br>

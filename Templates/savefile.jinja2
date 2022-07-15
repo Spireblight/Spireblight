@@ -1,7 +1,7 @@
 {% extends "base.jinja2" %}
 <!-- Refresh the page every 15 seconds; savefile gets regularly updated.
      Actual code will properly cache the savefile and serve latest -->
-{% block meta %}http-equiv="refresh" content="15"{% endblock %}
+{% block meta %}http-equiv="refresh" {% if redirect and parser.in_game %}content="0;url=/current"{% else %}content="15"{% endif %}{% endblock %}
 {% block title %}
 {{ parser.display_name }}
 {% endblock %}
@@ -15,6 +15,8 @@
     {% endif %}
     Seed: {{ parser.seed }}
     <br>
+    Upcoming act boss: {{ parser.upcoming_boss }}
+    <br>
     Current health: <p style="color:#AF0000">{{ parser.current_health }}/{{ parser.max_health }}</p>
     <br>
     Current gold: <p style="color:#CECE1E">{{ parser.current_gold }}</p>
@@ -22,6 +24,8 @@
     Current floor: {{ parser.current_floor }}
     <br>
     Current removal cost: <p style="color:#CECE1E">{{ parser.current_purge }}</p> ({{ parser.purge_totals }} cards removed)
+    <br>
+    Potion drop change: {{ parser.potion_chance }}%
     <br>
     Neow Bonus: {{ parser.neow_bonus.as_str() }}
     <br>

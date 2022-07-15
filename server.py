@@ -402,7 +402,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not args:
                 if name not in _cmds and name in aliases:
                     await ctx.send(f"Alias {name} is bound to {aliases[name][0].name}.")
-                elif _cmds[name]['aliases']:
+                elif _cmds[name].get("aliases"):
                     await ctx.send(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
                 else:
                     await ctx.send(f"Command {name} does not have any aliases.")
@@ -424,6 +424,8 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                     TConn._command_aliases[arg] = name
                 if DConn is not None:
                     DConn.get_command(name).aliases.append(arg)
+            if "aliases" not in _cmds[name]:
+                _cmds[name]["aliases"] = []
             _cmds[name]["aliases"].extend(args)
             _update_db()
             if len(args) == 1:
@@ -609,7 +611,7 @@ async def is_seeded(ctx: ContextType, j: Savefile):
 @with_savefile("boss", "actboss")
 async def actboss(ctx: ContextType, j: Savefile):
     """Display the upcoming act boss."""
-    await ctx.send(f"The upcoming act boss is {j['boss']}.")
+    await ctx.send(f"The upcoming act boss is {j.upcoming_boss}.")
 
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, j: Savefile):
@@ -619,7 +621,7 @@ async def shop_removal_cost(ctx: ContextType, j: Savefile):
 @with_savefile("potionchance", "potion")
 async def potion_chance(ctx: ContextType, j: Savefile):
     """Display the current potion drop chance."""
-    await ctx.send(f"Current potion chance: {40 + j['potion_chance']}%")
+    await ctx.send(f"Current potion chance: {j.potion_chance}%")
 
 @with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
 async def event_likelihood(ctx: ContextType, j: Savefile):

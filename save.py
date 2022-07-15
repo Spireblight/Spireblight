@@ -2,8 +2,9 @@ from typing import Any
 
 import base64
 import json
+import time
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, HTTPNotFound, Response, FileField
+from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, HTTPNotFound, HTTPFound, Response, FileField
 
 import aiohttp_jinja2
 
@@ -37,6 +38,8 @@ class Savefile(FileParser):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
         super().__init__(None)
+        self._last = time.time()
+        self._matches = False
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if data is None and has_run == "true" and self.data is not None:
@@ -44,13 +47,16 @@ class Savefile(FileParser):
             if maybe_run["seed_played"] == self["metric_seed_played"]:
                 # optimize save -> run node generation
                 maybe_run._cache["old_path"] = self._cache["path"]
+                self._matches = True
 
         self.data = data
         self._pathed = False
         if not character:
+            self._last = time.time()
             self._character = None
             self._cache.clear()
         else:
+            self._matches = False
             self._character = character
             if "path" in self._cache:
                 self._cache["old_path"] = self._cache.pop("path")
@@ -88,12 +94,31 @@ class Savefile(FileParser):
     def current_floor(self) -> int:
         return self["metric_floor_reached"]
 
+    @property
+    def potion_chance(self) -> int:
+        return self["potion_chance"] + 40
+
+    @property
+    def upcoming_boss(self) -> str:
+        return self["boss"]
+
 _savefile = Savefile()
+
+def _truthy(x: str | None) -> bool:
+    if x and x.lower() in ("1", "true", "yes"):
+        return True
+    return False
 
 @router.get("/current")
 @aiohttp_jinja2.template("savefile.jinja2")
 async def current_run(req: Request):
-    return {"parser": _savefile}
+    redirect = _truthy(req.query.get("redirect"))
+    if not _savefile.in_game and not redirect:
+        if _savefile._matches and time.time() - _savefile._last <= 60:
+            latest = get_latest_run(None, None)
+            raise HTTPFound(f"/runs/{latest.name}?redirect=true")
+
+    return {"parser": _savefile, "redirect": redirect}
 
 @router.get("/current/{type}")
 async def save_chart(req: Request) -> Response:
