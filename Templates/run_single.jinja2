@@ -22,14 +22,14 @@ Run: {{ parser.display_name }}
     <b>This is a modded character. Not all data will be accurate.</b><br>
     {% endif %}
     {% if "prev" in parser.matched %}
-    <a href="/runs/{{ parser.matched['prev'].name }}"><<< Previous run -</a>
+    <a href="/runs/{{ parser.matched['prev'].name }}">&lt;&lt;&lt; Previous run -</a>
     {% endif %}
     {% if "next" in parser.matched %}
     <a href="/runs/{{ parser.matched['next'].name }}">- Next run >>></a>
     {% endif %}
     <br>
     {% if "prev_char" in parser.matched %}
-    <a href="/runs/{{ parser.matched['prev_char'].name }}"><<< Previous {{ parser.character }} run -</a>
+    <a href="/runs/{{ parser.matched['prev_char'].name }}">&lt;&lt;&lt; Previous {{ parser.character }} run -</a>
     {% endif %}
     {% if "next_char" in parser.matched %}
     <a href="/runs/{{ parser.matched['next_char'].name }}">- Next {{ parser.character }} run >>></a>
@@ -37,7 +37,7 @@ Run: {{ parser.display_name }}
     <br>
     {% if parser.won %}
     {% if "prev_win" in parser.matched %}
-    <a href="/runs/{{ parser.matched['prev_win'].name }}"><<< Previous win -</a>
+    <a href="/runs/{{ parser.matched['prev_win'].name }}">&lt;&lt;&lt; Previous win -</a>
     {% endif %}
     {% if "next_win" in parser.matched %}
     <a href="/runs/{{ parser.matched['next_win'].name }}">- Next win >>></a>
@@ -46,7 +46,7 @@ Run: {{ parser.display_name }}
     Victory!
     {% else %}
     {% if "prev_loss" in parser.matched %}
-    <a href="/runs/{{ parser.matched['prev_loss'].name }}"><<< Previous loss -</a>
+    <a href="/runs/{{ parser.matched['prev_loss'].name }}">&lt;&lt;&lt; Previous loss -</a>
     {% endif %}
     {% if "next_loss" in parser.matched %}
     <a href="/runs/{{ parser.matched['next_loss'].name }}">- Next loss >>></a>
