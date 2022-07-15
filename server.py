@@ -428,10 +428,6 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 _cmds[name]["aliases"] = []
             _cmds[name]["aliases"].extend(args)
             _update_db()
-            if len(args) == 1:
-                await ctx.send(f"{args[0]} has been aliased to {name}.")
-            else:
-                await ctx.send(f"Command {name} now has aliases {', '.join(args)}")
             await ctx.send(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
 
         case "unalias":

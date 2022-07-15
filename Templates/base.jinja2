@@ -10,8 +10,18 @@ Software version: {{ version }}
 
 <html lang="en">
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kreon:wght@341&display=swap" rel="stylesheet">
         <style>
-        .card { font-family: 'Kreon', serif; }
+        .card {
+            font-family: 'Kreon', serif;
+            font-size: 25px;
+            display: inline-block;
+            width: 290px;
+            height: 32px;
+            vertical-align: middle;
+        }
         </style>
         <meta charset="UTF-8" {% block meta %}{% endblock %}>
         {% block head %}

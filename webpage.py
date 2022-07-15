@@ -78,8 +78,7 @@ async def redirected_totals(req: web.Request):
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
 
-router.static("/static/icons", os.path.join(os.getcwd(), "static", "icons"))
-router.static("/static/relics", os.path.join(os.getcwd(), "static", "relics"))
+router.static("/static", os.path.join(os.getcwd(), "static"))
 
 @events.add_listener("setup_init")
 async def setup_redirects():

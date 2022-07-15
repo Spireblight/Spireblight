@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from typing import Any, Generator
+
+import math
 import io
 
 from aiohttp.web import Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
@@ -589,8 +591,52 @@ class FileParser:
             yield card, get_card_metadata(x["id"])
 
     def cards_as_html(self) -> Generator[str, None, None]:
-        pass
+        text = (
+            '<span class="card"{color}>'
+            '<svg width="32" height="32">'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Back_{character}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Desc_{character}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Type_{card_type}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Banner_{banner}.png"></image>'
+            '</svg>{count}{card_name}</span>'
+        )
+        content = {}
+        order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Curse")
+        content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], "Special": []} for x in order}
+        for name, metadata in self._get_cards():
+            ctype = metadata.get("TYPE")
+            rarity = metadata.get("RARITY")
+            if rarity in ("Starter", None):
+                rarity = "Special"
+            if name not in content:
+                content[name] = {"count": 0, "character": metadata["CHARACTER"], "rarity": rarity, "card_type": ctype}
+            content[name]["count"] += 1
 
+        for name, d in content.items():
+            content_order[d["character"]][d["rarity"]].append((name, d["card_type"], d["count"]))
+
+        final = []
+
+        for char in order:
+            for rarity in ("Rare", "Uncommon", "Common", "Special"):
+                content_order[char][rarity].sort(key=lambda x: x[0])
+                for name, ctype, count in content_order[char][rarity]:
+                    format_map = {
+                        "color": ' style="color:#146214"' if "+" in name else "", # make it green when upgraded
+                        "website": config.website_url,
+                        "character": char,
+                        "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
+                        "banner": rarity,
+                        "count": f"{count}x " if count > 1 else "",
+                        "card_name": name,
+                    }
+                    final.append(text.format_map(format_map))
+
+        step = math.ceil(len(final) / 3)
+        for i in range(step):
+            for as_html in final[i::step]:
+                yield as_html
+            yield "<br>"
     @property
     def cards(self) -> list[str]:
         return [a for a, b in self._get_cards()]
