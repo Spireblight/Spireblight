@@ -563,7 +563,7 @@ class FileParser:
                     if choice["key"] == "RECALL":
                         yield ("Ruby Key", choice["floor"])
             if self["has_emerald_key"]:
-                floor = self["basemod:mod_saves"].get("GreenKeyTakenLog", "<Unknown floor>")
+                floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
                 yield ("Emerald Key", floor)
             if self["has_sapphire_key"]:
                 floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
@@ -1220,7 +1220,7 @@ class Treasure(NodeData):
         if self.blue_key:
             if 5 not in to_append:
                 to_append[5] = []
-            to_append[5].append(f"Skipped {self.key_relic} for the Sapphire key.")
+            to_append[5].append(f"Skipped {self.key_relic} for the Sapphire key")
         return super()._description(to_append)
 
     @classmethod
@@ -1264,7 +1264,7 @@ class EliteEncounter(EncounterBase):
         if self.has_key:
             if 5 not in to_append:
                 to_append[5] = []
-            to_append[5].append("Got the Emerald Key.")
+            to_append[5].append("Got the Emerald Key")
         return super()._description(to_append)
 
     @classmethod
@@ -1273,7 +1273,7 @@ class EliteEncounter(EncounterBase):
             key_floor = parser["basemod:mod_saves"].get("greenKeyTakenLog")
         else:
             key_floor = parser.get("green_key_taken_log")
-        has_key = (key_floor is not None and key_floor == floor)
+        has_key = (key_floor is not None and int(key_floor) == floor)
         return super().from_parser(parser, floor, has_key, *extra)
 
     @property
