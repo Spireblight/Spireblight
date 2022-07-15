@@ -140,7 +140,7 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
                 value = file.getvalue()
 
             parser._graph_cache[to_cache] = value
-            return Response(body=file.getvalue(), content_type="image/png")
+            return Response(body=value, content_type="image/png")
 
 class NeowBonus:
     def __init__(self, parser: FileParser):
