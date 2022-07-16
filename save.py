@@ -50,6 +50,7 @@ class Savefile(FileParser):
                 self._matches = True
 
         self.data = data
+        self._graph_cache.clear()
         if not character:
             self._last = time.time()
             self._character = None
@@ -118,7 +119,7 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("savefile.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    context = {"parser": _savefile, "redirect": redirect, "force": True}
+    context = {"parser": _savefile, "redirect": redirect}
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
@@ -137,7 +138,7 @@ async def save_chart(req: Request) -> Response:
     if _savefile.character is None:
         raise HTTPNotFound()
 
-    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string, force=_truthy(req.query.get("force")))
+    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string)
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
