@@ -39,3 +39,5 @@ The client side should run client.py. Client only needs the aiohttp library. Con
 - secret (needs to be identical to the server's secret for savefile syncing to work)
 
 For any issues, feel free to open an issue or submit a PR.
+
+Development discord: https://discord.gg/RHYrs3Nsve
