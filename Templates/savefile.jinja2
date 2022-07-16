@@ -1,7 +1,7 @@
 {% extends "base.jinja2" %}
 <!-- Refresh the page every 15 seconds; savefile gets regularly updated.
      Actual code will properly cache the savefile and serve latest -->
-{% block meta %}http-equiv="refresh" {% if redirect and parser.in_game %}content="0;url=/current"{% else %}content="15"{% endif %}{% endblock %}
+{% block head %}<meta http-equiv="refresh" content="{% if redirect and parser.in_game %}0;url=/current{% else %}15{% endif %}">{% endblock %}
 {% block title %}
 {{ parser.display_name }}
 {% endblock %}

@@ -24,10 +24,9 @@ Software version: {{ version }}
             vertical-align: middle;
         }
         </style>
-        <meta charset="UTF-8" {% block meta %}{% endblock %}>
-        {% block head %}
+        <meta charset="UTF-8">
+        {% block head %}{% endblock %}
         <title>{% block title %}{% endblock %} - Baalorlord's website</title>
-        {% endblock %}
     </head>
     <body style="background-color:{{ color }}">
         <div id="content">{% block content %}{% endblock %}</div>
