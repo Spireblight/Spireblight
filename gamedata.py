@@ -1106,7 +1106,11 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
     # this is also used for run files for which we had the savefile
     if maybe_cached:
         maybe_cached.pop()
+    previous = None
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+        if previous == "T" and actual == "T":
+            continue # idk what this is, but this fixes it?
+        previous = actual
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
         if node[0] is not None:
@@ -1141,6 +1145,12 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
                 cls = Campfire
             case ("B", "BOSS"):
                 cls = Boss
+            case ("C", "C"):
+                cls = Courier
+            case ("-", "-"):
+                cls = Empty
+            case ("P", "P"):
+                cls = SWF
             case (None, None):
                 if floor < 50: # kind of a hack for the first two acts
                     cls = BossChest
@@ -1567,6 +1577,36 @@ class Merchant(NodeData):
 class EventMerchant(Merchant):
     room_type = "Unknown (Merchant)"
     map_icon = "event_shop.png"
+
+class Courier(NodeData):
+    room_type = "Courier (Spire with Friends)"
+    map_icon = "event.png"
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 0 not in to_append:
+            to_append[0] = []
+        to_append[0].append("This is a Courier node. I don't know how to deal with it.")
+        return super()._description(to_append)
+
+class Empty(NodeData):
+    room_type = "Empty (Spire with Friends)"
+    map_icon = "event.png"
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 0 not in to_append:
+            to_append[0] = []
+        to_append[0].append("This is an empty node. Nothing happened here.")
+        return super()._description(to_append)
+
+class SWF(NodeData):
+    room_type = "Unknown Node (Spire with Friends)"
+    map_icon = "event.png"
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 0 not in to_append:
+            to_append[0] = []
+        to_append[0].append("This is some Spire with Friends stuff. I don't know how to deal with it.")
+        return super()._description(to_append)
 
 class Campfire(NodeData):
     room_type = "Rest Site"
