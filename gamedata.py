@@ -1106,15 +1106,15 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
     # this is also used for run files for which we had the savefile
     if maybe_cached:
         maybe_cached.pop()
-    previous = None
+    nodes = []
+    error = False
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
-        if previous == "T" and actual == "T":
-            continue # idk what this is, but this fixes it?
-        previous = actual
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
         if node[0] is not None:
             node[1] = next(on_map)
+
+        nodes.append(node)
 
         if maybe_cached:
             maybe_node = maybe_cached.pop(0)
@@ -1160,6 +1160,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
                     cls = Act4Transition
             case (a, b):
                 logger.warning(f"Error: the combination of map node {b!r} and content {a!r} is undefined (run: {getattr(parser, 'name', 'savefile')})")
+                error = True
                 continue
 
         try:
@@ -1168,6 +1169,9 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             continue
         else:
             yield value, False
+
+    if error:
+        logger.error("\n".join(f"Actual: {x:<4} | Map: {y}" for x, y in nodes))
 
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
