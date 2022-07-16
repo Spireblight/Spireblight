@@ -124,11 +124,6 @@ async def current_run(req: Request):
             latest = get_latest_run(None, None)
             raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
-    if _savefile.in_game:
-        if _savefile._last == _savefile.timestamp:
-            context["force"] = False
-        _savefile._last = _savefile.timestamp
-
     return context
 
 @router.get("/current/raw")
