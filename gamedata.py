@@ -883,9 +883,12 @@ class NodeData:
             elif "PotionUseLog" in parser.get("basemod:mod_saves", ()): # savefile
                 self._usedpotions.extend(get_potion(x) for x in parser["basemod:mod_saves"]["PotionUseLog"][floor - 1])
         except IndexError:
-            self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
-            self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
-            self._gold = parser[prefix + "gold_per_floor"][floor - 2]
+            try:
+                self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
+                self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
+                self._gold = parser[prefix + "gold_per_floor"][floor - 2]
+            except IndexError:
+                pass
 
         try:
             self._discarded.extend(parser.get("potion_discard_per_floor", ())[floor - 1])
