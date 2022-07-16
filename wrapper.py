@@ -57,7 +57,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
             new_args.append(arg)
 
         if req > len(new_args):
-            names = co.co_varnames[len(new_args):req]
+            names = co.co_varnames[len(new_args)+1:req]
             if len(names) == 1:
                 await ctx.send(f"Error: Missing required argument {names[0]!r}")
             else:

@@ -649,7 +649,7 @@ async def relic_info(ctx: ContextType, j: Savefile, index: int):
 
     await ctx.send(f"The relic at position {index} is {l[index-1].name}.")
 
-@with_savefile("skipped", "skippedboss", "bossrelic")
+@with_savefile("skipped", "picked", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, j: Savefile):
     """Display the boss relics that were taken and skipped."""
     l: list[dict] = j["metric_boss_relics"]
