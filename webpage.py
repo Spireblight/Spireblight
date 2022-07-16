@@ -14,9 +14,9 @@ import events
 
 import config
 
-__all__ = ["webpage", "router", "setup_redirects"]
+__all__ = ["webpage", "router"]
 
-__version__ = "0.2"
+__version__ = "0.3"
 __author__ = "Anilyka Barry"
 __github__ = "https://github.com/Vgr255/TwitchCordBot"
 __botname__ = "Faelorbot"

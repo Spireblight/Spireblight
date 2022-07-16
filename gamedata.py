@@ -423,7 +423,10 @@ class NeowBonus:
 
     def as_str(self) -> str:
         neg = getattr(self, f"cost_{self.parser['neow_cost']}", None)
-        pos = getattr(self, f"bonus_{self.parser['neow_bonus']}")
+        try:
+            pos = getattr(self, f"bonus_{self.parser['neow_bonus']}")
+        except AttributeError:
+            return "<No Neow Bonus picked>"
 
         if neg is None:
             msg = f"We {pos()}."
