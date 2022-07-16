@@ -588,7 +588,11 @@ class FileParser:
     def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
         if "master_deck" in self:
             for x in self["master_deck"]:
-                yield get_card(x), get_card_metadata(x)
+                try:
+                    meta = get_card_metadata(x)
+                except KeyError:
+                    meta = {"CHARACTER": "Special"}
+                yield get_card(x), meta
             return
 
         for x in self["cards"]:
@@ -599,7 +603,11 @@ class FileParser:
                 else:
                     card = f"{card}+"
 
-            yield card, get_card_metadata(x["id"])
+            try:
+                meta = get_card_metadata(x["id"])
+            except KeyError:
+                meta = {"CHARACTER": "Special"}
+            yield card, meta
 
     def cards_as_html(self) -> Generator[str, None, None]:
         text = (
