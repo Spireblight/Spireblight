@@ -50,7 +50,6 @@ class Savefile(FileParser):
                 self._matches = True
 
         self.data = data
-        self._pathed = False
         if not character:
             self._last = time.time()
             self._character = None

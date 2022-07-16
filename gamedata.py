@@ -518,7 +518,6 @@ class FileParser:
         self.data = data
         self.neow_bonus = NeowBonus(self)
         self._cache = {}
-        self._pathed = False
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str], str] = {}
 
@@ -699,11 +698,9 @@ class FileParser:
         return self._cache["seed"]
 
     @property
-    def path(self) -> Generator[NodeData, None, None]:
+    def path(self) -> list[NodeData]:
         """Return the run's path. This is cached."""
-        if not self._pathed:
-            if "path" in self._cache:
-                raise RuntimeError("Called RunParser.path while it's generating")
+        if "path" not in self._cache:
             self._cache["path"] = []
             if "basemod:mod_saves" in self:
                 floor_time = self["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
@@ -740,11 +737,8 @@ class FileParser:
                     node._floor_time = t - prev
                 prev = t
                 self._cache["path"].append(node)
-                yield node
-            self._pathed = True
-            return
 
-        yield from self._cache["path"] # generator so that it's a consistent type
+        return self._cache["path"]
 
 class RelicData:
     """Contain information for Spire relics."""
