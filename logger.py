@@ -3,6 +3,8 @@ import os
 
 __all__ = ["logger"]
 
+os.makedirs("data", exist_ok=True)
+
 logger = logging.getLogger("Twitch-Discord-Bot")
 logger.setLevel(logging.DEBUG)
 
