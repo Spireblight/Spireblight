@@ -1307,7 +1307,10 @@ class EventNode:
         if events[0]["event_name"] == "Colosseum":
             return Colosseum.from_parser(parser, floor, events, *extra)
         if len(events) != 1:
-            raise ValueError("could not figure out what to do with this")
+            for a in events:
+                for b in events:
+                    if a != b: # I'm not quite sure how this happens, but sometimes an event will be twice?
+                        raise ValueError("could not figure out what to do with this")
         event = events[0]
         for dmg in parser[parser.prefix + "damage_taken"]:
             if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
