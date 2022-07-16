@@ -428,10 +428,13 @@ class NeowBonus:
         except AttributeError:
             return "<No Neow Bonus picked>"
 
-        if neg is None:
-            msg = f"We {pos()}."
-        else:
-            msg = f"We {neg()}, and then {pos()}."
+        try:
+            if neg is None:
+                msg = f"We {pos()}."
+            else:
+                msg = f"We {neg()}, and then {pos()}."
+        except ValueError:
+            msg = "<Unknown Neow Bonus>"
 
         return msg
 
@@ -1146,7 +1149,8 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
                 else:
                     cls = Act4Transition
             case (a, b):
-                raise ValueError(f"Error: the combination of map node {b!r} and content {a!r} is undefined")
+                logger.warning(f"Error: the combination of map node {b!r} and content {a!r} is undefined (run: {getattr(parser, 'name', 'savefile')})")
+                continue
 
         try:
             value: NodeData = cls.from_parser(parser, floor)
@@ -1627,7 +1631,7 @@ class BossChest(NodeData):
         boss_relics = parser.get_boss_chest()
         picked = None
         skipped = []
-        if boss_relics["picked"] != "SKIP":
+        if boss_relics.get("picked", "SKIP") != "SKIP":
             picked = get_relic(boss_relics["picked"])
         for relic in boss_relics["not_picked"]:
             skipped.append(get_relic(relic))

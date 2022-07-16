@@ -21,9 +21,10 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
         new_args = []
         if wrapped_args is not None:
             new_args.extend(wrapped_args)
+        delta = len(new_args) + 1
         multiple = (co.co_flags & 0x04) # whether *args is supported
         annotations = inspect.get_annotations(func, eval_str=True)
-        for i, arg in enumerate(args, len(new_args) + 1):
+        for i, arg in enumerate(args, delta):
             if i < co.co_argcount:
                 var = co.co_varnames[i]
             elif multiple: # all from here on will match the same type -- typically str, but could be something else
@@ -36,13 +37,13 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
                     try:
                         arg = int(arg)
                     except ValueError:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be an integer.")
+                        await ctx.send(f"Error: Argument #{i-delta} ({var!r}) must be an integer.")
                         return
                 elif expected == float:
                     try:
                         arg = float(arg)
                     except ValueError:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be a floating point number.")
+                        await ctx.send(f"Error: Argument #{i-delta} ({var!r}) must be a floating point number.")
                         return
                 elif expected == bool:
                     if arg.lower() in ("yes", "y", "on", "true", "1"):
@@ -50,7 +51,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
                     elif arg.lower() in ("no", "n", "off", "false", "0"):
                         arg = False
                     else:
-                        await ctx.send(f"Error: Argument #{i} ({var!r}) must be parsable as a boolean value.")
+                        await ctx.send(f"Error: Argument #{i-delta} ({var!r}) must be parsable as a boolean value.")
                         return
                 elif expected != str:
                     await ctx.send(f"Warning: Unhandled type {expected!r} for argument #{i} ({var!r}) - please ping @FaeLyka")
