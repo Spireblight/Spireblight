@@ -118,15 +118,15 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("savefile.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    context = {"parser": _savefile, "redirect": redirect, "force": False}
+    context = {"parser": _savefile, "redirect": redirect, "force": True}
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
             raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
     if _savefile.in_game:
-        if _savefile._last != _savefile.timestamp:
-            context["force"] = True
+        if _savefile._last == _savefile.timestamp:
+            context["force"] = False
         _savefile._last = _savefile.timestamp
 
     return context
