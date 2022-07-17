@@ -20,7 +20,6 @@ async def main():
 
     tasks = set()
 
-    import sys
     if "--webonly" not in sys.argv:
         tasks.add(loop.create_task(server.Twitch_startup()))
         if "--nodiscord" not in sys.argv:
