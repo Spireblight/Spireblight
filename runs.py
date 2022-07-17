@@ -176,7 +176,7 @@ async def run_raw_json(req: Request) -> Response:
     if parser is None:
         raise HTTPNotFound()
 
-    return Response(text=json.dumps(parser.data, indent=4))
+    return Response(text=json.dumps(parser.data, indent=4), content_type="application/json")
 
 @router.get("/runs/{name}/{type}")
 async def run_chart(req: Request) -> Response:
