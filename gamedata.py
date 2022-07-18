@@ -65,7 +65,7 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
     floors = []
     for arg in params["view"].split(","):
         if arg.startswith("_"):
-            raise HTTPForbidden()
+            raise HTTPForbidden(reason="Cannot access private attributes.")
         totals[arg] = []
         if arg not in _variables_map:
             logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
@@ -560,6 +560,10 @@ class FileParser:
         return c
 
     @property
+    def ascension_level(self) -> int:
+        return self.data["ascension_level"]
+
+    @property
     def keys(self) -> Generator[tuple[str, str | int], None, None]:
         if "basemod:mod_saves" in self: # savefile
             if self["has_ruby_key"]:
@@ -670,8 +674,6 @@ class FileParser:
             for relic in self.data["relics"]:
                 value = RelicData(self, relic)
                 self._cache["relics"].append(value)
-                yield value
-            return
 
         yield from self._cache["relics"]
 
@@ -700,7 +702,7 @@ class FileParser:
         return self._cache["seed"]
 
     @property
-    def path(self) -> list[NodeData]:
+    def path(self) -> Generator[NodeData, None, None]:
         """Return the run's path. This is cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
@@ -740,7 +742,7 @@ class FileParser:
                 prev = t
                 self._cache["path"].append(node)
 
-        return self._cache["path"]
+        yield from self._cache["path"]
 
 class RelicData:
     """Contain information for Spire relics."""
