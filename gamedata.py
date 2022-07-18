@@ -129,7 +129,6 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
         case "embed":
             value: str = fig_to_html(fig)
             plt.close(fig)
-            value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
             parser._graph_cache[to_cache] = value
             return Response(body=value, content_type="text/html")
 
