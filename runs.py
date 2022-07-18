@@ -71,6 +71,10 @@ class RunParser(FileParser):
         return self.data.get("killed_by")
 
     @property
+    def ascension_level(self) -> int:
+        return self.data["ascension_level"]
+
+    @property
     def score(self) -> int:
         return int(self.data["score"])
 
