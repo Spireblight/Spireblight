@@ -97,13 +97,15 @@ class RunParser(FileParser):
 def _dump_all():
     import csv
     from collections import defaultdict
-    headers = ["Character", "Victory", "Killed by", "Floor reached", "Run length", "Score", "Max HP", "Card count", "Relic count", "CARDS ->"]
+    headers = ["Ironclad", "Silent", "Defect", "Watcher", "Swapped starter relic", "Victory", "Killed by", "Floor reached", "Run length", "Score", "Max HP", "Card count", "Relic count", "CARDS ->"]
     rows = []
     cards = {}
     for card, internal in get_all_cards().items():
         cards[internal] = card
         headers.append(f"{card} picked")
         headers.append(f"{card} skipped")
+        headers.append(f"{card}+ picked")
+        headers.append(f"{card}+ skipped")
     headers.append("<- CARDS | RELICS ->")
     for relic in get_all_relics():
         headers.append(relic)
@@ -114,8 +116,10 @@ def _dump_all():
     headers.append("<- EVENTS | BOSS RELICS ->")
 
     for run in _cache.values():
-        final = {}
-        final["Character"] = run.character
+        final = defaultdict(int)
+        final[run.character] = "1"
+        if run["neow_bonus"] == "BOSS_RELIC":
+            final["Swapped starter relic"] = "1"
         final["Victory"] = "1" if run.won else "0"
         if not run.won:
             final["Killed by"] = run.killed_by
@@ -126,41 +130,39 @@ def _dump_all():
         final["Card count"] = len(run["master_deck"])
         final["Relic count"] = len(run["relics"])
 
-        res = defaultdict(list)
-
         for choices in run["card_choices"]:
             if choices["picked"] not in ("SKIP", "Singing Bowl"):
                 name, _, upgrades = choices["picked"].partition("+")
-                res[f"{cards[name]} picked"].append(f"{choices['floor']}:{upgrades or 0}")
+                final[f"{cards[name]}{'+' if upgrades else ''} picked"] += 1
             for card in choices["not_picked"]:
                 name, _, upgrades = card.partition("+")
-                res[f"{cards[name]} skipped"].append(f"{choices['floor']}:{upgrades or 0}")
+                final[f"{cards[name]}{'+' if upgrades else ''} skipped"] += 1
 
-        for relics in run["relics_obtained"]:
-            res[get_relic(relics["key"])].append(str(relics["floor"]))
+        for relics in run["relics"]:
+            final[get_relic(relics)] += 1
 
         for event in run["event_choices"]:
-            res[get_event(event["event_name"])].append(str(event["floor"]))
+            final[get_event(event["event_name"])] += 1
 
-        floor = 17
+        for bought in run["items_purchased"]:
+            name, _, upgrades = bought.partition("+")
+            if name in cards:
+                final[f"{cards[name]}{'+' if upgrades else ''} picked"] += 1
+            elif (r := get_relic(bought, "")):
+                final[r] += 1
+
         for choices in run["boss_relics"]:
-            if (p := choices["picked"]) != "SKIP":
-                res[get_relic(p)].append(str(floor))
             for skipped in choices["not_picked"]:
                 name = get_relic(skipped)
                 key = f"Boss relic {name} skipped"
                 if key not in headers:
                     headers.append(key)
-                res[key].append(f"{name}:{floor}")
-            floor += 17
-
-        for key, values in res.items():
-            final[key] = ";".join(values)
+                final[key] += 1
 
         rows.append(final)
 
     with open("data/dump200.csv", "w", newline="") as f:
-        writer = csv.DictWriter(f, headers)
+        writer = csv.DictWriter(f, headers, "0")
         writer.writeheader()
         writer.writerows(rows)
 
