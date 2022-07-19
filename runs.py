@@ -12,7 +12,7 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnau
 
 import aiohttp_jinja2
 
-from nameinternal import get_all_relics, get_all_cards
+from nameinternal import get_all_relics, get_all_cards, get_all_events, get_relic, get_event
 from gamedata import FileParser, generate_graph
 from webpage import router
 from logger import logger
@@ -91,9 +91,84 @@ class RunParser(FileParser):
             return f"{hours}:{minutes:>02}:{seconds:>02}"
         return f"{minutes:>02}:{seconds:>02}"
 
+# This is a temporary hack for stats analysis
+# This was added on 18/07/2022 - let's see how long it lasts
+
+def _dump_all():
+    import csv
+    from collections import defaultdict
+    headers = ["Character", "Victory", "Killed by", "Floor reached", "Run length", "Score", "Max HP", "Card count", "Relic count", "CARDS ->"]
+    rows = []
+    cards = {}
+    for card, internal in get_all_cards().items():
+        cards[internal] = card
+        headers.append(f"{card} picked")
+        headers.append(f"{card} skipped")
+    headers.append("<- CARDS | RELICS ->")
+    for relic in get_all_relics():
+        headers.append(relic)
+    headers.append("<- RELICS | EVENTS ->")
+    for event in get_all_events():
+        headers.append(event)
+
+    headers.append("<- EVENTS | BOSS RELICS ->")
+
+    for run in _cache.values():
+        final = {}
+        final["Character"] = run.character
+        final["Victory"] = "1" if run.won else "0"
+        if not run.won:
+            final["Killed by"] = run.killed_by
+        final["Floor reached"] = run.floor_reached
+        final["Run length"] = run["playtime"]
+        final["Score"] = run.score
+        final["Max HP"] = run.final_health[1]
+        final["Card count"] = len(run["master_deck"])
+        final["Relic count"] = len(run["relics"])
+
+        res = defaultdict(list)
+
+        for choices in run["card_choices"]:
+            if choices["picked"] not in ("SKIP", "Singing Bowl"):
+                name, _, upgrades = choices["picked"].partition("+")
+                res[f"{cards[name]} picked"].append(f"{choices['floor']}:{upgrades or 0}")
+            for card in choices["not_picked"]:
+                name, _, upgrades = card.partition("+")
+                res[f"{cards[name]} skipped"].append(f"{choices['floor']}:{upgrades or 0}")
+
+        for relics in run["relics_obtained"]:
+            res[get_relic(relics["key"])].append(str(relics["floor"]))
+
+        for event in run["event_choices"]:
+            res[get_event(event["event_name"])].append(str(event["floor"]))
+
+        floor = 17
+        for choices in run["boss_relics"]:
+            if (p := choices["picked"]) != "SKIP":
+                res[get_relic(p)].append(str(floor))
+            for skipped in choices["not_picked"]:
+                name = get_relic(skipped)
+                key = f"Boss relic {name} skipped"
+                if key not in headers:
+                    headers.append(key)
+                res[key].append(f"{name}:{floor}")
+            floor += 17
+
+        for key, values in res.items():
+            final[key] = ";".join(values)
+
+        rows.append(final)
+
+    with open("data/dump200.csv", "w", newline="") as f:
+        writer = csv.DictWriter(f, headers)
+        writer.writeheader()
+        writer.writerows(rows)
+
 @add_listener("setup_init")
 async def _setup_cache():
     _update_cache()
+    # this should be uncommented only when dumping stats into a CSV
+    #_dump_all()
 
 def _update_cache():
     start = time.time()
