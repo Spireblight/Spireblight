@@ -71,6 +71,14 @@ class RunParser(FileParser):
         return self.data.get("killed_by")
 
     @property
+    def floor_reached(self) -> int:
+        return int(self["floor_reached"])
+
+    @property
+    def final_health(self) -> tuple[int, int]:
+        return self["current_hp_per_floor"][-1], self["max_hp_per_floor"][-1]
+
+    @property
     def score(self) -> int:
         return int(self.data["score"])
 

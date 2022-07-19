@@ -1476,6 +1476,10 @@ class Colosseum(Event):
                 dmg.append(damage)
         return super(Event, cls).from_parser(parser, floor, dmg, *extra)
 
+    @property
+    def damage(self) -> int:
+        return sum(d["damage"] for d in self._damages)
+
     def fights_delta(self) -> int:
         return len(self._damages)
 
