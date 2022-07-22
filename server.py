@@ -254,6 +254,10 @@ async def _timer(cmds: list[str]):
         if TConn.commands[maybe_cmd].disabled:
             cmds.append(maybe_cmd) # in case it gets enabled again
             continue
+        if maybe_cmd == "current":
+            save = get_savefile()
+            if save is None:
+                continue
         cmd = maybe_cmd
     # TODO: Check live status using EventSub/PubSub
     chan = TConn.get_channel(config.channel)
