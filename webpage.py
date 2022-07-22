@@ -56,7 +56,7 @@ env.globals["color"] = config.website_bg
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
-async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 1800000000}): # XXX: DO NOT PUSH THIS
+async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 0}):
     if _cache["video_id"] is None or _cache["last"] + config.cache_timeout < time.time():
         data = None
         async with ClientSession() as session:
