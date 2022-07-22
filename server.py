@@ -251,7 +251,7 @@ async def _timer(cmds: list[str]):
         if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
             i -= 1 # we're not adding it back, so it's fine
             continue
-        if TConn.commands[maybe_cmd].disabled:
+        if not TConn.commands[maybe_cmd].enabled:
             cmds.append(maybe_cmd) # in case it gets enabled again
             continue
         if maybe_cmd == "current":
@@ -271,26 +271,6 @@ async def _timer(cmds: list[str]):
         logger.error(f"Timer-command {cmd} needs non-constant formatting. Sending raw line.")
     await chan.send(msg)
     cmds.append(cmd)
-
-if config.global_interval:
-    _global_timer = routine(seconds=config.global_interval)(_timer)
-    @_global_timer.before_routine
-    async def before_global():
-        await TConn.wait_for_ready()
-
-    @_global_timer.error
-    async def error_global(e):
-        logger.error(f"Timer global error with {e}")
-
-if config.sponsored_interval:
-    _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
-    @_sponsored_timer.before_routine
-    async def before_sponsored():
-        await TConn.wait_for_ready()
-
-    @_sponsored_timer.error
-    async def error_sponsored(e):
-        logger.error(f"Timer sponsored error with {e}")
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -967,8 +947,27 @@ async def Twitch_startup():
     load()
 
     if config.global_interval and config.global_commands:
+        _global_timer = routine(seconds=config.global_interval)(_timer)
+        @_global_timer.before_routine
+        async def before_global():
+            await TConn.wait_for_ready()
+
+        @_global_timer.error
+        async def error_global(e):
+            logger.error(f"Timer global error with {e}")
+
         _global_timer.start(config.global_commands, stop_on_error=False)
+
     if config.sponsored_interval and config.sponsored_commands:
+        _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
+        @_sponsored_timer.before_routine
+        async def before_sponsored():
+            await TConn.wait_for_ready()
+
+        @_sponsored_timer.error
+        async def error_sponsored(e):
+            logger.error(f"Timer sponsored error with {e}")
+
         _sponsored_timer.start(config.sponsored_commands, stop_on_error=False)
 
     await TConn.connect()
