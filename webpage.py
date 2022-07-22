@@ -64,8 +64,11 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
                 data = await resp.json()
 
         if data is not None: # fallback on last/default video ID
-            _cache["video_id"] = data["items"][0]["id"]["videoId"]
-            _cache["last"] = time.time()
+            # If we don't have a proper setup, there will be an error from the
+            # Youtube API. Without this, the start page won't load.
+            if "error" not in data:
+                _cache["video_id"] = data["items"][0]["id"]["videoId"]
+                _cache["last"] = time.time()
 
     return _cache
 
