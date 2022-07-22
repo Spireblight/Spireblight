@@ -895,12 +895,12 @@ class NodeData:
 
         if "basemod:mod_saves" in parser:
             try:
-                self._discarded.extend(parser["basemod:mod_saves"].get("PotionDiscardLog", ()))[floor - 1]
+                self._discarded.extend(get_potion(x) for x in parser["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
             except IndexError:
                 pass
         else:
             try:
-                self._discarded.extend(parser.get("potion_discard_per_floor", ())[floor - 1])
+                self._discarded.extend(get_potion(x) for x in parser.get("potion_discard_per_floor", ())[floor - 1])
             except IndexError:
                 pass
 
@@ -1050,6 +1050,10 @@ class NodeData:
         return self._skipped_potions
 
     @property
+    def discarded_potions(self) -> list[str]:
+        return self._discarded
+
+    @property
     def floor_time(self) -> int:
         if self._floor_time is None:
             return 0
@@ -1069,7 +1073,7 @@ class NodeData:
         count = len(self.potions)
         if "Entropic Brew" in self.used_potions:
             count += 2
-        return count - len(self.used_potions) - len(self._discarded)
+        return count - len(self.used_potions) - len(self.discarded_potions)
 
     def fights_delta(self) -> int:
         return 0
