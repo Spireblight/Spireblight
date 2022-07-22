@@ -133,23 +133,21 @@ def _dump_all():
         for choices in run["card_choices"]:
             if choices["picked"] not in ("SKIP", "Singing Bowl"):
                 name, _, upgrades = choices["picked"].partition("+")
-                final[f"{cards[name]}{'+' if upgrades else ''} picked"] += 1
+                final[f"{cards[name]}{'+' if upgrades else ''} picked"] = 1
             for card in choices["not_picked"]:
                 name, _, upgrades = card.partition("+")
-                final[f"{cards[name]}{'+' if upgrades else ''} skipped"] += 1
+                final[f"{cards[name]}{'+' if upgrades else ''} skipped"] = 1
 
         for relics in run["relics"]:
-            final[get_relic(relics)] += 1
+            final[get_relic(relics)] = 1
 
         for event in run["event_choices"]:
-            final[get_event(event["event_name"])] += 1
+            final[get_event(event["event_name"])] = 1
 
         for bought in run["items_purchased"]:
             name, _, upgrades = bought.partition("+")
             if name in cards:
-                final[f"{cards[name]}{'+' if upgrades else ''} picked"] += 1
-            elif (r := get_relic(bought, "")):
-                final[r] += 1
+                final[f"{cards[name]}{'+' if upgrades else ''} picked"] = 1
 
         for choices in run["boss_relics"]:
             for skipped in choices["not_picked"]:
@@ -157,7 +155,7 @@ def _dump_all():
                 key = f"Boss relic {name} skipped"
                 if key not in headers:
                     headers.append(key)
-                final[key] += 1
+                final[key] = 1
 
         rows.append(final)
 
