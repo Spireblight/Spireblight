@@ -52,6 +52,7 @@ env.globals["config"] = config
 env.globals["uptime"] = uptime
 env.globals["start"] = _start_time.isoformat(" ", "seconds")
 env.globals["now"] = now
+env.globals["color"] = config.website_bg
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
