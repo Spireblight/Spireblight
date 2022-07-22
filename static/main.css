@@ -1,0 +1,26 @@
+.card {
+  font-family: 'Kreon', serif;
+  font-size: 25px;
+  display: inline-block;
+  width: 290px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 11.25rem 1fr 11.25rem;
+}
+
+.menu {
+  padding: 1em 0.5em;
+  background-color: #fafafa;
+}
+
+#command-list {
+  flex-wrap: wrap;
+}
+
+#command-list .column {
+  margin: 0.4em 0.4em;
+}

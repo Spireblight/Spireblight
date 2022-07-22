@@ -1,14 +1,17 @@
 {% extends "base.jinja2" %}
 {% block title %}
-Runs for {{ profile }}
+  Runs for {{ profile }}
 {% endblock %}
 {% block content %}
-    <h1>Run history</h1>
-    <!--<a href="/compare">Compare data between runs</a><br>-->
-    {% for obj in profile.runs %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Run history
+      </h1>
+    </div>
+  </section>
+  <!--<a href="/compare">Compare data between runs</a><br>-->
+  {% for obj in profile.runs %}
     <a href="/runs/{{ obj.name }}">{{ obj.display_name }}</a><br>
-    {% endfor %}
-{% endblock %}
-{% block footer %}
-<a href="/runs">Back to profile selection</a><br>
+  {% endfor %}
 {% endblock %}

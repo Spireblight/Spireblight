@@ -1,10 +1,25 @@
 {% extends "base.jinja2" %}
 {% block title %}
-Commands
+  Commands
 {% endblock %}
 {% block content %}
-    <h1>List of all commands current existing in the bot:</h1>
-    {% for name in commands %}
-        <a href="/commands/{{ name }}">{{ prefix }}{{ name }}</a><br>
-    {% endfor %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        All commands
+      </h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <p>These are all of the commands currently known by <b>baalorbot</b>.</p>
+  </section>
+
+  <section class="section">
+    <div id="command-list" class="columns">
+      {% for name in commands %}
+        <a class="box column is-narrow" href="/commands/{{ name }}">{{ prefix }}{{ name }}</a>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}
