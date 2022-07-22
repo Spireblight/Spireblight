@@ -242,7 +242,7 @@ class DiscordConn(DBot):
 async def _timer(cmds: list[str]):
     cmd = None
     i = 0
-    while cmd is not None:
+    while cmd is None:
         i += 1
         if i > len(cmds):
             logger.error("Timer has only non-existent or disabled commands!")
