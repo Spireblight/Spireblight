@@ -2,3 +2,6 @@ config.py
 *.pyc
 data/
 last_run
+/bin/
+/lib/
+/lib64
