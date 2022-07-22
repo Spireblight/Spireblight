@@ -274,8 +274,23 @@ async def _timer(cmds: list[str]):
 
 if config.global_interval:
     _global_timer = routine(seconds=config.global_interval)(_timer)
+    @_global_timer.before_routine
+    async def before_global():
+        await TConn.wait_for_ready()
+
+    @_global_timer.error
+    async def error_global(e):
+        logger.error(f"Timer global error with {e}")
+
 if config.sponsored_interval:
     _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
+    @_sponsored_timer.before_routine
+    async def before_sponsored():
+        await TConn.wait_for_ready()
+
+    @_sponsored_timer.error
+    async def error_sponsored(e):
+        logger.error(f"Timer sponsored error with {e}")
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -946,15 +961,16 @@ async def individual_cmd(req: Request):
 
 async def Twitch_startup():
     global TConn
-    if config.global_interval and config.global_commands:
-        _global_timer.start(config.global_commands)
-    if config.sponsored_interval and config.sponsored_commands:
-        _sponsored_timer.start(config.sponsored_commands)
-
     TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
     for cmd in _to_add_twitch:
         TConn.add_command(cmd)
     load()
+
+    if config.global_interval and config.global_commands:
+        _global_timer.start(config.global_commands, stop_on_error=False)
+    if config.sponsored_interval and config.sponsored_commands:
+        _sponsored_timer.start(config.sponsored_commands, stop_on_error=False)
+
     await TConn.connect()
 
 async def Twitch_cleanup():
