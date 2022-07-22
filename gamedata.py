@@ -891,10 +891,16 @@ class NodeData:
             except IndexError:
                 pass
 
-        try:
-            self._discarded.extend(parser.get("potion_discard_per_floor", ())[floor - 1])
-        except IndexError:
-            pass
+        if "basemod:mod_saves" in parser:
+            try:
+                self._discarded.extend(parser["basemod:mod_saves"].get("PotionDiscardLog", ()))[floor - 1]
+            except IndexError:
+                pass
+        else:
+            try:
+                self._discarded.extend(parser.get("potion_discard_per_floor", ())[floor - 1])
+            except IndexError:
+                pass
 
         for cards in parser[prefix + "card_choices"]:
             if cards["floor"] == floor and cards not in self._cards:
