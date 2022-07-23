@@ -240,6 +240,11 @@ class DiscordConn(DBot):
         return value
 
 async def _timer(cmds: list[str]):
+    # TODO: Check live status using EventSub/PubSub
+    chan = TConn.get_channel(config.channel)
+    live = TConn.fetch_streams(user_logins=[config.channel])
+    if not chan or not live:
+        return
     cmd = None
     i = 0
     while cmd is None:
@@ -255,14 +260,11 @@ async def _timer(cmds: list[str]):
             cmds.append(maybe_cmd) # in case it gets enabled again
             continue
         if maybe_cmd == "current":
-            save = get_savefile()
+            save = await get_savefile()
             if save is None:
+                cmds.append(maybe_cmd)
                 continue
         cmd = maybe_cmd
-    # TODO: Check live status using EventSub/PubSub
-    chan = TConn.get_channel(config.channel)
-    if not chan:
-        return
     # don't use the actual command, just send the raw output
     msg: str = _cmds[cmd]["output"]
     try:
