@@ -242,7 +242,7 @@ class DiscordConn(DBot):
 async def _timer(cmds: list[str]):
     # TODO: Check live status using EventSub/PubSub
     chan = TConn.get_channel(config.channel)
-    live = TConn.fetch_streams(user_logins=[config.channel])
+    live = await TConn.fetch_streams(user_logins=[config.channel])
     if not chan or not live:
         return
     cmd = None
