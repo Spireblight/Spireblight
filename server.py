@@ -578,7 +578,18 @@ async def stream_title(ctx: ContextType):
     if live:
         await ctx.send(live[0].title)
     else:
-        await ctx.send("Could not connect to the Twitch API.")
+        await ctx.send("Could not connect to the Twitch API (or stream is offline).")
+
+@command("uptime")
+async def stream_uptime(ctx: ContextType):
+    """Display the stream uptime."""
+    live: list[Stream] = await TConn.fetch_streams(user_logins=[config.channel])
+
+    if live:
+        td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - live[0].started_at.timestamp()))
+        await ctx.send(f"The stream has been live for {str(td).partition('.')[0]}")
+    else:
+        await ctx.send("Stream is offline (if this is wrong, the Twitch API broke).")
 
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, j: Savefile):
