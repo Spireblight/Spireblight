@@ -97,7 +97,7 @@ class RunParser(FileParser):
 def _dump_all():
     import csv
     from collections import defaultdict
-    headers = ["Ironclad", "Silent", "Defect", "Watcher", "Swapped starter relic", "Victory", "Killed by", "Floor reached", "Run length", "Score", "Max HP", "Card count", "Relic count", "CARDS ->"]
+    headers = ["Ironclad", "Silent", "Defect", "Watcher", "Swapped starter relic", "Victory", "Killed by", "Floor reached", "Run length", "Score", "Max HP", "Card count", "Relic count", "Has bites", "Has apparitions", "CARDS ->"]
     rows = []
     cards = {}
     for card, internal in get_all_cards().items():
@@ -129,6 +129,11 @@ def _dump_all():
         final["Max HP"] = run.final_health[1]
         final["Card count"] = len(run["master_deck"])
         final["Relic count"] = len(run["relics"])
+        deck = list(run.cards)
+        if "Bite" in deck or "Bite+" in deck:
+            final["Has bites"] = 1
+        if "Apparition" in deck or "Apparition+" in deck:
+            final["Has apparitions"] = 1
 
         for choices in run["card_choices"]:
             if choices["picked"] not in ("SKIP", "Singing Bowl"):

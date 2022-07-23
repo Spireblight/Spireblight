@@ -30,5 +30,5 @@ class TwitchCommand(Command):
                 ("m" in self.flag and not context.author.is_mod)
             ):
                 return
-        logger.debug(f"Invoking Twitch command {self.name} by {context.author.display_name}")
+        logger.debug(f"Invoking Twitch command {self.name} by {getattr(context.author, 'display_name', context.author.name)}")
         await super().invoke(context, index=index)

@@ -9,7 +9,7 @@ import sys
 import os
 
 from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
-from twitchio.ext.routines import routine
+from twitchio.ext.routines import routine, Routine
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
@@ -61,6 +61,8 @@ _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 
 _to_add_twitch: list[TwitchCommand] = []
 _to_add_discord: list[DiscordCommand] = []
+
+_timers: dict[str, Routine] = {}
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -381,6 +383,8 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             disabled.remove(name)
             with _getfile("disabled", "w") as f:
                 f.writelines(disabled)
+            if name == "sponsored_cmd" and "sponsored" in _timers:
+                _timers["sponsored"].restart()
             await ctx.send(f"Command {name} has been enabled.")
 
         case "disable":
@@ -949,7 +953,7 @@ async def Twitch_startup():
     load()
 
     if config.global_interval and config.global_commands:
-        _global_timer = routine(seconds=config.global_interval)(_timer)
+        _timers["global"] = _global_timer = routine(seconds=config.global_interval)(_timer)
         @_global_timer.before_routine
         async def before_global():
             await TConn.wait_for_ready()
@@ -961,7 +965,7 @@ async def Twitch_startup():
         _global_timer.start(config.global_commands, stop_on_error=False)
 
     if config.sponsored_interval and config.sponsored_commands:
-        _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
+        _timers["sponsored"] = _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
         @_sponsored_timer.before_routine
         async def before_sponsored():
             await TConn.wait_for_ready()
