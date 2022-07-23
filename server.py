@@ -252,7 +252,6 @@ async def _timer(cmds: list[str]):
     while cmd is None:
         i += 1
         if i > len(cmds):
-            logger.error("Timer has only non-existent or disabled commands!")
             return
         maybe_cmd = cmds.pop(0)
         if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
