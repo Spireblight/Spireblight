@@ -833,7 +833,7 @@ class RelicData:
 
     @property
     def image(self) -> str:
-        return f"{self._relic}.png"
+        return f"{self._relic.replace(':', '_')}.png"
 
     @property
     def name(self) -> str:
