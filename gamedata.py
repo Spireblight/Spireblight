@@ -1138,7 +1138,13 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         maybe_cached.pop()
     nodes = []
     error = False
+    taken_len = len([x for x in parser[prefix + "path_taken"] if x is not None])
+    actual_len = len(parser[prefix + "path_per_floor"])
+    last_changed = 0
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+        if taken_len != actual_len and taken_len > floor:
+            if actual == "T" and floor == last_changed + 9: # Slay the Streamer boss pick
+                continue
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
         if node[0] is not None:
@@ -1193,6 +1199,9 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
                 error = True
                 continue
 
+        if cls.end_of_act:
+            last_changed = floor
+
         try:
             value: NodeData = cls.from_parser(parser, floor)
         except ValueError: # this can happen for savefiles if we're on the latest floor
@@ -1201,7 +1210,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             yield value, False
 
     if error:
-        logger.error("\n".join(f"Actual: {x:<4} | Map: {y}" for x, y in nodes))
+        logger.error("\n".join(f"Actual: {str(x):<4} | Map: {y}" for x, y in nodes))
 
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""

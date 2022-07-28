@@ -42,6 +42,8 @@ class Savefile(FileParser):
         self._matches = False
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
+        if character.startswith(("1_", "2_")):
+            character = character[2:]
         if data is None and has_run == "true" and self.data is not None:
             maybe_run = get_latest_run(None, None)
             if maybe_run["seed_played"] == self["metric_seed_played"]:
