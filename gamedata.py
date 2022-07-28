@@ -235,7 +235,7 @@ class NeowBonus:
             if c == "NONE":
                 yield self.all_bonuses.get(b, b)
             else:
-                yield f"{self.all_costs.get(c, c)} - {self.all_bonuses.get(b, b)}"
+                yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
     @property
     def has_data(self) -> bool:
@@ -1236,6 +1236,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         iterate = True
         # Slay the Streamer boss pick
         if taken_len != actual_len and actual == "T" and floor == last_changed + 10:
+            taken_len += 1 # keep track
             iterate = False
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
