@@ -90,7 +90,18 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
         if node.end_of_act:
             ends.append(node.floor)
         for name, d in totals.items():
-            d.append(getattr(node, name, 0))
+            val = getattr(node, name, 0)
+            if callable(val):
+                try:
+                    val = val()
+                except TypeError:
+                    raise HTTPForbidden(reason=f"Cannot call function {name!r} that require parameters.")
+            try:
+                val + 0
+            except TypeError:
+                raise HTTPForbidden(reason=f"Cannot use non-integer {name!r} for graphs.")
+            else:
+                d.append(val)
 
     fig, ax = plt.subplots()
     match display_type:
