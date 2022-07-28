@@ -609,7 +609,7 @@ async def bluekey(ctx: ContextType, j: Savefile):
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, j: Savefile):
     """Display what the Neow bonus was."""
-    await ctx.send(j.neow_bonus.as_str())
+    await ctx.send(f"Option taken: {j.neow_bonus.picked} {j.neow_bonus.as_str() if j.neow_bonus.has_info else ''}")
 
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, j: Savefile):

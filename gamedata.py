@@ -155,6 +155,52 @@ def generate_graph(parser: FileParser, display_type: str, params: dict[str, str]
             return Response(body=value, content_type="image/png")
 
 class NeowBonus:
+
+    all_bonuses = {
+        "THREE_CARDS": "Choose one of three cards to obtain.",
+        "RANDOM_COLORLESS": "Choose an uncommon Colorless card to obtain.",
+        "RANDOM_COMMON_RELIC": "Obtain a random common relic.",
+        "REMOVE_CARD": "Remove a card.",
+        "TRANSFORM_CARD": "Transform a card.",
+        "UPGRADE_CARD": "Upgrade a card.",
+        "THREE_ENEMY_KILL": "Enemies if the first three combats have 1 HP.",
+        "THREE_SMALL_POTIONS": "Gain 3 random potions.",
+        "TEN_PERCENT_HP_BONUS": "Gain 10% Max HP.",
+        "ONE_RANDOM_RARE_CARD": "Gain a random Rare card.",
+        "HUNDRED_GOLD": "Gain 100 gold.",
+
+        "TWO_FIFTY_GOLD": "Gain 250 gold.",
+        "TWENTY_PERCENT_HP_BONUS": "Gain 20% Max HP.",
+        "RANDOM_COLORLESS_2": "Choose a Rare colorless card to obtain.",
+        "THREE_RARE_CARDS": "Choose a Rare card to obtain.",
+        "REMOVE_TWO": "Remove two cards.",
+        "TRANSFORM_TWO_CARDS": "Transform two cards.",
+        "ONE_RARE_RELIC": "Obtain a random Rare relic.",
+
+        "BOSS_RELIC": "Lose your starter relic. Obtain a random Boss relic.",
+
+        # more Neow
+
+        "CHOOSE_OTHER_CHAR_RANDOM_COMMON_CARD": "Choose a common card from another character to obtain.",
+        "CHOOSE_OTHER_CHAR_RANDOM_UNCOMMON_CARD": "Choose an uncommon card from another character to obtain.",
+        "CHOOSE_OTHER_CHAR_RANDOM_RARE_CARD": "Choose a rare card from another character to obtain.",
+        "GAIN_RANDOM_SHOP_RELIC": "Obtain a random Shop relic.",
+        "GAIN_TWO_RANDOM_COMMON_RELICS": "Gain two random common relics.",
+        "GAIN_UNCOMMON_RELIC": "Obtain a random uncommon relic.",
+        "THREE_BIG_POTIONS": "Obtain three random potions.",
+
+        "SWAP_MEMBERSHIP_COURIER": "Take a small loan... of a million gold.",
+    }
+
+    all_costs = {
+        "CURSE": "Gain a curse.",
+        "NO_GOLD": "Lose all gold.",
+        "TEN_PERCENT_HP_LOSS": "Lose 10% Max HP.",
+        "PERCENT_DAMAGE": "Take damage.",
+        "TWO_STARTER_CARDS": "Add two starter cards.",
+        "ONE_STARTER_CARD": "Add a starter card.",
+    }
+
     def __init__(self, parser: FileParser):
         self.parser = parser
 
@@ -163,6 +209,43 @@ class NeowBonus:
         if "basemod:mod_saves" in self.parser:
             return self.parser["basemod:mod_saves"].get("NeowBonusLog")
         return self.parser.get("neow_bonus_log")
+
+    @property
+    def picked(self) -> str:
+        cost = self.parser["neow_cost"]
+        bonus = self.parser["neow_bonus"]
+        if cost == "NONE":
+            return self.all_bonuses.get(bonus, bonus)
+        return f"{self.all_costs.get(cost, cost)} - {self.all_bonuses.get(bonus, bonus)}"
+
+    @property
+    def skipped(self) -> Generator[str, None, None]:
+        if "basemod:mod_saves" in self.parser:
+            bonuses = self.parser["basemod:mod_saves"].get("NeowBonusesSkippedLog")
+            costs = self.parser["basemod:mod_saves"].get("NeowCostsSkippedLog")
+        else:
+            bonuses = self.parser.get("neow_bonuses_skipped_log")
+            costs = self.parser.get("neow_costs_skipped_log")
+
+        if not bonuses or not costs:
+            yield "<Could not fetch data>"
+            return
+
+        for c, b in zip(costs, bonuses, strict=True):
+            if c == "NONE":
+                yield self.all_bonuses.get(b, b)
+            yield f"{self.all_costs.get(c, c)} - {self.all_bonuses.get(b, b)}"
+
+    @property
+    def has_data(self) -> bool:
+        if "basemod:mod_saves" in self.parser:
+            bonuses = self.parser["basemod:mod_saves"].get("NeowBonusesSkippedLog")
+            costs = self.parser["basemod:mod_saves"].get("NeowCostsSkippedLog")
+        else:
+            bonuses = self.parser.get("neow_bonuses_skipped_log")
+            costs = self.parser.get("neow_costs_skipped_log")
+
+        return bool(bonuses and costs)
 
     @property
     def current_hp(self) -> int:
@@ -325,7 +408,7 @@ class NeowBonus:
 
     def bonus_RANDOM_COMMON_RELIC(self):
         if self.mod_data is not None:
-            return f"picked a random Common relic, and got {get_relic(self.mod_data['relicsObtained'][0])}"
+            return f"got {get_relic(self.mod_data['relicsObtained'][0])}"
         return "picked a random Common relic"
 
     def bonus_REMOVE_CARD(self):
@@ -375,9 +458,6 @@ class NeowBonus:
             return f"picked a random Rare card, and got {get_card(self.mod_data['cardsObtained'][0])}"
         return "picked a random Rare card"
 
-    def bonus_HUNDRED_GOLD(self):
-        return "got 100 gold"
-
     # option 3
 
     def bonus_TWO_FIFTY_GOLD(self):
@@ -413,6 +493,12 @@ class NeowBonus:
             return f"swapped our starter relic for {get_relic(self.mod_data['relicsObtained'][0])}"
         return f"swapped our starter relic for {get_relic(self.parser['relics'][0])}" # N'loth can mess with this
 
+    # more Neow mod
+
+    bonus_CHOOSE_OTHER_CHAR_RANDOM_COMMON_CARD = bonus_THREE_CARDS
+    bonus_CHOOSE_OTHER_CHAR_RANDOM_UNCOMMON_CARD = bonus_THREE_CARDS
+    bonus_CHOOSE_OTHER_CHAR_RANDOM_RARE_CARD = bonus_THREE_CARDS
+
     # costs for option 3
 
     def cost_CURSE(self):
@@ -438,7 +524,7 @@ class NeowBonus:
         try:
             pos = getattr(self, f"bonus_{self.parser['neow_bonus']}")
         except AttributeError:
-            return "<No Neow Bonus picked>"
+            return "<No option picked/option unknown>"
 
         try:
             if neg is None:
@@ -446,9 +532,13 @@ class NeowBonus:
             else:
                 msg = f"We {neg()}, and then {pos()}."
         except ValueError:
-            msg = "<Unknown Neow Bonus>"
+            msg = "<Unknown option>"
 
         return msg
+
+    @property
+    def has_info(self) -> bool:
+        return hasattr(self, f"bonus_{self.parser['neow_bonus']}")
 
     @property
     def cards(self) -> list[str]:

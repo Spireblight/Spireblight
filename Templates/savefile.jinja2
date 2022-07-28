@@ -29,8 +29,21 @@
     <br>
     Potion drop chance: {{ parser.potion_chance }}%
     <br>
+    Neow option picked: {{ parser.neow_bonus.picked }}
+    <br>
+    {% if parser.neow_bonus.has_data %}
+    Neow options skipped:
+    <br>
+    {% for skipped in parser.neow_bonus.skipped %}
+    - {{ skipped }}
+    {% endfor %}
+    <br>
+    {% endif %}
+    {% if parser.neow_bonus.has_info %}
     Neow Bonus: {{ parser.neow_bonus.as_str() }}
-    <br><br>
+    <br>
+    {% endif %}
+    <br>
     Hover over any map node or relic to see their stats!
     <br><br>
     {% for node in parser.path %}
