@@ -1379,5 +1379,1440 @@
       "At the start of your turn, gain #b",
       " #yMantra."
     ]
+  },
+  "downfall:NeowBlessing": {
+    "NAME": "Neow's Blessing",
+    "FLAVOR": "Ease your rage. Be as tough and unyielding as the Spire itself.",
+    "DESCRIPTIONS": [
+      "Boss has increased max HP, no starter relic, draws #b2 less cards, and has 1 less ",
+      " . NL At the start of combat, Boss gains a unique Buff effect. Can't be #yStunned."
+    ]
+  },
+  "downfall:NeowBlessing_Player": {
+    "NAME": "Neow's Blessing",
+    "FLAVOR": "Ease your rage. Be as tough and unyielding as the Spire itself.",
+    "DESCRIPTIONS": [
+      "Upon pickup, increase your Maximum HP by #b100. NL Increase your Maximum HP by #b100 at the start of each Act. NL Lose all your Potion slots. NL Draw #b1 less card and lose [E] at the start of your turn."
+    ]
+  },
+  "downfall:CoffeeDripper": {
+    "DESCRIPTIONS": [
+      " NL Being unable to Rest, Boss started with less than maximum health."
+    ]
+  },
+  "downfall:BustedCrown": {
+    "DESCRIPTIONS": [
+      " NL Being unable to pick optimal cards, Boss has fewer synergistic cards than usual."
+    ]
+  },
+  "downfall:Girya": {
+    "DESCRIPTIONS": [
+      " NL Opting to Lift instead of Rest, Boss started with less than maximum health."
+    ]
+  },
+  "downfall:Matroyshka": {
+    "DESCRIPTIONS": [
+      " NL Boss acquired ",
+      " additional relics."
+    ]
+  },
+  "downfall:Ectoplasm": {
+    "DESCRIPTIONS": [
+      " NL Being unable to gain gold, Boss has ",
+      " fewer card removals than usual."
+    ]
+  },
+  "downfall:BlackStar": {
+    "DESCRIPTIONS": [
+      " NL Boss acquired ",
+      " additional relics, but starts with less than maximum health."
+    ]
+  },
+  "downfall:MoltenEgg": {
+    "DESCRIPTIONS": [
+      " NL Boss upgraded ",
+      " Attacks from this relic."
+    ]
+  },
+  "downfall:ToxicEgg": {
+    "DESCRIPTIONS": [
+      " NL Boss upgraded ",
+      " Skills from this relic."
+    ]
+  },
+  "downfall:FrozenEgg": {
+    "DESCRIPTIONS": [
+      "Boss has many Upgraded Powers."
+    ]
+  },
+  "downfall:Shovel": {
+    "DESCRIPTIONS": [
+      " NL Boss acquired ",
+      " additional relics, but starts with less than maximum health due to not Resting."
+    ]
+  },
+  "downfall:CBRSerpentHead": {
+    "DESCRIPTIONS": [
+      " NL Boss used this gold to remove 2 cards from their deck."
+    ]
+  },
+  "downfall:CursedKey": {
+    "DESCRIPTIONS": [
+      " NL Boss gained ",
+      " Curses from this relic."
+    ]
+  },
+  "downfall:DreamCatcher": {
+    "DESCRIPTIONS": [
+      " NL Boss gained additional cards when resting."
+    ]
+  },
+  "downfall:PrayerWheel": {
+    "DESCRIPTIONS": [
+      " NL Boss gained ",
+      " extra cards from this relic."
+    ]
+  },
+  "downfall:PeacePipe": {
+    "DESCRIPTIONS": [
+      " NL Boss removed ",
+      " additional cards, but starts with less than maximum health."
+    ]
+  },
+  "downfall:RunicDome": {
+    "DESCRIPTIONS": [
+      " NL Boss may choose the order of cards unfavorably."
+    ]
+  },
+  "downfall:CentennialPuzzle": {
+    "DESCRIPTIONS": [
+      " NL Cannot trigger on the Boss's turn."
+    ]
+  },
+  "downfall:CBRFaceOfCleric": {
+    "DESCRIPTIONS": [
+      " Max HP was gained via this relic."
+    ]
+  },
+  "downfall:Omamori": {
+    "DESCRIPTIONS": [
+      " NL Prevented the Boss from gaining a "
+    ]
+  },
+  "downfall:DollysMirror": {
+    "DESCRIPTIONS": [
+      " NL The mirror duplicated "
+    ]
+  },
+  "downfall:Vampires": {
+    "NAME": "Event: Vampires",
+    "FLAVOR": "The master's blood... the master's blood! THE MASTER'S BLOOD!",
+    "DESCRIPTIONS": [
+      "Strikes have been replaced with Bites. NL -",
+      " Maximum HP."
+    ]
+  },
+  "downfall:BonfireSpirits": {
+    "NAME": "Event: Bonfire Spirits",
+    "FLAVOR": "The spirits toss small bones and fragments into the fire, which brilliantly erupts each time...",
+    "DESCRIPTIONS": [
+      "Boss removed a card from its deck to gain 10 Max HP."
+    ]
+  },
+  "downfall:DesignerInSpire": {
+    "NAME": "Event: Designer-In-Spire",
+    "FLAVOR": "This will not do, no no. What is this style? Disgusting! Are you bleeeeding? Groooss.",
+    "DESCRIPTIONS": [
+      "A card was removed from the deck, and another was upgraded."
+    ]
+  },
+  "downfall:DivineFountain": {
+    "NAME": "Event: Divine Fountain",
+    "FLAVOR": "You come across shimmering water flowing endlessly from a fountain on a nearby wall.",
+    "DESCRIPTIONS": [
+      " Curses have been removed from the deck."
+    ]
+  },
+  "downfall:Duplicator": {
+    "NAME": "Event: Duplicator",
+    "FLAVOR": "Before you lies a decorated altar to some ancient entity.",
+    "DESCRIPTIONS": [
+      "Boss duplicated a powerful card."
+    ]
+  },
+  "downfall:BigFish": {
+    "NAME": "Event: Big Fish",
+    "FLAVOR": "As you make your way down a long corridor you see a banana, a donut, and a box floating about.",
+    "DESCRIPTIONS": [
+      "The Donut was chosen. NL +5 Maximum HP.",
+      "The Box was chosen. NL A Regret curse and a relic was added."
+    ]
+  },
+  "downfall:LivingWall": {
+    "NAME": "Event: Living Wall",
+    "FLAVOR": "Forget what you know, and I'll let you go.",
+    "DESCRIPTIONS": [
+      "Boss removed a ",
+      "Boss upgraded a ",
+      "Boss transformed a ",
+      " into a "
+    ]
+  },
+  "downfall:WheelOfChange": {
+    "NAME": "Event: Wheel of Change",
+    "FLAVOR": "It's time to spin the wheel! Are you READY? Of course you are!",
+    "DESCRIPTIONS": [
+      "The Wheel gave the Boss a ",
+      "Boss was healed to maximum health.",
+      "The Wheel removed a ",
+      " from the Boss's deck.",
+      "The Wheel caused damage to the Boss."
+    ]
+  },
+  "downfall:Falling": {
+    "NAME": "Event: Falling",
+    "FLAVOR": "While in free fall you consider your options...",
+    "DESCRIPTIONS": [
+      "Strike was removed from the deck."
+    ]
+  },
+  "downfall:Augmenter": {
+    "NAME": "Event: Augmenter",
+    "FLAVOR": "Hey there, stranger. Interested in advancing science?",
+    "DESCRIPTIONS": [
+      "Boss transformed 2 cards",
+      "Boss gained J.A.X.",
+      "Boss gained the Mutagenic Strength."
+    ]
+  },
+  "downfall:AncientWriting": {
+    "NAME": "Event: Ancient Writing",
+    "FLAVOR": "Suddenly, the message becomes clear...",
+    "DESCRIPTIONS": [
+      "Boss upgraded all Strikes & Defends."
+    ]
+  },
+  "downfall:Bandits": {
+    "NAME": "Event: Red Mask Bandits",
+    "FLAVOR": "Get em Bear!",
+    "DESCRIPTIONS": [
+      "Boss defeated the Bandits, gaining the Red Mask, but starts with less than maximum health."
+    ]
+  },
+  "downfall:WingStatue": {
+    "NAME": "Event: Wing Statue",
+    "FLAVOR": "Among the stone and boulders, you notice an intricate large blue statue resembling a wing.",
+    "DESCRIPTIONS": [
+      " was removed from the deck."
+    ]
+  },
+  "downfall:Serpent": {
+    "NAME": "Event: The Ssssserpent",
+    "FLAVOR": "The most fulfilling of lives is that in which you can buy anything! Do you agree?",
+    "DESCRIPTIONS": [
+      "Boss gained a Doubt curse to gain gold, which was used to buy a relic."
+    ]
+  },
+  "downfall:Cleric": {
+    "NAME": "Event: Cleric",
+    "FLAVOR": "Hello friend! I am Cleric! Are you interested in my services?!",
+    "DESCRIPTIONS": [
+      "Boss removed a card from its deck."
+    ]
+  },
+  "downfall:OldBeggar": {
+    "NAME": "Event: Old Beggar",
+    "FLAVOR": "Spare some coin, child?",
+    "DESCRIPTIONS": [
+      "A card was removed from the deck."
+    ]
+  },
+  "downfall:Library": {
+    "NAME": "Event: Library",
+    "FLAVOR": "You come across an ornate building which appears abandoned.",
+    "DESCRIPTIONS": [
+      "Boss gained an extra synergistic card."
+    ]
+  },
+  "downfall:Mausoleum": {
+    "NAME": "Event: Mausoleum",
+    "FLAVOR": "You cannot make out the writing on the coffin, however, you do notice black fog seeping out from the sides.",
+    "DESCRIPTIONS": [
+      "Boss gained a Writhe curse and an extra relic."
+    ]
+  },
+  "downfall:Nest": {
+    "NAME": "Event: Nest",
+    "FLAVOR": "CAW CAW CAAAAAWWW!",
+    "DESCRIPTIONS": [
+      "Boss gained a Ritual Dagger."
+    ]
+  },
+  "downfall:Colosseum": {
+    "NAME": "Event: Colosseum",
+    "FLAVOR": "WE NOW@ BEGIN THE COMBAT!!!!",
+    "DESCRIPTIONS": [
+      "Boss completed the Colosseum event, gaining two additional relics."
+    ]
+  },
+  "downfall:PleadingVagrant": {
+    "NAME": "Event: Pleading Vagrant",
+    "FLAVOR": "Got anything for me friend? Please... maybe some #yCoin?",
+    "DESCRIPTIONS": [
+      "Boss robbed the Vagrants, gaining a Shame curse and "
+    ]
+  },
+  "downfall:Mushroom": {
+    "NAME": "Event: Mushrooms",
+    "FLAVOR": "You enter a corridor full of hypnotizing colored mushrooms.",
+    "DESCRIPTIONS": [
+      "Boss healed to full and gained a Parasite curse.",
+      "Boss gained the Odd Mushroom relic, but starts with less than maximum health."
+    ]
+  },
+  "downfall:ShiningLight": {
+    "NAME": "Event: Shining Light",
+    "FLAVOR": "You find a shimmering mass of light encompassing the center of the room.",
+    "DESCRIPTIONS": [
+      "Boss upgraded ",
+      " and ",
+      ", but starts with less than maximum health."
+    ]
+  },
+  "downfall:ScrapOoze": {
+    "NAME": "Event: Scrap Ooze",
+    "FLAVOR": "Before you is a slime-like creature that ate too much scrap for its own good.",
+    "DESCRIPTIONS": [
+      "Boss gain an additional relic."
+    ]
+  },
+  "downfall:GoldenIdolEvent": {
+    "NAME": "Event: Golden Idol",
+    "FLAVOR": "Atop the altar sits an ornate female statue with arms outstretched. NL She calls out to you, demanding sacrifice.",
+    "DESCRIPTIONS": [
+      "Boss took the Golden Idol, gaining an Injury curse and use the extra gold to buy "
+    ]
+  },
+  "downfall:FaceTrader": {
+    "NAME": "Event: Face Trader",
+    "FLAVOR": "Face. Let me touch? Maybe trade?",
+    "DESCRIPTIONS": [
+      "Boss gained a random face relic."
+    ]
+  },
+  "downfall:OminousForge": {
+    "NAME": "Event: Ominous Forge",
+    "FLAVOR": "CLANG! CLAAANG! CLANG!",
+    "DESCRIPTIONS": [
+      "Boss gained Warped Tongs and a Pain curse."
+    ]
+  },
+  "downfall:Purifier": {
+    "NAME": "Event: Purifier",
+    "FLAVOR": "Before you lies an elaborate shrine to a forgotten spirit.",
+    "DESCRIPTIONS": [
+      " was removed from the deck."
+    ]
+  },
+  "downfall:MatchAndKeep": {
+    "NAME": "Event: Match and Keep",
+    "FLAVOR": "Twelve cards! Match them to keep them! Five tries, no do-overs. Are you ready? Let's start!",
+    "DESCRIPTIONS": [
+      "Boss matched successfully and gained a powerful card."
+    ]
+  },
+  "downfall:Transmogrifier": {
+    "NAME": "Event: Transmogrifier",
+    "FLAVOR": "Before you lies an elaborate shrine to a forgotten spirit.",
+    "DESCRIPTIONS": [
+      "Boss transformed a starter card into a new card."
+    ]
+  },
+  "downfall:TombRedMask": {
+    "NAME": "Event: Tomb of Lord Red Mask",
+    "FLAVOR": "A highly ornamented tomb can be seen on the other side of a floating path.",
+    "DESCRIPTIONS": [
+      "Boss gained the Red Mask relic."
+    ]
+  },
+  "downfall:UpgradeShrine": {
+    "NAME": "Event: Upgrade Shrine",
+    "FLAVOR": "Before you lies an elaborate shrine to a forgotten spirit.",
+    "DESCRIPTIONS": [
+      "Boss #yUpgraded a card with Upgrade Shrine."
+    ]
+  },
+  "downfall:WeMeetAgain": {
+    "NAME": "Event: We Meet Again",
+    "FLAVOR": "It's me, #yRanwid! Have any goods for me today? The usual? A fella like me can't make it alone, you know?",
+    "DESCRIPTIONS": [
+      "Gold was traded to Ranwid in exchange for an extra relic."
+    ]
+  },
+  "downfall:GoldenShrine": {
+    "NAME": "Event: Golden Shrine",
+    "FLAVOR": "Before you lies an elaborate shrine to an ancient spirit.",
+    "DESCRIPTIONS": [
+      "Boss gained a Regret curse in exchange for gold, and used this gold to buy "
+    ]
+  },
+  "downfall:GremlinSack": {
+    "NAME": "Gremlin Sack",
+    "FLAVOR": "The Gremlin and his bodyguard were no match for you.",
+    "DESCRIPTIONS": [
+      "Upon pickup, add the following cards to your deck: NL ",
+      "Upon pickup, add #b6 cards to your deck from the Match Game.",
+      "#g(Starter) ",
+      "#g(Common) ",
+      "#b(Uncommon) ",
+      "#y(Rare) ",
+      "#b(Colorless) ",
+      "#r(Curse) "
+    ]
+  },
+  "downfall:GremlinWheel": {
+    "NAME": "Wheel of Change",
+    "FLAVOR": "No one gets two spins, he says.",
+    "DESCRIPTIONS": [
+      "At each Rest Site, you may spin the wheel once. Choosing to collect its reward uses up this relic.",
+      "This relic has been used up."
+    ]
+  },
+  "downfall:CloakOfManyFaces": {
+    "NAME": "Coat of Many Faces",
+    "FLAVOR": "It was Steve, and Bill, and Ian, and Fred, and John...",
+    "DESCRIPTIONS": [
+      "Upon pickup, gain Cultist Headpiece, Face Of Cleric, N'loth's Hungry Face, Gremlin Visage, and Ssserpent Head."
+    ]
+  },
+  "downfall:BrokenWingStatue": {
+    "NAME": "Broken Wing Statue",
+    "FLAVOR": "A broken hunk of a once-magnificent statue.",
+    "DESCRIPTIONS": [
+      "The cultists that worship the Awakened One will be interested in this."
+    ]
+  },
+  "downfall:ShatteredFragment": {
+    "NAME": "Sharpened Fragment",
+    "FLAVOR": "Once a broken statue - now a makeshift weapon.",
+    "DESCRIPTIONS": [
+      "At the start of each turn, gain a #yCrystal #yShiv."
+    ]
+  },
+  "downfall:RedIOU": {
+    "NAME": "Bandit Contract",
+    "FLAVOR": "An agreement from the Bandit trio - partially in exchange for a trinket, but mostly in exchange for their lives.",
+    "DESCRIPTIONS": [
+      "At the start of the #b3rd boss combat, Red Mask Bandits will assist you.",
+      "It's time for work, boys!",
+      "Get 'em Bear!",
+      "A deal's a deal. NL We're done here.",
+      "All hail the new NL ~Lord~ ~Red~ ~Mask!~",
+      "Good luck, boss!"
+    ]
+  },
+  "downfall:RedIOUUpgrade": {
+    "NAME": "Bandit Contract+",
+    "FLAVOR": "An agreement from the Bandit trio - partially in exchange for a trinket, but mostly in exchange for their lives.",
+    "DESCRIPTIONS": [
+      "At the start of the #b3rd boss combat, Red Mask Bandits will assist you."
+    ]
+  },
+  "downfall:KnowingSkull": {
+    "NAME": "Knowing Skull",
+    "FLAVOR": "Put me down!",
+    "DESCRIPTIONS": [
+      "At the start of each combat, you may wish for Souls, Success, or a Pick me Up."
+    ]
+  },
+  "downfall:HeartBlessingRed": {
+    "NAME": "Ruby Heart Blessing",
+    "FLAVOR": "The heart is strong.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b1 #yStrength."
+    ]
+  },
+  "downfall:HeartBlessingBlue": {
+    "NAME": "Sapphire Heart Blessing",
+    "FLAVOR": "The heart is pleased.",
+    "DESCRIPTIONS": [
+      "Upon pickup, raise your Max HP by #b10."
+    ]
+  },
+  "downfall:HeartBlessingGreen": {
+    "NAME": "Emerald Heart Blessing",
+    "FLAVOR": "The heart is everything.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b1 #yDexterity."
+    ]
+  },
+  "downfall:TeleportStone": {
+    "NAME": "Teleport Stone",
+    "FLAVOR": "Never leave home without it.",
+    "DESCRIPTIONS": [
+      "You may skip any number of rooms the next time you move, but cannot move into a Boss Room.",
+      "",
+      "This relic has been used up."
+    ]
+  },
+  "downfall:HeartsMalice": {
+    "NAME": "The Heart's Malice",
+    "FLAVOR": "The malice of corruption bestowed by the Heart.",
+    "DESCRIPTIONS": [
+      "Enemies in your first #b3 combats will flee in terror.",
+      "This relic has been used up."
+    ]
+  },
+  "downfall:Hecktoplasm": {
+    "NAME": "Hecktoplasm",
+    "FLAVOR": "This blob of slime seems to pulse with the energy of hundreds of souls. No wonder no one wanted it.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. You can no longer gain #ySouls. Breaking Keys costs no #ySouls."
+    ]
+  },
+  "downfall:replacements": {
+    "NAME": "",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "During Merchant, Boss, and Elite combats, gain [E] at the start of your turn.",
+      "Cursed Coin",
+      "Few who still live know the true cost of this old coin...",
+      "MVB Card",
+      "Truly, you are the Heart's MVB: Most Valuable Boss.",
+      "The Heart's corruption knows no limits - not even precious pets.",
+      "Corrupted Courier",
+      "The Heart restocks cards, relics, and potions. All prices are reduced by #b20%.",
+      "Combat reward screens now contain Colorless cards and cards from the Hero colors.",
+      "Gain [E] at the start of your turn. You can no longer gain #ySouls. Breaking Keys costs no #ySouls."
+    ]
+  },
+  "downfall:LizardTail": {
+    "NAME": "Super Lizard Tail",
+    "FLAVOR": "A fake tail to trick enemies during combat.",
+    "DESCRIPTIONS": [
+      "When you would die, heal to #b100% of your Max HP instead (works once)."
+    ]
+  },
+  "downfall:TestRelic": {
+    "NAME": "VFX Tester",
+    "FLAVOR": "When it index oobs, you did it.",
+    "DESCRIPTIONS": [
+      "#pRight #pClick: Play the next card."
+    ]
+  },
+  "downfall:ExtraCursedKey": {
+    "NAME": "Extra Cursed Key",
+    "FLAVOR": "Locked away for good reason.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. NL Whenever you open a non-Boss chest, obtain #b2 #rCurses."
+    ]
+  },
+  "downfall:ExtraCursedBell": {
+    "NAME": "Extra Cursed Bell",
+    "FLAVOR": "You think you hear it echoing, but can never confirm it.",
+    "DESCRIPTIONS": [
+      "Upon pickup, obtain #b2 of a unique #rCurse and #b3 relics.",
+      "The Bell Tolls Twice...",
+      "Skip Rewards",
+      "Close"
+    ]
+  },
+  "expansioncontent:StudyCardRelic": {
+    "NAME": "Tiny Bowler Hat",
+    "FLAVOR": "Whosoever controls the hat, controls the Spire.",
+    "DESCRIPTIONS": [
+      "At the start of combat, add a #yStudy #ythe #ySpire card to your hand. It costs 0."
+    ]
+  },
+  "hermit:Momento": {
+    "NAME": "Old Locket",
+    "FLAVOR": "There's a faded picture inside.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, add a #yMemento into your hand."
+    ]
+  },
+  "hermit:RyeStalk": {
+    "NAME": "Rye Stalk",
+    "FLAVOR": "Still in mint condition, despite being chewed on for so long.",
+    "DESCRIPTIONS": [
+      "At the end of your turn, ALL enemies lose HP equal to their #yhermit:Bruise."
+    ]
+  },
+  "hermit:BartenderGlass": {
+    "NAME": "Shotglass",
+    "FLAVOR": "Any liquid placed inside changes into something else.",
+    "DESCRIPTIONS": [
+      "First #b2 times you use a potion each combat, gain a random potion. You can only use #b2 potions each combat.",
+      "You cannot use any more potions this combat."
+    ]
+  },
+  "hermit:Horseshoe": {
+    "NAME": "Horseshoe",
+    "FLAVOR": "Lucky charm. Somebody is gonna be missing this.",
+    "DESCRIPTIONS": [
+      "Whenever you gain #yWeak, #yFrail or #yVulnerable, gain #b1 less."
+    ]
+  },
+  "hermit:Spyglass": {
+    "NAME": "Spyglass",
+    "FLAVOR": "Property of Kestin Highfin.",
+    "DESCRIPTIONS": [
+      "If you end your turn #yhermit:Concentrated, gain an additional [E] next turn ."
+    ]
+  },
+  "hermit:RedScarf": {
+    "NAME": "Red Scarf",
+    "FLAVOR": "It's warm and fuzzy.",
+    "DESCRIPTIONS": [
+      "Whenever you apply a debuff to an enemy, gain #b2 #yBlock."
+    ]
+  },
+  "hermit:DentedPlate": {
+    "NAME": "Dented Plate",
+    "FLAVOR": "Several bullets are still lodged inside.",
+    "DESCRIPTIONS": [
+      "While your HP is at or below #b50%, gain [E] and draw #b1 card at the start of your turn."
+    ]
+  },
+  "hermit:PetGhost": {
+    "NAME": "Pet Ghost",
+    "FLAVOR": "Poor guy.",
+    "DESCRIPTIONS": [
+      "First time you would die each combat, survive with #b1 HP instead."
+    ]
+  },
+  "hermit:CharredGlove": {
+    "NAME": "Charred Glove",
+    "FLAVOR": "Parts of the glove still glow with otherworldly cinders.",
+    "DESCRIPTIONS": [
+      "Whenever you draw a #rCurse, your next attack deals #b4 more damage."
+    ]
+  },
+  "hermit:ClaspedLocket": {
+    "NAME": "Clasped Locket",
+    "FLAVOR": "It won't open anymore.",
+    "DESCRIPTIONS": [
+      "Replaces #yOld #yLocket. First time you draw a curse each turn, #yExhaust it and draw #b2 cards. Upon pickup, obtain #b2 #rInjuries.",
+      "Never again..."
+    ]
+  },
+  "hermit:StraightRazor": {
+    "NAME": "Straight Razor",
+    "FLAVOR": "For a cleaner shave...",
+    "DESCRIPTIONS": [
+      "Whenever you remove a card from your deck, heal #b15 HP."
+    ]
+  },
+  "hermit:BrassTacks": {
+    "NAME": "Brass Tacks",
+    "FLAVOR": "The luster on these tacks never seems to fade.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b2 #yMetallicize."
+    ]
+  },
+  "hermit:BlackPowder": {
+    "NAME": "Black Powder",
+    "FLAVOR": "Handle with care.",
+    "DESCRIPTIONS": [
+      "At the end of your turn, deal #b2 damage to ALL enemies for each #yhermit:Dead_On effect triggered."
+    ]
+  },
+  "hermit:BloodyTooth": {
+    "NAME": "Broken Tooth",
+    "FLAVOR": "Appears too large to have come from a human jaw...",
+    "DESCRIPTIONS": [
+      "Whenever you beat an Elite encounter, gain #b1 #yStrength at the start of each combat for the rest of the Act."
+    ]
+  },
+  "bronze:BronzeCore": {
+    "NAME": "Bronze Core",
+    "FLAVOR": "Replace once every 50,000 years.",
+    "DESCRIPTIONS": [
+      "The first time you create a Function each combat, gain [E] ."
+    ]
+  },
+  "bronze:ProtectiveGoggles": {
+    "NAME": "Protective Goggles",
+    "FLAVOR": "Look closely.",
+    "DESCRIPTIONS": [
+      "If you end your turn with no #yEncoded cards, gain #b4 #yBlock."
+    ]
+  },
+  "bronze:DecasWashers": {
+    "NAME": "Deca's Washers",
+    "FLAVOR": "It is unclear why Deca collects these.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, draw #b3 additional cards and add a #yDazed into your draw pile."
+    ]
+  },
+  "bronze:Timepiece": {
+    "NAME": "Frost Primer",
+    "FLAVOR": "22 ounces of the chemical compound Ar22, shelf life: 22 years. Best stored in a mahogany fridge.",
+    "DESCRIPTIONS": [
+      "All Functions you create gain #yRetain."
+    ]
+  },
+  "bronze:Mallet": {
+    "NAME": "Mallet",
+    "FLAVOR": "That's it! I'm gettin me mallet!",
+    "DESCRIPTIONS": [
+      "At the start of each combat, add #b2 copies of #yFine #yTuning+ to your hand."
+    ]
+  },
+  "bronze:SilverBullet": {
+    "NAME": "Silver Bullet",
+    "FLAVOR": "Spirewolves are long gone.",
+    "DESCRIPTIONS": [
+      "Start each combat with an #yEncoded #yPiercing #yShot."
+    ]
+  },
+  "bronze:MakeshiftBattery": {
+    "NAME": "Makeshift Battery",
+    "FLAVOR": "It's an 8.9 volt.",
+    "DESCRIPTIONS": [
+      "Gain [E] and add a #ySlimed into your discard pile at the start of your turn."
+    ]
+  },
+  "bronze:CableSpool": {
+    "NAME": "Cable Spool",
+    "FLAVOR": "Tangled...",
+    "DESCRIPTIONS": [
+      "#yEncode a copy of the first #yEncodable card you play each combat."
+    ]
+  },
+  "bronze:ElectromagneticCoil": {
+    "NAME": "Electromagnetic Coil",
+    "FLAVOR": "An inefficient but entertaining power source.",
+    "DESCRIPTIONS": [
+      "Functions are now made up of #b4 cards."
+    ]
+  },
+  "bronze:PlatinumCore": {
+    "NAME": "Platinum Core",
+    "FLAVOR": "Changelog: Improved user experience.",
+    "DESCRIPTIONS": [
+      "Replaces ",
+      ".[] NL The first #b3 Functions you create each combat cost #b0 until played."
+    ]
+  },
+  "bronze:BottledCode": {
+    "NAME": "Bottled Code",
+    "FLAVOR": "Actually, I have code for that exact thing...",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a card with #yEncode. Start each combat with this card #yEncoded.",
+      "Choose a card for ",
+      "Start each combat with #yEncoded ",
+      "."
+    ]
+  },
+  "bronze:DonusWashers": {
+    "NAME": "Donu's Washers",
+    "FLAVOR": "It is rather clear why Donu collects these.",
+    "DESCRIPTIONS": [
+      "At the start of combat, gain [E] [E] and add #b1 #yVoid into your draw pile."
+    ]
+  },
+  "bronze:BronzeIdol": {
+    "NAME": "Bronze Idol",
+    "FLAVOR": "An ancient, weaponised antivirus - who knows who made it, and why?",
+    "DESCRIPTIONS": [
+      "#yStatus cards may now be played for useful effects."
+    ]
+  },
+  "bronze:AnalyticalCore": {
+    "NAME": "Paradox Artifact",
+    "FLAVOR": "You've never seen a coding frenzy like this before.",
+    "DESCRIPTIONS": [
+      "At the start of each turn, add a random card with #yEncode to your hand and give it #yEthereal."
+    ]
+  },
+  "champ:ChampionCrown": {
+    "NAME": "Champion's Crown",
+    "FLAVOR": "A WINNER IS YOU!",
+    "DESCRIPTIONS": [
+      "At the start of combat, enter #bDefensive or #rBerserker Stance."
+    ]
+  },
+  "champ:BlackKnightHelmet": {
+    "NAME": "Black Knight's Helm",
+    "FLAVOR": "Only a flesh wound.",
+    "DESCRIPTIONS": [
+      "The first time you enter each Stance each combat: NL #bDefensive: Gain #b2 Dexterity and lose #b1 Strength. NL #rBerserker: Gain #b2 Strength and lose #b1 Dexterity."
+    ]
+  },
+  "champ:Barbells": {
+    "NAME": "Barbell",
+    "FLAVOR": "1000 reps? Psh. I can do 1001.",
+    "DESCRIPTIONS": [
+      "Whenever you enter a Rest Site, if you have at least #b10 Upgradable cards in your deck, #yUpgrade one at random."
+    ]
+  },
+  "champ:BerserkersGuideToSlaughter": {
+    "NAME": "Berserker's Guide",
+    "FLAVOR": "The text is illegible.",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #b3 #yVigor."
+    ]
+  },
+  "champ:ChampionCrownUpgraded": {
+    "NAME": "Victorious Crown",
+    "FLAVOR": "Conglaturation!! You are the greatest winner.",
+    "DESCRIPTIONS": [
+      "Replaces #rChampion's #rCrown. NL Start each combat in #ychamp:Ultimate #yStance, which lasts for #b1 turn."
+    ]
+  },
+  "champ:DefensiveTrainingManual": {
+    "NAME": "Defensive Thesis",
+    "FLAVOR": "Pro tip: Don't get hit.",
+    "DESCRIPTIONS": [
+      "Defensive Stance's #yFinisher #yBonus grants #b5 more #yBlock."
+    ]
+  },
+  "champ:DeflectingBracers": {
+    "NAME": "Deflecting Bracers",
+    "FLAVOR": "If you thought blocking was good then...",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #ychamp:Counter equal to half the amount of expired #yBlock."
+    ]
+  },
+  "champ:DuelingGlove": {
+    "NAME": "Dueling Glove",
+    "FLAVOR": "Count from ten...",
+    "DESCRIPTIONS": [
+      "After using a single-target #yAttack, if the target has no #yVulnerable, apply #b1 #yVulnerable."
+    ]
+  },
+  "champ:FightingForDummies": {
+    "NAME": "Dolphin's Style Guide",
+    "FLAVOR": "Author: Renowned explorer and pugilist Dolphin K. Mist.",
+    "DESCRIPTIONS": [
+      "If you end your turn while in no #yStance, draw #b1 additional card next turn."
+    ]
+  },
+  "champ:GladiatorsBookOfMartialProwess": {
+    "NAME": "Gladiators Manual",
+    "FLAVOR": "Try everything - something will stick.",
+    "DESCRIPTIONS": [
+      "Whenever you play a #yCombo, a #yFinisher, and enter a #yStance in the same turn, gain #b1 #yStrength and #yDexterity."
+    ]
+  },
+  "champ:PowerArmor": {
+    "NAME": "Power Armor",
+    "FLAVOR": "Bought used.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. NL Your maximum #yVigor and #ychamp:Counter is #b10."
+    ]
+  },
+  "champ:SignatureFinisher": {
+    "NAME": "Signature Finisher",
+    "FLAVOR": "And now, it's time for my ULTIMATE MOVE!",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a #yFinisher. This #yFinisher costs #b0, can be used without a #yStance, and never causes your #yStance to be exited.",
+      "Choose a card for ",
+      " costs 0, can be used without a #yStance, and never causes your #yStance to be exited."
+    ]
+  },
+  "champ:SpectersHand": {
+    "NAME": "Spectre's Hand",
+    "FLAVOR": "Some victories stay with you.",
+    "DESCRIPTIONS": [
+      "Whenever you Enter a Stance, gain a basic #yStrike or #yDefend. It costs #b0 and has #yExhaust."
+    ]
+  },
+  "champ:LiftRelic": {
+    "NAME": "Inner Strength",
+    "FLAVOR": "It's about the gigantic sword in your heart.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b",
+      " #yStrength."
+    ]
+  },
+  "champ:ChampStancesModRelic": {
+    "NAME": "New Challenger",
+    "FLAVOR": "Can you take the crown?",
+    "DESCRIPTIONS": [
+      "Start each combat in a random Champ #yStance."
+    ]
+  },
+  "Guardian:ModeShifter": {
+    "NAME": "Bronze Gear",
+    "FLAVOR": "Protection where you need it most.",
+    "DESCRIPTIONS": [
+      "The first time you enter #yguardianmod:Defensive_Mode each combat, gain an additional #b10 #yBlock. NL Guardian starts the run with a random common #yGem."
+    ]
+  },
+  "Guardian:ModeShifterPlus": {
+    "NAME": "Guardian Gear",
+    "FLAVOR": "Replace every 3,000 floors.",
+    "DESCRIPTIONS": [
+      "Replaces #rBronze #rGear. NL Begin each combat in #yguardianmod:Defensive_Mode, which persists for #b3 turns."
+    ]
+  },
+  "Guardian:DefensiveModeMoreBlock": {
+    "NAME": "Baalor's Lordly Plate",
+    "FLAVOR": "One can never have enough armor.",
+    "DESCRIPTIONS": [
+      "Whenever you #yguardianmod:Brace, #yBrace 1 more."
+    ]
+  },
+  "Guardian:guardianmod:GemCopier": {
+    "NAME": "Gem Tumbler",
+    "FLAVOR": "Only the most pristine will do.",
+    "DESCRIPTIONS": [
+      "When you play a #yguardianmod:Gem card, play a copy of it."
+    ]
+  },
+  "Guardian:PocketSentry": {
+    "NAME": "Arumba's Pocket Sentry",
+    "FLAVOR": "Sentry Mode active. Target acquired. No hard feelings.",
+    "DESCRIPTIONS": [
+      "At the start of each turn, alternates between: NL Deal #b",
+      " damage to a random enemy. NL Apply #b1 #yWeak to ALL enemies."
+    ]
+  },
+  "Guardian:SackOfGems": {
+    "NAME": "Sack of Gems",
+    "FLAVOR": "Ooh... shiny!",
+    "DESCRIPTIONS": [
+      "Upon pickup, add #b5 random #yguardianmod:Gems to your deck."
+    ]
+  },
+  "Guardian:StasisCodex": {
+    "NAME": "Pilot's Codex",
+    "FLAVOR": "Designs and diagrams of the Spire's earliest manually-driven prototypes, by Master Pilot David.",
+    "DESCRIPTIONS": [
+      "If you end your turn with no cards in #yguardianmod:Stasis, choose #b1 of #b3 cards to place into #yguardianmod:Stasis."
+    ]
+  },
+  "Guardian:StasisSlotIncreaseRelic": {
+    "NAME": "Tiny Police Box",
+    "FLAVOR": "It's bigger on the inside...",
+    "DESCRIPTIONS": [
+      "Start each combat with #b2 additional Stasis slots."
+    ]
+  },
+  "Guardian:StasisSlotReductionRelic": {
+    "NAME": "Wander Bots",
+    "FLAVOR": "These drones find the most wonderful salvage, but require processing power to maintain.",
+    "DESCRIPTIONS": [
+      "On pickup, lose #b2 Stasis slots. NL Gain [E] at the start of your turn."
+    ]
+  },
+  "Guardian:StasisUpgradeRelic": {
+    "NAME": "Cryo Chamber",
+    "FLAVOR": "Things always seem better coming out than they did going in.",
+    "DESCRIPTIONS": [
+      "Gain #b1 Stasis slot. Whenever a card enters #yguardianmod:Stasis, #yUpgrade it."
+    ]
+  },
+  "Guardian:BottledStasis": {
+    "NAME": "Bottled Black Hole",
+    "FLAVOR": "Somewhere, something incredible is waiting to be known.",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a card. Start each combat with this card in #yguardianmod:Stasis.",
+      "Choose a card for ",
+      "Start each combat with ",
+      " in #yguardianmod:Stasis."
+    ]
+  },
+  "Guardian:StasisEgg": {
+    "NAME": "Quantum Chamber",
+    "FLAVOR": "You get the chicken by hatching the egg, not by smashing it.",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a card. Start each combat with this card removed from your deck. At the start of your #b4th turn, return it and #b2 copies of it to your hand.",
+      "Choose a card for ",
+      "Start each combat with ",
+      " removed from your deck. At the start of your #b4th turn, return it and #b2 copies of it to your hand."
+    ]
+  },
+  "Guardian:TickHelperRelic": {
+    "NAME": "Cooling Fluid",
+    "FLAVOR": "Hazardous. Do not consume.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b2 additional Stasis slots. NL When a card enters #yguardianmod:Stasis, increase its turn counter by #b2."
+    ]
+  },
+  "Guardian:PickAxe": {
+    "NAME": "Pick of Rhapsody",
+    "FLAVOR": "With as many gemstones that litter the Spire, it is hard to imagine anyone so unlucky to have needed this Pick to aid them.",
+    "DESCRIPTIONS": [
+      "You can now #gMine for #b2 #yguardianmod:Gems at Rest Sites (up to #b3 times)."
+    ]
+  },
+  "Guardian:GemstoneGun": {
+    "NAME": "Gemstone Gun",
+    "FLAVOR": "Bang! Bang! Bang! Hey, I matched three!",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose #b3 #yguardianmod:Gems. At the start of each combat, gain a card with #yRetain, #yExhaust, and each chosen #yGem socketed.",
+      "Choose a Gem to load the Gem Gun."
+    ]
+  },
+  "Guardian:BottledAnomaly": {
+    "NAME": "Bottled Anomaly",
+    "FLAVOR": "Swirling and swirling and finally breaking.",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a card. At the start of each combat, remove it from your draw pile. At the start of turn #b3, add it into your hand. It costs #b0.",
+      "Choose a card for ",
+      "Start each combat with ",
+      " removed from your draw pile. At the start of turn #b3, add it into your hand. NL It costs #b0."
+    ]
+  },
+  "hexamod:SpiritBrand": {
+    "NAME": "Spirit Brand",
+    "FLAVOR": "A bound protector.",
+    "DESCRIPTIONS": [
+      "The first time you #yIgnite a Ghostflame each turn, gain #b4 #yBlock."
+    ]
+  },
+  "hexamod:TheBrokenSeal": {
+    "NAME": "The Broken Seal",
+    "FLAVOR": "Unlimited, unrestrained, unquenchable power.",
+    "DESCRIPTIONS": [
+      "Upon pickup, raise your Max HP by #b10, then heal all of your HP. Start each combat with #b2 #yStrength, #b2 #yDexterity, and #b2 #yhexamod:Intensity. You can not receive #pThe #pBroken #pSeal again."
+    ]
+  },
+  "hexamod:UnbrokenSoul": {
+    "NAME": "Mark of the Ether",
+    "FLAVOR": "Let’s see if we can do... better.",
+    "DESCRIPTIONS": [
+      "Replaces ",
+      ".[] NL The first time you #yIgnite a Ghostflame each turn, gain [E] ."
+    ]
+  },
+  "hexamod:IceCube": {
+    "NAME": "Xanatos' Icy Charm",
+    "FLAVOR": "I feel... cold.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. #yhexamod:Soulburn takes #b4 turns to activate."
+    ]
+  },
+  "hexamod:SoulConsumer": {
+    "NAME": "Thermal Stone",
+    "FLAVOR": "A fire would liven this thing up!",
+    "DESCRIPTIONS": [
+      "If #yhexamod:Soulburn detonates, heal #b4 HP at the end of combat."
+    ]
+  },
+  "hexamod:RecyclingMachine": {
+    "NAME": "Recycler",
+    "FLAVOR": "One day, it shall be recycled too.",
+    "DESCRIPTIONS": [
+      "The first time an non-Status and non-Curse #yEthereal card is #yExhausted each combat, add a copy to your hand that costs #b0 until played."
+    ]
+  },
+  "hexamod:MatchstickCase": {
+    "NAME": "Sneaky Teakwood Match",
+    "FLAVOR": "Lights on any surface!",
+    "DESCRIPTIONS": [
+      "At the start of each combat, #yhexamod:Ignite the current Ghostflame and #yhexamod:Advance."
+    ]
+  },
+  "hexamod:InflammatoryLetter": {
+    "NAME": "Jar of TOBSCo",
+    "FLAVOR": "A little extra heat makes everything better.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b1 #yhexamod:Intensity."
+    ]
+  },
+  "hexamod:SoulOfChaos": {
+    "NAME": "Soul of Chaos",
+    "FLAVOR": "Mayhem, made manifest.",
+    "DESCRIPTIONS": [
+      "The fourth Ghostflame becomes a #yMayhem #yGhostflame. NL #yMayhem #yGhostflame activates when you end your turn on it. NL #yIgnition: Play the top card of your draw pile."
+    ]
+  },
+  "hexamod:JarOfFuel": {
+    "NAME": "Olexa's Shield",
+    "FLAVOR": "Protection on-demand.",
+    "DESCRIPTIONS": [
+      "Swap the positions of the #yBolstering #yGhostflame and the first #ySearing #yGhostflame."
+    ]
+  },
+  "hexamod:BolsterEngine": {
+    "NAME": "Tricky's Bolster-Rod",
+    "FLAVOR": "Backed by the study of a thousand books. Knowledge is power!",
+    "DESCRIPTIONS": [
+      "The first time you play a #yPower card each combat, gain #b6 #yBlock and #b1 #yStrength."
+    ]
+  },
+  "hexamod:CandleOfCauterizing": {
+    "NAME": "Red Candle",
+    "FLAVOR": "Fire BURNS...",
+    "DESCRIPTIONS": [
+      "Whenever an #yAttack deals unblocked damage, apply #b2 #yhexamod:Soulburn."
+    ]
+  },
+  "hexamod:Sixitude": {
+    "NAME": "Six-Point Brand",
+    "FLAVOR": "Fire, fire, fire, fire, fire, FIRE!",
+    "DESCRIPTIONS": [
+      "Whenever you play #b6 cards, deal #b6 damage to a random enemy."
+    ]
+  },
+  "Slimebound:AbsorbEndCombat": {
+    "NAME": "Heart of Goo",
+    "FLAVOR": "I feel so funky.",
+    "DESCRIPTIONS": [
+      "Whenever you #yslimeboundmod:Consume, heal #b2 HP, up to #b8 each combat."
+    ]
+  },
+  "Slimebound:AbsorbEndCombatUpgraded": {
+    "NAME": "Black Heart of Goo",
+    "FLAVOR": "The Secret of the Ooze.",
+    "DESCRIPTIONS": [
+      "Replaces ",
+      ".[] NL Whenever you #yslimeboundmod:Consume, heal #b3 HP, up to #b15 each combat."
+    ]
+  },
+  "Slimebound:SlimedTailRelic": {
+    "NAME": "Slimed Tail",
+    "FLAVOR": "A fake tail to trick enemies during combat, completely covered in slime.",
+    "DESCRIPTIONS": [
+      "When you fall below #b50% of your Maximum HP, #yslimeboundmod:Split into a #yslimeboundmod:Guerilla #ySlime, and the next time you take damage, your leading slime is #yslimeboundmod:Absorbed instead. (works once per combat).",
+      "This relic has been used this combat. It will become active again next combat."
+    ]
+  },
+  "Slimebound:PotencyRelic": {
+    "NAME": "Stone of Nomakk",
+    "FLAVOR": "When presented to one of your Goop Gang, it seems to make the blob dance.",
+    "DESCRIPTIONS": [
+      "At the start of combat, #ySplit into a #yslimeboundmod:Mire #ySlime and gain #b1 #yslimeboundmod:Potency."
+    ]
+  },
+  "Slimebound:DailySplitRelic": {
+    "NAME": "Slime the Spire",
+    "FLAVOR": "ALWAYS Split.  Why is this a relic? Cause I can't figure out how to add the custom mod to the list of active mods UI!",
+    "DESCRIPTIONS": [
+      "#bCustom #bRun #bModifier NL All enemies form into two Slime enemies at #b50% HP."
+    ]
+  },
+  "Slimebound:ScrapOozeRelic": {
+    "NAME": "Scrap Ooze",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "At the start of combat, spawn #yScrap #yOoze (can be revived if #yAbsorbed). NL At Rest Sites, you can donate a card to the #yScrap #yOoze, modifying its damage: NL #b+1 damage for #gUncommons NL #b+2 damage for #yRares NL #b-1 damage for Commons NL #b-2 damage for #rCurses",
+      "Remove a card from your deck and modify Scrap Ooze's damage.",
+      "Nothing to give to the Scrap Ooze.",
+      "Scrap"
+    ]
+  },
+  "Slimebound:GreedOozeRelic": {
+    "NAME": "Greed Ooze",
+    "FLAVOR": "A friend found in the Spire who devours souls.",
+    "DESCRIPTIONS": [
+      "At the start of combat, spawn #yGreed #yOoze (can be revived if #yAbsorbed). NL At Rest Sites, #yGreed #yOoze will take #b50 of your souls, increasing its damage by #b1."
+    ]
+  },
+  "Slimebound:PreparedRelic": {
+    "NAME": "Slime Soup",
+    "FLAVOR": "Tastes awful, but incredibly healthy.",
+    "DESCRIPTIONS": [
+      "When you enter a Rest Site, begin the next combat with a #yPrepare card that costs #b0."
+    ]
+  },
+  "Slimebound:AggressiveSlimeRelic": {
+    "NAME": "Goop Dweller",
+    "FLAVOR": "He followed me home. Can I keep it?",
+    "DESCRIPTIONS": [
+      "At the start of combat, #yslimeboundmod:Split into a #yslimeboundmod:Bruiser #ySlime."
+    ]
+  },
+  "Slimebound:SlimedSkullRelic": {
+    "NAME": "Slimy Skull",
+    "FLAVOR": "A Snecko skull in absolutely awful condition. Unclean and slimy, dirt and grime stick to it like glue.",
+    "DESCRIPTIONS": [
+      "Whenever you apply #yslimeboundmod:Goop, apply an additional #b",
+      " #yslimeboundmod:Goop."
+    ]
+  },
+  "Slimebound:MaxSlimesRelic": {
+    "NAME": "Jeremiah's Banner",
+    "FLAVOR": "You and ooze army.",
+    "DESCRIPTIONS": [
+      "At the start of combat, #yslimeboundmod:Split into a #yslimeboundmod:Leeching #ySlime and gain #b1 Slime slot."
+    ]
+  },
+  "Slimebound:SelfDamagePreventRelic": {
+    "NAME": "Protective Gear",
+    "FLAVOR": "The best defense is a good offense.",
+    "DESCRIPTIONS": [
+      "Reduce the damage you take from #yslimeboundmod:Tackles by #b3."
+    ]
+  },
+  "Slimebound:TarBlob": {
+    "NAME": "Tarr Blob",
+    "FLAVOR": "The bad kind of Slime.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. At the start of combat, lose #b1 Slime slot."
+    ]
+  },
+  "Slimebound:StickyStick": {
+    "NAME": "Gelatinous Cube",
+    "FLAVOR": "Hey, it stuck to your body.",
+    "DESCRIPTIONS": [
+      "Whenever you draw a #yStatus card, draw #b1 card."
+    ]
+  },
+  "Gremlin:ImpeccablePecs": {
+    "NAME": "Impeccable Pecs",
+    "FLAVOR": "Glorious.",
+    "DESCRIPTIONS": [
+      "Whenever you gain #yStrength, gain an equal amount of #yTemporary_HP. NL Start each combat with #b1 #yStrength."
+    ]
+  },
+  "Gremlin:FragmentationGrenade": {
+    "NAME": "Fragmentation Grenade",
+    "FLAVOR": "Nobody dares to ask where the Gremlin got it from.",
+    "DESCRIPTIONS": [
+      "Damage dealt to random enemies is increased by #b", "."
+    ]
+  },
+  "Gremlin:GremlinBomb": {
+    "NAME": "Gremlin Bomb",
+    "FLAVOR": "Gremlins have an uncanny knack for finding dangerous things. Sometimes, they even survive looting them.",
+    "DESCRIPTIONS": [
+      "Whenever a Gremlin dies, deal #b", " damage to ALL enemies."
+    ]
+  },
+  "Gremlin:GremlinGravestone": {
+    "NAME": "Gremlin Gravestone",
+    "FLAVOR": "Where do gremlins go when they die? Not bloody far enough.",
+    "DESCRIPTIONS": [
+      "Dead Gremlins can be Resurrected at Rest Sites as a Free Action."
+    ]
+  },
+  "Gremlin:GremlinKnob": {
+    "NAME": "Mob Leader's Staff",
+    "FLAVOR": "Among gremlin mobs, the one with the best horn maintains complete command over the troupe, until another one manages to steal it.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, gain [E] , draw #b1 card, and #ySwap to the next Gremlin."
+    ]
+  },
+  "Gremlin:GremlinKnobUpgrade": {
+    "NAME": "Mob Leader's Crown",
+    "FLAVOR": "The fancier the symbol of office, the more likely it is to be stolen.",
+    "DESCRIPTIONS": [
+      "Replaces ",
+      ". NL The first time you shuffle your draw pile each turn, gain [E] , draw #b1 card, and #ySwap to the next Gremlin."
+    ]
+  },
+  "Gremlin:GremlinMask": {
+    "NAME": "Gremlin Mask",
+    "FLAVOR": "A sign of status among the Gremlin Mobs.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b1 #ytemporary #yStrength."
+    ]
+  },
+  "Gremlin:LeaderVoucher": {
+    "NAME": "Gremlin Leader's Voucher",
+    "FLAVOR": "IOU 1 Gremlin",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. NL Upon pickup, #rpermanently #rlose #ra #rGremlin.",
+      " NL #r( #rFat #rGremlin #r)",
+      " NL #r( #rGremlin #rWizard #r)",
+      " NL #r( #rMad #rGremlin #r)",
+      " NL #r( #rShield #rGremlin #r)",
+      " NL #r( #rSneaky #rGremlin #r)"
+    ]
+  },
+  "Gremlin:MagicalMallet": {
+    "NAME": "Magic Mallet",
+    "FLAVOR": "Stubs toes twice as hard.",
+    "DESCRIPTIONS": [
+      "Whenever you apply #yWeak, gain #b1 #yWiz, up to #b3 times per turn."
+    ]
+  },
+  "Gremlin:PricklyShields": {
+    "NAME": "Prickly Shields",
+    "FLAVOR": "Gremlins use whatever scraps they can find as weapons or armor. Some serve as both.",
+    "DESCRIPTIONS": [
+      "Whenever you gain #yBlock, deal #b", " damage to a random enemy."
+    ]
+  },
+  "Gremlin:ShortStature": {
+    "NAME": "Short Stature",
+    "FLAVOR": "It is easy to get away with mischief if you are literally beneath their notice.",
+    "DESCRIPTIONS": [
+      "The first time a Gremlin would die each combat, heal it to #b75% of your Max HP instead.",
+      "Already used this combat."
+    ]
+  },
+  "Gremlin:StolenMerchandise": {
+    "NAME": "Stolen Merchandise",
+    "FLAVOR": "\"Blasted, thieving Gremlins!\".",
+    "DESCRIPTIONS": [
+      "Whenever you #ySwap, gain an #yEcho of a random Colorless card. NL At the start of combat, the Merchant gains #b",
+      " Strength.",
+      "You no good, blasted, thieves!",
+      "You cowardly, wretched vermin!",
+      "Greedy grasping gremlins!"
+    ]
+  },
+  "Gremlin:SupplyScroll": {
+    "NAME": "Supply Scroll",
+    "FLAVOR": "A surprisingly detailed inventory of the mob's various bits and bobbles.",
+    "DESCRIPTIONS": [
+      "At the start of your 3rd turn, gain a #ySupply #yScroll."
+    ]
+  },
+  "Gremlin:TagTeamwork": {
+    "NAME": "Tag Teamwork",
+    "FLAVOR": "Teamwork makes the dream work.",
+    "DESCRIPTIONS": [
+      "Whenever you draw #yTag #yTeam, draw another card. NL Upon pickup, add two copies of #yTag #yTeam to your deck."
+    ]
+  },
+  "Gremlin:WizardHat": {
+    "NAME": "Wizard Hat",
+    "FLAVOR": "The accompanying robes have long since been stolen.",
+    "DESCRIPTIONS": [
+      "Whenever you consume #yWiz, remove a debuff at random."
+    ]
+  },
+  "Gremlin:WizardStaff": {
+    "NAME": "Wizard Staff",
+    "FLAVOR": "The pride and joy of every Gremlin Wizard, this staff is a frequent target of theft by rival mobs.",
+    "DESCRIPTIONS": [
+      "#yWiz deals #b7 additional damage."
+    ]
+  },
+  "Gremlin:WoundPoker": {
+    "NAME": "Wound Poker",
+    "FLAVOR": "Does it hurt when I do this?.",
+    "DESCRIPTIONS": [
+      "At the end of each turn, deal #b", " damage to each #yWeakened enemy."
+    ]
+  },
+  "Gremlin:PatchFixes": {
+    "NAME": "",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "Upon pickup, raise all your Gremlins' Max HP by #b",
+      "When adding cards into your deck, you may raise all your Gremlins' Max HP by #b1 instead.",
+      " #yGold. NL Raise all your Gremlins' Max HP by #b",
+      "At the end of every 5th combat, raise all your Gremlins' Max HP by #b1.",
+      "+1 Max HP"
+    ]
+  },
+  "sneckomod:SneckoSoul": {
+    "NAME": "Snecko Soul",
+    "FLAVOR": "0...3...2...2...1",
+    "DESCRIPTIONS": [
+      "The first time you play an #ysneckomod:Offclass card in a combat, gain [E] and draw a card."
+    ]
+  },
+  "sneckomod:SuperSneckoSoul": {
+    "NAME": "Super Snecko Soul",
+    "FLAVOR": "3120231321230320",
+    "DESCRIPTIONS": [
+      "Replaces ",
+      ".[] NL The first time you play an #ysneckomod:Offclass each turn, gain [E] ."
+    ]
+  },
+  "sneckomod:CleanMud": {
+    "NAME": "Snake-Charmer's Flute",
+    "FLAVOR": "Sssssss...",
+    "DESCRIPTIONS": [
+      "#ysneckomod:Muddled cards can't cost #b3."
+    ]
+  },
+  "sneckomod:ConfusingCodex": {
+    "NAME": "Ring of the Snek",
+    "FLAVOR": "Illegible, unreadable, due by Thursday.",
+    "DESCRIPTIONS": [
+      "At the start of combat, apply #b0-2 #yWeak and #yVulnerable to ALL enemies."
+    ]
+  },
+  "sneckomod:CrystallizedMud": {
+    "NAME": "Mesmerising Pendant",
+    "FLAVOR": "Dazzling dirt.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. #ysneckomod:Muddled cards can't cost #b0."
+    ]
+  },
+  "sneckomod:LoadedDie": {
+    "NAME": "Loaded Die",
+    "FLAVOR": "Cheese-stuffed.",
+    "DESCRIPTIONS": [
+      "Cards that choose random numbers have +1 minimum."
+    ]
+  },
+  "sneckomod:RareBoosterPack": {
+    "NAME": "Rare Booster Box",
+    "FLAVOR": "Mint condition.",
+    "DESCRIPTIONS": [
+      "Upon pickup, obtain a #yUnidentified #yRare card of each card type."
+    ]
+  },
+  "sneckomod:SleevedAce": {
+    "NAME": "Sleeved Ace",
+    "FLAVOR": "We're all aces.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, gain a #yPure #yLuck with #yRetain."
+    ]
+  },
+  "sneckomod:UnknownEgg": {
+    "NAME": "Unidentified Egg",
+    "FLAVOR": "What will hatch? Pay $1000 to see.",
+    "DESCRIPTIONS": [
+      "#yIdentifying becomes a free action. NL #yUnidentified cards in card rewards are #yUpgraded."
+    ]
+  },
+  "sneckomod:SuperSneckoEye": {
+    "NAME": "Super Snecko Eye",
+    "FLAVOR": "0121012",
+    "DESCRIPTIONS": [
+      "Replaces #ySnecko #yEye. At the start of your turn, draw #b2 additional cards. Start each combat #yConfused. The first time you draw a card that costs #b3 each combat, reduce its cost to #b0."
+    ]
+  },
+  "sneckomod:SneckoTalon": {
+    "NAME": "Idol of Retromation",
+    "FLAVOR": "Often called the Idol of Reto for short.",
+    "DESCRIPTIONS": [
+      "At the start of your turn, reduce the cost of the most expensive card in your hand by #b1 for this turn."
+    ]
+  },
+  "sneckomod:BlankCard": {
+    "NAME": "Blank Card",
+    "FLAVOR": "Card Mimic.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, play a copy of a random card from your deck."
+    ]
+  },
+  "sneckomod:D8": {
+    "NAME": "Mystical Octahedron",
+    "FLAVOR": "It appears weighted toward one side.",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose a card that selects a random number for its effects. This card always selects its maximum possible number.",
+      "Choose a card for ",
+      "Whenever ",
+      " is played, it chooses its maximum possible number for its effect."
+    ]
+  },
+  "sneckomod:BabySnecko": {
+    "NAME": "Young Snecko",
+    "FLAVOR": "Bewilderingly adorable.",
+    "DESCRIPTIONS": [
+      "Deals #b5 damage to a random enemy at the start of your turn."
+    ]
+  },
+  "sneckomod:SneckoCommon": {
+    "NAME": "Seal of Approval",
+    "FLAVOR": "I'm The Ironclad and this is my favorite Relic in the Spire.  -Merchant Advertising Pamphlet",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose #b1 of #b3 #yUnidentified #yCharacter cards to add to your deck. All future #yUnidentified #yCharacter cards found will be of this character.",
+      "All Unidentified Character cards found will be ",
+      " cards."
+    ]
+  },
+  "sneckomod:SneckoBoss": {
+    "NAME": "Lucky Horseshoe",
+    "FLAVOR": "Make your own luck.",
+    "DESCRIPTIONS": [
+      "Upon pickup, choose #b1 of #b3 #yUnidentified #yCharacter cards. Add #b5 copies of it to your deck. All combats drop an additional card reward of the chosen character's cards.",
+      "Upon pickup, obtain #b5 #yUnidentified ",
+      " cards. All combats drop an additional ",
+      " card reward."
+    ]
   }
 }
