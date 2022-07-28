@@ -1199,14 +1199,14 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
                 error = True
                 continue
 
+        if cls.end_of_act:
+            last_changed = floor
+
         try:
             value: NodeData = cls.from_parser(parser, floor)
         except ValueError: # this can happen for savefiles if we're on the latest floor
             continue
         else:
-            if value.end_of_act:
-                last_changed = floor
-
             yield value, False
 
     if error:
@@ -1347,6 +1347,8 @@ class EventElite(EliteEncounter):
     map_icon = "event.png"
 
 class EventNode:
+    end_of_act = False
+
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra) -> NodeData:
         events = []
