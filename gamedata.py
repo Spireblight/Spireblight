@@ -1142,12 +1142,13 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
     actual_len = len(parser[prefix + "path_per_floor"])
     last_changed = 0
     for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+        iterate = True
         # Slay the Streamer boss pick
         if taken_len != actual_len and actual == "T" and floor == last_changed + 10:
-            continue
+            iterate = False
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
-        if node[0] is not None:
+        if iterate and node[0] is not None:
             node[1] = next(on_map)
 
         nodes.append(node)
@@ -1157,6 +1158,9 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             if floor == maybe_node.floor: # if it's not, then something's wrong. just regen it
                 yield maybe_node, True
                 continue
+
+        if not iterate:
+            continue
 
         match node:
             case ("M", "M"):
