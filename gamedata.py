@@ -650,7 +650,10 @@ class FileParser:
             content[name]["count"] += 1
 
         for name, d in content.items():
-            content_order[d["character"]][d["rarity"]].append((name, d["card_type"], d["count"]))
+            char = d["character"]
+            if char not in content_order:
+                char = "Colorless"
+            content_order[char][d["rarity"]].append((name, d["card_type"], d["count"]))
 
         final = []
 
