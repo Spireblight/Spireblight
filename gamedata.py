@@ -163,7 +163,7 @@ class NeowBonus:
         "REMOVE_CARD": "Remove a card.",
         "TRANSFORM_CARD": "Transform a card.",
         "UPGRADE_CARD": "Upgrade a card.",
-        "THREE_ENEMY_KILL": "Enemies if the first three combats have 1 HP.",
+        "THREE_ENEMY_KILL": "Enemies in the first three combats have 1 HP.",
         "THREE_SMALL_POTIONS": "Gain 3 random potions.",
         "TEN_PERCENT_HP_BONUS": "Gain 10% Max HP.",
         "ONE_RANDOM_RARE_CARD": "Gain a random Rare card.",
@@ -234,7 +234,8 @@ class NeowBonus:
         for c, b in zip(costs, bonuses, strict=True):
             if c == "NONE":
                 yield self.all_bonuses.get(b, b)
-            yield f"{self.all_costs.get(c, c)} - {self.all_bonuses.get(b, b)}"
+            else:
+                yield f"{self.all_costs.get(c, c)} - {self.all_bonuses.get(b, b)}"
 
     @property
     def has_data(self) -> bool:
