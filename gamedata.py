@@ -1347,6 +1347,8 @@ class EventElite(EliteEncounter):
     map_icon = "event.png"
 
 class EventNode:
+    end_of_act = False
+
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra) -> NodeData:
         events = []
