@@ -646,7 +646,7 @@ class FileParser:
             if rarity  == "Starter":
                 rarity = None
             if name not in content:
-                content[name] = {"count": 0, "character": metadata["CHARACTER"], "rarity": rarity, "card_type": ctype}
+                content[name] = {"count": 0, "character": metadata.get("CHARACTER", name.split(":")[0]), "rarity": rarity, "card_type": ctype}
             content[name]["count"] += 1
 
         for name, d in content.items():
