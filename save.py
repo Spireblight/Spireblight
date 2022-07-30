@@ -92,11 +92,44 @@ class Savefile(FileParser):
 
     @property
     def current_purge(self) -> int:
-        return self["purgeCost"]
+        base = self["purgeCost"]
+        membership = False
+        for relic in self.relics:
+            if relic.name == "Smiling Mask":
+                return 50
+            if relic.name == "Membership Card":
+                base = self["purgeCost"] * 0.5
+                membership = True
+            if relic.name == "The Courier" and not membership:
+                base *= 0.8
+
+        return int(base)
 
     @property
     def purge_totals(self) -> int:
         return self["metric_purchased_purges"]
+
+    @property
+    def shop_prices(self) -> tuple[tuple[range, range, range], tuple[range, range], tuple[range, range, range], tuple[range, range, range]]:
+        m = 1.0
+        if self.ascension_level >= 16:
+            m += 0.1
+        for relic in self.relics:
+            if relic.name == "Membership Card":
+                m *= 0.5
+            if relic.name == "The Courier":
+                m *= 0.8
+        cards = [50*m, 75*m, 150*m] # 10% range
+        colorless = [90*m, 180*m] # 10%
+        relics = [150*m, 250*m, 300*m] # 5%
+        potions = [50*m, 75*m, 100*m] # 5%
+
+        return (
+            tuple(range(int(x*0.90), int(x*1.10)) for x in cards),
+            tuple(range(int(x*0.90), int(x*1.10)) for x in colorless),
+            tuple(range(int(x*0.95), int(x*1.05)) for x in relics),
+            tuple(range(int(x*0.95), int(x*1.05)) for x in potions),
+        )
 
     @property
     def current_floor(self) -> int:
@@ -104,6 +137,11 @@ class Savefile(FileParser):
 
     @property
     def potion_chance(self) -> int:
+        for relic in self.relics:
+            if relic.name == "White Beast Statue":
+                return 100
+            if relic.name == "Sozu":
+                return 0
         return self["potion_chance"] + 40
 
     @property

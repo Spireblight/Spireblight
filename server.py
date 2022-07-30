@@ -624,7 +624,7 @@ async def is_seeded(ctx: ContextType, j: Savefile):
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
-@with_savefile("boss", "actboss")
+@with_savefile("boss", "actboss", "nextboss")
 async def actboss(ctx: ContextType, j: Savefile):
     """Display the upcoming act boss."""
     await ctx.send(f"The upcoming act boss is {j.upcoming_boss}.")
@@ -633,6 +633,38 @@ async def actboss(ctx: ContextType, j: Savefile):
 async def shop_removal_cost(ctx: ContextType, j: Savefile):
     """Display the current shop removal cost."""
     await ctx.send(f"Current card removal cost: {j.current_purge} (removed {j.purge_totals} card{'' if j.purge_totals == 1 else 's'})")
+
+@with_savefile("shopprices", "shopranges", "shoprange", "ranges", "range", "shop", "prices")
+async def shop_prices(ctx: ContextType, j: Savefile):
+    """Display the current shop price ranges."""
+    cards, colorless, relics, potions = j.shop_prices
+    cc, uc, rc = cards
+    ul, rl = colorless
+    cr, ur, rr = relics
+    cp, up, rp = potions
+    await ctx.send(
+        f"Cards: Common {cc.start}-{cc.stop}, Uncommon {uc.start}-{uc.stop}, Rare {rc.start}-{rc.stop} | "
+        f"Colorless: Uncommon {ul.start}-{ul.stop}, Rare {rl.start}-{rl.stop} | "
+        f"Relics: Common {cr.start}-{cr.stop}, Uncommon {ur.start}-{ur.stop}, Rare {rr.start}-{rr.stop} | "
+        f"Potions: Common {cp.start}-{cp.stop}, Uncommon {up.start}-{up.stop}, Rare {rp.start}-{rp.stop} | "
+        f"Card removal: {j.current_purge}"
+    )
+
+@with_savefile("rest", "heal", "restheal")
+async def campfire_heal(ctx: ContextType, j: Savefile):
+    """Display the current heal at campfires."""
+    base = int(j.max_health * 0.3)
+    for relic in j.relics:
+        if relic.name == "Regal Pillow":
+            base += 15
+            break
+
+    lost = max(0, (base + j.current_health) - j.max_health)
+    extra = ""
+    if lost:
+        extra = f" (extra healing lost: {lost} HP)"
+
+    await ctx.send(f"Current campfire heal: {base} HP{extra}")
 
 @with_savefile("potionchance", "potion")
 async def potion_chance(ctx: ContextType, j: Savefile):
