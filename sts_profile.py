@@ -84,6 +84,7 @@ async def sync_profiles(req: Request) -> Response:
             profile = profile.decode("utf-8", "xmlcharrefreplace")
         if not profile:
             continue # either it doesn't exist, or it hasn't changed
+        profile = json.loads(profile)
         if i not in _profiles:
             _profiles[i] = Profile(i, profile)
         else:
