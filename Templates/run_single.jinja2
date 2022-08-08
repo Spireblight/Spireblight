@@ -63,6 +63,8 @@ Run: {{ parser.display_name }}
     <br>
     Ascension level: {{ parser.ascension_level }}
     <br>
+    Profile: {{ parser.profile.name }}
+    <br>
     Score: {{ parser.score }}
     <br>
     Neow option picked: {{ parser.neow_bonus.picked }}
@@ -129,5 +131,5 @@ Run: {{ parser.display_name }}
 <a href="/runs/{{ parser.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
 <br>
 {% endif %}
-<a href="/runs">Back to all runs</a><br>
+<a href="/profile/{{ parser.profile.index }}/runs">Back to all runs</a><br>
 {% endblock %}

@@ -16,7 +16,7 @@ import config
 
 __all__ = ["webpage", "router"]
 
-__version__ = "0.3"
+__version__ = "0.4"
 __author__ = "Anilyka Barry"
 __github__ = "https://github.com/Vgr255/TwitchCordBot"
 __botname__ = "Faelorbot"
@@ -86,6 +86,7 @@ router.static("/static", os.path.join(os.getcwd(), "static"))
 @events.add_listener("setup_init")
 async def setup_redirects():
     webpage.add_routes(router)
+    return # disable redirects for now
     with open(os.path.join("data", "redirects")) as f:
         data = f.readlines()
     for line in data:

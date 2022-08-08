@@ -585,5 +585,33 @@
       "TEXT": [
         "Relevant poison applied: "
       ]
+    },
+    "STATS:DollysMirror": {
+      "TEXT": [
+        "Card copied: "
+      ]
+    },
+    "STATS:Bag of Marbles": {
+      "TEXT": [
+        "Vulnerable applied: ",
+        "Artifacts removed: "
+      ]
+    },
+    "STATS:Red Mask": {
+      "TEXT": [
+        "Weak applied: ",
+        "Artifacts removed: "
+      ]
+    },
+    "STATS:TwistedFunnel": {
+      "TEXT": [
+        "Poison applied: ",
+        "Artifacts removed: "
+      ]
+    },
+    "STATS:Empty Cage": {
+      "TEXT": [
+        "Cards removed:"
+      ]
     }
   }

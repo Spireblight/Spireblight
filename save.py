@@ -215,7 +215,7 @@ async def receive_save(req: Request):
             j["basemod:mod_saves"] = {}
 
     _savefile.update_data(j, name, req.query["has_run"])
-    logger.debug("Received savefile. Updated data.")
+    logger.debug(f"Received savefile. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()
 

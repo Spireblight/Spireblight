@@ -22,6 +22,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
 from nameinternal import get_relic
+from sts_profile import get_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -801,26 +802,21 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
         value = f"lost {value}"
     await ctx.send(f"The last {value}'s history can be viewed at {config.website_url}/runs/{latest.name}")
 
-#@command("wall")
-async def wall_card(ctx: ContextType): # FIXME: Needs data from remote
+@command("wall")
+async def wall_card(ctx: ContextType):
     """Fetch the card in the wall for the ladder savefile."""
-    msg = "Current card in the !hole in the wall for the ladder savefile: {0}{1}"
-    if not config.STS_path:
-        await ctx.send("Error: could not fetch data.")
-        return
-    for p in ("", "1_", "2_"):
-        with open(os.path.join(config.STS_path, "preferences", f"{p}STSPlayer"), "r") as f:
-            d = json.load(f)
-        if "ladder" not in d["name"].lower():
+    for i in range(2):
+        try:
+            p = get_profile(i)
+        except KeyError:
             continue
-        card = d["NOTE_CARD"]
-        upgrade_count = int(d["NOTE_UPGRADE"])
-        if card == "Searing Blow":
-            await ctx.send(msg.format(card, f"+{upgrade_count}" if upgrade_count else ""))
-        else:
-            await ctx.send(msg.format(card, "+" if upgrade_count else ""))
+        if "ladder" in p.name.lower():
+            break
+    else:
+        await ctx.send("Error: could not find Ladder savefile.")
         return
-    await ctx.send("Error: could not find Ladder savefile.")
+
+    await ctx.send(f"Current card in the !hole in the wall for the ladder savefile: {p.hole_card}")
 
 @command("dig", burst=5, rate=2.0)
 async def dig_cmd(ctx: ContextType):

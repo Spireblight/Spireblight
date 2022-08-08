@@ -1,6 +1,6 @@
 {% extends "base.jinja2" %}
 {% block title %}
-Runs
+Runs for {{ profile }}
 {% endblock %}
 {% block content %}
     <h1>Run history</h1>
@@ -8,4 +8,7 @@ Runs
     {% for obj in runs %}
     <a href="/runs/{{ obj.name }}">{{ obj.display_name }}</a><br>
     {% endfor %}
+{% endblock %}
+{% block footer %}
+<a href="/runs">Back to profile selection</a><br>
 {% endblock %}

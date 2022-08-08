@@ -1,0 +1,10 @@
+{% extends "base.jinja2" %}
+{% block title %}
+Choose which profile to view runs for
+{% endblock %}
+{% block content %}
+    <h1>Pick a profile to view runs for</h1>
+    {% for profile in profiles %}
+    <a href="/profile/{{ profile.index }}/runs">{{ profile.name }}</a><br>
+    {% endfor %}
+{% endblock %}
