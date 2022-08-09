@@ -44,16 +44,17 @@ async def main():
 
         to_send = []
         files = []
-        for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
-            for folder in folders:
-                profile = "0"
-                if folder[0].isdigit():
-                    profile = folder[0]
-                for p1, d1, f1 in os.walk(os.path.join(path, folder)):
-                    for file in f1:
-                        if file > last_run:
-                            to_send.append((p1, file, profile))
-                            files.append(file)
+        if possible is not None: # don't check run files during a run
+            for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
+                for folder in folders:
+                    profile = "0"
+                    if folder[0].isdigit():
+                        profile = folder[0]
+                    for p1, d1, f1 in os.walk(os.path.join(path, folder)):
+                        for file in f1:
+                            if file > last_run:
+                                to_send.append((p1, file, profile))
+                                files.append(file)
 
         try:
             all_sent = True
