@@ -44,7 +44,7 @@ async def main():
 
         to_send = []
         files = []
-        for path, folders, files in os.walk(os.path.join(config.STS_path, "runs")):
+        for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
             for folder in folders:
                 profile = "0"
                 if folder[0].isdigit():
