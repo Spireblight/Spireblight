@@ -190,6 +190,9 @@ async def receive_save(req: Request):
     if pw != config.secret:
         raise HTTPForbidden(reason="Invalid API key provided")
 
+    start = float(req.query["start"])
+    logger.debug(f"Receiving savefile. Start of transaction: {start} - Time since beginning of transaction: {time.time() - start}s")
+
     post = await req.post()
 
     content = post.get("savefile")
@@ -204,6 +207,8 @@ async def receive_save(req: Request):
     if isinstance(name, bytes):
         name = name.decode("utf-8", "xmlcharrefreplace")
 
+    logger.debug(f"Savefile received. Beginning de-serializing. Time since beginning of transaction: {time.time() - start}s")
+
     j = None
     if content:
         decoded = base64.b64decode(content)
@@ -215,7 +220,7 @@ async def receive_save(req: Request):
             j["basemod:mod_saves"] = {}
 
     _savefile.update_data(j, name, req.query["has_run"])
-    logger.debug(f"Received savefile. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
+    logger.debug(f"Updated data. Final transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()
 
