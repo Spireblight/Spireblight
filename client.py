@@ -44,7 +44,7 @@ async def main():
 
         to_send = []
         files = []
-        if possible is not None: # don't check run files during a run
+        if possible is None: # don't check run files during a run
             for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
                 for folder in folders:
                     profile = "0"
