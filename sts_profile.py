@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import time
 import json
+import os
 
 from aiohttp.web import Request, Response, HTTPUnauthorized, HTTPNotImplemented, HTTPForbidden, FileField
 
 from nameinternal import get_card
 from webpage import router
 from logger import logger
+from events import add_listener
 
 import config
 
@@ -75,6 +77,8 @@ async def sync_profiles(req: Request) -> Response:
 
     _slots.clear()
     _slots.update(json.loads(slots))
+    with open(os.path.join("data", "slots"), "w") as f:
+        f.write(slots)
 
     for i in range(3):
         profile = post.get(str(i))
@@ -84,6 +88,8 @@ async def sync_profiles(req: Request) -> Response:
             profile = profile.decode("utf-8", "xmlcharrefreplace")
         if not profile:
             continue # either it doesn't exist, or it hasn't changed
+        with open(os.path.join("data", f"profile_{i}"), "w") as f:
+            f.write(profile)
         profile = json.loads(profile)
         if i not in _profiles:
             _profiles[i] = Profile(i, profile)
@@ -93,3 +99,18 @@ async def sync_profiles(req: Request) -> Response:
     logger.debug(f"Received profiles. Transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()
+
+@add_listener("setup_init")
+async def fetch_profiles():
+    try:
+        with open(os.path.join("data", "slots")) as f:
+            _slots.update(json.load(f))
+    except OSError:
+        pass
+
+    for i in range(3):
+        try:
+            with open(os.path.join("data", f"profile_{i}")) as f:
+                _profiles[i] = Profile(i, json.load(f))
+        except OSError:
+            continue
