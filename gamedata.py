@@ -5,7 +5,7 @@ from typing import Any, Generator
 import math
 import io
 
-from aiohttp.web import Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
+from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
@@ -14,145 +14,9 @@ from logger import logger
 
 import config
 
-__all__ = ["FileParser", "generate_graph"]
+__all__ = ["FileParser"]
 
 # TODO: Handle the website display part, figure out details of these classes later
-
-_variables_map = {
-    "current_hp": "Current HP",
-    "max_hp": "Max HP",
-    "gold": "Gold",
-    "floor_time": "Time spent in the floor (seconds)",
-    "card_count": "Cards in the deck",
-    "relic_count": "Relics",
-    "potion_count": "Potions",
-}
-
-def generate_graph(parser: FileParser, display_type: str, params: dict[str, str], unique_str: str, *, force: bool = False) -> Response:
-    """Generate a graph for various stats. This iterates through all floors.
-
-    :param: parser <FileParser>
-        Parser to iterate through its floors and generate data from the nodes.
-    :param: display_type <str>
-        One of {plot, bar, scatter, stem}, to determine the type of graph to generate.
-    :param: params <abc.Mapping[str, str]>
-        :key: type [required]
-            One of {embed, image}, to determine which format the graph will be.
-        :key: view [required]
-            Comma-separated string of data points to get. Must not start with '_'.
-        :key: label [optional]
-            Name of the Y-axis. If not present and 'view' has only one data point,
-            uses the formatted version of that instead.
-        :key: title [optional]
-            Name of the graph. This doesn't work with 'type=embed' due to limitations.
-    :param: unique_str <str>
-        A unique string used for caching. Two different graphs can never have the same
-        unique string, but identical graphs can have different unique strings.
-    :param: force <Optional[bool]>
-        If True, will forcibly regenerate the graph, even if it is present in the cache.
-
-    """
-
-    if "view" not in params or "type" not in params:
-        raise HTTPForbidden()
-    if params["type"] not in ("embed", "image"):
-        raise HTTPNotImplemented(reason=f"Display type {params['type']} is undefined")
-
-    to_cache = (display_type, params["type"], unique_str)
-
-    totals: dict[str, list[int]] = {}
-    ends = []
-    floors = []
-    for arg in params["view"].split(","):
-        if arg.startswith("_"):
-            raise HTTPForbidden(reason="Cannot access private attributes.")
-        totals[arg] = []
-        if arg not in _variables_map:
-            logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
-
-    # we use unique_str to cache, as it will never be the same for different graphs.
-    # (it could sometimes be different for identical graphs, but that isn't likely)
-    # in practice, this is just the URL query string. don't check cache if force=True
-    if not force and to_cache in parser._graph_cache:
-        if params["type"] == "embed":
-            return Response(body=parser._graph_cache[to_cache], content_type="text/html")
-        return Response(body=parser._graph_cache[to_cache], content_type="image/png")
-
-    for name, d in totals.items():
-        val = getattr(parser.neow_bonus, name, None)
-        if val is not None:
-            if not floors:
-                floors.append(0)
-            d.append(val)
-
-    for node in parser.path:
-        floors.append(node.floor)
-        if node.end_of_act:
-            ends.append(node.floor)
-        for name, d in totals.items():
-            val = getattr(node, name, 0)
-            if callable(val):
-                try:
-                    val = val()
-                except TypeError:
-                    raise HTTPForbidden(reason=f"Cannot call function {name!r} that require parameters.")
-            try:
-                val + 0
-            except TypeError:
-                raise HTTPForbidden(reason=f"Cannot use non-integer {name!r} for graphs.")
-            else:
-                d.append(val)
-
-    fig, ax = plt.subplots()
-    match display_type:
-        case "plot":
-            func = ax.plot
-        case "scatter":
-            func = ax.scatter
-        case "bar":
-            func = ax.bar
-        case "stem":
-            func = ax.stem
-        case _:
-            raise HTTPNotFound()
-
-    # this doesn't work well with embedding
-    if params["type"] != "embed":
-        for num in ends:
-            plt.axvline(num, color="black", linestyle="dashed")
-
-    for name, d in totals.items():
-        func(floors, d, label=_variables_map.get(name, name))
-    ax.legend()
-
-    plt.xlabel("Floor")
-    if "label" in params:
-        plt.ylabel(params["label"])
-    elif len(totals) == 1:
-        label = tuple(totals)[0]
-        plt.ylabel(_variables_map.get(label, label))
-    plt.xlim(left=0)
-    plt.ylim(bottom=0)
-    if "title" in params: # doesn't appear to work with mpld3
-        plt.suptitle(params["title"])
-
-    match params["type"]:
-        case "embed":
-            value: str = fig_to_html(fig)
-            plt.close(fig)
-            # XXX: Temporary hack until the new website design is in
-            value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
-            parser._graph_cache[to_cache] = value
-            return Response(body=value, content_type="text/html")
-
-        case "image":
-            with io.BytesIO() as file:
-                plt.savefig(file, format="png", transparent=True)
-                plt.close(fig)
-                value = file.getvalue()
-
-            parser._graph_cache[to_cache] = value
-            return Response(body=value, content_type="image/png")
 
 class NeowBonus:
 
@@ -618,6 +482,21 @@ class NeowBonus:
 _chars = {"THE_SILENT": "Silent"}
 
 class FileParser:
+    _variables_map = {
+        "current_hp": "Current HP",
+        "max_hp": "Max HP",
+        "gold": "Gold",
+        "floor_time": "Time spent in the floor (seconds)",
+        "card_count": "Cards in the deck",
+        "relic_count": "Relics",
+        "potion_count": "Potions",
+    }
+
+    _graph_types = {
+        "embed": "text/html",
+        "image": "image/png",
+    }
+
     prefix = ""
 
     def __init__(self, data: dict[str, Any]):
@@ -644,6 +523,100 @@ class FileParser:
             return next(self._cache["boss_chest_iter"])
         except StopIteration:
             return self[self.prefix + "boss_relics"][-1]
+
+    def graph(self, req: Request) -> Response:
+        if "view" not in req.query or "type" not in req.query:
+            raise HTTPForbidden(reason="Needs 'view' and 'type' params")
+        if req.query["type"] not in self._graph_types:
+            raise HTTPNotImplemented(reason=f"Display type {req.query['type']} is undefined")
+
+        to_cache = (req.match_info["type"], req.query_string)
+
+        totals: dict[str, list[int]] = {}
+        ends = []
+        floors = []
+        for arg in req.query["view"].split(","):
+            if arg.startswith("_"):
+                raise HTTPForbidden(reason="Cannot access private attributes.")
+            totals[arg] = []
+            if arg not in self._variables_map:
+                logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
+
+        if to_cache in self._graph_cache:
+            return Response(body=self._graph_cache[to_cache], content_type=self._graph_types[req.query["type"]])
+
+        for name, d in totals.items():
+            val = getattr(self.neow_bonus, name, None)
+            if val is not None:
+                if not floors:
+                    floors.append(0)
+                d.append(val)
+
+        for node in self.path:
+            floors.append(node.floor)
+            if node.end_of_act:
+                ends.append(node.floor)
+            for name, d in totals.items():
+                val = getattr(node, name, 0)
+                if callable(val):
+                    try:
+                        val = val()
+                    except TypeError:
+                        raise HTTPForbidden(reason=f"Cannot call function {name!r} that requires parameters.")
+                try:
+                    val + 0
+                except TypeError:
+                    raise HTTPForbidden(reason=f"Cannot use non-integer {name!r} for graphs.")
+                else:
+                    d.append(val)
+
+        fig, ax = plt.subplots()
+        match req.match_info["type"]:
+            case "plot":
+                func = ax.plot
+            case "scatter":
+                func = ax.scatter
+            case "bar":
+                func = ax.bar
+            case "stem":
+                func = ax.stem
+            case _:
+                raise HTTPNotFound()
+
+        if req.query["type"] != "embed":
+            for num in ends:
+                plt.axvline(num, color="black", linestyle="dashed")
+
+        for name, d in totals.items():
+            func(floors, d, label=self._variables_map.get(name, name))
+        ax.legend()
+
+        plt.xlabel("Floor")
+        if "label" in req.query:
+            plt.ylabel(req.query["label"])
+        elif len(totals) == 1:
+            label = tuple(totals)[0]
+            plt.ylabel(self._variables_map.get(label, label))
+        plt.xlim(left=0)
+        plt.ylim(bottom=0)
+        if "title" in req.query: # doesn't appear to work with mpld3
+            plt.suptitle(req.query["title"])
+
+        match req.query["type"]:
+            case "embed":
+                value: str = fig_to_html(fig)
+                plt.close(fig)
+                # XXX: Temporary hack until the new website design is in
+                value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+
+            case "image":
+                with io.BytesIO() as file:
+                    plt.savefig(file, format="png", transparent=True)
+                    plt.close(fig)
+                    value = file.getvalue()
+
+        self._graph_cache[to_cache] = value
+        return Response(body=value, content_type=self._graph_types[req.query["type"]])
 
     @property
     def timestamp(self) -> int:

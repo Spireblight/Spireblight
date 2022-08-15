@@ -14,7 +14,7 @@ import aiohttp_jinja2
 
 from nameinternal import get_all_relics, get_all_cards, get_all_events, get_relic, get_event
 from sts_profile import get_profile
-from gamedata import FileParser, generate_graph
+from gamedata import FileParser
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -234,7 +234,7 @@ async def run_chart(req: Request) -> Response:
     if parser is None:
         raise HTTPNotFound()
 
-    return generate_graph(parser, req.match_info["type"], req.query, req.query_string)
+    return parser.graph(req)
 
 #@router.get("/compare")
 @aiohttp_jinja2.template("runs_compare.jinja2")

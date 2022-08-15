@@ -9,7 +9,7 @@ from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImpleme
 import aiohttp_jinja2
 
 from typehints import ContextType
-from gamedata import FileParser, generate_graph
+from gamedata import FileParser
 from webpage import router
 from logger import logger
 from utils import get_req_data
@@ -179,7 +179,7 @@ async def save_chart(req: Request) -> Response:
     if _savefile.character is None:
         raise HTTPNotFound()
 
-    return generate_graph(_savefile, req.match_info["type"], req.query, req.query_string)
+    return _savefile.graph(req)
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
