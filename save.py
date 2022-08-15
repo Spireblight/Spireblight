@@ -12,6 +12,7 @@ from typehints import ContextType
 from gamedata import FileParser, generate_graph
 from webpage import router
 from logger import logger
+from utils import get_req_data
 from runs import get_latest_run
 
 import config
@@ -182,32 +183,7 @@ async def save_chart(req: Request) -> Response:
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
-    pw = req.query.get("key")
-    if pw is None:
-        raise HTTPUnauthorized(reason="No API key provided")
-    if not config.secret:
-        raise HTTPNotImplemented(reason="No API key present in config")
-    if pw != config.secret:
-        raise HTTPForbidden(reason="Invalid API key provided")
-
-    start = float(req.query["start"])
-    logger.debug(f"Receiving savefile. Start of transaction: {start} - Time since beginning of transaction: {time.time() - start}s")
-
-    post = await req.post()
-
-    content = post.get("savefile")
-    if isinstance(content, FileField):
-        content = content.file.read()
-    if isinstance(content, bytes):
-        content = content.decode("utf-8", "xmlcharrefreplace")
-
-    name = post.get("character")
-    if isinstance(name, FileField):
-        name = name.file.read()
-    if isinstance(name, bytes):
-        name = name.decode("utf-8", "xmlcharrefreplace")
-
-    logger.debug(f"Savefile received. Beginning de-serializing. Time since beginning of transaction: {time.time() - start}s")
+    content, name = await get_req_data(req, "savefile", "character")
 
     j = None
     if content:

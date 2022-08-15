@@ -10,6 +10,7 @@ from nameinternal import get_card
 from webpage import router
 from logger import logger
 from events import add_listener
+from utils import get_req_data
 
 import config
 
@@ -59,21 +60,7 @@ class Profile:
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:
-    pw = req.query.get("key")
-    if pw is None:
-        raise HTTPUnauthorized(reason="No API key provided")
-    if not config.secret:
-        raise HTTPNotImplemented(reason="No API key present in config")
-    if pw != config.secret:
-        raise HTTPForbidden(reason="Invalid API key provided")
-
-    post = await req.post()
-
-    slots = post.get("slots")
-    if isinstance(slots, FileField):
-        slots = slots.file.read()
-    if isinstance(slots, bytes):
-        slots = slots.decode("utf-8", "xmlcharrefreplace")
+    slots, *profiles = await get_req_data(req, "slots", "0", "1", "2")
 
     _slots.clear()
     _slots.update(json.loads(slots))
@@ -81,11 +68,7 @@ async def sync_profiles(req: Request) -> Response:
         f.write(slots)
 
     for i in range(3):
-        profile = post.get(str(i))
-        if isinstance(profile, FileField):
-            profile = profile.file.read()
-        if isinstance(profile, bytes):
-            profile = profile.decode("utf-8", "xmlcharrefreplace")
+        profile = profiles[i]
         if not profile:
             continue # either it doesn't exist, or it hasn't changed
         with open(os.path.join("data", f"profile_{i}"), "w") as f:

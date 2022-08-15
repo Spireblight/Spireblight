@@ -18,6 +18,7 @@ from gamedata import FileParser, generate_graph
 from webpage import router
 from logger import logger
 from events import add_listener
+from utils import get_req_data
 
 import config
 
@@ -265,33 +266,7 @@ async def compare_runs(req: Request):
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:
-    pw = req.query.get("key")
-    if pw is None:
-        raise HTTPUnauthorized(reason="No API key provided")
-    if not config.secret:
-        raise HTTPNotImplemented(reason="No API key present in config")
-    if pw != config.secret:
-        raise HTTPForbidden(reason="Invalid API key provided")
-
-    post = await req.post()
-
-    content = post.get("run")
-    if isinstance(content, FileField):
-        content = content.file.read()
-    if isinstance(content, bytes):
-        content = content.decode("utf-8", "xmlcharrefreplace")
-
-    name = post.get("name")
-    if isinstance(name, FileField):
-        name = name.file.read()
-    if isinstance(name, bytes):
-        name = name.decode("utf-8", "xmlcharrefreplace")
-
-    profile = post.get("profile")
-    if isinstance(profile, FileField):
-        profile = profile.file.read()
-    if isinstance(profile, bytes):
-        profile = profile.decode("utf-8", "xmlcharrefreplace")
+    content, name, profile = await get_req_data(req, "run", "name", "profile")
 
     with open(os.path.join("data", "runs", profile, name), "w") as f:
         f.write(content)
