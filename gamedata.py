@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator
+from typing import Any, Generator, Iterable
 
 import math
 import io
@@ -80,7 +80,7 @@ class NeowBonus:
         bonus = self.parser["neow_bonus"]
         if cost == "NONE":
             return self.all_bonuses.get(bonus, bonus)
-        return f"{self.all_costs.get(cost, cost)} - {self.all_bonuses.get(bonus, bonus)}"
+        return f"{self.all_costs.get(cost, cost)} {self.all_bonuses.get(bonus, bonus)}"
 
     @property
     def skipped(self) -> Generator[str, None, None]:
@@ -504,7 +504,7 @@ class FileParser:
         self.neow_bonus = NeowBonus(self)
         self._cache = {}
         self._character: str | None = None
-        self._graph_cache: dict[tuple[str, str], str] = {}
+        self._graph_cache: dict[tuple[str, str, frozenset[str], str | None, str | None], str] = {}
 
     def __getitem__(self, item: str) -> Any:
         return self.data[item]
@@ -530,20 +530,40 @@ class FileParser:
         if req.query["type"] not in self._graph_types:
             raise HTTPNotImplemented(reason=f"Display type {req.query['type']} is undefined")
 
-        to_cache = (req.match_info["type"], req.query_string)
+        graph_type = req.match_info["type"]
+        display_type = req.query["type"]
+        items = req.query["view"].split(",")
+        label = req.query.get("label")
+        title = req.query.get("title")
 
+        to_cache = (graph_type, display_type, frozenset(items), label, title)
+
+        if to_cache not in self._graph_cache:
+            try:
+                self._graph_cache[to_cache] = self._generate_graph(graph_type, display_type, items, label, title, allow_private=False)
+            except ValueError as e:
+                raise HTTPForbidden(reason=e.args[0])
+            except TypeError:
+                raise HTTPNotFound()
+
+        return Response(body=self._graph_cache[to_cache], content_type=self._graph_types[display_type])
+
+    def bar(self, dtype: str, items: Iterable[str], label: str | None = None, title: str | None = None, *, allow_private: bool = False) -> str:
+        to_cache = ("bar", dtype, frozenset(items), label, title)
+        if to_cache not in self._graph_cache:
+            self._graph_cache[to_cache] = self._generate_graph("bar", dtype, items, label, title, allow_private=allow_private)
+        return self._graph_cache[to_cache]
+
+    def _generate_graph(self, graph_type: str, display_type: str, items: Iterable[str], ylabel: str | None, title: str | None, *, allow_private: bool) -> str:
         totals: dict[str, list[int]] = {}
         ends = []
         floors = []
-        for arg in req.query["view"].split(","):
-            if arg.startswith("_"):
-                raise HTTPForbidden(reason="Cannot access private attributes.")
+        for arg in items:
+            if arg.startswith("_") and not allow_private:
+                raise ValueError(f"Cannot access private attribute {arg}.")
             totals[arg] = []
             if arg not in self._variables_map:
                 logger.warning(f"Graph parameter {arg!r} may not be properly handled.")
-
-        if to_cache in self._graph_cache:
-            return Response(body=self._graph_cache[to_cache], content_type=self._graph_types[req.query["type"]])
 
         for name, d in totals.items():
             val = getattr(self.neow_bonus, name, None)
@@ -562,16 +582,16 @@ class FileParser:
                     try:
                         val = val()
                     except TypeError:
-                        raise HTTPForbidden(reason=f"Cannot call function {name!r} that requires parameters.")
+                        raise ValueError(f"Cannot call function {name!r} that requires parameters.")
                 try:
                     val + 0
                 except TypeError:
-                    raise HTTPForbidden(reason=f"Cannot use non-integer {name!r} for graphs.")
+                    raise ValueError(f"Cannot use non-integer {name!r} for graphs.")
                 else:
                     d.append(val)
 
         fig, ax = plt.subplots()
-        match req.match_info["type"]:
+        match graph_type:
             case "plot":
                 func = ax.plot
             case "scatter":
@@ -580,10 +600,10 @@ class FileParser:
                 func = ax.bar
             case "stem":
                 func = ax.stem
-            case _:
-                raise HTTPNotFound()
+            case a:
+                raise TypeError(f"Could not understand graph type {a}")
 
-        if req.query["type"] != "embed":
+        if display_type != "embed":
             for num in ends:
                 plt.axvline(num, color="black", linestyle="dashed")
 
@@ -592,31 +612,28 @@ class FileParser:
         ax.legend()
 
         plt.xlabel("Floor")
-        if "label" in req.query:
-            plt.ylabel(req.query["label"])
+        if ylabel is not None:
+            plt.ylabel(ylabel)
         elif len(totals) == 1:
             label = tuple(totals)[0]
             plt.ylabel(self._variables_map.get(label, label))
         plt.xlim(left=0)
         plt.ylim(bottom=0)
-        if "title" in req.query: # doesn't appear to work with mpld3
-            plt.suptitle(req.query["title"])
+        if title is not None: # doesn't appear to work with mpld3
+            plt.suptitle(title)
 
-        match req.query["type"]:
+        match display_type:
             case "embed":
                 value: str = fig_to_html(fig)
                 plt.close(fig)
                 # XXX: Temporary hack until the new website design is in
-                value = value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+                return value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
 
             case "image":
                 with io.BytesIO() as file:
                     plt.savefig(file, format="png", transparent=True)
                     plt.close(fig)
-                    value = file.getvalue()
-
-        self._graph_cache[to_cache] = value
-        return Response(body=value, content_type=self._graph_types[req.query["type"]])
+                    return file.getvalue()
 
     @property
     def timestamp(self) -> int:

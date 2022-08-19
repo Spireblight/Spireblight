@@ -3,6 +3,7 @@ from typing import Any
 import base64
 import json
 import time
+import math
 
 from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, HTTPNotFound, HTTPFound, Response, FileField
 
@@ -104,7 +105,7 @@ class Savefile(FileParser):
             if relic.name == "The Courier" and not membership:
                 base *= 0.8
 
-        return int(base)
+        return math.ceil(base)
 
     @property
     def purge_totals(self) -> int:
@@ -126,10 +127,10 @@ class Savefile(FileParser):
         potions = [50*m, 75*m, 100*m] # 5%
 
         return (
-            tuple(range(int(x*0.90), int(x*1.10)) for x in cards),
-            tuple(range(int(x*0.90), int(x*1.10)) for x in colorless),
-            tuple(range(int(x*0.95), int(x*1.05)) for x in relics),
-            tuple(range(int(x*0.95), int(x*1.05)) for x in potions),
+            tuple(range(int(x - x*0.10), int(x + x*0.10)) for x in cards),
+            tuple(range(int(x - x*0.10), int(x + x*0.10)) for x in colorless),
+            tuple(range(int(x - x*0.05), int(x + x*0.05)) for x in relics),
+            tuple(range(int(x - x*0.05), int(x + x*0.05)) for x in potions),
         )
 
     @property
