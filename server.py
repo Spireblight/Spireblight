@@ -676,6 +676,19 @@ async def potion_chance(ctx: ContextType, j: Savefile):
     """Display the current potion drop chance."""
     await ctx.send(f"Current potion chance: {j.potion_chance}%")
 
+@with_savefile("nloth")
+async def nloth_traded(ctx: ContextType, j: Savefile):
+    """Display which relic was traded for N'loth's Gift."""
+    if "Nloth's Gift" not in j["relics"]:
+        await ctx.send("We do not have N'loth's Gift.")
+        return
+
+    for evt in j["metric_event_choices"]:
+        if evt["event_name"] == "N'loth":
+            await ctx.send(f"We traded {get_relic(evt['relics_lost'])} for N'loth's Gift.")
+    else:
+        await ctx.send("Something went terribly wrong.")
+
 @with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
 async def event_likelihood(ctx: ContextType, j: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""

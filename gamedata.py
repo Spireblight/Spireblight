@@ -1473,7 +1473,7 @@ class Event(NodeData):
             if val:
                 name = x.replace("_", " ").capitalize().replace("hp", "HP")
                 to_append[7].append(f"{name}: {val}")
-        for x in ("cards_transformed", "cards_obtained", "cards_removed", "cards_upgraded"):
+        for x in ("cards_transformed", "cards_obtained", "cards_removed", "cards_upgraded", "relics_lost"):
             val = getattr(self, x)
             if val:
                 name = x.replace("_", " ").capitalize()
@@ -1548,6 +1548,12 @@ class Event(NodeData):
         if "relics_obtained" not in self._event:
             return []
         return [get_relic(x) for x in self._event["relics_obtained"]]
+
+    @property
+    def relics_lost(self) -> list[str]:
+        if "relics_lost" not in self._event:
+            return []
+        return [get_relic(x) for x in self._event["relics_lost"]]
 
     @property
     def relics(self) -> list[str]:
