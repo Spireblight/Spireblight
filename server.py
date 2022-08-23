@@ -685,7 +685,7 @@ async def nloth_traded(ctx: ContextType, j: Savefile):
 
     for evt in j["metric_event_choices"]:
         if evt["event_name"] == "N'loth":
-            await ctx.send(f"We traded {get_relic(evt['relics_lost'])} for N'loth's Gift.")
+            await ctx.send(f"We traded {get_relic(evt['relics_lost'][0])} for N'loth's Gift.")
     else:
         await ctx.send("Something went terribly wrong.")
 
