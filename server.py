@@ -94,7 +94,11 @@ def _update_db():
 
 def _create_cmd(output):
     async def inner(ctx: ContextType, *s, output: str=output):
-        await ctx.send(output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts))
+        try:
+            msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
+        except KeyError as e:
+            msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
+        await ctx.send(msg)
     return inner
 
 def load():
@@ -371,7 +375,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.send(f"Error: cannot enable alias. Use 'enable {aliases[name][0].name}' instead.")
                 return
             if all(cmds[name]):
-                await ctx.send(f"Command {name} is already disabled.")
+                await ctx.send(f"Command {name} is already enabled.")
                 return
             for cmd in cmds[name]:
                 cmd.enabled = True
@@ -690,9 +694,15 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, j: Savefile, index: int):
     """Display information about the current relics."""
+    if index < 0:
+        await ctx.send("Why do you insist on breaking me?")
+        return
     l = list(j.relics)
     if index > len(l):
         await ctx.send(f"We only have {len(l)} relics!")
+        return
+    if not index:
+        await ctx.send(f"We have {len(l)} relics.")
         return
 
     await ctx.send(f"The relic at position {index} is {l[index-1].name}.")
@@ -770,7 +780,7 @@ async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
             if char is not None:
                 char = char.capitalize() # might be a mod character
 
-    return await _last_run(ctx, char, won)
+    await _last_run(ctx, char, won)
 
 @command("lastrun")
 async def get_last_run(ctx: ContextType):
@@ -856,6 +866,16 @@ async def pb_cmd(ctx: ContextType):
     with _getfile("pb", "r") as f:
         pb = f.read().split()
     await ctx.send(msg.format(pb))
+
+@command("winrate")
+async def winrate_cmd(ctx: ContextType):
+    """Display the current winrate for Baalor's 2022 A20 Heart kills."""
+    with _getfile("kills", "r") as f:
+        kills = [int(x) for x in f.read().split()]
+    with _getfile("losses", "r") as f:
+        losses = [int(x) for x in f.read().split()]
+    rate = [a/(a+b) for a, b in zip(kills, losses)]
+    await ctx.send(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 
 async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
     if arg.lower().startswith("i"):
