@@ -1,8 +1,18 @@
 {% extends "base.jinja2" %}
+
 {% block title %}
   Commands
 {% endblock %}
+
 {% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="/commands" class="is-active">All commands</a>
+      </li>
+    </ul>
+  </nav>
+
   <section class="section">
     <div class="container">
       <h1 class="title">

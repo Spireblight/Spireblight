@@ -1052,17 +1052,23 @@ async def individual_cmd(req: Request):
                 word = f'<a href="{word}">{word}</a>'
             out.append(word)
         d["output"] = " ".join(out)
-        d["enabled"] = _cmds[name].get("enabled", True)
-        d["aliases"] = ", ".join(_cmds[name].get("aliases", []))
+        d["enabled"] = _cmds[name].get("enabled", True) is True
+        d["aliases"] = _cmds[name].get("aliases", [])
+        # Just in case it's not a list...
+        if not isinstance(d["aliases"], list):
+            d["aliases"] = [d["aliases"]]
     else:
         d["builtin"] = True
         d["fndoc"] = cmd.__doc__
-        d["enabled"] = ("Yes" if cmd.enabled else "No")
+        d["enabled"] = cmd.enabled
 
-    d["twitch"] = ("No" if tcmd is None else "Yes")
-    d["discord"] = ("No" if dcmd is None else "Yes")
+    # d["twitch"] = ("No" if tcmd is None else "Yes")
+    # d["discord"] = ("No" if dcmd is None else "Yes")
+    d["twitch"] = tcmd
+    d["discord"] = dcmd
 
     d["permissions"] = ", ".join(_perms[x] for x in cmd.flag) or _perms[""]
+    d["prefix"] = config.prefix
 
     return d
 

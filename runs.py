@@ -67,7 +67,7 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> str:
-        return datetime.fromtimestamp(self.data["timestamp"]).isoformat(" ")
+        return datetime.fromtimestamp(self.data["timestamp"])
 
     @property
     def won(self) -> bool:
@@ -202,7 +202,38 @@ async def run_single(req: Request):
         raise HTTPNotFound()
     embed = _falsey(req.query.get("embed"))
     redirect = _truthy(req.query.get("redirect"))
-    return {"parser": parser, "embed": embed, "redirect": redirect}
+
+    # TODO(olivia): This should be moved to the parser so that the parser
+    # returns the thing we need, but I'm leaving it here for now to not
+    # intrude on the parser code for the sake of the design.
+    keys = {key: floor for key, floor in parser.keys}
+
+    delta = datetime.now() - parser.timestamp
+
+    return {
+        "parser": parser,
+        "delta": delta,
+        "keys": keys,
+        "runs": {
+            "previous": parser.matched.get('prev'),
+            "next": parser.matched.get('next'),
+            "wins": {
+                "previous": parser.matched.get('prev_win'),
+                "next": parser.matched.get('next_win'),
+            },
+            "losses": {
+                "previous": parser.matched.get('prev_loss'),
+                "next": parser.matched.get('next_loss'),
+            },
+        },
+        "characters": {
+            "previous": parser.matched.get('prev_char'),
+            "next": parser.matched.get('next_char'),
+        },
+        "modded": parser.character not in ("Ironclad", "Silent", "Defect", "Watcher"),
+        "embed": embed,
+        "redirect": redirect
+    }
 
 @router.get("/runs/{name}/raw")
 async def run_raw_json(req: Request) -> Response:

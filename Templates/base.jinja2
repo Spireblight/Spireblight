@@ -21,17 +21,21 @@
     <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block head %}{% endblock %}
-    <title>{% block title %}{% endblock %} - Baalorlord's website</title>
+    <title>{% block title %}{% endblock %} - Baalorlord</title>
   </head>
   <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="/">
+        <a class="navbar-item monument" href="/">
           <img alt="Baalorlord" src="/static/misc/icon.png"/>
+          <span>Baalorlord</span>
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -94,7 +98,9 @@
         </ul>
       </aside>
 
-      <div id="content">{% block content %}{% endblock %}</div>
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>
 
     </div>
     <footer id="footer" class="footer">
