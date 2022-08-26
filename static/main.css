@@ -1,10 +1,43 @@
+@font-face {
+    font-family: Monument;
+    src: url("/static/fonts/monumentextended-ultrabold.otf") format("opentype");
+}
+
+/* This is to override the Bulma default. So spacey */
+/* (and we don't like things that are Spacey - not since 2017. :baalorSmug:) */
+section.section {
+  padding: 1.5rem 3rem !important;
+}
+
+.monument {
+  font-family: 'Monument';
+  text-transform: uppercase;
+}
+
+.navbar-item.monument {
+  font-size: 1.25em;
+}
+.navbar-item.monument span {
+  display: block;
+  margin: 0 0.5em;
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 .card {
   font-family: 'Kreon', serif;
   font-size: 25px;
   display: inline-block;
-  width: 290px;
-  height: 32px;
+  width: 30%;
   vertical-align: middle;
+  margin: 0.2em 0.4em;
+}
+.card span {
+  margin-left: 0.2em;
 }
 
 #grid {
@@ -23,4 +56,150 @@
 
 #command-list .column {
   margin: 0.4em 0.4em;
+}
+
+.command-title .title {
+  display: flex;
+}
+.command-title .title span.name {
+  display: block;
+  flex-grow: 1;
+}
+.command-title .title i {
+  margin: 0 0.5rem;
+}
+.command-title .title .aliases {
+  font-size: 0.5em;
+  margin-top: -0.5em;
+}
+
+/* TODO(olivia): Probably consolidate with .command-title above */
+.run-title {
+  display: flex;
+  align-items: center;
+}
+.run-title .title {
+  display: block;
+  flex-grow: 1;
+  margin: 0 1rem !important;
+}
+.run-title .loss {
+  display: block;
+  flex-grow: 1;
+  margin: 0 1rem !important;
+}
+.run-title .loss i {
+  font-size: 0.75em;
+}
+.run-title i {
+  margin: 0 0.5rem;
+  font-size: 2em;
+}
+.run-title .avatar {
+  border-radius: 100px;
+  aspect-ratio: 1/1;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.2);
+}
+.run-title .avatar div {
+  font-size: 8px !important;
+}
+.run-title .score {
+  font-size: 1.5em;
+  margin-right: 1em;
+}
+.run-title .extra {
+  font-size: 0.75em;
+}
+
+.act {
+  display: flex;
+}
+.act img {
+  width: 5%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.relics {
+  display: flex;
+  flex-flow: wrap;
+  align-content: flex-start;
+  min-height: 250px;
+}
+.relics div {
+  width: 45px;
+  height: 45px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.neow, .relics-message {
+  min-height: 250px;
+  max-height: 250px;
+}
+
+.hint {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+.hint p {
+  display: block;
+  width: 50%;
+  font-size: 0.5em;
+  text-align: center;
+}
+
+.keys {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: flex-start;
+  height: 75%;
+}
+.keys .key {
+  transition: 0.7s;
+}
+.keys .key.missing {
+  filter: blur(2px) grayscale(75%);
+}
+.keys .ruby.key, .keys .sapphire.key {
+  top: 48px;
+}
+.keys .ruby.key {
+  position: absolute;
+  right: 50%;
+}
+.keys .sapphire.key {
+  position: absolute;
+  left: 50%;
+}
+
+.neow .hidden {
+  display: none;
+  visibility: none;
+}
+.neow .message-body {
+  font-family: 'Kreon', serif;
+  overflow: scroll;
+}
+
+.neow .message-body .skipped {
+  padding-top: 0.5em;
+  font-size: 0.75em;
+}
+
+.neow .message-body .skipped li {
+  text-decoration: line-through;
+  list-style: circle;
+  margin-left: 1em;
+}
+
+nav.breadcrumb {
+  padding: 1rem 3rem;
 }
