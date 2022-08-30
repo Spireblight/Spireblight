@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Generator
+
 import datetime
 import random
+import string
 import json
 import sys
 import os
@@ -52,6 +55,27 @@ _consts = {
     "website": config.website_url,
 }
 
+class Formatter(string.Formatter): # this does not support conversion or formatting
+    def parse(self, format_string: str) -> Generator[tuple[str, str | None, None, None]]:
+        if format_string is None: # recursion
+            yield ("", None, None, None)
+            return
+        start = 0
+        while start < len(format_string):
+            try:
+                idx = format_string.index("$(", start)
+                end = format_string.index(")", idx)
+            except ValueError:
+                yield (format_string[start:], None, None, None)
+                break
+
+            lit = format_string[start:idx]
+
+            yield (lit, format_string[idx+2:end], None, None)
+            start = end+1
+
+_formatter = Formatter()
+
 _perms = {
     "": "Everyone",
     "m": "Moderator",
@@ -98,6 +122,11 @@ def _create_cmd(output):
             msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
+        if "$(savefile" in msg:
+            save = await get_savefile(ctx)
+            if save is None:
+                return
+            msg = _formatter.format(msg, savefile=save)
         await ctx.send(msg)
     return inner
 
@@ -629,7 +658,7 @@ async def is_seeded(ctx: ContextType, j: Savefile):
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
-@with_savefile("boss", "actboss", "nextboss")
+#@with_savefile("boss", "actboss", "nextboss")
 async def actboss(ctx: ContextType, j: Savefile):
     """Display the upcoming act boss."""
     await ctx.send(f"The upcoming act boss is {j.upcoming_boss}.")
@@ -671,7 +700,7 @@ async def campfire_heal(ctx: ContextType, j: Savefile):
 
     await ctx.send(f"Current campfire heal: {base} HP{extra}")
 
-@with_savefile("potionchance", "potion")
+#@with_savefile("potionchance", "potion")
 async def potion_chance(ctx: ContextType, j: Savefile):
     """Display the current potion drop chance."""
     await ctx.send(f"Current potion chance: {j.potion_chance}%")

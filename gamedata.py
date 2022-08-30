@@ -504,7 +504,7 @@ class FileParser:
         self.neow_bonus = NeowBonus(self)
         self._cache = {}
         self._character: str | None = None
-        self._graph_cache: dict[tuple[str, str, frozenset[str], str | None, str | None], str] = {}
+        self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str] = {}
 
     def __getitem__(self, item: str) -> Any:
         return self.data[item]
@@ -536,7 +536,7 @@ class FileParser:
         label = req.query.get("label")
         title = req.query.get("title")
 
-        to_cache = (graph_type, display_type, frozenset(items), label, title)
+        to_cache = (graph_type, display_type, tuple(items), label, title)
 
         if to_cache not in self._graph_cache:
             try:
@@ -549,7 +549,9 @@ class FileParser:
         return Response(body=self._graph_cache[to_cache], content_type=self._graph_types[display_type])
 
     def bar(self, dtype: str, items: Iterable[str], label: str | None = None, title: str | None = None, *, allow_private: bool = False) -> str:
-        to_cache = ("bar", dtype, frozenset(items), label, title)
+        if dtype not in self._graph_types:
+            raise ValueError(f"Display type {dtype} is undefined")
+        to_cache = ("bar", dtype, tuple(items), label, title)
         if to_cache not in self._graph_cache:
             self._graph_cache[to_cache] = self._generate_graph("bar", dtype, items, label, title, allow_private=allow_private)
         return self._graph_cache[to_cache]
@@ -785,7 +787,7 @@ class FileParser:
                 seed = int(self["seed_played"])
 
             # this is a bit weird, but lets us convert a negative number, if any, into a positive one
-            num = int.from_bytes(seed.to_bytes(20, "big", signed=True).strip(b"\xff"), "big")
+            num = int.from_bytes(seed.to_bytes(20, "big", signed=True).lstrip(b"\xff"), "big")
             s = []
 
             while num:
