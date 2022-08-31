@@ -203,3 +203,79 @@ section.section {
 nav.breadcrumb {
   padding: 1rem 3rem;
 }
+
+.summary .box {
+  display: flex;
+  overflow: hidden;
+}
+.summary .box .kills {
+  font-size: 5rem;
+  font-weight: bold;
+  text-shadow: 4px 5px 4px rgba(0,0,0, 0.5);
+}
+.summary .box .deaths {
+  font-weight: bold;
+  color: #dbdbdb;
+  text-shadow: 2px 4px 2px rgba(0,0,0, 0.5);
+}
+
+.summary .character {
+  background-color: black;
+  color: white;
+}
+.summary .character:after {
+  background-position: center;
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.summary .character.ironclad:after {background-image: url(/static/characters/ironcladPortrait.jpg);}
+.summary .character.silent:after   {background-image: url(/static/characters/silentPortrait.jpg);}
+.summary .character.defect:after   {background-image: url(/static/characters/defectPortrait.jpg);}
+.summary .character.watcher:after  {background-image: url(/static/characters/watcherPortrait.jpg);}
+
+.summary .character.watcher {
+  /* No idea why Bulma is like this, but without this the last element is not*/
+  /* given any of the margin-bottom. */
+  margin-bottom: 1.5rem;
+}
+
+.summary .character .character-content {
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.heart-data {
+  justify-content: space-around;
+}
+.heart-data .box .data {
+  font-size: 3em;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.placeholder-data {
+  font-size: 0.75em;
+  color: #aaa;
+  width: 50%;
+  text-align: center;
+}
