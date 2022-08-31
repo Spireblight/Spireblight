@@ -22,59 +22,58 @@ async def main():
         print("Config is not complete")
         time.sleep(3)
         return
-    while True:
-        time.sleep(timeout)
-        start = time.time()
-        timeout = 1
-        if possible is None:
-            for file in os.listdir(os.path.join(config.STS_path, "saves")):
-                if file.endswith(".autosave"):
-                    if possible is None:
-                        possible = file
-                    else:
-                        print("Error: Multiple savefiles detected.")
-                        possible = None
-                        break
+    async with ClientSession(config.website_url) as session:
+        while True:
+            time.sleep(timeout)
+            start = time.time()
+            timeout = 1
+            if possible is None:
+                for file in os.listdir(os.path.join(config.STS_path, "saves")):
+                    if file.endswith(".autosave"):
+                        if possible is None:
+                            possible = file
+                        else:
+                            print("Error: Multiple savefiles detected.")
+                            possible = None
+                            break
 
-        if possible is not None:
+            if possible is not None:
+                try:
+                    cur = os.path.getmtime(os.path.join(config.STS_path, "saves", possible))
+                except OSError:
+                    possible = None
+
+            to_send = []
+            files = []
+            if possible is None: # don't check run files during a run
+                for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
+                    for folder in folders:
+                        profile = "0"
+                        if folder[0].isdigit():
+                            profile = folder[0]
+                        for p1, d1, f1 in os.walk(os.path.join(path, folder)):
+                            for file in f1:
+                                if file > last_run:
+                                    to_send.append((p1, file, profile))
+                                    files.append(file)
+
             try:
-                cur = os.path.getmtime(os.path.join(config.STS_path, "saves", possible))
-            except OSError:
-                possible = None
-
-        to_send = []
-        files = []
-        if possible is None: # don't check run files during a run
-            for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
-                for folder in folders:
-                    profile = "0"
-                    if folder[0].isdigit():
-                        profile = folder[0]
-                    for p1, d1, f1 in os.walk(os.path.join(path, folder)):
-                        for file in f1:
-                            if file > last_run:
-                                to_send.append((p1, file, profile))
-                                files.append(file)
-
-        try:
-            all_sent = True
-            if to_send: # send runs first so savefile can seamlessly transfer its cache
-                async with ClientSession() as session:
+                all_sent = True
+                if to_send: # send runs first so savefile can seamlessly transfer its cache
                     for path, file, profile in to_send:
                         with open(os.path.join(path, file)) as f:
                             content = f.read()
                         content = content.encode("utf-8", "xmlcharrefreplace")
-                        async with session.post(f"{config.website_url}/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": config.secret, "start": start}) as resp:
+                        async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": config.secret, "start": start}) as resp:
                             if not resp.ok:
                                 all_sent = False
-                if all_sent:
-                    last_run = max(files)
-                    with open("last_run", "w") as f:
-                        f.write(last_run)
+                    if all_sent:
+                        last_run = max(files)
+                        with open("last_run", "w") as f:
+                            f.write(last_run)
 
-            if possible is None and has_save: # server has a save, but we don't (anymore)
-                async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
+                if possible is None and has_save: # server has a save, but we don't (anymore)
+                    async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                         if resp.ok:
                             has_save = False
                     # update all profiles
@@ -102,28 +101,27 @@ async def main():
                         except OSError:
                             continue
 
-                    async with session.post(f"{config.website_url}/sync/profile", data=data, params={"key": config.secret, "start": start}) as resp:
+                    async with session.post("/sync/profile", data=data, params={"key": config.secret, "start": start}) as resp:
                         if resp.ok:
                             lasp = tobe_lasp
                         else:
                             print("Warning: Profiles were not successfully updated. Desyncs may occur.")
 
-            if possible is not None and cur != last:
-                content = ""
-                with open(os.path.join(config.STS_path, "saves", possible)) as f:
-                    content = f.read()
-                content = content.encode("utf-8", "xmlcharrefreplace")
-                char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                async with ClientSession() as session:
-                    async with session.post(f"{config.website_url}/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret, "has_run": "false", "start": start}) as resp:
+                if possible is not None and cur != last:
+                    content = ""
+                    with open(os.path.join(config.STS_path, "saves", possible)) as f:
+                        content = f.read()
+                    content = content.encode("utf-8", "xmlcharrefreplace")
+                    char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
+                    async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret, "has_run": "false", "start": start}) as resp:
                         if resp.ok:
                             last = cur
                             has_save = True
 
-        except ClientError:
-            timeout = 10 # give it a bit of time
-            print("Error: Server is offline! Retrying in 10s")
-            continue
+            except ClientError:
+                timeout = 10 # give it a bit of time
+                print("Error: Server is offline! Retrying in 10s")
+                continue
 
 if __name__ == "__main__":
     asyncio.run(main())
