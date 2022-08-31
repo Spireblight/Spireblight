@@ -72,6 +72,30 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
 
     return _cache
 
+class ChallengeCharacter:
+    def __init__(self, name: str, kills: int, deaths: int):
+        self.name = name
+        self.kills = kills
+        self.deaths = deaths
+
+@router.get("/400")
+@aiohttp_jinja2.template("400.jinja2")
+async def redirected_totals(req: web.Request):
+    # TODO(olivia): Obviously this needs to be real data
+    characters = [
+        ChallengeCharacter("Ironclad", 63, 31),
+        ChallengeCharacter("Silent", 63, 60),
+        ChallengeCharacter("Defect", 64, 52),
+        ChallengeCharacter("Watcher", 63, 30),
+        ]
+
+    left = datetime.date(2022, 12, 31) - datetime.date.today()
+    return {
+        "characters": characters,
+        "total": sum(x.kills for x in characters),
+        "days_left": left.days,
+    }
+
 #@router.get("/redirects")
 async def redirected_totals(req: web.Request):
     with open(os.path.join("data", "redirects.json")) as f:
