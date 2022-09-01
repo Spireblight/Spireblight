@@ -100,9 +100,9 @@ class RunParser(FileParser):
 
 @add_listener("setup_init")
 async def _setup_cache():
-    _update_cache()
     for i in range(3):
         os.makedirs(os.path.join("data", "runs", str(i)), exist_ok=True)
+    _update_cache()
 
 def _update_cache():
     start = time.time()

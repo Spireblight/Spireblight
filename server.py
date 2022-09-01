@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Generator
+from typing import Generator, Callable
 
 import datetime
 import random
 import string
 import json
 import sys
+import re
 import os
 
 from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
@@ -25,7 +26,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
 from nameinternal import get_relic
-from sts_profile import get_profile
+from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -56,23 +57,40 @@ _consts = {
 }
 
 class Formatter(string.Formatter): # this does not support conversion or formatting
-    def parse(self, format_string: str) -> Generator[tuple[str, str | None, None, None]]:
+    def __init__(self):
+        super().__init__()
+        self._re = re.compile(r".+(\(.+\)).*")
+
+    def parse(self, format_string: str) -> Generator[tuple[str, str | None, str | None, None]]:
         if format_string is None: # recursion
             yield ("", None, None, None)
             return
         start = 0
         while start < len(format_string):
             try:
-                idx = format_string.index("$(", start)
-                end = format_string.index(")", idx)
+                idx = format_string.index("$<", start)
+                end = format_string.index(">", idx)
             except ValueError:
                 yield (format_string[start:], None, None, None)
                 break
 
             lit = format_string[start:idx]
 
-            yield (lit, format_string[idx+2:end], None, None)
+            field = format_string[idx+2:end]
+
+            called = None
+            call_args = self._re.match(field)
+            if call_args:
+                called = call_args.group(1)
+                call_idx = field.index(called)
+                field = field[:call_idx]
+                called = called[1:-1]
+
+            yield (lit, field, called, None)
             start = end+1
+
+    def format_field(self, value: Callable, call_args: str) -> str:
+        return value(call_args)
 
 _formatter = Formatter()
 
@@ -122,13 +140,18 @@ def _create_cmd(output):
             msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
+        keywords = {"savefile": None, "profile": get_current_profile(), "readline": readline}
         if "$(savefile" in msg:
-            save = await get_savefile(ctx)
-            if save is None:
+            keywords["savefile"] = await get_savefile(ctx)
+            if keywords["savefile"] is None:
                 return
-            msg = _formatter.format(msg, savefile=save)
+        msg = _formatter.vformat(msg, (), keywords)
         await ctx.send(msg)
     return inner
+
+def readline(file: str) -> str:
+    with open(os.path.join("text", file), "r") as f:
+        return random.choice(f.readlines())
 
 def load():
     _cmds.clear()
@@ -658,11 +681,6 @@ async def is_seeded(ctx: ContextType, j: Savefile):
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
-#@with_savefile("boss", "actboss", "nextboss")
-async def actboss(ctx: ContextType, j: Savefile):
-    """Display the upcoming act boss."""
-    await ctx.send(f"The upcoming act boss is {j.upcoming_boss}.")
-
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, j: Savefile):
     """Display the current shop removal cost."""
@@ -699,11 +717,6 @@ async def campfire_heal(ctx: ContextType, j: Savefile):
         extra = f" (extra healing lost: {lost} HP)"
 
     await ctx.send(f"Current campfire heal: {base} HP{extra}")
-
-#@with_savefile("potionchance", "potion")
-async def potion_chance(ctx: ContextType, j: Savefile):
-    """Display the current potion drop chance."""
-    await ctx.send(f"Current potion chance: {j.potion_chance}%")
 
 @with_savefile("nloth")
 async def nloth_traded(ctx: ContextType, j: Savefile):
@@ -869,14 +882,7 @@ async def wall_card(ctx: ContextType):
         await ctx.send("Error: could not find Ladder savefile.")
         return
 
-    await ctx.send(f"Current card in the !hole in the wall for the ladder savefile: {p.hole_card}")
-
-@command("dig", burst=5, rate=2.0)
-async def dig_cmd(ctx: ContextType):
-    """Dig! Dig! Dig! Just like the Shovel in the game, you get a random relic! What will it be?"""
-    with open("dig_entries.txt", "r") as f:
-        line = random.choice(f.readlines())
-    await ctx.send(f"{ctx.author.display_name} has dug up {line}")
+    await ctx.send(f"Current card in the {config.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
 
 @command("kills", "wins") # TODO: Read game files for this
 async def kills_cmd(ctx: ContextType):
@@ -1021,9 +1027,9 @@ async def individual_cmd(req: Request):
         raise HTTPNotFound()
     if name in _cmds:
         d["builtin"] = False
-        output = _cmds[name]["output"]
+        output: str = _cmds[name]["output"]
         try:
-            output = d["output"].format(user="<username>", text="<text>", words="<words>", **_consts)
+            output = output.format(user="<username>", text="<text>", words="<words>", **_consts)
         except KeyError:
             pass
         out = []

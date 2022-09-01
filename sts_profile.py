@@ -4,15 +4,13 @@ import time
 import json
 import os
 
-from aiohttp.web import Request, Response, HTTPUnauthorized, HTTPNotImplemented, HTTPForbidden, FileField
+from aiohttp.web import Request, Response
 
 from nameinternal import get_card
 from webpage import router
 from logger import logger
 from events import add_listener
 from utils import get_req_data
-
-import config
 
 __all__ = ["get_profile", "get_current_profile"]
 
@@ -23,7 +21,7 @@ def get_profile(x: int) -> Profile:
     return _profiles[x]
 
 def get_current_profile() -> Profile:
-    return _profiles[int(_slots["DEFAULT_PROFILE"])]
+    return _profiles[int(_slots["DEFAULT_SLOT"])]
 
 class Profile:
     def __init__(self, index: int, data: dict[str, str]):
