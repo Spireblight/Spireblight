@@ -90,7 +90,9 @@ class Formatter(string.Formatter): # this does not support conversion or formatt
             start = end+1
 
     def format_field(self, value: Callable, call_args: str) -> str:
-        return value(call_args)
+        if call_args:
+            return value(call_args)
+        return value
 
 _formatter = Formatter()
 
