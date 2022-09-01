@@ -141,7 +141,7 @@ def _create_cmd(output):
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
         keywords = {"savefile": None, "profile": get_current_profile(), "readline": readline}
-        if "$(savefile" in msg:
+        if "$<savefile" in msg:
             keywords["savefile"] = await get_savefile(ctx)
             if keywords["savefile"] is None:
                 return
@@ -1034,6 +1034,8 @@ async def individual_cmd(req: Request):
             pass
         out = []
         for word in output.split():
+            if "<" in word:
+                word = word.replace("<", "&lt")
             if word.startswith("http"):
                 word = f'<a href="{word}">{word}</a>'
             out.append(word)
