@@ -4,6 +4,7 @@ from typing import Any, Generator, Iterable
 
 import math
 import io
+import urllib.parse
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt
@@ -720,13 +721,13 @@ class FileParser:
 
     def cards_as_html(self) -> Generator[str, None, None]:
         text = (
-            '<div class="card"{color}>'
+            '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
             '<svg width="32" height="32">'
             '<image width="32" height="32" xlink:href="{website}/static/card/Back_{character}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card/Desc_{character}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card/Type_{card_type}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card/Banner_{banner}.png"></image>'
-            '</svg><span>{count}{card_name}</span></div>'
+            '</svg><span>{count}{card_name}</span></a>'
         )
         content = {}
         order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
@@ -759,6 +760,7 @@ class FileParser:
                         "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
                         "banner": rarity or "Common",
                         "count": f"{count}x " if count > 1 else "",
+                        "card_url": urllib.parse.quote(name.strip("+")),
                         "card_name": name,
                     }
                     final.append(text.format_map(format_map))
