@@ -83,11 +83,11 @@ class ChallengeCharacter:
 async def redirected_totals(req: web.Request):
     # TODO(olivia): Obviously this needs to be real data
     characters = [
-        ChallengeCharacter("Ironclad", 63, 31),
+        ChallengeCharacter("Ironclad", 64, 31),
         ChallengeCharacter("Silent", 63, 60),
         ChallengeCharacter("Defect", 64, 52),
-        ChallengeCharacter("Watcher", 63, 30),
-        ]
+        ChallengeCharacter("Watcher", 64, 30),
+    ]
 
     left = datetime.date(2022, 12, 31) - datetime.date.today()
     return {

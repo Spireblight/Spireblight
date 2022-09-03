@@ -1,6 +1,6 @@
 @font-face {
-    font-family: Monument;
-    src: url("/static/fonts/monumentextended-ultrabold.otf") format("opentype");
+  font-family: Monument;
+  src: url("/static/fonts/monumentextended-ultrabold.otf") format("opentype");
 }
 
 /* This is to override the Bulma default. So spacey */
@@ -12,6 +12,10 @@ section.section {
 .monument {
   font-family: 'Monument';
   text-transform: uppercase;
+}
+
+.breadcrumb {
+  margin-bottom: 0 !important;
 }
 
 .navbar-item.monument {
@@ -73,43 +77,58 @@ section.section {
   margin-top: -0.5em;
 }
 
+.run-header {
+  display: flex !important;
+  overflow: hidden;
+}
+.run-header .avatar {
+  height: 86px;
+  width: 130px;
+  margin-right: -50px;
+}
+.run-header .avatar img {
+  height: 100%;
+  width: 100%;
+  object-fit: none;
+}
+.run-header .avatar img.ironclad.victory {object-position: -131px 0px;}
+.run-header .avatar img.silent.victory {object-position: -102px 0px;}
+.run-header .avatar img.defect.victory {object-position: -94px 0px;}
+.run-header .avatar img.watcher.victory {object-position: -150px 10px;}
+
+.run-header .avatar img.loss {
+  filter: grayscale(60%);
+}
+.run-header .avatar img.ironclad.loss {object-position: -313px -394px;}
+.run-header .avatar img.silent.loss {object-position: -322px -388px;}
+.run-header .avatar img.defect.loss {object-position: -333px -405px;}
+.run-header .avatar img.watcher.loss {object-position: -346px -412px;}
+
 /* TODO(olivia): Probably consolidate with .command-title above */
 .run-title {
   display: flex;
   align-items: center;
+  flex-grow: 1;
 }
 .run-title .title {
   display: block;
   flex-grow: 1;
   margin: 0 1rem !important;
 }
-.run-title .loss {
-  display: block;
-  flex-grow: 1;
-  margin: 0 1rem !important;
-}
-.run-title .loss i {
-  font-size: 0.75em;
-}
 .run-title i {
   margin: 0 0.5rem;
   font-size: 2em;
 }
-.run-title .avatar {
-  border-radius: 100px;
-  aspect-ratio: 1/1;
-  height: 3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,0.2);
-}
-.run-title .avatar div {
-  font-size: 8px !important;
-}
 .run-title .score {
-  font-size: 1.5em;
   margin-right: 1em;
+  text-align: right;
+}
+.run-title .points {
+  font-size: 1.5em;
+}
+.run-title .loss {
+  display: block;
+  font-size: 0.75em;
 }
 .run-title .extra {
   font-size: 0.75em;
@@ -137,7 +156,7 @@ section.section {
   cursor: pointer;
 }
 
-.neow, .relics-message {
+.neow .message-body, .relics-message .message-body {
   min-height: 250px;
   max-height: 250px;
 }
@@ -164,6 +183,7 @@ section.section {
 }
 .keys .key {
   transition: 0.7s;
+  cursor: pointer;
 }
 .keys .key.missing {
   filter: blur(2px) grayscale(75%);
@@ -187,6 +207,7 @@ section.section {
 .neow .message-body {
   font-family: 'Kreon', serif;
   overflow: scroll;
+  border-width: 0;
 }
 
 .neow .message-body .skipped {
@@ -278,4 +299,16 @@ nav.breadcrumb {
   color: #aaa;
   width: 50%;
   text-align: center;
+}
+
+#profiles a {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+#run-list a {
+  display: block !important;
+}
+#run-list .run.loss {
+  padding-left: 2.25rem;
 }

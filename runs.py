@@ -70,8 +70,16 @@ class RunParser(FileParser):
         return datetime.fromtimestamp(self.data["timestamp"])
 
     @property
+    def delta(self) -> datetime.datetime:
+        return datetime.now() - self.timestamp
+
+    @property
     def won(self) -> bool:
         return self.data["victory"]
+
+    @property
+    def verb(self) -> str:
+        return "victory" if self.won else "loss"
 
     @property
     def killed_by(self) -> str | None:
@@ -208,11 +216,8 @@ async def run_single(req: Request):
     # intrude on the parser code for the sake of the design.
     keys = {key: floor for key, floor in parser.keys}
 
-    delta = datetime.now() - parser.timestamp
-
     return {
-        "parser": parser,
-        "delta": delta,
+        "run": parser,
         "keys": keys,
         "runs": {
             "previous": parser.matched.get('prev'),

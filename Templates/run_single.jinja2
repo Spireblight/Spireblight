@@ -1,7 +1,7 @@
 {% extends "base.jinja2" %}
 
 {% block title %}
-  {{ parser.display_name }}
+  {{ run.display_name }}
 {% endblock %}
 
 {% block content %}
@@ -58,7 +58,7 @@
        label: 'HP',
        backgroundColor: '#ff6384',
        borderColor: '#ff6384',
-       data: {{ parser.current_hp_per_floor }},
+       data: {{ run.current_hp_per_floor }},
        yAxisID: 'y',
      },{
        label: 'Max HP',
@@ -66,13 +66,13 @@
        borderColor: '#8463ff',
        borderWidth: 1,
        radius: 0,
-       data: {{ parser.max_hp_per_floor }},
+       data: {{ run.max_hp_per_floor }},
        yAxisID: 'y',
      },{
        label: 'Gold',
        backgroundColor: '#ffd700',
        borderColor: '#ffd700',
-       data: {{ parser.gold_per_floor }},
+       data: {{ run.gold_per_floor }},
        yAxisID: 'y1',
      }]
    };
@@ -105,54 +105,62 @@
   </script>
 
 
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/runs">Run histories</a></li>
+      <li><a href="/profile/{{ run.profile.index }}/runs">{{ run.profile.name }}</a></li>
+      <li class="is-active"><a href="#">
+        {{ run.character }} {{ run.verb }}, {{ run.timestamp.strftime("%A %-d
+    %B, %H:%M") }}
+      </a></li>
+    </ul>
+  </nav>
+
   <section class="section">
-    <div class="container box">
-      <div class="run-title">
-
-        <div class="avatar is-primary has-text-gray-lighter">
-          <div>
-            {{ parser.character | lower }}.png
-          </div>
-        </div>
-
-        <div class="title">
-          {{ parser.character }}
-          {% if parser.won %}
-            victory! 🎉
-          {% else %}
-            loss 😔
-          {% endif %}
-        </div>
-
-        {% if not parser.won %}
-          <div class="loss">
-            <i class="fa-solid fa-skull"></i>
-            Killed by {{ parser.killed_by }}
-            <i class="fa-solid fa-skull"></i>
-          </div>
-        {% endif %}
-
-        <div class="score">
-          {{ parser.score }} points
-          {% if parser.ascension_level != 20 %}
-            (A{{ parser.ascension_level }})
-          {% endif %}
-        </div>
-        <div class="extra">
-          <div>Took {{ parser.run_length }}</div>
-          <div title="{{ parser.timestamp }}">
-            {% if delta.days > 0 %}
-              {{ delta.days }} days ago
+    <div class="box run-header is-paddingless">
+      <div class="avatar">
+        <img class="{{ run.character | lower }} {{ run.verb }}"
+          src="/static/characters/{{ run.character | lower }}-{{ run.verb }}.png"/>
+      </div>
+      <div class="container">
+        <div class="run-title pt-4 pr-4 pb-4">
+          <div class="title">
+            {{ run.character }}
+            {% if run.won %}
+              victory! 🎉
             {% else %}
-              Today!
+              loss 😔
             {% endif %}
           </div>
-          <div>{{ parser.seed }}</div>
+          <div class="score">
+            <div class="points">
+              {{ run.score }} points
+              {% if run.ascension_level != 20 %}
+                (A{{ run.ascension_level }})
+              {% endif %}
+            </div>
+            {% if not run.won %}
+              <div class="loss">
+                Killed by {{ run.killed_by }} on floor {{ run.floor_reached }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="extra">
+            <div>Took {{ run.run_length }}</div>
+            <div title="{{ run.timestamp }}">
+              {% if run.delta.days > 0 %}
+                {{ run.delta.days }} days ago
+              {% else %}
+                Today!
+              {% endif %}
+            </div>
+            <div>{{ run.seed }}</div>
+          </div>
+          {% if modded %}
+            <i title="This is a modded character. Not all data will be accurate."
+              class="fa-solid fa-circle-radiation"></i>
+          {% endif %}
         </div>
-        {% if modded %}
-          <i title="This is a modded character. Not all data will be accurate."
-            class="fa-solid fa-circle-radiation"></i>
-        {% endif %}
       </div>
     </div>
   </section>
@@ -164,13 +172,13 @@
         </div>
         <div id="neow-body-original" class="message-body">
           <p>
-            {{ parser.neow_bonus.as_str() }}
+            {{ run.neow_bonus.as_str() }}
           </p>
-          {% if parser.neow_bonus.has_data %}
+          {% if run.neow_bonus.has_data %}
             <div class="skipped">
               <p>And we skipped taking:</p>
               <ul>
-                {% for skipped in parser.neow_bonus.skipped %}
+                {% for skipped in run.neow_bonus.skipped %}
                   <li> {{ skipped }} </li>
                 {% endfor %}
               </ul>
@@ -189,34 +197,32 @@
           {% for key in ("Emerald Key", "Ruby Key", "Sapphire Key") %}
             <img class="{{ key | lower }} {% if key not in keys %} missing{% endif %}"
               src="/static/relics/cropped/{{ key | urlencode }}.png"
-              onmouseenter="neowText('{{ key }}',
-                        {% if key in keys %}
-                        'Obtained on floor {{ keys[key] }}'
-                        {% else %}
-                        'This key hasn\'t been obtained yet'
-                        {% endif %})">
+              onclick="neowText('{{ key }}',
+                      {% if key in keys %}
+                      'Obtained on floor {{ keys[key] }}'
+                      {% else %}
+                      'This key hasn\'t been obtained yet.'
+                      {% endif %})">
           {% endfor %}
         </div>
-        <div class="hint">
+        <div class="hint" onclick="neowReset()">
           <p>Hint: You can click on relics, floors, and the keys.</p>
         </div>
       </div>
 
-      <div class="column is-paddingless box relics-message">
-        <div class="message" onmouseleave="neowReset()">
-          <div class="message-header">
-            <p>Relics</p>
-          </div>
-          <div class="message-body relics">
-            {% for relic in parser.relics %}
-              <div>
-                <img src="/static/relics/cropped/{{ relic.image | urlencode }}"
-                  alt="{{ relic.description() }}"
-                  title="{{ relic.description() }}"
-                  onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{relic.escaped_description() }}')" >
-              </div>
-            {% endfor %}
-          </div>
+      <div class="column message relics-message is-paddingless is-marginless box">
+        <div class="message-header">
+          <p>Relics</p>
+        </div>
+        <div class="message-body relics">
+          {% for relic in run.relics %}
+            <div>
+              <img src="/static/relics/cropped/{{ relic.image | urlencode }}"
+                alt="{{ relic.description() }}"
+                title="{{ relic.description() }}"
+                onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{relic.escaped_description() }}')" >
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -224,8 +230,9 @@
 
   <section class="section">
     <div class="act">
-      {% for node in parser.path %}
+      {% for node in run.path %}
         <img src="/static/icons/{{ node.map_icon }}"
+          title="Floor {{ node.floor }}"
           onclick="neowText('Floor {{ node.floor }}', '{{ node.escaped_description() }}')">
         {# This is unfortunate logic, but it does the thing. #}
         {% if node.end_of_act %}
@@ -238,7 +245,7 @@
 
   <section class="section">
     <div class="cards">
-      {% for card_data in parser.cards_as_html() %}
+      {% for card_data in run.cards_as_html() %}
         {{ card_data | safe }}
       {% endfor %}
     </div>
@@ -262,36 +269,28 @@
        <br>
        <b>Tip: the graphs below can be interacted with, using the buttons in the bottom left!</b>
        <br>
-       <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
-       <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=embed" title="Progression of gold during the run" width=670 height=500>
-       <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=card_count&title=Card+count+during+the+run&type=embed" title="Card count during the run" width=670 height=500>
-       <embed type="text/html" src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=embed" title="Relic count during the run" width=670 height=500>
-       <embed type="text/html" src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=embed" title="Potion count during the run" width=670 height=500>
-       <embed type="text/html" src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=embed" title="Time spent on each floor" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=embed" title="Progression of HP during the run" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=embed" title="Progression of gold during the run" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/plot?view=card_count&title=Card+count+during+the+run&type=embed" title="Card count during the run" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=embed" title="Relic count during the run" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=embed" title="Potion count during the run" width=670 height=500>
+       <embed type="text/html" src="/runs/{{ run.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=embed" title="Time spent on each floor" width=670 height=500>
        {% else %}
-       <img src="/runs/{{ parser.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=image" alt="Progression of HP during the run">
-       <img src="/runs/{{ parser.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=image" alt="Progression of gold during the run">
-       <img src="/runs/{{ parser.name }}/plot?view=card_count&title=Card+count+during+the+run&type=image" alt="Card count during the run">
-       <img src="/runs/{{ parser.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=image" alt="Relic count during the run">
-       <img src="/runs/{{ parser.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=image" alt="Potion count during the run">
-       <img src="/runs/{{ parser.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=image" alt="Time spent on each floor">
+       <img src="/runs/{{ run.name }}/plot?view=max_hp,current_hp&title=Progression+of+HP+during+the+run&label=HP&type=image" alt="Progression of HP during the run">
+       <img src="/runs/{{ run.name }}/plot?view=gold&title=Progression+of+gold+during+the+run&type=image" alt="Progression of gold during the run">
+       <img src="/runs/{{ run.name }}/plot?view=card_count&title=Card+count+during+the+run&type=image" alt="Card count during the run">
+       <img src="/runs/{{ run.name }}/plot?view=relic_count&title=Relic+count+during+the+run&type=image" alt="Relic count during the run">
+       <img src="/runs/{{ run.name }}/stem?view=potion_count&title=Potion+count+during+the+run&type=image" alt="Potion count during the run">
+       <img src="/runs/{{ run.name }}/bar?view=floor_time&title=Time+spent+on+each+floor&type=image" alt="Time spent on each floor">
        {% endif %}
        </section> -->
 
 {% endblock %}
 
 {% block footer %}
-  <<<<<<< HEAD
   {% if embed %}
-    <a href="/runs/{{ parser.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
+    <a href="/runs/{{ run.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
     <br>
   {% endif %}
-  <a href="/profile/{{ parser.profile.index }}/runs">Back to all runs</a><br>
-  =======
-  {% if embed %}
-    <a href="/runs/{{ parser.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
-    <br>
-  {% endif %}
-  <a href="/runs">Back to all runs</a><br>
-  >>>>>>> 8e2d732 (WIP design changes)
+  <a href="/profile/{{ run.profile.index }}/runs">Back to all runs</a><br>
 {% endblock %}
