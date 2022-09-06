@@ -656,6 +656,14 @@ class FileParser:
         return c
 
     @property
+    def current_hp_counts(self) -> list[int]:
+        return self[self.prefix + "current_hp_per_floor"]
+
+    @property
+    def max_hp_counts(self) -> list[int]:
+        return self[self.prefix + "max_hp_per_floor"]
+
+    @property
     def ascension_level(self) -> int:
         return self.data["ascension_level"]
 
