@@ -5,7 +5,7 @@ import json
 import time
 import math
 
-from aiohttp.web import Request, HTTPUnauthorized, HTTPForbidden, HTTPNotImplemented, HTTPNotFound, HTTPFound, Response, FileField
+from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
@@ -15,8 +15,6 @@ from webpage import router
 from logger import logger
 from utils import get_req_data
 from runs import get_latest_run
-
-import config
 
 __all__ = ["get_savefile", "Savefile"]
 
@@ -168,8 +166,8 @@ class Savefile(FileParser):
         # I add that to the final likelihood, as it can skew the chance a bit. I
         # *could* calculate it, but that's already more trouble than I care to do.
         # (The base chance is 0.6, but as everything is divided by 100, it's 0.006)
-        rew_reg = 1 - ( (1-((3-base)/100)*mult) ** regular ) + 0.006 * regular
-        rew_eli = 1 - ( (1-((3-base+10)/100)*mult) ** elites ) + 0.006 * elites
+        rew_reg = 1 - ( (1-((3-base)/100)*mult) ** regular ) + 0.006 * (regular-1)
+        rew_eli = 1 - ( (1-((3-base+10)/100)*mult) ** elites ) + 0.006 * (elites-1)
         shops = 1 - ( (1-(3-base)/100) ** 5 )
         return max(rew_reg, 0.0), max(rew_eli, 0.0), max(shops, 0.0)
 
