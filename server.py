@@ -752,10 +752,11 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
 @with_savefile("rare", "rarecard", "rarechance") # see comment in save.py -- this is not entirely accurate
 async def rare_card_chances(ctx: ContextType, j: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
-    rewards, shops = j.rare_chance
+    regular, elites, shops = j.rare_chance
     await ctx.send(
-        f"The rough likelihood of seeing a rare card is {rewards:.2%} "
-        f"in card rewards, and {shops:.2%} in shops."
+        f"The rough likelihood of seeing a rare card is {regular:.2%} "
+        f"in normal fight card rewards, {elites:.2%} in elite fight "
+        f"card rewards, and {shops:.2%} in shops."
     )
 
 @with_savefile("relic")

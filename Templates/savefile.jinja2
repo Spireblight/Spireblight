@@ -29,9 +29,11 @@
     <br>
     Potion drop chance: {{ parser.potion_chance }}%
     <br>
-    Rare card chance in card rewards: {{ parser.rare_chance[0] }}%
+    Rare card chance in regular fight card rewards: {{ parser.rare_chance_as_str()[0] }}
     <br>
-    Rare card chance in shops: {{ parser.rare_chance[1] }}%
+    Rare card chance in elite fight card rewards: {{ parser.rare_chance_as_str()[1] }}
+    <br>
+    Rare card chance in shops: {{ parser.rare_chance_as_str()[2] }}
     <br>
     Neow option picked: {{ parser.neow_bonus.picked }}
     <br>
