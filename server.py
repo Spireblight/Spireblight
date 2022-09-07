@@ -749,6 +749,15 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
         f"See {config.prefix}eventrng for more information."
     )
 
+@with_savefile("rare", "rarecard", "rarechance") # see comment in save.py -- this is not entirely accurate
+async def rare_card_chances(ctx: ContextType, j: Savefile):
+    """Display the current chance to see rare cards in rewards and shops."""
+    rewards, shops = j.rare_chance
+    await ctx.send(
+        f"The rough likelihood of seeing a rare card is {rewards}% "
+        f"in card rewards, and {shops}% in shops."
+    )
+
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, j: Savefile, index: int):
     """Display information about the current relics."""
