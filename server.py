@@ -754,8 +754,8 @@ async def rare_card_chances(ctx: ContextType, j: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
     rewards, shops = j.rare_chance
     await ctx.send(
-        f"The rough likelihood of seeing a rare card is {rewards}% "
-        f"in card rewards, and {shops}% in shops."
+        f"The rough likelihood of seeing a rare card is {rewards:.2%} "
+        f"in card rewards, and {shops:.2%} in shops."
     )
 
 @with_savefile("relic")

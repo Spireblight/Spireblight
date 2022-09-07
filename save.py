@@ -147,7 +147,7 @@ class Savefile(FileParser):
         return self["potion_chance"] + 40
 
     @property
-    def rare_chance(self) -> tuple[int, int]:
+    def rare_chance(self) -> tuple[float, float]:
         base = self["card_random_seed_randomizer"]
         choices = 3
         if "Busted Crown" in self["relics"]:
@@ -161,12 +161,13 @@ class Savefile(FileParser):
             mult = 3
         # NOTE: This formula is... not very good. I'm not sure that the base is what
         # gets added to the 3% chance, but I'm rolling with it for now. As for that
-        # weirdness with 0.6 at the end, it's the base chance for common cards, so
+        # weirdness with 0.006 at the end, it's the base chance for common cards, so
         # I add that to the final likelihood, as it can skew the chance a bit. I
         # *could* calculate it, but that's already more trouble than I care to do.
-        rewards = 1 - ( (1-(base+3)*mult) ** choices ) + round(0.6 * choices)
-        shops = 1 - ( (1-base+3) ** 5 )
-        return max(rewards, 0), max(shops, 0)
+        # (The base chance is 0.6, but as everything is divided by 100, it's 0.006)
+        rewards = 1 - ( (1-((base+3)/100)*mult) ** choices ) + 0.006 * choices
+        shops = 1 - ( (1-(base+3)/100) ** 5 )
+        return max(rewards, 0.0), max(shops, 0.0)
 
     @property
     def upcoming_boss(self) -> str:
