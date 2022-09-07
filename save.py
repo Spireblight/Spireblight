@@ -165,8 +165,8 @@ class Savefile(FileParser):
         # I add that to the final likelihood, as it can skew the chance a bit. I
         # *could* calculate it, but that's already more trouble than I care to do.
         # (The base chance is 0.6, but as everything is divided by 100, it's 0.006)
-        rewards = 1 - ( (1-((base+3)/100)*mult) ** choices ) + 0.006 * choices
-        shops = 1 - ( (1-(base+3)/100) ** 5 )
+        rewards = 1 - ( (1-((3-base)/100)*mult) ** choices ) + 0.006 * choices
+        shops = 1 - ( (1-(3-base)/100) ** 5 )
         return max(rewards, 0.0), max(shops, 0.0)
 
     @property
