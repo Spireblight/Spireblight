@@ -166,7 +166,7 @@ class Savefile(FileParser):
         # *could* calculate it, but that's already more trouble than I care to do.
         rewards = 1 - ( (1-(base+3)*mult) ** choices ) + round(0.6 * choices)
         shops = 1 - ( (1-base+3) ** 5 )
-        return rewards, shops
+        return max(rewards, 0), max(shops, 0)
 
     @property
     def upcoming_boss(self) -> str:
