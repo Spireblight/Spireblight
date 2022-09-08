@@ -1,16 +1,23 @@
 from __future__ import annotations
 
+from typing import Generator, TYPE_CHECKING
+
 import time
 import json
 import os
 
-from aiohttp.web import Request, Response
+from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
+
+import aiohttp_jinja2
 
 from nameinternal import get_card
 from webpage import router
 from logger import logger
 from events import add_listener
 from utils import get_req_data
+
+if TYPE_CHECKING: # circular imports otherwise
+    from runs import RunParser
 
 __all__ = ["get_profile", "get_current_profile"]
 
@@ -30,6 +37,9 @@ class Profile:
         if index:
             self._prefix = f"{index}_"
         self.data = data
+
+    def __str__(self) -> str:
+        return self.name
 
     @property
     def name(self) -> str:
@@ -55,6 +65,30 @@ class Profile:
                 name = f"{name}+{c}"
 
         return name
+
+    @property
+    def runs(self) -> Generator[RunParser, None, None]:
+        """Return all runs from the matching profile, newest first."""
+        from runs import _ts_cache
+        l = list(_ts_cache)
+        l.sort()
+        l.reverse()
+        for ts in l:
+            if _ts_cache[ts]._profile == self.index:
+                yield _ts_cache[ts]
+
+@router.get("/profile/{profile}/runs")
+@aiohttp_jinja2.template("runs.jinja2")
+async def runs_page(req: Request):
+    try:
+        prof = get_profile(int(req.match_info["profile"]))
+    except KeyError:
+        raise HTTPNotFound()
+    except ValueError:
+        raise HTTPForbidden(reason="profile must be integer")
+    from runs import _update_cache
+    _update_cache()
+    return {"profile": prof}
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:

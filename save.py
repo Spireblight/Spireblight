@@ -148,13 +148,11 @@ class Savefile(FileParser):
     def rare_chance(self) -> tuple[float, float, float]:
         base = self["card_random_seed_randomizer"]
         regular = 3
-        elites = 3
         if "Busted Crown" in self["relics"]:
             regular -= 2
-            elites -= 2
         if "Question Card" in self["relics"]:
             regular += 1
-            elites -= 1
+        elites = regular
         if "Prayer Wheel" in self["relics"]:
             regular *= 2
         mult = 1
@@ -166,9 +164,9 @@ class Savefile(FileParser):
         # I add that to the final likelihood, as it can skew the chance a bit. I
         # *could* calculate it, but that's already more trouble than I care to do.
         # (The base chance is 0.6, but as everything is divided by 100, it's 0.006)
-        rew_reg = 1 - ( (1-((3-base)/100)*mult) ** regular ) + 0.006 * (regular-1)
-        rew_eli = 1 - ( (1-((3-base+10)/100)*mult) ** elites ) + 0.006 * (elites-1)
-        shops = 1 - ( (1-(3-base)/100) ** 5 )
+        rew_reg = 1 - ( (1-((3*mult-base)/100)) ** regular ) + 0.006 * (regular-1)
+        rew_eli = 1 - ( (1-((10*mult-base)/100)) ** elites ) + 0.006 * (elites-1)
+        shops = 1 - ( (1-(9-base)/100) ** 5 )
         return max(rew_reg, 0.0), max(rew_eli, 0.0), max(shops, 0.0)
 
     def rare_chance_as_str(self) -> tuple[str, str, str]:

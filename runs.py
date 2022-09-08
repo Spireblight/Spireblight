@@ -8,7 +8,7 @@ import json
 import time
 import os
 
-from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPUnauthorized, HTTPNotImplemented, FileField
+from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotImplemented
 
 import aiohttp_jinja2
 
@@ -155,22 +155,6 @@ def _update_cache():
     # that for now, but logging the update time everytime, in case it turns
     # out to be a bottleneck. We only want to actually update new runs.
     logger.info(f"Updated run parser cache in {time.time() - start}s")
-
-@router.get("/profile/{profile}/runs")
-@aiohttp_jinja2.template("runs.jinja2")
-async def runs_page(req: Request):
-    p = req.match_info["profile"]
-    try:
-        p = int(p)
-        prof = get_profile(p)
-    except KeyError:
-        raise HTTPNotFound()
-    except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
-    _update_cache()
-    runs = [_ts_cache[t] for t in sorted(_ts_cache) if _ts_cache[t]._profile == p]
-    runs.reverse() # return most recent runs at the top
-    return {"runs": runs, "profile": prof}
 
 @router.get("/runs")
 @aiohttp_jinja2.template("runs_profile.jinja2")
