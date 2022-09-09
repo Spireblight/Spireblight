@@ -34,6 +34,7 @@ from logger import logger
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run
+from utils import _getfile, _update_db
 
 from typehints import ContextType, CommandType
 import events
@@ -129,12 +130,6 @@ def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
 
     return _sanitize
 
-def _getfile(x: str, mode: str):
-    return open(os.path.join("data", x), mode)
-
-def _update_db():
-    with _getfile("data.json", "w") as f:
-        json.dump(_cmds, f, indent=config.json_indent)
 
 def _create_cmd(output):
     async def inner(ctx: ContextType, *s, output: str=output):
