@@ -91,10 +91,10 @@ section.section {
   width: 100%;
   object-fit: none;
 }
-.run-header .avatar img.ironclad.victory {object-position: -131px 0px;}
-.run-header .avatar img.silent.victory {object-position: -102px 0px;}
-.run-header .avatar img.defect.victory {object-position: -94px 0px;}
-.run-header .avatar img.watcher.victory {object-position: -150px 10px;}
+.run-header .avatar img.ironclad {object-position: -131px 0px;}
+.run-header .avatar img.silent {object-position: -102px 0px;}
+.run-header .avatar img.defect {object-position: -94px 0px;}
+.run-header .avatar img.watcher {object-position: -150px 10px;}
 
 .run-header .avatar img.loss {
   filter: grayscale(60%);
@@ -123,12 +123,11 @@ section.section {
   margin-right: 1em;
   text-align: right;
 }
-.run-title .points {
+.run-title .score .points {
   font-size: 1.5em;
 }
-.run-title .loss {
+.run-title .score .extra {
   display: block;
-  font-size: 0.75em;
 }
 .run-title .extra {
   font-size: 0.75em;
