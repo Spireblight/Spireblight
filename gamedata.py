@@ -666,6 +666,10 @@ class FileParser:
         return self[self.prefix + "max_hp_per_floor"]
 
     @property
+    def gold_counts(self) -> list[int]:
+        return self[self.prefix + "gold_per_floor"]
+
+    @property
     def ascension_level(self) -> int:
         return self.data["ascension_level"]
 
