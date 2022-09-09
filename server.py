@@ -32,10 +32,10 @@ from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
+from utils import getfile, update_db
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run
-from utils import _getfile, _update_db
 
 from typehints import ContextType, CommandType
 import events
@@ -153,7 +153,7 @@ def readline(file: str) -> str:
 
 def load():
     _cmds.clear()
-    with _getfile("data.json", "r") as f:
+    with getfile("data.json", "r") as f:
         _cmds.update(json.load(f))
     for name, d in _cmds.items():
         c = command(
@@ -164,7 +164,7 @@ def load():
             rate=d.get("rate", _DEFAULT_RATE)
         )(_create_cmd(d["output"]))
         c.enabled = d.get("enabled", True)
-    with _getfile("disabled", "r") as f:
+    with getfile("disabled", "r") as f:
         for disabled in f.readlines():
             TConn.commands[disabled].enabled = False
 
@@ -180,7 +180,7 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
         _cmds[name]["burst"] = burst
     if rate is not None:
         _cmds[name]["rate"] = rate
-    _update_db()
+    update_db()
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
     def inner(func, wrapper_func=None):
@@ -423,7 +423,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if flag:
                 _cmds[name]["flag"] = flag
-            _update_db()
+            update_db()
             for cmd in cmds[name]:
                 cmd._callback = _create_cmd(msg)
             await ctx.send(f"Command {name} edited successfully! Permission: {_perms[flag]}")
@@ -438,7 +438,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.send(f"Error: cannot delete built-in command {name}.")
                 return
             del _cmds[name]
-            _update_db()
+            update_db()
             if TConn is not None:
                 TConn.remove_command(name)
             if DConn is not None:
@@ -458,11 +458,11 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 cmd.enabled = True
             if name in _cmds:
                 _cmds[name]["enabled"] = True
-                _update_db()
-            with _getfile("disabled", "r") as f:
+                update_db()
+            with getfile("disabled", "r") as f:
                 disabled = f.readlines()
             disabled.remove(name)
-            with _getfile("disabled", "w") as f:
+            with getfile("disabled", "w") as f:
                 f.writelines(disabled)
             if name == "sponsored_cmd" and "sponsored" in _timers:
                 _timers["sponsored"].restart()
@@ -481,11 +481,11 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 cmd.enabled = False
             if name in _cmds:
                 _cmds[name]["enabled"] = False
-                _update_db()
-            with _getfile("disabled", "r") as f:
+                update_db()
+            with getfile("disabled", "r") as f:
                 disabled = f.readlines()
             disabled.append(name)
-            with _getfile("disabled", "w") as f:
+            with getfile("disabled", "w") as f:
                 f.writelines(disabled)
             await ctx.send(f"Command {name} has been disabled.")
 
@@ -518,7 +518,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if "aliases" not in _cmds[name]:
                 _cmds[name]["aliases"] = []
             _cmds[name]["aliases"].extend(args)
-            _update_db()
+            update_db()
             await ctx.send(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
 
         case "unalias":
@@ -550,7 +550,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 if args[0] in dcmd.aliases:
                     dcmd.aliases.remove(args[0])
             _cmds[name]["aliases"].remove(name)
-            _update_db()
+            update_db()
             await ctx.send(f"Alias {args[0]} has been removed from command {name}.")
 
         case "cooldown" | "cd":
@@ -594,7 +594,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name in _cmds:
                 _cmds[name]["burst"] = burst
                 _cmds[name]["rate"] = rate
-                _update_db()
+                update_db()
             await ctx.send(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
             if name not in _cmds:
                 await ctx.send("Warning: settings on built-in commands do not persist past a restart.")
@@ -923,7 +923,7 @@ async def wall_card(ctx: ContextType):
 async def kills_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
-    with _getfile("kills", "r") as f:
+    with getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
     await ctx.send(msg.format(kills, sum(kills)))
 
@@ -931,7 +931,7 @@ async def kills_cmd(ctx: ContextType):
 async def losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
     msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
-    with _getfile("losses", "r") as f:
+    with getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
     await ctx.send(msg.format(losses, sum(losses)))
 
@@ -939,7 +939,7 @@ async def losses_cmd(ctx: ContextType):
 async def streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
-    with _getfile("streak", "r") as f:
+    with getfile("streak", "r") as f:
         streak = f.read().split()
     await ctx.send(msg.format(streak))
 
@@ -947,16 +947,16 @@ async def streak_cmd(ctx: ContextType):
 async def pb_cmd(ctx: ContextType):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
-    with _getfile("pb", "r") as f:
+    with getfile("pb", "r") as f:
         pb = f.read().split()
     await ctx.send(msg.format(pb))
 
 @command("winrate")
 async def winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022 A20 Heart kills."""
-    with _getfile("kills", "r") as f:
+    with getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
-    with _getfile("losses", "r") as f:
+    with getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
     rate = [a/(a+b) for a, b in zip(kills, losses)]
     await ctx.send(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
@@ -974,14 +974,14 @@ async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
         await ctx.send(f"Unrecognized character {arg}")
         return
 
-    with _getfile("kills", "r") as f:
+    with getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
-    with _getfile("losses", "r") as f:
+    with getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
-    with _getfile("streak", "r") as f:
+    with getfile("streak", "r") as f:
         streak = [int(x) for x in f.read().split()]
     cur = streak.pop(0)
-    with _getfile("pb", "r") as f:
+    with getfile("pb", "r") as f:
         pb = [int(x) for x in f.read().split()]
     rot = pb.pop(0)
 
@@ -998,10 +998,10 @@ async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
             pb[i] = streak[i]
             pb_changed = True
 
-        with _getfile("kills", "w") as f:
+        with getfile("kills", "w") as f:
             f.write(" ".join(str(x) for x in kills))
         if pb_changed:
-            with _getfile("pb", "w") as f:
+            with getfile("pb", "w") as f:
                 f.write(f"{rot} {pb[0]} {pb[1]} {pb[2]} {pb[3]}")
 
     else:
@@ -1009,10 +1009,10 @@ async def edit_counts(ctx: ContextType, arg: str, *, add: bool):
         streak[i] = 0
         cur = 0
 
-        with _getfile("losses", "w") as f:
+        with getfile("losses", "w") as f:
             f.write(" ".join(str(x) for x in losses))
 
-    with _getfile("streak", "w") as f:
+    with getfile("streak", "w") as f:
         f.write(f"{cur} {streak[0]} {streak[1]} {streak[2]} {streak[3]}")
 
     d = ("Ironclad", "Silent", "Defect", "Watcher")

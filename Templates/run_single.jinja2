@@ -235,9 +235,5 @@
 {% endblock %}
 
 {% block footer %}
-  {% if embed %}
-    <a href="/runs/{{ run.name }}?embed=false{% if redirect %}&redirect=true{% endif %}">Graphs not loading? Click here!</a>
-    <br>
-  {% endif %}
   <a href="/profile/{{ run.profile.index }}/runs">Back to all runs</a><br>
 {% endblock %}

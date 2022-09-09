@@ -1,22 +1,22 @@
 from typing import Any
 
+import datetime
 import base64
 import json
 import time
-import datetime
 import math
 
 from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
+from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser
 from webpage import router
 from logger import logger
 from utils import get_req_data
 from runs import get_latest_run
-from sts_profile import get_current_profile
 
 __all__ = ["get_savefile", "Savefile"]
 
