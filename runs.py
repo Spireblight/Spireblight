@@ -71,12 +71,16 @@ class RunParser(FileParser):
         return datetime.fromtimestamp(self.data["timestamp"])
 
     @property
-    def delta(self) -> datetime.datetime:
+    def timedelta(self) -> datetime.timedelta:
         return datetime.now() - self.timestamp
 
     @property
     def won(self) -> bool:
         return self.data["victory"]
+
+    @property
+    def modded(self) -> bool:
+        return self.character not in ("Ironclad", "Silent", "Defect", "Watcher")
 
     @property
     def verb(self) -> str:
@@ -212,32 +216,15 @@ async def run_single(req: Request):
     embed = _falsey(req.query.get("embed"))
     redirect = _truthy(req.query.get("redirect"))
 
-    # TODO(olivia): This should be moved to the parser so that the parser
-    # returns the thing we need, but I'm leaving it here for now to not
-    # intrude on the parser code for the sake of the design.
-    keys = {key: floor for key, floor in parser.keys}
-
     return {
         "run": parser,
-        "keys": keys,
-        "runs": {
-            "previous": parser.matched.get('prev'),
-            "next": parser.matched.get('next'),
-            "wins": {
-                "previous": parser.matched.get('prev_win'),
-                "next": parser.matched.get('next_win'),
-            },
-            "losses": {
-                "previous": parser.matched.get('prev_loss'),
-                "next": parser.matched.get('next_loss'),
-            },
-        },
+        "keys": {key: floor for key, floor in parser.keys},
         "characters": {
             "previous": parser.matched.get('prev_char'),
             "next": parser.matched.get('next_char'),
         },
-        "modded": parser.character not in ("Ironclad", "Silent", "Defect", "Watcher"),
         "embed": embed,
+        "autorefresh": False,
         "redirect": redirect
     }
 
