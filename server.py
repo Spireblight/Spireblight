@@ -1103,7 +1103,7 @@ async def Twitch_startup():
 
     esbot = EventSubBot.from_client_credentials(config.client_id, config.client_secret, prefix=config.prefix)
     TConn.esclient = EventSubClient(esbot, config.webhook_secret, f"{config.website_url}/callback")
-    TConn.loop.run_until_complete(TConn.eventsub_setup())
+    await TConn.eventsub_setup()
 
     if config.global_interval and config.global_commands:
         _timers["global"] = _global_timer = routine(seconds=config.global_interval)(_timer)
