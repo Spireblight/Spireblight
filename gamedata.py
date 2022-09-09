@@ -499,6 +499,7 @@ class FileParser:
     }
 
     prefix = ""
+    done = False
 
     def __init__(self, data: dict[str, Any]):
         self.data = data
