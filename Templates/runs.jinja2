@@ -11,57 +11,10 @@
   </nav>
   <div id="run-list" class="container">
     {% for run in profile.runs %}
-      <section class="section">
-        <a href="/runs/{{ run.name }}"
-          class="{{ run.character | lower }} {{ run.verb }} run">
-          <div class="box run-header is-paddingless">
-            <div class="avatar">
-              <img class="{{ run.character | lower }} {{ run.verb }}"
-                src="/static/characters/{{ run.character | lower }}-{{ run.verb }}.png"/>
-            </div>
-            <div class="container">
-              <div class="run-title pt-4 pr-4 pb-4">
-                <div class="title">
-                  {{ run.character }}
-                  {% if run.won %}
-                    victory! 🎉
-                  {% else %}
-                    loss 😔
-                  {% endif %}
-                </div>
-                <div class="score">
-                  <div class="points">
-                    {{ run.score }} points
-                    {% if run.ascension_level != 20 %}
-                      (A{{ run.ascension_level }})
-                    {% endif %}
-                  </div>
-                  {% if not run.won %}
-                    <div class="loss">
-                      Killed by {{ run.killed_by }} on floor {{ run.floor_reached }}
-                    </div>
-                  {% endif %}
-                </div>
-                <div class="extra">
-                  <div>Took {{ run.run_length }}</div>
-                  <div title="{{ run.timestamp }}">
-                    {% if run.delta.days > 0 %}
-                      {{ run.delta.days }} days ago
-                    {% else %}
-                      Today!
-                    {% endif %}
-                  </div>
-                  <div>{{ run.seed }}</div>
-                </div>
-                {% if modded %}
-                  <i title="This is a modded character. Not all data will be accurate."
-                    class="fa-solid fa-circle-radiation"></i>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </a>
-      </section>
+      <a href="/runs/{{ run.name }}"
+        class="{{ run.character | lower }} {{ run.verb }} run">
+        {% include "partials/run_header.jinja2" %}
+      </a>
     {% endfor %}
   </div>
 {% endblock %}
