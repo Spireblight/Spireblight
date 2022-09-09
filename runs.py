@@ -47,6 +47,7 @@ def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     return latest
 
 class RunParser(FileParser):
+    done = True
     def __init__(self, filename: str, profile: int, data: dict[str, Any]):
         if filename in _cache:
             raise RuntimeError(f"Created duplicate run parser with name {filename}")
