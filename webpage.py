@@ -72,7 +72,7 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
 
     return _cache
 
-@router.get("/redirects")
+#@router.get("/redirects")
 async def redirected_totals(req: web.Request):
     with open(os.path.join("data", "redirects.json")) as f:
         j: dict[str, int] = json.load(f)
@@ -80,6 +80,13 @@ async def redirected_totals(req: web.Request):
     for name, count in j.items():
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
+
+@router.get("/debug")
+@router.post("/debug")
+async def debug_testing(req: web.Request):
+    content = req.content()
+    async for line in content:
+        logger.warning(line)
 
 router.static("/static", os.path.join(os.getcwd(), "static"))
 
