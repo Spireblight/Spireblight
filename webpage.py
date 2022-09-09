@@ -12,6 +12,7 @@ from logger import logger
 
 import events
 
+from utils import _getfile
 import config
 
 __all__ = ["webpage", "router"]
@@ -73,24 +74,29 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
     return _cache
 
 class ChallengeCharacter:
-    def __init__(self, name: str, kills: int, deaths: int):
+    def __init__(self, name: str, kills: int, deaths: int, streak: int):
         self.name = name
         self.kills = kills
         self.deaths = deaths
+        self.streak = streak
 
 @router.get("/400")
 @aiohttp_jinja2.template("400.jinja2")
-async def redirected_totals(req: web.Request):
-    # TODO(olivia): Obviously this needs to be real data
-    characters = [
-        ChallengeCharacter("Ironclad", 64, 31),
-        ChallengeCharacter("Silent", 63, 60),
-        ChallengeCharacter("Defect", 64, 52),
-        ChallengeCharacter("Watcher", 64, 30),
-    ]
+async def challenge(req: web.Request):
+    with _getfile("kills", "r") as f:
+        kills = [int(x) for x in f.read().split()]
+    with _getfile("losses", "r") as f:
+        losses = [int(x) for x in f.read().split()]
+    with _getfile("streak", "r") as f:
+        rot, *streak = [int(x) for x in f.read().split()]
+
+    characters = []
+    for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
+        characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
 
     left = datetime.date(2022, 12, 31) - datetime.date.today()
     return {
+        "streak": rot,
         "characters": characters,
         "total": sum(x.kills for x in characters),
         "days_left": left.days,
