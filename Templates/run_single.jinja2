@@ -147,7 +147,7 @@
             can't just loop  #}
             {% for key in ("Emerald Key", "Ruby Key", "Sapphire Key") %}
               <img class="{{ key | lower }} {% if key not in keys %} missing{% endif %}"
-                src="/static/relics/cropped/{{ key | urlencode }}.png"
+                src="/static/relics/{{ key | urlencode }}.png"
                 onclick="neowText('{{ key }}',
                       {% if key in keys %}
                       'Obtained on floor {{ keys[key] }}'
@@ -168,7 +168,7 @@
           <div class="message-body relics">
             {% for relic in run.relics %}
               <div>
-                <img src="/static/relics/cropped/{{ relic.image | urlencode }}"
+                <img src="/static/relics/{{ relic.image | urlencode }}"
                   alt="{{ relic.description() }}"
                   title="{{ relic.description() }}"
                   onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{relic.escaped_description() }}')" >
