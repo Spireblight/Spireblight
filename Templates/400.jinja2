@@ -1,0 +1,91 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  The 400 Challenge
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <h1 class="title has-text-centered">
+      The 400 Challenge
+    </h1>
+  </section>
+  <section class="section">
+    <div class="summary columns is-variable is-centered is-8">
+      {% for character in characters %}
+        <div class="container column box is-one-fifth character {{ character.name | lower }}">
+          <div class="character-content">
+            <div class="kills" title="{{ character.kills }} kills with {{ character.name }}">
+              {{ character.kills }}
+            </div>
+            <div class="deaths" title="{{ character.deaths }} losses with {{ character.name }}">
+              <i class="fa-solid fa-skull"></i>
+              {{ character.deaths }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+  </section>
+  <section class="section">
+    <div class="columns is-variable heart-data has-text-centered">
+      <div class="column box is-one-third is-marginless">
+        <div class="data">
+          {{ total }} / 400
+        </div>
+        <div>heart kills</div>
+      </div>
+      <div class="column box is-one-third is-marginless">
+        <div class="data">
+          {{ days_left }}
+        </div class="data">
+        <div>days left</div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">What's this? 👀</div>
+            <div class="message-body">
+              My 2022 challenge: Get 100 A20 Heart kills with every character
+              during the year, for 400 total. Each character will be run until
+              they win, before rotating to the next one. This will ensure all
+              characters reach 100 kills at the same time!
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">How come you started on Defect?</div>
+            <div class="message-body">
+              That just happened. We were about to go on a Defect run when the
+              challenge started in the beginning of the year.
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              Ooh, so we can have like a socratic FAQ here?
+            </div>
+            <div class="message-body">
+              You betcha! 💃
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box" style="height: 100%;">
+          <div class="placeholder">
+            <div class="placeholder-data">
+              There should be more graphs and data here, right? Join the <a href="/discord">dev Discord server</a> and go
+              to <b>#stats</b> if you have ideas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

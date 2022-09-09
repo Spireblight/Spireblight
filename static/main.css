@@ -1,0 +1,313 @@
+@font-face {
+  font-family: Monument;
+  src: url("/static/fonts/monumentextended-ultrabold.otf") format("opentype");
+}
+
+/* This is to override the Bulma default. So spacey */
+/* (and we don't like things that are Spacey - not since 2017. :baalorSmug:) */
+section.section {
+  padding: 1.5rem 3rem !important;
+}
+
+.monument {
+  font-family: 'Monument';
+  text-transform: uppercase;
+}
+
+.breadcrumb {
+  margin-bottom: 0 !important;
+}
+
+.navbar-item.monument {
+  font-size: 1.25em;
+}
+.navbar-item.monument span {
+  display: block;
+  margin: 0 0.5em;
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.card {
+  font-family: 'Kreon', serif;
+  font-size: 25px;
+  display: inline-block;
+  width: 30%;
+  vertical-align: middle;
+  margin: 0.2em 0.4em;
+}
+.card span {
+  margin-left: 0.2em;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 11.25rem 1fr 11.25rem;
+}
+
+.menu {
+  padding: 1em 0.5em;
+  background-color: #fafafa;
+}
+
+#command-list {
+  flex-wrap: wrap;
+}
+
+#command-list .column {
+  margin: 0.4em 0.4em;
+}
+
+.command-title .title {
+  display: flex;
+}
+.command-title .title span.name {
+  display: block;
+  flex-grow: 1;
+}
+.command-title .title i {
+  margin: 0 0.5rem;
+}
+.command-title .title .aliases {
+  font-size: 0.5em;
+  margin-top: -0.5em;
+}
+
+.run-header {
+  display: flex !important;
+  overflow: hidden;
+}
+.run-header .avatar {
+  height: 86px;
+  width: 130px;
+  margin-right: -50px;
+}
+.run-header .avatar img {
+  height: 100%;
+  width: 100%;
+  object-fit: none;
+}
+.run-header .avatar img.ironclad {object-position: -131px 0px;}
+.run-header .avatar img.silent {object-position: -102px 0px;}
+.run-header .avatar img.defect {object-position: -94px 0px;}
+.run-header .avatar img.watcher {object-position: -150px 10px;}
+
+.run-header .avatar img.loss {
+  filter: grayscale(60%);
+}
+.run-header .avatar img.ironclad.loss {object-position: -313px -394px;}
+.run-header .avatar img.silent.loss {object-position: -322px -388px;}
+.run-header .avatar img.defect.loss {object-position: -333px -405px;}
+.run-header .avatar img.watcher.loss {object-position: -346px -412px;}
+
+/* TODO(olivia): Probably consolidate with .command-title above */
+.run-title {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+.run-title .title {
+  display: block;
+  flex-grow: 1;
+  margin: 0 1rem !important;
+}
+.run-title i {
+  margin: 0 0.5rem;
+  font-size: 2em;
+}
+.run-title .score {
+  margin-right: 1em;
+  text-align: right;
+}
+.run-title .score .points {
+  font-size: 1.5em;
+}
+.run-title .score .extra {
+  display: block;
+}
+.run-title .extra {
+  font-size: 0.75em;
+}
+
+.act {
+  display: flex;
+}
+.act img {
+  width: 5%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.relics {
+  display: flex;
+  flex-flow: wrap;
+  align-content: flex-start;
+  min-height: 250px;
+}
+.relics div {
+  width: 45px;
+  height: 45px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.neow .message-body, .relics-message .message-body {
+  min-height: 250px;
+  max-height: 250px;
+}
+
+.hint {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+.hint p {
+  display: block;
+  width: 50%;
+  font-size: 0.5em;
+  text-align: center;
+}
+
+.keys {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: flex-start;
+  height: 75%;
+}
+.keys .key {
+  transition: 0.7s;
+  cursor: pointer;
+}
+.keys .key.missing {
+  filter: blur(2px) grayscale(75%);
+}
+.keys .ruby.key, .keys .sapphire.key {
+  top: 48px;
+}
+.keys .ruby.key {
+  position: absolute;
+  right: 50%;
+}
+.keys .sapphire.key {
+  position: absolute;
+  left: 50%;
+}
+
+.neow .hidden {
+  display: none;
+  visibility: none;
+}
+.neow .message-body {
+  font-family: 'Kreon', serif;
+  overflow: scroll;
+  border-width: 0;
+}
+
+.neow .message-body .skipped {
+  padding-top: 0.5em;
+  font-size: 0.75em;
+}
+
+.neow .message-body .skipped li {
+  text-decoration: line-through;
+  list-style: circle;
+  margin-left: 1em;
+}
+
+nav.breadcrumb {
+  padding: 1rem 3rem;
+}
+
+.summary .box {
+  display: flex;
+  overflow: hidden;
+}
+.summary .box .kills {
+  font-size: 5rem;
+  font-weight: bold;
+  text-shadow: 4px 5px 4px rgba(0,0,0, 0.5);
+}
+.summary .box .deaths {
+  font-weight: bold;
+  color: #dbdbdb;
+  text-shadow: 2px 4px 2px rgba(0,0,0, 0.5);
+}
+
+.summary .character {
+  background-color: black;
+  color: white;
+}
+.summary .character:after {
+  background-position: center;
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.summary .character.ironclad:after {background-image: url(/static/characters/ironcladPortrait.jpg);}
+.summary .character.silent:after   {background-image: url(/static/characters/silentPortrait.jpg);}
+.summary .character.defect:after   {background-image: url(/static/characters/defectPortrait.jpg);}
+.summary .character.watcher:after  {background-image: url(/static/characters/watcherPortrait.jpg);}
+
+.summary .character.watcher {
+  /* No idea why Bulma is like this, but without this the last element is not*/
+  /* given any of the margin-bottom. */
+  margin-bottom: 1.5rem;
+}
+
+.summary .character .character-content {
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.heart-data {
+  justify-content: space-around;
+}
+.heart-data .box .data {
+  font-size: 3em;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.placeholder-data {
+  font-size: 0.75em;
+  color: #aaa;
+  width: 50%;
+  text-align: center;
+}
+
+#profiles a {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+#run-list a {
+  display: block !important;
+}
+#run-list .run.loss {
+  padding-left: 2.25rem;
+}

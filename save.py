@@ -1,5 +1,6 @@
 from typing import Any
 
+import datetime
 import base64
 import json
 import time
@@ -9,6 +10,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
+from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser
 from webpage import router
@@ -70,13 +72,30 @@ class Savefile(FileParser):
 
     @property
     def timestamp(self) -> int:
-        return self["save_date"]
+        date = self.get("save_date")
+        if date is not None:
+            # Since the save date has milliseconds, we need to shave those
+            # off. A bit too much precision otherwise 👀
+            date = datetime.datetime.utcfromtimestamp(date / 1000)
+        else:
+            date = datetime.datetime.now()
+
+        return date
+
+    @property
+    def timedelta(self) -> datetime.timedelta:
+        # TODO(olivia): Do something better
+        return datetime.timedelta(hours=0)
 
     @property
     def display_name(self) -> str:
         if self.character is not None:
             return f"Current {self.character} run"
         return "Slay the Spire follow-along"
+
+    @property
+    def profile(self):
+        return get_current_profile()
 
     @property
     def current_health(self) -> int:
@@ -184,10 +203,14 @@ def _truthy(x: str | None) -> bool:
     return False
 
 @router.get("/current")
-@aiohttp_jinja2.template("savefile.jinja2")
+@aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    context = {"parser": _savefile, "redirect": redirect}
+    context = {
+        "run": _savefile,
+        "autorefresh": True,
+        "redirect": redirect
+    }
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)

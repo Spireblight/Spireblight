@@ -47,6 +47,7 @@ def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     return latest
 
 class RunParser(FileParser):
+    done = True
     def __init__(self, filename: str, profile: int, data: dict[str, Any]):
         if filename in _cache:
             raise RuntimeError(f"Created duplicate run parser with name {filename}")
@@ -66,12 +67,24 @@ class RunParser(FileParser):
         return get_profile(self._profile)
 
     @property
-    def timestamp(self) -> str:
-        return datetime.fromtimestamp(self.data["timestamp"]).isoformat(" ")
+    def timestamp(self) -> datetime.datetime:
+        return datetime.fromtimestamp(self.data["timestamp"])
+
+    @property
+    def timedelta(self) -> datetime.timedelta:
+        return datetime.now() - self.timestamp
 
     @property
     def won(self) -> bool:
         return self.data["victory"]
+
+    @property
+    def modded(self) -> bool:
+        return self.character not in ("Ironclad", "Silent", "Defect", "Watcher")
+
+    @property
+    def verb(self) -> str:
+        return "victory" if self.won else "loss"
 
     @property
     def killed_by(self) -> str | None:
@@ -200,9 +213,18 @@ async def run_single(req: Request):
     parser = _get_parser(req.match_info["name"])
     if parser is None:
         raise HTTPNotFound()
-    embed = _falsey(req.query.get("embed"))
     redirect = _truthy(req.query.get("redirect"))
-    return {"parser": parser, "embed": embed, "redirect": redirect}
+
+    return {
+        "run": parser,
+        "keys": {key: floor for key, floor in parser.keys},
+        "characters": {
+            "previous": parser.matched.get('prev_char'),
+            "next": parser.matched.get('next_char'),
+        },
+        "autorefresh": False,
+        "redirect": redirect
+    }
 
 @router.get("/runs/{name}/raw")
 async def run_raw_json(req: Request) -> Response:

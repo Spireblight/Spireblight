@@ -9,6 +9,7 @@ import aiohttp_jinja2
 import jinja2
 
 from logger import logger
+from utils import getfile
 
 import events
 
@@ -71,6 +72,35 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
                 _cache["last"] = time.time()
 
     return _cache
+
+class ChallengeCharacter:
+    def __init__(self, name: str, kills: int, deaths: int, streak: int):
+        self.name = name
+        self.kills = kills
+        self.deaths = deaths
+        self.streak = streak
+
+@router.get("/400")
+@aiohttp_jinja2.template("400.jinja2")
+async def challenge(req: web.Request):
+    with getfile("kills", "r") as f:
+        kills = [int(x) for x in f.read().split()]
+    with getfile("losses", "r") as f:
+        losses = [int(x) for x in f.read().split()]
+    with getfile("streak", "r") as f:
+        rot, *streak = [int(x) for x in f.read().split()]
+
+    characters = []
+    for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
+        characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
+
+    left = datetime.date(2022, 12, 31) - datetime.date.today()
+    return {
+        "streak": rot,
+        "characters": characters,
+        "total": sum(x.kills for x in characters),
+        "days_left": left.days,
+    }
 
 #@router.get("/redirects")
 async def redirected_totals(req: web.Request):

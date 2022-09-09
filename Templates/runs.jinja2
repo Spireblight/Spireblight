@@ -1,14 +1,20 @@
 {% extends "base.jinja2" %}
 {% block title %}
-Runs for {{ profile }}
+  Runs for {{ profile.name }}
 {% endblock %}
 {% block content %}
-    <h1>Run history</h1>
-    <!--<a href="/compare">Compare data between runs</a><br>-->
-    {% for obj in profile.runs %}
-    <a href="/runs/{{ obj.name }}">{{ obj.display_name }}</a><br>
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/runs">Run histories</a></li>
+      <li class="is-active"><a href="/profile/{{ profile.index }}/runs">{{ profile.name }}</a></li>
+    </ul>
+  </nav>
+  <div id="run-list" class="container">
+    {% for run in profile.runs %}
+      <a href="/runs/{{ run.name }}"
+        class="{{ run.character | lower }} {{ run.verb }} run">
+        {% include "partials/run_header.jinja2" %}
+      </a>
     {% endfor %}
-{% endblock %}
-{% block footer %}
-<a href="/runs">Back to profile selection</a><br>
+  </div>
 {% endblock %}

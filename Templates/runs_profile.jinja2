@@ -1,10 +1,23 @@
 {% extends "base.jinja2" %}
 {% block title %}
-Choose which profile to view runs for
+  Profiles
 {% endblock %}
 {% block content %}
-    <h1>Pick a profile to view runs for</h1>
-    {% for profile in profiles %}
-    <a href="/profile/{{ profile.index }}/runs">{{ profile.name }}</a><br>
-    {% endfor %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/runs">Run histories</a></li>
+    </ul>
+  </nav>
+  <section class="section has-text-centered">
+    <h1 class="title">Choose profile</h1>
+  </section>
+  <section id="profiles" class="section has-text-centered">
+    <div class="columns is-centered">
+      {% for profile in profiles %}
+        <a class="column box is-one-quarter" href="/profile/{{ profile.index }}/runs">
+          {{ profile.name }}
+        </a>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}
