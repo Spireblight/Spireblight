@@ -9,10 +9,10 @@ import aiohttp_jinja2
 import jinja2
 
 from logger import logger
+from utils import getfile
 
 import events
 
-from utils import _getfile
 import config
 
 __all__ = ["webpage", "router"]
@@ -83,11 +83,11 @@ class ChallengeCharacter:
 @router.get("/400")
 @aiohttp_jinja2.template("400.jinja2")
 async def challenge(req: web.Request):
-    with _getfile("kills", "r") as f:
+    with getfile("kills", "r") as f:
         kills = [int(x) for x in f.read().split()]
-    with _getfile("losses", "r") as f:
+    with getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
-    with _getfile("streak", "r") as f:
+    with getfile("streak", "r") as f:
         rot, *streak = [int(x) for x in f.read().split()]
 
     characters = []

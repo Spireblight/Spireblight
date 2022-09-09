@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Any, Generator, Iterable
 
+import urllib.parse
 import math
 import io
-import urllib.parse
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt

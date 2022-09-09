@@ -67,7 +67,7 @@ class RunParser(FileParser):
         return get_profile(self._profile)
 
     @property
-    def timestamp(self) -> str:
+    def timestamp(self) -> datetime.datetime:
         return datetime.fromtimestamp(self.data["timestamp"])
 
     @property
@@ -213,7 +213,6 @@ async def run_single(req: Request):
     parser = _get_parser(req.match_info["name"])
     if parser is None:
         raise HTTPNotFound()
-    embed = _falsey(req.query.get("embed"))
     redirect = _truthy(req.query.get("redirect"))
 
     return {
@@ -223,7 +222,6 @@ async def run_single(req: Request):
             "previous": parser.matched.get('prev_char'),
             "next": parser.matched.get('next_char'),
         },
-        "embed": embed,
         "autorefresh": False,
         "redirect": redirect
     }

@@ -4,7 +4,7 @@ import config
 import os
 import json
 
-__all__ = ["get_req_data", "_getfile", "_update_db"]
+__all__ = ["get_req_data", "getfile", "update_db"]
 
 async def get_req_data(req: Request, *keys: str) -> list[str]:
     pw = req.query.get("key")
@@ -29,9 +29,9 @@ async def get_req_data(req: Request, *keys: str) -> list[str]:
 
     return res
 
-def _getfile(x: str, mode: str):
+def getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
 
-def _update_db():
-    with _getfile("data.json", "w") as f:
+def update_db():
+    with getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.json_indent)
