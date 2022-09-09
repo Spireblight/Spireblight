@@ -14,6 +14,7 @@ import os
 
 from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
 from twitchio.ext.routines import routine, Routine
+from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflineData
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
@@ -217,7 +218,22 @@ def with_savefile(name: str, *aliases: str, **kwargs):
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
 
-class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
+class TwitchConn(TBot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.esclient: EventSubClient = None
+        self.live_channels: dict[str, bool] = {}
+
+    async def eventsub_setup(self):
+        self.loop.create_task(self.esclient.listen(port=4000))
+        self.live_channels[config.channel] = bool(await self.fetch_streams(user_logins=[config.channel]))
+
+        try:
+            await self.esclient.subscribe_channel_stream_start(broadcaster=config.channel)
+            await self.esclient.subscribe_channel_stream_end(broadcaster=config.channel)
+        except HTTPException:
+            pass
+
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
         match tags["msg-id"]:
@@ -276,6 +292,20 @@ class TwitchConn(TBot): # TODO: use PubSub/EventSub for notice stuff
                 return invoke
         raise AttributeError(name)
 
+class EventSubBot(TBot):
+    async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
+        TConn.live_channels[evt.broadcaster.name] = True
+        try:
+            _timers["global"].start(config.global_commands, stop_on_error=False)
+            _timers["sponsored"].start(config.sponsored_commands, stop_on_error=False)
+        except RuntimeError: # already running; don't worry about it
+            pass
+
+    async def event_eventsub_notification_stream_end(self, evt: StreamOfflineData):
+        TConn.live_channels[evt.broadcaster.name] = False
+        _timers["global"].stop()
+        _timers["sponsored"].stop()
+
 class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
@@ -301,10 +331,8 @@ class DiscordConn(DBot):
         return value
 
 async def _timer(cmds: list[str]):
-    # TODO: Check live status using EventSub/PubSub
     chan = TConn.get_channel(config.channel)
-    live = await TConn.fetch_streams(user_logins=[config.channel])
-    if not chan or not live:
+    if not chan or not TConn.live_channels[config.channel]:
         return
     cmd = None
     i = 0
@@ -1073,6 +1101,10 @@ async def Twitch_startup():
         TConn.add_command(cmd)
     load()
 
+    esbot = EventSubBot.from_client_credentials(config.client_id, config.client_secret, prefix=config.prefix)
+    TConn.esclient = EventSubClient(esbot, config.webhook_secret, f"{config.website_url}/callback")
+    TConn.loop.run_until_complete(TConn.eventsub_setup())
+
     if config.global_interval and config.global_commands:
         _timers["global"] = _global_timer = routine(seconds=config.global_interval)(_timer)
         @_global_timer.before_routine
@@ -1083,7 +1115,8 @@ async def Twitch_startup():
         async def error_global(e):
             logger.error(f"Timer global error with {e}")
 
-        _global_timer.start(config.global_commands, stop_on_error=False)
+        if TConn.live_channels[config.channel]:
+            _global_timer.start(config.global_commands, stop_on_error=False)
 
     if config.sponsored_interval and config.sponsored_commands:
         _timers["sponsored"] = _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
@@ -1095,7 +1128,8 @@ async def Twitch_startup():
         async def error_sponsored(e):
             logger.error(f"Timer sponsored error with {e}")
 
-        _sponsored_timer.start(config.sponsored_commands, stop_on_error=False)
+        if TConn.live_channels[config.channel]:
+            _sponsored_timer.start(config.sponsored_commands, stop_on_error=False)
 
     await TConn.connect()
 
