@@ -2,14 +2,9 @@
 
 This is a program meant as a Twitch-Discord hybrid bot that also is a website. Made for Baalorlord on Twitch, so quite a few things are hardcoded currently. If interest picks up and people want to use it elsewhere, I will move the stuff out of the repo.
 
-This needs Python 3.10 and the following libraries:
-
-- twitchio
-- discord
-- aiohttp
-- aiohttp_jinja2
-- matplotlib
-- mpld3
+This needs Python 3.10. To set up the project, you should only need to:
+- Create a virtualenv: `python3.10 -m venv env`
+- Install requirements: `pip install -r requirements.txt`
 
 The data folder has a bunch of stuff to make the bot run. data.json contains most of the commands
 
