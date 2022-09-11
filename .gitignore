@@ -1,4 +1,4 @@
-config.py
+config.json
 *.pyc
 data/
 last_run

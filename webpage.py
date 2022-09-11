@@ -13,7 +13,7 @@ from utils import getfile
 
 import events
 
-import config
+from config import global_config
 
 __all__ = ["webpage", "router"]
 
@@ -27,8 +27,8 @@ webpage = web.Application(logger=logger)
 router = web.RouteTableDef()
 
 _query_params = {
-    "key": config.API_key,
-    "channelId": config.YT_channel_id,
+    "key": global_config.API_key,
+    "channelId": global_config.YT_channel_id,
     "type": "video",
     "order": "date",
     "maxResults": "1",
@@ -53,12 +53,12 @@ env.globals["config"] = config
 env.globals["uptime"] = uptime
 env.globals["start"] = _start_time.isoformat(" ", "seconds")
 env.globals["now"] = now
-env.globals["color"] = config.website_bg
+env.globals["color"] = global_config.website_bg
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
-async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 0}):
-    if _cache["video_id"] is None or _cache["last"] + config.cache_timeout < time.time():
+async def main_page(req: web.Request, _cache={"video_id": global_config.default_video_id, "last": 0}):
+    if _cache["video_id"] is None or _cache["last"] + global_config.cache_timeout < time.time():
         data = None
         async with ClientSession() as session:
             async with session.get("https://www.googleapis.com/youtube/v3/search", params=_query_params) as resp:
@@ -136,5 +136,5 @@ async def setup_redirects():
                 j[name] = 0
             j[name] += 1
             with open(os.path.join("data", "redirects.json"), "w") as fw:
-                json.dump(j, fw, indent=config.json_indent)
+                json.dump(j, fw, indent=global_config.json_indent)
             raise web.HTTPFound(url)

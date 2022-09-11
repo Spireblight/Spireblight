@@ -4,7 +4,7 @@ from twitchio.ext.commands import Command, Context
 
 from logger import logger
 
-import config
+from config import global_config
 
 __all__ = ["TwitchCommand"]
 
@@ -23,7 +23,7 @@ class TwitchCommand(Command):
         if not self.enabled:
             return
         if self.flag:
-            is_editor = (context.author.name in config.editors)
+            is_editor = (context.author.name in global_config.editors)
             if (
                 (not context.author.is_broadcaster) and
                 ("e" in self.flag and not is_editor) and

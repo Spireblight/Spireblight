@@ -13,7 +13,7 @@ from mpld3 import fig_to_html
 from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats
 from logger import logger
 
-import config
+from config import global_config
 
 __all__ = ["FileParser"]
 
@@ -631,7 +631,7 @@ class FileParser:
                 value: str = fig_to_html(fig)
                 plt.close(fig)
                 # XXX: Temporary hack until the new website design is in
-                return value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+                return value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{global_config.website_bg}"')
 
             case "image":
                 with io.BytesIO() as file:
@@ -760,7 +760,7 @@ class FileParser:
                 for name, ctype, count in content_order[char][rarity]:
                     format_map = {
                         "color": ' style="color:#146214"' if "+" in name else "", # make it green when upgraded
-                        "website": config.website_url,
+                        "website": global_config.website_url,
                         "character": char if char != "Special" else "Colorless",
                         "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
                         "banner": rarity or "Common",

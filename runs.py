@@ -20,8 +20,6 @@ from logger import logger
 from events import add_listener
 from utils import get_req_data
 
-import config
-
 __all__ = ["get_latest_run"]
 
 _cache: dict[str, RunParser] = {}

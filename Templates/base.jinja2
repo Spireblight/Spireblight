@@ -106,13 +106,13 @@
     </div>
     <footer id="footer" class="footer">
       {% block footer %}{% endblock %}
-      <a href="https://twitch.tv/{{ config.channel }}">Engage with the live show</a><br>
+      <a href="https://twitch.tv/{{ global_config.channel }}">Engage with the live show</a><br>
       <a href="https://youtube.com/c/Baalorlord">Follow the YouTube channel</a><br>
       <a href="https://youtube.com/c/BaalorlordArchives">Full stream archives</a><br>
-      <a href="{{ config.discord_invite_link }}">Join the discord</a><br>
+      <a href="{{ global_config.discord_invite_link }}">Join the discord</a><br>
       <a href="{{ github }}">View the source code</a><br>
       <a href="{{ github }}/issues">Report an issue</a><br>
-      <a href="mailto:{{ config.email }}">Business enquiries</a>
+      <a href="mailto:{{ global_config.email }}">Business enquiries</a>
     </footer>
   </body>
 </html>

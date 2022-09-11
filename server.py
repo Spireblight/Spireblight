@@ -40,7 +40,7 @@ from runs import get_latest_run
 from typehints import ContextType, CommandType
 import events
 
-import config
+from config import global_config
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None
@@ -53,9 +53,9 @@ _DEFAULT_BURST = 1
 _DEFAULT_RATE  = 3.0
 
 _consts = {
-    "discord": config.discord_invite_link,
-    "prefix": config.prefix,
-    "website": config.website_url,
+    "discord": global_config.discord_invite_link,
+    "prefix": global_config.prefix,
+    "website": global_config.website_url,
 }
 
 class Formatter(string.Formatter): # this does not support conversion or formatting
@@ -221,11 +221,11 @@ class TwitchConn(TBot):
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
-        self.live_channels[config.channel] = bool(await self.fetch_streams(user_logins=[config.channel]))
+        self.live_channels[global_config.channel] = bool(await self.fetch_streams(user_logins=[global_config.channel]))
 
         try:
-            await self.esclient.subscribe_channel_stream_start(broadcaster=config.channel)
-            await self.esclient.subscribe_channel_stream_end(broadcaster=config.channel)
+            await self.esclient.subscribe_channel_stream_start(broadcaster=global_config.channel)
+            await self.esclient.subscribe_channel_stream_end(broadcaster=global_config.channel)
         except HTTPException:
             pass
 
@@ -291,8 +291,8 @@ class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
         TConn.live_channels[evt.broadcaster.name] = True
         try:
-            _timers["global"].start(config.global_commands, stop_on_error=False)
-            _timers["sponsored"].start(config.sponsored_commands, stop_on_error=False)
+            _timers["global"].start(global_config.global_commands, stop_on_error=False)
+            _timers["sponsored"].start(global_config.sponsored_commands, stop_on_error=False)
         except RuntimeError: # already running; don't worry about it
             pass
 
@@ -305,8 +305,8 @@ class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        if message.content.startswith(config.prefix) or isinstance(message.channel, discord.DMChannel):
-            content = message.content.lstrip(config.prefix).split()
+        if message.content.startswith(global_config.prefix) or isinstance(message.channel, discord.DMChannel):
+            content = message.content.lstrip(global_config.prefix).split()
             if not content:
                 return
             ctx = await self.get_context(message)
@@ -326,8 +326,8 @@ class DiscordConn(DBot):
         return value
 
 async def _timer(cmds: list[str]):
-    chan = TConn.get_channel(config.channel)
-    if not chan or not TConn.live_channels[config.channel]:
+    chan = TConn.get_channel(global_config.channel)
+    if not chan or not TConn.live_channels[global_config.channel]:
         return
     cmd = None
     i = 0
@@ -362,7 +362,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> <output>"""
     args = list(args)
     msg = " ".join(args)
-    name = name.lstrip(config.prefix)
+    name = name.lstrip(global_config.prefix)
     cmds: dict[str, list[CommandType]] = {}
     if TConn is not None:
         for cname, cmd in TConn.commands.items():
@@ -608,7 +608,7 @@ async def help_cmd(ctx: ContextType, name: str = ""):
     if not name:
         await ctx.send(f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
                        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, and "
-                       f"my source code is available at {__github__} . The website is {config.website_url}")
+                       f"my source code is available at {__github__} . The website is {global_config.website_url}")
         return
 
     tcmd = dcmd = None
@@ -618,10 +618,10 @@ async def help_cmd(ctx: ContextType, name: str = ""):
         dcmd = DConn.get_command(name)
     cmd = (tcmd or dcmd)
     if cmd:
-        await ctx.send(f"Full information about this command can be viewed at {config.website_url}/commands/{cmd.name}")
+        await ctx.send(f"Full information about this command can be viewed at {global_config.website_url}/commands/{cmd.name}")
         return
 
-    await ctx.send(f"Could not find matching command. You may view all existing commands here: {config.website_url}/commands")
+    await ctx.send(f"Could not find matching command. You may view all existing commands here: {global_config.website_url}/commands")
 
 @command("support", "shoutout", "so")
 async def shoutout(ctx: ContextType, name: str):
@@ -655,7 +655,7 @@ async def shoutout(ctx: ContextType, name: str):
 @command("title")
 async def stream_title(ctx: ContextType):
     """Display the current stream title."""
-    live: list[Stream] = await TConn.fetch_streams(user_logins=[config.channel])
+    live: list[Stream] = await TConn.fetch_streams(user_logins=[global_config.channel])
 
     if live:
         await ctx.send(live[0].title)
@@ -665,7 +665,7 @@ async def stream_title(ctx: ContextType):
 @command("uptime")
 async def stream_uptime(ctx: ContextType):
     """Display the stream uptime."""
-    live: list[Stream] = await TConn.fetch_streams(user_logins=[config.channel])
+    live: list[Stream] = await TConn.fetch_streams(user_logins=[global_config.channel])
 
     if live:
         td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - live[0].started_at.timestamp()))
@@ -702,7 +702,7 @@ async def seed_cmd(ctx: ContextType, j: Savefile):
 async def is_seeded(ctx: ContextType, j: Savefile):
     """Display whether the current run is seeded."""
     if j["seed_set"]:
-        await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
+        await ctx.send(f"This run is seeded! See '{global_config.prefix}seed' for the seed.")
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
@@ -769,7 +769,7 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
         f"Shop: {shop:.0%} - "
         f"Treasure: {chest:.0%} - "
         f"Event: {hallway+shop+chest:.0%} - "
-        f"See {config.prefix}eventrng for more information."
+        f"See {global_config.prefix}eventrng for more information."
     )
 
 @with_savefile("rare", "rarecard", "rarechance") # see comment in save.py -- this is not entirely accurate
@@ -901,7 +901,7 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
         value = f"winning {value}"
     elif arg is not None:
         value = f"lost {value}"
-    await ctx.send(f"The last {value}'s history can be viewed at {config.website_url}/runs/{latest.name}")
+    await ctx.send(f"The last {value}'s history can be viewed at {global_config.website_url}/runs/{latest.name}")
 
 @command("wall")
 async def wall_card(ctx: ContextType):
@@ -917,7 +917,7 @@ async def wall_card(ctx: ContextType):
         await ctx.send("Error: could not find Ladder savefile.")
         return
 
-    await ctx.send(f"Current card in the {config.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
+    await ctx.send(f"Current card in the {global_config.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
 
 @command("kills", "wins") # TODO: Read game files for this
 async def kills_cmd(ctx: ContextType):
@@ -1037,7 +1037,7 @@ async def loss_cmd(ctx: ContextType, arg: str):
 @router.get("/commands")
 @template("commands.jinja2")
 async def commands_page(req: Request):
-    d = {"prefix": config.prefix, "commands": []}
+    d = {"prefix": global_config.prefix, "commands": []}
     cmds = set()
     if TConn is not None:
         cmds.update(TConn.commands)
@@ -1091,23 +1091,23 @@ async def individual_cmd(req: Request):
     d["discord"] = dcmd
 
     d["permissions"] = ", ".join(_perms[x] for x in cmd.flag) or _perms[""]
-    d["prefix"] = config.prefix
+    d["prefix"] = global_config.prefix
 
     return d
 
 async def Twitch_startup():
     global TConn
-    TConn = TwitchConn(token=config.oauth, prefix=config.prefix, initial_channels=[config.channel], case_insensitive=True)
+    TConn = TwitchConn(token=global_config.oauth, prefix=global_config.prefix, initial_channels=[global_config.channel], case_insensitive=True)
     for cmd in _to_add_twitch:
         TConn.add_command(cmd)
     load()
 
-    esbot = EventSubBot.from_client_credentials(config.client_id, config.client_secret, prefix=config.prefix)
-    TConn.esclient = EventSubClient(esbot, config.webhook_secret, f"{config.website_url}/callback")
+    esbot = EventSubBot.from_client_credentials(global_config.client_id, global_config.client_secret, prefix=global_config.prefix)
+    TConn.esclient = EventSubClient(esbot, global_config.webhook_secret, f"{global_config.website_url}/callback")
     await TConn.eventsub_setup()
 
-    if config.global_interval and config.global_commands:
-        _timers["global"] = _global_timer = routine(seconds=config.global_interval)(_timer)
+    if global_config.global_interval and global_config.global_commands:
+        _timers["global"] = _global_timer = routine(seconds=global_config.global_interval)(_timer)
         @_global_timer.before_routine
         async def before_global():
             await TConn.wait_for_ready()
@@ -1116,11 +1116,11 @@ async def Twitch_startup():
         async def error_global(e):
             logger.error(f"Timer global error with {e}")
 
-        if TConn.live_channels[config.channel]:
-            _global_timer.start(config.global_commands, stop_on_error=False)
+        if TConn.live_channels[global_config.channel]:
+            _global_timer.start(global_config.global_commands, stop_on_error=False)
 
-    if config.sponsored_interval and config.sponsored_commands:
-        _timers["sponsored"] = _sponsored_timer = routine(seconds=config.sponsored_interval)(_timer)
+    if global_config.sponsored_interval and global_config.sponsored_commands:
+        _timers["sponsored"] = _sponsored_timer = routine(seconds=global_config.sponsored_interval)(_timer)
         @_sponsored_timer.before_routine
         async def before_sponsored():
             await TConn.wait_for_ready()
@@ -1129,8 +1129,8 @@ async def Twitch_startup():
         async def error_sponsored(e):
             logger.error(f"Timer sponsored error with {e}")
 
-        if TConn.live_channels[config.channel]:
-            _sponsored_timer.start(config.sponsored_commands, stop_on_error=False)
+        if TConn.live_channels[global_config.channel]:
+            _sponsored_timer.start(global_config.sponsored_commands, stop_on_error=False)
 
     await TConn.connect()
 
@@ -1139,10 +1139,10 @@ async def Twitch_cleanup():
 
 async def Discord_startup():
     global DConn
-    DConn = DiscordConn(config.prefix, case_insensitive=True, owner_ids=config.owners, help_command=None)
+    DConn = DiscordConn(global_config.prefix, case_insensitive=True, owner_ids=global_config.owners, help_command=None)
     for cmd in _to_add_discord:
         DConn.add_command(cmd)
-    await DConn.start(config.token)
+    await DConn.start(global_config.token)
 
 async def Discord_cleanup():
     await DConn.close()

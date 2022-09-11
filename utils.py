@@ -1,6 +1,6 @@
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 
-import config
+from config import global_config
 import os
 import json
 
@@ -10,9 +10,9 @@ async def get_req_data(req: Request, *keys: str) -> list[str]:
     pw = req.query.get("key")
     if pw is None:
         raise HTTPUnauthorized(reason="No API key provided")
-    if not config.secret:
+    if not global_config.secret:
         raise HTTPNotImplemented(reason="No API key present in config")
-    if pw != config.secret:
+    if pw != global_config.secret:
         raise HTTPForbidden(reason="Invalid API key provided")
 
     post = await req.post()
@@ -34,4 +34,4 @@ def getfile(x: str, mode: str):
 
 def update_db():
     with getfile("data.json", "w") as f:
-        json.dump(_cmds, f, indent=config.json_indent)
+        json.dump(_cmds, f, indent=global_config.json_indent)
