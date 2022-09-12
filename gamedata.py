@@ -71,14 +71,14 @@ class NeowBonus:
 
     @property
     def mod_data(self) -> dict[str, Any] | None:
-        if "basemod:mod_saves" in self.parser:
-            return self.parser["basemod:mod_saves"].get("NeowBonusLog")
-        return self.parser.get("neow_bonus_log")
+        if "basemod:mod_saves" in self.parser._data:
+            return self.parser._data["basemod:mod_saves"].get("NeowBonusLog")
+        return self.parser._data.get("neow_bonus_log")
 
     @property
     def picked(self) -> str:
-        cost = self.parser["neow_cost"]
-        bonus = self.parser["neow_bonus"]
+        cost = self.parser._data["neow_cost"]
+        bonus = self.parser._data["neow_bonus"]
         if cost == "NONE":
             return self.all_bonuses.get(bonus, bonus)
         return f"{self.all_costs.get(cost, cost)} {self.all_bonuses.get(bonus, bonus)}"
@@ -86,11 +86,11 @@ class NeowBonus:
     @property
     def skipped(self) -> Generator[str, None, None]:
         if "basemod:mod_saves" in self.parser:
-            bonuses = self.parser["basemod:mod_saves"].get("NeowBonusesSkippedLog")
-            costs = self.parser["basemod:mod_saves"].get("NeowCostsSkippedLog")
+            bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
+            costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")
         else:
-            bonuses = self.parser.get("neow_bonuses_skipped_log")
-            costs = self.parser.get("neow_costs_skipped_log")
+            bonuses = self.parser._data.get("neow_bonuses_skipped_log")
+            costs = self.parser._data.get("neow_costs_skipped_log")
 
         if not bonuses or not costs:
             yield "<Could not fetch data>"
@@ -105,11 +105,11 @@ class NeowBonus:
     @property
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser:
-            bonuses = self.parser["basemod:mod_saves"].get("NeowBonusesSkippedLog")
-            costs = self.parser["basemod:mod_saves"].get("NeowCostsSkippedLog")
+            bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
+            costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")
         else:
-            bonuses = self.parser.get("neow_bonuses_skipped_log")
-            costs = self.parser.get("neow_costs_skipped_log")
+            bonuses = self.parser._data.get("neow_bonuses_skipped_log")
+            costs = self.parser._data.get("neow_costs_skipped_log")
 
         return bool(bonuses and costs)
 
@@ -156,7 +156,7 @@ class NeowBonus:
             case a:
                 raise ValueError(f"I don't know how to handle {a}")
 
-        if self.parser["ascension_level"] >= 14: # lower max HP
+        if self.parser.ascension_level >= 14: # lower max HP
             base -= 4
             if self.parser.character == "Ironclad":
                 base -= 1 # 5 total
@@ -165,7 +165,7 @@ class NeowBonus:
 
         cur = base
 
-        if self.parser["ascension_level"] >= 6: # take damage
+        if self.parser.ascension_level >= 6: # take damage
             cur -= (cur // 10)
 
         if self.mod_data is not None:
@@ -175,7 +175,7 @@ class NeowBonus:
             base += self.mod_data["maxHpGained"]
             return (cur, base)
 
-        match self.parser["neow_cost"]:
+        match self.parser._data["neow_cost"]:
             case "TEN_PERCENT_HP_LOSS": # actually hardcoded
                 base -= bonus
                 if cur > base:
@@ -183,7 +183,7 @@ class NeowBonus:
             case "PERCENT_DAMAGE":
                 cur -= (cur // 10) * 3
 
-        match self.parser["neow_bonus"]:
+        match self.parser._data["neow_bonus"]:
             case "TEN_PERCENT_HP_BONUS":
                 base += bonus
                 cur += bonus
@@ -201,10 +201,10 @@ class NeowBonus:
                 base += 300
             return base
 
-        if self.parser["neow_cost"] == "NO_GOLD":
+        if self.parser._data["neow_cost"] == "NO_GOLD":
             base = 0
 
-        match self.parser["neow_bonus"]:
+        match self.parser._data["neow_bonus"]:
             case "HUNDRED_GOLD":
                 base += 100
             case "TWO_FIFTY_GOLD":
@@ -217,7 +217,7 @@ class NeowBonus:
 
     def get_cards(self) -> list[str]:
         cards = []
-        if self.parser["ascension_level"] >= 10:
+        if self.parser.ascension_level >= 10:
             cards.append("AscendersBane")
 
         match self.parser.character:
@@ -262,7 +262,7 @@ class NeowBonus:
 
     def bonus_THREE_CARDS(self):
         prefix = self.parser.prefix
-        for cards in self.parser[prefix + "card_choices"]:
+        for cards in self.parser._data[prefix + "card_choices"]:
             if cards["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     return f"picked {get_card(cards['picked'])} over {' and '.join(get_card(x) for x in cards['not_picked'])}"
@@ -299,14 +299,14 @@ class NeowBonus:
         potions = []
         skipped = []
         prefix = self.parser.prefix
-        for potion in self.parser[prefix + "potions_obtained"]:
+        for potion in self.parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == 0:
                 potions.append(get_potion(potion["key"]))
         if self.mod_data is not None:
-            if "basemod:mod_saves" in self.parser:
-                s = self.parser["basemod:mod_saves"]["RewardsSkippedLog"]
+            if "basemod:mod_saves" in self.parser._data:
+                s = self.parser._data["basemod:mod_saves"]["RewardsSkippedLog"]
             else:
-                s = self.parser["rewards_skipped"]
+                s = self.parser._data["rewards_skipped"]
             for skip in s:
                 if skip["floor"] == 0:
                     skipped.extend(get_potion(x) for x in skip["potions"])
@@ -386,9 +386,9 @@ class NeowBonus:
         return "took damage (current HP / 10, rounded down, * 3)"
 
     def as_str(self) -> str:
-        neg = getattr(self, f"cost_{self.parser['neow_cost']}", None)
+        neg = getattr(self, f"cost_{self.parser._data['neow_cost']}", None)
         try:
-            pos = getattr(self, f"bonus_{self.parser['neow_bonus']}")
+            pos = getattr(self, f"bonus_{self.parser._data['neow_bonus']}")
         except AttributeError:
             return "<No option picked/option unknown>"
 
@@ -404,7 +404,7 @@ class NeowBonus:
 
     @property
     def has_info(self) -> bool:
-        return hasattr(self, f"bonus_{self.parser['neow_bonus']}")
+        return hasattr(self, f"bonus_{self.parser._data['neow_bonus']}")
 
     @property
     def cards(self) -> list[str]:
@@ -418,19 +418,19 @@ class NeowBonus:
         if self.parser.character == "Silent":
             num += 2
 
-        if self.parser["ascension_level"] >= 10:
+        if self.parser.ascension_level >= 10:
             num += 1
 
         prefix = self.parser.prefix
-        for cards in self.parser[prefix + "card_choices"]:
+        for cards in self.parser._data[prefix + "card_choices"]:
             if cards["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     num += 1
 
-        if self.parser["neow_cost"] == "CURSE":
+        if self.parser._data["neow_cost"] == "CURSE":
             num += 1
 
-        match self.parser["neow_bonus"]:
+        match self.parser._data["neow_bonus"]:
             case "REMOVE_CARD":
                 num -= 1
             case "REMOVE_TWO":
@@ -442,14 +442,14 @@ class NeowBonus:
 
     def relic_delta(self) -> int:
         num = 1
-        if self.parser["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
+        if self.parser._data["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
             num += 1
         return num
 
     def potion_delta(self) -> int:
         num = 0
         prefix = self.parser.prefix
-        for potion in self.parser[prefix + "potions_obtained"]:
+        for potion in self.parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == 0:
                 num += 1
         return num
@@ -502,24 +502,24 @@ class FileParser:
     done = False
 
     def __init__(self, data: dict[str, Any]):
-        self.data = data
+        self._data = data
         self.neow_bonus = NeowBonus(self)
         self._cache = {}
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str] = {}
 
     def __getitem__(self, item: str) -> Any:
-        return self.data[item]
+        return self._data[item]
 
     def __contains__(self, item: str) -> bool:
-        return item in self.data
+        return item in self._data
 
     def get(self, item: str, default=None):
-        return self.data.get(item, default)
+        return self._data.get(item, default)
 
     def get_boss_chest(self) -> dict[str, str | list[str]]:
         if "boss_chest_iter" not in self._cache:
-            self._cache["boss_chest_iter"] = iter(self[self.prefix + "boss_relics"])
+            self._cache["boss_chest_iter"] = iter(self._data[self.prefix + "boss_relics"])
 
         try: # with a savefile, it's possible to try to get the same floor twice, which will the last one
             return next(self._cache["boss_chest_iter"])
@@ -659,32 +659,32 @@ class FileParser:
 
     @property
     def current_hp_counts(self) -> list[int]:
-        return self[self.prefix + "current_hp_per_floor"]
+        return self._data[self.prefix + "current_hp_per_floor"]
 
     @property
     def max_hp_counts(self) -> list[int]:
-        return self[self.prefix + "max_hp_per_floor"]
+        return self._data[self.prefix + "max_hp_per_floor"]
 
     @property
     def gold_counts(self) -> list[int]:
-        return self[self.prefix + "gold_per_floor"]
+        return self._data[self.prefix + "gold_per_floor"]
 
     @property
     def ascension_level(self) -> int:
-        return self.data["ascension_level"]
+        return self._data["ascension_level"]
 
     @property
     def keys(self) -> Generator[tuple[str, str | int], None, None]:
         if "basemod:mod_saves" in self: # savefile
-            if self["has_ruby_key"]:
-                for choice in self["metric_campfire_choices"]:
+            if self._data["has_ruby_key"]:
+                for choice in self._data["metric_campfire_choices"]:
                     if choice["key"] == "RECALL":
                         yield ("Ruby Key", choice["floor"])
-            if self["has_emerald_key"]:
-                floor = self["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
+            if self._data["has_emerald_key"]:
+                floor = self._data["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
                 yield ("Emerald Key", floor)
-            if self["has_sapphire_key"]:
-                floor = self["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
+            if self._data["has_sapphire_key"]:
+                floor = self._data["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
                 if floor is None:
                     floor = "<Unknown Floor>"
                 else:
@@ -692,17 +692,17 @@ class FileParser:
                 yield ("Sapphire Key", floor)
 
         else:
-            for choice in self["campfire_choices"]:
+            for choice in self._data["campfire_choices"]:
                 if choice["key"] == "RECALL":
                     yield ("Ruby Key", choice["floor"])
-            if "green_key_taken_log" in self:
+            if "green_key_taken_log" in self._data:
                 yield ("Emerald Key", self["green_key_taken_log"])
-            if "blue_key_relic_skipped_log" in self:
-                yield ("Sapphire Key", self["blue_key_relic_skipped_log"]["floor"])
+            if "blue_key_relic_skipped_log" in self._data:
+                yield ("Sapphire Key", self._data["blue_key_relic_skipped_log"]["floor"])
 
     def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
-        if "master_deck" in self:
-            for x in self["master_deck"]:
+        if "master_deck" in self._data:
+            for x in self._data["master_deck"]:
                 try:
                     meta = get_card_metadata(x)
                 except KeyError:
@@ -710,7 +710,7 @@ class FileParser:
                 yield get_card(x), meta
             return
 
-        for x in self["cards"]:
+        for x in self._data["cards"]:
             card = get_card(x["id"])
             if x["upgrades"]:
                 if x["upgrades"] > 1:
@@ -785,7 +785,7 @@ class FileParser:
     def relics(self) -> Generator[RelicData, None, None]:
         if "relics" not in self._cache:
             self._cache["relics"] = []
-            for relic in self.data["relics"]:
+            for relic in self._data["relics"]:
                 value = RelicData(self, relic)
                 self._cache["relics"].append(value)
 
@@ -797,9 +797,9 @@ class FileParser:
             c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
             try:
-                seed = int(self["seed"]) # might be stored as a str
+                seed = int(self._data["seed"]) # might be stored as a str
             except KeyError:
-                seed = int(self["seed_played"])
+                seed = int(self._data["seed_played"])
 
             # this is a bit weird, but lets us convert a negative number, if any, into a positive one
             num = int.from_bytes(seed.to_bytes(20, "big", signed=True).lstrip(b"\xff"), "big")
@@ -820,10 +820,10 @@ class FileParser:
         """Return the run's path. This is cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
-            if "basemod:mod_saves" in self:
-                floor_time = self["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
+            if "basemod:mod_saves" in self._data:
+                floor_time = self._data["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
             else:
-                floor_time = self.get("floor_exit_playtime", ())
+                floor_time = self._data.get("floor_exit_playtime", ())
             prev = 0
             card_count = self.neow_bonus.card_delta()
             relic_count = self.neow_bonus.relic_delta()

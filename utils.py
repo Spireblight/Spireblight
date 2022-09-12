@@ -1,8 +1,9 @@
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 
-import config
 import os
 import json
+
+import config
 
 __all__ = ["get_req_data", "getfile", "update_db"]
 
@@ -33,5 +34,6 @@ def getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
 
 def update_db():
+    from server import _cmds
     with getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.json_indent)

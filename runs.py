@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from datetime import datetime
-
+import datetime
 import json
 import time
 import os
@@ -19,8 +18,6 @@ from webpage import router
 from logger import logger
 from events import add_listener
 from utils import get_req_data
-
-import config
 
 __all__ = ["get_latest_run"]
 
@@ -68,15 +65,15 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        return datetime.fromtimestamp(self.data["timestamp"])
+        return datetime.datetime.fromtimestamp(self._data["timestamp"])
 
     @property
     def timedelta(self) -> datetime.timedelta:
-        return datetime.now() - self.timestamp
+        return datetime.datetime.now() - self.timestamp
 
     @property
     def won(self) -> bool:
-        return self.data["victory"]
+        return self._data["victory"]
 
     @property
     def modded(self) -> bool:
@@ -88,23 +85,23 @@ class RunParser(FileParser):
 
     @property
     def killed_by(self) -> str | None:
-        return self.data.get("killed_by")
+        return self._data.get("killed_by")
 
     @property
     def floor_reached(self) -> int:
-        return int(self["floor_reached"])
+        return int(self._data["floor_reached"])
 
     @property
     def final_health(self) -> tuple[int, int]:
-        return self["current_hp_per_floor"][-1], self["max_hp_per_floor"][-1]
+        return self._data["current_hp_per_floor"][-1], self._data["max_hp_per_floor"][-1]
 
     @property
     def score(self) -> int:
-        return int(self.data["score"])
+        return int(self._data["score"])
 
     @property
     def run_length(self) -> str:
-        seconds = self.data["playtime"]
+        seconds = self._data["playtime"]
         minutes, seconds = divmod(seconds, 60)
         hours, minutes = divmod(minutes, 60)
         if hours:
@@ -130,8 +127,8 @@ def _update_cache():
                     else:
                         with open(os.path.join(p1, file)) as f:
                             _cache[file] = parser = RunParser(file, profile, json.load(f))
-                            _ts_cache[parser.data["timestamp"]] = parser
-                    _cur_cache[parser.data["timestamp"]] = parser
+                            _ts_cache[parser._data["timestamp"]] = parser
+                    _cur_cache[parser._data["timestamp"]] = parser
 
             prev = None
             prev_char: dict[str, RunParser | None] = {}
@@ -232,7 +229,7 @@ async def run_raw_json(req: Request) -> Response:
     if parser is None:
         raise HTTPNotFound()
 
-    return Response(text=json.dumps(parser.data, indent=4), content_type="application/json")
+    return Response(text=json.dumps(parser._data, indent=4), content_type="application/json")
 
 @router.get("/runs/{name}/{type}")
 async def run_chart(req: Request) -> Response:
@@ -279,7 +276,7 @@ async def receive_run(req: Request) -> Response:
     data = json.loads(content)
     if name not in _cache:
         _cache[name] = parser = RunParser(name, int(profile), data)
-        _ts_cache[parser.data["timestamp"]] = parser
+        _ts_cache[parser._data["timestamp"]] = parser
         _update_cache()
 
     logger.debug(f"Received run history file. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")

@@ -46,14 +46,14 @@ class Savefile(FileParser):
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
             character = character[2:]
-        if data is None and has_run == "true" and self.data is not None:
+        if data is None and has_run == "true" and self._data is not None:
             maybe_run = get_latest_run(None, None)
-            if maybe_run["seed_played"] == self["metric_seed_played"]:
+            if maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
                 # optimize save -> run node generation
                 maybe_run._cache["old_path"] = self._cache["path"]
                 self._matches = True
 
-        self.data = data
+        self._data = data
         self._graph_cache.clear()
         if not character:
             self._last = time.time()
@@ -72,10 +72,10 @@ class Savefile(FileParser):
 
     @property
     def timestamp(self) -> int:
-        date = self.get("save_date")
+        date = self._data.get("save_date")
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
-            # off. A bit too much precision otherwise 👀
+            # off. A bit too much precision otherwise
             date = datetime.datetime.utcfromtimestamp(date / 1000)
         else:
             date = datetime.datetime.now()
@@ -99,19 +99,19 @@ class Savefile(FileParser):
 
     @property
     def current_health(self) -> int:
-        return self["current_health"]
+        return self._data["current_health"]
 
     @property
     def max_health(self) -> int:
-        return self["max_health"]
+        return self._data["max_health"]
 
     @property
     def current_gold(self) -> int:
-        return self["gold"]
+        return self._data["gold"]
 
     @property
     def current_purge(self) -> int:
-        base = self["purgeCost"]
+        base = self._data["purgeCost"]
         membership = False
         for relic in self.relics:
             if relic.name == "Smiling Mask":
@@ -126,7 +126,7 @@ class Savefile(FileParser):
 
     @property
     def purge_totals(self) -> int:
-        return self["metric_purchased_purges"]
+        return self._data["metric_purchased_purges"]
 
     @property
     def shop_prices(self) -> tuple[tuple[range, range, range], tuple[range, range], tuple[range, range, range], tuple[range, range, range]]:
@@ -152,7 +152,7 @@ class Savefile(FileParser):
 
     @property
     def current_floor(self) -> int:
-        return self["metric_floor_reached"]
+        return self._data["metric_floor_reached"]
 
     @property
     def potion_chance(self) -> int:
@@ -165,17 +165,17 @@ class Savefile(FileParser):
 
     @property
     def rare_chance(self) -> tuple[float, float, float]:
-        base = self["card_random_seed_randomizer"]
+        base = self._data["card_random_seed_randomizer"]
         regular = 3
-        if "Busted Crown" in self["relics"]:
+        if "Busted Crown" in self._data["relics"]:
             regular -= 2
-        if "Question Card" in self["relics"]:
+        if "Question Card" in self._data["relics"]:
             regular += 1
         elites = regular
-        if "Prayer Wheel" in self["relics"]:
+        if "Prayer Wheel" in self._data["relics"]:
             regular *= 2
         mult = 1
-        if "Nloth\u0027s Gift" in self["relics"]:
+        if "Nloth\u0027s Gift" in self._data["relics"]:
             mult = 3
         # NOTE: This formula is... not very good. I'm not sure that the base is what
         # gets added to the 3% chance, but I'm rolling with it for now. As for that
@@ -193,7 +193,7 @@ class Savefile(FileParser):
 
     @property
     def upcoming_boss(self) -> str:
-        return self["boss"]
+        return self._data["boss"]
 
 _savefile = Savefile()
 
@@ -222,7 +222,7 @@ async def current_run(req: Request):
 async def current_as_raw(req: Request):
     if _savefile.character is None:
         raise HTTPNotFound()
-    return Response(text=json.dumps(_savefile.data, indent=4), content_type="application/json")
+    return Response(text=json.dumps(_savefile._data, indent=4), content_type="application/json")
 
 @router.get("/current/{type}")
 async def save_chart(req: Request) -> Response:
