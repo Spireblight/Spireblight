@@ -311,3 +311,7 @@ nav.breadcrumb {
 #run-list .run.loss {
   padding-left: 2.25rem;
 }
+
+.button .fa-discord {
+  margin-right: 1rem;
+}

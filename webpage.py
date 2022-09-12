@@ -102,6 +102,11 @@ async def challenge(req: web.Request):
         "days_left": left.days,
     }
 
+@router.get("/discord")
+@aiohttp_jinja2.template("socials/discord.jinja2")
+async def discord(req: web.Request):
+    return {}
+
 #@router.get("/redirects")
 async def redirected_totals(req: web.Request):
     with open(os.path.join("data", "redirects.json")) as f:

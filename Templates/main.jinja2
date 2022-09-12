@@ -1,53 +1,78 @@
 {% extends "base.jinja2" %}
+
 {% block title %}
-  Index
+  Hi!
 {% endblock %}
+
 {% block content %}
   <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hi, I'm Baalor!
-      </h1>
-      <p class="subtitle">
-        I play video games and tell dad jokes.
-      </p>
+    <div class="columns">
+      <div class="column is-half">
+        <section class="hero">
+          <div class="hero-body">
+            <p class="title">
+              Hi, I'm Baalor!
+            </p>
+            <p class="subtitle">
+              I play video games and tell dad jokes.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <article class="message">
+            <div class="message-header">
+              <p>Who am I?</p>
+            </div>
+            <div class="message-body">
+              I am a streamer that plays games five times a week. I play many
+              games, the chief amongst them being
+              <a href="https://store.steampowered.com/app/646570/Slay_the_Spire/" target="_blank">Slay The Spire</a>.
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              <p>Schedule</p>
+            </div>
+            <div class="message-body">
+              Tuesday-Saturday starting at 12pm EST, with 30+ hours of live
+              content every week! See the <b>#schedule</b> channel
+              on <a href="/discord">the Discord server</a> for updated weekly schedules.
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <div class="column">
+        <section class="section">
+          <div class="container">
+            <h1 class="title">Latest YouTube video</h1>
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <h1 class="title">Live on Twitch</h1>
+            <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+            <div id="twitch_frame"></div>
+            <script type="text/javascript">
+             var options = {
+               /* width: 560,
+                * height: 315, */
+               channel: "{{ config.channel }}"
+             };
+             var player = new Twitch.Player("twitch_frame", options);
+             player.setVolume(0.5);
+            </script>
+          </div>
+
+        </section>
+      </div>
     </div>
   </section>
-
-  <!-- <div class="columns is-centered">
-       <div class="container column box is-three-quarters">
-       <h1 class="title">Latest YouTube video (ish... 👀)</h1>
-       <iframe
-       src="https://www.youtube.com/embed/{{ video_id }}"
-       title="YouTube video player" frameborder="0"
-       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-       allowfullscreen></iframe>
-       </div>
-       </div> -->
-
-  <section class="section"></section>
-
-  <div class="columns is-centered">
-    <div class="container column box is-three-quarters">
-      <h1 class="title">Live on Twitch</h1>
-      <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
-      <div id="twitch_frame"></div>
-      <script type="text/javascript">
-       var options = {
-         width: 560,
-         height: 315,
-         channel: "{{ config.channel }}"
-       };
-       var player = new Twitch.Player("twitch_frame", options);
-       player.setVolume(0.5);
-      </script>
-    </div>
-  </div>
-
-  <section class="section"></section>
-{% endblock %}
-{% block footer %}
-  <a href="/current">Follow along with the current run!</a><br>
-  <a href="/commands">View all of the bot commands.</a><br>
-  <a href="/runs">Entire run history</a><br>
 {% endblock %}
