@@ -123,7 +123,11 @@
           </div>
           <div id="neow-body-original" class="message-body">
             <p>
-              {{ run.neow_bonus.as_str() }}
+              {% if run.neow_bonus.has_data %}
+                {{ run.neow_bonus.as_str() }}
+              {% else %}
+                {{ run.neow_bonus.picked }}
+              {% endif %}
             </p>
             {% if run.neow_bonus.has_data %}
               <div class="skipped">
