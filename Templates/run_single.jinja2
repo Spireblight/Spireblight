@@ -123,7 +123,7 @@
           </div>
           <div id="neow-body-original" class="message-body">
             <p>
-              {% if run.neow_bonus.has_data %}
+              {% if run.neow_bonus.has_info %}
                 {{ run.neow_bonus.as_str() }}
               {% else %}
                 {{ run.neow_bonus.picked }}
