@@ -161,7 +161,7 @@ class Savefile(FileParser):
                 return 100
             if relic.name == "Sozu":
                 return 0
-        return self["potion_chance"] + 40
+        return self._data["potion_chance"] + 40
 
     @property
     def rare_chance(self) -> tuple[float, float, float]:
