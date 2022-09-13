@@ -1437,7 +1437,7 @@ class EliteEncounter(EncounterBase):
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
-        if "basemod:mod_saves" in parser:
+        if "basemod:mod_saves" in parser._data:
             key_floor = parser._data["basemod:mod_saves"].get("greenKeyTakenLog")
         else:
             key_floor = parser._data.get("green_key_taken_log")
