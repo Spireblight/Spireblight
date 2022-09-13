@@ -515,7 +515,7 @@ class FileParser:
         try: # with a savefile, it's possible to try to get the same floor twice, which will the last one
             return next(self._cache["boss_chest_iter"])
         except StopIteration:
-            return self[self.prefix + "boss_relics"][-1]
+            return self._data[self.prefix + "boss_relics"][-1]
 
     def graph(self, req: Request) -> Response:
         if "view" not in req.query or "type" not in req.query:
