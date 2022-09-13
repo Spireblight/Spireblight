@@ -85,7 +85,7 @@ class NeowBonus:
 
     @property
     def skipped(self) -> Generator[str, None, None]:
-        if "basemod:mod_saves" in self.parser:
+        if "basemod:mod_saves" in self.parser._data:
             bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
             costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")
         else:
