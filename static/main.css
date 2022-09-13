@@ -334,10 +334,14 @@ nav.breadcrumb {
   font-weight: bold;
   text-shadow: 4px 5px 4px rgba(0,0,0, 0.5);
 }
+.summary .box .kills .kill {
+  margin-bottom: -1.5rem;
+}
 .summary .box .deaths {
   font-weight: bold;
   color: #dbdbdb;
   text-shadow: 2px 4px 2px rgba(0,0,0, 0.5);
+  margin-top: 0.5rem;
 }
 
 .summary .character {
@@ -381,7 +385,7 @@ nav.breadcrumb {
 .heart-data {
   justify-content: space-around;
 }
-.heart-data .box .data {
+.heart-data .data {
   font-size: 3em;
   font-weight: bold;
   white-space: nowrap;
