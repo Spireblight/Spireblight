@@ -673,48 +673,48 @@ async def stream_uptime(ctx: ContextType):
     else:
         await ctx.send("Stream is offline (if this is wrong, the Twitch API broke).")
 
-@with_savefile("bluekey", "sapphirekey", "key")
-async def bluekey(ctx: ContextType, j: Savefile):
+@with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
+async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
-    if not j["has_sapphire_key"]:
+    if not save._data["has_sapphire_key"]:
         await ctx.send("We do not have the Sapphire key.")
         return
 
-    if "BlueKeyRelicSkippedLog" not in j["basemod:mod_saves"]:
+    if "BlueKeyRelicSkippedLog" not in save._data["basemod:mod_saves"]:
         await ctx.send("RunHistoryPlus is not running; cannot get data.")
         return
 
-    d = j["basemod:mod_saves"]["BlueKeyRelicSkippedLog"]
+    d = save._data["basemod:mod_saves"]["BlueKeyRelicSkippedLog"]
 
     await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']} for the Sapphire key.")
 
 @with_savefile("neow", "neowbonus")
-async def neowbonus(ctx: ContextType, j: Savefile):
+async def neowbonus(ctx: ContextType, save: Savefile):
     """Display what the Neow bonus was."""
-    await ctx.send(f"Option taken: {j.neow_bonus.picked} {j.neow_bonus.as_str() if j.neow_bonus.has_info else ''}")
+    await ctx.send(f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}")
 
 @with_savefile("seed", "currentseed")
-async def seed_cmd(ctx: ContextType, j: Savefile):
+async def seed_cmd(ctx: ContextType, save: Savefile):
     """Display the run's current seed."""
-    await ctx.send(f"Current seed: {j.seed}{' (set manually)' if j['seed_set'] else ''}")
+    await ctx.send(f"Current seed: {save.seed}{' (set manually)' if save.is_seeded else ''}")
 
 @with_savefile("seeded", "isthisseeded")
-async def is_seeded(ctx: ContextType, j: Savefile):
+async def is_seeded(ctx: ContextType, save: Savefile):
     """Display whether the current run is seeded."""
-    if j["seed_set"]:
+    if save.is_seeded:
         await ctx.send(f"This run is seeded! See '{config.prefix}seed' for the seed.")
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
 @with_savefile("shopremoval", "cardremoval", "removal")
-async def shop_removal_cost(ctx: ContextType, j: Savefile):
+async def shop_removal_cost(ctx: ContextType, save: Savefile):
     """Display the current shop removal cost."""
-    await ctx.send(f"Current card removal cost: {j.current_purge} (removed {j.purge_totals} card{'' if j.purge_totals == 1 else 's'})")
+    await ctx.send(f"Current card removal cost: {save.current_purge} (removed {save.purge_totals} card{'' if save.purge_totals == 1 else 's'})")
 
 @with_savefile("shopprices", "shopranges", "shoprange", "ranges", "range", "shop", "prices")
-async def shop_prices(ctx: ContextType, j: Savefile):
+async def shop_prices(ctx: ContextType, save: Savefile):
     """Display the current shop price ranges."""
-    cards, colorless, relics, potions = j.shop_prices
+    cards, colorless, relics, potions = save.shop_prices
     cc, uc, rc = cards
     ul, rl = colorless
     cr, ur, rr = relics
@@ -724,19 +724,19 @@ async def shop_prices(ctx: ContextType, j: Savefile):
         f"Colorless: Uncommon {ul.start}-{ul.stop}, Rare {rl.start}-{rl.stop} | "
         f"Relics: Common/Shop {cr.start}-{cr.stop}, Uncommon {ur.start}-{ur.stop}, Rare {rr.start}-{rr.stop} | "
         f"Potions: Common {cp.start}-{cp.stop}, Uncommon {up.start}-{up.stop}, Rare {rp.start}-{rp.stop} | "
-        f"Card removal: {j.current_purge}"
+        f"Card removal: {save.current_purge}"
     )
 
 @with_savefile("rest", "heal", "restheal")
-async def campfire_heal(ctx: ContextType, j: Savefile):
+async def campfire_heal(ctx: ContextType, save: Savefile):
     """Display the current heal at campfires."""
-    base = int(j.max_health * 0.3)
-    for relic in j.relics:
+    base = int(save.max_health * 0.3)
+    for relic in save.relics:
         if relic.name == "Regal Pillow":
             base += 15
             break
 
-    lost = max(0, (base + j.current_health) - j.max_health)
+    lost = max(0, (base + save.current_health) - save.max_health)
     extra = ""
     if lost:
         extra = f" (extra healing lost: {lost} HP)"
@@ -744,13 +744,13 @@ async def campfire_heal(ctx: ContextType, j: Savefile):
     await ctx.send(f"Current campfire heal: {base} HP{extra}")
 
 @with_savefile("nloth")
-async def nloth_traded(ctx: ContextType, j: Savefile):
+async def nloth_traded(ctx: ContextType, save: Savefile): # JSON_FP_PROP
     """Display which relic was traded for N'loth's Gift."""
-    if "Nloth's Gift" not in j["relics"]:
+    if "Nloth's Gift" not in save._data["relics"]:
         await ctx.send("We do not have N'loth's Gift.")
         return
 
-    for evt in j["metric_event_choices"]:
+    for evt in save._data["metric_event_choices"]:
         if evt["event_name"] == "N'loth":
             await ctx.send(f"We traded {get_relic(evt['relics_lost'][0])} for N'loth's Gift.")
             return
@@ -758,9 +758,9 @@ async def nloth_traded(ctx: ContextType, j: Savefile):
         await ctx.send("Something went terribly wrong.")
 
 @with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
-async def event_likelihood(ctx: ContextType, j: Savefile):
+async def event_likelihood(ctx: ContextType, save: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""
-    elite, hallway, shop, chest = j["event_chances"]
+    elite, hallway, shop, chest = save._data["event_chances"] # JSON_FP_PROP
     # elite likelihood is only for the "Deadly Events" custom modifier
 
     await ctx.send(
@@ -773,9 +773,9 @@ async def event_likelihood(ctx: ContextType, j: Savefile):
     )
 
 @with_savefile("rare", "rarecard", "rarechance") # see comment in save.py -- this is not entirely accurate
-async def rare_card_chances(ctx: ContextType, j: Savefile):
+async def rare_card_chances(ctx: ContextType, save: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
-    regular, elites, shops = j.rare_chance
+    regular, elites, shops = save.rare_chance
     await ctx.send(
         f"The rough likelihood of seeing a rare card is {regular:.2%} "
         f"in normal fight card rewards, {elites:.2%} in elite fight "
@@ -783,12 +783,12 @@ async def rare_card_chances(ctx: ContextType, j: Savefile):
     )
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, j: Savefile, index: int):
+async def relic_info(ctx: ContextType, save: Savefile, index: int):
     """Display information about the current relics."""
     if index < 0:
         await ctx.send("Why do you insist on breaking me?")
         return
-    l = list(j.relics)
+    l = list(save.relics)
     if index > len(l):
         await ctx.send(f"We only have {len(l)} relics!")
         return
@@ -799,9 +799,9 @@ async def relic_info(ctx: ContextType, j: Savefile, index: int):
     await ctx.send(f"The relic at position {index} is {l[index-1].name}.")
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
-async def skipped_boss_relics(ctx: ContextType, j: Savefile):
+async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
     """Display the boss relics that were taken and skipped."""
-    l: list[dict] = j["metric_boss_relics"]
+    l: list[dict] = save._data["metric_boss_relics"]
 
     if not l:
         await ctx.send("We have not picked any boss relics yet.")

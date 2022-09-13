@@ -501,21 +501,12 @@ class FileParser:
     prefix = ""
     done = False
 
-    def __init__(self, data: dict[str, Any]):
+    def __init__(self, data: dict[str, Any]): # TODO: fix all JSON_FP_PROP instances
         self._data = data
         self.neow_bonus = NeowBonus(self)
         self._cache = {}
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str] = {}
-
-    def __getitem__(self, item: str) -> Any:
-        return self._data[item]
-
-    def __contains__(self, item: str) -> bool:
-        return item in self._data
-
-    def get(self, item: str, default=None):
-        return self._data.get(item, default)
 
     def get_boss_chest(self) -> dict[str, str | list[str]]:
         if "boss_chest_iter" not in self._cache:
@@ -814,6 +805,12 @@ class FileParser:
             self._cache["seed"] = "".join(s)
 
         return self._cache["seed"]
+
+    @property
+    def is_seeded(self) -> bool:
+        if "seed_set" in self._data:
+            return self._data["seed_set"]
+        return self._data["chose_seed"]
 
     @property
     def path(self) -> Generator[NodeData, None, None]:
