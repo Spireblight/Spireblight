@@ -117,7 +117,7 @@ class Savefile(FileParser):
             if relic.name == "Smiling Mask":
                 return 50
             if relic.name == "Membership Card":
-                base = self["purgeCost"] * 0.5
+                base = self._data["purgeCost"] * 0.5
                 membership = True
             if relic.name == "The Courier" and not membership:
                 base *= 0.8
