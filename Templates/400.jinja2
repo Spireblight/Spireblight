@@ -16,11 +16,11 @@
         <div class="container column box is-one-fifth character {{ character.name | lower }}">
           <div class="character-content">
             <div class="kills" title="{{ character.kills }} kills with {{ character.name }}">
-              {{ character.kills }}
+              <div class="kill">{{ character.kills }}</div>
+              <div class="is-size-7 has-text-centered">kills</div>
             </div>
             <div class="deaths" title="{{ character.deaths }} losses with {{ character.name }}">
-              <i class="fa-solid fa-skull"></i>
-              {{ character.deaths }}
+              {{ character.deaths }} deaths, {{ character.streak }} streak
             </div>
           </div>
         </div>
@@ -28,13 +28,25 @@
   </section>
   <section class="section">
     <div class="columns is-variable heart-data has-text-centered">
-      <div class="column box is-one-third is-marginless">
+      <div class="column is-marginless">
         <div class="data">
           {{ total }} / 400
         </div>
         <div>heart kills</div>
       </div>
-      <div class="column box is-one-third is-marginless">
+      <div class="column is-marginless">
+        <div class="data">
+          {{ streak }}
+        </div>
+        <div>
+          current streak
+          {% if streak >= 20 %}
+            <br/>
+            (PB <i>and</i> WR!!)
+          {% endif %}
+        </div>
+      </div>
+      <div class="column is-marginless">
         <div class="data">
           {{ days_left }}
         </div class="data">
@@ -62,16 +74,6 @@
             <div class="message-body">
               That just happened. We were about to go on a Defect run when the
               challenge started in the beginning of the year.
-            </div>
-          </div>
-        </div>
-        <div class="box p-0">
-          <div class="message">
-            <div class="message-header">
-              Ooh, so we can have like a socratic FAQ here?
-            </div>
-            <div class="message-body">
-              You betcha! 💃
             </div>
           </div>
         </div>

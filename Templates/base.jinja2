@@ -27,6 +27,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/main.js"></script>
     {% block head %}{% endblock %}
     <title>{% block title %}{% endblock %} - Baalorlord</title>
   </head>
@@ -38,21 +39,43 @@
           <span>Baalorlord</span>
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a id="burger" role="button" class="navbar-burger"
+          onclick="burgerClick()"
+          aria-label="menu" aria-expanded="false"
+          data-target="navbar">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu">
+      <div id="navbar" class="navbar-menu">
         <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Slay the Spire
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/current">Current run</a>
+              <a class="navbar-item" href="/400">The 400 Challenge</a>
+              <a class="navbar-item" href="/profile/0/runs">Run history</a>
+            </div>
+          </div>
+
+          <a href="/commands" class="navbar-item">
+            <i class="fa-solid fa-robot"></i>
+            Baalorbot
+          </a>
+
           <a href="https://twitch.tv/baalorlord" class="navbar-item" target="_blank">
+            <i class="fa-brands fa-twitch"></i>
             Twitch
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
+              <i class="fa-brands fa-youtube"></i>
               Youtube
             </a>
 
@@ -65,11 +88,16 @@
                 Archive channel
               </a>
               <hr class="navbar-divider">
-              <a class="navbar-item" href="https://youtube.com/channel/UCkgqOXw0EQGiwklGEvz26Yg">
+              <a class="navbar-item" href="https://youtube.com/channel/UCkgqOXw0EQGiwklGEvz26Yg" target="_blank">
                 Non-Spire Variety content
               </a>
             </div>
           </div>
+
+          <a href="/discord" class="navbar-item">
+            <i class="fa-brands fa-discord"></i>
+            Discord
+          </a>
         </div>
       </div>
     </nav>
