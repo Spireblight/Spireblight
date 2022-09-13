@@ -687,7 +687,7 @@ class FileParser:
                 if choice["key"] == "RECALL":
                     yield ("Ruby Key", choice["floor"])
             if "green_key_taken_log" in self._data:
-                yield ("Emerald Key", self["green_key_taken_log"])
+                yield ("Emerald Key", self._data["green_key_taken_log"])
             if "blue_key_relic_skipped_log" in self._data:
                 yield ("Sapphire Key", self._data["blue_key_relic_skipped_log"]["floor"])
 
