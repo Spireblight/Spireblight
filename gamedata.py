@@ -666,7 +666,7 @@ class FileParser:
 
     @property
     def keys(self) -> Generator[tuple[str, str | int], None, None]:
-        if "basemod:mod_saves" in self: # savefile
+        if "basemod:mod_saves" in self._data: # savefile
             if self._data["has_ruby_key"]:
                 for choice in self._data["metric_campfire_choices"]:
                     if choice["key"] == "RECALL":
