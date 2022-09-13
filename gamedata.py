@@ -1239,14 +1239,14 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         maybe_cached.pop()
     nodes = []
     error = False
-    taken_len = len([x for x in parser._data[prefix + "path_taken"] if x is not None])
-    actual_len = len(parser._data[prefix + "path_per_floor"])
+    taken_len = len(parser._data[prefix + "path_taken"])
+    actual_len = len([x for x in parser._data[prefix + "path_per_floor"] if x is not None])
     last_changed = 0
     for floor, actual in enumerate(parser._data[prefix + "path_per_floor"], 1):
         iterate = True
         # Slay the Streamer boss pick
-        if taken_len != actual_len and actual == "T" and floor == last_changed + 10:
-            taken_len += 1 # keep track
+        if actual_len < taken_len and actual == "T" and floor == last_changed + 10:
+            actual_len += 1 # keep track
             iterate = False
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
