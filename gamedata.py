@@ -210,7 +210,7 @@ class NeowBonus:
             case "TWO_FIFTY_GOLD":
                 base += 250
             case "ONE_RARE_RELIC":
-                if self.parser["relics"][1] == "Old Coin": # this can break if N'loth is involved
+                if self.parser._data["relics"][1] == "Old Coin": # this can break if N'loth is involved
                     base += 300
 
         return base
@@ -251,7 +251,7 @@ class NeowBonus:
             for x in self.mod_data["cardsUpgraded"]:
                 index = cards.index(x)
                 cards.insert(index, f"{x}+1")
-        for x in self.parser[self.parser.prefix + "card_choices"]:
+        for x in self.parser._data[self.parser.prefix + "card_choices"]:
             if x["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     cards.append(x["picked"])
@@ -888,10 +888,10 @@ class RelicData:
         except KeyError: # no stats for these
             return []
         stats = None
-        if "basemod:mod_saves" in self.parser:
-            stats = self.parser["basemod:mod_saves"].get(f"stats_{self._relic}")
-        elif "relic_stats" in self.parser:
-            stats = self.parser["relic_stats"].get(self._relic)
+        if "basemod:mod_saves" in self.parser._data:
+            stats = self.parser._data["basemod:mod_saves"].get(f"stats_{self._relic}")
+        elif "relic_stats" in self.parser._data:
+            stats = self.parser._data["relic_stats"].get(self._relic)
         if stats is None:
             return []
 
@@ -1296,7 +1296,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             case (None, None):
                 if floor < 50: # kind of a hack for the first two acts
                     cls = BossChest
-                elif len(parser[prefix + "max_hp_per_floor"]) < floor:
+                elif len(parser._data[prefix + "max_hp_per_floor"]) < floor:
                     cls = Victory
                 else:
                     cls = Act4Transition
