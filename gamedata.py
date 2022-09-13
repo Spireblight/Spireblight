@@ -357,7 +357,7 @@ class NeowBonus:
     def bonus_BOSS_RELIC(self):
         if self.mod_data is not None:
             return f"swapped our starter relic for {get_relic(self.mod_data['relicsObtained'][0])}"
-        return f"swapped our starter relic for {get_relic(self.parser['relics'][0])}" # N'loth can mess with this
+        return f"swapped our starter relic for {get_relic(self.parser._data['relics'][0])}" # N'loth can mess with this
 
     # more Neow mod
 
@@ -990,48 +990,48 @@ class NodeData:
         self = cls(*extra)
         self._floor = floor
         try:
-            self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 1]
-            self._curhp = parser[prefix + "current_hp_per_floor"][floor - 1]
-            self._gold = parser[prefix + "gold_per_floor"][floor - 1]
-            if "potion_use_per_floor" in parser: # run file
-                self._usedpotions.extend(get_potion(x) for x in parser["potion_use_per_floor"][floor - 1])
-            elif "PotionUseLog" in parser.get("basemod:mod_saves", ()): # savefile
-                self._usedpotions.extend(get_potion(x) for x in parser["basemod:mod_saves"]["PotionUseLog"][floor - 1])
+            self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 1]
+            self._curhp = parser._data[prefix + "current_hp_per_floor"][floor - 1]
+            self._gold = parser._data[prefix + "gold_per_floor"][floor - 1]
+            if "potion_use_per_floor" in parser._data: # run file
+                self._usedpotions.extend(get_potion(x) for x in parser._data["potion_use_per_floor"][floor - 1])
+            elif "PotionUseLog" in parser._data.get("basemod:mod_saves", ()): # savefile
+                self._usedpotions.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["PotionUseLog"][floor - 1])
         except IndexError:
             try:
-                self._maxhp = parser[prefix + "max_hp_per_floor"][floor - 2]
-                self._curhp = parser[prefix + "current_hp_per_floor"][floor - 2]
-                self._gold = parser[prefix + "gold_per_floor"][floor - 2]
+                self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 2]
+                self._curhp = parser._data[prefix + "current_hp_per_floor"][floor - 2]
+                self._gold = parser._data[prefix + "gold_per_floor"][floor - 2]
             except IndexError:
                 pass
 
-        if "basemod:mod_saves" in parser:
+        if "basemod:mod_saves" in parser._data:
             try:
-                self._discarded.extend(get_potion(x) for x in parser["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
+                self._discarded.extend(get_potion(x) for x in parser._data["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
             except IndexError:
                 pass
         else:
             try:
-                self._discarded.extend(get_potion(x) for x in parser.get("potion_discard_per_floor", ())[floor - 1])
+                self._discarded.extend(get_potion(x) for x in parser._data.get("potion_discard_per_floor", ())[floor - 1])
             except IndexError:
                 pass
 
-        for cards in parser[prefix + "card_choices"]:
+        for cards in parser._data[prefix + "card_choices"]:
             if cards["floor"] == floor and cards not in self._cards:
                 self._cards.append(cards)
 
-        for relic in parser[prefix + "relics_obtained"]:
+        for relic in parser._data[prefix + "relics_obtained"]:
             if relic["floor"] == floor:
                 self._relics.append(get_relic(relic["key"]))
 
-        for potion in parser[prefix + "potions_obtained"]:
+        for potion in parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == floor:
                 self._potions.append(get_potion(potion["key"]))
 
-        if "basemod:mod_saves" in parser:
-            skipped = parser["basemod:mod_saves"].get("RewardsSkippedLog")
+        if "basemod:mod_saves" in parser._data:
+            skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
         else:
-            skipped = parser.get("rewards_skipped")
+            skipped = parser._data.get("rewards_skipped")
 
         if skipped:
             for choice in skipped:
@@ -1229,7 +1229,7 @@ class NodeData:
 def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
     """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
     prefix = parser.prefix
-    on_map = iter(parser[prefix + "path_taken"])
+    on_map = iter(parser._data[prefix + "path_taken"])
     # maybe_cached will not be None if this is a savefile we're iterating through
     # which means we already know previous floors, so just use that.
     # to be safe, regenerate the last floor, since it might have changed
@@ -1239,10 +1239,10 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         maybe_cached.pop()
     nodes = []
     error = False
-    taken_len = len([x for x in parser[prefix + "path_taken"] if x is not None])
-    actual_len = len(parser[prefix + "path_per_floor"])
+    taken_len = len([x for x in parser._data[prefix + "path_taken"] if x is not None])
+    actual_len = len(parser._data[prefix + "path_per_floor"])
     last_changed = 0
-    for floor, actual in enumerate(parser[prefix + "path_per_floor"], 1):
+    for floor, actual in enumerate(parser._data[prefix + "path_per_floor"], 1):
         iterate = True
         # Slay the Streamer boss pick
         if taken_len != actual_len and actual == "T" and floor == last_changed + 10:
@@ -1328,7 +1328,7 @@ class EncounterBase(NodeData):
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         prefix = parser.prefix
-        for damage in parser[prefix + "damage_taken"]:
+        for damage in parser._data[prefix + "damage_taken"]:
             if damage["floor"] == floor:
                 break
         else:
@@ -1395,14 +1395,14 @@ class Treasure(NodeData):
     def from_parser(cls, parser, floor: int, *extra):
         has_blue_key = False
         relic = ""
-        d = parser.get("basemod:mod_saves", ())
+        d = parser._data.get("basemod:mod_saves", ())
         if "BlueKeyRelicSkippedLog" in d:
             if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
                 relic = get_relic(d["BlueKeyRelicSkippedLog"]["relicID"])
                 has_blue_key = True
-        elif "blue_key_relic_skipped_log" in parser:
-            if parser["blue_key_relic_skipped_log"]["floor"] == floor:
-                relic = get_relic(parser["blue_key_relic_skipped_log"]["relicID"])
+        elif "blue_key_relic_skipped_log" in parser._data:
+            if parser._data["blue_key_relic_skipped_log"]["floor"] == floor:
+                relic = get_relic(parser._data["blue_key_relic_skipped_log"]["relicID"])
                 has_blue_key = True
         return super().from_parser(parser, floor, has_blue_key, relic, *extra)
 
@@ -1438,9 +1438,9 @@ class EliteEncounter(EncounterBase):
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         if "basemod:mod_saves" in parser:
-            key_floor = parser["basemod:mod_saves"].get("greenKeyTakenLog")
+            key_floor = parser._data["basemod:mod_saves"].get("greenKeyTakenLog")
         else:
-            key_floor = parser.get("green_key_taken_log")
+            key_floor = parser._data.get("green_key_taken_log")
         has_key = (key_floor is not None and int(key_floor) == floor)
         return super().from_parser(parser, floor, has_key, *extra)
 
@@ -1458,7 +1458,7 @@ class EventNode:
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra) -> NodeData:
         events = []
-        for event in parser[parser.prefix + "event_choices"]:
+        for event in parser._data[parser.prefix + "event_choices"]:
             if event["floor"] == floor:
                 events.append(event)
         if not events:
@@ -1471,7 +1471,7 @@ class EventNode:
                     if a != b: # I'm not quite sure how this happens, but sometimes an event will be in twice?
                         raise ValueError("could not figure out what to do with this")
         event = events[0]
-        for dmg in parser[parser.prefix + "damage_taken"]:
+        for dmg in parser._data[parser.prefix + "damage_taken"]:
             if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
                 return EventFight.from_parser(parser, floor, event, *extra)
         return Event.from_parser(parser, floor, event, *extra)
@@ -1620,7 +1620,7 @@ class Colosseum(Event):
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         dmg = []
-        for damage in parser[parser.prefix + "damage_taken"]:
+        for damage in parser._data[parser.prefix + "damage_taken"]:
             if damage["floor"] == floor:
                 dmg.append(damage)
         return super(Event, cls).from_parser(parser, floor, dmg, *extra)
@@ -1670,9 +1670,9 @@ class Merchant(NodeData):
         bought = {"cards": [], "relics": [], "potions": []}
         purged = None
         contents = None
-        for i, purchased in enumerate(parser[parser.prefix + "item_purchase_floors"]):
+        for i, purchased in enumerate(parser._data[parser.prefix + "item_purchase_floors"]):
             if purchased == floor:
-                value = parser[parser.prefix + "items_purchased"][i]
+                value = parser._data[parser.prefix + "items_purchased"][i]
                 card = get_card(value, "")
                 relic = get_relic(value, "")
                 potion = get_potion(value, "")
@@ -1684,17 +1684,17 @@ class Merchant(NodeData):
                     bought["potions"].append(potion)
 
         try:
-            index = parser[parser.prefix + "items_purged_floors"].index(floor)
+            index = parser._data[parser.prefix + "items_purged_floors"].index(floor)
         except ValueError:
             pass
         else:
-            purged = get_card(parser[parser.prefix + "items_purged"][index])
+            purged = get_card(parser._data[parser.prefix + "items_purged"][index])
 
         d = ()
-        if "shop_contents" in parser:
-            d = parser["shop_contents"]
-        elif "basemod:mod_saves" in parser:
-            d = parser["basemod:mod_saves"].get("ShopContentsLog", ())
+        if "shop_contents" in parser._data:
+            d = parser._data["shop_contents"]
+        elif "basemod:mod_saves" in parser._data:
+            d = parser._data["basemod:mod_saves"].get("ShopContentsLog", ())
         if d:
             contents = {"relics": [], "cards": [], "potions": []}
         for data in d:
@@ -1788,7 +1788,7 @@ class Campfire(NodeData):
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         key = None
         data = None
-        for rest in parser[parser.prefix + "campfire_choices"]:
+        for rest in parser._data[parser.prefix + "campfire_choices"]:
             if rest["floor"] == floor:
                 key = rest["key"]
                 data = rest.get("data")
@@ -1866,8 +1866,8 @@ class Victory(NodeData):
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
-        score = parser.get("score", 0)
-        breakdown = parser.get("score_breakdown", [])
+        score = parser._data.get("score", 0)
+        breakdown = parser._data.get("score_breakdown", [])
         return super().from_parser(parser, floor, score, breakdown, *extra)
 
     @property
