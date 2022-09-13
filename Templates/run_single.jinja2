@@ -116,7 +116,7 @@
     {% include "partials/run_header.jinja2" %}
 
     <section class="section">
-      <div class="columns is-marginless">
+      <div id="run-info" class="columns is-marginless">
         <div class="column message neow is-paddingless is-marginless box">
           <div class="message-header">
             <p id="neow-header">Neow bonus</p>
@@ -180,7 +180,7 @@
     </section>
 
     <section class="section">
-      <div class="act">
+      <div class="act act-1">
         {% for node in run.path %}
           <img src="/static/icons/{{ node.map_icon }}"
             title="Floor {{ node.floor }}"
@@ -188,7 +188,11 @@
           {# This is unfortunate logic, but it does the thing. #}
           {% if node.end_of_act %}
       </div>
-      <div class="act">
+      {# This hilariously makes the acts to be "2.0", "3.0" and
+      "4.0588235294117645", due to how Act 3 has extra rooms. It's used to add
+      classes to the acts so we can add labels for mobile. Please scream at
+      Olivia to fix this. #}
+      <div class="act act-{{ ( loop.index/17|int ) + 1 }}">
           {% endif %}
         {% endfor %}
       </div>
@@ -212,6 +216,10 @@
          );
         </script>
 
+        <p class="chart-disclaimer has-text-centered m-4 is-size-7">
+          This graph is not excellent on mobile yet. View it on desktop for a
+          better and more interactive experience.
+        </p>
       </div>
     </section>
     {% else %}
