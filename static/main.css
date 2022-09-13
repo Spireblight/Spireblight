@@ -26,6 +26,10 @@ section.section {
   margin: 0 0.5em;
 }
 
+#navbar i {
+  margin-right: 0.75em;
+}
+
 .cards {
   display: flex;
   align-items: center;
@@ -34,7 +38,6 @@ section.section {
 }
 .card {
   font-family: 'Kreon', serif;
-  font-size: 25px;
   display: inline-block;
   width: 30%;
   vertical-align: middle;
@@ -44,15 +47,45 @@ section.section {
   margin-left: 0.2em;
 }
 
+@media only screen and (min-width: 768px) {
+  .card {
+    font-size: 25px;
+    display: inline-block;
+    width: 30%;
+    vertical-align: middle;
+    margin: 0.2em 0.4em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .card {
+    font-size: 25px;
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    margin: 0.2em 0.4em;
+  }
+}
+
+/* @media only screen and (min-width: 960px) { */
+/*   #grid { */
+/*     display: grid; */
+/*     grid-template-columns: 11.25rem 1fr 11.25rem; */
+/*   } */
+
+/*   .menu { */
+/*     padding: 1em 0.5em; */
+/*     background-color: #fafafa; */
+/*   } */
+/* } */
+/* @media only screen and (max-width: 959px) { */
 #grid {
-  display: grid;
-  grid-template-columns: 11.25rem 1fr 11.25rem;
+  display: block;
 }
 
 .menu {
-  padding: 1em 0.5em;
-  background-color: #fafafa;
+  display: none;
 }
+/* } */
 
 #command-list {
   flex-wrap: wrap;
@@ -77,20 +110,72 @@ section.section {
   margin-top: -0.5em;
 }
 
-.run-header {
-  display: flex !important;
-  overflow: hidden;
+@media only screen and (min-width: 960px) {
+  .run-header {
+    display: flex !important;
+    overflow: hidden;
+  }
+  .run-header .avatar {
+    height: 86px;
+    width: 130px;
+    margin-right: -50px;
+  }
+  .run-header .avatar img {
+    height: 100%;
+    width: 100%;
+    object-fit: none;
+  }
+  /* TODO(olivia): Probably consolidate with .command-title above */
+  .run-title {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .run-title .title {
+    display: block;
+    flex-grow: 1;
+    margin: 0 1rem !important;
+  }
+  .run-title i {
+    margin: 0 0.5rem;
+    font-size: 2em;
+  }
+  .run-title .score {
+    margin-right: 1em;
+    text-align: right;
+  }
+  .run-title .score .points {
+    font-size: 1.5em;
+  }
+  .run-title .score .extra {
+    display: block;
+  }
+  .run-title .extra {
+    font-size: 0.75em;
+  }
 }
-.run-header .avatar {
-  height: 86px;
-  width: 130px;
-  margin-right: -50px;
+
+@media only screen and (max-width: 959px) {
+  .run-header {
+    display: flex !important;
+    overflow: hidden;
+  }
+  .run-header .avatar {
+    height: 86px;
+    width: 130px;
+    margin-right: -40px;
+  }
+  .run-header .avatar img {
+    height: 100%;
+    width: 100%;
+    object-fit: none;
+  }
+  .run-header .title {
+    font-size: 1em;
+    margin-bottom: 0.5rem !important;
+  }
 }
-.run-header .avatar img {
-  height: 100%;
-  width: 100%;
-  object-fit: none;
-}
+
 .run-header .avatar img.ironclad {object-position: -131px 0px;}
 .run-header .avatar img.silent {object-position: -102px 0px;}
 .run-header .avatar img.defect {object-position: -94px 0px;}
@@ -104,42 +189,56 @@ section.section {
 .run-header .avatar img.defect.loss {object-position: -333px -405px;}
 .run-header .avatar img.watcher.loss {object-position: -346px -412px;}
 
-/* TODO(olivia): Probably consolidate with .command-title above */
-.run-title {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-}
-.run-title .title {
-  display: block;
-  flex-grow: 1;
-  margin: 0 1rem !important;
-}
-.run-title i {
-  margin: 0 0.5rem;
-  font-size: 2em;
-}
-.run-title .score {
-  margin-right: 1em;
-  text-align: right;
-}
-.run-title .score .points {
-  font-size: 1.5em;
-}
-.run-title .score .extra {
-  display: block;
-}
-.run-title .extra {
-  font-size: 0.75em;
+
+.act img {
+  cursor: pointer;
 }
 
-.act {
-  display: flex;
+@media only screen and (min-width: 768px) {
+  .act {
+    display: flex;
+  }
+  .act img {
+    width: 5%;
+    aspect-ratio: 1/1;
+  }
 }
-.act img {
-  width: 5%;
-  aspect-ratio: 1/1;
-  cursor: pointer;
+@media only screen and (max-width: 767px) {
+  .act:before {
+    margin-top: 1.75rem;
+    display: block;
+  }
+  /* See the HTML in run_single.jinja2 for some more context. */
+  .act-1:before {content: "Act 1";}
+  .act-2\.0:before {content: "Act 2";}
+  .act-3\.0:before {content: "Act 3";}
+  .act-4\.0588235294117645:before {content: "Act 4";}
+}
+
+@media only screen and (max-width: 767px) {
+  #run-info {
+    display: flex;
+    flex-direction: column;
+  }
+  #run-info .column {
+    margin-bottom: 1.25rem !important;
+  }
+
+  #run-info .neow {order: 3}
+  #run-info .keys {order: 1}
+  #run-info .relics {order: 2}
+
+  #run-info .hint {
+    display: none;
+  }
+  #run-info .keys {
+    height: 100px;
+  }
+  #neow-body-original p:after {
+    content: "Hint: You can click on relics, floors, cards, and the keys.";
+    display: block;
+    margin-top: 1rem;
+  }
 }
 
 .relics {
@@ -155,9 +254,11 @@ section.section {
   cursor: pointer;
 }
 
-.neow .message-body, .relics-message .message-body {
-  min-height: 250px;
-  max-height: 250px;
+@media only screen and (min-width: 768px) {
+  .neow .message-body, .relics-message .message-body {
+    min-height: 250px;
+    max-height: 250px;
+  }
 }
 
 .hint {
@@ -314,4 +415,10 @@ nav.breadcrumb {
 
 .button .fa-discord {
   margin-right: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .chart-disclaimer {
+    display: none;
+  }
 }
