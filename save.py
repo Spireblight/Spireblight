@@ -208,7 +208,7 @@ async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
     context = {
         "run": _savefile,
-        "keys": {key: floor for key, floor in parser.keys},
+        "keys": {key: floor for key, floor in _savefile.keys},
         "autorefresh": True,
         "redirect": redirect
     }
