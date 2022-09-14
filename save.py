@@ -206,9 +206,13 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
+    keys = {}
+    if _savefile.in_game:
+        for key, floor in _savefile.keys:
+            keys[key] = floor
     context = {
         "run": _savefile,
-        "keys": {key: floor for key, floor in _savefile.keys if _savefile},
+        "keys": keys,
         "autorefresh": True,
         "redirect": redirect,
     }
