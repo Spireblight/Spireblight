@@ -680,13 +680,15 @@ async def bluekey(ctx: ContextType, save: Savefile):
         await ctx.send("We do not have the Sapphire key.")
         return
 
-    if "BlueKeyRelicSkippedLog" not in save._data["basemod:mod_saves"]:
-        await ctx.send("RunHistoryPlus is not running; cannot get data.")
-        return
+    for node in save.path:
+        try:
+            if node.blue_key:
+                await ctx.send(f"We skipped {node.key_relic} on floor {node.floor} for the Sapphire key.")
+                return
+        except AttributeError:
+            continue
 
-    d = save._data["basemod:mod_saves"]["BlueKeyRelicSkippedLog"]
-
-    await ctx.send(f"We skipped {d['relicID']} on floor {d['floor']} for the Sapphire key.")
+    await ctx.send("RunHistoryPlus is not running; cannot get data.")
 
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, save: Savefile):
