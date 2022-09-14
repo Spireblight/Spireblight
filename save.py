@@ -208,9 +208,9 @@ async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
     context = {
         "run": _savefile,
-        "keys": {key: floor for key, floor in _savefile.keys},
+        "keys": {key: floor for key, floor in _savefile.keys if _savefile},
         "autorefresh": True,
-        "redirect": redirect
+        "redirect": redirect,
     }
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
