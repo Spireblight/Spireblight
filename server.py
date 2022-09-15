@@ -713,7 +713,7 @@ async def run_playtime(ctx: ContextType, save: Savefile):
     """Display the current playtime for the run."""
     minutes, seconds = divmod(save.playtime, 60)
     hours, minutes = divmod(minutes, 60)
-    await ctx.send(f"This run has been going on for {hours}:{minutes}:{seconds}")
+    await ctx.send(f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}")
 
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, save: Savefile):
