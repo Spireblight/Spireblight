@@ -665,6 +665,10 @@ class FileParser:
         return self._data["ascension_level"]
 
     @property
+    def playtime(self) -> int:
+        return self._data[self.prefix + "playtime"]
+
+    @property
     def keys(self) -> Generator[tuple[str, str | int], None, None]:
         if "basemod:mod_saves" in self._data: # savefile
             if self._data["has_ruby_key"]:

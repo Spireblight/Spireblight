@@ -708,6 +708,13 @@ async def is_seeded(ctx: ContextType, save: Savefile):
     else:
         await ctx.send("This run is not seeded! Everything you're seeing is unplanned!")
 
+@with_savefile("playtime", "time", "played")
+async def run_playtime(ctx: ContextType, save: Savefile):
+    """Display the current playtime for the run."""
+    minutes, seconds = divmod(save.playtime, 60)
+    hours, minutes = divmod(minutes, 60)
+    await ctx.send(f"This run has been going on for {hours}:{minutes}:{seconds}")
+
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, save: Savefile):
     """Display the current shop removal cost."""
@@ -779,7 +786,7 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
     regular, elites, shops = save.rare_chance
     await ctx.send(
-        f"The rough likelihood of seeing a rare card is {regular:.2%} "
+        f"The current chance of seeing a rare card is {regular:.2%} "
         f"in normal fight card rewards, {elites:.2%} in elite fight "
         f"card rewards, and {shops:.2%} in shops."
     )
