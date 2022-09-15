@@ -4,11 +4,10 @@ import os
 from events import add_listener
 
 __all__ = [
-    "get_relic", "get_all_relics", "get_relic_stats",
-    "get_card", "get_card_metadata", "get_all_cards",
-    "get_potion", "get_all_potions",
-    "get_event", "get_all_events",
-    "get_enemy", "get_all_enemies",
+    "get_relic", "get_relic_stats",
+    "get_card", "get_card_metadata",
+    "get_potion",
+    "get_event",
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -16,16 +15,10 @@ _cache: dict[str, dict[str, str]] = {}
 def _get_name(x: str, d: str, default: str) -> str:
     return _cache[d].get(x, {}).get("NAME", default)
 
-def _get_all(d: str) -> dict[str, str]:
-    return {b["NAME"]: a for a, b in _cache[d].items()}
-
 def get_relic(name: str, default: str | None = None) -> str:
     if default is None:
         default = f"<Unknown Relic {name}>"
     return _get_name(name, "relics", default)
-
-def get_all_relics() -> dict[str, str]:
-    return _get_all("relics")
 
 def get_card(name: str, default: str | None = None) -> str:
     if name == "Singing Bowl":
@@ -41,32 +34,15 @@ def get_card(name: str, default: str | None = None) -> str:
 def get_card_metadata(name: str) -> dict[str, str]:
     return _cache["cards"][name.partition("+")[0]]
 
-def get_all_cards() -> dict[str, str]:
-    return _get_all("cards")
-
 def get_potion(name: str, default: str | None = None) -> str:
     if default is None:
         default = f"<Unknown Potion {name}>"
     return _get_name(name, "potions", default)
 
-def get_all_potions() -> dict[str, str]:
-    return _get_all("potions")
-
 def get_event(name: str, default: str | None = None) -> str:
     if default is None:
         default = f"<Unknown Event {name}>"
     return _get_name(name, "events", default)
-
-def get_all_events() -> dict[str, str]:
-    return _get_all("events")
-
-def get_enemy(name: str, default: str | None = None) -> str:
-    if default is None:
-        default = f"<Unknown Enemy {name}>"
-    return _get_name(name, "monsters", default)
-
-def get_all_enemies() -> dict[str, str]:
-    return _get_all("monsters")
 
 def get_relic_stats(name: str) -> list[str]:
     return _cache["relic_stats"][name]["TEXT"]
