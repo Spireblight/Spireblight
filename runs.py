@@ -11,7 +11,6 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
-from nameinternal import get_all_relics, get_all_cards, get_all_events, get_relic, get_event
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -238,15 +237,6 @@ async def run_chart(req: Request) -> Response:
         raise HTTPNotFound()
 
     return parser.graph(req)
-
-#@router.get("/compare")
-@aiohttp_jinja2.template("runs_compare.jinja2")
-async def compare_choose(req: Request):
-    return {
-        "characters": ("Ironclad", "Silent", "Defect", "Watcher"),
-        "relics": get_all_relics(),
-        "cards": get_all_cards(),
-    }
 
 #@router.get("/compare/view")
 @aiohttp_jinja2.template("compare_single.jinja2")
