@@ -337,7 +337,7 @@ nav.breadcrumb {
 .summary .box .kills .kill {
   margin-bottom: -1.5rem;
 }
-.summary .box .deaths {
+.summary .box .losses {
   font-weight: bold;
   color: #dbdbdb;
   text-shadow: 2px 4px 2px rgba(0,0,0, 0.5);
