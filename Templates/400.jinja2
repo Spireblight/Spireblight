@@ -49,8 +49,17 @@
       <div class="column is-marginless">
         <div class="data">
           {{ days_left }}
-        </div class="data">
+        </div>
         <div>days left</div>
+      </div>
+      <div class="column is-marginless">
+        {% if diff.current < 0 %}
+          <div class="data">{{ diff.current * -1 }}</div>
+          <div>kills behind</div>
+        {% else %}
+          <div class="data">{{ diff.current }}</div>
+          <div>kills ahead</div>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -79,7 +88,40 @@
         </div>
       </div>
       <div class="column">
-        <div class="box" style="height: 100%;">
+        <div class="message ahead-behind">
+          <div class="message-header">
+            <div>
+              How does the
+              <i>{% if diff.current < 0%}behind{% else %}ahead{% endif %}</i>
+              calculation work?
+            </div>
+          </div>
+          <div class="message-body">
+            <p class="block">
+              It approximates how many kills we should have based on what day of
+              the year it is. Today is day {{ diff.day_of_year }} of the year, so
+              we're {{ diff.percent_of_year }}% through the year and should
+              therefore have done {{ diff.approximated }} kills by today.
+
+              {% if diff.current == 0 %}
+                We're currently exactly on the curve!
+                <img alt="baalorSmug" src="/static/misc/baalorsmug.webp"/>
+              {% elif diff.current < 0 %}
+                Since we haven't, we're currently behind the curve.
+              {% else %}
+                Since we have, we're currently ahead of the curve.
+              {% endif %}
+            </p>
+            {% if total < 400 %}
+              <p class="block">
+                {{ kills_left }} kills left and {{ days_left }} days to go!
+              </p>
+            {% endif %}
+            <p class="block">The full formula is:</p>
+            <pre class="block">total_kills - math.floor(400 * ((365 - day_of_year) / 365.0))</pre>
+          </div>
+        </div>
+        <div class="box" style="flex-grow: 1;">
           <div class="placeholder">
             <div class="placeholder-data">
               There should be more graphs and data here, right? Join the <a href="/discord">dev Discord server</a> and go

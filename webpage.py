@@ -1,4 +1,5 @@
 import datetime
+import math
 import time
 import json
 import os
@@ -95,11 +96,28 @@ async def challenge(req: web.Request):
         characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
 
     left = datetime.date(2022, 12, 31) - datetime.date.today()
+    days_left = left.days
+
+    # By checking the percentage of the year we've done, we can calculate what
+    # the "assumed" amount of wins for today is, and therefore also if we're
+    # ahead or behind.
+    total = sum(x.kills for x in characters)
+    approximated = math.floor(400 * ((365 - days_left) / 365.0))
+    diff = total - approximated
+    day_of_year = 365 - days_left
+
     return {
         "rotating_streak": rotating_streak,
         "characters": characters,
-        "total": sum(x.kills for x in characters),
-        "days_left": left.days,
+        "total": total,
+        "kills_left": 400 - total,
+        "diff": {
+            "current": diff,
+            "approximated": approximated,
+            "day_of_year": day_of_year,
+            "percent_of_year": int(math.floor(100 * (day_of_year / 365))),
+        },
+        "days_left": days_left,
     }
 
 @router.get("/discord")
