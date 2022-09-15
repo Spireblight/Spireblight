@@ -426,3 +426,7 @@ nav.breadcrumb {
     display: none;
   }
 }
+
+.ahead-behind img {
+  height: 1.5em;
+}
