@@ -19,8 +19,8 @@
               <div class="kill">{{ character.kills }}</div>
               <div class="is-size-7 has-text-centered">kills</div>
             </div>
-            <div class="deaths" title="{{ character.deaths }} losses with {{ character.name }}">
-              {{ character.deaths }} deaths, {{ character.streak }} streak
+            <div class="losses" title="{{ character.losses }} losses with {{ character.name }}">
+              {{ character.losses }} losses, {{ character.streak }} streak
             </div>
           </div>
         </div>
@@ -36,11 +36,11 @@
       </div>
       <div class="column is-marginless">
         <div class="data">
-          {{ streak }}
+          {{ rotating_streak }}
         </div>
         <div>
           current streak
-          {% if streak >= 20 %}
+          {% if rotating_streak >= 20 %}
             <br/>
             (PB <i>and</i> WR!!)
           {% endif %}

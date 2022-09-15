@@ -74,10 +74,10 @@ async def main_page(req: web.Request, _cache={"video_id": config.default_video_i
     return _cache
 
 class ChallengeCharacter:
-    def __init__(self, name: str, kills: int, deaths: int, streak: int):
+    def __init__(self, name: str, kills: int, losses: int, streak: int):
         self.name = name
         self.kills = kills
-        self.deaths = deaths
+        self.losses = losses
         self.streak = streak
 
 @router.get("/400")
@@ -88,7 +88,7 @@ async def challenge(req: web.Request):
     with getfile("losses", "r") as f:
         losses = [int(x) for x in f.read().split()]
     with getfile("streak", "r") as f:
-        rot, *streak = [int(x) for x in f.read().split()]
+        rotating_streak, *streak = [int(x) for x in f.read().split()]
 
     characters = []
     for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
@@ -96,7 +96,7 @@ async def challenge(req: web.Request):
 
     left = datetime.date(2022, 12, 31) - datetime.date.today()
     return {
-        "streak": rot,
+        "rotating_streak": rotating_streak,
         "characters": characters,
         "total": sum(x.kills for x in characters),
         "days_left": left.days,
