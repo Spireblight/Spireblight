@@ -186,7 +186,7 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
     def inner(func, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
-        wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
+        #wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
             tcmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
             if TConn is None:
