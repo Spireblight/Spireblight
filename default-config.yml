@@ -38,8 +38,9 @@ discord:
   # messages to other servers.
   server_id: <channel id not set>
 
-  # Which user role is considered a moderator.
-  moderator_role: <moderator role not set>
+  # Which user role is considered a moderator. This should be the numberical ID
+  # of the role, and the default of 0 will make it error out.
+  moderator_role: 0
 
 youtube:
   # The API key to make Youtube calls.
