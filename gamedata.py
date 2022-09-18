@@ -13,7 +13,7 @@ from mpld3 import fig_to_html
 from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats
 from logger import logger
 
-import config
+from config import config
 
 __all__ = ["FileParser"]
 
@@ -755,7 +755,7 @@ class FileParser:
                 for name, ctype, count in content_order[char][rarity]:
                     format_map = {
                         "color": ' style="color:#146214"' if "+" in name else "", # make it green when upgraded
-                        "website": config.website_url,
+                        "website": config.server.url,
                         "character": char if char != "Special" else "Colorless",
                         "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
                         "banner": rarity or "Common",

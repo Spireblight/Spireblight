@@ -2,7 +2,7 @@ from discord.ext.commands import Command, Context
 
 from logger import logger
 
-import config
+from config import config
 
 __all__ = ["DiscordCommand"]
 
@@ -21,13 +21,13 @@ class DiscordCommand(Command):
             return
         if self.flag:
             for guild in context.bot.guilds:
-                if guild.id == config.discord_servid:
+                if guild.id == config.discord.server_id:
                     break
             else:
                 return
-            mod_role = guild.get_role(config.moderator_role)
+            mod_role = guild.get_role(config.discord.moderator_role)
             if self.flag and (
-                (context.author().id not in config.owners) and
+                (context.author().id not in config.baalorbot.owners) and
                 ("m" in self.flag and mod_role not in context.author().roles)
             ):
                 return
