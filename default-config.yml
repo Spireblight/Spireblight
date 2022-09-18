@@ -102,5 +102,5 @@ server:
 # Where the gamedata is located on your computer. This is used by the client to
 # figure out where to look for run files and autosaves.
 spire:
-  # TODO(olivia): Probably default to something Windows specific?
-  steamdir: ~/.steam/steam/steamapps/common/SlayTheSpire
+  # This needs single quotes because Windows uses backslashes.
+  steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
