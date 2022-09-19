@@ -834,9 +834,12 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
 @with_savefile("bottled")
 async def bottled_cards(ctx: ContextType, save: SaveFile):
-    """List all bottled cards"""
+    """List all bottled cards."""
     cards = save.bottled_cards
-    await ctx.send(", ".join(cards) if len(cards) > 0 else "We do not have any bottled cards.")
+    if len(cards) > 0:
+        await ctx.send(", ".join(cards))
+    else:
+        await ctx.send("We do not have any bottled cards.")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):

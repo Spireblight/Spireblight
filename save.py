@@ -10,6 +10,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
+from nameinternal import get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser
@@ -17,7 +18,6 @@ from webpage import router
 from logger import logger
 from utils import get_req_data
 from runs import get_latest_run
-from nameinternal import get_card
 
 __all__ = ["get_savefile", "Savefile"]
 
@@ -199,19 +199,17 @@ class Savefile(FileParser):
     @property
     def bottled_cards(self) -> str:
         cards = []
-        if self._data["bottled_flame"]:
-            cards.append(self.__get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"]))
-        if self._data["bottled_lightning"]:
-            cards.append(self.__get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"]))
-        if self._data["bottled_tornado"]:
-            cards.append(self.__get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"]))
-        return cards    
+        if self._data("bottled_flame"):
+            cards.append("🔥 " + self._get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"]))
+        if self._data("bottled_lightning"):
+            cards.append("⚡ " + self._get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"]))
+        if self._data("bottled_tornado"):
+            cards.append("🌪️ " + self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"]))
+        return cards
 
-    def __get_card_string(self, card: str, upgrades: int) -> str:
-        if upgrades == 1:
-            card += "+"
-        elif upgrades > 1:
-            card += "+" + str(upgrades)
+    def _get_card_string(self, card: str, upgrades: int) -> str:
+        if upgrades:
+            card = f"{card}+{upgrades}"
         return get_card(card)
 
 _savefile = Savefile()
