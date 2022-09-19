@@ -26,7 +26,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
 
-from nameinternal import get_relic
+from nameinternal import get_relic, get_card
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -831,6 +831,12 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
         i += 1
 
     await ctx.send(" ".join(msg))
+
+@with_savefile("bottled")
+async def bottled_cards(ctx: ContextType, save: SaveFile):
+    """List all bottled cards"""
+    cards = save.bottled_cards
+    await ctx.send(", ".join(cards) if len(cards) > 0 else "We do not have any bottled cards.")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
