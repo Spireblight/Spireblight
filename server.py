@@ -691,8 +691,18 @@ async def stream_uptime(ctx: ContextType):
 @command("playing", "nowplaying", "spotify")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
+    if not config.is_debug and not TConn.live_channels[config.channel]:
+        # just in case
+        TConn.live_channels[config.channel] = live = bool(await TConn.fetch_streams(user_logins=[config.channel]))
+        if not live:
+            await ctx.send("That's kinda creepy, not gonna lie...")
+            return
+
     j = await TConn.spotify_call()
-    await ctx.send(f"We are listening to {j['item']['name']} by {', '.join(x['name'] for x in j['item']['artists'])}.")
+    if j["is_playing"]:
+        await ctx.send(f"We are listening to {j['item']['name']} by {', '.join(x['name'] for x in j['item']['artists'])}.")
+    else:
+        await ctx.send("We are not currently listening to anything.")
 
 @with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
 async def bluekey(ctx: ContextType, save: Savefile):
