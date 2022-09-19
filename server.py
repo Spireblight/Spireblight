@@ -832,8 +832,8 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
     await ctx.send(" ".join(msg))
 
-@with_savefile("bottle", "bottled")
-async def bottled_cards(ctx: ContextType, save: SaveFile):
+@with_savefile("bottle", "bottled", "bottledcards", "bottledcard")
+async def bottled_cards(ctx: ContextType, save: Savefile):
     """List all bottled cards."""
     emoji_dict = {
         "Bottled Flame": "\N{FIRE}",

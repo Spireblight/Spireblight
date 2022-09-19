@@ -1,5 +1,4 @@
-from collections import namedtuple
-from typing import Any, NamedTuple
+from typing import Any
 
 import datetime
 import base64
@@ -208,7 +207,8 @@ class Savefile(FileParser):
             bottles.append(BottleRelic("Bottled Tornado", self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"])))
         return bottles
 
-    def _get_card_string(self, card: str, upgrades: int) -> str:
+    @staticmethod
+    def _get_card_string(card: str, upgrades: int) -> str:
         if upgrades:
             card = f"{card}+{upgrades}"
         return get_card(card)
