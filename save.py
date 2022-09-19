@@ -1,4 +1,5 @@
-from typing import Any
+from collections import namedtuple
+from typing import Any, NamedTuple
 
 import datetime
 import base64
@@ -13,7 +14,7 @@ import aiohttp_jinja2
 from nameinternal import get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
-from gamedata import FileParser
+from gamedata import FileParser, BottleRelic
 from webpage import router
 from logger import logger
 from utils import get_req_data
@@ -197,15 +198,15 @@ class Savefile(FileParser):
         return self._data["boss"]
 
     @property
-    def bottled_cards(self) -> str:
-        cards = []
+    def bottles(self) -> list[BottleRelic]:
+        bottles = []
         if self._data("bottled_flame"):
-            cards.append("🔥 " + self._get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"]))
+            bottles.append(BottleRelic("Bottled Flame", self._get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"])))
         if self._data("bottled_lightning"):
-            cards.append("⚡ " + self._get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"]))
+            bottles.append(BottleRelic("Bottled Lightning", self._get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"])))
         if self._data("bottled_tornado"):
-            cards.append("🌪️ " + self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"]))
-        return cards
+            bottles.append(BottleRelic("Bottled Tornado", self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"])))
+        return bottles
 
     def _get_card_string(self, card: str, upgrades: int) -> str:
         if upgrades:

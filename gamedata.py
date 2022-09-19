@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator, Iterable
+from typing import Any, Generator, Iterable, NamedTuple
 
 import urllib.parse
 import math
@@ -1885,3 +1885,7 @@ class Victory(NodeData):
     @property
     def score_breakdown(self) -> list[str]:
         return self._data
+
+class BottleRelic(NamedTuple):
+    bottle_id: str
+    card: str
