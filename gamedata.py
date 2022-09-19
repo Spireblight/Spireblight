@@ -978,8 +978,8 @@ class NodeData:
         self._relics = []
         self._potions = []
         self._usedpotions = []
-        self._potions_from_entropic = []
         self._potions_from_alchemize = []
+        self._potions_from_entropic = []
         self._discarded = []
         self._cache = {}
 
@@ -1003,16 +1003,16 @@ class NodeData:
                 self._usedpotions.extend(get_potion(x) for x in parser._data["potion_use_per_floor"][floor - 1])
             elif "PotionUseLog" in parser._data.get("basemod:mod_saves", ()): # savefile
                 self._usedpotions.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["PotionUseLog"][floor - 1])
-            
-            if "potions_obtained_entropic_brew" in parser._data: # run file
-                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["potions_obtained_entropic_brew"][floor - 1])
-            elif "potionsObtainedEntropicBrewLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["potionsObtainedEntropicBrewLog"][floor - 1])
 
             if "potions_obtained_alchemize" in parser._data: # run file
                 self._potions_from_alchemize.extend(get_potion(x) for x in parser._data["potions_obtained_alchemize"][floor - 1])
             elif "potionsObtainedAlchemizeLog" in parser._data.get("basemod:mod_saves", ()): # savefile
                 self._potions_from_alchemize.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["potionsObtainedAlchemizeLog"][floor - 1])
+
+            if "potions_obtained_entropic_brew" in parser._data: # run file
+                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["potions_obtained_entropic_brew"][floor - 1])
+            elif "potionsObtainedEntropicBrewLog" in parser._data.get("basemod:mod_saves", ()): # savefile
+                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["potionsObtainedEntropicBrewLog"][floor - 1])
         except IndexError:
             try:
                 self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 2]
@@ -1087,13 +1087,13 @@ class NodeData:
             text.append("Potions used:")
             text.extend(f"- {x}" for x in self.used_potions)
 
-        if self.potions_from_entropic:
-            text.append("Potions obtained from Entropic Brew:")
-            text.extend(f"- {x}" for x in self.potions_from_entropic)
-
         if self.potions_from_alchemize:
             text.append("Potions obtained from Alchemize:")
             text.extend(f"- {x}" for x in self.potions_from_alchemize)
+
+        if self.potions_from_entropic:
+            text.append("Potions obtained from Entropic Brew:")
+            text.extend(f"- {x}" for x in self.potions_from_entropic)
 
         if self.skipped_potions:
             text.append("Potions skipped:")
@@ -1213,13 +1213,7 @@ class NodeData:
         return len(self.relics)
 
     def potion_delta(self) -> int:
-        # Note: this assumes Ascension 11+, and no potion belt.
-        # I'm hoping to use a RunHistoryPlus field, but for now, this is a hack
-        # (some runs will be wrong, but they will be less wrong than otherwise)
-        # Once we keep track of deck per node, just add 1 potion per Alchemize
-        count = len(self.potions)
-        if "Entropic Brew" in self.used_potions:
-            count += 2
+        count = len(self.potions) + len(self.potions_from_alchemize) + len(self.potions_from_entropic)
         return count - len(self.used_potions) - len(self.discarded_potions)
 
     def fights_delta(self) -> int:
