@@ -835,9 +835,17 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 @with_savefile("bottle", "bottled")
 async def bottled_cards(ctx: ContextType, save: SaveFile):
     """List all bottled cards."""
-    cards = save.bottled_cards
-    if len(cards) > 0:
-        await ctx.send(", ".join(cards))
+    emoji_dict = {
+        "Bottled Flame": "\N{FIRE}",
+        "Bottled Lightning": "\N{HIGH VOLTAGE SIGN}",
+        "Bottled Tornado": "\N{CLOUD WITH TORNADO}"
+    }
+    bottles = save.bottles
+    bottle_strings = [str]
+    if bottles:
+        for bottle in bottles:
+            bottle_strings.append(f'{emoji_dict[bottle.bottle_id]} {bottle.card}')
+        await ctx.send(", ".join(bottle_strings))
     else:
         await ctx.send("We do not have any bottled cards.")
 
