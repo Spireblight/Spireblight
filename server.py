@@ -25,6 +25,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound
+from aiohttp import ClientSession
 
 from nameinternal import get_relic
 from sts_profile import get_profile, get_current_profile
@@ -218,6 +219,20 @@ class TwitchConn(TBot):
         super().__init__(*args, **kwargs)
         self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {}
+        self._session: ClientSession | None = None
+
+    async def spotify_call(self):
+        if self._session is None:
+            self._session = ClientSession()
+
+        async with self._session.get(
+            "https://api.spotify.com/v1/me/player/currently-playing",
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {config.spotify_token}",
+                }) as resp:
+            return await resp.json()
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
@@ -672,6 +687,12 @@ async def stream_uptime(ctx: ContextType):
         await ctx.send(f"The stream has been live for {str(td).partition('.')[0]}")
     else:
         await ctx.send("Stream is offline (if this is wrong, the Twitch API broke).")
+
+@command("playing", "nowplaying", "spotify")
+async def now_playing(ctx: ContextType):
+    """Return the currently-playing song on Spotify (if any)."""
+    j = await TConn.spotify_call()
+    await ctx.send(f"We are listening to {j['item']['name']} by {', '.join(x['name'] for x in j['item']['artists'])}.")
 
 @with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
 async def bluekey(ctx: ContextType, save: Savefile):

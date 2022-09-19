@@ -2,6 +2,7 @@ import datetime
 import math
 import time
 import json
+import sys
 import os
 
 from aiohttp import web, ClientSession
@@ -146,23 +147,6 @@ router.static("/static", os.path.join(os.getcwd(), "static"))
 @events.add_listener("setup_init")
 async def setup_redirects():
     webpage.add_routes(router)
-    if not config.spotify_code:
-        async with ClientSession() as session:
-            async with session.get("https://accounts.spotify.com/authorize", headers={"Content-Type": "application/x-www-form-urlencoded"}, params={
-                "client_id": config.spotify_id,
-                "response_type": "code",
-                "redirect_uri": f"{config.website_url}/debug",
-                "state": config.spotify_secret,
-            }) as resp:
-                print(resp.content)
-    elif not config.spotify_token:
-        async with ClientSession() as session:
-            async with session.post("https://accounts.spotify.com/api/token", params={
-                "grant_type": "authorization_code",
-                "code": config.spotify_code,
-                "redirect_uri": f"{config.website_url}/debug",
-            }) as resp:
-                print(resp.content)
     return # disable redirects for now
     with open(os.path.join("data", "redirects")) as f:
         data = f.readlines()
