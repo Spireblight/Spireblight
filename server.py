@@ -832,7 +832,7 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
     await ctx.send(" ".join(msg))
 
-@with_savefile("bottle, bottled")
+@with_savefile("bottle", "bottled")
 async def bottled_cards(ctx: ContextType, save: SaveFile):
     """List all bottled cards."""
     cards = save.bottled_cards
