@@ -688,7 +688,7 @@ async def stream_uptime(ctx: ContextType):
     else:
         await ctx.send("Stream is offline (if this is wrong, the Twitch API broke).")
 
-@command("playing", "nowplaying", "spotify")
+@command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
     if not config.is_debug and not TConn.live_channels[config.channel]:
@@ -700,7 +700,7 @@ async def now_playing(ctx: ContextType):
 
     j = await TConn.spotify_call()
     if j["is_playing"]:
-        await ctx.send(f"We are listening to {j['item']['name']} by {', '.join(x['name'] for x in j['item']['artists'])}.")
+        await ctx.send(f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}.")
     else:
         await ctx.send("We are not currently listening to anything.")
 
