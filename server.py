@@ -701,9 +701,9 @@ async def now_playing(ctx: ContextType):
             return
 
     j = await TConn.spotify_call()
-    if j["is_playing"]:
+    try:
         await ctx.send(f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}.")
-    else:
+    except KeyError:
         await ctx.send("We are not currently listening to anything.")
 
 @with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
