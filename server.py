@@ -840,6 +840,20 @@ async def relic_info(ctx: ContextType, save: Savefile, index: int):
 
     await ctx.send(f"The relic at position {index} is {l[index-1].name}.")
 
+@with_savefile("allrelics", "offscreen", "page2")
+async def relics_page2(ctx: ContextType, save: Savefile):
+    """Display the relics on page 2."""
+    l = list(save.relics)
+    if len(l) <= 25:
+        await ctx.send("We only have one page of relics!")
+        return
+
+    relics = []
+    for relic in l[25:]:
+        relics.append(relic.name)
+
+    await ctx.send(f"The relics past page 1 are {', '.join(relics)}")
+
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
     """Display the boss relics that were taken and skipped."""
@@ -874,9 +888,10 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
         "Bottled Tornado": "\N{CLOUD WITH TORNADO}"
     }
     bottle_strings: list[str] = []
-    if save.bottles:
-        for bottle in save.bottles:
-            bottle_strings.append(f'{emoji_dict[bottle.bottle_id]} {bottle.card}')
+    for bottle in save.bottles:
+        bottle_strings.append(f"{emoji_dict[bottle.bottle_id]} {bottle.card}")
+
+    if bottle_strings:
         await ctx.send(", ".join(bottle_strings))
     else:
         await ctx.send("We do not have any bottled cards.")
