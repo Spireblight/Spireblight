@@ -199,11 +199,11 @@ class Savefile(FileParser):
     @property
     def bottles(self) -> list[BottleRelic]:
         bottles = []
-        if self._data("bottled_flame"):
+        if self._data.get("bottled_flame"):
             bottles.append(BottleRelic("Bottled Flame", self._get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"])))
-        if self._data("bottled_lightning"):
+        if self._data.get("bottled_lightning"):
             bottles.append(BottleRelic("Bottled Lightning", self._get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"])))
-        if self._data("bottled_tornado"):
+        if self._data.get("bottled_tornado"):
             bottles.append(BottleRelic("Bottled Tornado", self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"])))
         return bottles
 
