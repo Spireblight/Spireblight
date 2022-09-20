@@ -873,10 +873,9 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
         "Bottled Lightning": "\N{HIGH VOLTAGE SIGN}",
         "Bottled Tornado": "\N{CLOUD WITH TORNADO}"
     }
-    bottles = save.bottles
-    bottle_strings = [str]
-    if bottles:
-        for bottle in bottles:
+    bottle_strings: list[str] = []
+    if save.bottles:
+        for bottle in save.bottles:
             bottle_strings.append(f'{emoji_dict[bottle.bottle_id]} {bottle.card}')
         await ctx.send(", ".join(bottle_strings))
     else:
