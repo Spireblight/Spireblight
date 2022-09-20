@@ -96,16 +96,16 @@ async def challenge(req: web.Request):
     for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
         characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
 
-    left = datetime.date(2022, 12, 31) - datetime.date.today()
-    days_left = left.days
-
     # By checking the percentage of the year we've done, we can calculate what
     # the "assumed" amount of wins for today is, and therefore also if we're
     # ahead or behind.
+    left = datetime.date(2022, 12, 31) - datetime.date.today()
+    stream_days_left = math.floor(left.days * 5/7)
     total = sum(x.kills for x in characters)
-    approximated = math.floor(400 * ((365 - days_left) / 365.0))
+    stream_year = math.floor(365 * 5/7)
+    approximated = math.floor(400 * ((stream_year - stream_days_left) / stream_year))
     diff = total - approximated
-    day_of_year = 365 - days_left
+    day_of_stream_year = stream_year - stream_days_left
 
     return {
         "rotating_streak": rotating_streak,
@@ -115,10 +115,10 @@ async def challenge(req: web.Request):
         "diff": {
             "current": diff,
             "approximated": approximated,
-            "day_of_year": day_of_year,
-            "percent_of_year": int(math.floor(100 * (day_of_year / 365))),
+            "day_of_stream_year": day_of_stream_year,
+            "percent_of_stream_year": int(math.floor(100 * (day_of_stream_year / stream_year))),
         },
-        "days_left": days_left,
+        "stream_days_left": stream_days_left,
     }
 
 @router.get("/discord")
