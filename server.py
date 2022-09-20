@@ -218,7 +218,7 @@ class TwitchConn(TBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.esclient: EventSubClient = None
-        self.live_channels: dict[str, bool] = {}
+        self.live_channels: dict[str, bool] = {config.channel: False}
         self._session: ClientSession | None = None
 
     async def spotify_call(self):
@@ -236,13 +236,15 @@ class TwitchConn(TBot):
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
-        self.live_channels[config.channel] = bool(await self.fetch_streams(user_logins=[config.channel]))
 
         try:
             await self.esclient.subscribe_channel_stream_start(broadcaster=config.channel)
             await self.esclient.subscribe_channel_stream_end(broadcaster=config.channel)
         except HTTPException:
             pass
+
+    async def event_ready(self):
+        self.live_channels[config.channel] = bool(await self.fetch_streams(user_logins=[config.channel]))
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
