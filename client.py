@@ -4,7 +4,7 @@ import asyncio
 import time
 import os
 
-from config import config
+from configuration import config
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!")

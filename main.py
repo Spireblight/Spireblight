@@ -9,7 +9,7 @@ from logger import logger
 
 import server, events
 
-from config import config
+from configuration import config
 
 if config.server.debug:
     logging.basicConfig(

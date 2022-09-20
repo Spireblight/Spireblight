@@ -41,7 +41,7 @@ from runs import get_latest_run
 from typehints import ContextType, CommandType
 import events
 
-from config import config
+from configuration import config
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None

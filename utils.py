@@ -3,7 +3,7 @@ from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthor
 import os
 import json
 
-from config import config
+from configuration import config
 
 __all__ = ["get_req_data", "getfile", "update_db"]
 

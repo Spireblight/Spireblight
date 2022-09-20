@@ -13,7 +13,7 @@ from mpld3 import fig_to_html
 from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats
 from logger import logger
 
-from config import config
+from configuration import config
 
 __all__ = ["FileParser"]
 

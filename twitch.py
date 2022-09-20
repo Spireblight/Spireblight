@@ -4,7 +4,7 @@ from twitchio.ext.commands import Command, Context
 
 from logger import logger
 
-from config import config
+from configuration import config
 
 __all__ = ["TwitchCommand"]
 

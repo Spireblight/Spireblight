@@ -15,7 +15,7 @@ from utils import getfile
 
 import events
 
-from config import config
+from configuration import config
 
 __all__ = ["webpage", "router"]
 
