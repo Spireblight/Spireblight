@@ -107,3 +107,8 @@ spire:
   steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
   # For Linux:
   # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
+
+# This is for Now Playing: functionality from Spotify
+spotify:
+  # https://developer.spotify.com/documentation/general/guides/authorization/
+  oauth_token: <token not set>

@@ -230,7 +230,7 @@ class TwitchConn(TBot):
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {config.spotify_token}",
+                "Authorization": f"Bearer {config.spotify.oauth_token}",
                 }) as resp:
             return await resp.json()
 
