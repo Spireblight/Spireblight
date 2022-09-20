@@ -25,14 +25,15 @@ discord:
   # bot or the Discord bot need to be enabled for the server to function.
   enabled: true
 
-  # TODO: Comment on how to obtain one of these.
+  # TODO: Find a good tutorial on how to set up your own testing bot and get the
+  # token from it.
   oauth_token: <token not set>
 
-  # Invite links to the servers. Should be the full https:// URLs.
   invite_links:
-    # Both of these are not rickrolls.
-    main: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-    dev: https://www.youtube.com/watch?v=QZ1U2jvJgUg
+    # This is the real invite as present on baalorlord.tv
+    main: https://discord.gg/trXhSbA
+    # This is a real invite by Olivia5k.
+    dev: https://discord.gg/7hNreCb6rs
 
   # The server ID the bot is working on. This acts as a guard so it doesn't send
   # messages to other servers.
@@ -92,15 +93,17 @@ server:
   # this can be left empty.
   business_email: <email not set>
 
-  # Websocket and webhook setup. TODO: Document.
+  # Websocket and webhook setup.
   websocket_client:
-    id: "889952b3-7b44-148e-9323-f38ccabb2744"
-    secret: "2f55d379-a27c-1101-dbfe-25c70e44f330"
+    id: <id not set>
+    secret: <secret not set>
   webhook:
-    secret: "6b3c2e7b-ce1f-776d-1ff2-aaf6322b5f6e"
+    secret: <secret not set>
 
 # Where the gamedata is located on your computer. This is used by the client to
 # figure out where to look for run files and autosaves.
 spire:
   # This needs single quotes because Windows uses backslashes.
   steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+  # For Linux:
+  # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
