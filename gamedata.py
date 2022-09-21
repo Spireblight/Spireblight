@@ -50,6 +50,8 @@ class NeowBonus:
         "CHOOSE_OTHER_CHAR_RANDOM_UNCOMMON_CARD": "Choose an uncommon card from another character to obtain.",
         "CHOOSE_OTHER_CHAR_RANDOM_RARE_CARD": "Choose a rare card from another character to obtain.",
         "GAIN_RANDOM_SHOP_RELIC": "Obtain a random Shop relic.",
+        "GAIN_POTION_SLOT": "Gain a potion slot.",
+        "GAIN_TWO_POTION_SLOTS": "Gain two potions slots.",
         "GAIN_TWO_RANDOM_COMMON_RELICS": "Gain two random common relics.",
         "GAIN_UNCOMMON_RELIC": "Obtain a random uncommon relic.",
         "THREE_BIG_POTIONS": "Obtain three random potions.",

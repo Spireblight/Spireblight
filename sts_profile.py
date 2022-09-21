@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from typing import Generator, TYPE_CHECKING
 
+import zipfile
 import time
 import json
 import os
+import io
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
 
@@ -29,6 +31,15 @@ def get_profile(x: int) -> Profile:
 
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
+
+def profile_from_request(req: Request) -> Profile:
+    try:
+        profile = get_profile(int(req.match_info["profile"]))
+    except KeyError:
+        raise HTTPNotFound()
+    except ValueError:
+        raise HTTPForbidden(reason="profile must be integer")
+    return profile
 
 class Profile:
     def __init__(self, index: int, data: dict[str, str]):
@@ -80,15 +91,23 @@ class Profile:
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
-    try:
-        prof = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
-    except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
+    profile = profile_from_request(req)
     from runs import _update_cache
     _update_cache()
-    return {"profile": prof}
+    return {"profile": profile}
+
+@router.get("/profile/{profile}/runs.zip")
+async def runs_as_zipfile(req: Request) -> Response:
+    profile = profile_from_request(req)
+    from runs import _update_cache
+    _update_cache()
+
+    with io.BytesIO() as zfile:
+        with zipfile.ZipFile(zfile, mode="w") as archive:
+            for run in profile.runs:
+                archive.write(f"data/runs/{profile.index}/{run.filename}")
+
+        return Response(body=zfile.getvalue(), content_type="application/zip")
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:

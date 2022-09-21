@@ -48,9 +48,9 @@
       </div>
       <div class="column is-marginless">
         <div class="data">
-          {{ days_left }}
+          {{ stream_days_left }}
         </div>
-        <div>days left</div>
+        <div>stream days left</div>
       </div>
       <div class="column is-marginless">
         {% if diff.current < 0 %}
@@ -98,10 +98,12 @@
           </div>
           <div class="message-body">
             <p class="block">
-              It approximates how many kills we should have based on what day of
-              the year it is. Today is day {{ diff.day_of_year }} of the year, so
-              we're {{ diff.percent_of_year }}% through the year and should
-              therefore have done {{ diff.approximated }} kills by today.
+              It approximates how many heart kills we should have based on what day
+              of the year it is. It also considers we only stream on 5/7 days
+              of the week. Today is day {{ diff.day_of_stream_year }} of the
+              "stream year" of 2022, so we're {{ diff.percent_of_stream_year }}%
+              through the challenge and should therefore have done
+              {{ diff.approximated }} heart kills by today.
 
               {% if diff.current == 0 %}
                 We're currently exactly on the curve!
@@ -112,13 +114,16 @@
                 Since we have, we're currently ahead of the curve.
               {% endif %}
             </p>
+            <p class="block">The full formula is:</p>
+            <pre class="block">stream_days_left = days_left_of_2022 * 5/7
+stream_year = 365 * 5/7
+day_of_year = stream_year - stream_days_left
+total_kills - (400 * ((stream_year - day_of_year) / stream_year))</pre>
             {% if total < 400 %}
               <p class="block">
-                {{ kills_left }} kills left and {{ days_left }} days to go!
+                {{ kills_left }} kills left and {{ stream_days_left }} stream days to go!
               </p>
             {% endif %}
-            <p class="block">The full formula is:</p>
-            <pre class="block">total_kills - math.floor(400 * ((365 - day_of_year) / 365.0))</pre>
           </div>
         </div>
         <div class="box" style="flex-grow: 1;">
