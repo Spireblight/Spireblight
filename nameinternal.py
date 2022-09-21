@@ -10,8 +10,8 @@ from events import add_listener
 __all__ = [
     "get_relic", "get_relic_stats",
     "get_card", "get_card_metadata",
-    "get_potion",
-    "get_event",
+    "get_potion", "get_event",
+    "query",
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -19,10 +19,14 @@ _full_data: dict[str, dict[str, list[dict[str, str]]]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
-def query(name: str, type: str | None) -> Base:
-    pass
+def query(name: str, type: str | None):
+    name = name.lower().replace(" ", "").replace("-", "")
+    if name in _query_cache:
+        return _query_cache[name][0] # FIX THIS
+    return None
 
 class Base:
+    cls_name = ""
     def __init__(self, data: dict[str, str]):
         self.internal = data.get("internal", data["name"])
         self.name = data["name"]
@@ -95,9 +99,9 @@ async def load():
     for cat, maps in _full_data.items():
         if cat in _str_to_cls:
             for mapping in maps:
-                inst = _str_to_cls[cat](mapping)
+                inst: Base = _str_to_cls[cat](mapping)
                 _internal_cache[inst.internal] = inst
-                _query_cache[inst.name].append(inst)
+                _query_cache[inst.name.lower().replace(" ", "").replace("-", "")].append(inst)
 
     for file in os.listdir("eng"):
         name = file[:-5]
