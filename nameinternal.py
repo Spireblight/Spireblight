@@ -20,7 +20,7 @@ _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
 def query(name: str, type: str | None = None):
-    name = name.lower().replace(" ", "").replace("-", "")
+    name = name.lower().replace(" ", "").replace("-", "").replace("'", "")
     if name in _query_cache:
         return _query_cache[name][0] # FIX THIS
     return None
@@ -101,7 +101,7 @@ async def load():
             for mapping in maps:
                 inst: Base = _str_to_cls[cat](mapping)
                 _internal_cache[inst.internal] = inst
-                _query_cache[inst.name.lower().replace(" ", "").replace("-", "")].append(inst)
+                _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "")].append(inst)
 
     for file in os.listdir("eng"):
         name = file[:-5]
