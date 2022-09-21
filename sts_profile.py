@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from typing import Generator, TYPE_CHECKING
 
+import zipfile
 import time
 import json
 import os
+import io
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
 
@@ -89,6 +91,24 @@ async def runs_page(req: Request):
     from runs import _update_cache
     _update_cache()
     return {"profile": prof}
+
+@router.get("/profile/{profile}/runs.zip")
+async def runs_as_zipfile(req: Request) -> Response:
+    try:
+        profile = get_profile(int(req.match_info["profile"]))
+    except KeyError:
+        raise HTTPNotFound()
+    except ValueError:
+        raise HTTPForbidden(reason="profile must be integer")
+    from runs import _update_cache
+    _update_cache()
+
+    with io.BytesIO() as zfile:
+        with zipfile.ZipFile(zfile, mode="w") as archive:
+            for run in profile.runs:
+                archive.write(f"data/runs/{profile.index}/{run.filename}")
+
+        return Response(body=zfile.getvalue(), content_type="application/zip")
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:
