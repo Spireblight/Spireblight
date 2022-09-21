@@ -11878,12 +11878,14 @@
         {
             "name": "Attack Potion",
             "rarity": "Common",
-            "description": "Choose 1 of 3 random Attack cards to add to your hand, it costs 0 this turn."
+            "description": "Choose 1 of 3 random Attack cards to add to your hand, it costs 0 this turn.",
+            "internal": "AttackPotion"
         },
         {
             "name": "Blessing of the Forge",
             "rarity": "Common",
-            "description": "Upgrade all cards in your hand for the rest of combat."
+            "description": "Upgrade all cards in your hand for the rest of combat.",
+            "internal": "BlessingOfTheForge"
         },
         {
             "name": "Block Potion",
@@ -11894,7 +11896,8 @@
             "name": "Blood Potion",
             "rarity": "Common",
             "description": "Heal for 20% of your Max HP.",
-            "color": "Red"
+            "color": "Red",
+            "internal": "BloodPotion"
         },
         {
             "name": "Bottled Dupe",
@@ -11906,12 +11909,14 @@
             "name": "Bottled Miracle",
             "rarity": "Common",
             "description": "Add 2 Miracles to your hand.",
-            "color": "Purple"
+            "color": "Purple",
+            "internal": "BottledMiracle"
         },
         {
             "name": "Colorless Potion",
             "rarity": "Common",
-            "description": "Choose 1 of 3 random Colorless cards to add to your hand, it costs 0 this turn."
+            "description": "Choose 1 of 3 random Colorless cards to add to your hand, it costs 0 this turn.",
+            "internal": "ColorlessPotion"
         },
         {
             "name": "Dexterity Potion",
@@ -11938,7 +11943,8 @@
         {
             "name": "Fear Potion",
             "rarity": "Common",
-            "description": "Apply 3 Vulnerable."
+            "description": "Apply 3 Vulnerable.",
+            "internal": "FearPotion"
         },
         {
             "name": "Fire Potion",
@@ -11948,12 +11954,14 @@
         {
             "name": "Flex Potion",
             "rarity": "Common",
-            "description": "Gain 5 Strength. At the end of your turn, lose 5 Strength."
+            "description": "Gain 5 Strength. At the end of your turn, lose 5 Strength.",
+            "internal": "SteroidPotion"
         },
         {
             "name": "Focus Potion",
             "rarity": "Common",
-            "description": "Gain 2 Focus."
+            "description": "Gain 2 Focus.",
+            "internal": "FocusPotion"
         },
         {
             "name": "Jar of Slime",
@@ -11985,17 +11993,20 @@
         {
             "name": "Power Potion",
             "rarity": "Common",
-            "description": "Choose 1 of 3 random Power cards to add to your hand, it costs 0 this turn."
+            "description": "Choose 1 of 3 random Power cards to add to your hand, it costs 0 this turn.",
+            "internal": "PowerPotion"
         },
         {
             "name": "Skill Potion",
             "rarity": "Common",
-            "description": "Choose 1 of 3 random Skill cards to add to your hand, it costs 0 this turn."
+            "description": "Choose 1 of 3 random Skill cards to add to your hand, it costs 0 this turn.",
+            "internal": "SkillPotion"
         },
         {
             "name": "Speed Potion",
             "rarity": "Common",
-            "description": "Gain 5 Dexterity. At the end of your turn, lose 5 Dexterity."
+            "description": "Gain 5 Dexterity. At the end of your turn, lose 5 Dexterity.",
+            "internal": "SpeedPotion"
         },
         {
             "name": "Strategy Potion",
@@ -12070,19 +12081,22 @@
             "name": "Cunning Potion",
             "rarity": "Uncommon",
             "description": "Add 3 Shiv+ to your hand.",
-            "color": "Green"
+            "color": "Green",
+            "internal": "CunningPotion"
         },
         {
             "name": "Distilled Chaos",
             "rarity": "Uncommon",
             "description": "Play the top 3 cards of your draw pile.",
-            "img": "/altered/img/potions/distilledchaos.gif"
+            "img": "/altered/img/potions/distilledchaos.gif",
+            "internal": "DistilledChaos"
         },
         {
             "name": "Duplication Potion",
             "rarity": "Uncommon",
             "description": "This turn, your next card is played twice.",
-            "img": "/altered/img/potions/dupe.gif"
+            "img": "/altered/img/potions/dupe.gif",
+            "internal": "DuplicationPotion"
         },
         {
             "name": "Eau de Grem",
@@ -12095,12 +12109,14 @@
             "name": "Elixir",
             "rarity": "Uncommon",
             "description": "Exhaust any number of cards in your hand.",
-            "color": "Red"
+            "color": "Red",
+            "internal": "ElixirPotion"
         },
         {
             "name": "Essence of Steel",
             "rarity": "Uncommon",
-            "description": "Gain 4 Plated Armor."
+            "description": "Gain 4 Plated Armor.",
+            "internal": "EssenceOfSteel"
         },
         {
             "name": "Exotic Beverage",
@@ -12112,17 +12128,20 @@
         {
             "name": "Gambler's Brew",
             "rarity": "Uncommon",
-            "description": "Discard any number of cards then draw that many."
+            "description": "Discard any number of cards then draw that many.",
+            "internal": "GamblersBrew"
         },
         {
             "name": "Liquid Bronze",
             "rarity": "Uncommon",
-            "description": "Gain 3 Thorns."
+            "description": "Gain 3 Thorns.",
+            "internal": "LiquidBronze"
         },
         {
             "name": "Liquid Memories",
             "rarity": "Uncommon",
-            "description": "Choose a card in your discard pile and return it to your hand. It costs 0 this turn."
+            "description": "Choose a card in your discard pile and return it to your hand. It costs 0 this turn.",
+            "internal": "LiquidMemories"
         },
         {
             "name": "Polishing Oil",
@@ -12135,7 +12154,8 @@
             "name": "Potion Of Capacity",
             "rarity": "Uncommon",
             "description": "Gain 2 Orb slots.",
-            "color": "Blue"
+            "color": "Blue",
+            "internal": "PotionOfCapacity"
         },
         {
             "name": "Regen Potion",
@@ -12153,7 +12173,8 @@
             "name": "Stance Potion",
             "rarity": "Uncommon",
             "description": "Enter Calm or Wrath.",
-            "color": "Purple"
+            "color": "Purple",
+            "internal": "StancePotion"
         },
         {
             "name": "Ambrosia",
@@ -12171,24 +12192,28 @@
         {
             "name": "Cultist Potion",
             "rarity": "Rare",
-            "description": "Gain 1 Ritual."
+            "description": "Gain 1 Ritual.",
+            "internal": "CultistPotion"
         },
         {
             "name": "Entropic Brew",
             "rarity": "Rare",
             "description": "Fill all your empty potion slots with random potions.",
-            "img": "/altered/img/potions/entropicbrew.gif"
+            "img": "/altered/img/potions/entropicbrew.gif",
+            "internal": "EntropicBrew"
         },
         {
             "name": "Essence Of Darkness",
             "rarity": "Rare",
             "description": "Channel 1 Dark for each orb slot.",
-            "color": "Blue"
+            "color": "Blue",
+            "internal": "EssenceOfDarkness"
         },
         {
             "name": "Fairy in a Bottle",
             "rarity": "Rare",
-            "description": "When you would die, heal to 30% of your Max HP instead and discard this potion."
+            "description": "When you would die, heal to 30% of your Max HP instead and discard this potion.",
+            "internal": "FairyPotion"
         },
         {
             "name": "Fruit Juice",
@@ -12199,7 +12224,8 @@
             "name": "Ghost in a Jar",
             "rarity": "Rare",
             "description": "Gain 1 Intangible.",
-            "color": "Green"
+            "color": "Green",
+            "internal": "GhostInAJar"
         },
         {
             "name": "Gremlin In A Jar",
@@ -12212,7 +12238,8 @@
             "name": "Heart of Iron",
             "rarity": "Rare",
             "description": "Gain 6 Metallicize.",
-            "color": "Red"
+            "color": "Red",
+            "internal": "HeartOfIron"
         },
         {
             "name": "Inferno Potion",
@@ -12252,12 +12279,14 @@
         {
             "name": "Smoke Bomb",
             "rarity": "Rare",
-            "description": "Escape from a non-boss combat. Receive no rewards."
+            "description": "Escape from a non-boss combat. Receive no rewards.",
+            "internal": "SmokeBomb"
         },
         {
             "name": "Snecko Oil",
             "rarity": "Rare",
-            "description": "Draw 5 cards. Randomize the cost of cards in your hand."
+            "description": "Draw 5 cards. Randomize the cost of cards in your hand.",
+            "internal": "SneckoOil"
         },
         {
             "name": "Stimpack",
