@@ -32,6 +32,15 @@ def get_profile(x: int) -> Profile:
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
 
+def profile_from_request(req: Request) -> Profile:
+    try:
+        profile = get_profile(int(req.match_info["profile"]))
+    except KeyError:
+        raise HTTPNotFound()
+    except ValueError:
+        raise HTTPForbidden(reason="profile must be integer")
+    return profile
+
 class Profile:
     def __init__(self, index: int, data: dict[str, str]):
         self.index = index
@@ -82,24 +91,14 @@ class Profile:
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
-    try:
-        prof = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
-    except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
+    profile = profile_from_request(req)
     from runs import _update_cache
     _update_cache()
-    return {"profile": prof}
+    return {"profile": profile}
 
 @router.get("/profile/{profile}/runs.zip")
 async def runs_as_zipfile(req: Request) -> Response:
-    try:
-        profile = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
-    except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
+    profile = profile_from_request(req)
     from runs import _update_cache
     _update_cache()
 
