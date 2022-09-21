@@ -153,9 +153,6 @@ section.section {
   .run-title .extra {
     font-size: 0.75em;
   }
-  .run-title .modifiers {
-    margin-right: 50px;
-  }
 }
 
 @media only screen and (max-width: 959px) {

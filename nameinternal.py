@@ -8,6 +8,7 @@ __all__ = [
     "get_card", "get_card_metadata",
     "get_potion",
     "get_event",
+    "get_run_mod"
 ]
 
 _cache: dict[str, dict[str, str]] = {}
