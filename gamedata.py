@@ -861,7 +861,7 @@ class FileParser:
 
     @property
     def modifiers(self) -> list[str]:
-        return self._data["daily_mods"]
+        return self._data.get("daily_mods", [])
 
     @property
     def modifiers_with_desc(self) -> list[str]:
