@@ -19,7 +19,7 @@ _full_data: dict[str, dict[str, list[dict[str, str]]]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
-def query(name: str, type: str | None):
+def query(name: str, type: str | None = None):
     name = name.lower().replace(" ", "").replace("-", "")
     if name in _query_cache:
         return _query_cache[name][0] # FIX THIS
