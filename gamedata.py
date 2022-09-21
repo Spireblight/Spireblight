@@ -10,7 +10,7 @@ from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HT
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
-from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats
+from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats, get_run_mod
 from logger import logger
 
 import config
@@ -858,6 +858,17 @@ class FileParser:
                 self._cache["path"].append(node)
 
         yield from self._cache["path"]
+
+    @property
+    def modifiers(self) -> list[str]:
+        return self._data["daily_mods"]
+
+    @property
+    def modifiers_with_desc(self) -> list[str]:
+        if self.modifiers:
+            modifiers_with_desc = [get_run_mod(mod) for mod in self.modifiers]
+            return "\n".join(modifiers_with_desc)
+        return []
 
 class RelicData:
     """Contain information for Spire relics."""

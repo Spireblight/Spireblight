@@ -47,6 +47,9 @@ def get_event(name: str, default: str | None = None) -> str:
 def get_relic_stats(name: str) -> list[str]:
     return _cache["relic_stats"][name]["TEXT"]
 
+def get_run_mod(name: str) -> str:
+    return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
+
 @add_listener("setup_init")
 async def load():
     _cache.clear()

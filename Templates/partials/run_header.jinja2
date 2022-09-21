@@ -14,6 +14,11 @@
             ongoing
           {% endif %}
         </div>
+        {% if run.modifiers %}
+        <div class="modifiers">
+          <div title="{{ run.modifiers_with_desc }}">Modifiers</div>
+        </div>
+        {% endif %}
         <div class="score">
           <div class="points">
             {% if run.done %}
