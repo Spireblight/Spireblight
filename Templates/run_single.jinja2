@@ -139,6 +139,12 @@
                 </ul>
               </div>
             {% endif %}
+            {% if run.modifiers %}
+            <div>
+              <p>Modifiers:</p>
+              {{ run.modifiers_with_desc }}
+            </div>
+            {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>
