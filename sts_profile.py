@@ -96,17 +96,30 @@ async def runs_page(req: Request):
     _update_cache()
     return {"profile": profile}
 
+@router.get("/profile/{profile}/runs/{timestamp}.zip")
 @router.get("/profile/{profile}/runs.zip")
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
     from runs import _update_cache
     _update_cache()
+    try:
+        timestamp = req.match_info.get("timestamp", "")
+        start, _, end = timestamp.partition("..")
+        start = int(start) if start else 0
+        end = int(end) if end else time.time()
+    except ValueError:
+        raise HTTPForbidden(reason="Timestamp must be integers if given.")
+    has_file = False
 
     with io.BytesIO() as zfile:
         with zipfile.ZipFile(zfile, mode="w") as archive:
             for run in profile.runs:
-                archive.write(f"data/runs/{profile.index}/{run.filename}")
+                if start <= run.timestamp.timestamp() <= end:
+                    archive.write(f"data/runs/{profile.index}/{run.filename}")
+                    has_file = True
 
+        if not has_file:
+            raise HTTPForbidden(reason="No run file matches the given range.")
         return Response(body=zfile.getvalue(), content_type="application/zip")
 
 @router.post("/sync/profile")
