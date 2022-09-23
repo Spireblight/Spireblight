@@ -1,4 +1,5 @@
 from __future__ import annotations
+from abc import abstractmethod
 
 from typing import Any, Generator, Iterable, NamedTuple
 
@@ -721,7 +722,27 @@ class FileParser:
                 meta = {"CHARACTER": "Special"}
             yield card, meta
 
-    def cards_as_html(self) -> Generator[str, None, None]:
+    @property
+    @abstractmethod
+    def removals(self) -> list[str]:
+        pass
+
+    def _get_removals(self) -> Generator[tuple[str, dict[str, str]], None, None]:
+        for card in self.removals:
+            try:
+                meta = get_card_metadata(card)
+            except KeyError:
+                meta = {"CHARACTER": "Special"}
+            yield get_card(card), meta
+        return
+
+    def master_deck_as_html(self) -> Generator[str, None, None]:
+        return self._cards_as_html(self._get_cards())
+
+    def removals_as_html(self) -> Generator[str, None, None]:
+        return self._cards_as_html(self._get_removals())
+
+    def _cards_as_html(self, cards: Generator[tuple[str, dict[str, str]], None, None]) -> Generator[str, None, None]:
         text = (
             '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
             '<svg width="32" height="32">'
@@ -734,7 +755,7 @@ class FileParser:
         content = {}
         order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
         content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], None: []} for x in order}
-        for name, metadata in self._get_cards():
+        for name, metadata in cards:
             ctype = metadata.get("TYPE")
             rarity = metadata.get("RARITY")
             if rarity  == "Starter":
@@ -985,6 +1006,7 @@ class NodeData:
         self._discarded = []
         self._cache = {}
 
+    # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         """Create a NodeData instance from a parser and floor number.

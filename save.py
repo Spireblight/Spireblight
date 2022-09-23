@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Generator
 
 import datetime
 import base64
@@ -10,7 +10,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
-from nameinternal import get_card
+from nameinternal import get_card, get_card_metadata
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic
@@ -212,6 +212,19 @@ class Savefile(FileParser):
         if upgrades:
             card = f"{card}+{upgrades}"
         return get_card(card)
+
+    @property
+    def removals(self) -> list[str]:
+        neow_bonus_removals = self._data.get("basemod:mod_saves", {}).get("NeowBonusLog", {}).get("cardsRemoved", [])
+        event_removals = []
+        for event in self._data["metric_event_choices"]:
+            event_removals.extend(event.get("cards_removed", []))                
+        
+        store_removals = self._data.get("metric_items_purged", [])
+
+        # missing Empty Cage
+        all_removals = neow_bonus_removals + event_removals + store_removals
+        return all_removals
 
 _savefile = Savefile()
 

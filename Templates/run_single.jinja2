@@ -204,11 +204,22 @@
 
     <section class="section">
       <div class="cards">
-        {% for card_data in run.cards_as_html() %}
+        {% for card_data in run.master_deck_as_html() %}
           {{ card_data | safe }}
         {% endfor %}
       </div>
     </section>
+
+    {% if run.removals %}
+    <section class="section">
+      <h4 class="title is-4">Cards Removed</h4>
+      <div class="cards">
+        {% for card_data in run.removals_as_html() %}
+          {{ card_data | safe }}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 
     <section class="section">
       <div class="charts">
