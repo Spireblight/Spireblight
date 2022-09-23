@@ -725,7 +725,7 @@ class FileParser:
     @property
     @abstractmethod
     def removals(self) -> list[str]:
-        pass
+        raise NotImplementedError
 
     def _get_removals(self) -> Generator[tuple[str, dict[str, str]], None, None]:
         for card in self.removals:
