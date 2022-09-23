@@ -721,7 +721,7 @@ class FileParser:
             except KeyError:
                 meta = {"CHARACTER": "Special"}
             yield card, meta
-
+    
     @property
     @abstractmethod
     def removals(self) -> list[str]:
