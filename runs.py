@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator
+from typing import Any
 
 import datetime
 import json
