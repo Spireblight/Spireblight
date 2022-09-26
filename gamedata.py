@@ -896,7 +896,7 @@ class RelicData:
         return self._description
 
     def escaped_description(self) -> str:
-        return self.description().replace("\n", "<br/>").replace("'", "\\'")
+        return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
         desc = []
@@ -1076,7 +1076,7 @@ class NodeData:
         return self._cache["description"]
 
     def escaped_description(self) -> str:
-        return self.description().replace("\n", "<br/>").replace("'", "\\'")
+        return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     def _description(self, to_append: dict[int, list[str]]) -> str:
         text = []
