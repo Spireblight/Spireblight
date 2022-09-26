@@ -110,7 +110,6 @@ class RunParser(FileParser):
 
     @property
     def removals(self) -> list[str]:
-        neow_bonus_removals = self._data.get("neow_bonus_log", {}).get("cardsRemoved", [])
         event_removals = []
         for event in self._data["event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                
@@ -118,7 +117,7 @@ class RunParser(FileParser):
         store_removals = self._data.get("items_purged", [])
 
         # missing Empty Cage
-        all_removals = neow_bonus_removals + event_removals + store_removals
+        all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
         return all_removals
 
 @add_listener("setup_init")

@@ -1,11 +1,12 @@
 from __future__ import annotations
-from abc import abstractmethod
 
 from typing import Any, Generator, Iterable, NamedTuple
 
 import urllib.parse
 import math
 import io
+
+from abc import ABC, abstractmethod
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt
@@ -141,6 +142,22 @@ class NeowBonus:
     @property
     def floor_time(self) -> int:
         return 0
+
+    @property
+    def cards_obtained(self) -> list[str]:
+        return self.mod_data.get("cardsObtained", [])
+
+    @property
+    def cards_removed(self) -> list[str]:
+        return self.mod_data.get("cardsRemoved", [])
+
+    @property
+    def cards_transformed(self) -> list[str]:
+        return self.mod_data.get("cardsTransformed", [])
+
+    @property
+    def cards_upgraded(self) -> list[str]:
+        return self.mod_data.get("cardsUpgraded", [])
 
     def get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
@@ -485,7 +502,7 @@ class NeowBonus:
 
 _chars = {"THE_SILENT": "Silent"}
 
-class FileParser:
+class FileParser(ABC):
     _variables_map = {
         "current_hp": "Current HP",
         "max_hp": "Max HP",
@@ -698,7 +715,7 @@ class FileParser:
             if "blue_key_relic_skipped_log" in self._data:
                 yield ("Sapphire Key", self._data["blue_key_relic_skipped_log"]["floor"])
 
-    def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
+    def _get_cards(self) -> Iterable[tuple[str, dict[str, str]]]:
         if "master_deck" in self._data:
             for x in self._data["master_deck"]:
                 try:

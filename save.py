@@ -215,7 +215,6 @@ class Savefile(FileParser):
 
     @property
     def removals(self) -> list[str]:
-        neow_bonus_removals = self._data.get("basemod:mod_saves", {}).get("NeowBonusLog", {}).get("cardsRemoved", [])
         event_removals = []
         for event in self._data["metric_event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                
@@ -223,7 +222,7 @@ class Savefile(FileParser):
         store_removals = self._data.get("metric_items_purged", [])
 
         # missing Empty Cage
-        all_removals = neow_bonus_removals + event_removals + store_removals
+        all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
         return all_removals
 
 _savefile = Savefile()
