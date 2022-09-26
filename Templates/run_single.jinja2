@@ -19,13 +19,20 @@
      // If you're reading this nonsense, I'm sorry.
 
      function neowText(header, bodyText) {
-       // Set the header
-       document.getElementById("neow-header").innerHTML = header;
-       // Hide the original content
-       document.getElementById("neow-body-original").className = "message-body hidden"
-       // Set the new content and make it appear
-       document.getElementById("neow-body-content").innerHTML = bodyText;
-       document.getElementById("neow-body-new").className = "message-body";
+       var headerText = document.getElementById("neow-header").innerHTML;
+       var contentText = document.getElementById("neow-body-content").innerHTML;
+
+       if (headerText == header && bodyText == contentText){
+         neowReset();
+       } else {
+         // Set the header
+         document.getElementById("neow-header").innerHTML = header;
+         // Hide the original content
+         document.getElementById("neow-body-original").className = "message-body hidden"
+         // Set the new content and make it appear
+         document.getElementById("neow-body-content").innerHTML = bodyText;
+         document.getElementById("neow-body-new").className = "message-body";
+       }
      }
 
      function neowReset() {
