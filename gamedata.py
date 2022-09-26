@@ -6,6 +6,8 @@ import urllib.parse
 import math
 import io
 
+from abc import ABC, abstractmethod
+
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
@@ -104,6 +106,7 @@ class NeowBonus:
             else:
                 yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
+    # All of the Neow Bonus keys should exist together, if more are added, we shouldn't need to add checks for them
     @property
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser._data:
@@ -140,6 +143,30 @@ class NeowBonus:
     @property
     def floor_time(self) -> int:
         return 0
+
+    @property
+    def cards_obtained(self) -> list[str]:
+        if self.has_data:
+            return self.mod_data.get("cardsObtained", [])
+        return []
+
+    @property
+    def cards_removed(self) -> list[str]:
+        if self.has_data:
+            return self.mod_data.get("cardsRemoved", [])
+        return []
+
+    @property
+    def cards_transformed(self) -> list[str]:
+        if self.has_data:
+            return self.mod_data.get("cardsTransformed", [])
+        return []
+
+    @property
+    def cards_upgraded(self) -> list[str]:
+        if self.has_data:
+            return self.mod_data.get("cardsUpgraded", [])
+        return []
 
     def get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
@@ -484,7 +511,7 @@ class NeowBonus:
 
 _chars = {"THE_SILENT": "Silent"}
 
-class FileParser:
+class FileParser(ABC):
     _variables_map = {
         "current_hp": "Current HP",
         "max_hp": "Max HP",
@@ -720,8 +747,28 @@ class FileParser:
             except KeyError:
                 meta = {"CHARACTER": "Special"}
             yield card, meta
+    
+    @property
+    @abstractmethod
+    def removals(self) -> list[str]:
+        raise NotImplementedError
 
-    def cards_as_html(self) -> Generator[str, None, None]:
+    def _get_removals(self) -> Generator[tuple[str, dict[str, str]], None, None]:
+        for card in self.removals:
+            try:
+                meta = get_card_metadata(card)
+            except KeyError:
+                meta = {"CHARACTER": "Special"}
+            yield get_card(card), meta
+        return
+
+    def master_deck_as_html(self) -> Generator[str, None, None]:
+        return self._cards_as_html(self._get_cards())
+
+    def removals_as_html(self) -> Generator[str, None, None]:
+        return self._cards_as_html(self._get_removals())
+
+    def _cards_as_html(self, cards: Iterable[tuple[str, dict[str, str]]]) -> Generator[str, None, None]:
         text = (
             '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
             '<svg width="32" height="32">'
@@ -734,7 +781,7 @@ class FileParser:
         content = {}
         order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
         content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], None: []} for x in order}
-        for name, metadata in self._get_cards():
+        for name, metadata in cards:
             ctype = metadata.get("TYPE")
             rarity = metadata.get("RARITY")
             if rarity  == "Starter":
@@ -996,6 +1043,7 @@ class NodeData:
         self._discarded = []
         self._cache = {}
 
+    # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
         """Create a NodeData instance from a parser and floor number.
