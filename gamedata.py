@@ -148,29 +148,25 @@ class NeowBonus:
     def cards_obtained(self) -> list[str]:
         if self.has_data:
             return self.mod_data.get("cardsObtained", [])
-        else:
-            return []
+        return []
 
     @property
     def cards_removed(self) -> list[str]:
         if self.has_data:
             return self.mod_data.get("cardsRemoved", [])
-        else:
-            return []
+        return []
 
     @property
     def cards_transformed(self) -> list[str]:
         if self.has_data:
             return self.mod_data.get("cardsTransformed", [])
-        else:
-            return []
+        return []
 
     @property
     def cards_upgraded(self) -> list[str]:
         if self.has_data:
             return self.mod_data.get("cardsUpgraded", [])
-        else:
-            return []
+        return []
 
     def get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
