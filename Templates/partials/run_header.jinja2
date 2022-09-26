@@ -55,6 +55,10 @@
           {% endif %}
           <div>{{ run.seed }}</div>
         </div>
+        {% if run.modifiers %}
+          <i title="This was a Custom run. Check the Neow Bonus panel for Modifiers" 
+            class="fa-solid fa-flask"></i>
+        {% endif %}
         {% if run.modded %}
           <i title="This is a modded character. Not all data will be accurate."
             class="fa-solid fa-circle-radiation"></i>

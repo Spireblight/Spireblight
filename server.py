@@ -918,6 +918,14 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
     else:
         await ctx.send("We do not have any bottled cards.")
 
+@with_savefile("custom", "modifiers")
+async def modifiers(ctx: ContextType, save: Savefile):
+    """List all custom modifiers for the run."""
+    if save.modifiers:
+        await ctx.send(", ".join(save.modifiers))
+    else:
+        await ctx.send("This is a standard run.")
+
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
     """Get the last run/win/loss."""

@@ -11,7 +11,8 @@ __all__ = [
     "get_relic", "get_relic_stats",
     "get_card", "get_card_metadata",
     "get_potion", "get_event",
-    "query",
+    "query", 
+    "get_run_mod"
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -89,6 +90,9 @@ def get_event(name: str, default: str | None = None) -> str:
 
 def get_relic_stats(name: str) -> list[str]:
     return _cache["relic_stats"][name]["TEXT"]
+
+def get_run_mod(name: str) -> str:
+    return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
 
 @add_listener("setup_init")
 async def load():
