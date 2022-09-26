@@ -106,6 +106,7 @@ class NeowBonus:
             else:
                 yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
+    # All of the Neow Bonus keys should exist together, if more are added, we shouldn't need to add checks for them
     @property
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser._data:
@@ -145,19 +146,31 @@ class NeowBonus:
 
     @property
     def cards_obtained(self) -> list[str]:
-        return self.mod_data.get("cardsObtained", [])
+        if self.has_data:
+            return self.mod_data.get("cardsObtained", [])
+        else:
+            return []
 
     @property
     def cards_removed(self) -> list[str]:
-        return self.mod_data.get("cardsRemoved", [])
+        if self.has_data:
+            return self.mod_data.get("cardsRemoved", [])
+        else:
+            return []
 
     @property
     def cards_transformed(self) -> list[str]:
-        return self.mod_data.get("cardsTransformed", [])
+        if self.has_data:
+            return self.mod_data.get("cardsTransformed", [])
+        else:
+            return []
 
     @property
     def cards_upgraded(self) -> list[str]:
-        return self.mod_data.get("cardsUpgraded", [])
+        if self.has_data:
+            return self.mod_data.get("cardsUpgraded", [])
+        else:
+            return []
 
     def get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
@@ -715,7 +728,7 @@ class FileParser(ABC):
             if "blue_key_relic_skipped_log" in self._data:
                 yield ("Sapphire Key", self._data["blue_key_relic_skipped_log"]["floor"])
 
-    def _get_cards(self) -> Iterable[tuple[str, dict[str, str]]]:
+    def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
         if "master_deck" in self._data:
             for x in self._data["master_deck"]:
                 try:
@@ -759,7 +772,7 @@ class FileParser(ABC):
     def removals_as_html(self) -> Generator[str, None, None]:
         return self._cards_as_html(self._get_removals())
 
-    def _cards_as_html(self, cards: Generator[tuple[str, dict[str, str]], None, None]) -> Generator[str, None, None]:
+    def _cards_as_html(self, cards: Iterable[tuple[str, dict[str, str]]]) -> Generator[str, None, None]:
         text = (
             '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
             '<svg width="32" height="32">'
