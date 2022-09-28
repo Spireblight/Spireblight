@@ -222,7 +222,7 @@ class TwitchConn(TBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.esclient: EventSubClient = None
-        self.live_channels: dict[str, bool] = {config.channel: False}
+        self.live_channels: dict[str, bool] = {config.twitch.channel: False}
         self._session: ClientSession | None = None
 
     async def spotify_call(self):
