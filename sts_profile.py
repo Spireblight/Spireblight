@@ -88,6 +88,10 @@ class Profile:
             if _ts_cache[ts]._profile == self.index:
                 yield _ts_cache[ts]
 
+    @property
+    def rotating_streak(self) -> int:
+        """Return the number of wins in a row"""
+
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
