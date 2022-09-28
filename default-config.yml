@@ -1,0 +1,114 @@
+# This is the defaults for all the configuration vaules.
+#
+# For a local setup you should not make changes here, but in dev-config.yml.
+
+twitch:
+  # If the Twitch part of the bot is enabled or not. At least one of the Twitch
+  # bot or the Discord bot need to be enabled for the server to function.
+  enabled: true
+
+  # Token to connect to the Twitch IRC. You can get one at
+  # https://twitchapps.com/tmi/. You probably don't want to use your own
+  # personal account, but rather a testing or dev account.
+  oauth_token: <token not set>
+
+  # Channel that the bot connects to. Unless you are deploying, this should
+  # _never_ be the live channel (i.e. "baalorlord"). Doing so will make the
+  # account connected to the OAuth token above to respond to bot commands
+  # (amongst other things).
+  # You probably want it to be your own private channel (i.e. your username) if
+  # you're testing things out.
+  channel: <channel not set>
+
+discord:
+  # If the Discord part of the bot is enabled or not. At least one of the Twitch
+  # bot or the Discord bot need to be enabled for the server to function.
+  enabled: true
+
+  # TODO: Find a good tutorial on how to set up your own testing bot and get the
+  # token from it.
+  oauth_token: <token not set>
+
+  invite_links:
+    # This is the real invite as present on baalorlord.tv
+    main: https://discord.gg/trXhSbA
+    # This is a real invite by Olivia5k.
+    dev: https://discord.gg/7hNreCb6rs
+
+  # The server ID the bot is working on. This acts as a guard so it doesn't send
+  # messages to other servers.
+  server_id: <channel id not set>
+
+  # Which user role is considered a moderator. This should be the numberical ID
+  # of the role, and the default of 0 will make it error out.
+  moderator_role: 0
+
+youtube:
+  # The API key to make Youtube calls.
+  api_key: <api key not set>
+
+  # The channel ID used when searching
+  channel_id: <channel id not set>
+
+  # If no video ID is found via search, use this instead. (most likely because
+  # you're in a development context)
+  default_video: "fei2frQWPxs"
+
+  # Amount of seconds we wait between making API calls to Youtube. Should
+  # probably never be lower than 3600.
+  cache_timeout: 3600
+
+baalorbot:
+  # What prefix the bot listens to
+  prefix: "!"
+
+  # These correspond to the permission groups for the bot.
+  owners: []
+  editors: []
+
+  # Commands that run automatically over certain intervals.
+  timers:
+    globals:
+      interval: 300
+      commands: []
+    sponsored:
+      interval: 300
+      commands: []
+
+server:
+  # If this is true, we enable debug logging.
+  debug: false
+
+  # Secret key used when making calls from the client. Needs to be the same on
+  # both the client side and the server side. The default is not set for security reasons.
+  secret: ""
+
+  # The URL used when rendering links and redirects.
+  url: http://localhost:8080
+
+  # Amount of spaces when dumping JSON files.
+  json_indent: 2
+
+  # This email is visible in the footer of every page. For development contexts,
+  # this can be left empty.
+  business_email: <email not set>
+
+  # Websocket and webhook setup.
+  websocket_client:
+    id: <id not set>
+    secret: <secret not set>
+  webhook:
+    secret: <secret not set>
+
+# Where the gamedata is located on your computer. This is used by the client to
+# figure out where to look for run files and autosaves.
+spire:
+  # This needs single quotes because Windows uses backslashes.
+  steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+  # For Linux:
+  # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
+
+# This is for Now Playing: functionality from Spotify
+spotify:
+  # https://developer.spotify.com/documentation/general/guides/authorization/
+  oauth_token: <token not set>
