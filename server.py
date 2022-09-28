@@ -248,7 +248,7 @@ class TwitchConn(TBot):
             pass
 
     async def event_ready(self):
-        self.live_channels[config.channel] = bool(await self.fetch_streams(user_logins=[config.channel]))
+        self.live_channels[config.twitch.channel] = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
@@ -697,9 +697,9 @@ async def stream_uptime(ctx: ContextType):
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
-    if not config.is_debug and not TConn.live_channels[config.channel]:
+    if not config.is_debug and not TConn.live_channels[config.twitch.channel]:
         # just in case
-        TConn.live_channels[config.channel] = live = bool(await TConn.fetch_streams(user_logins=[config.channel]))
+        TConn.live_channels[config.twitch.channel] = live = bool(await TConn.fetch_streams(user_logins=[config.twitch.channel]))
         if not live:
             await ctx.reply("That's kinda creepy, not gonna lie...")
             return
