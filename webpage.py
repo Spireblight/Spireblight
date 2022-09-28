@@ -22,7 +22,7 @@ __all__ = ["webpage", "router"]
 __version__ = "0.4"
 __author__ = "Anilyka Barry"
 __github__ = "https://github.com/Vgr255/TwitchCordBot"
-__botname__ = "Faelorbot"
+__botname__ = "Spireblight"
 
 webpage = web.Application(logger=logger)
 
@@ -134,13 +134,6 @@ async def redirected_totals(req: web.Request):
     for name, count in j.items():
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
-
-@router.get("/debug")
-@router.post("/debug")
-async def debug_testing(req: web.Request):
-    content = req.content()
-    async for line in content:
-        logger.warning(line)
 
 router.static("/static", os.path.join(os.getcwd(), "static"))
 

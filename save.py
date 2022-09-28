@@ -288,7 +288,7 @@ async def receive_save(req: Request):
 async def get_savefile(ctx: ContextType | None = None) -> Savefile:
     if _savefile.character is None:
         if ctx is not None:
-            await ctx.send("Not in a run.")
+            await ctx.reply("Not in a run.")
         return
 
     return _savefile
