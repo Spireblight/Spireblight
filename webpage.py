@@ -15,22 +15,22 @@ from utils import getfile
 
 import events
 
-import config
+from configuration import config
 
 __all__ = ["webpage", "router"]
 
 __version__ = "0.4"
 __author__ = "Anilyka Barry"
-__github__ = "https://github.com/Vgr255/TwitchCordBot"
-__botname__ = "Faelorbot"
+__github__ = "https://github.com/Spireblight/Spireblight"
+__botname__ = "Spireblight"
 
 webpage = web.Application(logger=logger)
 
 router = web.RouteTableDef()
 
 _query_params = {
-    "key": config.API_key,
-    "channelId": config.YT_channel_id,
+    "key": config.youtube.api_key,
+    "channelId": config.youtube.channel_id,
     "type": "video",
     "order": "date",
     "maxResults": "1",
@@ -55,12 +55,11 @@ env.globals["config"] = config
 env.globals["uptime"] = uptime
 env.globals["start"] = _start_time.isoformat(" ", "seconds")
 env.globals["now"] = now
-env.globals["color"] = config.website_bg
 
 @router.get("/")
 @aiohttp_jinja2.template("main.jinja2") # TODO: perform search if it's been more than the timeout, OR it's past 3pm UTC and previous update was before 3pm
-async def main_page(req: web.Request, _cache={"video_id": config.default_video_id, "last": 0}):
-    if _cache["video_id"] is None or _cache["last"] + config.cache_timeout < time.time():
+async def main_page(req: web.Request, _cache={"video_id": config.youtube.default_video, "last": 0}):
+    if _cache["video_id"] is None or _cache["last"] + config.youtube.cache_timeout < time.time():
         data = None
         async with ClientSession() as session:
             async with session.get("https://www.googleapis.com/youtube/v3/search", params=_query_params) as resp:
@@ -134,13 +133,6 @@ async def redirected_totals(req: web.Request):
     for name, count in j.items():
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
-
-@router.get("/debug")
-@router.post("/debug")
-async def debug_testing(req: web.Request):
-    content = req.content()
-    async for line in content:
-        logger.warning(line)
 
 router.static("/static", os.path.join(os.getcwd(), "static"))
 

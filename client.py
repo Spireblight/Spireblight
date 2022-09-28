@@ -4,7 +4,7 @@ import asyncio
 import time
 import os
 
-import config
+from configuration import config
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!")
@@ -18,17 +18,17 @@ async def main():
         last_run = ""
     possible = None
     timeout = 1
-    if not config.website_url or not config.secret:
+    if not config.server.url or not config.server.secret:
         print("Config is not complete")
         time.sleep(3)
         return
-    async with ClientSession(config.website_url) as session:
+    async with ClientSession(config.server.url) as session:
         while True:
             time.sleep(timeout)
             start = time.time()
             timeout = 1
             if possible is None:
-                for file in os.listdir(os.path.join(config.STS_path, "saves")):
+                for file in os.listdir(os.path.join(config.spire.steamdir, "saves")):
                     if file.endswith(".autosave"):
                         if possible is None:
                             possible = file
@@ -39,14 +39,14 @@ async def main():
 
             if possible is not None:
                 try:
-                    cur = os.path.getmtime(os.path.join(config.STS_path, "saves", possible))
+                    cur = os.path.getmtime(os.path.join(config.spire.steamdir, "saves", possible))
                 except OSError:
                     possible = None
 
             to_send = []
             files = []
             if possible is None: # don't check run files during a run
-                for path, folders, _f in os.walk(os.path.join(config.STS_path, "runs")):
+                for path, folders, _f in os.walk(os.path.join(config.spire.steamdir, "runs")):
                     for folder in folders:
                         profile = "0"
                         if folder[0].isdigit():
@@ -64,7 +64,7 @@ async def main():
                         with open(os.path.join(path, file)) as f:
                             content = f.read()
                         content = content.encode("utf-8", "xmlcharrefreplace")
-                        async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": config.secret, "start": start}) as resp:
+                        async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": config.server.secret, "start": start}) as resp:
                             if not resp.ok:
                                 all_sent = False
                     if all_sent:
@@ -73,7 +73,7 @@ async def main():
                             f.write(last_run)
 
                 if possible is None and has_save: # server has a save, but we don't (anymore)
-                    async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
+                    async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.server.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                         if resp.ok:
                             has_save = False
                     # update all profiles
@@ -84,7 +84,7 @@ async def main():
                         "2": b"",
                     }
                     # always send the save slots; it's likely it changed
-                    with open(os.path.join(config.STS_path, "preferences", "STSSaveSlots")) as f:
+                    with open(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots")) as f:
                         data["slots"] = f.read().encode("utf-8", "xmlcharrefreplace")
                     tobe_lasp = [0, 0, 0]
                     for i in range(3):
@@ -92,7 +92,7 @@ async def main():
                         if i:
                             name = f"{i}_{name}"
                         try:
-                            fname = os.path.join(config.STS_path, "preferences", name)
+                            fname = os.path.join(config.spire.steamdir, "preferences", name)
                             tobe_lasp[i] = m = os.path.getmtime(fname)
                             if m == lasp[i]:
                                 continue # unchanged, don't bother
@@ -101,7 +101,7 @@ async def main():
                         except OSError:
                             continue
 
-                    async with session.post("/sync/profile", data=data, params={"key": config.secret, "start": start}) as resp:
+                    async with session.post("/sync/profile", data=data, params={"key": config.server.secret, "start": start}) as resp:
                         if resp.ok:
                             lasp = tobe_lasp
                         else:
@@ -109,11 +109,11 @@ async def main():
 
                 if possible is not None and cur != last:
                     content = ""
-                    with open(os.path.join(config.STS_path, "saves", possible)) as f:
+                    with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
                         content = f.read()
                     content = content.encode("utf-8", "xmlcharrefreplace")
                     char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                    async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.secret, "has_run": "false", "start": start}) as resp:
+                    async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.server.secret, "has_run": "false", "start": start}) as resp:
                         if resp.ok:
                             last = cur
                             has_save = True
