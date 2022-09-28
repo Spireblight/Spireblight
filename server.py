@@ -1256,7 +1256,7 @@ async def Discord_startup():
     DConn = DiscordConn(config.baalorbot.prefix, case_insensitive=True, owner_ids=config.baalorbot.owners, help_command=None)
     for cmd in _to_add_discord:
         DConn.add_command(cmd)
-    await DConn.start(config.discord.token)
+    await DConn.start(config.discord.oauth_token)
 
 async def Discord_cleanup():
     await DConn.close()
