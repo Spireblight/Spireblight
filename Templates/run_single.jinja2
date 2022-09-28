@@ -19,13 +19,20 @@
      // If you're reading this nonsense, I'm sorry.
 
      function neowText(header, bodyText) {
-       // Set the header
-       document.getElementById("neow-header").innerHTML = header;
-       // Hide the original content
-       document.getElementById("neow-body-original").className = "message-body hidden"
-       // Set the new content and make it appear
-       document.getElementById("neow-body-content").innerHTML = bodyText;
-       document.getElementById("neow-body-new").className = "message-body";
+       var headerText = document.getElementById("neow-header").innerHTML;
+       var contentText = document.getElementById("neow-body-content").innerHTML;
+
+       if (headerText == header && bodyText == contentText){
+         neowReset();
+       } else {
+         // Set the header
+         document.getElementById("neow-header").innerHTML = header;
+         // Hide the original content
+         document.getElementById("neow-body-original").className = "message-body hidden"
+         // Set the new content and make it appear
+         document.getElementById("neow-body-content").innerHTML = bodyText;
+         document.getElementById("neow-body-new").className = "message-body";
+       }
      }
 
      function neowReset() {
@@ -139,6 +146,12 @@
                 </ul>
               </div>
             {% endif %}
+            {% if run.modifiers %}
+            <div>
+              <p>Modifiers:</p>
+              {{ run.modifiers_with_desc }}
+            </div>
+            {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>
@@ -204,11 +217,22 @@
 
     <section class="section">
       <div class="cards">
-        {% for card_data in run.cards_as_html() %}
+        {% for card_data in run.master_deck_as_html() %}
           {{ card_data | safe }}
         {% endfor %}
       </div>
     </section>
+
+    {% if run.removals %}
+    <section class="section">
+      <h4 class="title is-4">Cards Removed</h4>
+      <div class="cards">
+        {% for card_data in run.removals_as_html() %}
+          {{ card_data | safe }}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 
     <section class="section">
       <div class="charts">

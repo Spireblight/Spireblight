@@ -11,6 +11,7 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
+from nameinternal import get_card, get_card_metadata
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -106,6 +107,18 @@ class RunParser(FileParser):
         if hours:
             return f"{hours}:{minutes:>02}:{seconds:>02}"
         return f"{minutes:>02}:{seconds:>02}"
+
+    @property
+    def removals(self) -> list[str]:
+        event_removals = []
+        for event in self._data["event_choices"]:
+            event_removals.extend(event.get("cards_removed", []))                
+        
+        store_removals = self._data.get("items_purged", [])
+
+        # missing Empty Cage
+        all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
+        return all_removals
 
 @add_listener("setup_init")
 async def _setup_cache():

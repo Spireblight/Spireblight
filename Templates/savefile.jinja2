@@ -67,7 +67,7 @@
     <img src="/static/relics/{{ key | urlencode }}.png" alt="Gotten on floor {{ floor }}" title="Gotten on floor {{ floor }}" style="width:80px;height:80px">
     {% endfor %}
     <br>
-    {% for card_data in parser.cards_as_html() %}
+    {% for card_data in parser.master_deck_as_html() %}
     {{ card_data | safe }}
     {% endfor %}
     <br>

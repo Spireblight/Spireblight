@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from typing import Generator, TYPE_CHECKING
 
+import zipfile
 import time
 import json
 import os
+import io
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
 
@@ -29,6 +31,15 @@ def get_profile(x: int) -> Profile:
 
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
+
+def profile_from_request(req: Request) -> Profile:
+    try:
+        profile = get_profile(int(req.match_info["profile"]))
+    except KeyError:
+        raise HTTPNotFound()
+    except ValueError:
+        raise HTTPForbidden(reason="profile must be integer")
+    return profile
 
 class Profile:
     def __init__(self, index: int, data: dict[str, str]):
@@ -80,15 +91,36 @@ class Profile:
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
-    try:
-        prof = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
-    except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
+    profile = profile_from_request(req)
     from runs import _update_cache
     _update_cache()
-    return {"profile": prof}
+    return {"profile": profile}
+
+@router.get("/profile/{profile}/runs/{timestamp}.zip")
+@router.get("/profile/{profile}/runs.zip")
+async def runs_as_zipfile(req: Request) -> Response:
+    profile = profile_from_request(req)
+    from runs import _update_cache
+    _update_cache()
+    try:
+        timestamp = req.match_info.get("timestamp", "")
+        start, _, end = timestamp.partition("..")
+        start = int(start) if start else 0
+        end = int(end) if end else time.time()
+    except ValueError:
+        raise HTTPForbidden(reason="Timestamp must be integers if given.")
+    has_file = False
+
+    with io.BytesIO() as zfile:
+        with zipfile.ZipFile(zfile, mode="w") as archive:
+            for run in profile.runs:
+                if start <= run.timestamp.timestamp() <= end:
+                    archive.write(f"data/runs/{profile.index}/{run.filename}")
+                    has_file = True
+
+        if not has_file:
+            raise HTTPForbidden(reason="No run file matches the given range.")
+        return Response(body=zfile.getvalue(), content_type="application/zip")
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:
