@@ -21,7 +21,7 @@ __all__ = ["webpage", "router"]
 
 __version__ = "0.4"
 __author__ = "Anilyka Barry"
-__github__ = "https://github.com/Vgr255/TwitchCordBot"
+__github__ = "https://github.com/Spireblight/Spireblight"
 __botname__ = "Spireblight"
 
 webpage = web.Application(logger=logger)
