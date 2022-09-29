@@ -125,7 +125,6 @@ class Profile:
                 break
         return wins
 
-
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
