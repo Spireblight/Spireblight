@@ -11,7 +11,6 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
-from nameinternal import get_card, get_card_metadata
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
