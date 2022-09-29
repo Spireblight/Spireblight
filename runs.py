@@ -154,8 +154,8 @@ class RunParser(FileParser):
                             break
             loop_cached_runs("prev", True)
             loop_cached_runs("next", False)
-
-        return StreakInfo(streak_total, position_in_streak)
+            return StreakInfo(streak_total, position_in_streak)
+        return StreakInfo(0, 0)
 
 class StreakInfo(NamedTuple):
     streak: int
