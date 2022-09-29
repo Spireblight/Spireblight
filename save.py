@@ -10,7 +10,8 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
-from nameinternal import get_card, get_card_metadata
+from nameinternal import get_card
+from score.RunScore import RunScore
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic
@@ -224,6 +225,11 @@ class Savefile(FileParser):
         # missing Empty Cage
         all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
         return all_removals
+
+    def get_score(self) -> RunScore:
+        x = RunScore(self)
+        x.get_score_for_run()
+        return x
 
 _savefile = Savefile()
 

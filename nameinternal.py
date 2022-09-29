@@ -4,6 +4,7 @@ from collections import defaultdict
 
 import json
 import os
+from typing import Any
 
 from events import add_listener
 
@@ -11,8 +12,8 @@ __all__ = [
     "get_relic", "get_relic_stats",
     "get_card", "get_card_metadata",
     "get_potion", "get_event",
-    "query", 
-    "get_run_mod"
+    "query", "get_run_mod",
+    "get_score_bonus"
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -93,6 +94,9 @@ def get_relic_stats(name: str) -> list[str]:
 
 def get_run_mod(name: str) -> str:
     return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
+
+def get_score_bonus(name: str) -> Any:
+    return _cache["score_bonuses"][name]
 
 @add_listener("setup_init")
 async def load():

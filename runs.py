@@ -11,7 +11,7 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
-from nameinternal import get_card, get_card_metadata
+from score.RunScore import RunScore
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -118,7 +118,15 @@ class RunParser(FileParser):
 
         # missing Empty Cage
         all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
+        self.get_score()
         return all_removals
+
+    def get_score(self) -> RunScore:
+        x = RunScore(self)
+        x.get_score_for_run()
+        from pprint import pprint
+        pprint(vars(x))
+        return x
 
 @add_listener("setup_init")
 async def _setup_cache():
