@@ -88,43 +88,6 @@ class Profile:
             if _ts_cache[ts]._profile == self.index:
                 yield _ts_cache[ts]
 
-    @property
-    def rotating_streak(self) -> int:
-        """Return the number of wins in a row"""
-        wins = 0
-        for run in self.runs:
-            if run.won:
-                wins += 1
-            else:
-                break
-        return wins
-
-    @property
-    def ironclad_streak(self) -> int:
-        return self._get_character_streak("Ironclad")
-
-    @property
-    def silent_streak(self) -> int:
-        return self._get_character_streak("Silent")
-
-    @property
-    def defect_streak(self) -> int:
-        return self._get_character_streak("Defect")
-
-    @property
-    def watcher_streak(self) -> int:
-        return self._get_character_streak("Watcher")
-
-    def _get_character_streak(self, character: str) -> int:
-        runs = [run for run in self.runs if run.character == character]
-        wins = 0
-        for run in runs:
-            if run.won:
-                wins += 1
-            else:
-                break
-        return wins
-
 @router.get("/profile/{profile}/runs")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
