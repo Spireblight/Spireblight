@@ -14,13 +14,13 @@
             ongoing
           {% endif %}
         </div>
+        {% if run.won %}
         <div class="streak">
-          {% if run.won %}
             <h5 class="title is-5">Streak Info:</h5>
             <h6 class="title is-6">Rotating: {{ run.rotating_streak.position }}/{{ run.rotating_streak.streak }}</h5>
             <h6 class="title is-6">{{ run.character }}: {{ run.character_streak.position }}/{{ run.character_streak.streak }}</h6>
-          {% endif %}
         </div>
+        {% endif %}
         <div class="score">
           <div class="points">
             {% if run.done %}

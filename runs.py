@@ -138,20 +138,12 @@ class RunParser(FileParser):
 
             def loop_cached_runs(matched_key: str, should_iterate_position: bool):
                 nonlocal streak_total, position_in_streak
+                if is_character_streak:
+                    matched_key = matched_key + "_char"
                 if matched_key in self.matched:
                     current_run = self.matched[matched_key]
-                    while True:
-                        # ignore the run if it's a character streak but its a different character
-                        if (is_character_streak and self.character != current_run.character):
-                            if matched_key in current_run.matched:
-                                current_run = current_run.matched[matched_key]
-                                continue
-                            break
-
-                        # Streak is over, break out
-                        if not current_run.won:
-                            break
-
+                    while current_run.won:
+                        # iterate the streak
                         streak_total += 1
                         if should_iterate_position:
                             position_in_streak += 1
