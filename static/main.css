@@ -153,6 +153,11 @@ section.section {
   .run-title .extra {
     font-size: 0.75em;
   }
+
+  .run-title .streak {
+    display: block;
+    flex-grow: 1;
+  }
 }
 
 @media only screen and (max-width: 959px) {
