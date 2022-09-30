@@ -126,16 +126,22 @@ class RunParser(FileParser):
     @property
     def character_streak(self) -> StreakInfo:
         """Get the run position in the character streak."""
-        if self._character_streak is None:
-            self._character_streak = self._get_streak(is_character_streak=True)
-        return self._character_streak
+        streak = self._character_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=True)
+            if not streak.is_ongoing:
+                self._character_streak = streak
+        return streak
 
     @property
     def rotating_streak(self) -> StreakInfo:
         """Get the run position in the rotating streak."""
-        if self._rotating_streak is None:
-            self._rotating_streak = self._get_streak(is_character_streak=False)
-        return self._rotating_streak
+        streak = self._rotating_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=False)
+            if not streak.is_ongoing:
+                self._rotating_streak = streak
+        return streak
 
     def _get_streak(self, *, is_character_streak: bool) -> StreakInfo:
         if self.won:
