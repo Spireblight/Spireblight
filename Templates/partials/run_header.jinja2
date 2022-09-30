@@ -21,6 +21,13 @@
             <h6 class="title is-6">{{ run.character }}: {{ run.character_streak.position }}/{{ run.character_streak.streak }}</h6>
         </div>
         {% endif %}
+        {% if not run.done %}
+        <div class="streak">
+            <h5 class="title is-5">Streak Info:</h5>
+            <h6 class="title is-6">Current Rotating Streak: {{ run.rotating_streak }}</h5>
+            <h6 class="title is-6">Current {{ run.character }} Streak: {{ run.character_streak }}</h6>
+        </div>
+        {% endif %}
         <div class="score">
           <div class="points">
             {% if run.done %}
