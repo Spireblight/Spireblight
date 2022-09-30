@@ -226,6 +226,14 @@ class Savefile(FileParser):
         all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
         return all_removals
 
+    @property
+    def rotating_streak(self) -> int:
+        return get_latest_run(None, None).rotating_streak.streak
+
+    @property
+    def character_streak(self) -> int:
+        return get_latest_run(self.character, None).character_streak.streak
+
     def get_score(self) -> RunScore:
         x = RunScore(self)
         x.get_score_for_run()

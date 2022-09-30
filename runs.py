@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, NamedTuple
 
 import datetime
 import json
@@ -51,9 +51,13 @@ class RunParser(FileParser):
         super().__init__(data)
         self.filename = filename
         self.name, _, ext = filename.partition(".")
-        self.matched: dict[str, RunParser] = {}
+        # maybe consider creating a type for this so we can 
+        # say Matched.prev instead of having to know the keys
+        self.matched: dict[str, RunParser] = {} 
         self._character = data["character_chosen"]
         self._profile = profile
+        self._character_streak = None
+        self._rotating_streak = None
 
     @property
     def display_name(self) -> str:
@@ -127,6 +131,64 @@ class RunParser(FileParser):
         from pprint import pprint
         pprint(vars(x))
         return x
+
+    @property
+    def character_streak(self) -> StreakInfo:
+        """Get the run position in the character streak."""
+        streak = self._character_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=True)
+            if not streak.is_ongoing:
+                self._character_streak = streak
+        return streak
+
+    @property
+    def rotating_streak(self) -> StreakInfo:
+        """Get the run position in the rotating streak."""
+        streak = self._rotating_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=False)
+            if not streak.is_ongoing:
+                self._rotating_streak = streak
+        return streak
+
+    def _get_streak(self, *, is_character_streak: bool) -> StreakInfo:
+        if self.won:
+            streak_total = 1
+            position_in_streak = 1
+            is_ongoing = True
+
+            def loop_cached_runs(matched_key: str):
+                nonlocal streak_total, position_in_streak, is_ongoing
+                is_prev = matched_key == "prev"
+                if is_character_streak:
+                    matched_key = matched_key + "_char"
+                if matched_key in self.matched:
+                    current_run = self.matched[matched_key]
+                    while current_run.won:
+                        # iterate the streak
+                        streak_total += 1
+
+                        # only iterate the position if the Win came before the current run
+                        if is_prev:
+                            position_in_streak += 1
+
+                        if matched_key in current_run.matched:
+                            current_run = current_run.matched[matched_key]
+                        else:
+                            break
+                    does_upcoming_loss_exist = not is_prev and not current_run.won
+                    if does_upcoming_loss_exist:
+                        is_ongoing = False
+            loop_cached_runs("prev")
+            loop_cached_runs("next")
+            return StreakInfo(streak_total, position_in_streak, is_ongoing)
+        return StreakInfo(0, 0, False)
+
+class StreakInfo(NamedTuple):
+    streak: int
+    position: int
+    is_ongoing: bool
 
 @add_listener("setup_init")
 async def _setup_cache():
