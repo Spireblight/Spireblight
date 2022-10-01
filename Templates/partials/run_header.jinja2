@@ -14,20 +14,7 @@
             ongoing
           {% endif %}
         </div>
-        {% if run.won %}
-        <div class="streak">
-            <h5 class="title is-5">Streak Info:</h5>
-            <h6 class="title is-6">Rotating: {{ run.rotating_streak.position }}/{{ run.rotating_streak.streak }}</h5>
-            <h6 class="title is-6">{{ run.character }}: {{ run.character_streak.position }}/{{ run.character_streak.streak }}</h6>
-        </div>
-        {% endif %}
-        {% if not run.done %}
-        <div class="streak">
-            <h5 class="title is-5">Streak Info:</h5>
-            <h6 class="title is-6">Current Rotating Streak: {{ run.rotating_streak }}</h5>
-            <h6 class="title is-6">Current {{ run.character }} Streak: {{ run.character_streak }}</h6>
-        </div>
-        {% endif %}
+
         <div class="score">
           <div class="points">
             {% if run.done %}
@@ -39,7 +26,7 @@
               (A{{ run.ascension_level }})
             {% endif %}
           </div>
-          <div class="extra">
+          <div class="kills-bosses">
             {% if run.done %}
               {% if not run.won %}
                 Killed by {{ run.killed_by }} on floor {{ run.floor_reached }}
@@ -69,8 +56,49 @@
           {% endif %}
           <div>{{ run.seed }}</div>
         </div>
+
+        {% if run.won %}
+          <div class="streak">
+            {% if run.rotating_streak.streak == 1 %}
+              <div class="first">
+                First in rotating streak
+              </div>
+            {% else %}
+              <div>
+                <span class="big">{{ run.rotating_streak.position }}</span>
+                /
+                <span class="big">{{ run.rotating_streak.streak }}</span>
+                rotating
+              </div>
+              <div>
+                {{ run.character_streak.position }} / {{ run.character_streak.streak }}
+                {{ run.character }} streak
+              </div>
+            {% endif %}
+          </div>
+        {% elif not run.done %}
+          <div class="streak current">
+            <div>
+              {% if run.rotating_streak.streak <= 1 %}
+                No streak yet
+              {% else %}
+                <span class="big">{{ run.rotating_streak.streak }}</span> rotating
+              {% endif %}
+            </div>
+            {% if run.character_streak.streak > 1 %}
+              <div>
+                {{ run.character_streak.position }} {{ run.character }} streak
+              </div>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="streak lost">
+            no streak because ded :(
+          </div>
+        {% endif %}
+
         {% if run.modifiers %}
-          <i title="This was a Custom run. Check the Neow Bonus panel for Modifiers" 
+          <i title="This was a Custom run. Check the Neow Bonus panel for Modifiers"
             class="fa-solid fa-flask"></i>
         {% endif %}
         {% if run.modded %}

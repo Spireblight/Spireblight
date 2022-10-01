@@ -147,16 +147,34 @@ section.section {
   .run-title .score .points {
     font-size: 1.5em;
   }
-  .run-title .score .extra {
+  .run-title .score .kills-bosses {
+    font-size: 0.75em;
     display: block;
   }
   .run-title .extra {
     font-size: 0.75em;
+    border-right: 1px solid rgba(0,0,0,0.25);
+    padding-right: 1rem;
+    min-width: 7.5rem;
   }
-
   .run-title .streak {
     display: block;
-    flex-grow: 1;
+    font-size: 0.75em;
+    min-width: 7.5rem;
+    padding-left: 1rem;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .run-title .streak.lost {
+    font-size: 0.5em;
+    text-align: center;
+    opacity: 0.5;
+  }
+  .run-title .streak span.big {
+    font-size: 1.5em;
+  }
+  .run-title .streak .first {
+    text-align: center;
   }
 }
 
@@ -178,6 +196,9 @@ section.section {
   .run-header .title {
     font-size: 1em;
     margin-bottom: 0.5rem !important;
+  }
+  .run-header .streak.lost {
+    display: none;
   }
 }
 
