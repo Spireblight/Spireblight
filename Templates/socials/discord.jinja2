@@ -13,35 +13,36 @@
     </div>
   </section>
   <section class="section">
-    <section class="section">
-      <h1 class="title">
-        The Baalor Bunch
-      </h1>
-      <p>
-        The main Discord server. Come one, come all - for stream annoucements and
-        schedules, community game votes, a ton of cuties, and cozy vibes!
-      </p>
-      <div class="has-text-centered m-4">
-        <a href="{{ config.discord.invite_links.main }}" class="button is-large">
-          <i class="fa-brands fa-discord"></i>Join
-        </a>
+    <div class="columns">
+      <div class="column">
+        <h1 class="title">
+          The Baalor Bunch
+        </h1>
+        <p>
+          The main Discord server. Come one, come all - for stream annoucements and
+          schedules, community game votes, a ton of cuties, and cozy vibes!
+        </p>
+        <div class="has-text-centered m-4">
+          <a href="{{ config.discord.invite_links.main }}" class="button is-large">
+            <i class="fa-brands fa-discord"></i>Join
+          </a>
+        </div>
       </div>
-    </section>
-    <section class="section">
-      <h3 class="subtitle">
-        Baalorbot dev
-      </h3>
-      <p>
-        The development server. The source code for this page and the bot
-        <a href="{{ github }}" target="_blank">is open source</a>, and we
-        coordinate development on this server.
-      </p>
-      <div class="has-text-centered m-4">
-        <a href="{{ config.discord.invite_links.dev }}" class="button is-centered">
-          <i class="fa-brands fa-discord"></i>Join
-        </a>
+      <div class="column">
+        <h3 class="title is-4">
+          Baalorbot dev
+        </h3>
+        <p>
+          The development server. The source code for this page and the bot
+          <a href="{{ github }}" target="_blank">is open source</a>, and we
+          coordinate development on this server.
+        </p>
+        <div class="has-text-centered m-4">
+          <a href="{{ config.discord.invite_links.dev }}" class="button is-centered">
+            <i class="fa-brands fa-discord"></i>Join
+          </a>
+        </div>
       </div>
     </div>
-    </section>
   </section>
 {% endblock %}
