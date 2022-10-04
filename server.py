@@ -714,6 +714,7 @@ _ongoing_giveaway = {
     "running": False,
     "count": 0,
     "users": set(),
+    "starter": None,
 }
 
 @command("giveaway", flag="m")
@@ -722,14 +723,19 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
 
     if not _ongoing_giveaway["running"]:
         _ongoing_giveaway["running"] = True
+        _ongoing_giveaway["starter"] = ctx.author.name
         if count > 0:
             _ongoing_giveaway["count"] = count
         else:
             _ongoing_giveaway["count"] = 1
         await ctx.send(f"/announce A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
 
+    elif _ongoing_giveaway["starter"] != ctx.author.name:
+        await ctx.reply("Only the person who started the giveaway can resolve it!")
+
     else:
         _ongoing_giveaway["running"] = False
+        _ongoing_giveaway["starter"] = None
         _ongoing_giveaway["users"].discard(None) # just in case
         if not _ongoing_giveaway["users"]:
             await ctx.reply("uhhh, no one entered??")
@@ -742,10 +748,14 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
         else:
             await ctx.send(f"Congratulations to the following users for winning the giveaway: {', '.join(users)}")
 
-@command("enter")
+@command("enter", burst=25, rate=1.0)
 async def giveaway_enter(ctx: ContextType):
     """Enter into the current giveaway."""
     # it's a set, dupes won't do matter. don't respond to not spam
+    if not _ongoing_giveaway["running"]:
+        await ctx.reply("No giveaway is happening")
+        return
+
     _ongoing_giveaway["users"].add(ctx.author.name)
 
 @command("info", "cardinfo", "relicinfo")
