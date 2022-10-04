@@ -650,8 +650,7 @@ class FileParser(ABC):
             case "embed":
                 value: str = fig_to_html(fig)
                 plt.close(fig)
-                # XXX: Temporary hack until the new website design is in
-                return value.replace('"axesbg": "#FFFFFF"', f'"axesbg": "{config.website_bg}"')
+                return value
 
             case "image":
                 with io.BytesIO() as file:
