@@ -239,7 +239,7 @@ class TwitchConn(TBot):
             return await resp.json()
 
     async def eventsub_setup(self):
-        await self.loop.create_task(self.esclient.listen(port=4000))
+        self.loop.create_task(self.esclient.listen(port=4000))
 
         try:
             await self.esclient.subscribe_channel_stream_start(broadcaster=config.twitch.channel)
@@ -251,8 +251,8 @@ class TwitchConn(TBot):
         self.live_channels[config.twitch.channel] = live = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
         if live:
             try:
-                _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-                _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
+                await _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
+                await _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
             except RuntimeError: # already running; don't worry about it
                 pass
 
@@ -318,8 +318,8 @@ class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
         TConn.live_channels[evt.broadcaster.name] = True
         try:
-            _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-            _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
+            await _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
+            await _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
         except RuntimeError: # already running; don't worry about it
             pass
 
@@ -1284,7 +1284,7 @@ async def Twitch_startup():
             logger.error(f"Timer global error with {e}")
 
         if TConn.live_channels[config.twitch.channel]:
-            _global_timer.start(glob.commands, stop_on_error=False)
+            await _global_timer.start(glob.commands, stop_on_error=False)
 
     sponsored = config.baalorbot.timers.sponsored
     if sponsored.interval and sponsored.commands:
@@ -1298,7 +1298,7 @@ async def Twitch_startup():
             logger.error(f"Timer sponsored error with {e}")
 
         if TConn.live_channels[config.twitch.channel]:
-            _sponsored_timer.start(sponsored.commands, stop_on_error=False)
+            await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
 
     await TConn.connect()
 
