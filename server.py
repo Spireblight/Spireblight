@@ -239,7 +239,7 @@ class TwitchConn(TBot):
             return await resp.json()
 
     async def eventsub_setup(self):
-        self.loop.create_task(self.esclient.listen(port=4000))
+        await self.loop.create_task(self.esclient.listen(port=4000))
 
         try:
             await self.esclient.subscribe_channel_stream_start(broadcaster=config.twitch.channel)
@@ -248,7 +248,13 @@ class TwitchConn(TBot):
             pass
 
     async def event_ready(self):
-        self.live_channels[config.twitch.channel] = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
+        self.live_channels[config.twitch.channel] = live = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
+        if live:
+            try:
+                _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
+                _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
+            except RuntimeError: # already running; don't worry about it
+                pass
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
