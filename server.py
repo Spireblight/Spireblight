@@ -1269,7 +1269,7 @@ async def Twitch_startup():
         config.server.websocket_client.secret,
         prefix=config.baalorbot.prefix
     )
-    TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/callback")
+    TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/eventsub")
     await TConn.eventsub_setup()
 
     glob = config.baalorbot.timers.globals

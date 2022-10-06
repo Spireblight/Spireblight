@@ -134,6 +134,10 @@ async def redirected_totals(req: web.Request):
         lines.append(f"{name:>8} :: {count} redirects")
     return web.Response(text="\n".join(lines))
 
+@router.post("/eventsub")
+async def eventsub_redirect(req: web.Request):
+    raise web.HTTPFound("http://127.0.0.1:4000")
+
 router.static("/static", os.path.join(os.getcwd(), "static"))
 
 @events.add_listener("setup_init")
