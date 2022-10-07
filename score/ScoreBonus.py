@@ -308,7 +308,7 @@ class LightSpeed(ScoreBonus):
         super().__init__("Light Speed")
     
     def bonus_for_run(self, save: Savefile):
-        """Victory in under 60 minutes."""
+        """Victory in under 45 minutes."""
         if save._data.get("metric_playtime", 0) < 2700:
             return 50
         return 0

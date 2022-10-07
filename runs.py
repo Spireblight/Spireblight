@@ -11,7 +11,6 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
-from score.RunScore import RunScore
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
