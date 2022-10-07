@@ -24,15 +24,13 @@ class RunScore:
         self.general_bonuses.append(Highlander())
         self.general_bonuses.append(Poopy())
 
-        # These should go in descending order so we can stop when we hit a success
+        # Each sublist should go in descending order so we can stop when we hit a success
         self.bonus_exclusions: list[list[ScoreBonus]] = []
-        self.bonus_exclusions.append(
-            [BeyondPerfect(), Perfect()],
-            [Encyclopedian(), Librarian()],
-            [Stuffed(), WellFed()],
-            [ILikeGold(), RainingMoney(), MoneyMoney()],
-            [LightSpeed(), Speedster()]
-        )
+        self.bonus_exclusions.append([BeyondPerfect(), Perfect()])
+        self.bonus_exclusions.append([Encyclopedian(), Librarian()])
+        self.bonus_exclusions.append([Stuffed(), WellFed()])
+        self.bonus_exclusions.append([ILikeGold(), RainingMoney(), MoneyMoney()])
+        self.bonus_exclusions.append([LightSpeed(), Speedster()])
 
     def get_score_for_run(self, run: Savefile) -> int:
         score = 0
