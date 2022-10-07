@@ -1315,7 +1315,7 @@ class NodeData:
 def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
     """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
     prefix = parser.prefix
-    on_map = iter(parser._data[prefix + "path_taken"])
+    on_map = parser._data[prefix + "path_taken"]
     # maybe_cached will not be None if this is a savefile we're iterating through
     # which means we already know previous floors, so just use that.
     # to be safe, regenerate the last floor, since it might have changed
@@ -1328,16 +1328,18 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
     taken_len = len(parser._data[prefix + "path_taken"])
     actual_len = len([x for x in parser._data[prefix + "path_per_floor"] if x is not None])
     last_changed = 0
+    offset = 1
     for floor, actual in enumerate(parser._data[prefix + "path_per_floor"], 1):
         iterate = True
         # Slay the Streamer boss pick
-        if actual_len < taken_len and actual == "T" and floor == last_changed + 10:
-            actual_len += 1 # keep track
+        if actual_len > taken_len and actual == "T" and floor == last_changed + 10:
+            taken_len += 1 # keep track
+            offset += 1
             iterate = False
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
         if iterate and node[0] is not None:
-            node[1] = next(on_map)
+            node[1] = on_map[floor-offset]
 
         nodes.append(node)
 
