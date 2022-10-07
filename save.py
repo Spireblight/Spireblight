@@ -234,11 +234,6 @@ class Savefile(FileParser):
     def character_streak(self) -> int:
         return get_latest_run(self.character, None).character_streak.streak
 
-    def get_score(self) -> RunScore:
-        x = RunScore(self)
-        x.get_score_for_run()
-        return x
-
 _savefile = Savefile()
 
 def _truthy(x: str | None) -> bool:

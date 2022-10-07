@@ -122,15 +122,7 @@ class RunParser(FileParser):
 
         # missing Empty Cage
         all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
-        self.get_score()
         return all_removals
-
-    def get_score(self) -> RunScore:
-        x = RunScore(self)
-        x.get_score_for_run()
-        from pprint import pprint
-        pprint(vars(x))
-        return x
 
     @property
     def character_streak(self) -> StreakInfo:

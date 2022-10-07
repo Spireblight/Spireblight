@@ -107,12 +107,22 @@ class BossesSlain(ScoreBonus):
         # do this based on floor number or path == "BOSS"?
         return 0
 
+class Perfect(ScoreBonus):
+    def __init__(self):
+        super().__init__("Perfect")
+    
+    def bonus_for_run(self, save: Savefile):
+        """Return 50 points for each boss perfected.""" 
+        if save._data.get("perfect", 0) < 3:
+            return 50
+        return 0
+
 class BeyondPerfect(ScoreBonus):
     def __init__(self):
         super().__init__("Beyond Perfect")
     
     def bonus_for_run(self, save: Savefile):
-        """Return 50 points for each boss perfected, if 3 or more, return 200.""" 
+        """Return 200 points if 3+ bosses perfected.""" 
         if save._data.get("perfect", 0) >= 3:
             return 200
         return 0
