@@ -240,10 +240,11 @@ class TwitchConn(TBot):
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
+        channel = await self.fetch_users([config.twitch.channel])
 
         try:
-            await self.esclient.subscribe_channel_stream_start(broadcaster=config.twitch.channel)
-            await self.esclient.subscribe_channel_stream_end(broadcaster=config.twitch.channel)
+            await self.esclient.subscribe_channel_stream_start(broadcaster=channel[0])
+            await self.esclient.subscribe_channel_stream_end(broadcaster=channel[0])
         except HTTPException:
             pass
 
