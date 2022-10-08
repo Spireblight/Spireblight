@@ -15543,158 +15543,138 @@
     "score_bonuses": [
         {
             "name": "Alchemist",
-            "description": "Bought 5 potions.",
-            "bonus": 0
+            "description": "Bought 5 potions."
         },
         {
             "name": "Ascension",
-            "description": "+5% score per Ascension Level.",
-            "bonus": 0
+            "description": "+5% score per Ascension Level."
         },
         {
             "name": "Beyond Elites Killed",
-            "description": "",
-            "bonus": 0
+            "description": ""
         },
         {
             "name": "Beyond Perfect",
-            "description": "Defeat 3 bosses without taking damage.",
-            "bonus": 200
+            "description": "Defeat 3 bosses without taking damage."
         },
         {
             "name": "Bosses Slain",
-            "description": "",
-            "bonus": 0
+            "description": ""
         },
         {
             "name": "Champion",
-            "description": "Defeat an Elite without taking damage.",
-            "bonus": 0
+            "description": "Defeat an Elite without taking damage."
         },
         {
             "name": "Cheater",
-            "description": "Caught cheating. If caught twice, your score will never upload to the Leaderboards.",
-            "bonus": 0
+            "description": "Caught cheating. If caught twice, your score will never upload to the Leaderboards."
         },
         {
             "name": "City Elites Killed",
-            "description": "",
-            "bonus": 0
+            "description": ""
         },
         {
             "name": "Collector",
-            "description": "Have 4 copies of any non-starter card.",
-            "bonus": 25
+            "description": "Have 4 copies of any non-starter card."
         },
         {
             "name": "C-c-c-combo",
             "description": "Play 20 cards in a single turn.",
-            "bonus": 25
+            "internal": "Combo"
         },
         {
             "name": "Curses!",
             "description": "Your deck contains 5 curses.",
-            "bonus": 100
+            "internal": "Curses"
         },
         {
             "name": "Encyclopedian",
-            "description": "Deck size of at least 50 cards.",
-            "bonus": 50
+            "description": "Deck size of at least 50 cards."
+        },
+        {
+            "name": "Enemies Killed",
+            "description": "For each Monster encounter defeated."
         },
         {
             "name": "Exordium Elites Killed",
-            "description": "",
-            "bonus": 0
+            "description": ""
+        },
+        {
+            "name": "Floors Climbed",
+            "description": "Number of the Floor you reached."
         },
         {
             "name": "Heartbreaker",
-            "description": "Defeat the Heart.",
-            "bonus": 250
+            "description": "Defeat the Heart."
         },
         {
             "name": "Highlander",
-            "description": "Your deck contains no duplicates (excluding starter cards).",
-            "bonus": 100
+            "description": "Your deck contains no duplicates (excluding starter cards)."
         },
         {
             "name": "I Like Gold",
-            "description": "Accrued 3,000 gold.",
-            "bonus": 75
+            "description": "Accrued 3,000 gold."
         },
         {
             "name": "Librarian",
-            "description": "Deck size of at least 35 cards.",
-            "bonus": 25
+            "description": "Deck size of at least 35 cards."
         },
         {
             "name": "Light Speed",
-            "description": "Victory in under 45 minutes.",
-            "bonus": 50
+            "description": "Victory in under 45 minutes."
         },
         {
             "name": "Minimalist",
-            "description": "Removed 5+ cards from your deck.",
-            "bonus": 0
+            "description": "Removed 5+ cards from your deck."
         },
         {
             "name": "Money Money",
-            "description": "Accrued 1,000 gold.",
-            "bonus": 25
+            "description": "Accrued 1,000 gold."
         },
         {
             "name": "Mystery Machine",
-            "description": "Traveled to 15+ ? rooms.",
-            "bonus": 25
+            "description": "Traveled to 15+ ? rooms."
         },
         {
             "name": "On My Own Terms",
-            "description": "Killed yourself.",
-            "bonus": 0
+            "description": "Killed yourself."
         },
         {
             "name": "Overkill",
-            "description": "Deal 99 damage with a single attack.",
-            "bonus": 25
+            "description": "Deal 99 damage with a single attack."
         },
         {
             "name": "Pauper",
-            "description": "Have 0 rare cards.",
-            "bonus": 50
+            "description": "Have 0 rare cards."
         },
         {
             "name": "Perfect",
-            "description": "Defeat a Boss without taking damage.",
-            "bonus": 0
+            "description": "Defeat a Boss without taking damage."
         },
         {
             "name": "Poopy",
-            "description": "Received the Spirit Poop.",
-            "bonus": -1
+            "description": "Received the Spirit Poop."
         },
         {
             "name": "Raining Money",
-            "description": "Accrued 2,000 gold.",
-            "bonus": 50
+            "description": "Accrued 2,000 gold."
         },
         {
             "name": "I Like Shiny",
             "description": "Have 25+ relics.",
-            "bonus": 50
+            "internal": "Shiny"
         },
         {
             "name": "Speedster",
-            "description": "Victory in under 60 minutes.",
-            "bonus": 25
+            "description": "Victory in under 60 minutes."
         },
         {
             "name": "Stuffed",
-            "description": "Increased your Max HP by 30+.",
-            "bonus": 50
+            "description": "Increased your Max HP by 30+."
         },
         {
             "name": "Well Fed",
-            "description": "Increased your Max HP by 15+.",
-            "bonus": 25
+            "description": "Increased your Max HP by 15+."
         }
     ]
 }

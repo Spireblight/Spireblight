@@ -10,13 +10,13 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
-from score.ScoreBonus import *
 from nameinternal import get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic
 from webpage import router
 from logger import logger
+from score import score as _s
 from utils import get_req_data
 from runs import get_latest_run
 
@@ -242,29 +242,29 @@ class Savefile(FileParser):
     def score_breakdown(self) -> list[str]:
         return [bonus.get_format_string() for bonus in self._get_score_bonuses()]
 
-    def _get_score_bonuses(self) -> list[ScoreBonus]:
-        score_bonuses: list[ScoreBonus] = []
-        score_bonuses.append(get_floors_climbed_bonus(self))
-        score_bonuses.append(get_enemies_killed_bonus(self))
-        score_bonuses.append(get_act1_elites_killed_bonus(self))
-        score_bonuses.append(get_act2_elites_killed_bonus(self))
-        score_bonuses.append(get_act3_elites_killed_bonus(self))
-        score_bonuses.append(get_champions_bonus(self))
-        score_bonuses.append(get_bosses_slain_bonus(self))
-        score_bonuses.append(get_perfect_bosses_bonus(self))
-        score_bonuses.append(get_overkill_bonus(self))
-        score_bonuses.append(get_combo_bonus(self))
-        score_bonuses.append(get_ascension_score_bonus(self))
-        score_bonuses.append(get_collector_bonus(self))
-        score_bonuses.append(get_deck_bonus(self))
-        score_bonuses.append(get_mystery_machine_bonus(self))
-        score_bonuses.append(get_shiny_bonus(self))
-        score_bonuses.append(get_max_hp_bonus(self))
-        score_bonuses.append(get_gold_bonus(self))
-        score_bonuses.append(get_pauper_bonus(self))
-        score_bonuses.append(get_curses_bonus(self))
-        score_bonuses.append(get_highlander_bonus(self))
-        score_bonuses.append(get_poopy_bonus(self))
+    def _get_score_bonuses(self) -> list[_s.ScoreBonus]:
+        score_bonuses: list[_s.ScoreBonus] = []
+        score_bonuses.append(_s.get_floors_climbed_bonus(self))
+        score_bonuses.append(_s.get_enemies_killed_bonus(self))
+        score_bonuses.append(_s.get_act1_elites_killed_bonus(self))
+        score_bonuses.append(_s.get_act2_elites_killed_bonus(self))
+        score_bonuses.append(_s.get_act3_elites_killed_bonus(self))
+        score_bonuses.append(_s.get_champions_bonus(self))
+        score_bonuses.append(_s.get_bosses_slain_bonus(self))
+        score_bonuses.append(_s.get_perfect_bosses_bonus(self))
+        score_bonuses.append(_s.get_overkill_bonus(self))
+        score_bonuses.append(_s.get_combo_bonus(self))
+        score_bonuses.append(_s.get_ascension_score_bonus(self))
+        score_bonuses.append(_s.get_collector_bonus(self))
+        score_bonuses.append(_s.get_deck_bonus(self))
+        score_bonuses.append(_s.get_mystery_machine_bonus(self))
+        score_bonuses.append(_s.get_shiny_bonus(self))
+        score_bonuses.append(_s.get_max_hp_bonus(self))
+        score_bonuses.append(_s.get_gold_bonus(self))
+        score_bonuses.append(_s.get_pauper_bonus(self))
+        score_bonuses.append(_s.get_curses_bonus(self))
+        score_bonuses.append(_s.get_highlander_bonus(self))
+        score_bonuses.append(_s.get_poopy_bonus(self))
         return score_bonuses
 
     @property
