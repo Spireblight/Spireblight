@@ -10,6 +10,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
 
+from score.ScoreBonus import *
 from nameinternal import get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
@@ -232,6 +233,79 @@ class Savefile(FileParser):
     @property
     def character_streak(self) -> int:
         return get_latest_run(self.character, None).character_streak.streak
+
+    @property
+    def score(self) -> int:
+        return sum(bonus.score_bonus for bonus in self._get_score_bonuses())
+
+    @property
+    def score_breakdown(self) -> list[str]:
+        return [bonus.get_format_string() for bonus in self._get_score_bonuses()]
+
+    def _get_score_bonuses(self) -> list[ScoreBonus]:
+        score_bonuses: list[ScoreBonus] = []
+        score_bonuses.append(get_floors_climbed_bonus(self))
+        score_bonuses.append(get_enemies_killed_bonus(self))
+        score_bonuses.append(get_act1_elites_killed_bonus(self))
+        score_bonuses.append(get_act2_elites_killed_bonus(self))
+        score_bonuses.append(get_act3_elites_killed_bonus(self))
+        score_bonuses.append(get_champions_bonus(self))
+        score_bonuses.append(get_bosses_slain_bonus(self))
+        score_bonuses.append(get_perfect_bosses_bonus(self))
+        score_bonuses.append(get_overkill_bonus(self))
+        score_bonuses.append(get_combo_bonus(self))
+        score_bonuses.append(get_ascension_score_bonus(self))
+        score_bonuses.append(get_collector_bonus(self))
+        score_bonuses.append(get_deck_bonus(self))
+        score_bonuses.append(get_mystery_machine_bonus(self))
+        score_bonuses.append(get_shiny_bonus(self))
+        score_bonuses.append(get_max_hp_bonus(self))
+        score_bonuses.append(get_gold_bonus(self))
+        score_bonuses.append(get_pauper_bonus(self))
+        score_bonuses.append(get_curses_bonus(self))
+        score_bonuses.append(get_highlander_bonus(self))
+        score_bonuses.append(get_poopy_bonus(self))
+        return score_bonuses
+
+    @property
+    def monsters_killed(self) -> int:
+        return self._data.get("monsters_killed", 0)
+
+    @property
+    def act1_elites_killed(self) -> int:
+        return self._data.get("elites1_killed", 0)
+
+    @property
+    def act2_elites_killed(self) -> int:
+        return self._data.get("elites2_killed", 0)
+
+    @property
+    def act3_elites_killed(self) -> int:
+        return self._data.get("elites3_killed", 0)
+
+    @property
+    def perfect_elites(self) -> int:
+        return self._data.get("champions", 0)
+
+    @property
+    def perfect_bosses(self) -> int:
+        return self._data.get("perfect", 0)
+
+    @property
+    def has_overkill(self) -> int:
+        return self._data.get("overkill", False)
+
+    @property
+    def mystery_machine_counter(self) -> int:
+        return self._data.get("mystery_machine", 0)
+
+    @property
+    def total_gold_gained(self) -> int:
+        return self._data.get("gold_gained", 0)
+
+    @property
+    def has_combo(self) -> int:
+        return self._data.get("combo", False)
 
 _savefile = Savefile()
 

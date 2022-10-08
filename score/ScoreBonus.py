@@ -1,46 +1,29 @@
 from nameinternal import get_card_metadata, get_score_bonus
 from collections import Counter, namedtuple
 from save import Savefile
-from abc import ABC, abstractmethod
 
-# In general, these should only be needed for the Ongoing run
-# If for a completed run, use RunHistoryPlus's score_breakdown field
-class ScoreBonus(ABC):
+class ScoreBonus():
     def __init__(self, name: str):
-        data = get_score_bonus(name)
-        self.name = data["NAME"]
+        self.name = ""
+        self.format_string = ""
         self.description = ""
-        if data["DESCRIPTIONS"]:
-            self.description = data["DESCRIPTIONS"][0]
+        self.score_bonus = 0
 
-    def __init__(self, name: str, description: str) -> None:
-        self.name = name
-        self.description = description
+        if name:
+            data = get_score_bonus(name)
+            self.name = data["NAME"]
+            if data["DESCRIPTIONS"]:
+                self.description = data["DESCRIPTIONS"][0]
 
-    @abstractmethod
-    def bonus_for_run(self, save: Savefile):
-        raise NotImplementedError
+    def get_format_string(self) -> str:
+        if self.format_string:
+            return self.format_string
+        else:
+            return f'{self.name}: {self.score_bonus}'
 
-    def get_starting_max_hp(self, save: Savefile):
-        max_hp_tuple = namedtuple("MaxHP", ["base_max_hp", "asc_max_hp_loss"])
-        max_hp_dict = {
-            "Ironclad": max_hp_tuple(80, 5),
-            "Silent": max_hp_tuple(70, 4),
-            "Defect": max_hp_tuple(75, 4),
-            "Watcher": max_hp_tuple(72, 4)
-        }
-
-        character_max_hp = max_hp_dict[save.character].base_max_hp
-        if save.ascension_level >= 14:
-            character_max_hp -= max_hp_dict[save.character].asc_max_hp_loss
-
-        return character_max_hp
-
-class Ascension(ScoreBonus):
-    def __init__(self):
-        super().__init__("Ascension")
-
-    def bonus_for_run(self, save: Savefile):
+def get_ascension_score_bonus(save: Savefile) -> ScoreBonus:
+    bonus = ScoreBonus("Ascension")
+    if save.ascension_level > 0:
         # Only applies to the score from the following bonuses:
         # Floors Climbed
         # Enemies Killed
@@ -51,280 +34,243 @@ class Ascension(ScoreBonus):
         # Beyond Perfect
         # Overkill
         # C-c-c-combo.
-        return 0
+        bonuses_total = 0
+        bonuses_total += get_floors_climbed_bonus(save).score_bonus
+        bonuses_total += get_enemies_killed_bonus(save).score_bonus
+        bonuses_total += get_act1_elites_killed_bonus(save).score_bonus
+        bonuses_total += get_act2_elites_killed_bonus(save).score_bonus
+        bonuses_total += get_act3_elites_killed_bonus(save).score_bonus
+        bonuses_total += get_bosses_slain_bonus(save).score_bonus
+        bonuses_total += get_champions_bonus(save).score_bonus
+        bonuses_total += get_perfect_bosses_bonus(save).score_bonus
+        bonuses_total += get_overkill_bonus(save).score_bonus
+        bonuses_total += get_combo_bonus(save).score_bonus
+        score = round(bonuses_total * 0.05 * save.ascension_level)
+        bonus.format_string = f'Ascension ({save.ascension_level}): {score}'
+        bonus.score_bonus = score
+    return bonus
 
-class FloorsClimbed(ScoreBonus):
-    def __init__(self):
-        super().__init__("Floors Climbed", "Number of the Floor you reached")
+def get_floors_climbed_bonus(save: Savefile) -> ScoreBonus:
+    bonus = ScoreBonus()
+    bonus.name = "Floors Climbed"
+    bonus.description = "Five points for each Floor you reached"
+    score = 5 * (save.current_floor - 1) # will need to do more testing if this is current-1 or just current
+    bonus.format_string = f'Floors Climbed ({save.current_floor - 1}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-    def bonus_for_run(self, save: Savefile):
-        return 5 * save.current_floor
+def get_enemies_killed_bonus(save: Savefile) -> ScoreBonus:
+    bonus = ScoreBonus()
+    bonus.name = "Enemies Killed"
+    bonus.description = "Two points for each Monster encounter defeated"
+    score = 2 * save.monsters_killed
+    bonus.format_string = f'Enemies Slain ({save.monsters_killed}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-class EnemiesKilled(ScoreBonus):
-    def __init__(self):
-        super().__init__("Enemies Killed", "For each Monster encounter defeated")
+def get_act1_elites_killed_bonus(save: Savefile) -> ScoreBonus:
+    """Get 10 points for each elite killed."""
+    bonus = ScoreBonus("Exordium Elites Killed")
+    score = 10 * save.act1_elites_killed
+    bonus.format_string = f'Exordium Elites Killed ({save.act1_elites_killed}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-    def bonus_for_run(self, save: Savefile):
-        return 2 * save._data.get("monsters_killed", 0)
+def get_act2_elites_killed_bonus(save: Savefile) -> ScoreBonus:
+    """Get 20 points for each elite killed."""
+    bonus = ScoreBonus("City Elites Killed")
+    score = 20 * save.act2_elites_killed
+    bonus.format_string = f'City Elites Killed ({save.act2_elites_killed}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-class ExordiumElitesKilled(ScoreBonus):
-    def __init__(self):
-        super().__init__("Exordium Elites Killed")
+def get_act3_elites_killed_bonus(save: Savefile) -> ScoreBonus:
+    """Get 30 points for each elite killed."""
+    bonus = ScoreBonus("Beyond Elites Killed")
+    score = 30 * save.act3_elites_killed
+    bonus.format_string = f'Beyond Elites Killed ({save.act3_elites_killed}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-    def bonus_for_run(self, save: Savefile):
-        """Return 10 points for each elite killed."""
-        return 10 * save._data.get("elites1_killed", 0)
+def get_champions_bonus(save: Savefile) -> ScoreBonus:
+    """Get 25 points for each elite perfected."""
+    bonus = ScoreBonus("Champion")
+    score = 25 * save.perfect_elites
+    bonus.format_string = f'Champion ({save.perfect_elites}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-class CityElitesKilled(ScoreBonus):
-    def __init__(self):
-        super().__init__("City Elites Killed")
+def get_bosses_slain_bonus(save: Savefile) -> ScoreBonus:
+    """Get 25 points for each boss killed."""
+    bonus = ScoreBonus("Bosses Slain")
+    boss_nodes = sum(1 for node in save.path if node.room_type == "Boss")
+    score = 0
+    match boss_nodes:
+        case 1:
+            score = 50
+        case 2:
+            score = 150
+        case 3:
+            score = 300
+        case 4:
+            score = 500
+        case 5:
+            score = 750
+    bonus.format_string = f'Bosses Slain ({boss_nodes}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-    def bonus_for_run(self, save: Savefile):
-        """Return 20 points for each elite killed."""
-        return 20 * save._data.get("elites2_killed", 0)
+def get_perfect_bosses_bonus(save: Savefile) -> ScoreBonus:
+    """Get 50 points for each boss perfected, if 3 or more return 200."""
+    if save.perfect_bosses >= 3:
+        bonus = ScoreBonus("Beyond Perfect")
+        score = 200
+        bonus.format_string = f'Beyond Perfect: {score}'
+    else:
+        bonus = ScoreBonus("Perfect")
+        score = 50 * save.perfect_bosses
+        bonus.format_string = f'Perfect ({save.perfect_bosses}): {score}'
 
-class BeyondElitesKilled(ScoreBonus):
-    def __init__(self):
-        super().__init__("Beyond Elites Killed")
+    bonus.score_bonus = score
+    return bonus
 
-    def bonus_for_run(self, save: Savefile):
-        """Return 30 points for each elite killed."""
-        return 30 * save._data.get("elites3_killed", 0)
+def get_collector_bonus(save: Savefile) -> ScoreBonus:
+    """Get 25 points for each non-starter card with 4 copies."""
+    bonus = ScoreBonus("Collector")
+    card_dict = dict(Counter(save.cards))
+    nonstarter_cards = [key for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter"]
+    score = 25 * len(nonstarter_cards)
+    bonus.format_string = f'Collector ({len(nonstarter_cards)}): {score}'
+    bonus.score_bonus = score
+    return bonus
 
-class Champion(ScoreBonus):
-    def __init__(self):
-        super().__init__("Champion")
+def get_deck_bonus(save: Savefile) -> ScoreBonus:
+    """Get points depending on how big the deck is."""
+    size = len(list(save.cards))
+    if size >= 50:
+        bonus = ScoreBonus("Encyclopedian")
+        bonus.score_bonus = 50
+    elif size >= 35:
+        bonus = ScoreBonus("Librarian")
+        bonus.score_bonus = 25
+    else:
+        bonus = ScoreBonus()
+    return bonus
+
+def get_overkill_bonus(save: Savefile) -> ScoreBonus:
+    """Deal 99 damage with a single attack."""
+    bonus = ScoreBonus("Overkill")
+    score = 0
+    if save.has_overkill:
+        score = 25
+    bonus.score_bonus = score
+    return bonus
+
+def get_mystery_machine_bonus(save: Savefile) -> ScoreBonus:
+    """Traveled to 15+ ? rooms."""
+    bonus = ScoreBonus("Mystery Machine")
+    score = 0
+    if save.mystery_machine_counter >= 15:
+        score = 25
+    bonus.score_bonus = score
+    return bonus
+
+def get_shiny_bonus(save: Savefile) -> ScoreBonus:
+    """Have 25 or more Relics."""
+    bonus = ScoreBonus("Shiny")
+    score = 0
+    if len(list(save.relics)) >= 25:
+        score = 50
+    bonus.score_bonus = score
+    return bonus
+
+def get_max_hp_bonus(save: Savefile) -> ScoreBonus:
+    """Get points based on how much max HP gained"""
+    max_hp_tuple = namedtuple("MaxHP", ["base_max_hp", "asc_max_hp_loss"])
+    max_hp_dict = {
+        "Ironclad": max_hp_tuple(80, 5),
+        "Silent": max_hp_tuple(70, 4),
+        "Defect": max_hp_tuple(75, 4),
+        "Watcher": max_hp_tuple(72, 4)
+    }
+
+    character_starting_max_hp = max_hp_dict[save.character].base_max_hp
+    if save.ascension_level >= 14:
+        character_starting_max_hp -= max_hp_dict[save.character].asc_max_hp_loss
+
+    max_hp_gain = save.max_health - character_starting_max_hp
+    if max_hp_gain >= 30:
+        bonus = ScoreBonus("Stuffed")
+        bonus.score_bonus = 50
+    elif max_hp_gain >= 15:
+        bonus = ScoreBonus("Well Fed")
+        bonus.score_bonus = 25
+    else:
+        bonus = ScoreBonus()
+    return bonus
+
+def get_gold_bonus(save: Savefile) -> ScoreBonus:
+    """Get points based on how much accrued gold."""
+    if save.total_gold_gained >= 3000:
+        bonus = ScoreBonus("I Like Gold")
+        bonus.score_bonus = 75
+    elif save.total_gold_gained >= 2000:
+        bonus = ScoreBonus("Raining Money")
+        bonus.score_bonus = 50
+    elif save.total_gold_gained >= 1000:
+        bonus = ScoreBonus("Money Money")
+        bonus.score_bonus = 25
+    else:
+        bonus = ScoreBonus()
+    return bonus
+
+def get_combo_bonus(save: Savefile) -> ScoreBonus:
+    """Play 20 cards in a single turn."""
+    bonus = ScoreBonus("Combo")
+    score = 0
+    if save.has_combo:
+        score = 25
+    bonus.score_bonus = score
+    return bonus
+
+def get_pauper_bonus(save: Savefile) -> ScoreBonus:
+    """Have 0 rare cards."""
+    bonus = ScoreBonus("Pauper")
+    score = 0
+    rare_cards = [card for card in save.cards if get_card_metadata(card)["RARITY"] == "Rare"]
+    if not rare_cards:
+        score = 50
+    bonus.score_bonus = score
+    return bonus
+
+def get_curses_bonus(save: Savefile) -> ScoreBonus:
+    """Your deck contains 5 curses."""
+    bonus = ScoreBonus("Curses")
+    score = 0
+    curses = [card for card in save.cards if get_card_metadata(card)["CHARACTER"] == "Curse"]
+    if len(curses) >= 5:
+        score = 100
+    bonus.score_bonus = score
+    return bonus
+
+def get_highlander_bonus(save: Savefile) -> ScoreBonus:
+    """Your deck contains no duplicates."""
+    bonus = ScoreBonus("Highlander")
+    score = 0
+    card_dict = dict(Counter(save.cards))
+    multiple_copies = [key for key, value in card_dict.items() if value > 1 and get_card_metadata(key)["RARITY"] != "Starter"]
+    if not multiple_copies:
+        score = 100
+    bonus.score_bonus = score
+    return bonus
+
+def get_poopy_bonus(save: Savefile) -> ScoreBonus:
+    """Possess Spirit Poop."""
+    bonus = ScoreBonus("Poopy")
+    score = 0
+    relics = [relic.name for relic in save.relics]
+    if "Spirit Poop" in relics:
+        score = -1
+    bonus.score_bonus = score
+    return bonus
     
-    def bonus_for_run(self, save: Savefile):
-        """Return 25 points for each elite perfected.""" 
-        return 25 * save._data.get("champions", 0)
-
-class BossesSlain(ScoreBonus):
-    def __init__(self):
-        super().__init__("Bosses Slain")
-
-    def bonus_for_run(self, save: Savefile):
-        # do this based on floor number or path == "BOSS"?
-        return 0
-
-class Perfect(ScoreBonus):
-    def __init__(self):
-        super().__init__("Perfect")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Return 50 points for each boss perfected.""" 
-        if save._data.get("perfect", 0) < 3:
-            return 50
-        return 0
-
-class BeyondPerfect(ScoreBonus):
-    def __init__(self):
-        super().__init__("Beyond Perfect")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Return 200 points if 3+ bosses perfected.""" 
-        if save._data.get("perfect", 0) >= 3:
-            return 200
-        return 0
-
-class Collector(ScoreBonus):
-    def __init__(self):
-        super().__init__("Collector")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Have 4 copies of any non-starter card.""" 
-        card_dict = dict(Counter(save.cards))
-        nonstarter_cards = [key for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter"]
-        return 25 * len(nonstarter_cards)
-
-class Librarian(ScoreBonus):
-    def __init__(self):
-        super().__init__("Librarian")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Deck size greater than 35 cards.""" 
-        if len(list(save.cards)) > 35:
-            return 25
-        return 0
-    
-class Encyclopedian(ScoreBonus):
-    def __init__(self):
-        super().__init__("Encyclopedian")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Deck size greater than 50 cards.""" 
-        if len(list(save.cards)) > 50:
-            return 50
-        return 0
-
-class Overkill(ScoreBonus):
-    def __init__(self):
-        super().__init__("Overkill")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Deal 99 damage with a single attack.""" 
-        if save._data.get("overkill", False):
-            return 25
-        return 0
-
-class MysteryMachine(ScoreBonus):
-    def __init__(self):
-        super().__init__("Mystery Machine")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Visited 15+ events.""" 
-        if save._data.get("mystery_machine", 0) >= 15:
-            return 25
-        return 0
-
-class ILikeShiny(ScoreBonus):
-    def __init__(self):
-        super().__init__("Shiny")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Has 25+ relics.""" 
-        if len(save._data.get("relics", [])) >= 25:
-            return 50
-        return 0
-
-class WellFed(ScoreBonus):
-    def __init__(self):
-        super().__init__("Well Fed")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Has 15+ additional Max HP."""
-        if save._data.get("max_health", 0) - self.get_starting_max_hp(save) > 15:
-            return 25
-        return 0
-
-class Stuffed(ScoreBonus):
-    def __init__(self):
-        super().__init__("Stuffed")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Has 30+ additional Max HP."""
-        if save._data.get("max_health", 0) - self.get_starting_max_hp(save) > 30:
-            return 50
-        return 0
-
-class MoneyMoney(ScoreBonus):
-    def __init__(self):
-        super().__init__("Money Money")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Gained 1000+ gold."""
-        if save._data.get("gold_gained", 0) >= 1000:
-            return 25
-        return 0
-
-class RainingMoney(ScoreBonus):
-    def __init__(self):
-        super().__init__("Raining Money")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Gained 2000+ gold."""
-        if save._data.get("gold_gained", 0) >= 2000:
-            return 50
-        return 0
-
-class ILikeGold(ScoreBonus):
-    def __init__(self):
-        super().__init__("I Like Gold")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Gained 3000+ gold."""
-        if save._data.get("gold_gained", 0) >= 3000:
-            return 75
-        return 0
-
-class Combo(ScoreBonus):
-    def __init__(self):
-        super().__init__("Combo")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Play 20 cards in a single turn."""
-        if save._data.get("combo", False):
-            return 25
-        return 0
-
-class Pauper(ScoreBonus):
-    def __init__(self):
-        super().__init__("Pauper")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Have 0 rare cards."""
-        rare_cards = [card for card in save.cards if get_card_metadata(card)["RARITY"] == "Rare"]
-        if not rare_cards:
-            return 50
-        return 0
-
-class Curses(ScoreBonus):
-    def __init__(self):
-        super().__init__("Curses")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Your deck contains 5 curses."""
-        curses = [card for card in save.cards if get_card_metadata(card)["CHARACTER"] == "Curse"]
-        if len(curses) >= 5:
-            return 100
-        return 0
-
-class Highlander(ScoreBonus):
-    def __init__(self):
-        super().__init__("Highlander")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Your deck contains no duplicates."""
-        card_dict = dict(Counter(save.cards))
-        multiple_copies = [key for key, value in card_dict.items() if value > 1 and get_card_metadata(key)["RARITY"] != "Starter"]
-        if not multiple_copies:
-            return 100
-        return 0
-
-class Poopy(ScoreBonus):
-    def __init__(self):
-        super().__init__("Poopy")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Possess Spirit Poop."""
-        relics = save._data.get("relics", [])
-        if "Spirit Poop" in relics:
-            return -1
-        return 0
-
-# Probably never include any of the below in an ongoing run?
-class Speedster(ScoreBonus):
-    def __init__(self):
-        super().__init__("Speedster")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Victory in under 60 minutes."""
-        if save._data.get("metric_playtime", 0) < 3600:
-            return 25
-        return 0
-
-class LightSpeed(ScoreBonus):
-    def __init__(self):
-        super().__init__("Light Speed")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Victory in under 45 minutes."""
-        if save._data.get("metric_playtime", 0) < 2700:
-            return 50
-        return 0
-
-class Heartbreaker(ScoreBonus):
-    def __init__(self):
-        super().__init__("Heartbreaker")
-    
-    def bonus_for_run(self, save: Savefile):
-        return 250
-
-class OnMyOwnTerms(ScoreBonus):
-    def __init__(self):
-        super().__init__("On My Own Terms")
-    
-    def bonus_for_run(self, save: Savefile):
-        """Killed yourself."""
-        # no idea how this is checked or if we care
-        return 50
