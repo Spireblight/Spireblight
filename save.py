@@ -227,7 +227,7 @@ class Savefile(FileParser):
 
     @property
     def rotating_streak(self) -> int:
-        return get_latest_run(None, None).rotating_streak.streak
+        return get_latest_run(None, None).rotating_streak
 
     @property
     def character_streak(self) -> int:
