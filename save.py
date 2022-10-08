@@ -240,10 +240,10 @@ class Savefile(FileParser):
 
     @property
     def score_breakdown(self) -> list[str]:
-        return [bonus.get_format_string() for bonus in self._get_score_bonuses()]
+        return [bonus.full_display for bonus in self._get_score_bonuses() if bonus.score_bonus > 0]
 
-    def _get_score_bonuses(self) -> list[_s.ScoreBonus]:
-        score_bonuses: list[_s.ScoreBonus] = []
+    def _get_score_bonuses(self) -> list[_s.Score]:
+        score_bonuses: list[_s.Score] = []
         score_bonuses.append(_s.get_floors_climbed_bonus(self))
         score_bonuses.append(_s.get_enemies_killed_bonus(self))
         score_bonuses.append(_s.get_act1_elites_killed_bonus(self))

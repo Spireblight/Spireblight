@@ -4,26 +4,25 @@ from nameinternal import get_card_metadata, get_score_bonus
 from save import Savefile
 
 class Score:
-    def __init__(self, name: str, format_string: str):
-        self._format_string = format_string
+    def __init__(self, name: str, count: int, should_show: bool):
         self.score_bonus = 0
+        self.should_show = should_show or False
         if name:
             data = get_score_bonus(name)
             if data:
-                self.name = data.name
-                self.description = data.description
+                self._name = data.name
+                self._description = data.description
+                self._format_string = data.format_string.format(count = count)
             else:
                 raise ValueError("Invalid score bonus name")
 
     @property
-    def get_format_string(self) -> str:
-        if self._format_string:
-            return f'{self._format_string}: {self.score_bonus}'
-        else:
-            return f'{self.name}: {self.score_bonus}'
+    def full_display(self) -> str:
+        return f'{self._format_string}: {self.score_bonus}'
+
 
 def get_ascension_score_bonus(save: Savefile) -> Score:
-    asc_bonus = Score("Ascension", f'Ascension ({save.ascension_level})')
+    asc_bonus = Score("Ascension", save.ascension_level, should_show=True)
     if save.ascension_level > 0:
         # Only applies to the score from the following bonuses:
         # Floors Climbed
@@ -51,44 +50,44 @@ def get_ascension_score_bonus(save: Savefile) -> Score:
 
 def get_floors_climbed_bonus(save: Savefile) -> Score:
     """Get 5 points for each floor climbed."""
-    bonus = Score("Floors Climbed", f'Floors Climbed ({save.current_floor - 1}')
+    bonus = Score("Floors Climbed", save.current_floor - 1, should_show=True)
     bonus.score_bonus = 5 * (save.current_floor - 1) # will need to do more testing if this is current-1 or just current
     return bonus
 
 def get_enemies_killed_bonus(save: Savefile) -> Score:
     """Get 2 points for each monster defeated."""
-    bonus = Score("Enemies Killed", f'Enemies Slain ({save.monsters_killed})')
+    bonus = Score("Enemies Killed", save.monsters_killed, should_show=True)
     bonus.score_bonus = 2 * save.monsters_killed
     return bonus
 
 def get_act1_elites_killed_bonus(save: Savefile) -> Score:
     """Get 10 points for each Act 1 elite killed."""
-    bonus = Score("Exordium Elites Killed", f'Exordium Elites Killed ({save.act1_elites_killed})')
+    bonus = Score("Exordium Elites Killed", save.act1_elites_killed, should_show=True)
     bonus.score_bonus = 10 * save.act1_elites_killed
     return bonus
 
 def get_act2_elites_killed_bonus(save: Savefile) -> Score:
     """Get 20 points for each Act 2 elite killed."""
-    bonus = Score("City Elites Killed", f'City Elites Killed ({save.act2_elites_killed})')
+    bonus = Score("City Elites Killed", save.act2_elites_killed)
     bonus.score_bonus = 20 * save.act2_elites_killed
     return bonus
 
 def get_act3_elites_killed_bonus(save: Savefile) -> Score:
     """Get 30 points for each Act 3 elite killed."""
-    bonus = Score("Beyond Elites Killed", f'Beyond Elites Killed ({save.act3_elites_killed})')
+    bonus = Score("Beyond Elites Killed", save.act3_elites_killed, should_always_show=True)
     bonus.score_bonus = 30 * save.act3_elites_killed
     return bonus
 
 def get_champions_bonus(save: Savefile) -> Score:
     """Get 25 points for each elite perfected."""
-    bonus = Score("Champion", f'Champion ({save.perfect_elites})')
+    bonus = Score("Champion", save.perfect_elites)
     bonus.score_bonus = 25 * save.perfect_elites
     return bonus
 
 def get_bosses_slain_bonus(save: Savefile) -> Score:
     """Get 25 points for each boss killed."""
     boss_nodes = sum(1 for node in save.path if node.room_type == "Boss")
-    bonus = Score("Bosses Slain", f'Bosses Slain ({boss_nodes})')
+    bonus = Score("Bosses Slain", boss_nodes, should_show=True)
     score = 0
     match boss_nodes:
         case 1:
@@ -111,7 +110,7 @@ def get_perfect_bosses_bonus(save: Savefile) -> Score:
         bonus = Score("Beyond Perfect")
         score = 200
     else:
-        bonus = Score("Perfect", f'Perfect ({save.perfect_bosses})')
+        bonus = Score("Perfect", save.perfect_bosses)
         score = 50 * save.perfect_bosses
 
     bonus.score_bonus = score
@@ -119,10 +118,10 @@ def get_perfect_bosses_bonus(save: Savefile) -> Score:
 
 def get_collector_bonus(save: Savefile) -> Score:
     """Get 25 points for each non-starter card with 4 copies."""
-    bonus = Score("Collector", f'Collector ({len(nonstarter_cards)})')
     card_dict = dict(Counter(save.cards))
-    nonstarter_cards = [key for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter"]
-    bonus.score_bonus = 25 * len(nonstarter_cards)
+    nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter")
+    bonus = Score("Collector", nonstarter_cards_count)    
+    bonus.score_bonus = 25 * nonstarter_cards_count
     return bonus
 
 def get_deck_bonus(save: Savefile) -> Score:

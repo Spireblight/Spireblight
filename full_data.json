@@ -15547,11 +15547,13 @@
         },
         {
             "name": "Ascension",
-            "description": "+5% score per Ascension Level."
+            "description": "+5% score per Ascension Level.",
+            "format_string": "Ascension ({count})"
         },
         {
             "name": "Beyond Elites Killed",
-            "description": ""
+            "description": "",
+            "format_string": "Beyond Elites Killed ({count})"
         },
         {
             "name": "Beyond Perfect",
@@ -15559,11 +15561,13 @@
         },
         {
             "name": "Bosses Slain",
-            "description": ""
+            "description": "",
+            "format_string": "Bosses Slain ({count})"
         },
         {
             "name": "Champion",
-            "description": "Defeat an Elite without taking damage."
+            "description": "Defeat an Elite without taking damage.",
+            "format_string": "Champion ({count})"
         },
         {
             "name": "Cheater",
@@ -15571,11 +15575,13 @@
         },
         {
             "name": "City Elites Killed",
-            "description": ""
+            "description": "",
+            "format_string": "City Elites Killed ({count})"
         },
         {
             "name": "Collector",
-            "description": "Have 4 copies of any non-starter card."
+            "description": "Have 4 copies of any non-starter card.",
+            "format_string": "Collector ({count})"
         },
         {
             "name": "C-c-c-combo",
@@ -15593,15 +15599,18 @@
         },
         {
             "name": "Enemies Killed",
-            "description": "For each Monster encounter defeated."
+            "description": "For each Monster encounter defeated.",
+            "format_string": "Enemies Slain ({count})"
         },
         {
             "name": "Exordium Elites Killed",
-            "description": ""
+            "description": "",
+            "format_string": "Exordium Elites Killed ({count})"
         },
         {
             "name": "Floors Climbed",
-            "description": "Number of the Floor you reached."
+            "description": "Number of the Floor you reached.",
+            "format_string": "Floors Climbed ({count})"
         },
         {
             "name": "Heartbreaker",
@@ -15649,7 +15658,8 @@
         },
         {
             "name": "Perfect",
-            "description": "Defeat a Boss without taking damage."
+            "description": "Defeat a Boss without taking damage.",
+            "format_string": "Perfect ({count})"
         },
         {
             "name": "Poopy",

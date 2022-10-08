@@ -55,11 +55,12 @@ class ScoreBonus(Base):
     cls_name = "score_bonus"
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
+        self.format_string: str = data.get("format_string", self.name)
 
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,
-    "score_bonuses": Base
+    "score_bonuses": ScoreBonus
 }
 
 def _get_name(x: str, d: str, default: str) -> str:
@@ -100,7 +101,7 @@ def get_relic_stats(name: str) -> list[str]:
 def get_run_mod(name: str) -> str:
     return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
 
-def get_score_bonus(name: str) -> Base:
+def get_score_bonus(name: str) -> ScoreBonus:
     return _internal_cache[name]
 
 @add_listener("setup_init")
