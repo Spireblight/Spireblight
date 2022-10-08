@@ -135,6 +135,7 @@ async def redirected_totals(req: web.Request):
     return web.Response(text="\n".join(lines))
 
 @router.post("/eventsub")
+@router.post("/callback")
 async def eventsub_redirect(req: web.Request):
     raise web.HTTPFound("http://127.0.0.1:4000")
 
