@@ -310,7 +310,7 @@ class Savefile(FileParser):
 
     @property
     def act_num(self) -> int:
-        return self._data.get("act_num", 1)
+        return self._data["act_num"]
 
 _savefile = Savefile()
 
