@@ -231,7 +231,7 @@ class Savefile(FileParser):
 
     @property
     def character_streak(self) -> int:
-        return get_latest_run(self.character, None).character_streak.streak
+        return get_latest_run(self.character, None).character_streak
 
 _savefile = Savefile()
 
