@@ -240,7 +240,8 @@ class Savefile(FileParser):
 
     @property
     def score_breakdown(self) -> list[str]:
-        return [bonus.full_display for bonus in self._get_score_bonuses() if bonus.score_bonus > 0]
+        return [bonus.full_display for bonus in self._get_score_bonuses() 
+                        if bonus.should_show or bonus.score_bonus > 0]
 
     def _get_score_bonuses(self) -> list[_s.Score]:
         score_bonuses: list[_s.Score] = []
@@ -306,6 +307,10 @@ class Savefile(FileParser):
     @property
     def has_combo(self) -> int:
         return self._data.get("combo", False)
+
+    @property
+    def act_num(self) -> int:
+        return self._data.get("act_num", 1)
 
 _savefile = Savefile()
 

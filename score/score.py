@@ -6,7 +6,7 @@ from save import Savefile
 class Score:
     def __init__(self, name: str, count: int, should_show: bool):
         self.score_bonus = 0
-        self.should_show = should_show or False
+        self.should_show = should_show or False # use this to override showing if the score > 0
         if name:
             data = get_score_bonus(name)
             if data:
@@ -22,7 +22,7 @@ class Score:
 
 
 def get_ascension_score_bonus(save: Savefile) -> Score:
-    asc_bonus = Score("Ascension", save.ascension_level, should_show=True)
+    asc_bonus = Score("Ascension", save.ascension_level, should_show=save.ascension_level > 0)
     if save.ascension_level > 0:
         # Only applies to the score from the following bonuses:
         # Floors Climbed
@@ -68,13 +68,13 @@ def get_act1_elites_killed_bonus(save: Savefile) -> Score:
 
 def get_act2_elites_killed_bonus(save: Savefile) -> Score:
     """Get 20 points for each Act 2 elite killed."""
-    bonus = Score("City Elites Killed", save.act2_elites_killed)
+    bonus = Score("City Elites Killed", save.act2_elites_killed, should_show=save.act_num >= 2)
     bonus.score_bonus = 20 * save.act2_elites_killed
     return bonus
 
 def get_act3_elites_killed_bonus(save: Savefile) -> Score:
     """Get 30 points for each Act 3 elite killed."""
-    bonus = Score("Beyond Elites Killed", save.act3_elites_killed, should_always_show=True)
+    bonus = Score("Beyond Elites Killed", save.act3_elites_killed, should_show=save.act_num >= 3)
     bonus.score_bonus = 30 * save.act3_elites_killed
     return bonus
 
