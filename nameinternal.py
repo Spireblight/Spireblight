@@ -95,7 +95,7 @@ def get_relic_stats(name: str) -> list[str]:
 def get_run_mod(name: str) -> str:
     return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
 
-def get_score_bonus(name: str) -> Any:
+def get_score_bonus(name: str) -> dict[str, str]:
     return _cache["score_bonuses"][name]
 
 @add_listener("setup_init")

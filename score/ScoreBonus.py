@@ -273,4 +273,3 @@ def get_poopy_bonus(save: Savefile) -> ScoreBonus:
         score = -1
     bonus.score_bonus = score
     return bonus
-    
