@@ -918,6 +918,16 @@ class FileParser(ABC):
             return "\n".join(modifiers_with_desc)
         return []
 
+    @property
+    @abstractmethod
+    def score(self) -> int:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def score_breakdown(self) -> list[str]:
+        raise NotImplementedError
+
 class RelicData:
     """Contain information for Spire relics."""
 

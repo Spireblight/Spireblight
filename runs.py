@@ -103,6 +103,10 @@ class RunParser(FileParser):
         return int(self._data["score"])
 
     @property
+    def score_breakdown(self) -> list[str]:
+        return self._data.get("score_breakdown", [])
+
+    @property
     def run_length(self) -> str:
         seconds = self._data["playtime"]
         minutes, seconds = divmod(seconds, 60)
