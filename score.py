@@ -4,9 +4,10 @@ from nameinternal import get_card_metadata, get_score_bonus
 from save import Savefile
 
 class Score:
-    def __init__(self, name: str, count: int, score: int = 0, should_show: bool = False):
+    def __init__(self, name: str = "", count: int = 0, score: int = 0, should_show: bool = False):
         self.score_bonus = score
-        self.should_show = should_show
+        self.should_show = should_show            
+        self._format_string = ""
         if name:
             data = get_score_bonus(name)
             if data:
@@ -102,7 +103,7 @@ def get_perfect_bosses_bonus(save: Savefile) -> Score:
 
 def get_collector_bonus(save: Savefile) -> Score:
     """Get 25 points for each non-starter card with 4 copies."""
-    card_dict = dict(Counter(save.cards))
+    card_dict = Counter(save.cards)
     nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter")
     return Score("Collector", nonstarter_cards_count, 25 * nonstarter_cards_count) 
 
@@ -199,7 +200,7 @@ def get_curses_bonus(save: Savefile) -> Score:
 def get_highlander_bonus(save: Savefile) -> Score:
     """Your deck contains no duplicates."""
     score = 0
-    card_dict = dict(Counter(save.cards))
+    card_dict = Counter(save.cards)
     multiple_copies = [key for key, value in card_dict.items() if value > 1 and get_card_metadata(key)["RARITY"] != "Starter"]
     if not multiple_copies:
         score = 100
