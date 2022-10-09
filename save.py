@@ -9,6 +9,7 @@ import math
 from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
+import score as _s
 
 from nameinternal import get_card
 from sts_profile import get_current_profile
@@ -16,7 +17,6 @@ from typehints import ContextType
 from gamedata import FileParser, BottleRelic
 from webpage import router
 from logger import logger
-from score import score as _s
 from utils import get_req_data
 from runs import get_latest_run
 
@@ -293,7 +293,7 @@ class Savefile(FileParser):
         return self._data.get("perfect", 0)
 
     @property
-    def has_overkill(self) -> int:
+    def has_overkill(self) -> bool:
         return self._data.get("overkill", False)
 
     @property
@@ -305,7 +305,7 @@ class Savefile(FileParser):
         return self._data.get("gold_gained", 0)
 
     @property
-    def has_combo(self) -> int:
+    def has_combo(self) -> bool:
         return self._data.get("combo", False)
 
     @property
