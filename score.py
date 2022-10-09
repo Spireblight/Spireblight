@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING
+
 from collections import Counter, namedtuple
 
 from nameinternal import get_card_metadata, get_score_bonus
-from save import Savefile
+
+if TYPE_CHECKING:
+    from save import Savefile
 
 class Score:
     def __init__(self, name: str = "", count: int = 0, score: int = 0, should_show: bool = False):
@@ -20,7 +24,6 @@ class Score:
     @property
     def full_display(self) -> str:
         return f'{self._format_string}: {self.score_bonus}'
-
 
 def get_ascension_score_bonus(save: Savefile) -> Score:
     score = 0

@@ -9,7 +9,6 @@ import math
 from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
 import aiohttp_jinja2
-import score as _s
 
 from nameinternal import get_card
 from sts_profile import get_current_profile
@@ -19,6 +18,8 @@ from webpage import router
 from logger import logger
 from utils import get_req_data
 from runs import get_latest_run
+
+import score as _s
 
 __all__ = ["get_savefile", "Savefile"]
 
