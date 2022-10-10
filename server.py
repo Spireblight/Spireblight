@@ -775,7 +775,6 @@ async def now_playing(ctx: ContextType):
 
 @router.get("/playing")
 async def now_playing_client(req: Request):
-    print("Should check playing")
     await get_req_data(req) # just checking if key is OK
 
     data = await TConn.spotify_call()
