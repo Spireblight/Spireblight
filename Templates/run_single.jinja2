@@ -149,9 +149,21 @@
             {% if run.modifiers %}
             <div>
               <p>Modifiers:</p>
-              {{ run.modifiers_with_desc }}
+              <ul>
+              {% for modifier in run.modifiers_with_desc %}
+                <li>{{ modifier }}</li>
+              {% endfor %}
+              </ul>
             </div>
             {% endif %}
+            <div class="score">
+              <p>Score breakdown:</p>
+              <ul>
+              {% for score in run.score_breakdown %}
+                <li>{{ score }}</li>
+              {% endfor %}
+              </ul>
+            </div>
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>

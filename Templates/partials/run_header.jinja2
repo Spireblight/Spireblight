@@ -20,7 +20,7 @@
             {% if run.done %}
               {{ run.score }} points
             {% else %}
-              On floor {{ run.current_floor }}
+              Current Score: {{ run.score }} points | On floor {{ run.current_floor }}
             {% endif %}
             {% if run.ascension_level != 20 %}
               (A{{ run.ascension_level }})

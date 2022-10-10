@@ -79,10 +79,6 @@ class RunParser(FileParser):
         return self._data["victory"]
 
     @property
-    def modded(self) -> bool:
-        return self.character not in ("Ironclad", "Silent", "Defect", "Watcher")
-
-    @property
     def verb(self) -> str:
         return "victory" if self.won else "loss"
 

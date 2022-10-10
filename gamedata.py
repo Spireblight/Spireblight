@@ -677,6 +677,10 @@ class FileParser(ABC):
         return c
 
     @property
+    def modded(self) -> bool:
+        return self.character not in ("Ironclad", "Silent", "Defect", "Watcher")
+
+    @property
     def current_hp_counts(self) -> list[int]:
         return self._data[self.prefix + "current_hp_per_floor"]
 
@@ -915,7 +919,7 @@ class FileParser(ABC):
     def modifiers_with_desc(self) -> list[str]:
         if self.modifiers:
             modifiers_with_desc = [get_run_mod(mod) for mod in self.modifiers]
-            return "\n".join(modifiers_with_desc)
+            return modifiers_with_desc
         return []
 
     @property
