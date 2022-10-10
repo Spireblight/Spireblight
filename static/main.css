@@ -341,10 +341,13 @@ section.section {
   font-size: 0.75em;
 }
 
-.neow .message-body .skipped li {
-  text-decoration: line-through;
+.neow .message-body li {
   list-style: circle;
   margin-left: 1em;
+}
+
+.neow .message-body .skipped li {
+  text-decoration: line-through;
 }
 
 nav.breadcrumb {

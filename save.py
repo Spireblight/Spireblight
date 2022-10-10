@@ -242,7 +242,7 @@ class Savefile(FileParser):
     @property
     def score_breakdown(self) -> list[str]:
         return [bonus.full_display for bonus in self._get_score_bonuses() 
-                        if bonus.should_show or bonus.score_bonus > 0]
+                        if bonus.should_show or bonus.score_bonus != 0]
 
     def _get_score_bonuses(self) -> list[_s.Score]:
         score_bonuses: list[_s.Score] = []
@@ -263,9 +263,7 @@ class Savefile(FileParser):
         score_bonuses.append(_s.get_shiny_bonus(self))
         score_bonuses.append(_s.get_max_hp_bonus(self))
         score_bonuses.append(_s.get_gold_bonus(self))
-        score_bonuses.append(_s.get_pauper_bonus(self))
         score_bonuses.append(_s.get_curses_bonus(self))
-        score_bonuses.append(_s.get_highlander_bonus(self))
         score_bonuses.append(_s.get_poopy_bonus(self))
         return score_bonuses
 
@@ -312,6 +310,10 @@ class Savefile(FileParser):
     @property
     def act_num(self) -> int:
         return self._data["act_num"]
+
+    @property
+    def deck_card_ids(self) -> list[str]:
+        return [card["id"] for card in self._data["cards"]]
 
 _savefile = Savefile()
 

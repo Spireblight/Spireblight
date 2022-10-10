@@ -915,7 +915,7 @@ class FileParser(ABC):
     def modifiers_with_desc(self) -> list[str]:
         if self.modifiers:
             modifiers_with_desc = [get_run_mod(mod) for mod in self.modifiers]
-            return "\n".join(modifiers_with_desc)
+            return modifiers_with_desc
         return []
 
     @property
@@ -925,7 +925,7 @@ class FileParser(ABC):
 
     @property
     @abstractmethod
-    def score_breakdown(self) -> list[str]:
+    def score_breakdown(self) -> str:
         raise NotImplementedError
 
 class RelicData:

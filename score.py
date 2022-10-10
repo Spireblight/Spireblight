@@ -46,8 +46,9 @@ def get_ascension_score_bonus(save: Savefile) -> Score:
             get_act1_elites_killed_bonus(save),
             get_act2_elites_killed_bonus(save),
             get_act3_elites_killed_bonus(save),
-            get_bosses_slain_bonus(save),
             get_champions_bonus(save),
+            get_bosses_slain_bonus(save),
+            get_perfect_bosses_bonus(save),
             get_overkill_bonus(save),
             get_combo_bonus(save)
         ])
@@ -56,7 +57,7 @@ def get_ascension_score_bonus(save: Savefile) -> Score:
 
 def get_floors_climbed_bonus(save: Savefile) -> Score:
     """Get 5 points for each floor climbed."""
-    return Score("Floors Climbed", save.current_floor - 1, 5 * (save.current_floor - 1), should_show=True)
+    return Score("Floors Climbed", save.current_floor, 5 * (save.current_floor), should_show=True)
 
 def get_enemies_killed_bonus(save: Savefile) -> Score:
     """Get 2 points for each monster defeated."""
@@ -108,8 +109,8 @@ def get_perfect_bosses_bonus(save: Savefile) -> Score:
 
 def get_collector_bonus(save: Savefile) -> Score:
     """Get 25 points for each non-starter card with 4 copies."""
-    card_dict = Counter(save.cards)
-    nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get_card_metadata(key)["RARITY"] != "Starter")
+    card_dict = Counter(save.deck_card_ids)
+    nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get_card_metadata(key).get("RARITY", "") != "Starter")
     return Score("Collector", nonstarter_cards_count, 25 * nonstarter_cards_count) 
 
 def get_deck_bonus(save: Savefile) -> Score:
@@ -145,20 +146,15 @@ def get_shiny_bonus(save: Savefile) -> Score:
     return Score("Shiny", score=score)
 
 def get_max_hp_bonus(save: Savefile) -> Score:
-    """Get points based on how much max HP gained"""
-    max_hp_tuple = namedtuple("MaxHP", ["base_max_hp", "asc_max_hp_loss"])
+    """Get points based on how much max HP gained, ignores Ascension 14 penalty."""
     max_hp_dict = {
-        "Ironclad": max_hp_tuple(80, 5),
-        "Silent": max_hp_tuple(70, 4),
-        "Defect": max_hp_tuple(75, 4),
-        "Watcher": max_hp_tuple(72, 4)
+        "Ironclad": 80,
+        "Silent": 70,
+        "Defect": 75,
+        "Watcher": 72
     }
 
-    character_starting_max_hp = max_hp_dict[save.character].base_max_hp
-    if save.ascension_level >= 14:
-        character_starting_max_hp -= max_hp_dict[save.character].asc_max_hp_loss
-
-    max_hp_gain = save.max_health - character_starting_max_hp
+    max_hp_gain = save.max_health - max_hp_dict[save.character]
     if max_hp_gain >= 30:
         bonus = Score("Stuffed", score=50)
     elif max_hp_gain >= 15:
@@ -186,30 +182,13 @@ def get_combo_bonus(save: Savefile) -> Score:
         score = 25
     return Score("Combo", score=score)
 
-def get_pauper_bonus(save: Savefile) -> Score:
-    """Have 0 rare cards."""
-    score = 0
-    rare_cards = [card for card in save.cards if get_card_metadata(card)["RARITY"] == "Rare"]
-    if not rare_cards:
-        score = 50
-    return Score("Pauper", score=score)
-
 def get_curses_bonus(save: Savefile) -> Score:
     """Your deck contains 5 curses."""
     score = 0
-    curses = [card for card in save.cards if get_card_metadata(card)["CHARACTER"] == "Curse"]
+    curses = [card for card in save.deck_card_ids if get_card_metadata(card)["CHARACTER"] == "Curse"]
     if len(curses) >= 5:
         score = 100
     return Score("Curses", score=score)
-
-def get_highlander_bonus(save: Savefile) -> Score:
-    """Your deck contains no duplicates."""
-    score = 0
-    card_dict = Counter(save.cards)
-    multiple_copies = [key for key, value in card_dict.items() if value > 1 and get_card_metadata(key)["RARITY"] != "Starter"]
-    if not multiple_copies:
-        score = 100
-    return Score("Highlander", score=score)
 
 def get_poopy_bonus(save: Savefile) -> Score:
     """Possess Spirit Poop."""

@@ -104,6 +104,7 @@ class RunParser(FileParser):
 
     @property
     def score_breakdown(self) -> list[str]:
+        print(self._data.get("score_breakdown", []))
         return self._data.get("score_breakdown", [])
 
     @property
