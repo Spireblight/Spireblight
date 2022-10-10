@@ -45,7 +45,6 @@ async def main():
                     possible = None
 
             if possible is None:
-                print("getting the playing")
                 async with session.get("/playing", params={"key": config.server.secret}) as resp:
                     if resp.ok:
                         j = await resp.json()
