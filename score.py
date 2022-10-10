@@ -147,6 +147,7 @@ def get_shiny_bonus(save: Savefile) -> Score:
 
 def get_max_hp_bonus(save: Savefile) -> Score:
     """Get points based on how much max HP gained, ignores Ascension 14 penalty."""
+    bonus = Score()
     max_hp_dict = {
         "Ironclad": 80,
         "Silent": 70,
@@ -154,13 +155,12 @@ def get_max_hp_bonus(save: Savefile) -> Score:
         "Watcher": 72
     }
 
-    max_hp_gain = save.max_health - max_hp_dict[save.character]
-    if max_hp_gain >= 30:
-        bonus = Score("Stuffed", score=50)
-    elif max_hp_gain >= 15:
-        bonus = Score("Well Fed", score=25)
-    else:
-        bonus = Score()
+    if save.character in max_hp_dict:
+        max_hp_gain = save.max_health - max_hp_dict[save.character]
+        if max_hp_gain >= 30:
+            bonus = Score("Stuffed", score=50)
+        elif max_hp_gain >= 15:
+            bonus = Score("Well Fed", score=25)
     return bonus
 
 def get_gold_bonus(save: Savefile) -> Score:

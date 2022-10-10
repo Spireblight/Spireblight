@@ -986,6 +986,14 @@ async def modifiers(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply("This is a standard run.")
 
+@with_savefile("score")
+async def score(ctx: ContextType, save: Savefile):
+    """Display the current score of the run"""
+    if save.modded:
+        await ctx.reply(f'Current Score: ~{save.score} points')
+    else:
+        await ctx.reply(f'Current Score: {save.score} points')
+
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
     """Get the last run/win/loss."""
