@@ -925,7 +925,7 @@ class FileParser(ABC):
 
     @property
     @abstractmethod
-    def score_breakdown(self) -> str:
+    def score_breakdown(self) -> list[str]:
         raise NotImplementedError
 
 class RelicData:
