@@ -17,6 +17,7 @@ async def main():
     except OSError:
         last_run = ""
     possible = None
+    playing = None
     timeout = 1
     if not config.server.url or not config.server.secret:
         print("Config is not complete")
@@ -42,6 +43,20 @@ async def main():
                     cur = os.path.getmtime(os.path.join(config.spire.steamdir, "saves", possible))
                 except OSError:
                     possible = None
+
+            if possible is None:
+                print("getting the playing")
+                async with session.get("/playing", params={"key": config.server.secret}) as resp:
+                    if resp.ok:
+                        j = await resp.json()
+                        track = j['item']['name']
+                        artists = ", ".join(x['name'] for x in j['item']['artists'])
+                        album = j['item']['album']['name']
+                        if playing != (track, artists, album):
+                            print(config.client.playing)
+                            with open(config.client.playing, "w") as f:
+                                f.write(f"{track}\n{artists}\n{album}")
+                            playing = (track, artists, album)
 
             to_send = []
             files = []

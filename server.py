@@ -7,7 +7,9 @@ from typing import Generator, Callable
 import datetime
 import random
 import string
+import base64
 import json
+import time
 import sys
 import re
 import os
@@ -24,7 +26,7 @@ import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
 
 from aiohttp_jinja2 import template
-from aiohttp.web import Request, HTTPNotFound
+from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession
 
 from nameinternal import get_relic, query, Base, Card, Relic
@@ -33,7 +35,7 @@ from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
-from utils import getfile, update_db
+from utils import getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run
@@ -224,17 +226,67 @@ class TwitchConn(TBot):
         self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
         self._session: ClientSession | None = None
+        self._token: str = None
+        self._expires_at: int | float = 0
+        self._refresh_token: str = None
+        try:
+            with open(os.path.join("data", "spotify_refresh_token"), "r") as f:
+                self._refresh_token = f.read()
+        except OSError:
+            pass
+
+    async def get_new_token(self):
+        if self._session is None:
+            self._session = ClientSession()
+
+        value = base64.urlsafe_b64encode(f"{config.spotify.id}:{config.spotify.secret}".encode("utf-8"))
+        value = value.decode("utf-8")
+
+        headers = {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": f"Basic {value}",
+            }
+
+        if self._refresh_token:
+            params = {
+                "grant_type": "refresh_token",
+                "refresh_token": self._refresh_token,
+            }
+
+        else:
+            params={
+                "grant_type": "authorization_code",
+                "code": config.spotify.code,
+                "redirect_uri": f"{config.server.url}/spotify",
+            }
+
+        async with self._session.post("https://accounts.spotify.com/api/token", headers=headers, params=params) as resp:
+            if resp.ok:
+                content = await resp.json()
+                self._token = content["access_token"]
+                self._expires_at = (datetime.datetime.now() + datetime.timedelta(seconds=content["expires_in"])).timestamp()
+                if "refresh_token" in content:
+                    self._refresh_token = content["refresh_token"]
+                    with open(os.path.join("data", "spotify_refresh_token"), "w") as f:
+                        f.write(self._refresh_token)
+                return self._token
+            return None
 
     async def spotify_call(self):
         if self._session is None:
             self._session = ClientSession()
+
+        if not self._token or self._expires_at < time.time():
+            token = await self.get_new_token()
+            if not token:
+                return None
 
         async with self._session.get(
             "https://api.spotify.com/v1/me/player/currently-playing",
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {config.spotify.oauth_token}",
+                "Authorization": f"Bearer {self._token}",
                 }) as resp:
             return await resp.json()
 
@@ -704,7 +756,7 @@ async def stream_uptime(ctx: ContextType):
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
-    if not config.is_debug and not TConn.live_channels[config.twitch.channel]:
+    if not config.server.debug and not TConn.live_channels[config.twitch.channel]:
         # just in case
         TConn.live_channels[config.twitch.channel] = live = bool(await TConn.fetch_streams(user_logins=[config.twitch.channel]))
         if not live:
@@ -712,10 +764,25 @@ async def now_playing(ctx: ContextType):
             return
 
     j = await TConn.spotify_call()
-    try:
+    if j is None:
+        await ctx.reply("Could not get token from Spotify API. Retry in a few seconds.")
+    elif "error" in j:
+        await ctx.reply(f"Something went wrong with the Spotify API ({j['status']}: {j['message']})")
+    elif j["is_playing"]:
         await ctx.reply(f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}.")
-    except KeyError:
+    else:
         await ctx.reply("We are not currently listening to anything.")
+
+@router.get("/playing")
+async def now_playing_client(req: Request):
+    print("Should check playing")
+    await get_req_data(req) # just checking if key is OK
+
+    data = await TConn.spotify_call()
+
+    if data:
+        return Response(text=json.dumps(data), content_type="application/json")
+    raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
 _ongoing_giveaway = {
     "running": False,

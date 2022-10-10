@@ -111,4 +111,14 @@ spire:
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/
-  oauth_token: <token not set>
+  # id and secret are the credentials for the application that we're using
+  id: <not set>
+  secret: <not set>
+  # this code is a one-time use only. we then save the refresh token to disk and use that
+  # this should be obtained by doing a GET request to /authorize
+  code: <not set>
+
+# This is functionality unique to the client
+client:
+  # The file that the "now playing" info will be saved to
+  playing: ''

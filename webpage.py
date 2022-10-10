@@ -2,7 +2,6 @@ import datetime
 import math
 import time
 import json
-import sys
 import os
 
 from aiohttp import web, ClientSession
