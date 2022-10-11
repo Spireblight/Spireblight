@@ -68,7 +68,6 @@ async def main():
                                 except OSError:
                                     pass
 
-            continue
             to_send = []
             files = []
             if possible is None: # don't check run files during a run

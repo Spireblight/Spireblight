@@ -236,6 +236,9 @@ class TwitchConn(TBot):
             pass
 
     async def get_new_token(self):
+        if not config.spotify.enabled:
+            return
+
         if self._session is None:
             self._session = ClientSession()
 
@@ -276,6 +279,9 @@ class TwitchConn(TBot):
             return None
 
     async def spotify_call(self):
+        if not config.spotify.enabled:
+            return
+
         if self._session is None:
             self._session = ClientSession()
 
@@ -779,6 +785,9 @@ async def now_playing(ctx: ContextType):
 @router.get("/playing")
 async def now_playing_client(req: Request):
     await get_req_data(req) # just checking if key is OK
+
+    if TConn is None: # no Twitch, no Spotify
+        raise HTTPServiceUnavailable(reason="Need Twitch connection for Spotify")
 
     data = await TConn.spotify_call()
 
