@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, TYPE_CHECKING
 
 import datetime
 import json
@@ -11,6 +11,7 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
+from cache.year_run_stats import update_run_stats
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -231,6 +232,8 @@ def _update_cache():
                             cur.matched["prev_loss"] = prev_loss
                         prev_loss = cur
                 prev = cur
+    
+    update_run_stats()
 
     # I don't actually know how long this cache updating is going to take...
     # I think it's as optimized as I could make it while still being safe,

@@ -29,6 +29,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession
 
+from cache.year_run_stats import get_run_stats
 from nameinternal import get_relic, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
@@ -1168,46 +1169,41 @@ async def wall_card(ctx: ContextType):
 
     await ctx.reply(f"Current card in the {config.baalorbot.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
 
-@command("kills", "wins") # TODO: Read game files for this
-async def kills_cmd(ctx: ContextType):
+@command("kills", "wins")
+async def calculate_wins_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
-    msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
-    with getfile("kills", "r") as f:
-        kills = [int(x) for x in f.read().split()]
-    await ctx.reply(msg.format(kills, sum(kills)))
+    msg = "A20 Heart kills in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats.wins))
 
 @command("losses")
-async def losses_cmd(ctx: ContextType):
+async def calculate_losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
-    with getfile("losses", "r") as f:
-        losses = [int(x) for x in f.read().split()]
-    await ctx.reply(msg.format(losses, sum(losses)))
+    msg = "A20 Heart losses in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats.losses))
 
 @command("streak")
-async def streak_cmd(ctx: ContextType):
+async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
-    msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
-    with getfile("streak", "r") as f:
-        streak = f.read().split()
-    await ctx.reply(msg.format(streak))
+    msg = "Current streak: Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats.streaks))
 
 @command("pb")
-async def pb_cmd(ctx: ContextType):
+async def calculate_pb_cmd(ctx: ContextType):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
-    msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
-    with getfile("pb", "r") as f:
-        pb = f.read().split()
-    await ctx.reply(msg.format(pb))
+    msg = "Baalor's PB A20H Streaks | Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats.pb))
 
 @command("winrate")
-async def winrate_cmd(ctx: ContextType):
+async def calculate_winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022 A20 Heart kills."""
-    with getfile("kills", "r") as f:
-        kills = [int(x) for x in f.read().split()]
-    with getfile("losses", "r") as f:
-        losses = [int(x) for x in f.read().split()]
-    rate = [a/(a+b) for a, b in zip(kills, losses)]
+    run_stats = get_run_stats()
+    wins = [run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count]
+    losses = [run_stats.losses.ironclad_count, run_stats.losses.silent_count, run_stats.losses.defect_count, run_stats.losses.watcher_count]
+    rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 
 async def edit_counts(ctx: ContextType, arg: str, *, add: bool):

@@ -123,3 +123,6 @@ spotify:
 client:
   # The file that the "now playing" info will be saved to
   playing: ''
+
+  # If this is true, we sync local runs to data.
+  sync_runs: true
