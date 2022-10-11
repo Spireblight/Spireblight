@@ -5,4 +5,5 @@ last_run
 /lib/
 /lib64
 /env/
-dev-config.yml
+!default-config.yml
+*.yml
