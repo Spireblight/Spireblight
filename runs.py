@@ -227,31 +227,38 @@ def _update_cache():
                             prev_win.matched["next_win"] = cur
                             cur.matched["prev_win"] = prev_win
                         prev_win = cur
-                        if not _run_stats.streaks.is_loaded:
-                            _run_stats.add_win(cur.character)
                     else:
                         if "prev_loss" not in cur.matched and prev_loss is not None:
                             prev_loss.matched["next_loss"] = cur
                             cur.matched["prev_loss"] = prev_loss
                         prev_loss = cur
-                        if not _run_stats.streaks.is_loaded:
-                            _run_stats.add_loss(cur.character)
                 prev = cur
     
-    ts_keys = list(reversed(_ts_cache.keys()))
+    update_run_stats()
+
+    # I don't actually know how long this cache updating is going to take...
+    # I think it's as optimized as I could make it while still being safe,
+    # but it's possible it still takes some time. I'm not going to focus on
+    # that for now, but logging the update time everytime, in case it turns
+    # out to be a bottleneck. We only want to actually update new runs.
+    logger.info(f"Updated run parser cache in {time.time() - start}s")
+
+def update_run_stats():
     # we should only have to load this one time this way, after that we can just use the most recent run to update values
-    print(f'is loaded: {_run_stats.streaks.is_loaded}')
+    runs = list(get_profile(1).runs)
     if not _run_stats.streaks.is_loaded:
         _run_stats.streaks.all_character_count = 0
 
-        for timestamp in ts_keys[1:]:
+        for run in runs[1:]:
+            if run.timestamp.year != 2022:
+                continue
+
+            if run.won:
+                _run_stats.add_win(run.character)
+            else:
+                _run_stats.add_loss(run.character)
+
             if _run_stats.streaks.is_loaded:
-                print(f'broke at: {timestamp}')
-                break
-            
-            run = _ts_cache[timestamp]
-            if run.timestamp.year != 2022: # this is only for tracking the 2022 stats
-                print(f'continuing')
                 continue
             
             if _run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
@@ -264,17 +271,23 @@ def _update_cache():
                 _run_stats.streaks.watcher_count = run.character_streak.streak
 
     # set the stats from most recent run's rotating streak and character streak
-    last_run = _ts_cache[ts_keys[0]]
-    _run_stats.streaks.all_character_count = last_run.rotating_streak.streak
-    match last_run.character:
-        case "Ironclad":
-            _run_stats.streaks.ironclad_count = last_run.character_streak.streak
-        case "Silent":
-            _run_stats.streaks.silent_count = last_run.character_streak.streak
-        case "Defect":
-            _run_stats.streaks.defect_count = last_run.character_streak.streak
-        case "Watcher":
-            _run_stats.streaks.watcher_count = last_run.character_streak.streak
+    last_run = runs[0]
+    if not last_run.modded:
+        print("updating stats")
+        if last_run.won:
+            _run_stats.add_win(last_run.character)
+        else:
+            _run_stats.add_loss(last_run.character)
+        _run_stats.streaks.all_character_count = last_run.rotating_streak.streak
+        match last_run.character:
+            case "Ironclad":
+                _run_stats.streaks.ironclad_count = last_run.character_streak.streak
+            case "Silent":
+                _run_stats.streaks.silent_count = last_run.character_streak.streak
+            case "Defect":
+                _run_stats.streaks.defect_count = last_run.character_streak.streak
+            case "Watcher":
+                _run_stats.streaks.watcher_count = last_run.character_streak.streak
 
     msg = "A20 Heart kills in 2022: Total: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
     print(msg.format(_run_stats.wins.all_character_count, _run_stats.wins.ironclad_count, _run_stats.wins.silent_count, _run_stats.wins.defect_count, _run_stats.wins.watcher_count))
@@ -284,13 +297,6 @@ def _update_cache():
 
     msg = "Current streak: Rotating: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
     print(msg.format(_run_stats.streaks.all_character_count, _run_stats.streaks.ironclad_count, _run_stats.streaks.silent_count, _run_stats.streaks.defect_count, _run_stats.streaks.watcher_count))
-
-    # I don't actually know how long this cache updating is going to take...
-    # I think it's as optimized as I could make it while still being safe,
-    # but it's possible it still takes some time. I'm not going to focus on
-    # that for now, but logging the update time everytime, in case it turns
-    # out to be a bottleneck. We only want to actually update new runs.
-    logger.info(f"Updated run parser cache in {time.time() - start}s")
 
 def get_run_stats():
     return _run_stats
