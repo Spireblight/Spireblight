@@ -11,7 +11,6 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
-from cache.cache_helpers import RunStats
 from cache.year_run_stats import update_run_stats
 from sts_profile import get_profile
 from gamedata import FileParser
