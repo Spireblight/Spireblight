@@ -1,5 +1,7 @@
+import datetime
+
 class Statistic:
-    def __init__(self, set_default: bool = False):
+    def __init__(self, *, set_default: bool = False):
         self.all_character_count = None
         self.ironclad_count = None
         self.silent_count = None
@@ -13,15 +15,15 @@ class Statistic:
             self.watcher_count = 0
 
     @property
-    def is_loaded(self):
+    def is_loaded(self) -> bool:
         return self.all_character_count is not None and self.ironclad_count is not None and self.silent_count is not None and self.defect_count is not None and self.watcher_count is not None 
 
 class RunStats:
     def __init__(self):
-        self.wins = Statistic(True)
-        self.losses = Statistic(True)
+        self.wins = Statistic(set_default=True)
+        self.losses = Statistic(set_default=True)
         self.streaks = Statistic()
-        self.last_timestamp = None
+        self.last_timestamp: datetime.datetime = None
 
     def add_win(self, char: str):
         self._increment_stat(self.wins, char)

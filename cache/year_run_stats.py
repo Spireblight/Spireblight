@@ -3,6 +3,8 @@ from sts_profile import get_profile
 
 _run_stats = RunStats()
 
+__all__ = ["update_run_stats", "get_run_stats"]
+
 def update_run_stats():
     # we should only have to load this one time this way, after that we can just use the most recent run to update values
     runs = list(get_profile(0).runs) # BaalorA20 profile

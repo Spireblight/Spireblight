@@ -1169,7 +1169,7 @@ async def wall_card(ctx: ContextType):
 
     await ctx.reply(f"Current card in the {config.baalorbot.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
 
-@command("kills", "wins") # TODO: Read game files for this
+# @command("kills", "wins")
 async def kills_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
     msg = "A20 Heart kills in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
@@ -1177,14 +1177,14 @@ async def kills_cmd(ctx: ContextType):
         kills = [int(x) for x in f.read().split()]
     await ctx.reply(msg.format(kills, sum(kills)))
 
-@command("winstest")
-async def killstest_cmd(ctx: ContextType):
+@command("kills", "wins")
+async def calculate_wins_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
-    msg = "A20 Heart kills in 2022: Total: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    msg = "A20 Heart kills in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.wins.all_character_count, run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count))
+    await ctx.reply(msg.format(run_stats.wins))
 
-@command("losses")
+# @command("losses")
 async def losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
     msg = "A20 Heart losses in 2022: Total: {1} - Ironclad: {0[0]} - Silent: {0[1]} - Defect: {0[2]} - Watcher: {0[3]}"
@@ -1192,14 +1192,14 @@ async def losses_cmd(ctx: ContextType):
         losses = [int(x) for x in f.read().split()]
     await ctx.reply(msg.format(losses, sum(losses)))
 
-@command("lossestest")
-async def lossestest_cmd(ctx: ContextType):
+@command("losses")
+async def calculate_losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in 2022: Total: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    msg = "A20 Heart losses in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.losses.all_character_count, run_stats.losses.ironclad_count, run_stats.losses.silent_count, run_stats.losses.defect_count, run_stats.losses.watcher_count))
+    await ctx.reply(msg.format(run_stats.losses))
 
-@command("streak")
+# @command("streak")
 async def streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
     msg = "Current streak: Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
@@ -1207,12 +1207,12 @@ async def streak_cmd(ctx: ContextType):
         streak = f.read().split()
     await ctx.reply(msg.format(streak))
 
-@command("streaktest")
-async def streaktest_cmd(ctx: ContextType):
+@command("streak")
+async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
-    msg = "Current streak: Rotating: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    msg = "Current streak: Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.streaks.all_character_count, run_stats.streaks.ironclad_count, run_stats.streaks.silent_count, run_stats.streaks.defect_count, run_stats.streaks.watcher_count))
+    await ctx.reply(msg.format(run_stats.streaks))
 
 @command("pb")
 async def pb_cmd(ctx: ContextType):
@@ -1222,7 +1222,7 @@ async def pb_cmd(ctx: ContextType):
         pb = f.read().split()
     await ctx.reply(msg.format(pb))
 
-@command("winrate")
+#@command("winrate")
 async def winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022 A20 Heart kills."""
     with getfile("kills", "r") as f:
@@ -1232,8 +1232,8 @@ async def winrate_cmd(ctx: ContextType):
     rate = [a/(a+b) for a, b in zip(kills, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 
-@command("winratetest")
-async def winrate_cmd(ctx: ContextType):
+@command("winrate")
+async def calculate_winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022 A20 Heart kills."""
     run_stats = get_run_stats()
     wins = [run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count]
