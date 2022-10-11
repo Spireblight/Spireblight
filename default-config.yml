@@ -99,9 +99,6 @@ server:
     secret: <secret not set>
   webhook:
     secret: <secret not set>
-  
-  # If this is true, we sync local runs to data.
-  sync_runs: true
 
 # Where the gamedata is located on your computer. This is used by the client to
 # figure out where to look for run files and autosaves.
@@ -126,3 +123,6 @@ spotify:
 client:
   # The file that the "now playing" info will be saved to
   playing: ''
+
+  # If this is true, we sync local runs to data.
+  sync_runs: true
