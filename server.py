@@ -231,7 +231,7 @@ class TwitchConn(TBot):
         self._refresh_token: str = None
         try:
             with open(os.path.join("data", "spotify_refresh_token"), "r") as f:
-                self._refresh_token = f.read()
+                self._refresh_token = f.read().strip()
         except OSError:
             pass
 
@@ -267,8 +267,11 @@ class TwitchConn(TBot):
                 self._expires_at = (datetime.datetime.now() + datetime.timedelta(seconds=content["expires_in"])).timestamp()
                 if "refresh_token" in content:
                     self._refresh_token = content["refresh_token"]
-                    with open(os.path.join("data", "spotify_refresh_token"), "w") as f:
-                        f.write(self._refresh_token)
+                    try:
+                        with open(os.path.join("data", "spotify_refresh_token"), "w") as f:
+                            f.write(self._refresh_token)
+                    except OSError: # oh no
+                        logger.error(f"Could not write refresh token to file: {self._refresh_token}")
                 return self._token
             return None
 

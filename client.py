@@ -50,18 +50,25 @@ async def main():
                         j = await resp.json()
                         if not j["is_playing"]:
                             playing = None
-                            with open(config.client.playing, "w") as f:
-                                pass # make it an empty file
+                            try:
+                                with open(config.client.playing, "w") as f:
+                                    pass # make it an empty file
+                            except OSError:
+                                pass
                         else:
                             track = j['item']['name']
                             artists = ", ".join(x['name'] for x in j['item']['artists'])
                             album = j['item']['album']['name']
                             text = f"{track}\n{artists}\n{album}"
                             if playing != text:
-                                with open(config.client.playing, "w") as f:
-                                    f.write(text)
-                                playing = text
+                                try:
+                                    with open(config.client.playing, "w") as f:
+                                        f.write(text)
+                                    playing = text
+                                except OSError:
+                                    pass
 
+            continue
             to_send = []
             files = []
             if possible is None: # don't check run files during a run
