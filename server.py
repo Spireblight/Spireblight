@@ -236,6 +236,9 @@ class TwitchConn(TBot):
             pass
 
     async def get_new_token(self):
+        if not config.spotify.enabled:
+            return
+
         if self._session is None:
             self._session = ClientSession()
 
@@ -276,6 +279,9 @@ class TwitchConn(TBot):
             return None
 
     async def spotify_call(self):
+        if not config.spotify.enabled:
+            return
+
         if self._session is None:
             self._session = ClientSession()
 

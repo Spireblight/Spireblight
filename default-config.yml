@@ -111,6 +111,7 @@ spire:
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/
+  enabled: false
   # id and secret are the credentials for the application that we're using
   id: <not set>
   secret: <not set>
