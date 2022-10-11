@@ -11,6 +11,7 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 
 import aiohttp_jinja2
 
+from helpers.cache_helpers import RunStats
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -22,6 +23,7 @@ __all__ = ["get_latest_run"]
 
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
+_run_stats = RunStats()
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
@@ -225,12 +227,63 @@ def _update_cache():
                             prev_win.matched["next_win"] = cur
                             cur.matched["prev_win"] = prev_win
                         prev_win = cur
+                        if not _run_stats.streaks.is_loaded:
+                            _run_stats.add_win(cur.character)
                     else:
                         if "prev_loss" not in cur.matched and prev_loss is not None:
                             prev_loss.matched["next_loss"] = cur
                             cur.matched["prev_loss"] = prev_loss
                         prev_loss = cur
+                        if not _run_stats.streaks.is_loaded:
+                            _run_stats.add_loss(cur.character)
                 prev = cur
+    
+    ts_keys = list(reversed(_ts_cache.keys()))
+    # we should only have to load this one time this way, after that we can just use the most recent run to update values
+    print(f'is loaded: {_run_stats.streaks.is_loaded}')
+    if not _run_stats.streaks.is_loaded:
+        _run_stats.streaks.all_character_count = 0
+
+        for timestamp in ts_keys[1:]:
+            if _run_stats.streaks.is_loaded:
+                print(f'broke at: {timestamp}')
+                break
+            
+            run = _ts_cache[timestamp]
+            if run.timestamp.year != 2022: # this is only for tracking the 2022 stats
+                print(f'continuing')
+                continue
+            
+            if _run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
+                _run_stats.streaks.ironclad_count = run.character_streak.streak
+            elif _run_stats.streaks.silent_count is None and run.character == "Silent":
+                _run_stats.streaks.silent_count = run.character_streak.streak
+            elif _run_stats.streaks.defect_count is None and run.character == "Defect":
+                _run_stats.streaks.defect_count = run.character_streak.streak
+            elif _run_stats.streaks.watcher_count is None and run.character == "Watcher":
+                _run_stats.streaks.watcher_count = run.character_streak.streak
+
+    # set the stats from most recent run's rotating streak and character streak
+    last_run = _ts_cache[ts_keys[0]]
+    _run_stats.streaks.all_character_count = last_run.rotating_streak.streak
+    match last_run.character:
+        case "Ironclad":
+            _run_stats.streaks.ironclad_count = last_run.character_streak.streak
+        case "Silent":
+            _run_stats.streaks.silent_count = last_run.character_streak.streak
+        case "Defect":
+            _run_stats.streaks.defect_count = last_run.character_streak.streak
+        case "Watcher":
+            _run_stats.streaks.watcher_count = last_run.character_streak.streak
+
+    msg = "A20 Heart kills in 2022: Total: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    print(msg.format(_run_stats.wins.all_character_count, _run_stats.wins.ironclad_count, _run_stats.wins.silent_count, _run_stats.wins.defect_count, _run_stats.wins.watcher_count))
+
+    msg = "A20 Heart losses in 2022: Total: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    print(msg.format(_run_stats.losses.all_character_count, _run_stats.losses.ironclad_count, _run_stats.losses.silent_count, _run_stats.losses.defect_count, _run_stats.losses.watcher_count))
+
+    msg = "Current streak: Rotating: {0} - Ironclad: {1} - Silent: {2} - Defect: {3} - Watcher: {4}"
+    print(msg.format(_run_stats.streaks.all_character_count, _run_stats.streaks.ironclad_count, _run_stats.streaks.silent_count, _run_stats.streaks.defect_count, _run_stats.streaks.watcher_count))
 
     # I don't actually know how long this cache updating is going to take...
     # I think it's as optimized as I could make it while still being safe,
@@ -238,6 +291,9 @@ def _update_cache():
     # that for now, but logging the update time everytime, in case it turns
     # out to be a bottleneck. We only want to actually update new runs.
     logger.info(f"Updated run parser cache in {time.time() - start}s")
+
+def get_run_stats():
+    return _run_stats
 
 @router.get("/runs")
 @aiohttp_jinja2.template("runs_profile.jinja2")
