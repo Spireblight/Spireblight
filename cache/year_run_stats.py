@@ -1,5 +1,6 @@
 from cache.cache_helpers import RunStats
 from sts_profile import get_profile
+from logger import logger
 
 _run_stats = RunStats()
 
@@ -12,6 +13,12 @@ def update_run_stats():
         _run_stats.streaks.all_character_count = 0
 
         for run in runs[1:]:
+            if run.modded or run.modifiers:
+                logger.info(f"Found modded or custom run in stats: {run.name}")
+            elif run.ascension_level < 20:
+                logger.info(f"Found non-A20 run in stats: {run.name}")
+
+            _run_stats.check_pb(run)
             if run.timestamp.year != 2022:
                 continue
 
@@ -36,6 +43,7 @@ def update_run_stats():
     last_run = runs[0]
     if _run_stats.last_timestamp != last_run.timestamp and not last_run.modded:
         _run_stats.last_timestamp = last_run.timestamp # if this happens to get called multiple times between runs, we want to make sure we don't continually increment
+        _run_stats.check_pb(last_run)
         if last_run.won:
             _run_stats.add_win(last_run.character)
         else:

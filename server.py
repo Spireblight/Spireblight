@@ -1214,13 +1214,20 @@ async def calculate_streak_cmd(ctx: ContextType):
     run_stats = get_run_stats()
     await ctx.reply(msg.format(run_stats.streaks))
 
-@command("pb")
+#@command("pb")
 async def pb_cmd(ctx: ContextType):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
     msg = "Baalor's PB A20H Streaks | Rotating: {0[0]} - Ironclad: {0[1]} - Silent: {0[2]} - Defect: {0[3]} - Watcher: {0[4]}"
     with getfile("pb", "r") as f:
         pb = f.read().split()
     await ctx.reply(msg.format(pb))
+
+@command("pb")
+async def calculate_pb_cmd(ctx: ContextType):
+    """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
+    msg = "Baalor's PB A20H Streaks | Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats.pb))
 
 #@command("winrate")
 async def winrate_cmd(ctx: ContextType):

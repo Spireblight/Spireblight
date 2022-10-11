@@ -1,4 +1,11 @@
+from __future__ import annotations
+
 import datetime
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from runs import RunParser
 
 class Statistic:
     def __init__(self, *, set_default: bool = False):
@@ -22,6 +29,7 @@ class RunStats:
     def __init__(self):
         self.wins = Statistic(set_default=True)
         self.losses = Statistic(set_default=True)
+        self.pb = Statistic(set_default=True)
         self.streaks = Statistic()
         self.last_timestamp: datetime.datetime = None
 
@@ -30,6 +38,24 @@ class RunStats:
 
     def add_loss(self, char: str):
         self._increment_stat(self.losses, char)
+
+    def check_pb(self, run: RunParser):
+        if not run.modded:
+            if self.pb.all_character_count < run.rotating_streak.streak:
+                self.pb.all_character_count = run.rotating_streak.streak
+            match run.character:
+                case "Ironclad":
+                    if self.pb.ironclad_count < run.character_streak.streak:
+                        self.pb.ironclad_count = run.character_streak.streak
+                case "Silent":
+                    if self.pb.silent_count < run.character_streak.streak:
+                        self.pb.silent_count = run.character_streak.streak
+                case "Defect":
+                    if self.pb.defect_count < run.character_streak.streak:
+                        self.pb.defect_count = run.character_streak.streak
+                case "Watcher":
+                    if self.pb.watcher_count < run.character_streak.streak:
+                        self.pb.watcher_count = run.character_streak.streak
 
     def _increment_stat(self, stat: Statistic, char: str):
         match char:
