@@ -21,6 +21,7 @@ class RunStats:
         self.wins = Statistic(True)
         self.losses = Statistic(True)
         self.streaks = Statistic()
+        self.last_timestamp = None
 
     def add_win(self, char: str):
         self._increment_stat(self.wins, char)

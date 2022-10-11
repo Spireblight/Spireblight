@@ -29,6 +29,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession
 
+from cache.year_run_stats import get_run_stats
 from nameinternal import get_relic, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
@@ -38,7 +39,7 @@ from logger import logger
 from utils import getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
-from runs import get_latest_run, get_run_stats
+from runs import get_latest_run
 
 from typehints import ContextType, CommandType
 import events
