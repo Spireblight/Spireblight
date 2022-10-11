@@ -786,6 +786,9 @@ async def now_playing(ctx: ContextType):
 async def now_playing_client(req: Request):
     await get_req_data(req) # just checking if key is OK
 
+    if TConn is None: # no Twitch, no Spotify
+        raise HTTPServiceUnavailable(reason="Need Twitch connection for Spotify")
+
     data = await TConn.spotify_call()
 
     if data:
