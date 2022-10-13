@@ -1293,8 +1293,7 @@ async def Twitch_startup():
         async def error_global(e):
             logger.error(f"Timer global error with {e}")
 
-        if TConn.live_channels[config.twitch.channel]:
-            await _global_timer.start(glob.commands, stop_on_error=False)
+        await _global_timer.start(glob.commands, stop_on_error=False)
 
     sponsored = config.baalorbot.timers.sponsored
     if sponsored.interval and sponsored.commands:
@@ -1307,8 +1306,7 @@ async def Twitch_startup():
         async def error_sponsored(e):
             logger.error(f"Timer sponsored error with {e}")
 
-        if TConn.live_channels[config.twitch.channel]:
-            await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
+        await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
 
     await TConn.connect()
 
