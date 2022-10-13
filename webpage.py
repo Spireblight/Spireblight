@@ -10,7 +10,6 @@ import aiohttp_jinja2
 import jinja2
 
 from logger import logger
-from utils import getfile
 
 import events
 
@@ -83,13 +82,11 @@ class ChallengeCharacter:
 @router.get("/400")
 @aiohttp_jinja2.template("400.jinja2")
 async def challenge(req: web.Request):
-    with getfile("kills", "r") as f:
-        kills = [int(x) for x in f.read().split()]
-    with getfile("losses", "r") as f:
-        losses = [int(x) for x in f.read().split()]
-    with getfile("streak", "r") as f:
-        rotating_streak, *streak = [int(x) for x in f.read().split()]
-
+    from cache.year_run_stats import get_run_stats # TODO: Fix circular imports with router
+    run_stats = get_run_stats()
+    kills = [run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count]
+    losses = [run_stats.losses.ironclad_count, run_stats.losses.silent_count, run_stats.losses.defect_count, run_stats.losses.watcher_count]
+    streak = [run_stats.streaks.ironclad_count, run_stats.streaks.silent_count, run_stats.streaks.defect_count, run_stats.streaks.watcher_count]
     characters = []
     for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
         characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
@@ -99,14 +96,14 @@ async def challenge(req: web.Request):
     # ahead or behind.
     left = datetime.date(2022, 12, 31) - datetime.date.today()
     stream_days_left = math.floor(left.days * 5/7)
-    total = sum(x.kills for x in characters)
+    total = run_stats.wins.all_character_count
     stream_year = math.floor(365 * 5/7)
     approximated = math.floor(400 * ((stream_year - stream_days_left) / stream_year))
     diff = total - approximated
     day_of_stream_year = stream_year - stream_days_left
 
     return {
-        "rotating_streak": rotating_streak,
+        "rotating_streak": run_stats.streaks.all_character_count,
         "characters": characters,
         "total": total,
         "kills_left": 400 - total,
