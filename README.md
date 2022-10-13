@@ -39,6 +39,10 @@ The client configuration needs the following to be set:
 - `server.url`
 - `server.secret`
 
+## Syncing Run Data
+
+There will be no runs on the client initially. In order to sync your runs, while both the server and client from above are running, you'll need to complete a run in Slay the Spire. This can include just starting a run and abandoning it immediately. The synced runs can be found in the `data` folder in the root.
+
 ## Contributing
 
 For any issues, feel free to open an issue or submit a PR.
