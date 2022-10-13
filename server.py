@@ -313,8 +313,8 @@ class TwitchConn(TBot):
         self.live_channels[config.twitch.channel] = live = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
         if live:
             try:
-                await _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-                await _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
+                _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
+                _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
             except RuntimeError: # already running; don't worry about it
                 pass
 
@@ -380,8 +380,8 @@ class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
         TConn.live_channels[evt.broadcaster.name] = True
         try:
-            await _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-            await _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
+            _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
+            _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
         except RuntimeError: # already running; don't worry about it
             pass
 
@@ -1293,7 +1293,7 @@ async def Twitch_startup():
         async def error_global(e):
             logger.error(f"Timer global error with {e}")
 
-        await _global_timer.start(glob.commands, stop_on_error=False)
+        _global_timer.start(glob.commands, stop_on_error=False)
 
     sponsored = config.baalorbot.timers.sponsored
     if sponsored.interval and sponsored.commands:
@@ -1306,7 +1306,7 @@ async def Twitch_startup():
         async def error_sponsored(e):
             logger.error(f"Timer sponsored error with {e}")
 
-        await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
+        _sponsored_timer.start(sponsored.commands, stop_on_error=False)
 
     await TConn.connect()
 
