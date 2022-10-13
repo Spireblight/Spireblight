@@ -135,7 +135,6 @@ def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
 
     return _sanitize
 
-
 def _create_cmd(output):
     async def inner(ctx: ContextType, *s, output: str=output):
         try:
@@ -416,8 +415,9 @@ class DiscordConn(DBot):
         return value
 
 async def _timer(cmds: list[str]):
+    live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
     chan = TConn.get_channel(config.twitch.channel)
-    if not chan or not TConn.live_channels[config.twitch.channel]:
+    if not live:
         return
     cmd = None
     i = 0
