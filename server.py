@@ -135,7 +135,6 @@ def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
 
     return _sanitize
 
-
 def _create_cmd(output):
     async def inner(ctx: ContextType, *s, output: str=output):
         try:
@@ -416,8 +415,9 @@ class DiscordConn(DBot):
         return value
 
 async def _timer(cmds: list[str]):
+    live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
     chan = TConn.get_channel(config.twitch.channel)
-    if not chan or not TConn.live_channels[config.twitch.channel]:
+    if not live:
         return
     cmd = None
     i = 0
@@ -1293,8 +1293,7 @@ async def Twitch_startup():
         async def error_global(e):
             logger.error(f"Timer global error with {e}")
 
-        if TConn.live_channels[config.twitch.channel]:
-            await _global_timer.start(glob.commands, stop_on_error=False)
+        await _global_timer.start(glob.commands, stop_on_error=False)
 
     sponsored = config.baalorbot.timers.sponsored
     if sponsored.interval and sponsored.commands:
@@ -1307,8 +1306,7 @@ async def Twitch_startup():
         async def error_sponsored(e):
             logger.error(f"Timer sponsored error with {e}")
 
-        if TConn.live_channels[config.twitch.channel]:
-            await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
+        await _sponsored_timer.start(sponsored.commands, stop_on_error=False)
 
     await TConn.connect()
 
