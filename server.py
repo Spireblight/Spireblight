@@ -417,7 +417,7 @@ class DiscordConn(DBot):
 async def _timer(cmds: list[str]):
     live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
     chan = TConn.get_channel(config.twitch.channel)
-    if not live:
+    if not live or not chan:
         return
     cmd = None
     i = 0
@@ -462,7 +462,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if cmd.name not in cmds:
                 cmds[cmd.name] = []
             cmds[cmd.name].append(cmd)
-    aliases: dict[str, list[CommandType]] = {}
+    aliases: dict[str, list[str]] = {}
     if TConn is not None:
         for alias, cmd in TConn._command_aliases.items():
             aliases[alias] = [cmd]
@@ -630,7 +630,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name not in _cmds:
                 await ctx.reply("Error: cannot unalias built-in commands.")
                 return
-            if aliases[args[0]][0].name != name:
+            if aliases[args[0]][0] != name:
                 await ctx.reply(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]][0].name}).")
                 return
             if TConn is not None:
@@ -1280,7 +1280,7 @@ async def Twitch_startup():
         prefix=config.baalorbot.prefix
     )
     TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/eventsub")
-    await TConn.eventsub_setup()
+    #await TConn.eventsub_setup()
 
     glob = config.baalorbot.timers.globals
     if glob.interval and glob.commands:
