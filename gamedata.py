@@ -869,7 +869,7 @@ class FileParser(ABC):
         return self._data["chose_seed"]
 
     @property
-    def path(self) -> Generator[NodeData, None, None]:
+    def path(self) -> list[NodeData]:
         """Return the run's path. This is cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
@@ -909,7 +909,7 @@ class FileParser(ABC):
                 prev = t
                 self._cache["path"].append(node)
 
-        yield from self._cache["path"]
+        return list(self._cache["path"])
 
     @property
     def modifiers(self) -> list[str]:
@@ -931,6 +931,12 @@ class FileParser(ABC):
     @abstractmethod
     def score_breakdown(self) -> list[str]:
         raise NotImplementedError
+
+    def get_floor(self, floor: int) -> NodeData | None:
+        for node in self.path:
+            if node.floor == floor:
+                return node
+        return None
 
 class RelicData:
     """Contain information for Spire relics."""
