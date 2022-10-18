@@ -1,3 +1,4 @@
+from typing import Any
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 
 import os
@@ -37,3 +38,6 @@ def update_db():
     from server import _cmds
     with getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.server.json_indent)
+
+def convert_class_to_obj(obj: Any):
+    return vars(obj)
