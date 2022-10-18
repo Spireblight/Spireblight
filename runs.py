@@ -12,12 +12,14 @@ from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotI
 import aiohttp_jinja2
 
 from cache.year_run_stats import update_run_stats
+from response_objects.profiles import ProfilesResponse
+from response_objects.run_single import RunResponse
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
 from logger import logger
 from events import add_listener
-from utils import get_req_data
+from utils import convert_class_to_obj, get_req_data
 
 __all__ = ["get_latest_run"]
 
@@ -255,7 +257,7 @@ async def pick_profile(req: Request):
     if not profiles:
         raise HTTPNotImplemented(reason="No run files were found")
 
-    return {"profiles": profiles}
+    return convert_class_to_obj(ProfilesResponse(profiles))
 
 def _get_parser(name) -> RunParser | None:
     parser = _cache.get(f"{name}.run") # most common case
@@ -287,17 +289,8 @@ async def run_single(req: Request):
     if parser is None:
         raise HTTPNotFound()
     redirect = _truthy(req.query.get("redirect"))
-
-    return {
-        "run": parser,
-        "keys": {key: floor for key, floor in parser.keys},
-        "characters": {
-            "previous": parser.matched.get('prev_char'),
-            "next": parser.matched.get('next_char'),
-        },
-        "autorefresh": False,
-        "redirect": redirect
-    }
+    response = RunResponse(parser, {key: floor for key, floor in parser.keys}, prev_char=parser.matched.get('prev_char'), next_char=parser.matched.get('next_char'), autorefresh=False, redirect=redirect)
+    return convert_class_to_obj(response)
 
 @router.get("/runs/{name}/raw")
 async def run_raw_json(req: Request) -> Response:

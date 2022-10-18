@@ -68,3 +68,14 @@ class RunStats:
             case "Watcher":
                 stat.watcher_count += 1
         stat.all_character_count += 1
+
+class RunLinkedListNode:
+    def __init__(self):
+        self.next: RunParser = None
+        self.prev: RunParser = None
+        self.next_char: RunParser = None
+        self.prev_char: RunParser = None
+        self.next_win: RunParser = None
+        self.prev_win: RunParser = None
+        self.next_loss: RunParser = None
+        self.prev_loss: RunParser = None

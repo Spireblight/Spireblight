@@ -11,12 +11,13 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from nameinternal import get_card
+from response_objects.run_single import RunResponse
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic
 from webpage import router
 from logger import logger
-from utils import get_req_data
+from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run
 
 import score as _s
@@ -330,18 +331,14 @@ async def current_run(req: Request):
     if _savefile.in_game:
         for key, floor in _savefile.keys:
             keys[key] = floor
-    context = {
-        "run": _savefile,
-        "keys": keys,
-        "autorefresh": True,
-        "redirect": redirect,
-    }
+
+    context = RunResponse(_savefile, keys, autorefresh=True, redirect=redirect)
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
             raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
-    return context
+    return convert_class_to_obj(context)
 
 @router.get("/current/raw")
 async def current_as_raw(req: Request):

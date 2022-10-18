@@ -179,7 +179,7 @@
                 src="/static/relics/{{ key | urlencode }}.png"
                 onclick="neowText('{{ key }}',
                       {% if key in keys %}
-                      'Obtained on floor {{ keys[key] }}'
+                      'Obtained on floor {{ keys[key] }}<br>{{ path_as_list[keys[key] - 1].escaped_description() }}'
                       {% else %}
                       'This key hasn\'t been obtained yet.'
                       {% endif %})">
