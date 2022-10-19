@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 class RunResponse:
     def __init__(self, parser: FileParser, keys: dict[str, int], *, prev_char: RunParser = None, next_char: RunParser = None, autorefresh: bool, redirect: bool):
         self.run = parser
-        self.path_as_list = list(parser.path)
         self.keys = keys
         # This should be strongly typed to the prototyped RunLinkedListNode
         if prev_char is not None or next_char is not None:

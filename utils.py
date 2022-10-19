@@ -39,5 +39,5 @@ def update_db():
     with getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.server.json_indent)
 
-def convert_class_to_obj(obj: Any):
+def convert_class_to_obj(obj: Any) -> dict[str, Any]:
     return vars(obj)
