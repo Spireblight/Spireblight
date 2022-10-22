@@ -87,8 +87,16 @@
          },
          stacked: false,
          scales: {
+           x: {
+             grid: {
+               color: "#222229",
+             }
+           },
            y: {
-             min: 0
+             min: 0,
+             grid: {
+               color: "#222229",
+             }
            },
            y1: {
              type: 'linear',
@@ -96,6 +104,7 @@
              position: 'right',
              min: 0,
              grid: {
+               color: "#222229",
                drawOnChartArea: false, // only want the grid lines for one axis to show up
              },
            },
@@ -147,21 +156,21 @@
               </div>
             {% endif %}
             {% if run.modifiers %}
-            <div>
-              <p>Modifiers:</p>
-              <ul>
-              {% for modifier in run.modifiers_with_desc %}
-                <li>{{ modifier }}</li>
-              {% endfor %}
-              </ul>
-            </div>
+              <div>
+                <p>Modifiers:</p>
+                <ul>
+                  {% for modifier in run.modifiers_with_desc %}
+                    <li>{{ modifier }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
             {% endif %}
             <div class="score">
               <p>Score breakdown:</p>
               <ul>
-              {% for score in run.score_breakdown %}
-                <li>{{ score }}</li>
-              {% endfor %}
+                {% for score in run.score_breakdown %}
+                  <li>{{ score }}</li>
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -236,14 +245,14 @@
     </section>
 
     {% if run.removals %}
-    <section class="section">
-      <h4 class="title is-4">Cards Removed</h4>
-      <div class="cards">
-        {% for card_data in run.removals_as_html() %}
-          {{ card_data | safe }}
-        {% endfor %}
-      </div>
-    </section>
+      <section class="section">
+        <h4 class="title is-4">Cards Removed</h4>
+        <div class="cards">
+          {% for card_data in run.removals_as_html() %}
+            {{ card_data | safe }}
+          {% endfor %}
+        </div>
+      </section>
     {% endif %}
 
     <section class="section">

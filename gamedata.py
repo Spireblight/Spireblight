@@ -750,7 +750,7 @@ class FileParser(ABC):
             except KeyError:
                 meta = {"CHARACTER": "Special"}
             yield card, meta
-    
+
     @property
     @abstractmethod
     def removals(self) -> list[str]:
@@ -806,7 +806,7 @@ class FileParser(ABC):
                 content_order[char][rarity].sort(key=lambda x: x[0])
                 for name, ctype, count in content_order[char][rarity]:
                     format_map = {
-                        "color": ' style="color:#146214"' if "+" in name else "", # make it green when upgraded
+                        "color": ' style="color:#a0ffaa"' if "+" in name else "", # make it green when upgraded
                         "website": config.server.url,
                         "character": char if char != "Special" else "Colorless",
                         "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image

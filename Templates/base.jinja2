@@ -12,6 +12,7 @@
   <head>
     <link rel="icon" href="/static/misc/icon.png">
     <link href="/static/main.css" rel="stylesheet" />
+    <link href="/static/bulma.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kreon:wght@341&display=swap" rel="stylesheet">
@@ -20,7 +21,6 @@
     https://csstools.github.io/sanitize.css/ #}
     <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -68,7 +68,7 @@
             Baalorbot
           </a>
 
-          <a href="https://twitch.tv/baalorlord" class="navbar-item" target="_blank">
+          <a href="https://twitch.tv/{{ config.twitch.channel }}" class="navbar-item" target="_blank">
             <i class="fa-brands fa-twitch"></i>
             Twitch
           </a>

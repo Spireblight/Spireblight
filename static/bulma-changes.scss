@@ -1,0 +1,74 @@
+/* This needs the directory ./bulma/ to exist to actually work. */
+/* git clone https://github.com/jgthms/bulma */
+
+@charset "utf-8";
+
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Inter:400,700');
+
+// Set your brand colors
+$purple: #cc1620;
+$pink: #0fdcff;
+$brown: #404049;
+$beige-light: #dbdbdb;
+$beige-lighter: #ffffff;
+
+// Update Bulma's global variables
+$family-sans-serif: "Inter", sans-serif;
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$primary: $purple;
+$link: $pink;
+// $widescreen-enabled: false;
+// $fullhd-enabled: false;
+
+// Update some of Bulma's component variables
+$background: #222229;
+$body-background-color: #151519;
+$scheme-main: $background;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+$grey-darker:  hsl(0, 0%, 93%) !default;
+$grey-dark:    hsl(0, 0%, 86%)  !default;
+$grey:         hsl(0, 0%, 71%) !default;
+$grey-light:   hsl(0, 0%, 48%) !default;
+$grey-lighter: hsl(0, 0%, 29%) !default;
+$grey-lightest: hsl(0, 0%, 21%)  !default;
+
+$black:        hsl(0, 0%, 100%) !default;
+$black-bis:    hsl(0, 0%, 98%) !default;
+$black-ter:    hsl(0, 0%, 96%) !default;
+
+$white-ter:    hsl(0, 0%, 14%) !default;
+$white-bis:    hsl(0, 0%, 7%) !default;
+$white:        hsl(0, 0%, 4%) !default;
+
+$scheme-invert: hsl(0, 0%, 4%) !default;
+$text: #dbdbdb;
+
+$message-header-background-color: #404049;
+$message-header-color: $text;
+$footer-background-color: $background;
+
+$message-body-pre-background-color: $body-background-color;
+$message-body-pre-code-background-color: $body-background-color;
+
+$navbar-item-active-color: $pink;
+$navbar-dropdown-item-hover-color: $pink;
+$navbar-item-hover-background-color: transparent;
+
+$border: $pink;
+$shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.5), 0 0px 0 1px rgba($scheme-invert, 0.02);
+
+// Import only what you need from Bulma
+@import "./bulma/bulma.sass";
+// @import "./bulma/sass/base/_all.sass";
+// @import "./bulma/sass/elements/button.sass";
+// @import "./bulma/sass/elements/container.sass";
+// @import "./bulma/sass/elements/title.sass";
+// @import "./bulma/sass/form/_all.sass";
+// @import "./bulma/sass/components/navbar.sass";
+// @import "./bulma/sass/layout/hero.sass";
+// @import "./bulma/sass/layout/section.sass";

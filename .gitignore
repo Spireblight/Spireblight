@@ -7,3 +7,4 @@ last_run
 /env/
 !default-config.yml
 *.yml
+/static/bulma/
