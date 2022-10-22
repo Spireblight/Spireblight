@@ -829,14 +829,14 @@ class FileParser(ABC):
             yield a
 
     @property
-    def relics(self) -> Generator[RelicData, None, None]:
+    def relics(self) -> list[RelicData]:
         if "relics" not in self._cache:
             self._cache["relics"] = []
             for relic in self._data["relics"]:
                 value = RelicData(self, relic)
                 self._cache["relics"].append(value)
 
-        yield from self._cache["relics"]
+        return list(self._cache["relics"])
 
     @property
     def seed(self) -> str:

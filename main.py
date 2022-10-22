@@ -50,4 +50,5 @@ async def main():
             await server.Discord_cleanup()
         loop.close()
 
-asyncio.run(main()) # TODO: Signal handlers and stuff
+if __name__ == "__main__":
+    asyncio.run(main()) # TODO: Signal handlers and stuff
