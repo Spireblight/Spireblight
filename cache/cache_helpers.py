@@ -79,3 +79,15 @@ class RunLinkedListNode:
         self.prev_win: RunParser = None
         self.next_loss: RunParser = None
         self.prev_loss: RunParser = None
+
+    def get_run(self, *, is_prev: bool, is_character_specific: bool) -> RunParser:
+        if is_prev:
+            if is_character_specific:
+                return self.prev_char
+            else:
+                return self.prev
+        else:
+            if is_character_specific:
+                return self.next_char
+            else:
+                return self.next

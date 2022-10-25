@@ -14,6 +14,7 @@ import aiohttp_jinja2
 from response_objects.run_single import RunResponse
 from response_objects.profiles import ProfilesResponse
 from cache.year_run_stats import update_run_stats
+from cache.cache_helpers import RunLinkedListNode
 from sts_profile import get_profile
 from gamedata import FileParser
 from webpage import router
@@ -29,19 +30,19 @@ _ts_cache: dict[int, RunParser] = {}
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
     latest = _ts_cache[max(_ts_cache)]
-    key = "prev"
+    is_character_specific = False
     if character is not None:
-        key = "prev_char"
+        is_character_specific = True
         while latest.character != character:
-            latest = latest.matched["prev"]
+            latest = latest.matched.prev
 
     if victory is not None:
         if victory:
             while not latest.won:
-                latest = latest.matched[key]
+                latest = latest.matched.get_run(is_prev=True, is_character_specific=is_character_specific)
         else:
             while latest.won:
-                latest = latest.matched[key]
+                latest = latest.matched.get_run(is_prev=True, is_character_specific=is_character_specific)
 
     return latest
 
@@ -53,9 +54,7 @@ class RunParser(FileParser):
         super().__init__(data)
         self.filename = filename
         self.name, _, ext = filename.partition(".")
-        # maybe consider creating a type for this so we can 
-        # say Matched.prev instead of having to know the keys
-        self.matched: dict[str, RunParser] = {} 
+        self.matched = RunLinkedListNode()
         self._character = data["character_chosen"]
         self._profile = profile
         self._character_streak = None
@@ -152,13 +151,10 @@ class RunParser(FileParser):
             position_in_streak = 1
             is_ongoing = True
 
-            def loop_cached_runs(matched_key: str):
+            def loop_cached_runs(*, is_prev: bool):
                 nonlocal streak_total, position_in_streak, is_ongoing
-                is_prev = matched_key == "prev"
-                if is_character_streak:
-                    matched_key = matched_key + "_char"
-                if matched_key in self.matched:
-                    current_run = self.matched[matched_key]
+                current_run: RunParser = self.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)
+                if current_run is not None:
                     while current_run.won:
                         # iterate the streak
                         streak_total += 1
@@ -167,15 +163,15 @@ class RunParser(FileParser):
                         if is_prev:
                             position_in_streak += 1
 
-                        if matched_key in current_run.matched:
-                            current_run = current_run.matched[matched_key]
+                        if (run := current_run.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)) is not None:
+                            current_run = run
                         else:
                             break
                     does_upcoming_loss_exist = not is_prev and not current_run.won
                     if does_upcoming_loss_exist:
                         is_ongoing = False
-            loop_cached_runs("prev")
-            loop_cached_runs("next")
+            loop_cached_runs(is_prev=True)
+            loop_cached_runs(is_prev=False)
             return StreakInfo(streak_total, position_in_streak, is_ongoing)
         return StreakInfo(0, 0, False)
 
@@ -214,24 +210,24 @@ def _update_cache():
             for t in sorted(_cur_cache):
                 cur = _cur_cache[t]
                 if prev is not None:
-                    if "prev" not in cur.matched:
-                        prev.matched["next"] = cur
-                        cur.matched["prev"] = prev
+                    if cur.matched.prev is None:
+                        prev.matched.next = cur
+                        cur.matched.prev = prev
                     if cur.character not in prev_char:
                         prev_char[cur.character] = None
-                    if "prev_char" not in cur.matched and (c := prev_char[cur.character]) is not None:
-                        c.matched["next_char"] = cur
-                        cur.matched["prev_char"] = c
+                    if cur.matched.prev_char is None and (c := prev_char[cur.character]) is not None:
+                        c.matched.next_char = cur
+                        cur.matched.prev_char = c
                     prev_char[cur.character] = cur
                     if cur.won:
-                        if "prev_win" not in cur.matched and prev_win is not None:
-                            prev_win.matched["next_win"] = cur
-                            cur.matched["prev_win"] = prev_win
+                        if cur.matched.prev_win is None and prev_win is not None:
+                            prev_win.matched.next_win = cur
+                            cur.matched.prev_win = prev_win
                         prev_win = cur
                     else:
-                        if "prev_loss" not in cur.matched and prev_loss is not None:
-                            prev_loss.matched["next_loss"] = cur
-                            cur.matched["prev_loss"] = prev_loss
+                        if cur.matched.prev_loss is None and prev_loss is not None:
+                            prev_loss.matched.next_loss = cur
+                            cur.matched.prev_loss = prev_loss
                         prev_loss = cur
                 prev = cur
     
@@ -289,7 +285,7 @@ async def run_single(req: Request):
     if parser is None:
         raise HTTPNotFound()
     redirect = _truthy(req.query.get("redirect"))
-    response = RunResponse(parser, {key: floor for key, floor in parser.keys}, prev_char=parser.matched.get('prev_char'), next_char=parser.matched.get('next_char'), autorefresh=False, redirect=redirect)
+    response = RunResponse(parser, {key: floor for key, floor in parser.keys}, parser.matched.prev_char, parser.matched.next_char, autorefresh=False, redirect=redirect)
     return convert_class_to_obj(response)
 
 @router.get("/runs/{name}/raw")
