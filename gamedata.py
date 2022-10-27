@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Any, Generator, Iterable, NamedTuple
+from typing import Any, Generator, Iterable, NamedTuple, TYPE_CHECKING
 
 import urllib.parse
+import datetime
 import math
 import io
 
@@ -13,9 +14,13 @@ from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
 from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats, get_run_mod
+from sts_profile import Profile
 from logger import logger
 
 from configuration import config
+
+if TYPE_CHECKING:
+    from runs import StreakInfo
 
 __all__ = ["FileParser"]
 
@@ -659,7 +664,28 @@ class FileParser(ABC):
                     return file.getvalue()
 
     @property
-    def timestamp(self) -> int:
+    @abstractmethod
+    def timestamp(self) -> datetime.datetime:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def timedelta(self) -> datetime.timedelta:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def profile(self) -> Profile:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def character_streak(self) -> StreakInfo:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def rotating_streak(self) -> StreakInfo:
         raise NotImplementedError
 
     @property

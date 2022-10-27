@@ -19,6 +19,11 @@ pip install -r requirements.txt
 The data folder has a bunch of stuff to make the bot run. data.json contains
 most of the commands
 
+## Documentation
+
+The documentation [lives here](https://spireblight.github.io), with the Sphinx
+source [in the Docs repo](https://github.com/Spireblight/Docs).
+
 ## Running and configuring the server
 
 ```bash

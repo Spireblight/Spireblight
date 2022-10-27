@@ -18,7 +18,7 @@ from gamedata import FileParser, BottleRelic
 from webpage import router
 from logger import logger
 from utils import convert_class_to_obj, get_req_data
-from runs import get_latest_run
+from runs import get_latest_run, StreakInfo
 
 import score as _s
 
@@ -229,11 +229,11 @@ class Savefile(FileParser):
         return all_removals
 
     @property
-    def rotating_streak(self) -> int:
+    def rotating_streak(self) -> StreakInfo:
         return get_latest_run(None, None).rotating_streak
 
     @property
-    def character_streak(self) -> int:
+    def character_streak(self) -> StreakInfo:
         return get_latest_run(self.character, None).character_streak
 
     @property
