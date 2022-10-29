@@ -8,6 +8,7 @@ import os
 from events import add_listener
 
 __all__ = [
+    "get",
     "get_relic", "get_relic_stats",
     "get_card", "get_card_metadata",
     "get_potion", "get_event",
@@ -26,6 +27,12 @@ def query(name: str, type: str | None = None):
         return _query_cache[name][0] # FIX THIS
     return None
 
+def get(name: str) -> Base:
+    if name in _internal_cache:
+        return _internal_cache[name]
+
+    raise ValueError(f"Could not find item {name}")
+
 class Base:
     cls_name = ""
     def __init__(self, data: dict[str, str]):
@@ -42,6 +49,8 @@ class Card(Base):
         self.rarity: str = data["rarity"]
         self.type: str = data["type"]
         self.cost: str | None = data["cost"] or None
+        self.in_game: str | None = data.get("in_game")
+        self.base: int | None = data.get("base")
 
 class Relic(Base):
     cls_name = "relic"
@@ -50,6 +59,12 @@ class Relic(Base):
         self.pool: str | None = data.get("pool")
         self.tier: str = data["tier"]
         self.flavour_text: str = data["flavorText"]
+
+class Potion(Base): # XXX: Downfall internal codes aren't in
+    cls_name = "potion"
+    def __init__(self, data: dict[str, str]):
+        super().__init__(data)
+        self.rarity: str = data["rarity"]
 
 class ScoreBonus(Base):
     cls_name = "score_bonus"
@@ -60,7 +75,8 @@ class ScoreBonus(Base):
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,
-    "score_bonuses": ScoreBonus
+    "potions": Potion,
+    "score_bonuses": ScoreBonus,
 }
 
 def _get_name(x: str, d: str, default: str) -> str:

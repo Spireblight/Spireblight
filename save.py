@@ -14,7 +14,7 @@ from response_objects.run_single import RunResponse
 from nameinternal import get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
-from gamedata import FileParser, BottleRelic
+from gamedata import FileParser, BottleRelic, KeysObtained
 from webpage import router
 from logger import logger
 from utils import convert_class_to_obj, get_req_data
@@ -96,6 +96,27 @@ class Savefile(FileParser):
         if self.character is not None:
             return f"Current {self.character} run"
         return "Slay the Spire follow-along"
+
+    @property
+    def keys(self) -> KeysObtained:
+        keys = KeysObtained()
+        if self._data["has_ruby_key"]:
+            for choice in self._data["metric_campfire_choices"]:
+                if choice["key"] == "RECALL":
+                    keys.ruby_key_obtained = True
+                    keys.ruby_key_floor = int(choice["floor"])
+        if self._data["has_emerald_key"]:
+            keys.emerald_key_obtained = True
+            floor = self._data["basemod:mod_saves"].get("greenKeyTakenLog")
+            if floor:
+                keys.emerald_key_floor = int(floor)
+        if self._data["has_sapphire_key"]:
+            keys.sapphire_key_obtained = True
+            floor = self._data["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
+            if floor:
+                keys.sapphire_key_floor = int(floor["floor"])
+
+        return keys
 
     @property
     def profile(self):

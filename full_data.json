@@ -408,7 +408,9 @@
             "rarity": "Uncommon",
             "type": "Attack",
             "cost": "2",
-            "description": "Deal 12 (16 (21 (27 (34 (42 (51 (61 (72 (84 (97)))))))))) damage.\nCan be Upgraded any number of times."
+            "description": "Deal 12 (16 (21 (27 (34 (42 (51 (61 (72 (84 (97)))))))))) damage.\nCan be Upgraded any number of times.",
+            "in_game": "Deal {0} damage.\nCan be Upgraded any number of times.",
+            "base": 12
         },
         {
             "name": "Second Wind",
@@ -1541,7 +1543,9 @@
             "rarity": "Uncommon",
             "type": "Skill",
             "cost": "1",
-            "description": "Gain 1 Block. Permanently increase this card's Block by 2 (3).\nExhaust."
+            "description": "Gain 1 Block. Permanently increase this card's Block by 2 (3).\nExhaust.",
+            "in_game": "Gain {0} Block. Permanently increase this card's Block by 2 (3).\nExhaust.",
+            "base": 1
         },
         {
             "name": "Glacier",
@@ -2826,7 +2830,9 @@
             "type": "Attack",
             "cost": "1",
             "description": "Deal 15 damage.\nIf Fatal, permanently increase this card's damage by 3 (5).\nExhaust.",
-            "internal": "RitualDagger"
+            "internal": "RitualDagger",
+            "in_game": "Deal {0} damage.\nIf Fatal, permanently increase this card's damage by 3 (5).\nExhaust.",
+            "base": 15
         },
         {
             "name": "SLIME CRUSH!!!",

@@ -16,7 +16,7 @@ from response_objects.profiles import ProfilesResponse
 from cache.year_run_stats import update_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from sts_profile import get_profile
-from gamedata import FileParser
+from gamedata import FileParser, KeysObtained
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -75,6 +75,22 @@ class RunParser(FileParser):
     @property
     def timedelta(self) -> datetime.timedelta:
         return datetime.datetime.now() - self.timestamp
+
+    @property
+    def keys(self) -> KeysObtained:
+        keys = KeysObtained()
+        for choice in self._data["campfire_choices"]:
+            if choice["key"] == "RECALL":
+                keys.ruby_key_obtained = True
+                keys.ruby_key_floor = int(choice["floor"])
+        if "green_key_taken_log" in self._data:
+            keys.emerald_key_obtained = True
+            keys.emerald_key_floor = int(self._data["green_key_taken_log"])
+        if "blue_key_relic_skipped_log" in self._data:
+            keys.sapphire_key_obtained = True
+            keys.sapphire_key_floor = int(self._data["blue_key_relic_skipped_log"]["floor"])
+
+        return keys
 
     @property
     def won(self) -> bool:
