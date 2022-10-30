@@ -301,7 +301,7 @@ async def run_single(req: Request):
     if parser is None:
         raise HTTPNotFound()
     redirect = _truthy(req.query.get("redirect"))
-    response = RunResponse(parser, {key: floor for key, floor in parser.keys}, parser.matched.prev_char, parser.matched.next_char, autorefresh=False, redirect=redirect)
+    response = RunResponse(parser, parser.matched.prev_char, parser.matched.next_char, autorefresh=False, redirect=redirect)
     return convert_class_to_obj(response)
 
 @router.get("/runs/{name}/raw")

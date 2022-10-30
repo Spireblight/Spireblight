@@ -952,6 +952,13 @@ class KeysObtained:
         self.sapphire_key_obtained = False
         self.sapphire_key_floor = 0
 
+    def as_list(self):
+        return [
+            ("Emerald Key", self.emerald_key_obtained, self.emerald_key_floor),
+            ("Ruby Key", self.ruby_key_obtained, self.ruby_key_floor),
+            ("Sapphire Key", self.sapphire_key_obtained, self.sapphire_key_floor),
+        ]
+
 class RelicData:
     """Contain information for Spire relics."""
 

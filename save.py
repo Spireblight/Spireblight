@@ -348,12 +348,7 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    keys = {}
-    if _savefile.in_game:
-        for key, floor in _savefile.keys:
-            keys[key] = floor
-
-    context = RunResponse(_savefile, keys, autorefresh=True, redirect=redirect)
+    context = RunResponse(_savefile, autorefresh=True, redirect=redirect)
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
