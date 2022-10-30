@@ -793,7 +793,7 @@ class FileParser(ABC):
         content = collections.defaultdict(new_color)
         for card in cards:
             if card.color not in order:
-                order.insert(0, card.color) # TODO: Add tiny cards for mods
+                order.insert(0, card.color)
             content[card.color][card.rarity_safe].append(card)
 
         final = []
@@ -1036,15 +1036,6 @@ class CardData: # TODO: metadata + scaling cards (for savefile)
         self.card: Card = get(name)
         self.meta = meta
         self.upgrades = int(upgrades) if upgrades else 0
-
-    def __hash__(self) -> int:
-        return hash(self.name)
-
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, CardData):
-            return NotImplemented
-
-        return self.name == other.name
 
     def as_cards(self):
         for i in range(self.count):
