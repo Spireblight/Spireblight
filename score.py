@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from collections import Counter, namedtuple
+from collections import Counter
 
-from nameinternal import get, get_score_bonus
+from nameinternal import get, ScoreBonus
 
 if TYPE_CHECKING:
     from save import Savefile
@@ -15,7 +15,7 @@ class Score:
         self.should_show = should_show            
         self._format_string = ""
         if name:
-            data = get_score_bonus(name)
+            data: ScoreBonus = get(name)
             if data:
                 self._name = data.name
                 self._description = data.description

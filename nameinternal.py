@@ -45,6 +45,7 @@ def get_card(card: str) -> str:
 class Base:
     cls_name = ""
     def __init__(self, data: dict[str, str]):
+        assert self.cls_name, "Cannot instantiate Base"
         self.internal = data.get("internal", data["name"])
         self.name = data["name"]
         self.description = data["description"]
@@ -69,7 +70,7 @@ class Relic(Base):
         self.tier: str = data["tier"]
         self.flavour_text: str = data["flavorText"]
 
-class Potion(Base): # XXX: Downfall internal codes aren't in
+class Potion(Base):
     cls_name = "potion"
     def __init__(self, data: dict[str, str]):
         super().__init__(data)

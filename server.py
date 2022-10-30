@@ -866,10 +866,10 @@ async def card_info(ctx: ContextType, *line: str):
                 pool = f" ({rel.pool})"
             await ctx.reply(f"{rel.name} - {rel.tier}{pool}: {rel.description} {mod}")
 
-@with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
+@with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
-    if not save._data["has_sapphire_key"]:
+    if not save.keys.sapphire_key_obtained:
         await ctx.reply("We do not have the Sapphire key.")
         return
 
