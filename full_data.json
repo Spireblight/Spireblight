@@ -3483,7 +3483,7 @@
             "cost": "2",
             "description": "Requires 10 Block.\nDeal 4 (6) damage to ALL enemies 4 times.\nExhaust.",
             "mod": "Downfall",
-            "internal": "Guardian:GuardianWhirl"
+            "internal": "expansioncontent:GuardianWhirl"
         },
         {
             "name": "Hexaburn",
@@ -3513,7 +3513,7 @@
             "cost": "2",
             "description": "Remove all Debuffs.\nGain 1 Strength.\nIf you are below half HP, Gain (Heal)  (10 and gain ) 2 Strength.",
             "mod": "Downfall",
-            "internal": "champ:LastStand"
+            "internal": "expansioncontent:LastStand"
         },
         {
             "name": "Prepare Crush",
@@ -4852,7 +4852,7 @@
             "cost": "2 (1)",
             "description": "When you draw the first Status or Curse card each turn, Exhaust it and draw a card.",
             "mod": "Downfall",
-            "internal": "Guardian:Repulse"
+            "internal": "bronze:Repulse"
         },
         {
             "name": "Return",
@@ -5681,7 +5681,8 @@
             "type": "Attack",
             "cost": "2",
             "description": "Deal 12 damage.\nslimeboundmod:Split into a random Slime ( slimeboundmod:Specialist ).\nslimeboundmod:Command 2 (3) times.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "Slimebound:TagTeam"
         },
         {
             "name": "Leech Life",
@@ -9280,7 +9281,7 @@
             "cost": "1",
             "description": "*Strikes deal 3 (4) more damage this combat.\nGain 1 (2) Dexterity.\nThis costs 1 more this combat.",
             "mod": "Downfall",
-            "internal": "hermit:BossMaintenance"
+            "internal": "hermit:Maintenance"
         },
         {
             "name": "Malice",

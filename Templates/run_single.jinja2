@@ -183,7 +183,7 @@
           <div class="keys">
             {# Since we want the keys to be rendered in a specific order, we
             can't just loop  #}
-            {% for key, obtained, floor in run.keys.as_list %}
+            {% for key, obtained, floor in run.keys.as_list() %}
               <img class="{{ key | lower }} {% if not obtained %} missing{% endif %}"
                 src="/static/relics/{{ key | urlencode }}.png"
                 onclick="neowText('{{ key }}',
@@ -244,7 +244,7 @@
       </div>
     </section>
 
-    {% if run.removals %}
+    {% if run.has_removals %}
       <section class="section">
         <h4 class="title is-4">Cards Removed</h4>
         <div class="cards">

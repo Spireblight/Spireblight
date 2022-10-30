@@ -14,7 +14,7 @@ from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HT
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
-from nameinternal import get_event, get_relic_stats, get_run_mod, get, Card, Relic
+from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic
 from sts_profile import Profile
 from logger import logger
 
@@ -1305,14 +1305,14 @@ class NodeData:
         ret = []
         for cards in self._cards:
             if cards["picked"] != "SKIP":
-                ret.append(get(cards["picked"]).name)
+                ret.append(get_card(cards["picked"]))
         return ret
 
     @property
     def skipped(self) -> list[str]:
         ret = []
         for cards in self._cards:
-            ret.extend(get(x).name for x in cards["not_picked"])
+            ret.extend(get_card(x) for x in cards["not_picked"])
         return ret
 
     @property
@@ -1858,13 +1858,7 @@ class Merchant(NodeData):
                 item = get(name)
                 match item.cls_name:
                     case "card":
-                        match upgrades:
-                            case "":
-                                bought["cards"].append(item.name)
-                            case "1":
-                                bought["cards"].append(f"{item.name}+")
-                            case a:
-                                bought["cards"].append(f"{item.name}+{a}")
+                        bought["cards"].append(get_card(value))
                     case "relic":
                         bought["relics"].append(item.name)
                     case "potion":
@@ -1875,15 +1869,7 @@ class Merchant(NodeData):
         except ValueError:
             pass
         else:
-            name, _, upgrades = parser._data[parser.prefix + "items_purged"][index].partition("+")
-            value = get(name)
-            match upgrades:
-                case "":
-                    purged = value.name
-                case "1":
-                    purged = f"{value.name}+"
-                case a:
-                    purged = f"{value.name}+{a}"
+            purged = get_card(parser._data[parser.prefix + "items_purged"][index])
 
         d = ()
         if "shop_contents" in parser._data:

@@ -8,7 +8,8 @@ import os
 from events import add_listener
 
 __all__ = [
-    "get", "get_relic_stats",
+    "get", "get_card",
+    "get_relic_stats",
     "get_event",
     "query", "get_run_mod",
     "get_score_bonus"
@@ -30,6 +31,17 @@ def get(name: str) -> Base:
         return _internal_cache[name]
 
     raise ValueError(f"Could not find item {name}")
+
+def get_card(card: str) -> str:
+    name, _, upgrades = card.partition("+")
+    inst = get(name)
+    match upgrades:
+        case "":
+            return inst.name
+        case "1":
+            return f"{inst.name}+"
+        case a:
+            return f"{inst.name}+{a}"
 
 class Base:
     cls_name = ""
