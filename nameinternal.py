@@ -12,7 +12,6 @@ __all__ = [
     "get_relic_stats",
     "get_event",
     "query", "get_run_mod",
-    "get_score_bonus"
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -75,6 +74,7 @@ class Potion(Base): # XXX: Downfall internal codes aren't in
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.rarity: str = data["rarity"]
+        self.color: str = data.get("color")
 
 class ScoreBonus(Base):
     cls_name = "score_bonus"
@@ -102,9 +102,6 @@ def get_relic_stats(name: str) -> list[str]:
 
 def get_run_mod(name: str) -> str:
     return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
-
-def get_score_bonus(name: str) -> ScoreBonus:
-    return _internal_cache[name]
 
 @add_listener("setup_init")
 async def load():
