@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from collections import Counter, namedtuple
 
-from nameinternal import get_card_metadata, get_score_bonus
+from nameinternal import get, get_score_bonus
 
 if TYPE_CHECKING:
     from save import Savefile
@@ -110,7 +110,7 @@ def get_perfect_bosses_bonus(save: Savefile) -> Score:
 def get_collector_bonus(save: Savefile) -> Score:
     """Get 25 points for each non-starter card with 4 copies."""
     card_dict = Counter(save.deck_card_ids)
-    nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get_card_metadata(key).get("RARITY", "") != "Starter")
+    nonstarter_cards_count = sum(1 for key, value in card_dict.items() if value >= 4 and get(key).rarity != "Basic")
     return Score("Collector", nonstarter_cards_count, 25 * nonstarter_cards_count) 
 
 def get_deck_bonus(save: Savefile) -> Score:
@@ -185,7 +185,7 @@ def get_combo_bonus(save: Savefile) -> Score:
 def get_curses_bonus(save: Savefile) -> Score:
     """Your deck contains 5 curses."""
     score = 0
-    curses = [card for card in save.deck_card_ids if get_card_metadata(card)["CHARACTER"] == "Curse"]
+    curses = [card for card in save.deck_card_ids if get(card).color == "Curse"]
     if len(curses) >= 5:
         score = 100
     return Score("Curses", score=score)

@@ -11,7 +11,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
-from nameinternal import get_card
+from nameinternal import get
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic, KeysObtained
@@ -117,6 +117,28 @@ class Savefile(FileParser):
                 keys.sapphire_key_floor = int(floor["floor"])
 
         return keys
+
+    @property
+    def _master_deck(self) -> list[str]:
+        ret = []
+        for x in self._data["cards"]:
+            if x["upgrades"]:
+                ret.append(f"{x['id']}+{x['upgrades']}")
+            else:
+                ret.append(x["id"])
+
+        return ret
+
+    def get_meta_scaling_cards(self) -> list[tuple[str, int]]:
+        ret = []
+        for x in self._data["cards"]:
+            if x["misc"]:
+                card = x["id"]
+                if x["upgrades"]:
+                    card = f"{x['id']}+{x['upgrades']}"
+                ret.append((card, x["misc"]))
+
+        return ret
 
     @property
     def profile(self):
@@ -233,12 +255,13 @@ class Savefile(FileParser):
 
     @staticmethod
     def _get_card_string(card: str, upgrades: int) -> str:
+        item = get(card)
         if upgrades:
-            card = f"{card}+{upgrades}"
-        return get_card(card)
+            item = f"{card}+{upgrades}"
+        return item
 
     @property
-    def removals(self) -> list[str]:
+    def _removals(self) -> list[str]:
         event_removals = []
         for event in self._data["metric_event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                

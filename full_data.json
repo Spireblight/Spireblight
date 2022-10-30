@@ -740,7 +740,8 @@
             "rarity": "Common",
             "type": "Skill",
             "cost": "1",
-            "description": "ALL enemies lose 6 (8) Strength this turn.\nExhaust."
+            "description": "ALL enemies lose 6 (8) Strength this turn.\nExhaust.",
+            "internal": "PiercingWail"
         },
         {
             "name": "Poisoned Stab",

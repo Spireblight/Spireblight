@@ -12,7 +12,7 @@ from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
 
 import aiohttp_jinja2
 
-from nameinternal import get_card
+from nameinternal import get
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -68,12 +68,14 @@ class Profile:
 
     @property
     def hole_card(self) -> str:
-        name = get_card(self.data["NOTE_CARD"])
-        if (c := self.data["NOTE_UPGRADE"]) != "0":
-            if c == "1":
-                name += "+"
-            else:
-                name = f"{name}+{c}"
+        item = get(self.data["NOTE_CARD"])
+        match self.data["NOTE_UPGRADE"]:
+            case "0":
+                name = item.name
+            case "1":
+                name = f"{item.name}+"
+            case a:
+                name = f"{name}+{a}"
 
         return name
 

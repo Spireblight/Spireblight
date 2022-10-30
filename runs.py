@@ -93,6 +93,10 @@ class RunParser(FileParser):
         return keys
 
     @property
+    def _master_deck(self) -> list[str]:
+        return list(self._data["master_deck"])
+
+    @property
     def won(self) -> bool:
         return self._data["victory"]
 
@@ -130,7 +134,7 @@ class RunParser(FileParser):
         return f"{minutes:>02}:{seconds:>02}"
 
     @property
-    def removals(self) -> list[str]:
+    def _removals(self) -> list[str]:
         event_removals = []
         for event in self._data["event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                
