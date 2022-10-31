@@ -200,7 +200,7 @@ class NeowBonus:
         cur = base
 
         if self.parser.ascension_level >= 6: # take damage
-            cur -= (cur // 10)
+            cur -= math.ceil(cur / 10)
 
         if self.mod_data is not None:
             cur -= self.mod_data["damageTaken"]
