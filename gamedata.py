@@ -128,14 +128,14 @@ class NeowBonus:
         try:
             return self.get_hp()[0]
         except ValueError: # modded character; we don't have the data
-            raise AttributeError("current_hp")
+            return 0 # make it 0 so it doesn't break stuff
 
     @property
     def max_hp(self) -> int:
         try:
             return self.get_hp()[1]
         except ValueError:
-            raise AttributeError("max_hp")
+            return 0
 
     @property
     def gold(self) -> int:
@@ -708,15 +708,15 @@ class FileParser(ABC):
 
     @property
     def current_hp_counts(self) -> list[int]:
-        return self._data[self.prefix + "current_hp_per_floor"]
+        return [self.neow_bonus.current_hp] + self._data[self.prefix + "current_hp_per_floor"]
 
     @property
     def max_hp_counts(self) -> list[int]:
-        return self._data[self.prefix + "max_hp_per_floor"]
+        return [self.neow_bonus.max_hp] + self._data[self.prefix + "max_hp_per_floor"]
 
     @property
     def gold_counts(self) -> list[int]:
-        return self._data[self.prefix + "gold_per_floor"]
+        return [self.neow_bonus.gold] + self._data[self.prefix + "gold_per_floor"]
 
     @property
     def ascension_level(self) -> int:
