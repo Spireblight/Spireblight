@@ -676,7 +676,8 @@
             "rarity": "Common",
             "type": "Skill",
             "cost": "1",
-            "description": "Gain 6 Block.\nAdd 1 (2) Shiv (Shivs) into your hand."
+            "description": "Gain 6 Block.\nAdd 1 (2) Shiv (Shivs) into your hand.",
+            "internal": "Cloak And Dagger"
         },
         {
             "name": "Dagger Spray",
