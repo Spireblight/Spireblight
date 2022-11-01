@@ -3667,6 +3667,26 @@
             "internal": "hexamod:BurningTouch"
         },
         {
+            "name": "Crushing Stance",
+            "color": "Hexa_ghost_purple",
+            "rarity": "Uncommon",
+            "type": "Skill",
+            "cost": "1",
+            "description": "Placeholder for probably removed content",
+            "mod": "Downfall",
+            "internal": "hexamod:CrushingStance"
+        },
+        {
+            "name": "Dynamic Blow",
+            "color": "Hexa_ghost_purple",
+            "rarity": "Uncommon",
+            "type": "Skill",
+            "cost": "1",
+            "description": "Placeholder for probably removed content",
+            "mod": "Downfall",
+            "internal": "hexamod:DynamicBlow"
+        },
+        {
             "name": "Firestarter",
             "color": "Hexa_ghost_purple",
             "rarity": "Common",
@@ -3745,6 +3765,16 @@
             "description": "Deal 4 (7) damage.\nIf the enemy has Soulburn, detonate it.",
             "mod": "Downfall",
             "internal": "hexamod:PhantomFireball"
+        },
+        {
+            "name": "Phantom Cloak",
+            "color": "Hexa_ghost_purple",
+            "rarity": "Common",
+            "type": "Skill",
+            "cost": "1",
+            "description": "Ethereal.\nGain 1 (2) Dexterity and lose 1 Strength.",
+            "mod": "Downfall",
+            "internal": "hexamod:PhantomCloak"
         },
         {
             "name": "Shield of Night",
