@@ -6681,8 +6681,9 @@
             "rarity": "Common",
             "type": "Skill",
             "cost": "",
-            "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "description": "THIS IS A BUG, YOU SHOULD NOT BE SEEING THIS",
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClass"
         },
         {
             "name": "???",
@@ -6691,7 +6692,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassRED"
         },
         {
             "name": "???",
@@ -6700,7 +6702,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassGREEN"
         },
         {
             "name": "???",
@@ -6709,7 +6712,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassBLUE"
         },
         {
             "name": "???",
@@ -6718,7 +6722,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassPURPLE"
         },
         {
             "name": "???",
@@ -6727,7 +6732,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassHERMIT_YELLOW"
         },
         {
             "name": "???",
@@ -6736,7 +6742,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassHEXA_GHOST_PURPLE"
         },
         {
             "name": "???",
@@ -6745,7 +6752,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassGUARDIAN"
         },
         {
             "name": "???",
@@ -6754,7 +6762,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassTHE_BRONZE_AUTOMATON"
         },
         {
             "name": "???",
@@ -6763,7 +6772,8 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassSLIMEBOUND"
         },
         {
             "name": "???",
@@ -6772,7 +6782,18 @@
             "type": "Skill",
             "cost": "",
             "description": "* (Upgraded ) Unidentified Character Card.",
-            "mod": "Downfall"
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassGREMLIN"
+        },
+        {
+            "name": "???",
+            "color": "Snecko_cyan",
+            "rarity": "Common",
+            "type": "Skill",
+            "cost": "",
+            "description": "* (Upgraded ) Unidentified Character Card.",
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownClassTHE_CHAMP_GRAY"
         },
         {
             "name": "??? 1-Cost",
@@ -6963,6 +6984,16 @@
             "description": "* (Upgraded ) Unidentified Exhaust Card.",
             "mod": "Downfall",
             "internal": "sneckomod:UnknownExhaust"
+        },
+        {
+            "name": "??? Ethereal",
+            "color": "Snecko_cyan",
+            "rarity": "Uncommon",
+            "type": "Skill",
+            "cost": "",
+            "description": "* (Upgraded ) Unidentified Ethereal Card.",
+            "mod": "Downfall",
+            "internal": "sneckomod:UnknownEthereal"
         },
         {
             "name": "??? Strength",
