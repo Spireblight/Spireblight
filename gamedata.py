@@ -515,7 +515,15 @@ class NeowBonus:
     def turns_count(self) -> int:
         return self.turns_delta()
 
-_chars = {"THE_SILENT": "Silent"}
+_chars = {
+    "THE_SILENT": "Silent",
+    "SLIMEBOUND": "Slime Boss",
+    "THE_CHAMP": "Champ",
+    "GREMLIN": "Gremlins",
+    "THE_AUTOMATON": "Automaton",
+    "THE_SPIRIT": "Hexaghost",
+    "THE_SNECKO": "Snecko",
+}
 
 class FileParser(ABC):
     _variables_map = {
