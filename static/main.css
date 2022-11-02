@@ -230,6 +230,11 @@ section.section {
 .run-header .avatar img.watcher.loss {object-position: -346px -412px;}
 
 
+#run-nav {
+  margin-right: 3.75em;
+  margin-top: 2em;
+}
+
 .act img {
   cursor: pointer;
 }
