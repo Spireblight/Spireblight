@@ -8,11 +8,8 @@ if TYPE_CHECKING:
     from runs import RunParser
 
 class RunResponse:
-    def __init__(self, parser: FileParser, prev_char: RunParser = None, next_char: RunParser = None, *, autorefresh: bool, redirect: bool):
+    def __init__(self, parser: FileParser, run_linked_node: RunLinkedListNode = None, *, autorefresh: bool, redirect: bool):
         self.run = parser
-        if prev_char is not None or next_char is not None:
-            self.characters = RunLinkedListNode()
-            self.characters.prev_char = prev_char
-            self.characters.next_char = next_char
+        self.linked_runs = run_linked_node
         self.autorefresh = autorefresh
         self.redirect = redirect
