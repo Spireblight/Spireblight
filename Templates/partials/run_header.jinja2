@@ -4,7 +4,7 @@
       <img class="{{ run.character | lower }} {{ run.verb }}"
         src="/static/characters/{{ run.character | lower }}-{% if run.done and not run.won %}loss{% else %}face{% endif %}.png"/>
     </div>
-    <div class="container">
+    <div class="run-header-content">
       <div class="run-title pt-4 pr-4 pb-4">
         <div class="title">
           {{ run.character }}

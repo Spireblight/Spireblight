@@ -140,6 +140,10 @@ section.section {
     width: 100%;
     object-fit: none;
   }
+  .run-header-content {
+    display: flex !important;
+    flex-grow: 1;
+  }
   /* TODO(olivia): Probably consolidate with .command-title above */
   .run-title {
     display: flex;
@@ -191,7 +195,6 @@ section.section {
     font-size: 0.75em;
     min-width: 9rem;
     padding-left: 1rem;
-    height: 100%;
     white-space: nowrap;
     text-align: center;
   }
