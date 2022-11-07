@@ -92,43 +92,50 @@
     </script>
 
     {% if run.done %}
-    {# We only show this when looking at run histories #}
-    <div class="columns">
-      <div class="column is-three-quarters">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-          <ul>
-            <li><a href="/runs">Run histories</a></li>
-            <li><a href="/profile/{{ run.profile.index }}/runs">{{ run.profile.name }}</a></li>
-            <li class="is-active">
-              <a href="#">
-                {{ run.character }} {{ run.verb }},
-                {{ run.timestamp.strftime("%A %d %B, %H:%M") }}
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      {% if linked_runs %}
-      <div id="run-nav" class="box column">
-        <div>
-          {% if linked_runs.prev %}
-          <a id="hrefPrevRun" href="/runs/{{ linked_runs.prev.name }}">Previous run</a>
-          {% endif %}
-          {% if linked_runs.next %}
-          <a id="hrefNextRun" class="is-pulled-right" href="/runs/{{ linked_runs.next.name }}">Next run</a>
-          {% endif %}
+      {# We only show this when looking at run histories #}
+      <div class="columns">
+        <div class="column is-three-quarters">
+          <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="/runs">Run histories</a></li>
+              <li><a href="/profile/{{ run.profile.index }}/runs">{{ run.profile.name }}</a></li>
+              <li class="is-active">
+                <a href="#">
+                  {{ run.character }} {{ run.verb }} on seed {{ run.seed }}
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div>
-          {% if linked_runs.prev_char %}
-          <a href="/runs/{{ linked_runs.prev_char.name }}">Previous {{ run.character }} run</a>
-          {% endif %}
-          {% if linked_runs.next_char %}
-          <a class="is-pulled-right" href="/runs/{{ linked_runs.next_char.name }}">Next {{ run.character }} run</a>
-          {% endif %}
-        </div>
+        {% if linked_runs %}
+          <div id="run-nav" class="box column">
+            <div class="px-2">
+              {% if linked_runs.prev %}
+                <a id="hrefPrevRun" href="/runs/{{ linked_runs.prev.name }}">
+                  Previous run
+                </a>
+              {% endif %}
+              {% if linked_runs.next %}
+                <a id="hrefNextRun" class="is-pulled-right" href="/runs/{{ linked_runs.next.name }}">
+                  Next run
+                </a>
+              {% endif %}
+            </div>
+            <div class="px-2">
+              {% if linked_runs.prev_char %}
+                <a href="/runs/{{ linked_runs.prev_char.name }}">
+                  Previous {{ run.character }} run
+                </a>
+              {% endif %}
+              {% if linked_runs.next_char %}
+                <a class="is-pulled-right" href="/runs/{{ linked_runs.next_char.name }}">
+                  Next {{ run.character }} run
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
       </div>
-      {% endif %}
-    </div>
     {% endif %}
 
     {% include "partials/run_header.jinja2" %}
