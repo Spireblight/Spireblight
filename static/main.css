@@ -298,7 +298,7 @@ section.section {
   #run-info .keys {
     height: 100px;
   }
-  #neow-body-original p:after {
+  #top-section:before {
     content: "Hint: You can click on relics, floors, cards, and the keys.";
     display: block;
     margin-top: 1rem;
