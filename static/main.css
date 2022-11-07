@@ -466,6 +466,10 @@ nav.breadcrumb {
   padding-left: 2.25rem;
 }
 
+#run-list .run.loss .section .box {
+  background-color: #292229;
+}
+
 .button .fa-discord {
   margin-right: 1rem;
 }
