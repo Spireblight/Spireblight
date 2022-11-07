@@ -368,7 +368,6 @@ section.section {
   visibility: none;
 }
 .neow .message-body {
-  font-family: 'Kreon', serif;
   overflow: scroll;
   border-width: 0;
 }
