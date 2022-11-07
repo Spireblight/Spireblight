@@ -235,19 +235,34 @@ section.section {
     display: none;
   }
 }
-
-.run-header .avatar img.ironclad {object-position: -131px 0px;}
-.run-header .avatar img.silent {object-position: -102px 0px;}
-.run-header .avatar img.defect {object-position: -94px 0px;}
-.run-header .avatar img.watcher {object-position: -150px 10px;}
+.run-header .avatar img.automaton {object-position: -119px -7px;}
+.run-header .avatar img.champ     {object-position: -85px 1px; transform: scaleX(-1);}
+.run-header .avatar img.defect    {object-position: -94px 0px;}
+.run-header .avatar img.gremlins  {object-position: -70px -17px;}
+.run-header .avatar img.guardian  {object-position: -139px -67px; transform: scaleX(-1);}
+.run-header .avatar img.hermit    {object-position: -55px 1px;}
+.run-header .avatar img.hexaghost {object-position: -139px -186px; transform: scaleX(-1);}
+.run-header .avatar img.ironclad  {object-position: -131px 0px;}
+.run-header .avatar img.silent    {object-position: -102px 0px;}
+.run-header .avatar img.slime     {object-position: -190px 10px;}
+.run-header .avatar img.snecko    {object-position: -75px -6px;}
+.run-header .avatar img.watcher   {object-position: -150px 10px;}
 
 .run-header .avatar img.loss {
   filter: grayscale(60%);
 }
-.run-header .avatar img.ironclad.loss {object-position: -313px -394px;}
-.run-header .avatar img.silent.loss {object-position: -322px -388px;}
-.run-header .avatar img.defect.loss {object-position: -333px -405px;}
-.run-header .avatar img.watcher.loss {object-position: -346px -412px;}
+.run-header .avatar img.automaton.loss {object-position: -272px -417px;}
+.run-header .avatar img.champ.loss     {object-position: -245px -262px; transform: scaleX(1);}
+.run-header .avatar img.defect.loss    {object-position: -333px -405px;}
+.run-header .avatar img.gremlins.loss  {object-position: -266px -364px;}
+.run-header .avatar img.guardian.loss  {object-position: -320px -387px;}
+.run-header .avatar img.hermit.loss    {object-position: -295px -402px;}
+.run-header .avatar img.hexaghost.loss {object-position: -90px  -425px;}
+.run-header .avatar img.ironclad.loss  {object-position: -313px -394px;}
+.run-header .avatar img.silent.loss    {object-position: -322px -388px;}
+.run-header .avatar img.slime.loss     {object-position: -89px  -412px; transform: scaleX(-1);}
+.run-header .avatar img.snecko.loss    {object-position: -261px -365px;}
+.run-header .avatar img.watcher.loss   {object-position: -346px -412px;}
 
 
 @media only screen and (min-width: 768px) {

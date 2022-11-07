@@ -17,7 +17,7 @@ from configuration import config
 
 __all__ = ["webpage", "router"]
 
-__version__ = "0.4"
+__version__ = "0.5"
 __author__ = "Anilyka Barry"
 __github__ = "https://github.com/Spireblight/Spireblight"
 __botname__ = "Spireblight"

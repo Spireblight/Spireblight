@@ -16,7 +16,7 @@ from response_objects.profiles import ProfilesResponse
 from cache.year_run_stats import update_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from sts_profile import get_profile
-from gamedata import FileParser
+from gamedata import FileParser, KeysObtained
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -77,6 +77,26 @@ class RunParser(FileParser):
         return datetime.datetime.now() - self.timestamp
 
     @property
+    def keys(self) -> KeysObtained:
+        keys = KeysObtained()
+        for choice in self._data["campfire_choices"]:
+            if choice["key"] == "RECALL":
+                keys.ruby_key_obtained = True
+                keys.ruby_key_floor = int(choice["floor"])
+        if "green_key_taken_log" in self._data:
+            keys.emerald_key_obtained = True
+            keys.emerald_key_floor = int(self._data["green_key_taken_log"])
+        if "blue_key_relic_skipped_log" in self._data:
+            keys.sapphire_key_obtained = True
+            keys.sapphire_key_floor = int(self._data["blue_key_relic_skipped_log"]["floor"])
+
+        return keys
+
+    @property
+    def _master_deck(self) -> list[str]:
+        return list(self._data["master_deck"])
+
+    @property
     def won(self) -> bool:
         return self._data["victory"]
 
@@ -114,7 +134,7 @@ class RunParser(FileParser):
         return f"{minutes:>02}:{seconds:>02}"
 
     @property
-    def removals(self) -> list[str]:
+    def _removals(self) -> list[str]:
         event_removals = []
         for event in self._data["event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                
@@ -285,7 +305,8 @@ async def run_single(req: Request):
     if parser is None:
         raise HTTPNotFound()
     redirect = _truthy(req.query.get("redirect"))
-    response = RunResponse(parser, {key: floor for key, floor in parser.keys}, parser.matched, autorefresh=False, redirect=redirect)
+
+    response = RunResponse(parser, parser.matched, autorefresh=False, redirect=redirect)
     return convert_class_to_obj(response)
 
 @router.get("/runs/{name}/raw")

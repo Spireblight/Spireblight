@@ -30,7 +30,7 @@ from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession
 
 from cache.year_run_stats import get_run_stats
-from nameinternal import get_relic, query, Base, Card, Relic
+from nameinternal import get, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -866,10 +866,10 @@ async def card_info(ctx: ContextType, *line: str):
                 pool = f" ({rel.pool})"
             await ctx.reply(f"{rel.name} - {rel.tier}{pool}: {rel.description} {mod}")
 
-@with_savefile("bluekey", "sapphirekey", "key") # JSON_FP_PROP
+@with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
-    if not save._data["has_sapphire_key"]:
+    if not save.keys.sapphire_key_obtained:
         await ctx.reply("We do not have the Sapphire key.")
         return
 
@@ -955,7 +955,7 @@ async def nloth_traded(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
     for evt in save._data["metric_event_choices"]:
         if evt["event_name"] == "N'loth":
-            await ctx.reply(f"We traded {get_relic(evt['relics_lost'][0])} for N'loth's Gift.")
+            await ctx.reply(f"We traded {get(evt['relics_lost'][0]).name} for N'loth's Gift.")
             return
     else:
         await ctx.reply("Something went terribly wrong.")
@@ -1031,9 +1031,9 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
         msg.append(
             template.format(
                 i,
-                get_relic(item["picked"]),
-                get_relic(item["not_picked"][0]),
-                get_relic(item["not_picked"][1]),
+                get(item["picked"]).name,
+                get(item["not_picked"][0]).name,
+                get(item["not_picked"][1]).name,
             )
         )
         i += 1

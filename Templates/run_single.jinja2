@@ -194,12 +194,12 @@
           <div class="keys">
             {# Since we want the keys to be rendered in a specific order, we
             can't just loop  #}
-            {% for key in ("Emerald Key", "Ruby Key", "Sapphire Key") %}
-              <img class="{{ key | lower }} {% if key not in keys %} missing{% endif %}"
+            {% for key, obtained, floor in run.keys.as_list() %}
+              <img class="{{ key | lower }} {% if not obtained %} missing{% endif %}"
                 src="/static/relics/{{ key | urlencode }}.png"
                 onclick="neowText('{{ key }}',
-                      {% if key in keys %}
-                      'Obtained on floor {{ keys[key] }}<br>{{ run.get_floor(keys[key]).escaped_description() }}'
+                      {% if obtained %}
+                      'Obtained on floor {{ floor }}<br>{{ run.get_floor(floor).escaped_description() }}'
                       {% else %}
                       'This key hasn\'t been obtained yet.'
                       {% endif %})">
@@ -255,7 +255,7 @@
       </div>
     </section>
 
-    {% if run.removals %}
+    {% if run.has_removals %}
       <section class="section">
         <h4 class="title is-4">Cards Removed</h4>
         <div class="cards">

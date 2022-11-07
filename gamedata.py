@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Generator, Iterable, NamedTuple, TYPE_CHECKING
 
 import urllib.parse
+import collections
 import datetime
 import math
 import io
@@ -13,7 +14,7 @@ from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HT
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
-from nameinternal import get_relic, get_card, get_card_metadata, get_potion, get_event, get_relic_stats, get_run_mod
+from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic
 from sts_profile import Profile
 from logger import logger
 
@@ -299,8 +300,8 @@ class NeowBonus:
         for cards in self.parser._data[prefix + "card_choices"]:
             if cards["floor"] == 0:
                 if cards["picked"] != "SKIP":
-                    return f"picked {get_card(cards['picked'])} over {' and '.join(get_card(x) for x in cards['not_picked'])}"
-                return f"were offered {', '.join(get_card(x) for x in cards['not_picked'])} but skipped them all"
+                    return f"picked {get(cards['picked']).name} over {' and '.join(get(x).name for x in cards['not_picked'])}"
+                return f"were offered {', '.join(get(x).name for x in cards['not_picked'])} but skipped them all"
 
         raise ValueError("That is not the right bonus??")
 
@@ -308,22 +309,22 @@ class NeowBonus:
 
     def bonus_RANDOM_COMMON_RELIC(self):
         if self.mod_data is not None:
-            return f"got {get_relic(self.mod_data['relicsObtained'][0])}"
+            return f"got {get(self.mod_data['relicsObtained'][0]).name}"
         return "picked a random Common relic"
 
     def bonus_REMOVE_CARD(self):
         if self.mod_data is not None:
-            return f"removed {get_card(self.mod_data['cardsRemoved'][0])}"
+            return f"removed {get(self.mod_data['cardsRemoved'][0]).name}"
         return "removed a card"
 
     def bonus_TRANSFORM_CARD(self):
         if self.mod_data is not None:
-            return f"transformed {get_card(self.mod_data['cardsTransformed'][0])} into {get_card(self.mod_data['cardsObtained'][0])}"
+            return f"transformed {get(self.mod_data['cardsTransformed'][0]).name} into {get(self.mod_data['cardsObtained'][0]).name}"
         return "transformed a card"
 
     def bonus_UPGRADE_CARD(self):
         if self.mod_data is not None:
-            return f"upgraded {get_card(self.mod_data['cardsUpgraded'][0])}"
+            return f"upgraded {get(self.mod_data['cardsUpgraded'][0]).name}"
         return "upgraded a card"
 
     def bonus_THREE_ENEMY_KILL(self):
@@ -335,7 +336,7 @@ class NeowBonus:
         prefix = self.parser.prefix
         for potion in self.parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == 0:
-                potions.append(get_potion(potion["key"]))
+                potions.append(get(potion["key"]).name)
         if self.mod_data is not None:
             if "basemod:mod_saves" in self.parser._data:
                 s = self.parser._data["basemod:mod_saves"]["RewardsSkippedLog"]
@@ -343,7 +344,7 @@ class NeowBonus:
                 s = self.parser._data["rewards_skipped"]
             for skip in s:
                 if skip["floor"] == 0:
-                    skipped.extend(get_potion(x) for x in skip["potions"])
+                    skipped.extend(get(x).name for x in skip["potions"])
         if skipped:
             return f"got {' and '.join(potions)}, and skipped {' and '.join(skipped)}"
         return f"got {' and '.join(potions)}"
@@ -355,7 +356,7 @@ class NeowBonus:
 
     def bonus_ONE_RANDOM_RARE_CARD(self):
         if self.mod_data is not None:
-            return f"picked a random Rare card, and got {get_card(self.mod_data['cardsObtained'][0])}"
+            return f"picked a random Rare card, and got {get(self.mod_data['cardsObtained'][0]).name}"
         return "picked a random Rare card"
 
     # option 3
@@ -373,25 +374,25 @@ class NeowBonus:
 
     def bonus_REMOVE_TWO(self):
         if self.mod_data is not None:
-            return f"removed {' and '.join(get_card(x) for x in self.mod_data['cardsRemoved'])}"
+            return f"removed {' and '.join(get(x).name for x in self.mod_data['cardsRemoved'])}"
         return "removed two cards"
 
     def bonus_TRANSFORM_TWO_CARDS(self):
         if self.mod_data is not None:
-            return f"transformed {' and '.join(get_card(x) for x in self.mod_data['cardsTransformed'])} into {' and '.join(get_card(x) for x in self.mod_data['cardsObtained'])}"
+            return f"transformed {' and '.join(get(x).name for x in self.mod_data['cardsTransformed'])} into {' and '.join(get(x).name for x in self.mod_data['cardsObtained'])}"
         return "transformed two cards"
 
     def bonus_ONE_RARE_RELIC(self):
         if self.mod_data is not None:
-            return f"picked a random Rare relic and got {get_relic(self.mod_data['relicsObtained'][0])}"
+            return f"picked a random Rare relic and got {get(self.mod_data['relicsObtained'][0]).name}"
         return "obtained a random Rare relic"
 
     # option 4
 
     def bonus_BOSS_RELIC(self):
         if self.mod_data is not None:
-            return f"swapped our starter relic for {get_relic(self.mod_data['relicsObtained'][0])}"
-        return f"swapped our starter relic for {get_relic(self.parser._data['relics'][0])}" # N'loth can mess with this
+            return f"swapped our starter relic for {get(self.mod_data['relicsObtained'][0]).name}"
+        return f"swapped our starter relic for {get(self.parser._data['relics'][0]).name}" # N'loth can mess with this
 
     # more Neow mod
 
@@ -403,7 +404,7 @@ class NeowBonus:
 
     def cost_CURSE(self):
         if self.mod_data is not None:
-            return f"got cursed with {get_card(self.mod_data['cardsObtained'][0])}"
+            return f"got cursed with {get(self.mod_data['cardsObtained'][0]).name}"
         return "got a random curse"
 
     def cost_NO_GOLD(self):
@@ -443,7 +444,7 @@ class NeowBonus:
     @property
     def cards(self) -> list[str]:
         try:
-            return [get_card(x) for x in self.get_cards()]
+            return [get(x).name for x in self.get_cards()]
         except ValueError:
             return []
 
@@ -514,7 +515,15 @@ class NeowBonus:
     def turns_count(self) -> int:
         return self.turns_delta()
 
-_chars = {"THE_SILENT": "Silent"}
+_chars = {
+    "THE_SILENT": "Silent",
+    "SLIMEBOUND": "Slime Boss",
+    "THE_CHAMP": "Champ",
+    "GREMLIN": "Gremlins",
+    "THE_AUTOMATON": "Automaton",
+    "THE_SPIRIT": "Hexaghost",
+    "THE_SNECKO": "Snecko",
+}
 
 class FileParser(ABC):
     _variables_map = {
@@ -727,119 +736,85 @@ class FileParser(ABC):
         return self._data[self.prefix + "playtime"]
 
     @property
-    def keys(self) -> Generator[tuple[str, str | int], None, None]:
-        if "basemod:mod_saves" in self._data: # savefile
-            if self._data["has_ruby_key"]:
-                for choice in self._data["metric_campfire_choices"]:
-                    if choice["key"] == "RECALL":
-                        yield ("Ruby Key", choice["floor"])
-            if self._data["has_emerald_key"]:
-                floor = self._data["basemod:mod_saves"].get("greenKeyTakenLog", "<Unknown floor>")
-                yield ("Emerald Key", floor)
-            if self._data["has_sapphire_key"]:
-                floor = self._data["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
-                if floor is None:
-                    floor = "<Unknown Floor>"
-                else:
-                    floor = floor["floor"]
-                yield ("Sapphire Key", floor)
-
-        else:
-            for choice in self._data["campfire_choices"]:
-                if choice["key"] == "RECALL":
-                    yield ("Ruby Key", choice["floor"])
-            if "green_key_taken_log" in self._data:
-                yield ("Emerald Key", self._data["green_key_taken_log"])
-            if "blue_key_relic_skipped_log" in self._data:
-                yield ("Sapphire Key", self._data["blue_key_relic_skipped_log"]["floor"])
-
-    def _get_cards(self) -> Generator[tuple[str, dict[str, str]], None, None]:
-        if "master_deck" in self._data:
-            for x in self._data["master_deck"]:
-                try:
-                    meta = get_card_metadata(x)
-                except KeyError:
-                    meta = {"CHARACTER": "Special"}
-                yield get_card(x), meta
-            return
-
-        for x in self._data["cards"]:
-            card = get_card(x["id"])
-            if x["upgrades"]:
-                if x["upgrades"] > 1:
-                    card = f"{card}+{x['upgrades']}"
-                else:
-                    card = f"{card}+"
-
-            try:
-                meta = get_card_metadata(x["id"])
-            except KeyError:
-                meta = {"CHARACTER": "Special"}
-            yield card, meta
+    @abstractmethod
+    def keys(self) -> KeysObtained:
+        raise NotImplementedError
 
     @property
     @abstractmethod
-    def removals(self) -> list[str]:
+    def _master_deck(self) -> list[str]:
         raise NotImplementedError
 
-    def _get_removals(self) -> Generator[tuple[str, dict[str, str]], None, None]:
-        for card in self.removals:
-            try:
-                meta = get_card_metadata(card)
-            except KeyError:
-                meta = {"CHARACTER": "Special"}
-            yield get_card(card), meta
-        return
+    def get_cards(self) -> Generator[CardData, None, None]:
+        master_deck = self._master_deck
+        for card in set(master_deck):
+            yield CardData(card, master_deck)
 
-    def master_deck_as_html(self) -> Generator[str, None, None]:
-        return self._cards_as_html(self._get_cards())
+    def get_meta_scaling_cards(self) -> list[tuple[str, int]]:
+        return []
 
-    def removals_as_html(self) -> Generator[str, None, None]:
-        return self._cards_as_html(self._get_removals())
+    @property
+    def cards(self) -> Generator[str, None, None]:
+        for card in self.get_cards():
+            yield from card.as_cards()
 
-    def _cards_as_html(self, cards: Iterable[tuple[str, dict[str, str]]]) -> Generator[str, None, None]:
+    @property
+    @abstractmethod
+    def _removals(self) -> list[str]:
+        raise NotImplementedError
+
+    def get_removals(self) -> Generator[CardData, None, None]:
+        removals = self._removals
+        for card in set(removals):
+            yield CardData(card, removals)
+
+    @property
+    def has_removals(self) -> bool:
+        return bool(self._removals)
+
+    @property
+    def removals(self) -> Generator[str, None, None]:
+        for card in self.get_removals():
+            yield from card.as_cards()
+
+    def master_deck_as_html(self):
+        return self._cards_as_html(self.get_cards())
+
+    def removals_as_html(self):
+        return self._cards_as_html(self.get_removals())
+
+    def _cards_as_html(self, cards: Iterable[CardData]) -> Generator[str, None, None]:
         text = (
             '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
             '<svg width="32" height="32">'
-            '<image width="32" height="32" xlink:href="{website}/static/card/Back_{character}.png"></image>'
-            '<image width="32" height="32" xlink:href="{website}/static/card/Desc_{character}.png"></image>'
-            '<image width="32" height="32" xlink:href="{website}/static/card/Type_{card_type}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Back_{card.color}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Desc_{card.color}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card/Type_{card.type_safe}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card/Banner_{banner}.png"></image>'
-            '</svg><span>{count}{card_name}</span></a>'
+            '</svg><span>{card.display_name}</span></a>'
         )
-        content = {}
-        order = ("Ironclad", "Silent", "Defect", "Watcher", "Colorless", "Special", "Curse")
-        content_order = {x: {"Rare": [], "Uncommon": [], "Common": [], None: []} for x in order}
-        for name, metadata in cards:
-            ctype = metadata.get("TYPE")
-            rarity = metadata.get("RARITY")
-            if rarity  == "Starter":
-                rarity = None
-            if name not in content:
-                content[name] = {"count": 0, "character": metadata.get("CHARACTER", name.split(":")[0]), "rarity": rarity, "card_type": ctype}
-            content[name]["count"] += 1
 
-        for name, d in content.items():
-            char = d["character"]
-            if char not in content_order:
-                char = "Colorless"
-            content_order[char][d["rarity"]].append((name, d["card_type"], d["count"]))
+        def new_color() -> dict[str | None, list[CardData]]:
+            return {"Rare": [], "Uncommon": [], "Common": [], None: []}
+
+        order = ["Red", "Green", "Blue", "Purple", "Colorless", "Curse"]
+        content = collections.defaultdict(new_color)
+        for card in cards:
+            if card.color not in order:
+                order.insert(0, card.color)
+            content[card.color][card.rarity_safe].append(card)
 
         final = []
 
-        for char in order:
-            for rarity in ("Rare", "Uncommon", "Common", None):
-                content_order[char][rarity].sort(key=lambda x: x[0])
-                for name, ctype, count in content_order[char][rarity]:
+        for color in order:
+            for rarity, all_cards in content[color].items():
+                for card in all_cards:
                     format_map = {
-                        "color": ' style="color:#a0ffaa"' if "+" in name else "", # make it green when upgraded
+                        "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
                         "website": config.server.url,
-                        "character": char if char != "Special" else "Colorless",
-                        "card_type": ctype or "Skill", # curses don't have a type, but use the Skill image
                         "banner": rarity or "Common",
-                        "count": f"{count}x " if count > 1 else "",
-                        "card_url": urllib.parse.quote(name.strip("+")),
-                        "card_name": name,
+                        "card_url": urllib.parse.quote(card.card.name),
+                        "card": card,
                     }
                     final.append(text.format_map(format_map))
 
@@ -847,12 +822,6 @@ class FileParser(ABC):
         for i in range(step):
             for as_html in final[i::step]:
                 yield as_html
-            # yield "<br>"
-
-    @property
-    def cards(self) -> Generator[str, None, None]:
-        for a, b in self._get_cards():
-            yield a
 
     @property
     def relics(self) -> list[RelicData]:
@@ -964,12 +933,30 @@ class FileParser(ABC):
                 return node
         return None
 
+class KeysObtained:
+    """Contain information about the obtained keys."""
+
+    def __init__(self):
+        self.ruby_key_obtained = False
+        self.ruby_key_floor = 0
+        self.emerald_key_obtained = False
+        self.emerald_key_floor = 0
+        self.sapphire_key_obtained = False
+        self.sapphire_key_floor = 0
+
+    def as_list(self):
+        return [
+            ("Emerald Key", self.emerald_key_obtained, self.emerald_key_floor),
+            ("Ruby Key", self.ruby_key_obtained, self.ruby_key_floor),
+            ("Sapphire Key", self.sapphire_key_obtained, self.sapphire_key_floor),
+        ]
+
 class RelicData:
     """Contain information for Spire relics."""
 
     def __init__(self, parser: FileParser, relic: str):
         self.parser = parser
-        self._relic = relic
+        self.relic: Relic = get(relic)
         self._description = None
 
     def description(self) -> str:
@@ -993,18 +980,18 @@ class RelicData:
     def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
         desc = []
         try:
-            text = get_relic_stats(self._relic)
+            text = get_relic_stats(self.relic.name) # FIXME
         except KeyError: # no stats for these
             return []
         stats = None
         if "basemod:mod_saves" in self.parser._data:
-            stats = self.parser._data["basemod:mod_saves"].get(f"stats_{self._relic}")
+            stats = self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.name}")
         elif "relic_stats" in self.parser._data:
-            stats = self.parser._data["relic_stats"].get(self._relic)
+            stats = self.parser._data["relic_stats"].get(self.relic.name)
         if stats is None:
             return []
 
-        if self._relic == "White Beast Statue":
+        if self.relic.name == "White Beast Statue":
             # if this is a savefile, only the last number matters. run files should be unaffected
             stats = [stats[-1]]
 
@@ -1018,12 +1005,12 @@ class RelicData:
             else:
                 desc.append(f"{text[0]}{seconds:.2f}s")
         elif isinstance(stats, str): # bottles
-            desc.append(text[0] + get_card(stats))
+            desc.append(text[0] + get(stats).name)
         elif isinstance(stats, list):
             if not stats: # e.g. Whetstone upgrading nothing
                 desc.append(f"{text[0]}<nothing>")
             elif isinstance(stats[0], str):
-                stats = [get_card(x) for x in stats]
+                stats = [get(x).name for x in stats]
                 desc.append(f"{text[0]}\n- "+ "\n- ".join(stats))
             else:
                 text_iter = iter(text)
@@ -1043,11 +1030,68 @@ class RelicData:
 
     @property
     def image(self) -> str:
-        return f"{self._relic.replace(':', '_')}.png"
+        return f"{self.relic.internal.replace(':', '_')}.png"
 
     @property
     def name(self) -> str:
-        return get_relic(self._relic)
+        return self.relic.name
+
+class CardData: # TODO: metadata + scaling cards (for savefile)
+    def __init__(self, card: str, cards_list: list[str], meta: int = 0):
+        name, _, upgrades = card.partition("+")
+        self._cards_list = cards_list
+        self.internal = card
+        self.card: Card = get(name)
+        self.meta = meta
+        self.upgrades = int(upgrades) if upgrades else 0
+
+    def as_cards(self):
+        for i in range(self.count):
+            yield self.name
+
+    @property
+    def color(self) -> str:
+        return self.card.color
+
+    @property
+    def type(self) -> str:
+        return self.card.type
+
+    @property
+    def type_safe(self) -> str:
+        if self.type not in ("Attack", "Skill", "Power"):
+            return "Skill"
+        return self.type
+
+    @property
+    def rarity(self) -> str:
+        return self.card.rarity
+
+    @property
+    def rarity_safe(self) -> str | None:
+        if self.rarity not in ("Rare", "Uncommon", "Common"):
+            return None
+        return self.rarity
+
+    @property
+    def count(self) -> int:
+        return self._cards_list.count(self.internal)
+
+    @property
+    def name(self) -> str:
+        match self.upgrades:
+            case 0:
+                return self.card.name
+            case 1:
+                return f"{self.card.name}+"
+            case a:
+                return f"{self.card.name}+{a}"
+
+    @property
+    def display_name(self) -> str:
+        if self.count > 1:
+            return f"{self.count}x {self.name}"
+        return self.name
 
 class NodeData:
     """Contain relevant information for Spire nodes.
@@ -1106,19 +1150,19 @@ class NodeData:
             self._curhp = parser._data[prefix + "current_hp_per_floor"][floor - 1]
             self._gold = parser._data[prefix + "gold_per_floor"][floor - 1]
             if "potion_use_per_floor" in parser._data: # run file
-                self._usedpotions.extend(get_potion(x) for x in parser._data["potion_use_per_floor"][floor - 1])
+                self._usedpotions.extend(get(x).name for x in parser._data["potion_use_per_floor"][floor - 1])
             elif "PotionUseLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._usedpotions.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["PotionUseLog"][floor - 1])
+                self._usedpotions.extend(get(x).name for x in parser._data["basemod:mod_saves"]["PotionUseLog"][floor - 1])
 
             if "potions_obtained_alchemize" in parser._data: # run file
-                self._potions_from_alchemize.extend(get_potion(x) for x in parser._data["potions_obtained_alchemize"][floor - 1])
+                self._potions_from_alchemize.extend(get(x).name for x in parser._data["potions_obtained_alchemize"][floor - 1])
             elif "potionsObtainedAlchemizeLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._potions_from_alchemize.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["potionsObtainedAlchemizeLog"][floor - 1])
+                self._potions_from_alchemize.extend(get(x).name for x in parser._data["basemod:mod_saves"]["potionsObtainedAlchemizeLog"][floor - 1])
 
             if "potions_obtained_entropic_brew" in parser._data: # run file
-                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["potions_obtained_entropic_brew"][floor - 1])
+                self._potions_from_entropic.extend(get(x).name for x in parser._data["potions_obtained_entropic_brew"][floor - 1])
             elif "potionsObtainedEntropicBrewLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._potions_from_entropic.extend(get_potion(x) for x in parser._data["basemod:mod_saves"]["potionsObtainedEntropicBrewLog"][floor - 1])
+                self._potions_from_entropic.extend(get(x).name for x in parser._data["basemod:mod_saves"]["potionsObtainedEntropicBrewLog"][floor - 1])
         except IndexError:
             try:
                 self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 2]
@@ -1129,12 +1173,12 @@ class NodeData:
 
         if "basemod:mod_saves" in parser._data:
             try:
-                self._discarded.extend(get_potion(x) for x in parser._data["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
+                self._discarded.extend(get(x).name for x in parser._data["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
             except IndexError:
                 pass
         else:
             try:
-                self._discarded.extend(get_potion(x) for x in parser._data.get("potion_discard_per_floor", ())[floor - 1])
+                self._discarded.extend(get(x).name for x in parser._data.get("potion_discard_per_floor", ())[floor - 1])
             except IndexError:
                 pass
 
@@ -1144,11 +1188,11 @@ class NodeData:
 
         for relic in parser._data[prefix + "relics_obtained"]:
             if relic["floor"] == floor:
-                self._relics.append(get_relic(relic["key"]))
+                self._relics.append(get(relic["key"]).name)
 
         for potion in parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == floor:
-                self._potions.append(get_potion(potion["key"]))
+                self._potions.append(get(potion["key"]).name)
 
         if "basemod:mod_saves" in parser._data:
             skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
@@ -1158,8 +1202,8 @@ class NodeData:
         if skipped:
             for choice in skipped:
                 if choice["floor"] == floor:
-                    self._skipped_relics = [get_relic(x) for x in choice["relics"]]
-                    self._skipped_potions = [get_potion(x) for x in choice["potions"]]
+                    self._skipped_relics = [get(x).name for x in choice["relics"]]
+                    self._skipped_potions = [get(x).name for x in choice["potions"]]
 
         return self
 
@@ -1534,11 +1578,11 @@ class Treasure(NodeData):
         d = parser._data.get("basemod:mod_saves", ())
         if "BlueKeyRelicSkippedLog" in d:
             if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
-                relic = get_relic(d["BlueKeyRelicSkippedLog"]["relicID"])
+                relic = get(d["BlueKeyRelicSkippedLog"]["relicID"]).name
                 has_blue_key = True
         elif "blue_key_relic_skipped_log" in parser._data:
             if parser._data["blue_key_relic_skipped_log"]["floor"] == floor:
-                relic = get_relic(parser._data["blue_key_relic_skipped_log"]["relicID"])
+                relic = get(parser._data["blue_key_relic_skipped_log"]["relicID"]).name
                 has_blue_key = True
         return super().from_parser(parser, floor, has_blue_key, relic, *extra)
 
@@ -1679,37 +1723,37 @@ class Event(NodeData):
     def cards_transformed(self) -> list[str]:
         if "cards_transformed" not in self._event:
             return []
-        return [get_card(x) for x in self._event["cards_transformed"]]
+        return [get(x).name for x in self._event["cards_transformed"]]
 
     @property
     def cards_obtained(self) -> list[str]:
         if "cards_obtained" not in self._event:
             return []
-        return [get_card(x) for x in self._event["cards_obtained"]]
+        return [get(x).name for x in self._event["cards_obtained"]]
 
     @property
     def cards_removed(self) -> list[str]:
         if "cards_removed" not in self._event:
             return []
-        return [get_card(x) for x in self._event["cards_removed"]]
+        return [get(x).name for x in self._event["cards_removed"]]
 
     @property
     def cards_upgraded(self) -> list[str]:
         if "cards_upgraded" not in self._event:
             return []
-        return [get_card(x) for x in self._event["cards_upgraded"]]
+        return [get(x).name for x in self._event["cards_upgraded"]]
 
     @property
     def relics_obtained(self) -> list[str]:
         if "relics_obtained" not in self._event:
             return []
-        return [get_relic(x) for x in self._event["relics_obtained"]]
+        return [get(x).name for x in self._event["relics_obtained"]]
 
     @property
     def relics_lost(self) -> list[str]:
         if "relics_lost" not in self._event:
             return []
-        return [get_relic(x) for x in self._event["relics_lost"]]
+        return [get(x).name for x in self._event["relics_lost"]]
 
     @property
     def relics(self) -> list[str]:
@@ -1809,15 +1853,15 @@ class Merchant(NodeData):
         for i, purchased in enumerate(parser._data[parser.prefix + "item_purchase_floors"]):
             if purchased == floor:
                 value = parser._data[parser.prefix + "items_purchased"][i]
-                card = get_card(value, "")
-                relic = get_relic(value, "")
-                potion = get_potion(value, "")
-                if card:
-                    bought["cards"].append(card)
-                elif relic:
-                    bought["relics"].append(relic)
-                elif potion:
-                    bought["potions"].append(potion)
+                name, _, upgrades = value.partition("+")
+                item = get(name)
+                match item.cls_name:
+                    case "card":
+                        bought["cards"].append(get_card(value))
+                    case "relic":
+                        bought["relics"].append(item.name)
+                    case "potion":
+                        bought["potions"].append(item.name)
 
         try:
             index = parser._data[parser.prefix + "items_purged_floors"].index(floor)
@@ -1836,11 +1880,11 @@ class Merchant(NodeData):
         for data in d:
             if data["floor"] == floor:
                 for relic in data["relics"]:
-                    contents["relics"].append(get_relic(relic))
+                    contents["relics"].append(get(relic).name)
                 for card in data["cards"]:
-                    contents["cards"].append(get_card(card))
+                    contents["cards"].append(get(card).name)
                 for potion in data["potions"]:
-                    contents["potions"].append(get_potion(potion))
+                    contents["potions"].append(get(potion).name)
 
         return super().from_parser(parser, floor, bought, purged, contents, *extra)
 
@@ -1938,13 +1982,13 @@ class Campfire(NodeData):
             case "RECALL":
                 return "Got the Ruby key"
             case "SMITH":
-                return f"Upgraded {get_card(self._data)}"
+                return f"Upgraded {get(self._data).name}"
             case "LIFT":
                 return f"Lifted for additional strength (Total: {self._data})"
             case "DIG":
                 return "Dug!"
             case "PURGE":
-                return f"Toked {get_card(self._data)}"
+                return f"Toked {get(self._data).name}"
             case a:
                 return f"Did {a!r} with {self._data!r}, but I'm not sure what this means"
 
@@ -1969,9 +2013,9 @@ class BossChest(NodeData):
         picked = None
         skipped = []
         if boss_relics.get("picked", "SKIP") != "SKIP":
-            picked = get_relic(boss_relics["picked"])
+            picked = get(boss_relics["picked"]).name
         for relic in boss_relics["not_picked"]:
-            skipped.append(get_relic(relic))
+            skipped.append(get(relic).name)
         return super().from_parser(parser, floor, picked, skipped, *extra)
 
     @property

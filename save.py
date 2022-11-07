@@ -11,10 +11,10 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
-from nameinternal import get_card
+from nameinternal import get, get_card
 from sts_profile import get_current_profile
 from typehints import ContextType
-from gamedata import FileParser, BottleRelic
+from gamedata import FileParser, BottleRelic, KeysObtained
 from webpage import router
 from logger import logger
 from utils import convert_class_to_obj, get_req_data
@@ -96,6 +96,49 @@ class Savefile(FileParser):
         if self.character is not None:
             return f"Current {self.character} run"
         return "Slay the Spire follow-along"
+
+    @property
+    def keys(self) -> KeysObtained:
+        keys = KeysObtained()
+        if self._data["has_ruby_key"]:
+            for choice in self._data["metric_campfire_choices"]:
+                if choice["key"] == "RECALL":
+                    keys.ruby_key_obtained = True
+                    keys.ruby_key_floor = int(choice["floor"])
+        if self._data["has_emerald_key"]:
+            keys.emerald_key_obtained = True
+            floor = self._data["basemod:mod_saves"].get("greenKeyTakenLog")
+            if floor:
+                keys.emerald_key_floor = int(floor)
+        if self._data["has_sapphire_key"]:
+            keys.sapphire_key_obtained = True
+            floor = self._data["basemod:mod_saves"].get("BlueKeyRelicSkippedLog")
+            if floor:
+                keys.sapphire_key_floor = int(floor["floor"])
+
+        return keys
+
+    @property
+    def _master_deck(self) -> list[str]:
+        ret = []
+        for x in self._data["cards"]:
+            if x["upgrades"]:
+                ret.append(f"{x['id']}+{x['upgrades']}")
+            else:
+                ret.append(x["id"])
+
+        return ret
+
+    def get_meta_scaling_cards(self) -> list[tuple[str, int]]:
+        ret = []
+        for x in self._data["cards"]:
+            if x["misc"]:
+                card = x["id"]
+                if x["upgrades"]:
+                    card = f"{x['id']}+{x['upgrades']}"
+                ret.append((card, x["misc"]))
+
+        return ret
 
     @property
     def profile(self):
@@ -203,21 +246,15 @@ class Savefile(FileParser):
     def bottles(self) -> list[BottleRelic]:
         bottles = []
         if self._data.get("bottled_flame"):
-            bottles.append(BottleRelic("Bottled Flame", self._get_card_string(self._data["bottled_flame"], self._data["bottled_flame_upgrade"])))
+            bottles.append(BottleRelic("Bottled Flame", get_card(f"{self._data['bottled_flame']}+{self._data['bottled_flame_upgrade']}")))
         if self._data.get("bottled_lightning"):
-            bottles.append(BottleRelic("Bottled Lightning", self._get_card_string(self._data["bottled_lightning"], self._data["bottled_lightning_upgrade"])))
+            bottles.append(BottleRelic("Bottled Lightning", get_card(f"{self._data['bottled_lightning']}+{self._data['bottled_lightning_upgrade']}")))
         if self._data.get("bottled_tornado"):
-            bottles.append(BottleRelic("Bottled Tornado", self._get_card_string(self._data["bottled_tornado"], self._data["bottled_tornado_upgrade"])))
+            bottles.append(BottleRelic("Bottled Tornado", get_card(f"{self._data['bottled_tornado']}+{self._data['bottled_tornado_upgrade']}")))
         return bottles
 
-    @staticmethod
-    def _get_card_string(card: str, upgrades: int) -> str:
-        if upgrades:
-            card = f"{card}+{upgrades}"
-        return get_card(card)
-
     @property
-    def removals(self) -> list[str]:
+    def _removals(self) -> list[str]:
         event_removals = []
         for event in self._data["metric_event_choices"]:
             event_removals.extend(event.get("cards_removed", []))                
@@ -327,12 +364,7 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    keys = {}
-    if _savefile.in_game:
-        for key, floor in _savefile.keys:
-            keys[key] = floor
-
-    context = RunResponse(_savefile, keys, autorefresh=True, redirect=redirect)
+    context = RunResponse(_savefile, autorefresh=True, redirect=redirect)
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
