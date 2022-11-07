@@ -132,6 +132,7 @@ section.section {
   .run-header .avatar {
     height: 86px;
     width: 130px;
+    max-width: 130px;
     margin-right: -50px;
   }
   .run-header .avatar img {
@@ -146,13 +147,17 @@ section.section {
     flex-grow: 1;
   }
   .run-title .title {
-    display: block;
+    display: flex;
     flex-grow: 1;
+    align-items: center;
     margin: 0 1rem !important;
   }
   .run-title i {
     margin: 0 0.5rem;
     font-size: 2em;
+  }
+  .run-title .mods {
+    padding: 0 0.5em;
   }
   .run-title .score {
     margin-right: 1em;
@@ -165,22 +170,33 @@ section.section {
     font-size: 0.75em;
     display: block;
   }
+  .run-title .score .kills-bosses span.red {
+    color: #a65555;
+  }
+  .run-title .score .kills-bosses span {
+    font-weight: bold;
+  }
   .run-title .extra {
     font-size: 0.75em;
-    border-right: 1px solid rgba(0,0,0,0.25);
     padding-right: 1rem;
     min-width: 7.5rem;
+    text-align: right;
+  }
+  .run-title .extra .seed {
+    color: #888;
+    font-weight: 200;
   }
   .run-title .streak {
     display: block;
     font-size: 0.75em;
-    min-width: 7.5rem;
+    min-width: 9rem;
     padding-left: 1rem;
     height: 100%;
     white-space: nowrap;
+    text-align: center;
   }
   .run-title .streak.lost {
-    font-size: 0.5em;
+    font-size: 0.75em;
     text-align: center;
     opacity: 0.5;
   }
@@ -200,6 +216,7 @@ section.section {
   .run-header .avatar {
     height: 86px;
     width: 130px;
+    max-width: 130px;
     margin-right: -40px;
   }
   .run-header .avatar img {
