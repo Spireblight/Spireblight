@@ -156,7 +156,7 @@
             </p>
             {% if run.neow_bonus.has_data %}
               <div class="skipped">
-                <p>And we skipped taking:</p>
+                <p>And we skipped</p>
                 <ul>
                   {% for skipped in run.neow_bonus.skipped %}
                     <li> {{ skipped }} </li>
@@ -166,7 +166,7 @@
             {% endif %}
             {% if run.modifiers %}
               <div>
-                <p>Modifiers:</p>
+                <h3 class="subtitle">Modifiers</h3>
                 <ul>
                   {% for modifier in run.modifiers_with_desc %}
                     <li>{{ modifier }}</li>
@@ -174,14 +174,16 @@
                 </ul>
               </div>
             {% endif %}
-            <div class="score">
-              <p>Score breakdown:</p>
-              <ul>
-                {% for score in run.score_breakdown %}
-                  <li>{{ score }}</li>
-                {% endfor %}
-              </ul>
-            </div>
+            {% if run.score_breakdown %}
+              <div class="score mt-4">
+                <h3 class="subtitle mb-1">Score breakdown</h3>
+                <ul>
+                  {% for score in run.score_breakdown %}
+                    <li>{{ score }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>
