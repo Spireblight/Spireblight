@@ -48,14 +48,14 @@ async def main():
                 async with session.get("/playing", params={"key": config.server.secret}) as resp:
                     if resp.ok:
                         j = await resp.json()
-                        if not j["is_playing"]:
+                        if not j or not j.get("is_playing"):
                             playing = None
                             try:
                                 with open(config.client.playing, "w") as f:
                                     pass # make it an empty file
                             except OSError:
                                 pass
-                        else:
+                        elif j.get("item"):
                             track = j['item']['name']
                             artists = ", ".join(x['name'] for x in j['item']['artists'])
                             album = j['item']['album']['name']
