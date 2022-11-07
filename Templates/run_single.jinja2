@@ -1,7 +1,11 @@
 {% extends "base.jinja2" %}
 
 {% block title %}
-  {{ run.display_name }}
+  {% if run.done or run.in_game %}
+    {{ run.character }} {{ run.verb }} on seed {{ run.seed }}
+  {% else %}
+    No active run
+  {% endif %}
 {% endblock %}
 
 {% block head %}
@@ -270,9 +274,9 @@
       </div>
     </section>
     {% else %}
-    <section class="section mt-4">
+    <section class="section mt-4 mb-4">
       <div class="columns is-centered has-text-centered mt-4">
-        <div class="column">
+        <div class="column mb-4">
           <h1 class="title">
             No run is currently going on!
           </h1>
