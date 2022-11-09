@@ -808,6 +808,7 @@ class FileParser(ABC):
 
         for color in order:
             for rarity, all_cards in content[color].items():
+                all_cards.sort(key=lambda x: f"{x.name}{x.upgrades}")
                 for card in all_cards:
                     format_map = {
                         "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
@@ -818,10 +819,15 @@ class FileParser(ABC):
                     }
                     final.append(text.format_map(format_map))
 
-        step = math.ceil(len(final) / 3)
+        step, rem = divmod(len(final), 3)
+        end = []
+        while rem:
+            end.append(final.pop(step*rem))
+            rem -= 1
+        end.reverse()
         for i in range(step):
-            for as_html in final[i::step]:
-                yield as_html
+            yield from final[i::step]
+        yield from end
 
     @property
     def relics(self) -> list[RelicData]:
