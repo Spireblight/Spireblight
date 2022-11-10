@@ -866,6 +866,15 @@ async def card_info(ctx: ContextType, *line: str):
                 pool = f" ({rel.pool})"
             await ctx.reply(f"{rel.name} - {rel.tier}{pool}: {rel.description} {mod}")
 
+@with_savefile("cache", flag="m")
+async def save_cache(ctx: ContextType, save: Savefile, arg: str):
+    match arg:
+        case "clear":
+            save._cache.clear()
+            ctx.reply("Cache cleared.")
+        case a:
+            ctx.reply(f"Argument {a!r} not recognized.")
+
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
