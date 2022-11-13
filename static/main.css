@@ -39,6 +39,10 @@ section.section {
   margin-right: 0.75em;
 }
 
+.breadcrumb .selectable {
+  user-select: text;
+}
+
 .cards {
   display: flex;
   align-items: center;
