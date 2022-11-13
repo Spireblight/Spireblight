@@ -1888,7 +1888,7 @@ class Merchant(NodeData):
                 for relic in data["relics"]:
                     contents["relics"].append(get(relic).name)
                 for card in data["cards"]:
-                    contents["cards"].append(get(card).name)
+                    contents["cards"].append(get_card(card))
                 for potion in data["potions"]:
                     contents["potions"].append(get(potion).name)
 
@@ -1988,13 +1988,13 @@ class Campfire(NodeData):
             case "RECALL":
                 return "Got the Ruby key"
             case "SMITH":
-                return f"Upgraded {get(self._data).name}"
+                return f"Upgraded {get_card(self._data)}"
             case "LIFT":
                 return f"Lifted for additional strength (Total: {self._data})"
             case "DIG":
                 return "Dug!"
             case "PURGE":
-                return f"Toked {get(self._data).name}"
+                return f"Toked {get_card(self._data)}"
             case a:
                 return f"Did {a!r} with {self._data!r}, but I'm not sure what this means"
 
