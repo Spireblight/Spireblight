@@ -1324,7 +1324,7 @@ async def Twitch_cleanup():
 
 async def Discord_startup():
     global DConn
-    DConn = DiscordConn(config.baalorbot.prefix, case_insensitive=True, owner_ids=config.baalorbot.owners, help_command=None)
+    DConn = DiscordConn(config.baalorbot.prefix, case_insensitive=True, owner_ids=config.baalorbot.owners, help_command=None, intents=discord.Intents.all())
     for cmd in _to_add_discord:
         DConn.add_command(cmd)
     await DConn.start(config.discord.oauth_token)
