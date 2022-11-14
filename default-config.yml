@@ -3,8 +3,7 @@
 # For a local setup you should not make changes here, but in dev-config.yml.
 
 twitch:
-  # If the Twitch part of the bot is enabled or not. At least one of the Twitch
-  # bot or the Discord bot need to be enabled for the server to function.
+  # If the Twitch part of the bot is enabled or not.
   enabled: true
 
   # Token to connect to the Twitch IRC. You can get one at
@@ -21,8 +20,7 @@ twitch:
   channel: <channel not set>
 
 discord:
-  # If the Discord part of the bot is enabled or not. At least one of the Twitch
-  # bot or the Discord bot need to be enabled for the server to function.
+  # If the Discord part of the bot is enabled or not.
   enabled: true
 
   # TODO: Find a good tutorial on how to set up your own testing bot and get the
