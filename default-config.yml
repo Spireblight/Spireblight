@@ -12,12 +12,18 @@ twitch:
   oauth_token: <token not set>
 
   # Channel that the bot connects to. Unless you are deploying, this should
-  # _never_ be the live channel (i.e. "baalorlord"). Doing so will make the
+  # _never_ be the live channel (e.g. "baalorlord"). Doing so will make the
   # account connected to the OAuth token above to respond to bot commands
   # (amongst other things).
   # You probably want it to be your own private channel (i.e. your username) if
   # you're testing things out.
   channel: <channel not set>
+
+  timers:
+    # The default interval for new timers
+    default_interval: 900
+    # The time between different timers when bot starts
+    stagger_interval: 60
 
 discord:
   # If the Discord part of the bot is enabled or not.
