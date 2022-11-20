@@ -1,4 +1,8 @@
-{% extends "base.jinja2" %}
+{% if extend_base %}
+  {% extends "base.jinja2" %}
+{% else %}
+  {% extends "content.jinja2" %}
+{% endif %}
 
 {% block title %}
   {% if run.done or run.in_game %}
@@ -9,12 +13,6 @@
 {% endblock %}
 
 {% block head %}
-  {% if autorefresh %}
-    <!-- Refresh the page every 15 seconds; savefile gets regularly updated.
-         Actual code will properly cache the savefile and serve latest -->
-    <meta http-equiv="refresh"
-      content="{% if redirect and parser.in_game %}0;url=/current{% else %}15{% endif %}">
-  {% endif %}
   <script src="/static/js/run.js"></script>
 {% endblock %}
 
