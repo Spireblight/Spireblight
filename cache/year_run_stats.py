@@ -10,6 +10,10 @@ def update_run_stats():
     # we should only have to load this one time this way, after that we can just use the most recent run to update values
     try:
         runs = list(get_profile(0).runs) # BaalorA20 profile
+    except:
+        runs = []
+
+    if runs:
         if not _run_stats.streaks.is_loaded:
             _run_stats.streaks.all_character_count = 0
 
@@ -59,7 +63,7 @@ def update_run_stats():
                     _run_stats.streaks.defect_count = last_run.character_streak.streak
                 case "Watcher":
                     _run_stats.streaks.watcher_count = last_run.character_streak.streak
-    except:
+    else:
         _run_stats.streaks.ironclad_count = 0
         _run_stats.streaks.silent_count = 0
         _run_stats.streaks.defect_count = 0
