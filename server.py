@@ -1008,7 +1008,8 @@ async def relic_info(ctx: ContextType, save: Savefile, index: int):
         await ctx.reply(f"We have {len(l)} relics.")
         return
 
-    await ctx.reply(f"The relic at position {index} is {l[index-1].name}.")
+    relicData = l[index-1]
+    await ctx.reply(f"The relic at position {index} is {relicData.name}: {relicData.relic.description}")
 
 @with_savefile("allrelics", "offscreen", "page2")
 async def relics_page2(ctx: ContextType, save: Savefile):
