@@ -1,4 +1,4 @@
-from aiohttp import ClientSession, ClientError
+from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
 import asyncio
 import time
@@ -143,7 +143,7 @@ async def main():
                             last = cur
                             has_save = True
 
-            except ClientError:
+            except (ClientError, ServerDisconnectedError):
                 timeout = 10 # give it a bit of time
                 print("Error: Server is offline! Retrying in 10s")
                 continue
