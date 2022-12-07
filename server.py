@@ -995,17 +995,16 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
     )
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: Savefile, index: int):
+async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
     """Display information about the current relics."""
-    if index < 0:
-        await ctx.reply("Why do you insist on breaking me?")
-        return
     l = list(save.relics)
-    if index > len(l):
-        await ctx.reply(f"We only have {len(l)} relics!")
-        return
     if not index:
         await ctx.reply(f"We have {len(l)} relics.")
+        return
+    if index < 0:
+        index = len(l) + index + 1
+    if index > len(l) or index <= 0:
+        await ctx.reply(f"We only have {len(l)} relics!")
         return
 
     relicData = l[index-1]
