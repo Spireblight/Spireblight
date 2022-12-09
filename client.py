@@ -44,31 +44,6 @@ async def main():
                 except OSError:
                     possible = None
 
-            if possible is None:
-                async with session.get("/playing", params={"key": config.server.secret}) as resp:
-                    if resp.ok:
-                        j = await resp.json()
-                        if j and j.get("item"):
-                            track = j['item']['name']
-                            artists = ", ".join(x['name'] for x in j['item']['artists'])
-                            album = j['item']['album']['name']
-                            text = f"{track}\n{artists}\n{album}"
-                            if playing != text:
-                                try:
-                                    with open(config.client.playing, "w") as f:
-                                        f.write(text)
-                                    playing = text
-                                except OSError:
-                                    pass
-
-                        else:
-                            playing = None
-                            try:
-                                with open(config.client.playing, "w") as f:
-                                    pass # make it an empty file
-                            except OSError:
-                                pass
-
             to_send = []
             files = []
             if possible is None and config.client.sync_runs: # don't check run files during a run
@@ -84,6 +59,31 @@ async def main():
                                     files.append(file)
 
             try:
+                if possible is None:
+                    async with session.get("/playing", params={"key": config.server.secret}) as resp:
+                        if resp.ok:
+                            j = await resp.json()
+                            if j and j.get("item"):
+                                track = j['item']['name']
+                                artists = ", ".join(x['name'] for x in j['item']['artists'])
+                                album = j['item']['album']['name']
+                                text = f"{track}\n{artists}\n{album}"
+                                if playing != text:
+                                    try:
+                                        with open(config.client.playing, "w") as f:
+                                            f.write(text)
+                                        playing = text
+                                    except OSError:
+                                        pass
+
+                            else:
+                                playing = None
+                                try:
+                                    with open(config.client.playing, "w") as f:
+                                        pass # make it an empty file
+                                except OSError:
+                                    pass
+
                 all_sent = True
                 if to_send: # send runs first so savefile can seamlessly transfer its cache
                     for path, file, profile in to_send:
