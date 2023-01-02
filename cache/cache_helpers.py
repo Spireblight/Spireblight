@@ -30,25 +30,31 @@ class RunStats:
         self.current_year = datetime.datetime.now().year
         self.all_wins = Statistic(set_default=True)
         self.all_losses = Statistic(set_default=True)
-        self.year_wins: dict[int, Statistic] = {} 
-        self.year_losses: dict[int, Statistic] = {}
+        self.year_wins: dict[int, Statistic] = {
+            self.current_year: Statistic(set_default=True)
+        } 
+        self.year_losses: dict[int, Statistic] = {
+            self.current_year: Statistic(set_default=True)
+        }
         self.pb = Statistic(set_default=True)
         self.streaks = Statistic()
         self.last_timestamp: datetime.datetime = None
 
     def add_win(self, char: str, run_date: datetime):
-        if not run_date.date.year in self.year_wins:
-            self.year_wins[run_date.date.year] = Statistic(set_default=True)
+        date = run_date.date()
+        if not date.year in self.year_wins:
+            self.year_wins[date.year] = Statistic(set_default=True)
 
         self._increment_stat(self.all_wins, char)
-        self._increment_stat(self.year_wins[run_date.date.year], char)
+        self._increment_stat(self.year_wins[date.year], char)
         
     def add_loss(self, char: str, run_date: datetime):
-        if not run_date.date.year in self.year_losses:
-            self.year_losses[run_date.date.year] = Statistic(set_default=True)
+        date = run_date.date()
+        if not date.year in self.year_losses:
+            self.year_losses[date.year] = Statistic(set_default=True)
 
         self._increment_stat(self.all_losses, char)
-        self._increment_stat(self.year_losses[run_date.date.year], char)
+        self._increment_stat(self.year_losses[date.year], char)
 
     def check_pb(self, run: RunParser):
         if not run.modded:
