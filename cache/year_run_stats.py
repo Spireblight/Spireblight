@@ -24,13 +24,13 @@ def update_run_stats():
                     logger.info(f"Found non-A20 run in stats: {run.name}")
 
                 _run_stats.check_pb(run)
-                if run.timestamp.year != 2022:
+                if run.timestamp.year < 2022:
                     continue
 
                 if run.won:
-                    _run_stats.add_win(run.character)
+                    _run_stats.add_win(run.character, run.timestamp)
                 else:
-                    _run_stats.add_loss(run.character)
+                    _run_stats.add_loss(run.character, run.timestamp)
 
                 if _run_stats.streaks.is_loaded:
                     continue
@@ -50,9 +50,9 @@ def update_run_stats():
             _run_stats.last_timestamp = last_run.timestamp # if this happens to get called multiple times between runs, we want to make sure we don't continually increment
             _run_stats.check_pb(last_run)
             if last_run.won:
-                _run_stats.add_win(last_run.character)
+                _run_stats.add_win(last_run.character, last_run.timestamp)
             else:
-                _run_stats.add_loss(last_run.character)
+                _run_stats.add_loss(last_run.character, last_run.timestamp)
             _run_stats.streaks.all_character_count = last_run.rotating_streak.streak
             match last_run.character:
                 case "Ironclad":
