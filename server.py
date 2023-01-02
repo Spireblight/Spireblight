@@ -1182,16 +1182,16 @@ async def wall_card(ctx: ContextType):
 @command("kills", "wins")
 async def calculate_wins_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
-    msg = "A20 Heart kills in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.wins))
+    msg = "A20 Heart kills in {0.current_year}: Total: {0.year_wins[0.current_year].all_character_count} - Ironclad: {0.year_wins[0.current_year].ironclad_count} - Silent: {0.year_wins[0.current_year].silent_count} - Defect: {0.year_wins[0.current_year].defect_count} - Watcher: {0.year_wins[0.current_year].watcher_count}"
+    await ctx.reply(msg.format(run_stats))
 
 @command("losses")
 async def calculate_losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    msg = "A20 Heart losses in {0.current_year}: Total: {0.year_losses[0.current_year].all_character_count} - Ironclad: {0.year_losses[0.current_year].ironclad_count} - Silent: {0.year_losses[0.current_year].silent_count} - Defect: {0.year_losses[0.current_year].defect_count} - Watcher: {0.year_losses[0.current_year].watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.losses))
+    await ctx.reply(msg.format(run_stats))
 
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType):
@@ -1211,8 +1211,8 @@ async def calculate_pb_cmd(ctx: ContextType):
 async def calculate_winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022 A20 Heart kills."""
     run_stats = get_run_stats()
-    wins = [run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count]
-    losses = [run_stats.losses.ironclad_count, run_stats.losses.silent_count, run_stats.losses.defect_count, run_stats.losses.watcher_count]
+    wins = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
+    losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 

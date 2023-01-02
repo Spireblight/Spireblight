@@ -24,7 +24,8 @@ def update_run_stats():
                     logger.info(f"Found non-A20 run in stats: {run.name}")
 
                 _run_stats.check_pb(run)
-                if run.timestamp.year != 2022:
+                print("looping over runs")
+                if run.timestamp.year < 2022:
                     continue
 
                 if run.won:
