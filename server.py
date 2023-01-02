@@ -1185,15 +1185,15 @@ async def wall_card(ctx: ContextType):
 async def calculate_wins_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
     run_stats = get_run_stats()
-    msg = "A20 Heart kills in {0.current_year}: Total: {0.year_wins[0.current_year].all_character_count} - Ironclad: {0.year_wins[0.current_year].ironclad_count} - Silent: {0.year_wins[0.current_year].silent_count} - Defect: {0.year_wins[0.current_year].defect_count} - Watcher: {0.year_wins[0.current_year].watcher_count}"
-    await ctx.reply(msg.format(run_stats))
+    msg = "A20 Heart kills in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
+    await ctx.reply(msg.format(run_stats, run_stats.year_wins[run_stats.current_year]))
 
 @command("losses")
 async def calculate_losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in {0.current_year}: Total: {0.year_losses[0.current_year].all_character_count} - Ironclad: {0.year_losses[0.current_year].ironclad_count} - Silent: {0.year_losses[0.current_year].silent_count} - Defect: {0.year_losses[0.current_year].defect_count} - Watcher: {0.year_losses[0.current_year].watcher_count}"
+    msg = "A20 Heart losses in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats))
+    await ctx.reply(msg.format(run_stats, run_stats.year_losses[run_stats.current_year]))
 
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType):
