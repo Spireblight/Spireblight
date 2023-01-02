@@ -53,10 +53,6 @@ def update_run_stats():
                 _run_stats.add_win(last_run.character, last_run.timestamp)
             else:
                 _run_stats.add_loss(last_run.character, last_run.timestamp)
-            print(_run_stats.all_wins.all_character_count)
-            print(_run_stats.all_losses.all_character_count)
-            print(_run_stats.year_wins[2023].all_character_count)
-            print(_run_stats.year_losses[2023].all_character_count)
             _run_stats.streaks.all_character_count = last_run.rotating_streak.streak
             match last_run.character:
                 case "Ironclad":
