@@ -27,7 +27,7 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from nameinternal import get, query, Base, Card, Relic
@@ -297,7 +297,10 @@ class TwitchConn(TBot):
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {self._token}",
                 }) as resp:
-            return await resp.json()
+            try:
+                return await resp.json()
+            except ContentTypeError:
+                return {}
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
@@ -995,17 +998,16 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
     )
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: Savefile, index: int):
+async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
     """Display information about the current relics."""
-    if index < 0:
-        await ctx.reply("Why do you insist on breaking me?")
-        return
     l = list(save.relics)
-    if index > len(l):
-        await ctx.reply(f"We only have {len(l)} relics!")
-        return
     if not index:
         await ctx.reply(f"We have {len(l)} relics.")
+        return
+    if index < 0:
+        index = len(l) + index + 1
+    if index > len(l) or index <= 0:
+        await ctx.reply(f"We only have {len(l)} relics!")
         return
 
     relicData = l[index-1]
