@@ -192,7 +192,7 @@ def load(loop: asyncio.AbstractEventLoop):
                 _timers[name] = Timer(name, d["interval"], loop=loop)
             _timers[name].commands.extend(d["commands"])
             if d.get("enabled", True):
-                to_start.add(_timers[name])
+                to_start.append(_timers[name])
         loop.create_task(_launch_timers(to_start))
     except FileNotFoundError:
         pass
@@ -457,18 +457,26 @@ class Timer:
         self.interval = interval
         self.commands = []
         self.running = False
-        self._routine = Routine(coro=self._coro_internal, delta=float(interval), loop=loop)
+        self.loop = loop
+        self._task = None
+        self.set_routine()
+
+    def set_routine(self):
+        if self.running:
+            self._routine.stop()
+        self._routine = Routine(coro=self._coro_internal, delta=float(self.interval), loop=self.loop)
         self._routine.before_routine(self.before_ready)
         self._routine.error(self.on_error)
-        self._task = None
+        if self.running:
+            self.task = self._routine.start()
 
     async def _coro_internal(self):
         if not self.running:
             return
         live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
         chan = TConn.get_channel(config.twitch.channel)
-        if not live or not chan:
-            return
+        #if not live or not chan:
+        #    return
         cmd = None
         i = 0
         while cmd is None:
@@ -516,24 +524,24 @@ class Timer:
 
 @command("timers", flag="me")
 async def timers_list(ctx: ContextType):
-    ctx.reply(f"The existing timers are {', '.join(_timers)}.")
+    await ctx.reply(f"The existing timers are {', '.join(_timers)}.")
 
 @command("timer", flag="me")
 async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
     match action:
         case "create":
             if name in _timers:
-                ctx.reply(f"Timer {name} already exists.")
+                await ctx.reply(f"Timer {name} already exists.")
                 return
             if name.startswith("auto_"):
-                ctx.reply(f"Cannot manually create automatic timers. Use 'auto {name[5:]}' instead.")
+                await ctx.reply(f"Cannot manually create automatic timers. Use 'auto {name[5:]}' instead.")
                 return
             interval = config.twitch.timers.default_interval
             if args:
                 interval = args[0]
             _timers[name] = Timer(name, interval)
             _update_timers()
-            ctx.reply(f"Timer {name} has been created! Use 'add {name} <commands>' to add commands to it.")
+            await ctx.reply(f"Timer {name} has been created! Use 'add {name} <commands>' to add commands to it.")
 
         case "add":
             if name not in _timers:
@@ -548,32 +556,80 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 if cmd is not None and cmd.name not in t.commands:
                     t.commands.append(cmd.name)
             _update_timers()
-            ctx.reply(f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s.")
+            await ctx.reply(f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s.")
+
+        case "delete" | "remove":
+            if name not in _timers:
+                ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                return
+            t = _timers[name]
+            t.stop()
+            del _timers[name]
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been removed.")
 
         case "auto":
             cmd = TConn.get_command(name)
             if cmd is None:
-                ctx.reply(f"Command {name} does not exist.")
+                await ctx.reply(f"Command {name} does not exist.")
                 return
             timer_name = f"auto_{cmd.name}"
             if timer_name in _timers:
-                ctx.reply(f"Automatic timer {name} ({timer_name}) already exists; starting it.")
+                await ctx.reply(f"Automatic timer {name} ({timer_name}) already exists; starting it.")
                 _timers[timer_name].start()
                 return
             interval = config.twitch.timers.default_interval
             if args:
                 interval = args[0]
             _timers[timer_name] = t = Timer(timer_name, interval)
+            t.commands.append(cmd.name)
             t.start()
             _update_timers()
-            ctx.reply(f"Automatic timer {name} ({timer_name}) has been created and started.")
+            await ctx.reply(f"Automatic timer {name} ({timer_name}) has been created and started.")
 
-        case "status":
+        case "status" | "info":
             if name not in _timers:
-                ctx.reply(f"Timer {name} does not exist.")
+                await ctx.reply(f"Timer {name} does not exist.")
                 return
             t = _timers[name]
-            ctx.reply(f"Timer {name} has an interval of {t.interval}s with commands {', '.join(t.commands)} and is currently {t.running and 'running' or 'stopped'}.")
+            await ctx.reply(f"Timer {name} has an interval of {t.interval}s with commands {', '.join(t.commands)} and is currently {t.running and 'running' or 'stopped'}.")
+
+        case "start":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            if t.running:
+                await ctx.reply(f"Timer {name} is already running.")
+                return
+            t.start()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been started.")
+
+        case "stop":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            if not t.running:
+                await ctx.reply(f"Timer {name} is not running.")
+                return
+            t.stop()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been stopped.")
+
+        case "interval":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            interval = config.twitch.timers.default_interval
+            if args:
+                interval = args[0]
+            t.interval = interval
+            t.set_routine()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been set to interval {interval}. If it was running, it will complete the existing interval.")
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
