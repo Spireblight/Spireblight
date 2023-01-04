@@ -354,12 +354,6 @@ class TwitchConn(TBot):
 
     async def event_ready(self):
         self.live_channels[config.twitch.channel] = live = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
-        if live:
-            try:
-                _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-                _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
-            except RuntimeError: # already running; don't worry about it
-                pass
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
@@ -422,16 +416,9 @@ class TwitchConn(TBot):
 class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
         TConn.live_channels[evt.broadcaster.name] = True
-        try:
-            _timers["global"].start(config.baalorbot.timers.globals.commands, stop_on_error=False)
-            _timers["sponsored"].start(config.baalorbot.timers.sponsored.commands, stop_on_error=False)
-        except RuntimeError: # already running; don't worry about it
-            pass
 
     async def event_eventsub_notification_stream_end(self, evt: StreamOfflineData):
         TConn.live_channels[evt.broadcaster.name] = False
-        _timers["global"].stop()
-        _timers["sponsored"].stop()
 
 class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
@@ -744,8 +731,6 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             disabled.remove(name)
             with getfile("disabled", "w") as f:
                 f.writelines(disabled)
-            if name == "sponsored_cmd" and "sponsored" in _timers:
-                _timers["sponsored"].restart()
             await ctx.reply(f"Command {name} has been enabled.")
 
         case "disable":
@@ -1493,34 +1478,6 @@ async def Twitch_startup():
     )
     TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/eventsub")
     #await TConn.eventsub_setup()
-
-    """
-    glob = config.baalorbot.timers.globals
-    if glob.interval and glob.commands:
-        _timers["global"] = _global_timer = routine(seconds=glob.interval)(_timer)
-        @_global_timer.before_routine
-        async def before_global():
-            await TConn.wait_for_ready()
-
-        @_global_timer.error
-        async def error_global(e):
-            logger.error(f"Timer global error with {e}")
-
-        _global_timer.start(glob.commands, stop_on_error=False)
-
-    sponsored = config.baalorbot.timers.sponsored
-    if sponsored.interval and sponsored.commands:
-        _timers["sponsored"] = _sponsored_timer = routine(seconds=sponsored.interval)(_timer)
-        @_sponsored_timer.before_routine
-        async def before_sponsored():
-            await TConn.wait_for_ready()
-
-        @_sponsored_timer.error
-        async def error_sponsored(e):
-            logger.error(f"Timer sponsored error with {e}")
-
-        _sponsored_timer.start(sponsored.commands, stop_on_error=False)
-    """
 
     await TConn.connect()
 
