@@ -6,7 +6,9 @@ from typing import Generator, Callable
 
 from collections import defaultdict
 
+import traceback
 import datetime
+import asyncio
 import random
 import string
 import base64
@@ -116,7 +118,7 @@ _cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
 _to_add_twitch: list[TwitchCommand] = []
 _to_add_discord: list[DiscordCommand] = []
 
-_timers: dict[str, Routine] = {}
+_timers: dict[str, Timer] = {}
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -161,10 +163,13 @@ def readline(file: str) -> str:
     with open(os.path.join("text", file), "r") as f:
         return random.choice(f.readlines())
 
-def load():
+def load(loop: asyncio.AbstractEventLoop):
     _cmds.clear()
-    with getfile("data.json", "r") as f:
-        _cmds.update(json.load(f))
+    try:
+        with getfile("data.json", "r") as f:
+            _cmds.update(json.load(f))
+    except FileNotFoundError:
+        pass
     for name, d in _cmds.items():
         c = command(
             name,
@@ -174,9 +179,41 @@ def load():
             rate=d.get("rate", _DEFAULT_RATE)
         )(_create_cmd(d["output"]))
         c.enabled = d.get("enabled", True)
-    with getfile("disabled", "r") as f:
-        for disabled in f.readlines():
-            TConn.commands[disabled].enabled = False
+    try:
+        with getfile("disabled", "r") as f:
+            for disabled in f.readlines():
+                TConn.commands[disabled].enabled = False
+    except FileNotFoundError:
+        pass
+
+    try:
+        to_start = []
+        with getfile("timers.json", "r") as f:
+            j = json.load(f)
+        for name, d in j.items():
+            if name not in _timers:
+                _timers[name] = Timer(name, d["interval"], loop=loop)
+            _timers[name].commands.extend(d["commands"])
+            if d.get("enabled", True):
+                to_start.append(_timers[name])
+        loop.create_task(_launch_timers(to_start))
+    except FileNotFoundError:
+        pass
+
+async def _launch_timers(timers: list[Timer]):
+    for timer in timers:
+        timer.start()
+        await asyncio.sleep(config.twitch.timers.stagger_interval)
+
+def _update_timers():
+    final = {}
+    for name, timer in _timers.items():
+        d = {"interval": timer.interval, "commands": timer.commands}
+        if not timer.running:
+            d["enabled"] = False
+        final[name] = d
+    with getfile("timers.json", "w") as f:
+        json.dump(final, f, indent=config.server.json_indent)
 
 def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: str = None, burst: int = None, rate: float = None, output: str):
     _cmds[name] = {"output": output}
@@ -420,38 +457,185 @@ class DiscordConn(DBot):
                 self.remove_listener(event, name)
         return value
 
-async def _timer(cmds: list[str]):
-    live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
-    chan = TConn.get_channel(config.twitch.channel)
-    if not live or not chan:
-        return
-    cmd = None
-    i = 0
-    while cmd is None:
-        i += 1
-        if i > len(cmds):
+class Timer:
+    def __init__(self, name: str, interval: int, *, loop=None):
+        self.name = name
+        self.interval = interval
+        self.commands = []
+        self.running = False
+        self.loop = loop
+        self._task = None
+        self.set_routine()
+
+    def set_routine(self):
+        if self.running:
+            self._routine.stop()
+        self._routine = Routine(coro=self._coro_internal, delta=float(self.interval), loop=self.loop)
+        self._routine.before_routine(self.before_ready)
+        self._routine.error(self.on_error)
+        if self.running:
+            self.task = self._routine.start()
+
+    async def _coro_internal(self):
+        if not self.running:
             return
-        maybe_cmd = cmds.pop(0)
-        if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
-            i -= 1 # we're not adding it back, so it's fine
-            continue
-        if not TConn.commands[maybe_cmd].enabled:
-            cmds.append(maybe_cmd) # in case it gets enabled again
-            continue
-        if maybe_cmd == "current":
-            save = await get_savefile()
-            if save is None:
-                cmds.append(maybe_cmd)
+        live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
+        chan = TConn.get_channel(config.twitch.channel)
+        if not live or not chan:
+            return
+        cmd = None
+        i = 0
+        while cmd is None:
+            i += 1
+            if i > len(self.commands):
+                return
+            maybe_cmd = self.commands.pop(0)
+            if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
+                i -= 1 # we're not adding it back, so it's fine
                 continue
-        cmd = maybe_cmd
-    # don't use the actual command, just send the raw output
-    msg: str = _cmds[cmd]["output"]
-    try:
-        msg = msg.format(**_consts)
-    except KeyError:
-        logger.error(f"Timer-command {cmd} needs non-constant formatting. Sending raw line.")
-    await chan.send(msg)
-    cmds.append(cmd)
+            if not TConn.commands[maybe_cmd].enabled:
+                self.commands.append(maybe_cmd) # in case it gets enabled again
+                continue
+            if maybe_cmd == "current":
+                save = await get_savefile()
+                if save is None:
+                    self.commands.append(maybe_cmd)
+                    continue
+            cmd = maybe_cmd
+        # don't use the actual command, just send the raw output
+        msg: str = _cmds[cmd]["output"]
+        try:
+            msg = msg.format(**_consts)
+        except KeyError:
+            logger.error(f"Command {cmd} of timer {self.name} needs non-constant formatting. Sending raw line.")
+        await chan.send(msg)
+        self.commands.append(cmd)
+        _update_timers() # keep track of command ordering
+
+    async def before_ready(self):
+        await TConn.wait_for_ready()
+
+    async def on_error(self, error: Exception):
+        logger.error(f"Error in timer {self.name}:")
+        logger.error("\n".join(traceback.format_exception(type(error), error, error.__traceback__)))
+
+    def start(self):
+        if not self.running:
+            self.running = True
+            self.task = self._routine.start()
+
+    def stop(self):
+        self._routine.stop()
+        self.running = False
+
+@command("timers", flag="me")
+async def timers_list(ctx: ContextType):
+    await ctx.reply(f"The existing timers are {', '.join(_timers)}.")
+
+@command("timer", flag="me")
+async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
+    match action:
+        case "create":
+            if name in _timers:
+                await ctx.reply(f"Timer {name} already exists.")
+                return
+            if name.startswith("auto_"):
+                await ctx.reply(f"Cannot manually create automatic timers. Use 'auto {name[5:]}' instead.")
+                return
+            interval = config.twitch.timers.default_interval
+            if args:
+                interval = args[0]
+            _timers[name] = Timer(name, interval)
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been created! Use 'add {name} <commands>' to add commands to it.")
+
+        case "add":
+            if name not in _timers:
+                ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                return
+            if not args:
+                ctx.reply("No commands to add.")
+                return
+            t = _timers[name]
+            for arg in args:
+                cmd = TConn.get_command(arg)
+                if cmd is not None and cmd.name not in t.commands:
+                    t.commands.append(cmd.name)
+            _update_timers()
+            await ctx.reply(f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s.")
+
+        case "delete" | "remove":
+            if name not in _timers:
+                ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                return
+            t = _timers[name]
+            t.stop()
+            del _timers[name]
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been removed.")
+
+        case "auto":
+            cmd = TConn.get_command(name)
+            if cmd is None:
+                await ctx.reply(f"Command {name} does not exist.")
+                return
+            timer_name = f"auto_{cmd.name}"
+            if timer_name in _timers:
+                await ctx.reply(f"Automatic timer {name} ({timer_name}) already exists; starting it.")
+                _timers[timer_name].start()
+                return
+            interval = config.twitch.timers.default_interval
+            if args:
+                interval = args[0]
+            _timers[timer_name] = t = Timer(timer_name, interval)
+            t.commands.append(cmd.name)
+            t.start()
+            _update_timers()
+            await ctx.reply(f"Automatic timer {name} ({timer_name}) has been created and started.")
+
+        case "status" | "info":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            await ctx.reply(f"Timer {name} has an interval of {t.interval}s with commands {', '.join(t.commands)} and is currently {t.running and 'running' or 'stopped'}.")
+
+        case "start":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            if t.running:
+                await ctx.reply(f"Timer {name} is already running.")
+                return
+            t.start()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been started.")
+
+        case "stop":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            if not t.running:
+                await ctx.reply(f"Timer {name} is not running.")
+                return
+            t.stop()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been stopped.")
+
+        case "interval":
+            if name not in _timers:
+                await ctx.reply(f"Timer {name} does not exist.")
+                return
+            t = _timers[name]
+            interval = config.twitch.timers.default_interval
+            if args:
+                interval = args[0]
+            t.interval = interval
+            t.set_routine()
+            _update_timers()
+            await ctx.reply(f"Timer {name} has been set to interval {interval}. If it was running, it will complete the existing interval.")
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -1300,7 +1484,7 @@ async def Twitch_startup():
     TConn = TwitchConn(token=config.twitch.oauth_token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
     for cmd in _to_add_twitch:
         TConn.add_command(cmd)
-    load()
+    load(asyncio.get_event_loop())
 
     esbot = EventSubBot.from_client_credentials(
         config.server.websocket_client.id,
@@ -1310,6 +1494,7 @@ async def Twitch_startup():
     TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/eventsub")
     #await TConn.eventsub_setup()
 
+    """
     glob = config.baalorbot.timers.globals
     if glob.interval and glob.commands:
         _timers["global"] = _global_timer = routine(seconds=glob.interval)(_timer)
@@ -1335,6 +1520,7 @@ async def Twitch_startup():
             logger.error(f"Timer sponsored error with {e}")
 
         _sponsored_timer.start(sponsored.commands, stop_on_error=False)
+    """
 
     await TConn.connect()
 
