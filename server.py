@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Generator, Callable
 
+from collections import defaultdict
+
 import datetime
 import random
 import string
@@ -32,6 +34,7 @@ from aiohttp import ClientSession, ContentTypeError
 from cache.year_run_stats import get_run_stats
 from nameinternal import get, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
+from mastered import get_mastered
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -1211,12 +1214,25 @@ async def calculate_pb_cmd(ctx: ContextType):
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType):
-    """Display the current winrate for Baalor's 2022 A20 Heart kills."""
+    """Display the current winrate for Baalor's 2022+ A20 Heart kills."""
     run_stats = get_run_stats()
     wins = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
     losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
+
+#@command("mastered")
+async def mastered_stuff(ctx: ContextType):
+    """Display how many cards and relics are mastered in the mastery challenge."""
+    cards, relics = get_mastered()
+    total = (75 * 4) + 39 + 13 # 178 relics
+    chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
+    d = defaultdict(dict)
+
+    for card, (color, char, ts) in cards.items():
+        d[color][card] = (char, ts)
+
+    msg = ["Current mastery progression:"]
 
 @router.get("/commands")
 @template("commands.jinja2")
