@@ -538,10 +538,10 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
         case "add":
             if name not in _timers:
-                ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                await ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
                 return
             if not args:
-                ctx.reply("No commands to add.")
+                await ctx.reply("No commands to add.")
                 return
             t = _timers[name]
             for arg in args:
