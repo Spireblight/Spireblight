@@ -26,8 +26,8 @@ class TwitchCommand(Command):
             is_editor = (context.author.name in config.baalorbot.editors)
             if (
                 (not context.author.is_broadcaster) and
-                ("e" in self.flag and not is_editor) and
-                ("m" in self.flag and not context.author.is_mod)
+                (("e" in self.flag and not is_editor) or
+                ("m" in self.flag and not context.author.is_mod))
             ):
                 return
         logger.debug(f"Invoking Twitch command {self.name} by {getattr(context.author, 'display_name', context.author.name)}")
