@@ -475,8 +475,8 @@ class Timer:
             return
         live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
         chan = TConn.get_channel(config.twitch.channel)
-        #if not live or not chan:
-        #    return
+        if not live or not chan:
+            return
         cmd = None
         i = 0
         while cmd is None:
