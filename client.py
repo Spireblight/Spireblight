@@ -1,4 +1,4 @@
-from aiohttp import ClientSession, ClientError
+from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
 import asyncio
 import time
@@ -44,30 +44,6 @@ async def main():
                 except OSError:
                     possible = None
 
-            if possible is None:
-                async with session.get("/playing", params={"key": config.server.secret}) as resp:
-                    if resp.ok:
-                        j = await resp.json()
-                        if not j or not j.get("is_playing"):
-                            playing = None
-                            try:
-                                with open(config.client.playing, "w") as f:
-                                    pass # make it an empty file
-                            except OSError:
-                                pass
-                        elif j.get("item"):
-                            track = j['item']['name']
-                            artists = ", ".join(x['name'] for x in j['item']['artists'])
-                            album = j['item']['album']['name']
-                            text = f"{track}\n{artists}\n{album}"
-                            if playing != text:
-                                try:
-                                    with open(config.client.playing, "w") as f:
-                                        f.write(text)
-                                    playing = text
-                                except OSError:
-                                    pass
-
             to_send = []
             files = []
             if possible is None and config.client.sync_runs: # don't check run files during a run
@@ -83,6 +59,31 @@ async def main():
                                     files.append(file)
 
             try:
+                if possible is None:
+                    async with session.get("/playing", params={"key": config.server.secret}) as resp:
+                        if resp.ok:
+                            j = await resp.json()
+                            if j and j.get("item"):
+                                track = j['item']['name']
+                                artists = ", ".join(x['name'] for x in j['item']['artists'])
+                                album = j['item']['album']['name']
+                                text = f"{track}\n{artists}\n{album}"
+                                if playing != text:
+                                    try:
+                                        with open(config.client.playing, "w") as f:
+                                            f.write(text)
+                                        playing = text
+                                    except OSError:
+                                        pass
+
+                            else:
+                                playing = None
+                                try:
+                                    with open(config.client.playing, "w") as f:
+                                        pass # make it an empty file
+                                except OSError:
+                                    pass
+
                 all_sent = True
                 if to_send: # send runs first so savefile can seamlessly transfer its cache
                     for path, file, profile in to_send:
@@ -143,7 +144,7 @@ async def main():
                             last = cur
                             has_save = True
 
-            except ClientError:
+            except (ClientError, ServerDisconnectedError):
                 timeout = 10 # give it a bit of time
                 print("Error: Server is offline! Retrying in 10s")
                 continue

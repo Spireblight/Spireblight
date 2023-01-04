@@ -31,11 +31,12 @@ from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, B
 
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from nameinternal import get, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
+from mastered import get_mastered
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -336,7 +337,10 @@ class TwitchConn(TBot):
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {self._token}",
                 }) as resp:
-            return await resp.json()
+            try:
+                return await resp.json()
+            except ContentTypeError:
+                return {}
 
     async def eventsub_setup(self):
         self.loop.create_task(self.esclient.listen(port=4000))
@@ -1181,20 +1185,20 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
     )
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: Savefile, index: int):
+async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
     """Display information about the current relics."""
-    if index < 0:
-        await ctx.reply("Why do you insist on breaking me?")
-        return
     l = list(save.relics)
-    if index > len(l):
-        await ctx.reply(f"We only have {len(l)} relics!")
-        return
     if not index:
         await ctx.reply(f"We have {len(l)} relics.")
         return
+    if index < 0:
+        index = len(l) + index + 1
+    if index > len(l) or index <= 0:
+        await ctx.reply(f"We only have {len(l)} relics!")
+        return
 
-    await ctx.reply(f"The relic at position {index} is {l[index-1].name}.")
+    relicData = l[index-1]
+    await ctx.reply(f"The relic at position {index} is {relicData.name}: {relicData.relic.description}")
 
 @with_savefile("allrelics", "offscreen", "page2")
 async def relics_page2(ctx: ContextType, save: Savefile):
@@ -1367,16 +1371,16 @@ async def wall_card(ctx: ContextType):
 @command("kills", "wins")
 async def calculate_wins_cmd(ctx: ContextType):
     """Display the cumulative number of wins for the year-long challenge."""
-    msg = "A20 Heart kills in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.wins))
+    msg = "A20 Heart kills in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
+    await ctx.reply(msg.format(run_stats, run_stats.year_wins[run_stats.current_year]))
 
 @command("losses")
 async def calculate_losses_cmd(ctx: ContextType):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in 2022: Total: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    msg = "A20 Heart losses in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.losses))
+    await ctx.reply(msg.format(run_stats, run_stats.year_losses[run_stats.current_year]))
 
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType):
@@ -1394,12 +1398,25 @@ async def calculate_pb_cmd(ctx: ContextType):
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType):
-    """Display the current winrate for Baalor's 2022 A20 Heart kills."""
+    """Display the current winrate for Baalor's 2022+ A20 Heart kills."""
     run_stats = get_run_stats()
-    wins = [run_stats.wins.ironclad_count, run_stats.wins.silent_count, run_stats.wins.defect_count, run_stats.wins.watcher_count]
-    losses = [run_stats.losses.ironclad_count, run_stats.losses.silent_count, run_stats.losses.defect_count, run_stats.losses.watcher_count]
+    wins = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
+    losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
+
+#@command("mastered")
+async def mastered_stuff(ctx: ContextType):
+    """Display how many cards and relics are mastered in the mastery challenge."""
+    cards, relics = get_mastered()
+    total = (75 * 4) + 39 + 13 # 178 relics
+    chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
+    d = defaultdict(dict)
+
+    for card, (color, char, ts) in cards.items():
+        d[color][card] = (char, ts)
+
+    msg = ["Current mastery progression:"]
 
 @router.get("/commands")
 @template("commands.jinja2")
