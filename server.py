@@ -553,7 +553,7 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
         case "delete" | "remove":
             if name not in _timers:
-                ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                await ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
                 return
             t = _timers[name]
             t.stop()
