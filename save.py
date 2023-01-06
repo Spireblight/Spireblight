@@ -271,7 +271,10 @@ class Savefile(FileParser):
 
     @property
     def character_streak(self) -> StreakInfo:
-        return get_latest_run(self.character, None).character_streak
+        try:
+            return get_latest_run(self.character, None).character_streak
+        except AttributeError: # no character played like this; likely a mod
+            return StreakInfo(0, 0, True)
 
     @property
     def score(self) -> int:
