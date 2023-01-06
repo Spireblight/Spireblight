@@ -521,6 +521,29 @@ async def timers_list(ctx: ContextType):
 
 @command("timer", flag="me")
 async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
+    """Manipulate the timers. Syntax:
+
+    - `create <name> [interval]` will create a new timer with the name
+       and the given interval, if specified. It has no other effect.
+    - `add <name> <commands>` will add all of the commands (space-separated)
+       to the timer `name` - it does not start the timer. If it is running,
+       it will seamlessly integrate the new command at the current point in
+       the rotation.
+    - `delete <name>` completely removes a timer and associated commands.
+       This cannot be undone.
+    - `auto <name> [interval]` creates a new timer with the given interval,
+       if specified, and exactly one command `name`. It immediately starts it.
+       This is basically used for single-command sponsored timers and the like.
+       The internal timer name will be `auto_` followed by the command name,
+       and can be edited normally afterwards.
+    - `status <name>` outputs the commands and interval tied to this timer.
+    - `start <name>` starts the given timer.
+    - `stop <name>` stops the given timer.
+    - `interval <name> <interval>` changes the interval of an existing timer.
+       This will have some weird double-send glitch if editing the interval
+       of a running timer, but is mostly fine otherwise.
+    """
+
     match action:
         case "create":
             if name in _timers:
