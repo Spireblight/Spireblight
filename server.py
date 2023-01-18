@@ -1413,18 +1413,42 @@ async def calculate_winrate_cmd(ctx: ContextType):
     rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 
-#@command("mastered")
-async def mastered_stuff(ctx: ContextType):
-    """Display how many cards and relics are mastered in the mastery challenge."""
+@command("mastered")
+async def mastered_stuff(ctx: ContextType, card: str):
+    """Tell us whether a certain card or relic is mastered."""
     cards, relics = get_mastered()
-    total = (75 * 4) + 39 + 13 # 178 relics
-    chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
-    d = defaultdict(dict)
+    #total = (75 * 4) + 39 + 13 # 178 relics
+    #chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
+    #d = defaultdict(dict)
 
-    for card, (color, char, ts) in cards.items():
-        d[color][card] = (char, ts)
+    #for card, (color, char, ts) in cards.items():
+    #    d[color][card] = (char, ts)
 
-    msg = ["Current mastery progression:"]
+    #msg = ["Current mastery progression:"]
+
+    try:
+        info = get(card)
+    except ValueError:
+        await ctx.reply(f"Could not find card or relic {card}.")
+        return
+
+    if info.mod:
+        await ctx.reply("We do not attempt to master modded content.")
+        return
+
+    match info.cls_name:
+        case "card":
+            d = cards
+        case "relic":
+            d = relics
+        case _:
+            await ctx.reply("Only cards or relics may be mastered.")
+            return
+
+    if info.name in d:
+        await ctx.reply(f"The {info.cls_name} {info.name} IS mastered!")
+    else:
+        await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
 
 @router.get("/commands")
 @template("commands.jinja2")
