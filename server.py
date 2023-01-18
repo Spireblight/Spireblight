@@ -1414,7 +1414,7 @@ async def calculate_winrate_cmd(ctx: ContextType):
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
 
 @command("mastered")
-async def mastered_stuff(ctx: ContextType, card: str):
+async def mastered_stuff(ctx: ContextType, *card: str):
     """Tell us whether a certain card or relic is mastered."""
     cards, relics = get_mastered()
     #total = (75 * 4) + 39 + 13 # 178 relics
@@ -1426,10 +1426,9 @@ async def mastered_stuff(ctx: ContextType, card: str):
 
     #msg = ["Current mastery progression:"]
 
-    try:
-        info = get(card)
-    except ValueError:
-        await ctx.reply(f"Could not find card or relic {card}.")
+    info = query("".join(card))
+    if info is None:
+        await ctx.reply(f"Could not find card or relic {' '.join(card)}.")
         return
 
     if info.mod:
