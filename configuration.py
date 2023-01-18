@@ -33,6 +33,9 @@ def load_file(filename: str) -> DotMap:
 # Load the default configuration file
 config = load_file("./default-config.yml")
 
+# Expand filepaths for *nix systems ('~/' becomes '/home/$USER').  Has no effect otherwise.
+config.spire.steamdir = os.path.expanduser(config.spire.steamdir) 
+
 # Determine which extra file to load values from.
 if len(sys.argv) >= 2:
     # If we have specified a configuration file on the command line, use that.
