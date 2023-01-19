@@ -53,3 +53,47 @@ There will be no runs on the client initially. In order to sync your runs, while
 For any issues, feel free to open an issue or submit a PR.
 
 Development discord: https://discord.gg/RHYrs3Nsve
+
+---
+
+# Step-by-step guide to get minimum functionality up and running (mostly) locally
+
+## Local server and client:
+1. Clone repo from github
+2. Create virtual environment and install dependancies:
+    1. Create env:
+        ```bash
+        python3.10 -m venv env
+        ```
+    2.  Start virtual environment:
+        ```bash
+        source env/bin/activate
+        ```
+    3.  Install requirements:
+        ```bash
+        pip install -r requirements.txt
+        ```
+3. Run `python ./main.py` to start the server
+    * At this step the website should be accessible at `localhost:8080`
+4. Run `python ./client.py` once to create a skeleton `dev-config.yml` file
+5. Check `default-config.yml` and `dev-config.yml` settings and validate:
+    1. that there is a secret set for the server and,
+    2. that the Spire path matches your OS
+6. Stop and restart the server (`ctrl-c` to stop, then `python ./main.py`)
+7. Stop and restart the client (`ctrl-c` to stop, then `python ./client.py`)
+    * Any Spire runs in your save file should now be visible on the website.
+
+## If you want to test bot commands, you'll also need a bot of some kind:
+### Discord Bot
+1. Go to the discord developer site at `https://discord.com/developers/applications`
+2. Create a new application and give it a name (accept terms if necessary)
+3. Within this new app, click on the bot tab and create a new bot
+    * You'll need to record the token for this bot in order to hook it into the server - if you lose it, you'll need to generate a new one.
+    * Disabling the "Public Bot" setting prevents random people from adding your bot to servers
+4. Create an OAuth2 link to add your bot to a server using the OAuth2 URL Generator
+    * Select relevant permissions/scope, then click copy and paste this into a browser and complete prompts.
+5. Give your new bot permissions appropriate Privileged Gateway Intents (If these are not set correctly, the discord integration will fail and crash the rest of the app)
+6. Add the bot token to your `dev-config.yml` file and set `Discord.enabled: true`
+7. Restart the server (`python ./main.py`)
+8. Validate functionality by using commands in discord and checking for command list on site
+
