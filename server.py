@@ -1416,7 +1416,7 @@ async def calculate_winrate_cmd(ctx: ContextType):
 @command("mastered")
 async def mastered_stuff(ctx: ContextType, *card: str):
     """Tell us whether a certain card or relic is mastered."""
-    cards, relics = get_mastered()
+    cards, relics, colors = get_mastered()
     #total = (75 * 4) + 39 + 13 # 178 relics
     #chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
     #d = defaultdict(dict)
@@ -1445,7 +1445,7 @@ async def mastered_stuff(ctx: ContextType, *card: str):
             return
 
     if info.name in d:
-        await ctx.reply(f"The {info.cls_name} {info.name} IS mastered!")
+        await ctx.reply(f"The {info.cls_name} {info.name} IS mastered! Run: {config.server.url}/runs/{d[info.name].name}")
     else:
         await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
 
