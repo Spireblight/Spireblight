@@ -97,3 +97,13 @@ Development discord: https://discord.gg/RHYrs3Nsve
 7. Restart the server (`python ./main.py`)
 8. Validate functionality by using commands in discord and checking for command list on site
 
+### Twitch Chat commands
+Twitch chat messages can be tested without setting up a full Twitch developer account.  All that is required is an oath login token for your account and a chat channel to test commands in.
+1. Go to `https://twitchapps.com/tmi/` while logged in as the account you wish to use to test and copy the oath token
+2. In the `dev-config.yml`, update the `twitch:` configs:
+    * Paste the oath token into the `oauth_token:` line
+    * Choose a channel use to test commands and put that in the `channel:` line - Every twitch accout has an associated channel, so you can put your twitch username here and use that if nothing else comes to mind.
+    * Set `enabled:` to `true`
+3. Restart the server (`python ./main.py`)
+4. Navigate to the twitch channel you used and then the chat page
+5. Validate functionality by using commands in chat and checking for command list on site
