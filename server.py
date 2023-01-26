@@ -146,7 +146,12 @@ def _create_cmd(output):
             msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
-        keywords = {"savefile": None, "profile": get_current_profile(), "readline": readline}
+        keywords = {"savefile": None, "profile": None, "readline": readline}
+        if "$<profile" in msg:
+            try:
+                keywords["profile"] = get_current_profile()
+            except KeyError: # in case we have nothing
+                msg = f"Error: command requires an existing profile, and none exist."
         if "$<savefile" in msg:
             keywords["savefile"] = await get_savefile(ctx)
             if keywords["savefile"] is None:
