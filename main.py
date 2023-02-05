@@ -7,7 +7,7 @@ from aiohttp import web
 from webpage import webpage
 from logger import logger
 
-import server, events
+import server, events, youtubearchive
 
 from configuration import config
 
@@ -35,6 +35,8 @@ async def main():
         tasks.add(loop.create_task(server.Twitch_startup()))
     if config.discord.enabled:
         tasks.add(loop.create_task(server.Discord_startup()))
+    if config.youtube_archive.enabled:
+        tasks.add(loop.create_task(youtubearchive.Refresh_Global_Youtube_Archive()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 

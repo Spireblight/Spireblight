@@ -6,6 +6,7 @@ import datetime
 import json
 import time
 import os
+import re
 
 from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotImplemented
 
@@ -16,6 +17,7 @@ from response_objects.profiles import ProfilesResponse
 from cache.year_run_stats import update_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
+from youtubearchive import Global_Youtube_Archive
 from nameinternal import get, Potion
 from sts_profile import get_profile
 from gamedata import FileParser, KeysObtained
@@ -28,6 +30,8 @@ __all__ = ["get_latest_run"]
 
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
+
+_youtube_timestamp_offset_re = re.compile(r"(\d?\d:\d\d:\d\d) Slay the Spire")
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
@@ -61,6 +65,7 @@ class RunParser(FileParser):
         self._profile = profile
         self._character_streak = None
         self._rotating_streak = None
+        self._archive_link = None
 
     @property
     def display_name(self) -> str:
@@ -229,6 +234,49 @@ class RunParser(FileParser):
             loop_cached_runs(is_prev=False)
             return StreakInfo(streak_total, position_in_streak, is_ongoing)
         return StreakInfo(0, 0, False)
+    
+    @property
+    def start_time(self) -> datetime.datetime:
+        return self.timestamp - datetime.timedelta(seconds=int(self.playtime))
+
+    @property
+    def has_archive_link(self) -> bool:
+        return self.archive_link != ""
+    
+    @property
+    def archive_link(self) -> str:
+        archive_link = self._archive_link
+        if archive_link is None:
+            archive_link = self._get_archive_link()
+            self._archive_link = archive_link
+        return archive_link
+
+    def _get_archive_link(self) -> str:
+        earliest_start = self.start_time
+        current_run = self.matched.get_run(is_prev=True, is_character_specific=False)
+        while current_run is not None and current_run.timestamp.date() == self.timestamp.date():
+            earliest_start = current_run.start_time
+            current_run = current_run.matched.get_run(is_prev=True, is_character_specific=False)
+        run_delta = self.start_time - earliest_start
+
+        date_str = f"({self.timestamp.date()})"
+
+        video_id = ""
+        video_offset = 0
+        for archive in Global_Youtube_Archive().archive:
+            if date_str in archive.title:
+                video_id = archive.id
+
+                matches = _youtube_timestamp_offset_re.findall(archive.description)
+                if len(matches) > 0:
+                    first_match = matches.pop()
+                    h, m, s = first_match.split(':')
+                    video_offset = (int(h) * 3600) + (int(m) * 60) + int(s)
+        
+        if video_id == "":
+            return ""
+
+        return f"https://www.youtube.com/watch?v={video_id}&t={video_offset+run_delta.seconds}s"
 
 class StreakInfo(NamedTuple):
     streak: int

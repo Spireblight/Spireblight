@@ -7,6 +7,10 @@
     <div class="run-header-content">
       <div class="run-title pt-4 pr-4 pb-4">
         <div class="title">
+          {% if run.has_archive_link %}
+          <a href="{{ run.archive_link }}">
+          {% endif %}
+          
           {{ run.character }}
           {% if run.done %}
             {% if run.won %}
@@ -16,6 +20,10 @@
             {% endif %}
           {% else %}
             ongoing, on floor {{ run.current_floor }}
+          {% endif %}
+
+          {% if run.has_archive_link %}
+          </a>
           {% endif %}
         </div>
 

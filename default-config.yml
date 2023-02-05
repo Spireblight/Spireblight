@@ -62,6 +62,16 @@ youtube:
   # probably never be lower than 3600.
   cache_timeout: 3600
 
+youtube_archive:
+  # If the Youtube Archive part of the site is enabled or not.
+  enabled: false
+
+  # The API key to make Youtube calls.
+  api_key: <api key not set>
+
+  # The channel ID used when searching
+  channel_id: <channel id not set>
+
 baalorbot:
   # What prefix the bot listens to
   prefix: "!"
