@@ -25,8 +25,11 @@ class TwitchCommand(Command):
         if self.flag:
             is_editor = (context.author.name in config.baalorbot.editors or context.author.is_broadcaster)
             is_mod = (context.author.is_mod or context.author.is_broadcaster)
-            if "m" in self.flag and "e" not in self.flag:
-                if not is_mod:
+            if "m" in self.flag:
+                if "e" in self.flag:
+                    if not (is_mod or is_editor):
+                        return
+                elif not is_mod:
                     return
             elif "e" in self.flag:
                 if not is_editor:
