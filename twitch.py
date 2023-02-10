@@ -23,12 +23,13 @@ class TwitchCommand(Command):
         if not self.enabled:
             return
         if self.flag:
-            is_editor = (context.author.name in config.baalorbot.editors)
-            if (
-                (not context.author.is_broadcaster) and
-                (("e" in self.flag and not is_editor) or
-                ("m" in self.flag and not context.author.is_mod))
-            ):
-                return
+            is_editor = (context.author.name in config.baalorbot.editors or context.author.is_broadcaster)
+            is_mod = (context.author.is_mod or context.author.is_broadcaster)
+            if "m" in self.flag and "e" not in self.flag:
+                if not is_mod:
+                    return
+            elif "e" in self.flag:
+                if not is_editor:
+                    return
         logger.debug(f"Invoking Twitch command {self.name} by {getattr(context.author, 'display_name', context.author.name)}")
         await super().invoke(context, index=index)
