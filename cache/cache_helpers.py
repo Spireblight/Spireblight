@@ -108,3 +108,10 @@ class RunLinkedListNode:
                 return self.next_char
             else:
                 return self.next
+
+class MasteryStats:
+    def __init__(self) -> None:
+        self.mastered_cards: dict[str, RunParser] = {}
+        self.mastered_relics: dict[str, RunParser] = {}
+        self.colors: dict[str, str] = {}
+        self.last_run_timestamp: datetime.datetime = None

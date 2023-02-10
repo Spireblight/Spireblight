@@ -34,9 +34,9 @@ from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
+from cache.mastered import get_current_masteries, get_mastered
 from nameinternal import get, query, Base, Card, Relic
 from sts_profile import get_profile, get_current_profile
-from mastered import get_mastered
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
@@ -1421,7 +1421,7 @@ async def calculate_winrate_cmd(ctx: ContextType):
 @command("mastered")
 async def mastered_stuff(ctx: ContextType, *card: str):
     """Tell us whether a certain card or relic is mastered."""
-    cards, relics, colors = get_mastered()
+    mastery_stats = get_mastered()
     #total = (75 * 4) + 39 + 13 # 178 relics
     #chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
     #d = defaultdict(dict)
@@ -1442,9 +1442,9 @@ async def mastered_stuff(ctx: ContextType, *card: str):
 
     match info.cls_name:
         case "card":
-            d = cards
+            d = mastery_stats.mastered_cards
         case "relic":
-            d = relics
+            d = mastery_stats.mastered_relics
         case _:
             await ctx.reply("Only cards or relics may be mastered.")
             return
@@ -1453,6 +1453,27 @@ async def mastered_stuff(ctx: ContextType, *card: str):
         await ctx.reply(f"The {info.cls_name} {info.name} IS mastered! Run: {config.server.url}/runs/{d[info.name].name}")
     else:
         await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
+
+@with_savefile("currentmastery")
+async def current_mastery_check(ctx: ContextType, save: Savefile, *arg: str):
+    """Tell what cards and relics in the current run can be mastered if won"""
+    mastery_type = "".join(arg)
+    if mastery_type != "cards" and mastery_type != "relics":
+        await ctx.reply(f"Call !currentmastery with \"cards\" or \"relics\". {mastery_type}")
+
+    one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
+
+    match mastery_type:
+        case "cards":
+            if cards_can_master:
+                await ctx.reply(f"The cards that can be mastered this run are: {', '.join(cards_can_master)}")
+            else:
+                await ctx.reply(f"There are no new cards in this run that can be mastered.")
+        case "relics":
+            if relics_can_master:
+                await ctx.reply(f"The relics that can be mastered this run are: {', '.join(relics_can_master)}")
+            else:
+                await ctx.reply(f"There are no new relics in this run that can be mastered.")
 
 @router.get("/commands")
 @template("commands.jinja2")
