@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, NamedTuple, TYPE_CHECKING
+from typing import Any, NamedTuple
 
 import datetime
 import json
@@ -15,6 +15,7 @@ from response_objects.run_single import RunResponse
 from response_objects.profiles import ProfilesResponse
 from cache.year_run_stats import update_run_stats
 from cache.cache_helpers import RunLinkedListNode
+from cache.mastered import update_mastery_stats
 from sts_profile import get_profile
 from gamedata import FileParser, KeysObtained
 from webpage import router
@@ -252,6 +253,7 @@ def _update_cache():
                 prev = cur
     
     update_run_stats()
+    update_mastery_stats()
 
     # I don't actually know how long this cache updating is going to take...
     # I think it's as optimized as I could make it while still being safe,

@@ -8,3 +8,4 @@ last_run
 !default-config.yml
 *.yml
 /static/bulma/
+/.vscode/
