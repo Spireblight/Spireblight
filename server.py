@@ -1454,12 +1454,12 @@ async def mastered_stuff(ctx: ContextType, *card: str):
     else:
         await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
 
-@with_savefile("currentmastery")
+@with_savefile("candidates")
 async def current_mastery_check(ctx: ContextType, save: Savefile, *arg: str):
     """Tell what cards and relics in the current run can be mastered if won"""
     mastery_type = "".join(arg)
     if mastery_type != "cards" and mastery_type != "relics":
-        await ctx.reply(f"Call !currentmastery with \"cards\" or \"relics\". {mastery_type}")
+        await ctx.reply(f"Call !candidates with \"cards\" or \"relics\". {mastery_type}")
 
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
 
