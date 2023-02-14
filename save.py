@@ -11,7 +11,7 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
-from nameinternal import get, get_card
+from nameinternal import get, get_card, Relic
 from sts_profile import get_current_profile
 from typehints import ContextType
 from gamedata import FileParser, BottleRelic, KeysObtained
@@ -237,6 +237,37 @@ class Savefile(FileParser):
 
     def rare_chance_as_str(self) -> tuple[str, str, str]:
         return tuple(f"{x:.2%}" for x in self.rare_chance)
+
+    @property
+    def _available_rare_relics(self) -> list[str]:
+        floor = self.current_floor
+        ret = []
+        for relic in self._data["rare_relics"]:
+            match relic:
+                case "WingedGreaves":
+                    if floor > 40:
+                        continue
+                case "Old Coin" | "Prayer Wheel":
+                    if floor >= 48:
+                        continue
+                case "Peace Pipe" | "Girya" | "Shovel":
+                    if floor > 48 or ((
+                            "Peace Pipe" in self._data["relics"],
+                            "Shovel" in self._data["relics"],
+                            "Girya" in self._data["relics"],
+                            ).count(True) > 1):
+                        continue
+            ret.append(relic)
+        return ret
+
+    def available_relic(self, relic: Relic) -> bool:
+        """Return True if the relic can be acquired still this run."""
+        if relic.tier in ("Common", "Uncommon", "Shop"):
+            return relic.internal in self._data[f"{relic.tier.lower()}_relics"]
+        if relic.tier != "Rare": # just in case
+            raise ValueError("Relic rarity can only be Common, Uncommon, Rare, or Shop.")
+
+        return relic.internal in self._available_rare_relics
 
     @property
     def upcoming_boss(self) -> str:

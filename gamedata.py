@@ -840,6 +840,11 @@ class FileParser(ABC):
         return list(self._cache["relics"])
 
     @property
+    def relics_bare(self) -> list[Relic]:
+        # could be a generator, but we want easy contain check
+        return [x.relic for x in self.relics]
+
+    @property
     def seed(self) -> str:
         if "seed" not in self._cache:
             c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"

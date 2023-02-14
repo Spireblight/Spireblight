@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from functools import total_ordering
 
 import json
 import os
@@ -42,6 +43,7 @@ def get_card(card: str) -> str:
         case a:
             return f"{inst.name}+{a}"
 
+@total_ordering
 class Base:
     cls_name = ""
     def __init__(self, data: dict[str, str]):
@@ -50,6 +52,19 @@ class Base:
         self.name = data["name"]
         self.description = data["description"]
         self.mod = data.get("mod")
+
+    def __eq__(self, other):
+        # technically, this could be checking against just Base
+        # but we don't want to accidentally compare cards and relics
+        # so it's disallowed here and will throw an error instead
+        if not isinstance(other, type(self)):
+            return NotImplemented
+        return self.name == other.name
+
+    def __lt__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+        return self.name < other.name
 
 class Card(Base):
     cls_name = "card"

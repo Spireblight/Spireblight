@@ -1227,6 +1227,38 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 
     await ctx.reply(f"The relics past page 1 are {', '.join(relics)}")
 
+@with_savefile("seen", "seenrelic", "available")
+async def seen_relic(ctx: ContextType, save: Savefile, relic: str):
+    """Output whether a given relic has been seen."""
+    try:
+        data = get(relic)
+    except ValueError:
+        await ctx.reply(f"Could not find relic {relic!r}.")
+        return
+
+    if data.cls_name != "relic":
+        await ctx.reply("Can only look for relics seen.")
+    elif data in save.relics_bare:
+        await ctx.reply(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
+    elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
+        match data.tier:
+            case "Boss":
+                s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
+            case "Starter":
+                s = "Starter relics can't exactly be seen during a run. What?"
+            case "Special":
+                s = "We can only see Special relics from events."
+            case a:
+                s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
+        await ctx.reply(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
+    elif save.available_relic(data):
+        await ctx.reply(f"We have not seen {data.name} yet! There's a chance we'll see it!")
+    else:
+        s = ""
+        if data.pool:
+            s = " (or maybe it doesn't belong to this character)"
+        await ctx.reply(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
     """Display the boss relics that were taken and skipped."""
