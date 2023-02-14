@@ -1,31 +1,30 @@
 from __future__ import annotations
-from collections import Counter
-from cache.cache_helpers import MasteryStats
 
+from typing import TYPE_CHECKING
+
+from collections import Counter
+
+from cache.cache_helpers import MasteryStats
 from nameinternal import get
 from sts_profile import get_profile
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from runs import RunParser
     from save import Savefile
 
-_mastery_stats: MasteryStats = None
+_mastery_stats = MasteryStats()
 
 __all__ = ["update_mastery_stats", "get_mastered", "get_current_masteries"]
 
 def update_mastery_stats():
-    global _mastery_stats
     try:
         runs = list(get_profile(0).runs) # BaalorA20 profile
-    except:
+    except IndexError:
         runs = []
-    
-    if _mastery_stats is None:
-        _mastery_stats = MasteryStats()
-        if runs:
-            for run in runs:
-                _update_mastery_stats_from_run(run)
+
+    if _mastery_stats.last_run_timestamp is None:
+        for run in runs:
+            _update_mastery_stats_from_run(run)
     else:
         if runs and _mastery_stats.last_run_timestamp != runs[0].timestamp:
             _update_mastery_stats_from_run(runs[0])

@@ -1456,10 +1456,10 @@ async def mastered_stuff(ctx: ContextType, *card: str):
 
 @with_savefile("candidates")
 async def current_mastery_check(ctx: ContextType, save: Savefile, *arg: str):
-    """Tell what cards and relics in the current run can be mastered if won"""
+    """Output what cards and relics in the current run can be mastered if won."""
     mastery_type = "".join(arg)
     if mastery_type != "cards" and mastery_type != "relics":
-        await ctx.reply(f"Call !candidates with \"cards\" or \"relics\". {mastery_type}")
+        await ctx.reply(f'Call {config.baalorbot.prefix}candidates with "cards" or "relics".')
 
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
 
