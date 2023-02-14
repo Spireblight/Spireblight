@@ -997,9 +997,15 @@ class RelicData:
         if stats is None:
             return []
 
+        per_turn = True
+
         if self.relic.name == "White Beast Statue":
             # if this is a savefile, only the last number matters. run files should be unaffected
             stats = [stats[-1]]
+        if self.relic.name == "Snecko Eye":
+            # special handling for this
+            per_turn = False
+            stats[-1] = stats[-1] / sum(stats[:-1])
 
         if isinstance(stats, int):
             desc.append(text[0] + str(stats))
@@ -1025,10 +1031,11 @@ class RelicData:
                     if isinstance(stat, float):
                         stat_str = f"{stat:.2f}"
                     desc.append(next(text_iter) + stat_str)
-                    num = stat / max((last.turns_count - obtained.turns_count), 1)
-                    desc.append(f"Per turn: {num:.2f}")
-                    num = stat / max((last.fights_count - obtained.fights_count), 1)
-                    desc.append(f"Per combat: {num:.2f}")
+                    if per_turn:
+                        num = stat / max((last.turns_count - obtained.turns_count), 1)
+                        desc.append(f"Per turn: {num:.2f}")
+                        num = stat / max((last.fights_count - obtained.fights_count), 1)
+                        desc.append(f"Per combat: {num:.2f}")
         else:
             desc.append(f"Unable to parse stats for {self.name}")
 
