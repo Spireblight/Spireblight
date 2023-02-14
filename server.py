@@ -1232,7 +1232,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
     try:
-        data = get(relic)
+        data = query(relic)
     except ValueError:
         await ctx.reply(f"Could not find relic {relic!r}.")
         return
