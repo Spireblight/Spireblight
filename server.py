@@ -1231,13 +1231,11 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
-    try:
-        data = query(relic)
-    except ValueError:
-        await ctx.reply(f"Could not find relic {relic!r}.")
-        return
+    data = query(relic)
 
-    if data.cls_name != "relic":
+    if not data:
+        await ctx.reply(f"Could not find relic {relic!r}.")
+    elif data.cls_name != "relic":
         await ctx.reply("Can only look for relics seen.")
     elif data in save.relics_bare:
         await ctx.reply(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
