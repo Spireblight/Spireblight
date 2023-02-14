@@ -1228,8 +1228,9 @@ async def relics_page2(ctx: ContextType, save: Savefile):
     await ctx.reply(f"The relics past page 1 are {', '.join(relics)}")
 
 @with_savefile("seen", "seenrelic", "available")
-async def seen_relic(ctx: ContextType, save: Savefile, relic: str):
+async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
+    relic = " ".join(relic)
     try:
         data = get(relic)
     except ValueError:
