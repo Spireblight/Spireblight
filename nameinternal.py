@@ -53,6 +53,9 @@ class Base:
         self.description = data["description"]
         self.mod = data.get("mod")
 
+    def __hash__(self) -> int:
+        return hash(self.internal)
+
     def __eq__(self, other):
         # technically, this could be checking against just Base
         # but we don't want to accidentally compare cards and relics
