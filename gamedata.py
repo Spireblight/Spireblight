@@ -785,7 +785,7 @@ class FileParser(ABC):
 
     def _cards_as_html(self, cards: Iterable[CardData]) -> Generator[str, None, None]:
         text = (
-            '<a class="card"{color} href="https://slay-the-spire.fandom.com/wiki/{card_url}" target="_blank">'
+            '<a class="card"{color} href="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/cards/{card_url}.png" target="_blank">'
             '<svg width="32" height="32">'
             '<image width="32" height="32" xlink:href="{website}/static/card/Back_{card.color}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card/Desc_{card.color}.png"></image>'
@@ -810,11 +810,13 @@ class FileParser(ABC):
             for rarity, all_cards in content[color].items():
                 all_cards.sort(key=lambda x: f"{x.name}{x.upgrades}")
                 for card in all_cards:
+                    name = card.card.name.replace(":", "-").replace("'", "-").replace(" ", "")
                     format_map = {
                         "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
                         "website": config.server.url,
                         "banner": rarity or "Common",
-                        "card_url": urllib.parse.quote(card.card.name),
+                        "mod": urllib.parse.quote(card.card.mod or "Slay the Spire"),
+                        "card_url": f"{card.card.color[:10]}-{name}",
                         "card": card,
                     }
                     final.append(text.format_map(format_map))
