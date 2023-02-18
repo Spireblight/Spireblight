@@ -170,29 +170,28 @@ def get_run_mod(name: str) -> str:
 @add_listener("setup_init")
 async def load():
     _cache.clear()
-    session = ClientSession()
-    for mod in config.spire.enabled_mods:
-        data = None
-        async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/data.json") as resp:
-            if resp.ok:
-                decoded = await resp.text()
-                data = json.loads(decoded)
-        if data is None:
-            raise ValueError(f"Mod {mod} could not be found.")
+    with ClientSession() as session:
+        for mod in config.spire.enabled_mods:
+            data = None
+            async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/data.json") as resp:
+                if resp.ok:
+                    decoded = await resp.text()
+                    data = json.loads(decoded)
+            if data is None:
+                raise ValueError(f"Mod {mod} could not be found.")
 
-        for cat, maps in data.items():
-            if cat in _str_to_cls:
-                for mapping in maps:
-                    inst: Base = _str_to_cls[cat](mapping)
-                    if inst.store_internal:
-                        _internal_cache[inst.internal] = inst
-                    _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")].append(inst)
+            for cat, maps in data.items():
+                if cat in _str_to_cls:
+                    for mapping in maps:
+                        inst: Base = _str_to_cls[cat](mapping)
+                        if inst.store_internal:
+                            _internal_cache[inst.internal] = inst
+                        _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")].append(inst)
 
     with open("score_bonuses.json") as f:
         j = json.load(f)
         for x in j["score_bonuses"]:
             inst = ScoreBonus(x)
-            _internal_cache[inst.internal] = inst
             _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "")].append(inst)
 
     for file in os.listdir("eng"):
