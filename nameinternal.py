@@ -170,7 +170,7 @@ def get_run_mod(name: str) -> str:
 @add_listener("setup_init")
 async def load():
     _cache.clear()
-    with ClientSession() as session:
+    async with ClientSession() as session:
         for mod in config.spire.enabled_mods:
             data = None
             async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/data.json") as resp:
