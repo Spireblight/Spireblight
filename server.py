@@ -35,7 +35,7 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, Base, Card, Relic
+from nameinternal import get, query, Base, Card, Relic, Potion, Keyword, ScoreBonus
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -1055,21 +1055,7 @@ async def card_info(ctx: ContextType, *line: str):
         await ctx.reply(f"Could not find info for {line!r}")
         return
 
-    mod = ""
-    if info.mod:
-        mod = f"(Mod: {info.mod})"
-    match info.cls_name:
-        case "card":
-            card: Card = info
-            if card.pack:
-                mod = f"(The Packmaster: {card.pack})"
-            await ctx.reply(f"{card.name} - [{card.cost}] {card.color} {card.rarity} {card.type}: {card.description} {mod}")
-        case "relic":
-            rel: Relic = info
-            pool = " "
-            if rel.pool:
-                pool = f" ({rel.pool})"
-            await ctx.reply(f"{rel.name} - {rel.tier}{pool}: {rel.description} {mod}")
+    await ctx.reply(info.info)
 
 @with_savefile("cache", flag="m")
 async def save_cache(ctx: ContextType, save: Savefile, arg: str):

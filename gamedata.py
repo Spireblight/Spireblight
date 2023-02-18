@@ -1049,8 +1049,18 @@ class RelicData:
         return desc
 
     @property
+    def mod(self) -> str:
+        if not self.relic.mod:
+            return "Slay the Spire"
+        return self.relic.mod
+
+    @property
     def image(self) -> str:
-        return f"{self.relic.internal.replace(':', '_')}.png"
+        name = self.relic.internal
+        if ":" in name:
+            name = name[name.index(":")+1:]
+        name = name.replace(" ", "")
+        return f"{name}.png"
 
     @property
     def name(self) -> str:

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from collections import defaultdict
 from functools import total_ordering
+from aiohttp import ClientSession
 
 import json
 import os
 
+from configuration import config
 from events import add_listener
 
 __all__ = [
@@ -16,12 +18,11 @@ __all__ = [
 ]
 
 _cache: dict[str, dict[str, str]] = {}
-_full_data: dict[str, dict[str, list[dict[str, str]]]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
 def query(name: str, type: str | None = None):
-    name = name.lower().replace(" ", "").replace("-", "").replace("'", "")
+    name = name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")
     if name in _query_cache:
         return _query_cache[name][0] # FIX THIS
     return None
@@ -48,10 +49,14 @@ class Base:
     cls_name = ""
     def __init__(self, data: dict[str, str]):
         assert self.cls_name, "Cannot instantiate Base"
-        self.internal = data.get("internal", data["name"])
+        self.internal = data.get("id", data["name"])
         self.name = data["name"]
         self.description = data["description"]
         self.mod = data.get("mod")
+
+    @property
+    def info(self) -> str:
+        return f"{self.name}: {self.description}"
 
     def __hash__(self) -> int:
         return hash(self.internal)
@@ -79,6 +84,15 @@ class Card(Base):
         self.cost: str | None = data["cost"] or None
         self.pack: str | None = data.get("pack")
 
+    @property
+    def info(self) -> str:
+        mod = ""
+        if self.pack:
+            mod = f"(Packmaster: {self.pack})"
+        elif self.mod != "Slay the Spire":
+            mod = f"(Mod: {self.mod})"
+        return f"{self.name} - [{self.cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
+
 class Relic(Base):
     cls_name = "relic"
     def __init__(self, data: dict[str, str]):
@@ -87,12 +101,38 @@ class Relic(Base):
         self.tier: str = data["tier"]
         self.flavour_text: str = data["flavorText"]
 
+    @property
+    def info(self) -> str:
+        mod = ""
+        if self.mod != "Slay the Spire":
+            mod = f"(Mod: {self.mod})"
+        pool = " "
+        if self.pool:
+            pool = f" ({self.pool})"
+        return f"{self.name} - {self.tier}{pool}: {self.description} {mod}"
+
 class Potion(Base):
     cls_name = "potion"
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.rarity: str = data["rarity"]
         self.color: str = data.get("color")
+
+    @property
+    def info(self) -> str:
+        mod = ""
+        if self.mod != "Slay the Spire":
+            mod = f"(Mod: {self.mod})"
+        color = ""
+        if self.color:
+            color = f" ({self.color})"
+        return f"{self.name} - {self.rarity}{color}: {self.description} {mod}"
+
+class Keyword(Base):
+    cls_name = "keyword"
+    def __init__(self, data: dict[str, str]):
+        super().__init__(data)
+        self.names: list[str] = data.get("names", [])
 
 class ScoreBonus(Base):
     cls_name = "score_bonus"
@@ -104,6 +144,7 @@ _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,
     "potions": Potion,
+    "keywords": Keyword,
     "score_bonuses": ScoreBonus,
 }
 
@@ -124,15 +165,29 @@ def get_run_mod(name: str) -> str:
 @add_listener("setup_init")
 async def load():
     _cache.clear()
-    _full_data.clear()
-    with open("full_data.json") as f:
-        _full_data.update(json.load(f))
-    for cat, maps in _full_data.items():
-        if cat in _str_to_cls:
-            for mapping in maps:
-                inst: Base = _str_to_cls[cat](mapping)
-                _internal_cache[inst.internal] = inst
-                _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "")].append(inst)
+    session = ClientSession()
+    for mod in config.spire.enabled_mods:
+        data = None
+        async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/data.json") as resp:
+            if resp.ok:
+                decoded = await resp.text()
+                data = json.loads(decoded)
+        if data is None:
+            raise ValueError(f"Mod {mod} could not be found.")
+
+        for cat, maps in data.items():
+            if cat in _str_to_cls:
+                for mapping in maps:
+                    inst: Base = _str_to_cls[cat](mapping)
+                    _internal_cache[inst.internal] = inst
+                    _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")].append(inst)
+
+    with open("score_bonuses.json") as f:
+        j = json.load(f)
+        for x in j["score_bonuses"]:
+            inst = ScoreBonus(x)
+            _internal_cache[inst.internal] = inst
+            _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "")].append(inst)
 
     for file in os.listdir("eng"):
         name = file[:-5]

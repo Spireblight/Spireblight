@@ -196,7 +196,7 @@
             can't just loop  #}
             {% for key, obtained, floor in run.keys.as_list() %}
               <img class="{{ key | lower }} {% if not obtained %} missing{% endif %}"
-                src="/static/relics/{{ key | urlencode }}.png"
+                src="/static/keys/{{ key | urlencode }}.png"
                 onclick="neowText('{{ key }}',
                       {% if obtained %}
                       'Obtained on floor {{ floor }}<br>{{ run.get_floor(floor).escaped_description() }}'
@@ -217,7 +217,7 @@
           <div class="message-body relics">
             {% for relic in run.relics %}
               <div>
-                <img src="/static/relics/{{ relic.image | urlencode }}"
+                <img src="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{{ relic.mod | urlencode }}/relics/{{ relic.image | urlencode }}"
                   alt="{{ relic.description() }}"
                   title="{{ relic.description() }}"
                   onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{relic.escaped_description() }}')" >
