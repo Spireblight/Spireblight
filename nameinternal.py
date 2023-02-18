@@ -54,6 +54,8 @@ class Base:
         self.name = data["name"]
         self.description = data["description"]
         self.mod = data.get("mod")
+        if self.mod == "Slay the Spire":
+            self.mod = None
 
     @property
     def info(self) -> str:
@@ -90,7 +92,7 @@ class Card(Base):
         mod = ""
         if self.pack:
             mod = f"(Packmaster: {self.pack})"
-        elif self.mod != "Slay the Spire":
+        elif self.mod:
             mod = f"(Mod: {self.mod})"
         return f"{self.name} - [{self.cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
 
@@ -105,7 +107,7 @@ class Relic(Base):
     @property
     def info(self) -> str:
         mod = ""
-        if self.mod != "Slay the Spire":
+        if self.mod:
             mod = f"(Mod: {self.mod})"
         pool = " "
         if self.pool:
@@ -122,7 +124,7 @@ class Potion(Base):
     @property
     def info(self) -> str:
         mod = ""
-        if self.mod != "Slay the Spire":
+        if self.mod:
             mod = f"(Mod: {self.mod})"
         color = ""
         if self.color:

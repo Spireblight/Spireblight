@@ -1059,7 +1059,7 @@ class RelicData:
         name = self.relic.internal
         if ":" in name:
             name = name[name.index(":")+1:]
-        name = name.replace(" ", "")
+        name = name.replace(" ", "").replace("'", "")
         return f"{name}.png"
 
     @property
