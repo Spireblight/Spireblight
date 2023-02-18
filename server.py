@@ -1061,6 +1061,8 @@ async def card_info(ctx: ContextType, *line: str):
     match info.cls_name:
         case "card":
             card: Card = info
+            if card.pack:
+                mod = f"(The Packmaster: {card.pack})"
             await ctx.reply(f"{card.name} - [{card.cost}] {card.color} {card.rarity} {card.type}: {card.description} {mod}")
         case "relic":
             rel: Relic = info

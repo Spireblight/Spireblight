@@ -77,8 +77,7 @@ class Card(Base):
         self.rarity: str = data["rarity"]
         self.type: str = data["type"]
         self.cost: str | None = data["cost"] or None
-        self.in_game: str | None = data.get("in_game")
-        self.base: int | None = data.get("base")
+        self.pack: str | None = data.get("pack")
 
 class Relic(Base):
     cls_name = "relic"
