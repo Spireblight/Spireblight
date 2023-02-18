@@ -47,6 +47,7 @@ def get_card(card: str) -> str:
 @total_ordering
 class Base:
     cls_name = ""
+    store_internal = True
     def __init__(self, data: dict[str, str]):
         assert self.cls_name, "Cannot instantiate Base"
         self.internal = data.get("id", data["name"])
@@ -130,12 +131,14 @@ class Potion(Base):
 
 class Keyword(Base):
     cls_name = "keyword"
+    store_internal = False
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.names: list[str] = data.get("names", [])
 
 class ScoreBonus(Base):
     cls_name = "score_bonus"
+    store_internal = False
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.format_string: str = data.get("format_string", self.name)
@@ -179,7 +182,8 @@ async def load():
             if cat in _str_to_cls:
                 for mapping in maps:
                     inst: Base = _str_to_cls[cat](mapping)
-                    _internal_cache[inst.internal] = inst
+                    if inst.store_internal:
+                        _internal_cache[inst.internal] = inst
                     _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")].append(inst)
 
     with open("score_bonuses.json") as f:
