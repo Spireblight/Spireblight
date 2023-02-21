@@ -10,6 +10,9 @@ import os
 from configuration import config
 from events import add_listener
 
+# this is an iterable of 1-length str to remove from queries
+_replace_str = " -'()."
+
 __all__ = [
     "get", "get_card",
     "get_relic_stats",
@@ -21,8 +24,14 @@ _cache: dict[str, dict[str, str]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
+def sanitize(x: str) -> str:
+    x = x.lower()
+    for s in _replace_str:
+        x = x.replace(s, "")
+    return x
+
 def query(name: str, type: str | None = None):
-    name = name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")
+    name = sanitize(name)
     if name in _query_cache:
         return _query_cache[name][0] # FIX THIS
     return None
@@ -64,7 +73,7 @@ class Base:
     def __hash__(self) -> int:
         return hash(self.internal)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         # technically, this could be checking against just Base
         # but we don't want to accidentally compare cards and relics
         # so it's disallowed here and will throw an error instead
@@ -72,7 +81,7 @@ class Base:
             return NotImplemented
         return self.name == other.name
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         if not isinstance(other, type(self)):
             return NotImplemented
         return self.name < other.name
@@ -186,13 +195,14 @@ async def load():
                         inst: Base = _str_to_cls[cat](mapping)
                         if inst.store_internal:
                             _internal_cache[inst.internal] = inst
-                        _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "").replace("(", "").replace(")", "")].append(inst)
+                        _query_cache[sanitize(inst.name)].append(inst)
 
     with open("score_bonuses.json") as f:
         j = json.load(f)
         for x in j["score_bonuses"]:
             inst = ScoreBonus(x)
-            _query_cache[inst.name.lower().replace(" ", "").replace("-", "").replace("'", "")].append(inst)
+            _internal_cache[inst.internal] = inst
+            _query_cache[sanitize(inst.name)].append(inst)
 
     for file in os.listdir("eng"):
         name = file[:-5]
