@@ -14,7 +14,7 @@ from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HT
 from matplotlib import pyplot as plt
 from mpld3 import fig_to_html
 
-from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic
+from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic, Potion
 from sts_profile import Profile
 from logger import logger
 
@@ -728,6 +728,26 @@ class FileParser(ABC):
         return [self.neow_bonus.gold] + self._data[self.prefix + "gold_per_floor"]
 
     @property
+    @abstractmethod
+    def potions_use(self) -> list[list[Potion]]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def potions_alchemize(self) -> list[list[Potion]]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def potions_entropic(self) -> list[list[Potion]]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def potions_discarded(self) -> list[list[Potion]]:
+        raise NotImplementedError
+
+    @property
     def ascension_level(self) -> int:
         return self._data["ascension_level"]
 
@@ -1156,10 +1176,10 @@ class NodeData:
         self._cards = []
         self._relics = []
         self._potions = []
-        self._usedpotions = []
-        self._potions_from_alchemize = []
-        self._potions_from_entropic = []
-        self._discarded = []
+        self._usedpotions = None
+        self._potions_from_alchemize = None
+        self._potions_from_entropic = None
+        self._discarded = None
         self._cache = {}
 
     # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
@@ -1176,39 +1196,19 @@ class NodeData:
         self = cls(*extra)
         self._floor = floor
         try:
-            self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 1]
-            self._curhp = parser._data[prefix + "current_hp_per_floor"][floor - 1]
-            self._gold = parser._data[prefix + "gold_per_floor"][floor - 1]
-            if "potion_use_per_floor" in parser._data: # run file
-                self._usedpotions.extend(get(x).name for x in parser._data["potion_use_per_floor"][floor - 1])
-            elif "PotionUseLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._usedpotions.extend(get(x).name for x in parser._data["basemod:mod_saves"]["PotionUseLog"][floor - 1])
+            self._maxhp = parser.max_hp_counts[floor]
+            self._curhp = parser.current_hp_counts[floor]
+            self._gold = parser.gold_counts[floor]
 
-            if "potions_obtained_alchemize" in parser._data: # run file
-                self._potions_from_alchemize.extend(get(x).name for x in parser._data["potions_obtained_alchemize"][floor - 1])
-            elif "potionsObtainedAlchemizeLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._potions_from_alchemize.extend(get(x).name for x in parser._data["basemod:mod_saves"]["potionsObtainedAlchemizeLog"][floor - 1])
-
-            if "potions_obtained_entropic_brew" in parser._data: # run file
-                self._potions_from_entropic.extend(get(x).name for x in parser._data["potions_obtained_entropic_brew"][floor - 1])
-            elif "potionsObtainedEntropicBrewLog" in parser._data.get("basemod:mod_saves", ()): # savefile
-                self._potions_from_entropic.extend(get(x).name for x in parser._data["basemod:mod_saves"]["potionsObtainedEntropicBrewLog"][floor - 1])
+            self._usedpotions = parser.potions_use[floor]
+            self._potions_from_alchemize = parser.potions_alchemize[floor]
+            self._potions_from_entropic = parser.potions_entropic[floor]
+            self._discarded = parser.potions_discarded[floor]
         except IndexError:
             try:
-                self._maxhp = parser._data[prefix + "max_hp_per_floor"][floor - 2]
-                self._curhp = parser._data[prefix + "current_hp_per_floor"][floor - 2]
-                self._gold = parser._data[prefix + "gold_per_floor"][floor - 2]
-            except IndexError:
-                pass
-
-        if "basemod:mod_saves" in parser._data:
-            try:
-                self._discarded.extend(get(x).name for x in parser._data["basemod:mod_saves"].get("PotionDiscardLog", ())[floor - 1])
-            except IndexError:
-                pass
-        else:
-            try:
-                self._discarded.extend(get(x).name for x in parser._data.get("potion_discard_per_floor", ())[floor - 1])
+                self._maxhp = parser.max_hp_counts[floor - 1]
+                self._curhp = parser.current_hp_counts[floor - 1]
+                self._gold = parser.gold_counts[floor - 1]
             except IndexError:
                 pass
 
@@ -1218,11 +1218,11 @@ class NodeData:
 
         for relic in parser._data[prefix + "relics_obtained"]:
             if relic["floor"] == floor:
-                self._relics.append(get(relic["key"]).name)
+                self._relics.append(get(relic["key"]))
 
         for potion in parser._data[prefix + "potions_obtained"]:
             if potion["floor"] == floor:
-                self._potions.append(get(potion["key"]).name)
+                self._potions.append(get(potion["key"]))
 
         if "basemod:mod_saves" in parser._data:
             skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
@@ -1232,8 +1232,8 @@ class NodeData:
         if skipped:
             for choice in skipped:
                 if choice["floor"] == floor:
-                    self._skipped_relics = [get(x).name for x in choice["relics"]]
-                    self._skipped_potions = [get(x).name for x in choice["potions"]]
+                    self._skipped_relics = [get(x) for x in choice["relics"]]
+                    self._skipped_potions = [get(x) for x in choice["potions"]]
 
         return self
 
@@ -1261,32 +1261,36 @@ class NodeData:
         text.extend(to_append.get(7, ()))
         if self.potions:
             text.append("Potions obtained:")
-            text.extend(f"- {x}" for x in self.potions)
+            text.extend(f"- {x.name}" for x in self.potions)
 
         if self.used_potions:
             text.append("Potions used:")
-            text.extend(f"- {x}" for x in self.used_potions)
+            text.extend(f"- {x.name}" for x in self.used_potions)
 
         if self.potions_from_alchemize:
             text.append("Potions obtained from Alchemize:")
-            text.extend(f"- {x}" for x in self.potions_from_alchemize)
+            text.extend(f"- {x.name}" for x in self.potions_from_alchemize)
 
         if self.potions_from_entropic:
             text.append("Potions obtained from Entropic Brew:")
-            text.extend(f"- {x}" for x in self.potions_from_entropic)
+            text.extend(f"- {x.name}" for x in self.potions_from_entropic)
+
+        if self.discarded_potions:
+            text.append("Potions discarded:")
+            text.extend(f"- {x.name}" for x in self.discarded_potions)
 
         if self.skipped_potions:
             text.append("Potions skipped:")
-            text.extend(f"- {x}" for x in self.skipped_potions)
+            text.extend(f"- {x.name}" for x in self.skipped_potions)
 
         text.extend(to_append.get(4, ()))
         if self.relics:
             text.append("Relics obtained:")
-            text.extend(f"- {x}" for x in self.relics)
+            text.extend(f"- {x.name}" for x in self.relics)
 
         if self.skipped_relics:
             text.append("Relics skipped:")
-            text.extend(f"- {x}" for x in self.skipped_relics)
+            text.extend(f"- {x.name}" for x in self.skipped_relics)
 
         text.extend(to_append.get(5, ()))
         if self.picked:
@@ -1345,40 +1349,48 @@ class NodeData:
         return ret
 
     @property
-    def relics(self) -> list[str]:
+    def relics(self) -> list[Relic]:
         return self._relics
 
     @property
-    def skipped_relics(self) -> list[str]:
+    def skipped_relics(self) -> list[Relic]:
         if self._skipped_relics is None:
             return []
         return self._skipped_relics
 
     @property
-    def potions(self) -> list[str]:
+    def potions(self) -> list[Potion]:
         return self._potions
 
     @property
-    def used_potions(self) -> list[str]:
+    def used_potions(self) -> list[Potion]:
+        if self._usedpotions is None:
+            return []
         return self._usedpotions
 
     @property
-    def potions_from_alchemize(self) -> list[str]:
+    def potions_from_alchemize(self) -> list[Potion]:
+        if self._potions_from_alchemize is None:
+            return []
         return self._potions_from_alchemize
 
     @property
-    def potions_from_entropic(self) -> list[str]:
+    def potions_from_entropic(self) -> list[Potion]:
+        if self._potions_from_entropic is None:
+            return []
         return self._potions_from_entropic
 
     @property
-    def skipped_potions(self) -> list[str]:
+    def discarded_potions(self) -> list[Potion]:
+        if self._discarded is None:
+            return []
+        return self._discarded
+
+    @property
+    def skipped_potions(self) -> list[Potion]:
         if self._skipped_potions is None:
             return []
         return self._skipped_potions
-
-    @property
-    def discarded_potions(self) -> list[str]:
-        return self._discarded
 
     @property
     def floor_time(self) -> int:
@@ -1788,6 +1800,9 @@ class Event(NodeData):
     @property
     def relics(self) -> list[str]:
         return super().relics + self.relics_obtained
+
+    def relic_delta(self) -> int:
+        return super().relic_delta() - len(self.relics_lost)
 
 class EventFight(Event, EncounterBase):
     """This is a subclass for fights that happen in events.

@@ -149,7 +149,6 @@ class Keyword(Base):
 
 class ScoreBonus(Base):
     cls_name = "score_bonus"
-    store_internal = False
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.format_string: str = data.get("format_string", self.name)
