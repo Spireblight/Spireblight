@@ -2049,7 +2049,7 @@ class BossChest(NodeData):
     def __init__(self, picked: str | None, skipped: list[str], *extra):
         super().__init__(*extra)
         if picked is not None:
-            self._relics.append(picked)
+            self._relics.append(get(picked))
         self._skipped = skipped
 
     @classmethod
