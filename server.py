@@ -6,6 +6,7 @@ from typing import Generator, Callable
 
 from collections import defaultdict
 
+import urllib.parse
 import traceback
 import datetime
 import asyncio
@@ -1049,13 +1050,33 @@ async def giveaway_enter(ctx: ContextType):
 
 @command("info", "cardinfo", "relicinfo")
 async def card_info(ctx: ContextType, *line: str):
-    line = "".join(line)
+    line = " ".join(line)
     info: Base = query(line)
     if info is None:
         await ctx.reply(f"Could not find info for {line!r}")
         return
 
     await ctx.reply(info.info)
+
+@command("card", "cardart")
+async def card_with_art(ctx: ContextType, *line: str):
+    line = " ".join(line)
+    info: Base = query(line)
+    if info is None:
+        await ctx.reply(f"Could not find card {line!r}")
+        return
+    if info.cls_name != "card":
+        await ctx.reply(f"Can only find art for cards. Use {config.baalorbot.prefix}info instead.")
+        return
+
+    info: Card
+
+    base = "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/"
+    mod = urllib.parse.quote(info.mod or "Slay the Spire")
+    name = info.name.replace(":", "-").replace("'", "").replace(" ", "")
+    link = f"{mod}/cards/{info.color[:10]}-{name}.png"
+
+    await ctx.reply(f"You can view this card and the upgrade with the art here: {base}{link}")
 
 @with_savefile("cache", flag="m")
 async def save_cache(ctx: ContextType, save: Savefile, arg: str):

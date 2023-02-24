@@ -33,7 +33,10 @@ def sanitize(x: str) -> str:
 def query(name: str, type: str | None = None):
     name = sanitize(name)
     if name in _query_cache:
-        return _query_cache[name][0] # FIX THIS
+        ret = _query_cache[name].pop(0)
+        # this makes sure to cycle through cards if there are multiple
+        _query_cache[name].append(ret)
+        return ret
     return None
 
 def get(name: str) -> Base:

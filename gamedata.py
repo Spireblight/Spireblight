@@ -830,7 +830,7 @@ class FileParser(ABC):
             for rarity, all_cards in content[color].items():
                 all_cards.sort(key=lambda x: f"{x.name}{x.upgrades}")
                 for card in all_cards:
-                    name = card.card.name.replace(":", "-").replace("'", "-").replace(" ", "")
+                    name = card.card.name.replace(":", "-").replace("'", "").replace(" ", "")
                     format_map = {
                         "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
                         "website": config.server.url,
