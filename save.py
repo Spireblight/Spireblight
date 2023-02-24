@@ -227,7 +227,7 @@ class Savefile(FileParser):
         return self._potion_handling("potionsObtainedAlchemizeLog")
 
     @property
-    def potions_alchemize(self) -> list[list[Potion]]:
+    def potions_entropic(self) -> list[list[Potion]]:
         return self._potion_handling("potionsObtainedEntropicBrewLog")
 
     @property
