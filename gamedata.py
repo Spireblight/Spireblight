@@ -999,7 +999,7 @@ class RelicData:
             obtained: NodeData = self.parser.neow_bonus
             node = None
             for node in self.parser.path:
-                if self.name in node.relics:
+                if self.relic in node.relics:
                     obtained = node
             desc.append(f"Obtained on floor {obtained.floor}")
             if node is not None:
@@ -1771,34 +1771,34 @@ class Event(NodeData):
     def cards_obtained(self) -> list[str]:
         if "cards_obtained" not in self._event:
             return []
-        return [get(x).name for x in self._event["cards_obtained"]]
+        return [get_card(x) for x in self._event["cards_obtained"]]
 
     @property
     def cards_removed(self) -> list[str]:
         if "cards_removed" not in self._event:
             return []
-        return [get(x).name for x in self._event["cards_removed"]]
+        return [get_card(x) for x in self._event["cards_removed"]]
 
     @property
     def cards_upgraded(self) -> list[str]:
         if "cards_upgraded" not in self._event:
             return []
-        return [get(x).name for x in self._event["cards_upgraded"]]
+        return [get_card(x) for x in self._event["cards_upgraded"]]
 
     @property
-    def relics_obtained(self) -> list[str]:
+    def relics_obtained(self) -> list[Relic]:
         if "relics_obtained" not in self._event:
             return []
-        return [get(x).name for x in self._event["relics_obtained"]]
+        return [get(x) for x in self._event["relics_obtained"]]
 
     @property
-    def relics_lost(self) -> list[str]:
+    def relics_lost(self) -> list[Relic]:
         if "relics_lost" not in self._event:
             return []
-        return [get(x).name for x in self._event["relics_lost"]]
+        return [get(x) for x in self._event["relics_lost"]]
 
     @property
-    def relics(self) -> list[str]:
+    def relics(self) -> list[Relic]:
         return super().relics + self.relics_obtained
 
     def relic_delta(self) -> int:
