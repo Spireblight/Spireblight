@@ -1881,13 +1881,13 @@ class Merchant(NodeData):
             to_append[6].append("Skipped:")
             if self.contents["relics"]:
                 to_append[6].append("* Relics")
-                to_append[6].extend(f"  - {x}" for x in self.contents["relics"])
+                to_append[6].extend(f"  - {x.name}" for x in self.contents["relics"])
             if self.contents["cards"]:
                 to_append[6].append("* Cards")
                 to_append[6].extend(f"  - {x}" for x in self.contents["cards"])
             if self.contents["potions"]:
                 to_append[6].append("* Potions")
-                to_append[6].extend(f"  - {x}" for x in self.contents["potions"])
+                to_append[6].extend(f"  - {x.name}" for x in self.contents["potions"])
         return super()._description(to_append)
 
     @classmethod
@@ -1904,9 +1904,9 @@ class Merchant(NodeData):
                     case "card":
                         bought["cards"].append(get_card(value))
                     case "relic":
-                        bought["relics"].append(item.name)
+                        bought["relics"].append(item)
                     case "potion":
-                        bought["potions"].append(item.name)
+                        bought["potions"].append(item)
 
         try:
             index = parser._data[parser.prefix + "items_purged_floors"].index(floor)
@@ -1925,11 +1925,11 @@ class Merchant(NodeData):
         for data in d:
             if data["floor"] == floor:
                 for relic in data["relics"]:
-                    contents["relics"].append(get(relic).name)
+                    contents["relics"].append(get(relic))
                 for card in data["cards"]:
                     contents["cards"].append(get_card(card))
                 for potion in data["potions"]:
-                    contents["potions"].append(get(potion).name)
+                    contents["potions"].append(get(potion))
 
         return super().from_parser(parser, floor, bought, purged, contents, *extra)
 
@@ -1938,15 +1938,15 @@ class Merchant(NodeData):
         return super().picked + self.bought["cards"]
 
     @property
-    def relics(self) -> list[str]:
+    def relics(self) -> list[Relic]:
         return super().relics + self.bought["relics"]
 
     @property
-    def potions(self) -> list[str]:
+    def potions(self) -> list[Potion]:
         return super().potions + self.bought["potions"]
 
     @property
-    def bought(self) -> dict[str, list[str]]:
+    def bought(self) -> dict[str, list[str | Relic | Potion]]:
         return self._bought
 
     @property
@@ -1954,7 +1954,7 @@ class Merchant(NodeData):
         return self._purged
 
     @property
-    def contents(self) -> dict[str, list[str]] | None:
+    def contents(self) -> dict[str, list[str | Relic | Potion]] | None:
         return self._contents
 
     def card_delta(self) -> int:
