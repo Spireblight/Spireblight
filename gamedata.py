@@ -2050,7 +2050,7 @@ class BossChest(NodeData):
         super().__init__(*extra)
         if picked is not None:
             self._relics.append(get(picked))
-        self._skipped = skipped
+        self._skipped = [get(x) for x in skipped]
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -2064,7 +2064,7 @@ class BossChest(NodeData):
         return super().from_parser(parser, floor, picked, skipped, *extra)
 
     @property
-    def skipped_relics(self) -> list[str]:
+    def skipped_relics(self) -> list[Relic]:
         return self._skipped
 
 class Act4Transition(NodeData):
