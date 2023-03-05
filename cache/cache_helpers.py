@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+from collections import Counter
 
 from typing import TYPE_CHECKING
 
@@ -23,7 +24,7 @@ class Statistic:
 
     @property
     def is_loaded(self) -> bool:
-        return self.all_character_count is not None and self.ironclad_count is not None and self.silent_count is not None and self.defect_count is not None and self.watcher_count is not None 
+        return self.all_character_count is not None and self.ironclad_count is not None and self.silent_count is not None and self.defect_count is not None and self.watcher_count is not None
 
 class RunStats:
     def __init__(self):
@@ -32,7 +33,7 @@ class RunStats:
         self.all_losses = Statistic(set_default=True)
         self.year_wins: dict[int, Statistic] = {
             self.current_year: Statistic(set_default=True)
-        } 
+        }
         self.year_losses: dict[int, Statistic] = {
             self.current_year: Statistic(set_default=True)
         }
@@ -47,7 +48,7 @@ class RunStats:
 
         self._increment_stat(self.all_wins, char)
         self._increment_stat(self.year_wins[date.year], char)
-        
+
     def add_loss(self, char: str, run_date: datetime):
         date = run_date.date()
         if not date.year in self.year_losses:
@@ -115,3 +116,39 @@ class MasteryStats:
         self.mastered_relics: dict[str, RunParser] = {}
         self.colors: dict[str, str] = {}
         self.last_run_timestamp: datetime.datetime = None
+        self.by_color: dict[str, dict[str, int]] = {}
+
+    def group_mastery_by_color(self):
+        counts = Counter(self.colors.values())
+        self.by_color = {
+            "ironclad": {
+                "total": 75,
+                "mastered": counts["Red"],
+            },
+            "silent": {
+                "total": 76,
+                "mastered": counts["Green"],
+            },
+            "defect": {
+                "total": 76,
+                "mastered": counts["Blue"],
+            },
+            "watcher": {
+                "total": 76,
+                "mastered": counts["Purple"],
+            },
+            "colorless": {
+                "total": 39,
+                # created during combat, like Beta, Expunger, Shiv,
+                # et.c.  Pls doubly check.
+                "mastered": counts["Colorless"],
+            },
+            "curse": {
+                "total": 13,
+                "mastered": counts["Curse"],
+            },
+            "relics": {
+                "total": 178,  # Circlet not included
+                "mastered": len(self.mastered_relics),
+            },
+        }

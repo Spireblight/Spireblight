@@ -1,0 +1,89 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  The Mastery Challenge
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <h1 class="title has-text-centered">
+      The Mastery Challenge
+    </h1>
+
+    <div class="container">
+      <progress class="progress box is-primary"
+        value="{{ amount }}"
+        max="{{ total }}"></progress>
+    </div>
+
+    <h1 class="subtitle has-text-centered m-4">
+      {{ (amount / total * 100) | round(1, 'floor') }}% mastery achieved
+    </h1>
+  </section>
+
+  <section class="section">
+    <div class="columns is-variable is-centered">
+      <div class="column is-variable is-centered is-4">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">What's this? 👀</div>
+            <div class="message-body">
+              My 2023 challenge: Master all the cards! <br/> <br/>
+
+              A card is mastered when we beat the Heart on A20 with two copies
+              of said card.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container columns summary is-flex-wrap-wrap
+                is-justify-content-space-around mastery-summary">
+      {% for character, data in characters.items() %}
+        <div class="column character {{character}} box mastery is-two-fifths">
+          <div class="character-content p-2">
+            <div class="data">
+              <span>{{ data.mastered }}</span>
+              of
+              <span>{{ data.total }}</span>
+              {{ character | title }} cards mastered
+            </div>
+            <div class="progress-bar">
+              <progress class="progress box"
+                value="{{ data.mastered }}"
+                max="{{ data.total }}"></progress>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container columns summary is-flex-wrap-wrap
+                is-justify-content-space-around mastery-summary">
+      {% for category, data in categories.items() %}
+        <div class="column character {{category}} box mastery is-one-quarter">
+          <div class="character-content p-2">
+            <div class="data smaller">
+              <span>{{ data.mastered }}</span>
+              of
+              <span>{{ data.total }}</span>
+              {{ category }} {% if category != "relics" %}cards{% endif %} mastered
+            </div>
+            <div class="progress-bar">
+              <progress class="progress box"
+                value="{{ data.mastered }}"
+                max="{{ data.total }}"></progress>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+{% endblock %}

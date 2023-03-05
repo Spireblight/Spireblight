@@ -327,13 +327,13 @@ section.section {
   }
 }
 
-.relics {
+#top-section .relics {
   display: flex;
   flex-flow: wrap;
   align-content: flex-start;
   min-height: 250px;
 }
-.relics div {
+#top-section .relics div {
   width: 45px;
   height: 45px;
   aspect-ratio: 1/1;
@@ -449,13 +449,15 @@ nav.breadcrumb {
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .summary .character.ironclad:after {background-image: url(/static/characters/ironcladPortrait.jpg);}
 .summary .character.silent:after   {background-image: url(/static/characters/silentPortrait.jpg);}
 .summary .character.defect:after   {background-image: url(/static/characters/defectPortrait.jpg);}
 .summary .character.watcher:after  {background-image: url(/static/characters/watcherPortrait.jpg);}
+.summary .character.colorless:after  {background-image: url(/static/characters/apotheosis.png);}
+.summary .character.curse:after  {background-image: url(/static/characters/necronomicurse.png);}
 
 .summary .character.watcher {
   /* No idea why Bulma is like this, but without this the last element is not*/
@@ -463,7 +465,7 @@ nav.breadcrumb {
   margin-bottom: 1.5rem;
 }
 
-.summary .character .character-content {
+.character .character-content {
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -522,4 +524,50 @@ nav.breadcrumb {
 
 .ahead-behind img {
   height: 1.5em;
+}
+
+/* Mastery page */
+progress {
+  background-color: #333339;
+  flex-direction: column;
+}
+
+.mastery {
+  display: flex !important;
+  height: 6em;
+}
+.mastery .icon {
+  width: 50px;
+}
+.mastery .progress-bar {
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+}
+.mastery .progress-bar progress {
+  background-color: #404049;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+  /* opacity: 0.8; */
+}
+.mastery .data {
+  font-weight: bold;
+  flex-grow: 1;
+  height: 4em;
+  /* min-width: 7em; */
+  /* padding: 1em 0.5em; */
+  font-size: 1.25em;
+}
+.mastery .data span {
+  font-size: 1.5em;
+}
+.mastery .data.smaller {
+  font-size: 0.75em;
+}
+.mastery-summary .character {
+  position: relative;
+}
+.mastery-summary .character-content {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }

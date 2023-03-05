@@ -5,6 +5,7 @@ import json
 import os
 
 from aiohttp import web, ClientSession
+from collections import namedtuple
 
 import aiohttp_jinja2
 import jinja2
@@ -35,6 +36,11 @@ _query_params = {
 }
 
 _start_time = datetime.datetime.utcnow()
+
+Mastery = namedtuple(
+    "MasterySummary",
+    ["key", "label", "amount", "total"],
+)
 
 def uptime() -> str:
     delta = (datetime.datetime.utcnow() - _start_time)
@@ -115,6 +121,28 @@ async def challenge(req: web.Request):
         },
         "stream_days_left": stream_days_left,
     }
+
+@router.get("/mastery")
+@aiohttp_jinja2.template("mastery.jinja2")
+async def mastery(req: web.Request):
+    # TODO(olivia): Faely, I'm sorry for function local imports. You can
+    # probably make better sense of it than I can.
+    from cache.mastered import get_mastered
+
+    mastered = get_mastered()
+    by_color = mastered.by_color
+    import pprint
+    # pprint.pprint(mastered.mastered_relics)
+
+    ret = {
+        "amount": sum(x['mastered'] for x in by_color.values()),
+        "total": sum(x['total'] for x in by_color.values()),
+        "characters": {k: v for k, v in by_color.items() if k in ('ironclad', 'silent', 'defect', 'watcher')},
+        "categories": {k: v for k, v in by_color.items() if k in ('colorless', 'curse', 'relics')},
+    }
+    pprint.pprint(ret)
+    return ret
+
 
 @router.get("/discord")
 @aiohttp_jinja2.template("socials/discord.jinja2")

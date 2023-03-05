@@ -29,6 +29,10 @@ def update_mastery_stats():
         if runs and _mastery_stats.last_run_timestamp != runs[0].timestamp:
             _update_mastery_stats_from_run(runs[0])
 
+    # Also perform the calculations that groups the cards by color and
+    # character so we don't need to do that over and over.
+    _mastery_stats.group_mastery_by_color()
+
 def _update_mastery_stats_from_run(run: RunParser):
     if run.timestamp.year < 2023:
         return
@@ -62,7 +66,7 @@ def get_current_masteries(save: Savefile):
             if count == 1:
                 one_ofs.append(card)
             cards_can_master.append(card)
-    
+
     relics_can_master: list[str] = []
     for relic in save.relics:
         if relic.name not in _mastery_stats.mastered_relics:
