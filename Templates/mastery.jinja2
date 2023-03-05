@@ -42,19 +42,19 @@
   <section class="section">
     <div class="container columns summary is-flex-wrap-wrap
                 is-justify-content-space-around mastery-summary">
-      {% for character, data in characters.items() %}
-        <div class="column character {{character}} box mastery is-two-fifths">
+      {% for mastery in characters %}
+        <div class="column character {{ mastery.character }} box mastery is-two-fifths">
           <div class="character-content p-2">
             <div class="data">
-              <span>{{ data.mastered }}</span>
+              <span>{{ mastery.mastered_counts }}</span>
               of
-              <span>{{ data.total }}</span>
-              {{ character | title }} cards mastered
+              <span>{{ mastery.total_count }}</span>
+              {{ mastery.character | title }} cards mastered
             </div>
             <div class="progress-bar">
               <progress class="progress box"
-                value="{{ data.mastered }}"
-                max="{{ data.total }}"></progress>
+                value="{{ mastery.mastered_count }}"
+                max="{{ mastery.total_count }}"></progress>
             </div>
           </div>
         </div>
@@ -65,19 +65,19 @@
   <section class="section">
     <div class="container columns summary is-flex-wrap-wrap
                 is-justify-content-space-around mastery-summary">
-      {% for category, data in categories.items() %}
-        <div class="column character {{category}} box mastery is-one-quarter">
+      {% for category in categories.items() %}
+        <div class="column character {{ category.character }} box mastery is-one-quarter">
           <div class="character-content p-2">
             <div class="data smaller">
-              <span>{{ data.mastered }}</span>
+              <span>{{ category.mastered_count }}</span>
               of
-              <span>{{ data.total }}</span>
-              {{ category }} {% if category != "relics" %}cards{% endif %} mastered
+              <span>{{ category.total_count }}</span>
+              {{ category.character }} {% if category.character != "Relics" %}cards{% endif %} mastered
             </div>
             <div class="progress-bar">
               <progress class="progress box"
-                value="{{ data.mastered }}"
-                max="{{ data.total }}"></progress>
+                value="{{ category.mastered_count }}"
+                max="{{ category.total_count }}"></progress>
             </div>
           </div>
         </div>

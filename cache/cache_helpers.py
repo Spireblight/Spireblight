@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import datetime
-from collections import Counter
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from nameinternal import Card, Relic
     from runs import RunParser
 
 class Statistic:
@@ -112,43 +112,20 @@ class RunLinkedListNode:
 
 class MasteryStats:
     def __init__(self) -> None:
-        self.mastered_cards: dict[str, RunParser] = {}
-        self.mastered_relics: dict[str, RunParser] = {}
-        self.colors: dict[str, str] = {}
+        self.mastered_cards: dict[Card, RunParser] = {}
+        self.mastered_relics: dict[Relic, RunParser] = {}
         self.last_run_timestamp: datetime.datetime = None
-        self.by_color: dict[str, dict[str, int]] = {}
 
-    def group_mastery_by_color(self):
-        counts = Counter(self.colors.values())
-        self.by_color = {
-            "ironclad": {
-                "total": 75,
-                "mastered": counts["Red"],
-            },
-            "silent": {
-                "total": 76,
-                "mastered": counts["Green"],
-            },
-            "defect": {
-                "total": 76,
-                "mastered": counts["Blue"],
-            },
-            "watcher": {
-                "total": 76,
-                "mastered": counts["Purple"],
-            },
-            "colorless": {
-                "total": 39,
-                # created during combat, like Beta, Expunger, Shiv,
-                # et.c.  Pls doubly check.
-                "mastered": counts["Colorless"],
-            },
-            "curse": {
-                "total": 13,
-                "mastered": counts["Curse"],
-            },
-            "relics": {
-                "total": 178,  # Circlet not included
-                "mastered": len(self.mastered_relics),
-            },
-        }
+class MasteryCounts:
+    def __init__(self, character: str, mastered: list[Card | Relic], unmastered: list[Card | Relic]) -> None:
+        self.character = character
+        self.mastered = mastered
+        self.unmastered = unmastered
+
+    @property
+    def mastered_count(self):
+        return len(self.mastered)
+
+    @property
+    def total_count(self):
+        return self.mastered_count + len(self.unmastered)

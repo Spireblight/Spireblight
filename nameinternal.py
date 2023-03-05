@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Generator
+
 from collections import defaultdict
 from functools import total_ordering
 from aiohttp import ClientSession
@@ -15,6 +17,7 @@ _replace_str = " -'()."
 
 __all__ = [
     "get", "get_card",
+    "get_color", "get_relics",
     "get_relic_stats",
     "get_event",
     "query", "get_run_mod",
@@ -55,6 +58,19 @@ def get_card(card: str) -> str:
             return f"{inst.name}+"
         case a:
             return f"{inst.name}+{a}"
+
+def get_color(x: str) -> Generator[Card]:
+    for base in _internal_cache.values():
+        if base.cls_name == "card":
+            card: Card = base
+            if card.color == x:
+                yield card
+
+def get_relics(mod: str = "Slay the Spire") -> Generator[Relic]:
+    for base in _internal_cache.values():
+        if base.cls_name == "relic":
+            if base.mod == mod:
+                yield base
 
 @total_ordering
 class Base:
