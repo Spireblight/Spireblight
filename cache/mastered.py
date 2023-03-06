@@ -61,7 +61,8 @@ def get_mastery_counts(*, force: bool = False, _cached: dict = {}) -> list[Maste
         if k == "last":
             continue
 
-        ret.append(v)
+        counts = MasteryCounts(k, v["mastered"], v["unmastered"])
+        ret.append(counts)
 
     _cached["last"] = _mastery_stats.last_run_timestamp
     return ret
