@@ -10,7 +10,11 @@ async def main():
     print("Client running. Will periodically check for the savefile and send it over!")
     has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
+    last_slots = 0
     lasp = [0, 0, 0]
+    last_sd = 0
+    use_sd = False
+    user = None
     try:
         with open("last_run") as f:
             last_run = f.read().strip()
@@ -23,6 +27,12 @@ async def main():
         print("Config is not complete")
         time.sleep(3)
         return
+    try:
+        use_sd = config.slice.enabled
+        user = os.environ["USERPROFILE"]
+    except (AttributeError, KeyError):
+        use_sd = False
+
     async with ClientSession(config.server.url) as session:
         while True:
             time.sleep(timeout)
@@ -43,6 +53,16 @@ async def main():
                     cur = os.path.getmtime(os.path.join(config.spire.steamdir, "saves", possible))
                 except OSError:
                     possible = None
+
+            if use_sd:
+                cur = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
+                if cur != last_sd:
+                    with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
+                        sd_data = f.read()
+                    sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
+                    async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
+                        if resp.ok:
+                            last_sd = cur
 
             to_send = []
             files = []
@@ -109,27 +129,32 @@ async def main():
                         "1": b"",
                         "2": b"",
                     }
-                    # always send the save slots; it's likely it changed
+
+                # always send the save slots; it's possible it changed, even during a run (e.g. wall card)
+                cur_slots = os.path.getmtime(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots"))
+                if cur_slots != last_slots:
                     with open(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots")) as f:
                         data["slots"] = f.read().encode("utf-8", "xmlcharrefreplace")
-                    tobe_lasp = [0, 0, 0]
-                    for i in range(3):
-                        name = "STSPlayer"
-                        if i:
-                            name = f"{i}_{name}"
-                        try:
-                            fname = os.path.join(config.spire.steamdir, "preferences", name)
-                            tobe_lasp[i] = m = os.path.getmtime(fname)
-                            if m == lasp[i]:
-                                continue # unchanged, don't bother
-                            with open(fname) as f:
-                                data[str(i)] = f.read().encode("utf-8", "xmlcharrefreplace")
-                        except OSError:
-                            continue
+                tobe_lasp = [0, 0, 0]
+                for i in range(3):
+                    name = "STSPlayer"
+                    if i:
+                        name = f"{i}_{name}"
+                    try:
+                        fname = os.path.join(config.spire.steamdir, "preferences", name)
+                        tobe_lasp[i] = m = os.path.getmtime(fname)
+                        if m == lasp[i]:
+                            continue # unchanged, don't bother
+                        with open(fname) as f:
+                            data[str(i)] = f.read().encode("utf-8", "xmlcharrefreplace")
+                    except OSError:
+                        continue
 
+                if data:
                     async with session.post("/sync/profile", data=data, params={"key": config.server.secret, "start": start}) as resp:
                         if resp.ok:
                             lasp = tobe_lasp
+                            last_slots = cur_slots
                         else:
                             print("Warning: Profiles were not successfully updated. Desyncs may occur.")
 

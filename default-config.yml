@@ -106,6 +106,10 @@ spire:
   # These are all the enabled mods (used for !info and run history pages)
   enabled_mods: ["Slay the Spire", "Downfall", "The Packmaster"]
 
+slice:
+  # Whether we deal with Slice & Dice data
+  enabled: false
+
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/

@@ -1,0 +1,423 @@
+Mortal	1	All heroes: Shields, health and pips limited to 15
+Monster HP	1	All monsters: +1 hp for each 7 base hp
+Sandstorm	1	At the end of every third turn, 1 damage to all heroes
+Heavy Dice	1	Cannot roll more than 3 dice at a time
+Armour	1	At the start of the second turn, shield 1 to all enemies
+Start damaged	1	All heroes: 1 of every 5 max hp starts empty
+Small Bonus	1	All tiny enemies: +1 to the middle column
+Tower	1	All huge enemies: +3 max hp
+Fear	1	All big enemies: +2 max hp
+Swarm	1	All tiny enemies: +1 max hp
+Mana Debt	1	The second spell you cast each fight costs +1 mana
+Revive 3 hp	1	Defeated heroes return on 3 hp next fight
+Slow spells	1	Maximum of 3 spells cast per turn
+Bottom poison	1	Bottom hero: Start poisoned
+A	1	All monsters: +1 max hp for each 'a' in their name
+Boss Bones	1	During boss levels : Add a bones to each fight
+Cooldown Burst	1	Add cooldown to burst
+Skulk	1	During the third turn, +1 to enemy sides
+Arthritis	1	Tier 3 heroes get -1 max hp
+-2 Max Mana	1	-2 max stored mana
+Death Shield	1	All monsters: Upon death: shield 1 to all allies
+Fourth single-use	1	The fourth dice you use each turn gains single-use
+Worse Items	1	-1 item quality
+Right Blank	1	All heroes: Replace the rightmost side with 'blank'
+Shield Response	1	All monsters: After taking damage for the first time each turn, self-shield 1
+Frail middle	1	Middle hero: If you have gained no shields this turn, x2 to incoming damage
+Horde	1	+20% space for enemies (before becoming reinforcements)
+Nostalgia	1	Goblin: +1 to all sides for each defeated ally
+Archery Training	1	Archers & Snipers: +2 to all sides
+XYZ	1	All monsters: +2 max hp for each 'x', 'y' & 'z' in their name
+Spiky	1	All hero-sized enemies: Spiky 1
+Boss Armour	1	During boss levels: At the start of the first turn, shield 2 to all enemies
+Selfless Heroes	1	All heroes: Add selfless to all sides
+Doom	1	At the end of the eighth turn, 8 damage to all heroes
+Monster Left +1	1	All monsters: +1 to the left side
+Add Slimelet (11-20)	1	During levels 11-20: add a slimelet to each fight
+Add Illusion (11-20)	1	During levels 11-20: add an illusion to each fight
+Add Archer (11-20)	1	During levels 11-20: add an archer to each fight
+Add Spider (11-20)	1	During levels 11-20: add a spider to each fight
+Add Rat (11-20)	1	During levels 11-20: add a rat to each fight
+i-Affliction	1	"Gain the 'Affliction' item 
+(Must be equipped; Add pain to the two left sides)"
+i-Weariness	1	"Gain the 'Weariness' item 
+(Must be equipped; Add single-use to the middle row)"
+i-Broken Heart	1	"Gain the 'Broken Heart' item 
+(Must be equipped; Immune to healing)"
+i-D4	1	"Gain the 'D4' item 
+(Must be equipped; Replace the right side with '1 self damage cantrip')"
+i-Coiled Snake	1	"Gain the 'Coiled Snake' item 
+(Must be equipped; Start poisoned)"
+i-Martyr	1	"Gain the 'Martyr' item 
+(Must be equipped; Add death & +1 to the two left sides)"
+i-Handcuffs	1	"Gain the 'Handcuffs' item 
+(Must be equipped; -1 item slot)"
+i-Lead Weight	1	"Gain the 'Lead Weight' item 
+(Must be equipped; Replace the top and bottom sides with 'blank')"
+i-Mould	1	"Gain the 'Mould' item 
+(Must be equipped; Add decay to all sides)"
+Mortal+	2	All heroes: Shields, health and pips limited to 12
+Monster HP+	2	All monsters: +1 hp for each 6 base hp
+Sandstorm+	2	At the end of every second turn, 1 damage to all heroes
+Slippery Dice	2	Cannot lock more than 2 dice at a time
+Armour+	2	At the start of the first turn, shield 1 to all enemies
+Start damaged+	2	All heroes: 1 of every 4 max hp starts empty
+Small Bonus+	2	All tiny enemies: +1 to all sides
+Tower+	2	All huge enemies: +6 max hp
+Fear+	2	All big enemies: +4 max hp
+Swarm+	2	All tiny enemies: +2 max hp
+Mana Debt+	2	The first spell you cast each fight costs +1 mana
+Revive 2 hp	2	Defeated heroes return on 2 hp next fight
+Slow spells+	2	Maximum of 2 spells cast per turn
+Bottom poison+	2	Bottom hero: Start poisoned for 2
+AE	2	All monsters: +1 max hp for each 'a' & 'e' in their name
+Non-Boss Bones	2	During non-boss levels : Add a bones to each fight
+Single Burst	2	Add single-cast to burst
+Skulk+	2	During the second turn, +1 to enemy sides
+Osteoporosis 	2	Tier 3 heroes get -2 max hp
+-3 Max Mana	2	-3 max stored mana
+Second single-use	2	The second dice you use each turn gains single-use
+Death Shield+	2	All monsters: Upon death: shield 2 to all allies
+Stitch	2	The most-damaged enemy: At the end of the turn, self-heal 1
+Fifth death	2	The fifth dice you use each turn gains death
+Monster Growth	2	All monsters: Add growth to all sides
+Final Boss Curse	2	After beating level 19: gain a t8 curse
+15-16 Curses	2	After beating levels 15-16: gain a t2 curse
+Poisoned Finale	2	During Final level: All heroes: Start poisoned for 2
+Doom+	2	At the end of the seventh turn, 8 damage to all heroes
+Monster Left +2 	2	All monsters: +2 to the left side
+Monster Right +1	2	All monsters: +1 to the rightmost side
+Add Slimelet	2	Add a slimelet to each fight
+Add Illusion	2	Add an illusion to each fight
+Add Archer	2	Add an archer to each fight
+Add Rat	2	Add a rat to each fight
+Add Wisp (11-20)	2	During levels 11-20: add a wisp to each fight
+Add Goblin (11-20)	2	During levels 11-20: add a goblin to each fight
+Add Wolf (11-20)	2	During levels 11-20: add a wolf to each fight
+3rd turn Slimelets	2	Summon a slimelet every third turn
+3rd turn Illusions	2	Summon an illusion every third turn
+3rd turn Archers	2	Summon an archer every third turn
+3rd turn Rats	2	Summon a rat every third turn
+i-Exhaustion	2	"Gain the 'Exhaustion' item 
+(Must be equipped; Add single-use to all sides)"
+i-Broken Spirit	2	"Gain the 'Broken Spirit' item 
+(Must be equipped; Immune to healing & shields)"
+i-Pharoah's Curse	2	"Gain the 'Phaorah's Curse' item 
+(Must be equipped; -1 to all sides)"
+i-Slimed	2	"Gain the 'Slimed' item 
+(Must be equipped; Cannot be rerolled)"
+i-Soul Link	2	"Gain the 'Soul Link' item 
+(Must be equipped; When an ally dies, you die)"
+i-Wretched Crown	2	"Gain the 'Wretched Crown' item 
+(Must be equipped; Upon death: kill all allies)"
+Mortal++	3	All heroes: Shields, health and pips limited to 10
+Monster HP++	3	All monsters: +1 hp for each 5 base hp
+Sandstorm++	3	At the end of every third turn, 2 damage to all heroes
+Heavy Dice+	3	Cannot roll more than 2 dice at a time
+Armour++	3	At the start of the second turn, shield 3 to all enemies
+Start damaged++	3	All heroes: 1 of every 3 max hp starts empty
+Small Bonus++	3	All tiny enemies: +2 to the middle row
+Tower++	3	All huge enemies: +9 max hp
+Fear++	3	All big enemies: +6 max hp
+Swarm++	3	All tiny enemies: +3 max hp
+Mana Debt++	3	The second spell you cast each fight costs +2 mana
+Revive 1 hp	3	Defeated heroes return on 1 hp next fight
+Slow spells++	3	Add cooldown to all spells
+Bottom poison++	3	Bottom hero: Start poisoned for 3
+Curse of vowels	3	All monsters: +1 max hp for each vowel in their name
+No Burst	3	Forget burst
+Skulk++	3	During the first turn, +1 to enemy sides
+Worse Items+	3	-2 item quality
+Right Blank+	3	All heroes: replace the two right sides with 'blank'
+Shield Response+	3	All monsters: After taking damage, self-shield 1
+Frail Edges	3	"Top and bottom heroes: 
+If you have gained no shields this turn, x2 to incoming damage"
+Monster Charged	3	All monsters: Add charged to all sides
+Top 1 hp	3	Top hero: Set max hp to 1
+Middle 1 hp	3	Middle hero: Set max hp to 1
+Bottom 1 hp	3	Bottom hero: Set max hp to 1
+Stony Grasp	3	All heroes: Start petrified for 1
+Skip rewards 5	3	Skip rewards from level 5
+Skip rewards 18-19	3	Skip rewards from level 18-19
+Shield -1	3	All heroes: -1 to all shield/self-shield sides
+Heal -1	3	All heroes: -1 to all heal/self-heal sides
+Left -1	3	All heroes: -1 to the left side
+Mundane	3	"All heroes: Replace mana/mana-gain sides with damage sides, retaining 
+their original value and other keywords"
+Depleted spells	3	Add deplete to all spells
+Hero eliminate	3	All heroes: Add eliminate to all sides
+Doom++	3	At the end of the sixth turn, 8 damage to all heroes
+Monster Left +3	3	All monsters: +3 to the left side
+Monster Rights +1	3	All monsters: +1 to the two right sides
+Add Bones	3	Add a bones to each fight
+Add Spider	3	Add a spider to each fight
+Add Imp (11-20)	3	During levels 11-20: add an imp to each fight
+Add Grave (11-20)	3	During levels 11-20: add a grave to each fight
+Add Quartz (11-20)	3	During levels 11-20: add a quartz to each fight
+Add Sudul (11-20)	3	During levels 11-20: add a sudul to each fight
+Add Snake (11-20)	3	During levels 11-20: add a snake to each fight
+Add Gnoll (11-20)	3	During levels 11-20: add a gnoll to each fight
+Add Thorn (11-20)	3	During levels 11-20: add a thorn to each fight
+Add Sniper (11-20)	3	During levels 11-20: add a sniper to each fight
+Add Caw Egg (11-20)	3	During levels 11-20: add a caw egg to each fight
+Add Bandit (11-20)	3	During levels 11-20: add a bandit to each fight
+Add Crone (11-20)	3	During levels 11-20: add a crone to each fight
+Add Boar (11-20)	3	During levels 11-20: add a boar to each fight
+3rd turn Bones	3	Summon a bones every third turn
+3rd turn Spiders	3	Summon a spider every third turn
+Mortal+++	4	All heroes: Shields, health and pips limited to 8
+Monster HP+++	4	All monsters: +1 hp for each 4 base hp
+Sandstorm+++	4	At the end of every second turn, 2 damage to all heroes
+Slippery Dice+	4	Cannot lock more than 1 dice at a time
+Armour+++	4	At the start of the first turn, shield 2 to all enemies
+Start damaged+++	4	All heroes: 2 of every 4 max hp starts empty
+Small Bonus+++	4	All tiny enemies: +2 to all sides
+Tower+++	4	All huge enemies: +12 max hp
+Fear+++	4	All big enemies: +8 max hp
+Swarm+++	4	All tiny enemies: +4 max hp
+Mana Debt+++	4	The first spell you cast each fight costs +2 mana
+Permadeath	4	All heroes: Death is permanent
+Slow spells+++	4	Maximum of 1 spell cast per turn
+Top 3 Poisoned	4	Top three heroes: Start poisoned
+Middle Blank	4	All heroes: Replace the middle side with 'blank'
+Stitch+	4	The most-damaged enemy: At the end of the turn, self-heal 2
+Fourth death	4	The fourth dice you use each turn gains death
+Monster Pristine	4	All monsters: Add pristine to all sides
+De-level top	4	Downgrade the top hero to level 0
+De-level middle	4	Downgrade the middle hero to level 0
+De-level bottom	4	Downgrade the bottom hero to level 0
+Expensive Spells	4	Spells cost +1 mana
+Hero decay	4	All heroes: Add decay to all sides
+Pain edges	4	All heroes: Add pain to the top and bottom sides
+Wanded	4	All heroes: Add single-use to the two left sides
+Heavy Weapons	4	All heroes: Add heavy to all damage sides
+Stone Monsters	4	All monsters: The last hp must be removed individually
+Barricade	4	All most-damaged enemies: Move back
+Slimedemic	4	All monsters except slimelet: Summon a slimelet at the third to last hp pip
+-1 Reroll	4	-1 reroll
+Undying Monsters	4	All monsters: Cannot be killed on the first turn
+Ouroboros	4	Imp: Replace the two right sides with 'summon a hexia'
+Doom+++	4	At the end of the fifth turn, 8 damage to all heroes
+Monster Left +4	4	All monsters: +4 to the left side
+Monster Right +2	4	All monsters: +2 to the rightmost side
+Add Goblin	4	Add a goblin to each fight
+Add Wolf	4	Add a wolf to each fight
+Add Wisp	4	Add a wisp to each fight
+Add Fanatic (11-20)	4	During levels 11-20: add a fanatic to each fight
+Add Zombie (11-20)	4	During levels 11-20: add a zombie to each fight
+Add Wizz (11-20)	4	During levels 11-20: add a wizz to each fight
+Add Slimer (11-20)	4	During levels 11-20: add a slimer to each fight
+Add Ghost (11-20)	4	During levels 11-20: add a ghost to each fight
+Add Dragon Egg (11-20)	4	During levels 11-20: add a dragon egg to each fight
+3rd turn Caw Eggs	4	Summon a caw egg every third turn
+3rd turn Snakes	4	Summon a snake every third turn
+3rd turn Suduls	4	Summon a sudul every third turn
+3rd turn Goblins	4	Summon a goblin every third turn
+3rd turn Wolves	4	Summon a wolf every third turn
+3rd turn Wisps	4	Summon a wisp every third turn
+3rd turn Snipers	4	Summon a sniper every third turn
+Mortal++++	5	All heroes: Shields, health and pips limited to 7
+Monster HP++++	5	All monsters: +2 hp for each 5 base hp
+Sandstorm++++	5	At the end of each turn, 1 damage to all heroes
+Heavy Dice++	5	"You can only roll 1 dice at a time
++1 reroll"
+Armour++++	5	At the start of the first turn, shield 3 to all enemies
+Start damaged++++	5	All heroes: 1 of every 2 max hp starts empty
+Small Bonus++++	5	All tiny enemies: +3 to all sides
+Shield Response++	5	All monsters: After taking damage, self-shield 2
+Mana -1	5	All heroes: -1 to all mana/mana gain sides
+Sticky blanks	5	All heroes: Add sticky to all blank sides
+Shimmering Monsters	5	All monsters: The third to last hp pip must be removed by spell damage
+Single spells	5	Add single-cast to all spells
+Back to basics	5	All heroes: Remove all keywords from all sides
+Monster Column +1	5	All monsters: +1 to the middle column
+Creaky Joints	5	During the first turn, -1 to hero sides
+Caltrops	5	All heroes: Replace the rightmost side with '1 self damage cantrip'
+Monster Left +5	5	All monsters: +5 to the left side
+Monster +1 (11-20)	5	During level 11-20: All monsters: +1 to all sides
+Add Imp	5	Add an imp to each fight
+Add Caw Egg	5	Add a caw egg to each fight
+Add Gnoll	5	Add a gnoll to each fight
+Add Snake	5	Add a snake to each fight
+Add Sudul	5	Add a sudul to each fight
+Add Sniper	5	Add a sniper to each fight
+Add Saber (11-20)	5	During levels 11-20: add a saber to each fight
+Add Caw (11-20)	5	During levels 11-20: add a caw to each fight
+Add Warchief (11-20)	5	During levels 11-20: add a warchief to each fight
+3rd turn Gnolls	5	Summon a gnoll every third turn
+3rd turn Thorns	5	Summon a thorn every third turn
+3rd turn Quartz	5	Summon a quartz every third turn
+3rd turn Imps	5	Summon an imp every third turn
+Monster HP+++++	6	All monsters: +1 hp for each 3 base hp
+Sandstorm+++++	6	At the end of every second turn, 3 damage to all heroes
+Slippery Dice++	6	All heroes: Cannot be rerolled
+Third death	6	The third dice you use each turn gains death
+Damage -1	6	All heroes: -1 to all damage sides
+Migraine	6	All heroes: -1 to the two left sides
+Growing HP	6	For each defeated boss: All monsters: +1 max hp
+Consistency	6	All heroes: Replace damage sides with '2 damage'
+Doom++++	6	At the end of the fourth turn, 8 damage to all heroes
+Monster Rights +2	6	All monsters: +2 to the two right sides
+Add Thorn	6	Add a thorn to each fight
+Add Crone	6	Add a caw egg to each fight
+Add Bandit	6	Add a bandit to each fight
+Add Boar	6	Add a boar to each fight
+Add Grave	6	Add a grave to each fight
+Add Quartz	6	Add a quartz to each fight
+Add Slate (11-20)	6	During levels 11-20: add a slate to each fight
+Add Alpha (11-20)	6	During levels 11-20: add an alpha to each fight
+Add Ogre (11-20)	6	During levels 11-20: add an ogre to each fight
+3rd turn Dragon Eggs	6	Summon a dragon egg every third turn
+3rd turn Boars	6	Summon a boar every third turn
+3rd turn Bandits	6	Summon a bandit every third turn
+3rd turn Crones	6	Summon a crone every third turn
+3rd turn Graves	6	Summon a grave every third turn
+Summon Slimelets	6	Summon a slimelet each turn
+Summon Illusions	6	Summon an illusion each turn
+Mortal+++++	7	All heroes: Shields, health and pips limited to 6
+Monster HP++++++	7	All monsters: +3 hp for each 6 base hp
+Sandstorm++++++	7	At the end of every third turn, 6 damage to all heroes
+Worse Items++	7	-3 item quality
+Left Blank	7	All heroes: Replace the left side with 'blank'
+1-10 curses	7	After beating level 1-10: gain a t1 curse
+Top Death	7	No top hero
+Middle Death	7	No middle hero
+Bottom Death	7	No bottom hero
+Rise	7	All monsters except bones: Upon death: summon a bones
+All Poisoned	7	All heroes: Start poisoned
+Monster Row +1	7	All monsters: +1 to the middle row
+Reanimated Bosses	7	For each defeated boss: Add a bones to each fight
+Add Dragon Egg	7	Add a dragon egg to each fight
+Add Demon (11-20)	7	During levels 11-20: add a demon to each fight
+Add Basilisk (11-20)	7	During levels 11-20: add a basilisk to each fight
+Add Cyclops (11-20)	7	During levels 11-20: add a cyclops to each fight
+Add Bramble (11-20)	7	During levels 11-20: add a bramble to each fight
+Add Z0mbie (11-20)	7	During levels 11-20: add a z0mbie to each fight
+3rd turn Fanatics	7	Summon a dragon egg every third turn
+3rd turn Zombies	7	Summon a boar every third turn
+3rd turn Slimers	7	Summon a boar every third turn
+3rd turn Ghosts	7	Summon a ghost every third turn
+3rd turn Wizz	7	Summon a wizz every third turn
+Summon Archers	7	Summon an archer each turn
+Monster HP+++++++	8	All monsters: +2 hp for each 4 base hp
+Sandstorm+++++++	8	At the end of every second turn, 4 damage to all heroes
+Second death	8	The second dice you use each turn gain death
+Monster self-heal	8	All monsters: Add self-heal to all sides
+De-level top and bottom	8	Downgrade the top and bottom heroes to level 0
+Hero heavy	8	All heroes: Add heavy to all sides
+Consistency+	8	All heroes: Replace all sides with '2 damage'
+Doom+++++	8	At the end of the third turn, 8 damage to all heroes
+Add Fanatic	8	Add a fanatic to each fight
+Add Ghost	8	Add a ghost to each fight
+Add Zombie	8	Add a zombie to each fight
+Add Slimer	8	Add a slimer to each fight
+Add Wizz	8	Add a wizz to each fight
+3rd turn Sabers	8	Summon a saber every third turn
+3rd turn Warchiefs	8	Summon a warchief every third turn
+3rd turn Caws	8	Summon a caw every third turn
+3rd turn Alphas	8	Summon an alpha every third turn
+3rd turn Ogres	8	Summon an ogre every third turn
+Summon Rats	8	Summon a rat each turn
+Monster HP++++++++	9	All monsters: +1 hp for each 2 base hp
+Sandstorm++++++++	9	At the end of each turn, 2 damage to all heroes
+Frailty	9	All heroes: If you have gained no shields this turn, x2 to incoming damage
+Monster era	9	All monsters: Add era to all sides
+Hero single-use	9	All heroes: Add single use to all sides
+Monster Column +2	9	All monsters: +2 to the middle column
+Monster +1	9	All monsters: +1 to all sides
+Monster Rights +3	9	All monsters: +3 to the two right sides
+Add Caw	9	Add a caw to each fight
+Add Saber	9	Add a saber to each fight
+Add Warchief	9	Add a warchief to each fight
+Add Troll (11-20)	9	During levels 11-20: add a troll to each fight
+Add Banshee (11-20)	9	During levels 11-20: add a banshee to each fight
+Add Spiker (11-20)	9	During levels 11-20: add a spiker to each fight
+Mortal++++++	10	All heroes: Shields, health and pips limited to 5
+Monster inflict-death	10	All monsters: Add inflict-death to all sides
+-2 Rerolls	10	-2 rerolls
+Hero exert	10	All heroes: Add exert to all sides
+Hero pain	10	All heroes: Add pain to all sides
+Undying Monsters+	10	All monsters: Cannot be killed on the 2 turns
+Caltrops+	10	All heroes: Replace the two right sides with '1 self damage cantrip'
+Monster +2 (11-20)	10	During level 11-20: All monsters: +2 to all sides
+Add Ogre	10	Add an ogre to each fight
+Add Alpha	10	Add an alpha to each fight
+3rd turn Demons	10	Summon a demon every third turn
+3rd turn Slates	10	Summon a slate every third turn
+3rd turn Basilisks	10	Summon a basilisk every third turn
+3rd turn Z0mbies	10	Summon a z0mbie every third turn
+Add Slate	11	Add a slate to each fight
+Summon Bones	11	Summon a bones each turn
+Summon Spiders	11	Summon a spider each turn
+De-level top three	12	Downgrade the top three heroes to level 0
+De-level every other	12	Downgrade the every other hero to level 0
+Growing HP+	12	For each defeated boss: All monsters: +2 max hp
+Add Basilisk	12	Add a basilisk to each fight
+Add Z0mbie	12	Add a z0mbie to each fight
+Add Hydra (11-20)	12	During levels 11-20: add a hydra to each fight
+Curse of Horus	13	All heroes: -1 to all sides
+Monster Row +2	13	All monsters: +2 to the middle row
+Caltrops++	13	All heroes: Replace the middle side with '2 self damage cantrip'
+Doom++++++	13	At the end of the second turn, 8 damage to all heroes
+Add Cyclops	13	Add a cyclops to each fight
+Add Demon	13	Add a demon to each fight
+Add Bramble	13	Add a bramble to each fight
+Summon Wisps	13	Summon a wisp each turn
+Summon Goblins	13	Summon a goblin each turn
+Add Lich (11-20)	14	During levels 11-20: add a lich to each fight
+Summon Suduls	14	Summon a sudul each turn
+Summon Wolves	14	Summon a wolf each turn
+Mortal+++++++	15	All heroes: Shields, health and pips limited to 4
+Edge death	15	No top and bottom heroes
+Skip rewards 11-19	15	Skip rewards from levels 11-19
+Caltrops+++	15	All heroes: Replace the top and bottom sides with '1 self damage cantrip'
+Boss Spirits	15	For each defeated boss: Add a ghost to each fight
+Add Troll	15	Add a troll to each fight
+Summon Imps	15	Summon an imp each turn
+Summon Snipers	15	Summon a sniper each turn
+Summon Caw Eggs	15	Summon a caw egg each turn
+Summon Snakes	15	Summon a snake each turn
+Add Banshee	16	Add a banshee to each fight
+Add Spiker	16	Add a spiker to each fight
+Summon Gnolls	16	Summon a gnoll each turn
+Monster +2	17	All monsters: +2 to all sides
+Summon Thorns	17	Summon a thorn each turn
+Growing HP++	18	For each defeated boss: All monsters: +3 max hp
+Summon Boars	18	Summon a boar each turn
+Summon Quartz	18	Summon a quartz each turn
+Summon Graves	19	Summon a grave each turn
+Summon Bandits	19	Summon a bandit each turn
+Summon Crones	19	Summon a crone each turn
+Monster HP+++++++++	20	All monsters: +1 hp for each 1 base hp
+Double Monsters	20	Double the monsters in each fight (Also double the space for enemies)
+Add Hydra	21	Add a hydra to each fight
+Summon Dragon Eggs	21	Summon a dragon egg each turn
+Summon Wizz	23	Summon a wizz each turn
+Summon Fanatics	23	Summon a fanatic each turn
+Summon Ghosts	23	Summon a ghost each turn
+Add Lich	24	Add a lich to each fight
+Summon Zombies	24	Summon a zombie each turn
+Summon Sabers	24	Summon a saber each turn
+Summon Slimers	24	Summon a slimer each turn
+Mortal++++++++	25	All heroes: Shields, health and pips limited to 3
+Hero death	25	All heroes: Add death to all sides
+Doom+++++++	25	At the end of the first turn, 8 damage to all heroes
+Add Dragon (11-20)	25	During levels 11-20: add a dragon to each fight
+Summon Caws	25	Summon a caw each turn
+Summon Warchiefs	25	Summon a warchief each turn
+Summon Ogres	27	Summon an ogre each turn
+Summon Alphas	27	Summon an alpha each turn
+Summon Slates	30	Summon a slate each turn
+Summon Z0mbies	31	Summon a z0mbie each turn
+Summon Basilisks	32	Summon a basilisk each turn
+Summon Demons	33	Summon a demon each turn
+Summon Cyclops	34	Summon a cyclops each turn
+Summon Brambles	35	Summon a bramble each turn
+Summon Trolls	38	Summon a troll each turn
+Mortal+++++++++	40	All heroes: Shields, health and pips limited to 2
+Summon Banshees	40	Summon a banshee each turn
+Summon Spikers	40	Summon a spiker each turn
+Add Dragon	43	Add a dragon to each fight
+Summon Hydras	51	Summon a hydra each turn
+Summon Lichs	56	Summon a lich each turn
+Mortal++++++++++	100	All heroes: Shields, health and pips limited to 1

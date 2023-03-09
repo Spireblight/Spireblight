@@ -42,6 +42,7 @@ from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
+from slice import get_current_run, CurrentRun
 from utils import getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
@@ -264,6 +265,18 @@ def with_savefile(name: str, *aliases: str, **kwargs):
                 raise ValueError("No savefile")
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
+    return inner
+
+def slice_command(name: str, *aliases: str, **kwargs):
+    def inner(func):
+        async def _slice_get(ctx) -> list:
+            res = get_current_run()
+            if res is None:
+                if ctx:
+                    await ctx.reply("We are not playing Slice & Dice currently.")
+                raise ValueError("No Slice & Dice run going on")
+            return [res]
+        return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
     return inner
 
 class TwitchConn(TBot):
@@ -1324,6 +1337,16 @@ async def score(ctx: ContextType, save: Savefile):
         await ctx.reply(f'Current Score: ~{save.score} points')
     else:
         await ctx.reply(f'Current Score: {save.score} points')
+
+@slice_command("curses")
+async def curses(ctx: ContextType, save: CurrentRun):
+    """Display the current run's curses."""
+    await ctx.reply(save.curses)
+
+@slice_command("items")
+async def items(ctx: ContextType, save: CurrentRun):
+    """Display the current run's unequipped items."""
+    await ctx.reply(save.items)
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):

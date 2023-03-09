@@ -1,0 +1,426 @@
+Broken Spirit		-2	"Must be equipped
+Immune to healing
+Immune to shields"
+Exhaustion		-2	"Must be equipped
+Add single-use to all sides"
+Pharoah's Curse		-2	"Must be equipped
+-1 to all sides"
+Slimed		-2	"Must be equipped
+Cannot be rerolled"
+Soul Link		-2	"Must be equipped
+When an ally dies, you die"
+Wretched Crown		-2	"Must be equipped
+Upon death: kill all allies"
+Affliction		-1	"Must be equipped
+Add pain to the two left sides"
+Broken Heart		-1	"Must be equipped
+Immune to healing"
+Coiled Snake		-1	"Must be equipped
+Start poisoned"
+D4		-1	"Must be equipped
+Replace the right side with '1 self damage cantrip'"
+Handcuffs		-1	"Must be equipped
+-1 item slot"
+Lead Weight		-1	"Must be equipped
+Replace the top and bottom sides with 'blank'"
+Martyr		-1	"Must be equipped
+Add death & +1 to the two left sides"
+Mould		-1	"Must be equipped
+Add decay to all sides"
+Weariness		-1	"Must be equipped
+Add single-use to the middle row"
+Bent Fork		0	x1 the pips of all sides
+Bent Spoon		0	+0 to all sides
+Bond Certificate		0	15th turn: +15 to all sides
+Burred Shield		0	Replace the left side with 'Shield 5 pain'
+Cholesterol		0	"+5 empty max hp
+Immune to healing"
+Corroded Bomb		0	Replace the right side with '1 damage to all heroes and monsters charged, mana-cost'
+Cracked Emerald		0	Gain the effects of all tier 10 items on other heroes
+Cracked Phylactery		0	"Add self-heal to the two left sides
+-6 max hp"
+Cyanide Pill		0	Add cantrip & death to the two right sides
+Dead Branch		0	Replace the bottom side with '1 damage single-use'
+Dull Wit		0	"Replace mana/mana-gain sides with basic damage sides, retaining their original value and other
+keywords"
+Extra Pocket		0	+1 item slot (max 3)
+False Idol		0	+1 max hp for each 'z' in your name
+Fidget Spinner		0	Replace the middle side with 'Target hero can use their dice again duplicate'
+Flea		0	+1 to all sides with exactly 0 pips
+Fly		0	Add growth & decay to the left side
+Gambler's Two		0	"+1 to the rightmost side
+-1 to other sides"
+Grass		0	Replace blank sides with 'blank (petrified)'
+Hidden Strength		0	Replace the bottom side with '10 damage to all enemies mana-cost'
+Paper		0	Add nothing to the left side
+Peanut Shell		0	"Must be equipped
++1 empty max hp"
+Potion Shard		0	Replace the bottom side with '3 damage pain, drink'
+rorriM tekcoP		0	Copy the rightmost side onto the left side
+Rusty Longsword		0	Replace the middle row with '1 damage'
+Scissors		0	Add deathwish & pain to the middle side
+Snake Oil		0	Add engage to all basic heal sides
+Spanner		0	Revert all changes to the top side
+Spell: Betray		0	Cost: 2 mana - Kill an ally
+Spell: Hinder		0	Cost: 1 mana - 1 damage to an ally weaken
+Spell: Mana		0	Cost: 1 mana - +1 mana single-cast
+Toy Sword		0	Replace the rightmost side with '0 damage'
+Trick Deck		0	Add sept to the left side
+Twiddle		0	Swap the top side with the bottom side
+Void		0	
+Wooden Armour		0	"+2 max hp
+-1 to all sides"
+Anchor		1	Turn 1: self-shield 2
+Ballet Shoes		1	Swap the left side with the rightmost side
+Barkskin		1	"Immune to shields
++2 max hp"
+Basilisk Scale		1	"Start petrified for 1
++3 to the top side"
+Big Heart		1	Replace the middle side with 'Heal 5'
+Big Shield		1	Replace the left side with 'Shield 4'
+Bone Charm		1	No hp penalty when defeated
+Castor Root		1	Replace blank sides with 'Heal 1'
+Change of Heart		1	Replace heal/self-heal sides with basic shield sides, retaining their original value and other keywords
+Cleanse Potion		1	Replace the rightmost side with 'Heal 21 drink, cleanse'
+Cloak		1	Replace the middle side with 'Dodge all enemy attacks/effects'
+Coin		1	"+1 to the left side
+Cannot be locked"
+Compass		1	Rotate sides clockwise around the middle side
+Copper Ring		1	"+1 empty max hp
++1 max stored mana"
+Courage Potion		1	Add drink & +2 to the left side
+Emerald Shard		1	"Gain the effects of all tier 2 items on other heroes (not potions)
+(Can copy the effects of items that are exclusive to a certain hero color)"
+Foil		1	Replace the right side with '0 damage skill'
+Glass Helm		1	"+3 max hp
+Death is permanent"
+Healing Wand		1	Replace the rightmost side with 'Heal 4 single-use'
+Infused Herbs		1	Replace the bottom side with 'Heal 2 regen, cleanse, mana-cost'
+Knife Bag		1	Replace blank sides with '1 damage cantrip, pain'
+Leather Vest		1	+1 max hp
+Pendulum		1	Swap the left side with the middle side
+Reagents		1	Replace the two right sides with 'blank' & 'Heal 1 regen'
+Revive Potion		1	Replace the right side with 'Revive the 2 top-most defeated allies drink'
+Rusty Plate		1	"Replace the middle side with 'blank'
++3 max hp"
+Scar		1	+4 empty max hp
+Seedling		1	Replace the left side with '2 damage growth'
+Spell: Poultice		1	Cost: 1 mana - Heal 2 single-cast
+Stake		1	Add terminal to all damage sides
+Tattered Robes		1	"Replace the three right sides with '+1 mana'
++1 max stored mana"
+Wine		1	"Start poisoned
+The monster with the most hp starts poisoned"
+Wolf Ears		1	Set max hp to 6
+Worn Arms		1	Replace the top and bottom sides with '2 damage' & 'Shield 2'
+2 of Hearts		2	At the start of each turn, self-heal 2 if you are on exactly 2 hp
+Big Hammer		2	Replace the two left sides with '5 damage heavy' & 'blank'
+Blessed Ring		2	Replace the rightmost side with 'Shield 1 rescue'
+Blessed Water		2	Replace the rightmost side with 'Heal 2 vitality'
+Buckler		2	Replace the middle side with 'Shield 3 bloodlust'
+Burning Blade		2	"Replace the left side with '4 damage'
+-2 max hp"
+Cheater's Sleeves		2	Add quin to the top and bottom sides
+Citrine Ring		2	+1 to the rightmost side
+Cursed Bolt		2	"After a spell is cast, 1 self damage
++1 to the two right sides"
+First-aid Kit		2	"Orange heroes only
+Replace the left side with 'Heal 4 cleanse'"
+Fletching		2	Add ranged to the left side
+Flickering Blade		2	Replace the rightmost side with '1 damage copycat'
+Friendship Bracelet		2	"+2 empty max hp
+Monsters flee if you have 5x as much hp as them instead of 10x"
+Gambler's Ace		2	"+2 to the left side
+-2 to other sides"
+Garnet		2	+1 to incoming healing
+Golden Thread		2	"Yellow heroes only
++1 to all non-damage sides"
+Incense		2	Add rite to the top side
+Iron Heart		2	"Add exert & +1 to all sides
++1 max hp"
+Leather Gloves		2	Copy the rightmost side onto the top and bottom sides
+Liqueur		2	"Swap the top side with the rightmost side
++2 max stored mana"
+Longbow		2	Replace the top and bottom sides with '2 damage ranged'
+Mana Potion		2	Replace the rightmost side with '+5 mana drink'
+Origami		2	"Swap each side with its opposite
+(Swap top side with bottom side, left side with right side, middle side with rightmost side)"
+Powdered Mana		2	Replace blank sides with '+1 mana'
+Regen Potion		2	Replace the bottom side with 'Heal 3 drink, regen'
+Relic		2	+1 to all sides if you are on exactly 1 hp
+Sapphire		2	Replace the middle side with '+2 mana'
+Sapphire Skull		2	Upon death: +2 mana
+Shortsword		2	Replace the two right sides with '2 damage'
+Silver Imp		2	Replace the top and bottom sides with 'Gain 1 reroll cantrip, pain'
+Spell: Remedy		2	Cost: 1 mana - Heal 1 cleanse, single-cast
+Spell: Restore		2	Cost: 2 mana - Heal 1 to all allies
+Spell: Slice		2	Cost: 3 mana - 1 damage to all enemies
+Square Wheel		2	Replace the three right sides with 'Gain 1 reroll cantrip', 'blank' & 'blank'
+Statuette		2	"Replace the middle row with 'blank'
++6 max hp"
+Titanbane Potion		2	Add dispel & drink & +1 to the middle side
+Twin Daggers		2	Replace the top and bottom sides with '1 damage cantrip'
+Wandify		2	Add single-use & +1 to the two right sides
+Whey		2	Add vitality to the left side
+Abacus		3	"Shift your middle row across by 1
++1 max hp"
+Autumn Leaf		3	Add growth to the rightmost side
+Blood Chalice		3	Self-shield 1 for each wasted point of healing you receive
+Bowl		3	"Revert all changes to all sides
+(Replace all sides with your base sides)"
+Clumsy Hammer		3	Replace the top side with '4 damage heavy, eliminate'
+Droopy Hat		3	"+2 max hp
++2 max stored mana"
+Enchanted Shield		3	At the start of each turn, self-shield 1
+Faint Halo		3	+1 max hp this fight whenever you save a hero
+Glass Blade		3	"Replace the left side with '5 damage'
+'Glass Blade' lost upon death"
+Idol of Aiiu		3	+1 max hp for each vowel in your name
+Iron Pendant		3	+1 to incoming shields
+Lead Boots		3	"Cannot be rerolled
++1 to all sides"
+Lich's Tome		3	"+1 to all sides
+After you use this dice, summon a bones"
+Lightning Rod		3	Replace the left side with '0 damage ranged, charged, rampage, pain'
+Lucky		3	+1 to the left side, -2 to the middle side
+Pocket Phylactery		3	"Add pain to the two left sides
++6 max hp"
+Pure Heart Pendant		3	Replace the middle side with 'Heal 3 cleanse'
+Rain of Arrows		3	Replace the top side with '1 damage ranged, duplicate'
+Rejuvenation Wand		3	Replace the top and bottom sides with 'Heal 10 single-use'
+Scalpel		3	"Red heroes only
++1 to all damage sides"
+Spell: Sprout		3	Cost: 3 mana - Heal 3 channel
+Three-of-a-Kind		3	Add triple to the rightmost side
+Tower Shield		3	Replace the middle side with 'Shield 7 heavy'
+Unholy Strength		3	"Immune to shields
+Immune to healing
++1 to the middle row"
+Urn		3	Add enduring to the middle side
+Whetstone		3	+1 to all basic damage sides
+Antivenom		4	Immune to poison
+Apple		4	Add ego to the two left sides
+Bonesaw		4	"Red heroes only
+Replace the top and bottom sides with '3 damage cruel'"
+Chainmail		4	+3 max hp
+Charged Skull		4	Upon death: +4 mana
+Charon's Obol		4	Add deathwish to the two right sides
+Cracked Wheel		4	"Cannot be rerolled
++1 reroll"
+Demon Eye		4	Add pain & +2 to the left side
+Diving Suit		4	Replace the two right sides with the hero below's base sides
+Duelling Pistol		4	Add duel to the left side
+Empty Chalice		4	If you have 0 mana at the end of the turn, +1 mana
+Flawed Diamond		4	"Add pristine to the two left sides
++4 empty max hp"
+Harpoon		4	Replace the rightmost side with '1 damage vulnerable'
+Hissing Ring		4	Replace the middle side with '2 damage poison'
+Jester's Cap		4	Replace all sides with Jester's sides
+Lich Finger		4	Add mana-gain & death to the left side
+Life Bolt		4	After a spell is cast, self-heal 1
+Longsword		4	Replace the middle row with '3 damage'
+Magic Staff		4	Set all mana/mana-gain sides to 2
+Mana Bomb		4	Replace the rightmost side with '0 damage to all heroes and monsters charged, mana-cost'
+Mana Jelly		4	Add single-use & cantrip to all mana/mana-gain sides
+Mini Crossbow		4	Replace the rightmost side with '2 damage ranged, engage'
+Natural		4	"Blue heroes only
+Replace the two right sides with '+2 mana'"
+Pillow		4	Add patient to the left side
+PowerStone		4	"Grey heroes only
+Replace the left side with '+0 mana steel'"
+Quicksilver		4	Keep unused shields
+Ritual Dagger		4	Replace the rightmost side with 'Revive the 4 top-most defeated allies death'
+Siphon		4	Replace the middle side with 'Heal 0 vitality, flesh, pain'
+Smelly Manure		4	"Add growth to the top and bottom sides
+Add decay to the middle row"
+Spell: Hack		4	Cost: 2 mana - Replace blank sides with '4 damage' this turn
+Spell: Hex		4	Cost: 3 mana - Kill an enemy with exactly 6 hp ranged, single-cast
+Splitting Arrows		4	Replace the two right sides with '1 damage ranged, cleave'
+Syringe		4	+5 to all sides if there are 2 or fewer living heroes
+Terrarium		4	Replace the two right sides with 'Shield 2 growth' & '+1 mana growth'
+Tiara		4	Add self-heal to all mana/mana-gain sides
+Troll's Nose		4	Regenerate 1 health at the end of each turn
+Viscera		4	Replace the middle side with '0 damage flesh, pain'
+Alembic		5	Replace the middle side with 'Add mana-gain & pain to target's sides this turn'
+Ambrosia		5	Add rescue to the left side
+Blindfold		5	Remove all keywords from the middle row
+Chakram		5	"Replace shield/self-shield sides with ranged damage sides, retaining their original value and other 
+keywords"
+Chocolate Bar		5	+1 to all cruel, engage, deathwish & chain sides
+Demon Horn		5	Replace the rightmost side with 'Heal 2 boost, inflict-pain'
+Determination		5	Cannot be killed for the first 2 turns
+Door		5	+2 to all shield/self-shield sides if there are 4 or more monsters
+Dragonhide Gloves		5	Copy the middle side onto the top and bottom sides
+Duck		5	Add echo to the two right sides
+Enchanted Harp		5	Replace the middle side with 'Shield 2 to all allies'
+Eucalyptus		5	Replace the right side with 'Heal 3 cleanse, double-use'
+Eyepatch		5	Remove all keywords from the left side
+Faerie Pact		5	"Replace the rightmost side with '+4 mana'
+-4 max hp"
+Fearless		5	"+1 max hp
+Replace the rightmost side with 'Stun an enemy with equal or less hp than you'"
+Heart of Light		5	Replace the two right sides with 'Heal 3 cleanse'
+Idol of Chrzktx		5	+1 max hp for each consonant in your name
+Ladder		5	Replace the middle side with the hero above's base side
+Monocle		5	Add engage to the middle side
+Ordinary Triangle		5	+1 to all sides with exactly 3 pips
+Ornate Hilt		5	Add self-shield to all damage sides
+Pauldron		5	+2 to the top side, -2 to the bottom side
+Polished Emerald		5	"Gain the effects of all tier 0-3 items on other heroes (not potions)
+(Can copy the effects of items that are exclusive to a certain hero color)"
+Red flag		5	"+3 max hp
+Replace the middle side with 'Redirect all enemy attacks/effects from an ally to you cleave'"
+Ruby		5	"+2 to incoming healing
++2 empty max hp"
+Sack of Mana		5	Replace the middle column with 'blank', '+4 mana' & 'blank'
+Shining Bow		5	Add ranged to all damage sides
+Shuriken		5	Add ranged & chain to the two right sides
+Simplicity		5	+1 to all basic heal, mana, damage & shield sides
+Sling		5	Add underdog to the bottom side
+Spell: Beam		5	Cost: 5 mana - 7 damage single-cast, ranged
+Spell: Clink		5	Cost: 2 mana - Double all friendly shields deplete
+Spell: Heat		5	Cost: 3 mana - Heal 3 to all allies with shields cleanse
+Tankard		5	+1 to all sides for each stack of poison on you
+Treasure Chest		5	Add hoard & single-use to the left side
+Updog		5	Add overdog to the top side
+Wand of Wand		5	Replace the right side with '1 damage single-use, inflict-single-use'
+Whiskey		5	"+2 max hp
++6 empty max hp"
+Blinding Bolt		6	After a spell is cast, self-shield 2
+Blood Amulet		6	Add self-heal to the two left sides
+Candle		6	Add vigil to all sides
+Catnip		6	Add cantrip to the rightmost side
+Crescent Shield		6	Replace the left side with 'Shield 1 repel, rampage, rescue'
+Demonic Deal		6	Add pain & +2 to all sides
+Duvet		6	Add patient to the three right sides
+Dynamo		6	Add single-use & era to the two right sides
+Early Grave		6	Add pain & cantrip to the top and bottom sides
+Ghost Shield		6	At the start of each turn, self-shield 2
+Glowing Egg		6	Add growth to the left side
+Glyph of Purity		6	Add cleanse to the top and bottom sides
+Hourglass		6	First turn: +1 to all sides
+InfiniHeal		6	Replace the two right sides with heal all sides, retaining their original value and keywords
+Ink Bottle		6	Replace blank sides with 'Shield 1 cantrip'
+Karma		6	"Add self-heal to all heal sides
+Add self-shield to all shield sides
+Add pain to all damage sides"
+Leaden Handle		6	Add heavy & +1 to all damage sides
+Lens		6	Add focus to all heal/self-heal sides
+Nunchaku		6	Add chain to the top and bottom sides
+Ocular Amulet		6	+1 to the left side
+Overflowing Chalice		6	If you have 3 or more mana at the end of the turn, +2 mana
+Poem		6	Add alliteration to all sides
+Poodle		6	Add dog to the middle column
+Scales		6	Set the value of the rightmost side to the maximum of your other side's values
+Shimmering Halo		6	+2 max hp this fight whenever you save a hero
+Silver Pendant		6	+2 to incoming shields
+Spell: Mark		6	Cost: 4 mana - 2 damage vulnerable
+Spinning Scythe		6	Replace the middle side with '1 damage to all heroes and monsters rampage'
+Tentacle		6	"Add repel to the two right sides
+-2 max hp"
+Thimble		6	Immune to damage during your turn
+Tie		6	Add pristine to the middle side
+Tooth Necklace		6	Add cruel to the two left sides
+Twisted Bar		6	Set all sides to 2
+Twisted Flax		6	+1 to the top and bottom sides, -1 to the middle side
+Wand Grips		6	Add single-use & +2 to the left side
+Water		6	+1 to the left and right sides, -1 to the middle and rightmost sides
+Wrench		6	+1 to the middle side
+Anvil		7	Add steel to the middle side
+Boots of Speed		7	"+1 reroll
+Replace the left side with 'Dodge all enemy attacks/effects'"
+Broadsword		7	Replace the middle column with '4 damage'
+Cauldron		7	Add rite & +1 to the middle side
+Charge Link		7	Add charged & single-use to the top and bottom sides
+Conduit		7	Replace the middle side with '+2 mana duplicate'
+Demon Claw		7	Add rampage & -1 to the left side
+Dragon Pipe		7	+1 to all heal/self-heal sides
+Erythrocyte		7	Replace the middle side with 'Shield 0 flesh'
+Flute		7	Replace the rightmost side with 'Shield 1 to all allies cantrip'
+Ichor Chalice		7	1 damage to the top-most enemy for each wasted point of healing you receive
+Iron Helm		7	+6 max hp
+Metal Studs		7	+1 to all shield/self-shield sides
+Mushroom		7	Add decay & +1 to all sides
+Ogre Blood		7	Add bloodlust to the middle side
+Pair of Kings		7	Add pair to the top and bottom sides
+Pocket Mirror		7	Copy the left side onto the rightmost side
+Poison Dip		7	Add poison to the top and bottom sides
+Second Chance		7	Replace the rightmost side with 'Target hero can use their dice again'
+Sharp Wit		7	"Replace mana/mana-gain sides with basic damage sides, retaining their other keywords and triple 
+their values"
+Sickle		7	+1 to all lowest-pip sides
+Spell: Charge		7	Cost: 2 mana - Shield 2 boost, single-cast
+Spell: Invest		7	Cost: 4 mana - +6 mana future, cooldown
+Spell: Spark		7	Cost: 5 mana - Add mana-gain to target's sides this turn
+Stasis		7	Your sides cannot change
+Study		7	"Cost: 2 mana - 3 damage or shield 3
+Forget Burst"
+Tourmaline Paraiba		7	Add era to all mana/mana-gain sides
+Troll's Blood		7	Regenerate 2 health at the end of each turn
+Two Reeds		7	+1 to all sides with even pips
+Wand of Stun		7	Replace the middle side with 'Stun an enemy single-use'
+Wax Seal		7	All sides get +1 for each other identical side
+Wooden Bracelet		7	+1 to all sides with no keywords
+Brimstone		8	Triple the pips of the rightmost side
+Burning Halo		8	1 damage to all enemies whenever you save a hero
+Clay		8	Copy the other equipped items on you
+Cocoon		8	Add era & -1 to all sides
+Deadly Bolt		8	After a spell is cast, 1 damage to the top-most enemy
+Enhance Wand		8	Replace the top side with 'Shield 1 single-use, perma-boost'
+Faerie Dust		8	Replace blank sides with '+3 mana'
+Gauntlet		8	+1 to all damage sides
+Greatsword		8	Replace the middle side with '5 damage inspired'
+Ironblood Pendant		8	+3 to incoming healing and shields
+Mirror Mask		8	Replace all sides with the hero above's base sides
+Olympian Trident		8	Add cleave to the middle side
+Prism		8	Add rainbow to the middle side
+Sapphire Ring		8	+1 to all mana/mana-gain sides
+Scorpion Tail		8	Add weaken & pain to the top and bottom sides
+Serration		8	Add vulnerable to the top and bottom sides
+Singularity		8	+2 to the two right sides
+Spell: Light		8	"Cost: 3 mana - Heal 5 
+Target hero can use their dice again single-cast"
+Standard		8	"Yellow heroes only +1 to all sides"
+Sushi		8	Replace the left side with 'Gain 2 rerolls cantrip'
+Wandcraft		8	Replace all sides with single-use mana sides, retaining their original value and keywords
+Angel Feather		9	Add rescue to the top and bottom sides
+Boarhide Bracers		9	+2 to the top and bottom sides
+Bullseye		9	Add engage to the middle column
+Chaos Wand		9	Replace the middle side with '1 damage single-use, cleave, engage, self-heal, weaken, vulnerable'
+Charged Hammer		9	Replace the left side with '10 damage heavy, charged'
+Collar		9	Add copycat to the top and bottom sides
+Dolphin		9	Add echo to all sides
+Dumbbell		9	+4 to all sides with 4 or more pips
+Emerald Mirror		9	Gain the effects of all tier 5-7 items on other heroes
+Eye of Horus		9	+1 to all sides
+Goblet of Life		9	Replace the middle side with 'Heal and shield 2 cleave, self-heal, self-shield'
+Helm of Power		9	Double the pips of the left side
+Horned Viper		9	Add poison to the two left sides
+Iron Crown		9	"Grey heroes only +4 to the left side"
+Silk Cape		9	Copy the left side onto the middle row
+Timestone		9	Add cantrip to the two right sides
+Triple Shuriken		9	Add ranged & chain to all sides
+Diamond Skull		10	"+2 max hp
+Upon death: +1 to allied sides this fight"
+Egg Basket		10	+6 to the left side, replace all other sides with 'blank'
+Fangs		10	Add invigorate to the top and bottom sides
+Mithril Shields		10	Add cantrip to all shield/self-shield sides
+Poseidon's Charm		10	Add cleave to the top and bottom sides
+Spell: Infinity		10	Cost: 10 mana - Kill an enemy
+Top Duplicate		10	Add duplicate to the top side
+Blue Skink		11	Replace all sides with the hero below's base sides, retaining your side's values and keywords
+Huge Sword		11	Add cleave to all damage sides
+Pentagram		11	Cannot be killed for the first 4 turns
+Ruby Shards		11	Add cleave to all heal/self-heal/shield/self-shield sides
+Whirlwind		11	Add cantrip to the middle column
+Archmage Orb		12	+1 mana for each wasted point of healing you receive
+Broomstick		12	Add mana-gain to the two left sides
+Face of Horus		12	+2 to all sides
+Golden D6		12	Set the values of all sides to Ludus's sides
+Diamond Ring		13	Replace damage sides with heal, shield, mana-gain sides, retaining their original value and keywords
+Ethereal Cloak		13	Replace all sides with 'Dodge all enemy attacks/effects'
+Fertiliser		13	Add growth to all sides
+Illegal		13	Replace left side with '2 rerolls cantrip' & middle side with 'Target hero can use their dice again'
+placeholder		13	Add dispel to all sides
+Banned		14	Add cleave to the left side & growth to the middle side
+Bag of Holding		20	Gain the effects of all tier 7 items
