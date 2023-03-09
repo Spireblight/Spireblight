@@ -42,6 +42,7 @@ from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
+from slice import get_current_run, CurrentRun
 from utils import getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
@@ -264,6 +265,18 @@ def with_savefile(name: str, *aliases: str, **kwargs):
                 raise ValueError("No savefile")
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
+    return inner
+
+def slice_command(name: str, *aliases: str, **kwargs):
+    def inner(func):
+        async def _slice_get(ctx) -> list:
+            res = get_current_run()
+            if res is None:
+                if ctx:
+                    await ctx.reply("We are not playing Slice & Dice currently.")
+                raise ValueError("No Slice & Dice run going on")
+            return [res]
+        return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
     return inner
 
 class TwitchConn(TBot):
@@ -1325,6 +1338,16 @@ async def score(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f'Current Score: {save.score} points')
 
+@slice_command("curses")
+async def curses(ctx: ContextType, save: CurrentRun):
+    """Display the current run's curses."""
+    await ctx.reply(save.curses)
+
+@slice_command("items")
+async def items(ctx: ContextType, save: CurrentRun):
+    """Display the current run's unequipped items."""
+    await ctx.reply(save.items)
+
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
     """Get the last run/win/loss."""
@@ -1497,23 +1520,23 @@ async def mastered_stuff(ctx: ContextType, *card: str):
 @with_savefile("candidates")
 async def current_mastery_check(ctx: ContextType, save: Savefile, *arg: str):
     """Output what cards and relics in the current run can be mastered if won."""
-    mastery_type = "".join(arg)
-    if mastery_type != "cards" and mastery_type != "relics":
-        await ctx.reply(f'Call {config.baalorbot.prefix}candidates with "cards" or "relics".')
+    mastery_type = "".join(arg).lower()
 
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
 
     match mastery_type:
-        case "cards":
+        case "cards" | "card" | "c":
             if cards_can_master:
                 await ctx.reply(f"The cards that can be mastered this run are: {', '.join(cards_can_master)}")
             else:
                 await ctx.reply(f"There are no new cards in this run that can be mastered.")
-        case "relics":
+        case "relics" | "relic" | "r":
             if relics_can_master:
                 await ctx.reply(f"The relics that can be mastered this run are: {', '.join(relics_can_master)}")
             else:
                 await ctx.reply(f"There are no new relics in this run that can be mastered.")
+        case a:
+            await ctx.reply(f'Option {" ".join(arg)!r} not recognized. Call {config.baalorbot.prefix}candidates with "cards" or "relics".')
 
 @router.get("/commands")
 @template("commands.jinja2")
