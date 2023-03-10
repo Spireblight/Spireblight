@@ -69,8 +69,7 @@ async def main():
                                 decoded: list[str] = pickle.loads(curses)
                                 try:
                                     with open(config.slice.curses, "w") as f:
-                                        for line in decoded:
-                                            f.write(line)
+                                        f.write("\n".join(decoded))
                                 except OSError:
                                     pass
 
