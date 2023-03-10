@@ -1341,12 +1341,15 @@ async def score(ctx: ContextType, save: Savefile):
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""
-    await ctx.reply(save.curses)
+    await ctx.reply(f"We are running Classic on {save.difficulty} with {'; '.join(save.curses)}.")
 
 @slice_command("items")
 async def items(ctx: ContextType, save: CurrentRun):
     """Display the current run's unequipped items."""
-    await ctx.reply(save.items)
+    if save.items:
+        await ctx.reply(f"The unequipped items are {'; '.join(save.items)}.")
+    else:
+        await ctx.reply("We have no unequipped items.")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):

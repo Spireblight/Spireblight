@@ -1,4 +1,5 @@
 import xml.etree.ElementTree
+import pickle
 import json
 import os
 
@@ -13,22 +14,24 @@ class CurrentRun:
         self._data = data["d"]
 
     @property
-    def curses(self):
+    def difficulty(self) -> str:
+        return self._data["c"]
+
+    @property
+    def curses(self) -> list[str]:
         ret = []
         for curse in self._data["m"]:
             ret.append(f"{curse} [{curses[curse]['tier']}] ({curses[curse]['description']})")
 
-        return f"We are running Classic on {self._data['c']} with {'; '.join(ret)}."
+        return ret
 
     @property
-    def items(self):
+    def items(self) -> list[str]:
         ret = []
         for item in self._data["e"]:
             ret.append(f"{item} [{items[item]['tier']}] ({items[item]['description']})")
 
-        if ret:
-            return f"The unequipped items are {'; '.join(ret)}."
-        return "We have no unequipped items."
+        return ret
 
 def get_current_run():
     if "classic" in parsed_data:
@@ -36,18 +39,42 @@ def get_current_run():
 
 try:
     from webpage import router
+    from events import add_listener
     from utils import get_req_data
-
+except ModuleNotFoundError: # running as stand-alone module
+    pass
+else:
     @router.post("/sync/slice")
     async def receive_slice(req: Request):
         data = await get_req_data(req, "data")
         with open(os.path.join("data", "slice-data"), "w") as f:
             f.write(data[0])
         populate(os.path.join("data", "slice-data"))
+        run = get_current_run()
+        if run is not None:
+            return Response(body=pickle.dumps(run.curses))
         return Response()
 
-except ModuleNotFoundError: # running as stand-alone module
-    pass
+    @add_listener("setup_init")
+    async def load():
+        populate(os.path.join("data", "slice-data"))
+        for file, var in (("curses", curses), ("items", items)):
+            with open(f"{file}.txt") as f:
+                cont = False
+                for line in f.readlines():
+                    line = line.replace("\t\t", "\t")[:-1] # remove trailing newline
+                    if cont:
+                        if line.endswith('"'):
+                            line = line[:-1]
+                            cont = False
+                        desc = f"{desc} {line}"
+                    else:
+                        name, tier, desc = line.split("\t")
+                        if desc.startswith('"'):
+                            desc = desc[1:]
+                            cont = True
+                    if not cont:
+                        var[name] = {"tier": tier, "description": desc}
 
 def populate(path=None) -> bool:
     """Decode the savefile and populate the variables.
@@ -76,21 +103,3 @@ def populate(path=None) -> bool:
             # TODO: non-standard JSON; keys and values aren't quoted
             continue
         parsed_data[key] = json.loads(data)
-
-    for file, var in (("curses", curses), ("items", items)):
-        with open(f"{file}.txt") as f:
-            cont = False
-            for line in f.readlines():
-                line = line.replace("\t\t", "\t")[:-1] # remove trailing newline
-                if cont:
-                    if line.endswith('"'):
-                        line = line[:-1]
-                        cont = False
-                    desc = f"{desc} {line}"
-                else:
-                    name, tier, desc = line.split("\t")
-                    if desc.startswith('"'):
-                        desc = desc[1:]
-                        cont = True
-                if not cont:
-                    var[name] = {"tier": tier, "description": desc}

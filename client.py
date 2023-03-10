@@ -1,6 +1,7 @@
 from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
 import asyncio
+import pickle
 import time
 import os
 
@@ -55,14 +56,23 @@ async def main():
                     possible = None
 
             if use_sd:
-                cur = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
-                if cur != last_sd:
+                cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
+                if cur_sd != last_sd:
                     with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
                         sd_data = f.read()
                     sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
                     async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
                         if resp.ok:
-                            last_sd = cur
+                            last_sd = cur_sd
+                            curses = await resp.read()
+                            if curses and config.slice.curses:
+                                decoded: list[str] = pickle.loads(curses)
+                                try:
+                                    with open(config.slice.curses, "w") as f:
+                                        for line in decoded:
+                                            f.write(line)
+                                except OSError:
+                                    pass
 
             to_send = []
             files = []

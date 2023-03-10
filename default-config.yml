@@ -109,6 +109,8 @@ spire:
 slice:
   # Whether we deal with Slice & Dice data
   enabled: false
+  # The file to write curse data to
+  curses: ''
 
 # This is for Now Playing: functionality from Spotify
 spotify:
