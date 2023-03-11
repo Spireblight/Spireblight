@@ -28,7 +28,7 @@ class CurrentRun:
     @property
     def items(self) -> list[str]:
         ret = []
-        for item in self._data["e"]:
+        for item in self._data["p"]["e"]:
             ret.append(f"{item} [{items[item]['tier']}] ({items[item]['description']})")
 
         return ret
@@ -56,25 +56,8 @@ else:
         return Response()
 
     @add_listener("setup_init")
-    async def load():
-        populate(os.path.join("data", "slice-data"))
-        for file, var in (("curses", curses), ("items", items)):
-            with open(f"{file}.txt") as f:
-                cont = False
-                for line in f.readlines():
-                    line = line.replace("\t\t", "\t")[:-1] # remove trailing newline
-                    if cont:
-                        if line.endswith('"'):
-                            line = line[:-1]
-                            cont = False
-                        desc = f"{desc} {line}"
-                    else:
-                        name, tier, desc = line.split("\t")
-                        if desc.startswith('"'):
-                            desc = desc[1:]
-                            cont = True
-                    if not cont:
-                        var[name] = {"tier": tier, "description": desc}
+    async def _load():
+        load()
 
 def populate(path=None) -> bool:
     """Decode the savefile and populate the variables.
@@ -103,3 +86,25 @@ def populate(path=None) -> bool:
             # TODO: non-standard JSON; keys and values aren't quoted
             continue
         parsed_data[key] = json.loads(data)
+
+    return True
+
+def load():
+    populate(os.path.join("data", "slice-data"))
+    for file, var in (("curses", curses), ("items", items)):
+        with open(f"{file}.txt") as f:
+            cont = False
+            for line in f.readlines():
+                line = line.replace("\t\t", "\t")[:-1] # remove trailing newline
+                if cont:
+                    if line.endswith('"'):
+                        line = line[:-1]
+                        cont = False
+                    desc = f"{desc} {line}"
+                else:
+                    name, tier, desc = line.split("\t")
+                    if desc.startswith('"'):
+                        desc = desc[1:]
+                        cont = True
+                if not cont:
+                    var[name] = {"tier": tier, "description": desc}
