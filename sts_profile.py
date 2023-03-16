@@ -128,10 +128,11 @@ async def runs_as_zipfile(req: Request) -> Response:
 async def sync_profiles(req: Request) -> Response:
     slots, *profiles = await get_req_data(req, "slots", "0", "1", "2")
 
-    _slots.clear()
-    _slots.update(json.loads(slots))
-    with open(os.path.join("data", "slots"), "w") as f:
-        f.write(slots)
+    if slots:
+        _slots.clear()
+        _slots.update(json.loads(slots))
+        with open(os.path.join("data", "slots"), "w") as f:
+            f.write(slots)
 
     for i in range(3):
         profile = profiles[i]
