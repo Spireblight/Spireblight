@@ -131,13 +131,14 @@ async def main():
                     async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.server.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                         if resp.ok:
                             has_save = False
-                    # update all profiles
-                    data = {
-                        "slots": b"",
-                        "0": b"",
-                        "1": b"",
-                        "2": b"",
-                    }
+
+                # update all profiles
+                data = {
+                    "slots": b"",
+                    "0": b"",
+                    "1": b"",
+                    "2": b"",
+                }
 
                 # always send the save slots; it's possible it changed, even during a run (e.g. wall card)
                 cur_slots = os.path.getmtime(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots"))
