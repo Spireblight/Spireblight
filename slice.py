@@ -21,6 +21,7 @@ class CurrentRun:
     def curses(self) -> list[str]:
         ret = []
         for curse in self._data["m"]:
+            curse = curse.replace("[purple]", "").replace("[cu]", "")
             ret.append(f"{curse} [{curses[curse]['tier']}] ({curses[curse]['description']})")
 
         return ret
