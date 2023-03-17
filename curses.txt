@@ -74,7 +74,7 @@ AE	2	All monsters: +1 max hp for each 'a' & 'e' in their name
 Non-Boss Bones	2	During non-boss levels : Add a bones to each fight
 Single Burst	2	Add single-cast to burst
 Skulk+	2	During the second turn, +1 to enemy sides
-Osteoporosis 	2	Tier 3 heroes get -2 max hp
+Osteoporosis	2	Tier 3 heroes get -2 max hp
 -3 Max Mana	2	-3 max stored mana
 Second single-use	2	The second dice you use each turn gains single-use
 Death Shield+	2	All monsters: Upon death: shield 2 to all allies
