@@ -1,13 +1,81 @@
+from __future__ import annotations
+
 import xml.etree.ElementTree
 import pickle
+import enum
 import json
 import os
+import io
 
-from aiohttp.web import Request, Response
+from fractions import Fraction
+
+from openpyxl_image_loader import SheetImageLoader
+from PIL.PngImagePlugin import PngImageFile
+from openpyxl import load_workbook
 
 parsed_data = {}
-curses = {}
-items = {}
+
+_curses: dict[str, Curse] = {}
+_items = {}
+
+def sanitize(x: str) -> str:
+    x = x.strip()
+    x = x.replace("[purple]", "").replace("[cu]", "")
+    return x
+
+class Color(enum.Enum):
+    Orange = "topmost"
+    Yellow = "top"
+    Grey = "middle"
+    Red = "bottom"
+    Blue = "bottommost"
+
+class Curse:
+    def __init__(self, name: str, tier: str, description: str, rarity: str | None, upgrade: str | None, is_gen: str | None):
+        self.name = name
+        self.tier = int(tier)
+        self.description = description
+        self.rarity = Fraction(rarity or 1)
+        if upgrade is not None:
+            upgrade = sanitize(upgrade)
+        self._upgrade = upgrade
+        self.is_generated = (is_gen == "TRUE")
+
+    @property
+    def upgrades_to(self):
+        if self._upgrade is not None:
+            return _curses[self._upgrade]
+
+    @property
+    def display(self):
+        return f"{self.name} [{self.tier}] ({self.description})"
+
+class _WithImage:
+    def __init__(self, image: PngImageFile):
+        self.image = io.BytesIO()
+        image.save(self.image, format="png")
+        image.close()
+
+class Face(_WithImage):
+    def __init__(self, value: str, image: PngImageFile):
+        super().__init__(image)
+        self.value = value
+
+class Equipment(_WithImage):
+    def __init__(self, name: str, value: str, tier: int, image: PngImageFile):
+        super().__init__(image)
+        self.name = name
+        self.value = value
+        self.tier = tier
+
+class Hero(_WithImage):
+    def __init__(self, name: str, color: Color, tier: int, image: PngImageFile,
+                 l: Face, m: Face, t: Face, b: Face, r: Face, rr: Face):
+        super().__init__(image)
+        self.name = name
+        self.color = color
+        self.tier = tier
+        self.faces = (l, m, t, b, r, rr)
 
 class CurrentRun:
     def __init__(self, data):
@@ -21,8 +89,11 @@ class CurrentRun:
     def curses(self) -> list[str]:
         ret = []
         for curse in self._data["m"]:
-            curse = curse.replace("[purple]", "").replace("[cu]", "")
-            ret.append(f"{curse} [{curses[curse]['tier']}] ({curses[curse]['description']})")
+            curse = sanitize(curse)
+            if curse in _curses:
+                ret.append(_curses[curse].display)
+            else:
+                ret.append(f"<unknown curse {curse!r}>")
 
         return ret
 
@@ -39,6 +110,8 @@ def get_current_run():
         return CurrentRun(parsed_data["classic"])
 
 try:
+    from aiohttp.web import Request, Response
+
     from webpage import router
     from events import add_listener
     from utils import get_req_data
@@ -92,7 +165,14 @@ def populate(path=None) -> bool:
 
 def load():
     populate(os.path.join("data", "slice-data"))
-    for file, var in (("curses", curses), ("items", items)):
+    wb = load_workbook("slice_dice_data.xlsx")
+
+    for name, tier, effect, rarity, upgrade, is_gen, *_ in wb["Curses"].iter_rows(3, values_only=True):
+        name = sanitize(name)
+        _curses[name] = Curse(name, tier, effect, rarity, upgrade, is_gen)
+
+    # TODO
+    for file, var in (("items", items),):
         with open(f"{file}.txt") as f:
             cont = False
             for line in f.readlines():

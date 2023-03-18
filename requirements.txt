@@ -7,3 +7,5 @@ mpld3==0.5.8
 twitchio==2.4.0
 dotmap==1.3.30
 PyYAML==6.0
+openpyxl==3.1.2
+openpyxl_image_loader==1.0.5
