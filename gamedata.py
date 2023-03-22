@@ -25,8 +25,6 @@ if TYPE_CHECKING:
 
 __all__ = ["FileParser"]
 
-# TODO: Handle the website display part, figure out details of these classes later
-
 class NeowBonus:
 
     all_bonuses = {
@@ -516,11 +514,8 @@ class NeowBonus:
         return self.turns_delta()
 
 _chars = {
-    "THE_SILENT": "Silent",
     "SLIMEBOUND": "Slime Boss",
-    "THE_CHAMP": "Champ",
-    "GREMLIN": "Gremlins",
-    "THE_AUTOMATON": "Automaton",
+    "GREMLIN": "Gremlin Gang",
     "THE_SPIRIT": "Hexaghost",
     "THE_SNECKO": "Snecko",
 }
@@ -708,7 +703,7 @@ class FileParser(ABC):
 
         c = _chars.get(self._character)
         if c is None:
-            c = self._character.title()
+            c = self._character.replace("_", " ").title()
         return c
 
     @property
@@ -1533,7 +1528,9 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         try:
             value: NodeData = cls.from_parser(parser, floor)
         except ValueError: # this can happen for savefiles if we're on the latest floor
-            continue
+            if taken_len == floor:
+                continue # we're on the last floor
+            raise
         else:
             yield value, False
 
@@ -1614,7 +1611,7 @@ class Treasure(NodeData):
         return super()._description(to_append)
 
     @classmethod
-    def from_parser(cls, parser, floor: int, *extra):
+    def from_parser(cls, parser: FileParser, floor: int, *extra):
         has_blue_key = False
         relic = ""
         d = parser._data.get("basemod:mod_saves", ())
