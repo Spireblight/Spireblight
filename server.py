@@ -1092,14 +1092,29 @@ async def card_with_art(ctx: ContextType, *line: str):
     await ctx.reply(f"You can view this card and the upgrade with the art here: {base}{link}")
 
 @with_savefile("cache", flag="m")
-async def save_cache(ctx: ContextType, save: Savefile, arg: str):
+async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
     match arg:
         case "clear":
             save._cache.clear()
-            ctx.reply("Cache cleared.")
-        case a:
-            ctx.reply(f"Argument {a!r} not recognized.")
+            await ctx.reply("Cache cleared.")
+        case "key":
+            val = arg
+            for a in args:
+                try:
+                    a = int(a)
+                except ValueError:
+                    pass
+                try:
+                    val = val[a]
+                except (IndexError, KeyError):
+                    try:
+                        val = getattr(val, a)
+                    except AttributeError:
+                        break
 
+            await ctx.reply(f"Value in cache: {val}")
+        case a:
+            await ctx.reply(f"Argument {a!r} not recognized.")
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
