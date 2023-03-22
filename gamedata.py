@@ -1681,7 +1681,7 @@ class EventNode:
             if event["floor"] == floor:
                 events.append(event)
         if not events:
-            raise ValueError("no event data")
+            raise ValueError(f"no event data on floor {floor}")
         if events[0]["event_name"] == "Colosseum":
             return Colosseum.from_parser(parser, floor, events, *extra)
         if len(events) != 1:
