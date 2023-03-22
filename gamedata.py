@@ -1681,19 +1681,52 @@ class EventNode:
             if event["floor"] == floor:
                 events.append(event)
         if not events:
-            raise ValueError(f"no event data on floor {floor}")
+            return EmptyEvent.from_parser(parser, floor, *extra)
         if events[0]["event_name"] == "Colosseum":
             return Colosseum.from_parser(parser, floor, events, *extra)
         if len(events) != 1:
             for a in events:
                 for b in events:
                     if a != b: # I'm not quite sure how this happens, but sometimes an event will be in twice?
-                        raise ValueError("could not figure out what to do with this")
+                        return AmbiguousEvent.from_parser(parser, floor, events, *extra)
         event = events[0]
         for dmg in parser._data[parser.prefix + "damage_taken"]:
             if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
                 return EventFight.from_parser(parser, floor, event, *extra)
         return Event.from_parser(parser, floor, event, *extra)
+
+class EmptyEvent(NodeData):
+    room_type = "Unknown (Bugged)"
+    map_icon = "event.png"
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 9 not in to_append:
+            to_append[9] = []
+        to_append[9].append(
+            "Something happened here, but I'm not sure what...\n"
+            "This is a bug with a mod. Please report this to the mod creators:\n"
+            "'Missing event data in JSON'\n"
+            "(Provide the event name if you can find it)"
+        )
+        return super()._description(to_append)
+
+class AmbiguousEvent(NodeData):
+    room_type = "Unknown (Ambiguous)"
+    map_icon = "event.png"
+
+    def __init__(self, events: list[dict[str, Any]], *extra):
+        super().__init__(*extra)
+        self._events = events
+
+    def _description(self, to_append: dict[int, list[str]]) -> str:
+        if 9 not in to_append:
+            to_append[9] = []
+        to_append[9].append(
+            "This event is ambiguous; multiple events map to it:\n" +
+            ", ".join(self._events["event_name"]) + " -\n" +
+            "This is a bug with a mod. Please report this to the mod creators."
+        )
+        return super()._description(to_append)
 
 class Event(NodeData):
     room_type = "Unknown"
