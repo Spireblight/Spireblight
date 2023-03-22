@@ -1098,7 +1098,7 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
             save._cache.clear()
             await ctx.reply("Cache cleared.")
         case "key":
-            val = arg
+            val = save._cache
             for a in args:
                 try:
                     a = int(a)
@@ -1106,7 +1106,7 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
                     pass
                 try:
                     val = val[a]
-                except (IndexError, KeyError):
+                except (IndexError, KeyError, TypeError):
                     try:
                         val = getattr(val, a)
                     except AttributeError:
