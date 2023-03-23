@@ -1263,6 +1263,8 @@ class NodeData:
                     continue # support multi-classing in case you're Emily Axford
                 if cls.get_description(self, to_append) is not None: # returned something
                     raise RuntimeError(f"'{cls.__name__}.get_description()' returned a non-None value.")
+                if not to_append:
+                    continue
                 try:
                     if (n := max(to_append)) > 99:
                         raise ValueError(f"Class {cls.__name__!r} used out-of-bounds index {n} (max 99)")
