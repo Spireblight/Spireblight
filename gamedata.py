@@ -542,7 +542,7 @@ class FileParser(ABC):
     def __init__(self, data: dict[str, Any]): # TODO: fix all JSON_FP_PROP instances
         self._data = data
         self.neow_bonus = NeowBonus(self)
-        self._cache = {}
+        self._cache = {"self": self} # this lets us do on-the-fly debugging
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str] = {}
 
@@ -1147,7 +1147,30 @@ class NodeData:
 
     The recommended creation mechanism for NodeData classes is to call
     the class method `from_parser` with either a Run History parser or a
-    Savefile parser, and the floor number."""
+    Savefile parser, and the floor number.
+
+    Subclasses can - and should - write their own 'get_description' method.
+    This takes one argument, type 'collections.defaultdict[int, list[str]]',
+    and should modify that mapping in-place. Returning any non-None value
+    will raise an error. The method should **NOT** attempt to call the
+    superclass version of it with super(); that will be done automatically.
+
+    Built-in index keys all use even numbers. Result will be joined together
+    with newlines, and printed in ascending order. Custom code should only add
+    data to odd indices. Ranges are provided here; refer to the relevant
+    subclass for details. Calling order between various methods is not
+    guaranteed - appending to a key already used may have unexpected results.
+
+    0     - Basic stuff; only for things that all nodes share
+    4     - Combat results (damage taken, turns elapsed, etc.)
+    6     - Unique values (key obtained, campfire option, etc.)
+    10-20 - Potion usage data
+    30-36 - Relic obtention data
+    40-62 - Event results
+    70-78 - Shop contents
+    99    - Special stuff; reserved for bugged or modded content
+
+    """
 
     room_type = "<UNDEFINED>"
     map_icon = "<UNDEFINED>"
@@ -1234,71 +1257,77 @@ class NodeData:
 
     def description(self) -> str:
         if "description" not in self._cache:
-            self._cache["description"] = self._description({})
+            to_append = collections.defaultdict(list)
+            for cls in type(self).__mro__:
+                if not issubclass(cls, NodeData):
+                    continue # support multi-classing in case you're Emily Axford
+                if cls.get_description(self, to_append) is not None: # returned something
+                    raise RuntimeError(f"'{cls.__name__}.get_description()' returned a non-None value.")
+                try:
+                    if (n := max(to_append)) > 99:
+                        raise ValueError(f"Class {cls.__name__!r} used out-of-bounds index {n} (max 99)")
+                    if (n := min(to_append)) < 0:
+                        raise ValueError(f"Class {cls.__name__!r} used negative index {n} (positive values only)")
+                except TypeError as e:
+                    raise TypeError(f"Class {cls.__name__!r} did not use a number-like type") from e
+
+            final = []
+            desc = list(to_append.items())
+            desc.sort(key=lambda x: x[0])
+            for i, text in desc:
+                final.extend(text)
+            self._cache["description"] = "\n".join(final)
         return self._cache["description"]
 
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        text = []
-        text.extend(to_append.get(0, ()))
-        text.append(f"{self.room_type}")
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[0].append(f"{self.room_type}")
+        to_append[0].append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
 
-        text.extend(to_append.get(1, ()))
-        text.append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
-
-        text.extend(to_append.get(2, ()))
         if self.name:
-            text.append(self.name)
+            to_append[0].append(self.name)
 
-        text.extend(to_append.get(3, ()))
-        text.extend(to_append.get(7, ()))
         if self.potions:
-            text.append("Potions obtained:")
-            text.extend(f"- {x.name}" for x in self.potions)
+            to_append[10].append("Potions obtained:")
+            to_append[10].extend(f"- {x.name}" for x in self.potions)
 
         if self.used_potions:
-            text.append("Potions used:")
-            text.extend(f"- {x.name}" for x in self.used_potions)
+            to_append[12].append("Potions used:")
+            to_append[12].extend(f"- {x.name}" for x in self.used_potions)
 
         if self.potions_from_alchemize:
-            text.append("Potions obtained from Alchemize:")
-            text.extend(f"- {x.name}" for x in self.potions_from_alchemize)
+            to_append[14].append("Potions obtained from Alchemize:")
+            to_append[14].extend(f"- {x.name}" for x in self.potions_from_alchemize)
 
         if self.potions_from_entropic:
-            text.append("Potions obtained from Entropic Brew:")
-            text.extend(f"- {x.name}" for x in self.potions_from_entropic)
+            to_append[16].append("Potions obtained from Entropic Brew:")
+            to_append[16].extend(f"- {x.name}" for x in self.potions_from_entropic)
 
         if self.discarded_potions:
-            text.append("Potions discarded:")
-            text.extend(f"- {x.name}" for x in self.discarded_potions)
+            to_append[18].append("Potions discarded:")
+            to_append[18].extend(f"- {x.name}" for x in self.discarded_potions)
 
         if self.skipped_potions:
-            text.append("Potions skipped:")
-            text.extend(f"- {x.name}" for x in self.skipped_potions)
+            to_append[20].append("Potions skipped:")
+            to_append[20].extend(f"- {x.name}" for x in self.skipped_potions)
 
-        text.extend(to_append.get(4, ()))
         if self.relics:
-            text.append("Relics obtained:")
-            text.extend(f"- {x.name}" for x in self.relics)
+            to_append[30].append("Relics obtained:")
+            to_append[30].extend(f"- {x.name}" for x in self.relics)
 
         if self.skipped_relics:
-            text.append("Relics skipped:")
-            text.extend(f"- {x.name}" for x in self.skipped_relics)
+            to_append[32].append("Relics skipped:")
+            to_append[32].extend(f"- {x.name}" for x in self.skipped_relics)
 
-        text.extend(to_append.get(5, ()))
         if self.picked:
-            text.append("Picked:")
-            text.extend(f"- {x}" for x in self.picked)
+            to_append[34].append("Picked:")
+            to_append[34].extend(f"- {x}" for x in self.picked)
 
         if self.skipped:
-            text.append("Skipped:")
-            text.extend(f"- {x}" for x in self.skipped)
-
-        text.extend(to_append.get(6, ()))
-
-        return "\n".join(text)
+            to_append[36].append("Skipped:")
+            to_append[36].extend(f"- {x}" for x in self.skipped)
 
     @property
     def name(self) -> str:
@@ -1555,14 +1584,11 @@ class EncounterBase(NodeData):
 
         return super().from_parser(parser, floor, damage, *extra)
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 3 not in to_append:
-            to_append[3] = []
+    def get_description(self, to_append: dict[int, list[str]]):
         if self.name != self.fought:
-            to_append[3].append(f"Fought {self.fought}")
-        to_append[3].append(f"{self.damage} damage")
-        to_append[3].append(f"{self.turns} turns")
-        return super()._description(to_append)
+            to_append[4].append(f"Fought {self.fought}")
+        to_append[4].append(f"{self.damage} damage")
+        to_append[4].append(f"{self.turns} turns")
 
     def fights_delta(self) -> int:
         return 1
@@ -1603,12 +1629,9 @@ class Treasure(NodeData):
         self._bluekey = has_blue_key
         self._key_relic = relic
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
+    def get_description(self, to_append: dict[int, list[str]]):
         if self.blue_key:
-            if 5 not in to_append:
-                to_append[5] = []
-            to_append[5].append(f"Skipped {self.key_relic} for the Sapphire key")
-        return super()._description(to_append)
+            to_append[6].append(f"Skipped {self.key_relic} for the Sapphire key")
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -1647,12 +1670,9 @@ class EliteEncounter(EncounterBase):
         super().__init__(damage, *extra)
         self._has_key = has_key
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
+    def get_description(self, to_append: dict[int, list[str]]):
         if self.has_key:
-            if 5 not in to_append:
-                to_append[5] = []
-            to_append[5].append("Got the Emerald Key")
-        return super()._description(to_append)
+            to_append[6].append("Got the Emerald Key")
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -1699,16 +1719,13 @@ class EmptyEvent(NodeData):
     room_type = "Unknown (Bugged)"
     map_icon = "event.png"
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 9 not in to_append:
-            to_append[9] = []
-        to_append[9].append(
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[99].append(
             "Something happened here, but I'm not sure what...\n"
             "This is a bug with a mod. Please report this to the mod creators:\n"
             "'Missing event data in JSON'\n"
             "(Provide the event name if you can find it)"
         )
-        return super()._description(to_append)
 
 class AmbiguousEvent(NodeData):
     room_type = "Unknown (Ambiguous)"
@@ -1718,15 +1735,12 @@ class AmbiguousEvent(NodeData):
         super().__init__(*extra)
         self._events = events
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 9 not in to_append:
-            to_append[9] = []
-        to_append[9].append(
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[99].append(
             "This event is ambiguous; multiple events map to it:\n" +
-            ", ".join(self._events["event_name"]) + " -\n" +
+            ", ".join(x["event_name"] for x in self._events) + " -\n" +
             "This is a bug with a mod. Please report this to the mod creators."
         )
-        return super()._description(to_append)
 
 class Event(NodeData):
     room_type = "Unknown"
@@ -1736,22 +1750,25 @@ class Event(NodeData):
         super().__init__(*extra)
         self._event = event
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 7 not in to_append:
-            to_append[7] = []
-        to_append[7].append(f"Option taken:\n- {self.choice}")
+    def get_description(self, to_append: dict[int, list[str]]):
+        i = 40
+        to_append[i].append(f"Option taken:\n- {self.choice}")
+        #                42               44              46               48           50             52
         for x in ("damage_healed", "damage_taken", "max_hp_gained", "max_hp_lost", "gold_gained", "gold_lost"):
+            i += 2
             val = getattr(self, x)
             if val:
                 name = x.replace("_", " ").capitalize().replace("hp", "HP")
-                to_append[7].append(f"{name}: {val}")
+                to_append[i].append(f"{name}: {val}")
+
+        #               54                   56                58               60                 62
         for x in ("cards_transformed", "cards_obtained", "cards_removed", "cards_upgraded", "relics_lost"):
+            i += 2
             val = getattr(self, x)
             if val:
                 name = x.replace("_", " ").capitalize()
-                to_append[7].append(f"{name}:")
-                to_append[7].extend(f"- {card}" for card in val)
-        return super()._description(to_append)
+                to_append[i].append(f"{name}:")
+                to_append[i].extend(f"- {card}" for card in val)
 
     def potion_delta(self) -> int:
         value = super().potion_delta()
@@ -1863,14 +1880,11 @@ class Colosseum(Event):
         super().__init__(event, *extra)
         self._damages = damages
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 3 not in to_append:
-            to_append[3] = []
+    def get_description(self, to_append: dict[int, list[str]]):
         for i, dmg in enumerate(self._damages, 1):
-            to_append[3].append(f"Fight {i} ({dmg['enemies']}):")
-            to_append[3].append(f"{dmg['damage']} damage")
-            to_append[3].append(f"{dmg['turns']} turns")
-        return super()._description(to_append)
+            to_append[4].append(f"Fight {i} ({dmg['enemies']}):")
+            to_append[4].append(f"{dmg['damage']} damage")
+            to_append[4].append(f"{dmg['turns']} turns")
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -1900,25 +1914,20 @@ class Merchant(NodeData):
         self._purged = purged
         self._contents = contents
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
+    def get_description(self, to_append: dict[int, list[str]]):
         if self.purged:
-            if 5 not in to_append:
-                to_append[5] = []
-            to_append[5].append(f"* Removed {self.purged}")
+            to_append[70].append(f"* Removed {self.purged}")
         if self.contents:
-            if 6 not in to_append:
-                to_append[6] = []
-            to_append[6].append("Skipped:")
+            to_append[72].append("Skipped:")
             if self.contents["relics"]:
-                to_append[6].append("* Relics")
-                to_append[6].extend(f"  - {x.name}" for x in self.contents["relics"])
+                to_append[74].append("* Relics")
+                to_append[74].extend(f"  - {x.name}" for x in self.contents["relics"])
             if self.contents["cards"]:
-                to_append[6].append("* Cards")
-                to_append[6].extend(f"  - {x}" for x in self.contents["cards"])
+                to_append[76].append("* Cards")
+                to_append[76].extend(f"  - {x}" for x in self.contents["cards"])
             if self.contents["potions"]:
-                to_append[6].append("* Potions")
-                to_append[6].extend(f"  - {x.name}" for x in self.contents["potions"])
-        return super()._description(to_append)
+                to_append[78].append("* Potions")
+                to_append[78].extend(f"  - {x.name}" for x in self.contents["potions"])
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -1998,31 +2007,22 @@ class Courier(NodeData):
     room_type = "Courier (Spire with Friends)"
     map_icon = "event.png"
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 0 not in to_append:
-            to_append[0] = []
-        to_append[0].append("This is a Courier node. I don't know how to deal with it.")
-        return super()._description(to_append)
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[99].append("This is a Courier node. I don't know how to deal with it.")
 
 class Empty(NodeData):
     room_type = "Empty (Spire with Friends)"
     map_icon = "event.png"
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 0 not in to_append:
-            to_append[0] = []
-        to_append[0].append("This is an empty node. Nothing happened here.")
-        return super()._description(to_append)
+    def get_description(self, to_append: dict[int, list[str]]) :
+        to_append[99].append("This is an empty node. Nothing happened here.")
 
 class SWF(NodeData):
     room_type = "Unknown Node (Spire with Friends)"
     map_icon = "event.png"
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 0 not in to_append:
-            to_append[0] = []
-        to_append[0].append("This is some Spire with Friends stuff. I don't know how to deal with it.")
-        return super()._description(to_append)
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[99].append("This is some Spire with Friends stuff. I don't know how to deal with it.")
 
 class Campfire(NodeData):
     room_type = "Rest Site"
@@ -2033,11 +2033,8 @@ class Campfire(NodeData):
         self._key = key
         self._data = data
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
-        if 4 not in to_append:
-            to_append[4] = []
-        to_append[4].append(self.action)
-        return super()._description(to_append)
+    def get_description(self, to_append: dict[int, list[str]]) -> str:
+        to_append[6].append(self.action)
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):
@@ -2111,13 +2108,10 @@ class Victory(NodeData):
         self._data = data
         super().__init__(*extra)
 
-    def _description(self, to_append: dict[int, list[str]]) -> str:
+    def get_description(self, to_append: dict[int, list[str]]):
         if self.score:
-            if 6 not in to_append:
-                to_append[6] = []
             to_append[6].extend(self.score_breakdown)
             to_append[6].append(f"Score: {self.score}")
-        return super()._description(to_append)
 
     @classmethod
     def from_parser(cls, parser: FileParser, floor: int, *extra):

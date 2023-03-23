@@ -1096,6 +1096,7 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
     match arg:
         case "clear":
             save._cache.clear()
+            save._cache["self"] = save
             await ctx.reply("Cache cleared.")
         case "key":
             val = save._cache
@@ -1115,6 +1116,7 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
             await ctx.reply(f"Value in cache: {val}")
         case a:
             await ctx.reply(f"Argument {a!r} not recognized.")
+
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
