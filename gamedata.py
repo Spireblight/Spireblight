@@ -1162,6 +1162,7 @@ class NodeData:
     guaranteed - appending to a key already used may have unexpected results.
 
     0     - Basic stuff; only for things that all nodes share
+    2     - Event-specific combat setup
     4     - Combat results (damage taken, turns elapsed, etc.)
     6     - Unique values (key obtained, campfire option, etc.)
     10-20 - Potion usage data
@@ -1258,11 +1259,17 @@ class NodeData:
     def description(self) -> str:
         if "description" not in self._cache:
             to_append = collections.defaultdict(list)
+            done = []
             for cls in type(self).__mro__:
-                if not issubclass(cls, NodeData):
-                    continue # support multi-classing in case you're Emily Axford
-                if cls.get_description(self, to_append) is not None: # returned something
+                try:
+                    fn = cls.get_description
+                except AttributeError:
+                    continue # support multi-classing if you're Emily Axford
+                if fn in done:
+                    continue
+                if fn(self, to_append) is not None: # returned something
                     raise RuntimeError(f"'{cls.__name__}.get_description()' returned a non-None value.")
+                done.append(fn)
                 if not to_append:
                     continue
                 try:
@@ -1754,8 +1761,10 @@ class Event(NodeData):
 
     def get_description(self, to_append: dict[int, list[str]]):
         i = 40
+        if type(self) is EventFight:
+            i = 2
         to_append[i].append(f"Option taken:\n- {self.choice}")
-        #                42               44              46               48           50             52
+        i = 42   #       42               44              46               48           50             52
         for x in ("damage_healed", "damage_taken", "max_hp_gained", "max_hp_lost", "gold_gained", "gold_lost"):
             i += 2
             val = getattr(self, x)
