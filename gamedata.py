@@ -518,6 +518,7 @@ _chars = {
     "GREMLIN": "Gremlin Gang",
     "THE_SPIRIT": "Hexaghost",
     "THE_SNECKO": "Snecko",
+    "THE_SILENT": "Silent",
 }
 
 class FileParser(ABC):
