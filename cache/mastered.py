@@ -61,7 +61,9 @@ def get_current_masteries(save: Savefile):
         if card not in _mastery_stats.mastered_cards:
             if count == 1:
                 one_ofs.append(card)
-            cards_can_master.append(card)
+                cards_can_master.append(card)
+            else:
+                cards_can_master.append(f'({card})')
     
     relics_can_master: list[str] = []
     for relic in save.relics:
