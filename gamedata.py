@@ -11,8 +11,16 @@ import io
 from abc import ABC, abstractmethod
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
-from matplotlib import pyplot as plt
-from mpld3 import fig_to_html
+
+try:
+    from matplotlib import pyplot as plt
+except ModuleNotFoundError:
+    plt = None
+
+try:
+    from mpld3 import fig_to_html
+except ModuleNotFoundError:
+    fig_to_html = None
 
 from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic, Potion
 from sts_profile import Profile
@@ -589,6 +597,9 @@ class FileParser(ABC):
         return self._graph_cache[to_cache]
 
     def _generate_graph(self, graph_type: str, display_type: str, items: Iterable[str], ylabel: str | None, title: str | None, *, allow_private: bool) -> str:
+        if plt is None:
+            raise ValueError("matplotlib is not installed, graphs cannot be used")
+
         totals: dict[str, list[int]] = {}
         ends = []
         floors = []
@@ -658,6 +669,8 @@ class FileParser(ABC):
 
         match display_type:
             case "embed":
+                if fig_to_html is None:
+                    raise ValueError("mpld3 isn't installed, cannot embed graphs. Use 'image' display type")
                 value: str = fig_to_html(fig)
                 plt.close(fig)
                 return value
