@@ -63,6 +63,7 @@ class Savefile(FileParser):
             self._last = time.time()
             self._character = None
             self._cache.clear()
+            self._cache["self"] = self
         else:
             self._matches = False
             self._character = character
@@ -75,21 +76,21 @@ class Savefile(FileParser):
         return self.character is not None
 
     @property
-    def timestamp(self) -> int:
+    def timestamp(self) -> datetime.datetime:
+        """Return the save time for the run, as UTC."""
         date = self._data.get("save_date")
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
             # off. A bit too much precision otherwise
             date = datetime.datetime.utcfromtimestamp(date / 1000)
         else:
-            date = datetime.datetime.now()
+            date = datetime.datetime.utcnow()
 
         return date
 
     @property
     def timedelta(self) -> datetime.timedelta:
-        # TODO(olivia): Do something better
-        return datetime.timedelta(hours=0)
+        return datetime.timedelta(seconds=self.playtime)
 
     @property
     def display_name(self) -> str:

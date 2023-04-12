@@ -1093,6 +1093,8 @@ async def card_with_art(ctx: ContextType, *line: str):
 
 @with_savefile("cache", flag="m")
 async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
+    # TODO: 'cache reload', to reload the JSON, but it needs a bunch of state changing
+    # (need to clear all the commands from both bots first)
     match arg:
         case "clear":
             save._cache.clear()
@@ -1102,15 +1104,15 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
             val = save._cache
             for a in args:
                 try:
-                    a = int(a)
-                except ValueError:
-                    pass
-                try:
-                    val = val[a]
-                except (IndexError, KeyError, TypeError):
+                    val = getattr(val, a)
+                except AttributeError:
                     try:
-                        val = getattr(val, a)
-                    except AttributeError:
+                        a = int(a)
+                    except ValueError:
+                        pass
+                    try:
+                        val = val[a]
+                    except (IndexError, KeyError, TypeError):
                         break
 
             await ctx.reply(f"Value in cache: {val}")
@@ -1139,6 +1141,10 @@ async def neowbonus(ctx: ContextType, save: Savefile):
     """Display what the Neow bonus was."""
     await ctx.reply(f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}")
 
+@with_savefile("neowskipped", "skippedbonus")
+async def neow_skipped(ctx: ContextType, save: Savefile):
+    await ctx.reply(f"Options skipped: {', '.join(save.neow_bonus.skipped)}")
+
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, save: Savefile):
     """Display the run's current seed."""
@@ -1155,8 +1161,9 @@ async def is_seeded(ctx: ContextType, save: Savefile):
 @with_savefile("playtime", "runtime", "time", "played")
 async def run_playtime(ctx: ContextType, save: Savefile):
     """Display the current playtime for the run."""
-    # TODO: get run start time and compare to now, rather than the save data
-    minutes, seconds = divmod(save.playtime, 60)
+    start = save.timestamp - save.timedelta
+    seconds = int(time.time()) - start.timestamp()
+    minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     await ctx.reply(f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}")
 
