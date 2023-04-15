@@ -1085,7 +1085,7 @@ async def card_with_art(ctx: ContextType, *line: str):
     info: Card
 
     base = "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/"
-    mod = urllib.parse.quote(info.mod or "Slay the Spire")
+    mod = urllib.parse.quote(info.mod or "Slay the Spire").lower()
     name = info.name.replace(":", "-").replace("'", "").replace(" ", "")
     link = f"{mod}/cards/{info.color[:10]}-{name}.png"
 

@@ -217,7 +217,7 @@
           <div class="message-body relics">
             {% for relic in run.relics %}
               <div>
-                <img src="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{{ relic.mod | urlencode }}/relics/{{ relic.image | urlencode }}"
+                <img src="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{{ relic.mod.lower() | urlencode }}/relics/{{ relic.image | urlencode }}"
                   alt="{{ relic.description() }}"
                   title="{{ relic.description() }}"
                   onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{relic.escaped_description() }}')" >

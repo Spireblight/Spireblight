@@ -844,7 +844,7 @@ class FileParser(ABC):
                         "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
                         "website": config.server.url,
                         "banner": rarity or "Common",
-                        "mod": urllib.parse.quote(card.card.mod or "Slay the Spire"),
+                        "mod": urllib.parse.quote(card.card.mod or "Slay the Spire").lower(),
                         "card_url": f"{card.card.color[:10]}-{name}",
                         "card": card,
                     }

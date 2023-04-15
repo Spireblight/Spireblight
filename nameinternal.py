@@ -184,7 +184,7 @@ async def load():
     async with ClientSession() as session:
         for mod in config.spire.enabled_mods:
             data = None
-            async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/data.json") as resp:
+            async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
                 if resp.ok:
                     decoded = await resp.text()
                     data = json.loads(decoded)
