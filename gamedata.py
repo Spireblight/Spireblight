@@ -12,6 +12,8 @@ from abc import ABC, abstractmethod
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 
+from utils import format_for_slaytabase
+
 try:
     from matplotlib import pyplot as plt
 except ModuleNotFoundError:
@@ -839,13 +841,12 @@ class FileParser(ABC):
             for rarity, all_cards in content[color].items():
                 all_cards.sort(key=lambda x: f"{x.name}{x.upgrades}")
                 for card in all_cards:
-                    name = card.card.name.replace(":", "-").replace("'", "").replace(" ", "")
                     format_map = {
                         "color": ' style="color:#a0ffaa"' if card.upgrades else "", # make it green when upgraded
                         "website": config.server.url,
                         "banner": rarity or "Common",
                         "mod": urllib.parse.quote(card.card.mod or "Slay the Spire").lower(),
-                        "card_url": f"{card.card.color[:10]}-{name}",
+                        "card_url": format_for_slaytabase(card.card.internal),
                         "card": card,
                     }
                     final.append(text.format_map(format_map))
@@ -1088,8 +1089,7 @@ class RelicData:
         name = self.relic.internal
         if ":" in name:
             name = name[name.index(":")+1:]
-        name = name.replace(" ", "").replace("'", "")
-        return f"{name}.png"
+        return f"{format_for_slaytabase(name)}.png"
 
     @property
     def name(self) -> str:
