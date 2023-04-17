@@ -43,7 +43,7 @@ from wrapper import wrapper
 from twitch import TwitchCommand
 from logger import logger
 from slice import get_current_run, CurrentRun
-from utils import getfile, update_db, get_req_data
+from utils import format_for_slaytabase, getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser
@@ -1086,8 +1086,8 @@ async def card_with_art(ctx: ContextType, *line: str):
 
     base = "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/"
     mod = urllib.parse.quote(info.mod or "Slay the Spire").lower()
-    name = info.name.replace(":", "-").replace("'", "").replace(" ", "")
-    link = f"{mod}/cards/{info.color[:10]}-{name}.png"
+    id = format_for_slaytabase(info.internal)
+    link = f"{mod}/cards/{id}.png"
 
     await ctx.reply(f"You can view this card and the upgrade with the art here: {base}{link}")
 

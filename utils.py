@@ -41,3 +41,6 @@ def update_db():
 
 def convert_class_to_obj(obj: Any) -> dict[str, Any]:
     return vars(obj)
+
+def format_for_slaytabase(val: str) -> str:
+    return val.replace(":", "-").replace("'", "").replace(" ", "").lower()
