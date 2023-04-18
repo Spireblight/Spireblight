@@ -1031,7 +1031,7 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
             _ongoing_giveaway["count"] = count
         else:
             _ongoing_giveaway["count"] = 1
-        await ctx.send(f"/announce A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
+        await ctx.send(f"A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
 
     elif _ongoing_giveaway["starter"] != ctx.author.name:
         await ctx.reply("Only the person who started the giveaway can resolve it!")
