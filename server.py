@@ -46,7 +46,7 @@ from slice import get_current_run, CurrentRun
 from utils import format_for_slaytabase, getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
-from runs import get_latest_run
+from runs import get_latest_run, get_parser
 
 from typehints import ContextType, CommandType
 import events
@@ -1031,7 +1031,7 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
             _ongoing_giveaway["count"] = count
         else:
             _ongoing_giveaway["count"] = 1
-        await ctx.send(f"/announce A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
+        await ctx.send(f"A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
 
     elif _ongoing_giveaway["starter"] != ctx.author.name:
         await ctx.reply("Only the person who started the giveaway can resolve it!")
@@ -1100,8 +1100,11 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
             save._cache.clear()
             save._cache["self"] = save
             await ctx.reply("Cache cleared.")
-        case "key":
-            val = save._cache
+        case "key" | "find":
+            if arg == "key":
+                val = save._cache
+            else:
+                val = get_parser(args[0])._cache
             for a in args:
                 try:
                     val = getattr(val, a)
