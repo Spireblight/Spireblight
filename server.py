@@ -1545,25 +1545,13 @@ async def mastered_stuff(ctx: ContextType, *card: str):
         await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
 
 @with_savefile("candidates")
-async def current_mastery_check(ctx: ContextType, save: Savefile, *arg: str):
-    """Output what cards and relics in the current run can be mastered if won."""
-    mastery_type = "".join(arg).lower()
-
+async def current_mastery_check(ctx: ContextType, save: Savefile):
+    """Output what cards in the current run can be mastered if won."""
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
-
-    match mastery_type:
-        case "cards" | "card" | "c":
-            if cards_can_master:
-                await ctx.reply(f"The cards that can be mastered this run are: {', '.join(cards_can_master)}")
-            else:
-                await ctx.reply(f"There are no new cards in this run that can be mastered.")
-        case "relics" | "relic" | "r":
-            if relics_can_master:
-                await ctx.reply(f"The relics that can be mastered this run are: {', '.join(relics_can_master)}")
-            else:
-                await ctx.reply(f"There are no new relics in this run that can be mastered.")
-        case a:
-            await ctx.reply(f'Option {" ".join(arg)!r} not recognized. Call {config.baalorbot.prefix}candidates with "cards" or "relics".')
+    if cards_can_master:
+        await ctx.reply(f"The cards that can be mastered this run are: {', '.join(cards_can_master)}")
+    else:
+        await ctx.reply(f"There are no new cards in this run that can be mastered.")
 
 @router.get("/commands")
 @template("commands.jinja2")
