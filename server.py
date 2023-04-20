@@ -1165,7 +1165,7 @@ async def is_seeded(ctx: ContextType, save: Savefile):
 async def run_playtime(ctx: ContextType, save: Savefile):
     """Display the current playtime for the run."""
     start = save.timestamp - save.timedelta
-    seconds = int(time.time()) - start.timestamp()
+    seconds = int(time.time() - start.timestamp())
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     await ctx.reply(f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}")
