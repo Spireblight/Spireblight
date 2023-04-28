@@ -43,7 +43,7 @@ def get(name: str) -> Base:
     if name in _internal_cache:
         return _internal_cache[name]
 
-    raise ValueError(f"Could not find item {name}")
+    return Unknown(name)
 
 def get_card(card: str) -> str:
     name, _, upgrades = card.partition("+")
@@ -155,6 +155,14 @@ class ScoreBonus(Base):
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.format_string: str = data.get("format_string", self.name)
+
+class Unknown(Base):
+    cls_name = "<unknown>"
+    def __init__(self, name: str):
+        self.internal = name
+        self.name = name
+        self.description = f"Could not find description for {name!r} (this is a bug)"
+        self.mod = None
 
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
