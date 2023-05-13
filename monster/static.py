@@ -7,6 +7,7 @@ from __future__ import annotations
 from collections import defaultdict
 
 import json
+import os
 
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."
@@ -89,7 +90,7 @@ def load():
     _internal_cache.clear()
     _query_cache.clear()
     for cls, file in ((Card, "cards"), (Artifact, "artifacts")):
-        with open(f"{file}.json") as f:
+        with open(os.path.join("monster", f"{file}.json")) as f:
             data = json.load(f)
         for d in data:
             value = cls(d)
