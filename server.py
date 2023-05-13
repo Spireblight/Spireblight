@@ -1074,7 +1074,7 @@ async def card_info(ctx: ContextType, *line: str):
 
 @command("mtinfo")
 async def mt_info(ctx: ContextType, *line: str):
-    line = " ".join(str)
+    line = " ".join(line)
     info = mt_query(line)
     if info is None:
         await ctx.reply(f"Could not find info for {line!r}")
