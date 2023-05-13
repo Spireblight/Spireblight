@@ -74,6 +74,7 @@ class Artifact(Base):
 
     @property
     def info(self) -> str:
+        clan = source = ""
         if self.clan:
             clan = f" ({self.clan})"
         if self.source:
