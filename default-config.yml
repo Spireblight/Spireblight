@@ -112,6 +112,10 @@ slice:
   # The file to write curse data to
   curses: ''
 
+mt:
+  # Monster Train data
+  enabled: false
+
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/

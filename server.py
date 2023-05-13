@@ -40,6 +40,7 @@ from nameinternal import get, query, Base, Card, Relic, Potion, Keyword, ScoreBo
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
+from monster import query as mt_query
 from twitch import TwitchCommand
 from logger import logger
 from slice import get_current_run, CurrentRun
@@ -1065,6 +1066,16 @@ async def giveaway_enter(ctx: ContextType):
 async def card_info(ctx: ContextType, *line: str):
     line = " ".join(line)
     info: Base = query(line)
+    if info is None:
+        await ctx.reply(f"Could not find info for {line!r}")
+        return
+
+    await ctx.reply(info.info)
+
+@command("mtinfo")
+async def mt_info(ctx: ContextType, *line: str):
+    line = " ".join(str)
+    info = mt_query(line)
     if info is None:
         await ctx.reply(f"Could not find info for {line!r}")
         return

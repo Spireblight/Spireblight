@@ -14,7 +14,9 @@ async def main():
     last_slots = 0
     lasp = [0, 0, 0]
     last_sd = 0
+    last_mt = 0
     use_sd = False
+    use_mt = False
     user = None
     try:
         with open("last_run") as f:
@@ -30,9 +32,10 @@ async def main():
         return
     try:
         use_sd = config.slice.enabled
+        #use_mt = config.mt.enabled
         user = os.environ["USERPROFILE"]
     except (AttributeError, KeyError):
-        use_sd = False
+        use_sd = use_mt = False
 
     async with ClientSession(config.server.url) as session:
         while True:
@@ -56,22 +59,54 @@ async def main():
                     possible = None
 
             if use_sd:
-                cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
-                if cur_sd != last_sd:
-                    with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
-                        sd_data = f.read()
-                    sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
-                    async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
-                        if resp.ok:
-                            last_sd = cur_sd
-                            curses = await resp.read()
-                            if curses and config.slice.curses:
-                                decoded: list[str] = pickle.loads(curses)
-                                try:
-                                    with open(config.slice.curses, "w") as f:
-                                        f.write("\n".join(decoded))
-                                except OSError:
-                                    pass
+                try:
+                    cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
+                except OSError:
+                    pass
+                else:
+                    if cur_sd != last_sd:
+                        with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
+                            sd_data = f.read()
+                        sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
+                        async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
+                            if resp.ok:
+                                last_sd = cur_sd
+                                curses = await resp.read()
+                                if curses and config.slice.curses:
+                                    decoded: list[str] = pickle.loads(curses)
+                                    try:
+                                        with open(config.slice.curses, "w") as f:
+                                            f.write("\n".join(decoded))
+                                    except OSError:
+                                        pass
+
+            if False and use_mt: # needs testing before being live
+                mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
+                mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
+                try:
+                    cur_mt = os.path.getmtime(mt_file)
+                except OSError:
+                    pass
+                else:
+                    if cur_mt != last_mt:
+                        with open(mt_file) as f:
+                            mt_data = f.read()
+                        mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
+                        mt_runs = {}
+                        for file in os.listdir(os.path.join(mt_folder, "run-history")):
+                            if not file.endswith(".db"):
+                                continue
+                            if file == "runHistory.db": # main one
+                                key = "main"
+                            elif file.startswith("runHistoryData"): # something like runHistoryData00.db
+                                key = int(file[14:16])
+                            else:
+                                key = file # just in case
+                            with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
+                                mt_runs[key] = f.read()
+                        async with session.post("/sync/monster", data={"save": mt_data, **mt_runs}, params={"key": config.server.secret}) as resp:
+                            if resp.ok:
+                                last_mt = cur_mt
 
             to_send = []
             files = []
