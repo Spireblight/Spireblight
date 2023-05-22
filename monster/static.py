@@ -38,9 +38,14 @@ def get(name: str) -> Base:
 
     return Unknown(name)
 
+def get_safe(name: str) -> str:
+    if name in _internal_cache:
+        return _internal_cache[name].name
+    return name
+
 class Base:
     def __init__(self, data: dict):
-        self.name = data["Name"]
+        self.name: str = data["Name"]
         self.description = data["Description"]
         self.internal = data["ID"]
 
