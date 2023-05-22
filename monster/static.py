@@ -93,7 +93,7 @@ def load():
     for cls, file in ((Card, "cards"), (Artifact, "artifacts")):
         with open(os.path.join("monster", f"{file}.json")) as f:
             data = json.load(f)
-        for d in data:
-            value = cls(d)
-            _internal_cache[value.internal] = value
-            _query_cache[sanitize(value.name)].append(value)
+            for d in data:
+                value = cls(d)
+                _internal_cache[value.internal] = value
+                _query_cache[sanitize(value.name)].append(value)

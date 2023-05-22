@@ -164,6 +164,9 @@ class Unknown(Base):
         self.description = f"Could not find description for {name!r} (this is a bug)"
         self.mod = None
 
+    def __getattr__(self, attr: str):
+        return f"<Unknown attribute {attr}>"
+
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,

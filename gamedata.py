@@ -555,7 +555,7 @@ class FileParser(ABC):
         self.neow_bonus = NeowBonus(self)
         self._cache = {"self": self} # this lets us do on-the-fly debugging
         self._character: str | None = None
-        self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str] = {}
+        self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str | bytes] = {}
 
     def get_boss_chest(self) -> dict[str, str | list[str]]:
         if "boss_chest_iter" not in self._cache:
@@ -590,7 +590,7 @@ class FileParser(ABC):
 
         return Response(body=self._graph_cache[to_cache], content_type=self._graph_types[display_type])
 
-    def bar(self, dtype: str, items: Iterable[str], label: str | None = None, title: str | None = None, *, allow_private: bool = False) -> str:
+    def bar(self, dtype: str, items: Iterable[str], label: str | None = None, title: str | None = None, *, allow_private: bool = False) -> str | bytes:
         if dtype not in self._graph_types:
             raise ValueError(f"Display type {dtype} is undefined")
         to_cache = ("bar", dtype, tuple(items), label, title)
@@ -598,7 +598,7 @@ class FileParser(ABC):
             self._graph_cache[to_cache] = self._generate_graph("bar", dtype, items, label, title, allow_private=allow_private)
         return self._graph_cache[to_cache]
 
-    def _generate_graph(self, graph_type: str, display_type: str, items: Iterable[str], ylabel: str | None, title: str | None, *, allow_private: bool) -> str:
+    def _generate_graph(self, graph_type: str, display_type: str, items: Iterable[str], ylabel: str | None, title: str | None, *, allow_private: bool) -> str | bytes:
         if plt is None:
             raise ValueError("matplotlib is not installed, graphs cannot be used")
 

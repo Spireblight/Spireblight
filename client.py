@@ -31,9 +31,9 @@ async def main():
         time.sleep(3)
         return
     try:
-        use_sd = config.slice.enabled
-        #use_mt = config.mt.enabled
         user = os.environ["USERPROFILE"]
+        use_sd = config.slice.enabled
+        use_mt = config.mt.enabled
     except (AttributeError, KeyError):
         use_sd = use_mt = False
 
@@ -80,7 +80,7 @@ async def main():
                                     except OSError:
                                         pass
 
-            if False and use_mt: # needs testing before being live
+            if use_mt:
                 mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
                 mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
                 try:
@@ -99,7 +99,7 @@ async def main():
                             if file == "runHistory.db": # main one
                                 key = "main"
                             elif file.startswith("runHistoryData"): # something like runHistoryData00.db
-                                key = int(file[14:16])
+                                key = file[14:16]
                             else:
                                 key = file # just in case
                             with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
