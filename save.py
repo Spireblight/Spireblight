@@ -5,6 +5,7 @@ import base64
 import json
 import time
 import math
+import os
 
 from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
@@ -21,6 +22,8 @@ from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run, StreakInfo
 
 import score as _s
+
+from configuration import config
 
 __all__ = ["get_savefile", "Savefile"]
 
@@ -43,7 +46,13 @@ class Savefile(FileParser):
     def __init__(self):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
-        super().__init__(None)
+        data = None
+        try:
+            with open(os.path.join("data", "spire-save.json"), "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            pass
+        super().__init__(data)
         self._last = time.time()
         self._matches = False
 
@@ -468,6 +477,11 @@ async def receive_save(req: Request):
             j["basemod:mod_saves"] = {}
 
     _savefile.update_data(j, name, req.query["has_run"])
+    with open(os.path.join("data", "spire-save.json"), "w") as f:
+        if j:
+            json.dump(j, f, indent=config.server.json_indent)
+        else:
+            f.write("{}")
     logger.debug(f"Updated data. Final transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()

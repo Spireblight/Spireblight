@@ -8,13 +8,14 @@ import os
 from configuration import config
 
 async def main():
-    print("Client running. Will periodically check for the savefile and send it over!")
+    print("Client running. Will periodically check for the savefile and send it over!\n")
     has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
     last_slots = 0
     lasp = [0, 0, 0]
     last_sd = 0
     last_mt = 0
+    runs_last = {}
     use_sd = False
     use_mt = False
     user = None
@@ -36,6 +37,13 @@ async def main():
         use_mt = config.mt.enabled
     except (AttributeError, KeyError):
         use_sd = use_mt = False
+
+    print(f"User profile folder: {user}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
+
+    if use_mt:
+        mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
+        mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
+        print(f"\nFolder: {mt_folder}\nSavefile: {mt_file}")
 
     async with ClientSession(config.server.url) as session:
         while True:
@@ -81,8 +89,6 @@ async def main():
                                         pass
 
             if use_mt:
-                mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
-                mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
                 try:
                     cur_mt = os.path.getmtime(mt_file)
                 except OSError:
@@ -93,6 +99,7 @@ async def main():
                             mt_data = f.read()
                         mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
                         mt_runs = {}
+                        mt_runs_last = {}
                         for file in os.listdir(os.path.join(mt_folder, "run-history")):
                             if not file.endswith(".db"):
                                 continue
@@ -102,11 +109,15 @@ async def main():
                                 key = file[14:16]
                             else:
                                 key = file # just in case
-                            with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
-                                mt_runs[key] = f.read()
+                            last = os.path.getmtime(os.path.join(mt_folder, "run-history", file))
+                            if runs_last.get(key) != last:
+                                with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
+                                    mt_runs[key] = f.read()
+                                    mt_runs_last[key] = last
                         async with session.post("/sync/monster", data={"save": mt_data, **mt_runs}, params={"key": config.server.secret}) as resp:
                             if resp.ok:
                                 last_mt = cur_mt
+                                runs_last.update(mt_runs_last)
 
             to_send = []
             files = []
