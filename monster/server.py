@@ -7,6 +7,8 @@ from monster.static import get_safe
 from webpage import router
 from utils import get_req_data
 
+from typehints import ContextType
+
 from configuration import config
 
 class MonsterSave:
@@ -32,6 +34,14 @@ class MonsterSave:
 
 _savefile = MonsterSave()
 
+async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
+    if _savefile._data is None or not (_savefile.main_class and _savefile.sub_class):
+        if ctx is not None:
+            await ctx.reply("Not in a run.")
+        return
+
+    return _savefile
+
 @router.post("/sync/monster")
 async def get_data(req: Request):
     save = (await get_req_data(req, "save"))[0]
@@ -48,7 +58,7 @@ async def get_data(req: Request):
         if isinstance(value, FileField):
             value = value.file.read()
         with open(os.path.join("data", f"mt-runs-{name}.sqlite3"), "wb") as f:
-            f.write(post[name])
+            f.write(value)
 
     for k in post:
         if k == "main" or k.isdigit() or k.endswith(".db"):

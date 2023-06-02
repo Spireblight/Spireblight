@@ -36,11 +36,11 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, Base, Card, Relic, Potion, Keyword, ScoreBonus
+from nameinternal import get, query, Base, Card
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
-from monster import query as mt_query
+from monster import query as mt_query, get_savefile as get_mt_save
 from twitch import TwitchCommand
 from logger import logger
 from slice import get_current_run, CurrentRun
@@ -149,7 +149,7 @@ def _create_cmd(output):
             msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
-        keywords = {"savefile": None, "profile": None, "readline": readline}
+        keywords = {"mt-save": None, "savefile": None, "profile": None, "readline": readline}
         if "$<profile" in msg:
             try:
                 keywords["profile"] = get_current_profile()
@@ -159,8 +159,12 @@ def _create_cmd(output):
             keywords["savefile"] = await get_savefile(ctx)
             if keywords["savefile"] is None:
                 return
+        if "$<mt-save" in msg:
+            keywords["mt-save"] = await get_mt_save(ctx)
+            if keywords["mt-save"] is None:
+                return
         msg = _formatter.vformat(msg, (), keywords)
-        # TODO: Add a flag to the command that says whethere it's a reply
+        # TODO: Add a flag to the command that says whether it's a reply
         # or a regular message.
         await ctx.reply(msg)
     return inner
@@ -278,6 +282,16 @@ def slice_command(name: str, *aliases: str, **kwargs):
                 raise ValueError("No Slice & Dice run going on")
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
+    return inner
+
+def mt_command(name: str, *aliases: str, **kwargs):
+    def inner(func):
+        async def _mt_get(ctx) -> list:
+            res = await get_mt_save(ctx)
+            if res is None:
+                raise ValueError("No savefile")
+            return [res]
+        return command(name, *aliases, **kwargs)(func, wrapper_func=_mt_get)
     return inner
 
 class TwitchConn(TBot):

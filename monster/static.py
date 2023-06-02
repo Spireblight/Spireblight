@@ -86,6 +86,9 @@ class Artifact(Base):
             source = f" [from {self.source}]"
         return f"{self.name}{clan}{source}: {self.description}"
 
+class Misc(Base):
+    """For things like clan names."""
+
 class Unknown(Base):
     def __init__(self, name: str):
         self.internal = name
@@ -95,7 +98,7 @@ class Unknown(Base):
 def load():
     _internal_cache.clear()
     _query_cache.clear()
-    for cls, file in ((Card, "cards"), (Artifact, "artifacts")):
+    for cls, file in ((Card, "cards"), (Artifact, "artifacts"), (Misc, "misc")):
         with open(os.path.join("monster", f"{file}.json")) as f:
             data = json.load(f)
             for d in data:
