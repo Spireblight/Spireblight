@@ -46,7 +46,7 @@ def get_safe(name: str) -> str:
 class Base:
     def __init__(self, data: dict):
         self.name: str = data["Name"]
-        self.description = data["Description"]
+        self.description = data.get("Description", "")
         self.internal = data["ID"]
 
     @property
