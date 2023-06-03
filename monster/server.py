@@ -17,7 +17,7 @@ class MonsterSave:
         try:
             with open(os.path.join("data", "monster-train-save.json"), "r") as f:
                 data = json.load(f)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             pass
         self._data = data
 
