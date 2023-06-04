@@ -206,7 +206,7 @@ async def main():
                     except OSError:
                         continue
 
-                if data:
+                if any(data.values()):
                     async with session.post("/sync/profile", data=data, params={"key": config.server.secret, "start": start}) as resp:
                         if resp.ok:
                             lasp = tobe_lasp
