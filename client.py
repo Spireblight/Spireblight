@@ -216,8 +216,12 @@ async def main():
 
                 if possible is not None and cur != last:
                     content = ""
-                    with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
-                        content = f.read()
+                    try:
+                        with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
+                            content = f.read()
+                    except OSError:
+                        possible = None
+                        continue
                     content = content.encode("utf-8", "xmlcharrefreplace")
                     char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
                     async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.server.secret, "has_run": "false", "start": start}) as resp:
