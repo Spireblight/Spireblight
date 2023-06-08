@@ -29,8 +29,16 @@ class MonsterSave:
         return self._data["startingConditions"]["mainClassInfo"]["className"]
 
     @property
+    def main_exiled(self) -> bool:
+        return bool(self._data["startingConditions"]["mainClassInfo"]["championIndex"])
+
+    @property
     def sub_class(self) -> str:
         return self._data["startingConditions"]["subclassInfo"]["className"]
+
+    @property
+    def sub_exiled(self) -> bool:
+        return bool(self._data["startingConditions"]["subclassInfo"]["championIndex"])
 
 _savefile = MonsterSave()
 

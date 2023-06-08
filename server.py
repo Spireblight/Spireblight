@@ -40,7 +40,7 @@ from nameinternal import get, query, Base, Card
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
-from monster import query as mt_query, get_savefile as get_mt_save
+from monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from twitch import TwitchCommand
 from logger import logger
 from slice import get_current_run, CurrentRun
@@ -1389,6 +1389,16 @@ async def score(ctx: ContextType, save: Savefile):
         await ctx.reply(f'Current Score: ~{save.score} points')
     else:
         await ctx.reply(f'Current Score: {save.score} points')
+
+@mt_command("clans")
+async def mt_clans(ctx: ContextType, save: MonsterSave):
+    main = save.main_class
+    if save.main_exiled:
+        main = f"{main} (Exiled)"
+    sub = save.sub_class
+    if save.sub_exiled:
+        sub = f"{sub} (Exiled)"
+    await ctx.reply(f"The clans are {main} and {sub}.")
 
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
