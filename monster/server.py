@@ -5,6 +5,7 @@ from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
 
 from monster.static import get_safe
 from webpage import router
+from logger import logger
 from utils import get_req_data
 
 from typehints import ContextType
@@ -43,27 +44,41 @@ async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
     return _savefile
 
 @router.post("/sync/monster")
-async def get_data(req: Request):
-    save = (await get_req_data(req, "save"))[0]
+async def get_data(req: Request): # lots of logging is temporary
+    print("Monster Train syncing.")
+    try:
+        save = (await get_req_data(req, "save"))[0]
+    except Exception as e:
+        import traceback
+        traceback.print_exception(e)
+        raise
     data = json.loads(save)
+    print("Data parsed.")
     _savefile.update_data(data)
+    print("Data loaded.")
     with open(os.path.join("data", "monster-train-save.json"), "w") as f:
         json.dump(data, f, indent=config.server.json_indent)
+        print("Data saved to disk.")
 
+    print("Grabbing run files.")
     # handle database stuff
     post = await req.post()
+    print("Post grabbed. Writing to disk.")
 
     def write_db(name: str):
+        print(f"Writing {name} to disk.")
         value = post[name]
         if isinstance(value, FileField):
             value = value.file.read()
         with open(os.path.join("data", f"mt-runs-{name}.sqlite3"), "wb") as f:
             f.write(value)
+            print("Wrote to disk.")
 
     for k in post:
         if k == "main" or k.isdigit() or k.endswith(".db"):
             write_db(k)
 
+    print("Done, returning 200.")
     return Response()
 
 @router.get("/mt/debug")
