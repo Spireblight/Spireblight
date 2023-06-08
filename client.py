@@ -1,5 +1,6 @@
 from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
+import traceback
 import asyncio
 import pickle
 import time
@@ -92,13 +93,13 @@ async def main():
                 try:
                     cur_mt = os.path.getmtime(mt_file)
                 except OSError:
-                    pass
+                    traceback.print_exc()
                 else:
                     if cur_mt != last_mt:
                         with open(mt_file) as f:
                             mt_data = f.read()
                         mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
-                        mt_runs = {}
+                        mt_runs = {"save": mt_data}
                         mt_runs_last = {}
                         for file in os.listdir(os.path.join(mt_folder, "run-history")):
                             if not file.endswith(".db"):
@@ -114,10 +115,12 @@ async def main():
                                 with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
                                     mt_runs[key] = f.read()
                                     mt_runs_last[key] = last
-                        async with session.post("/sync/monster", data={"save": mt_data, **mt_runs}, params={"key": config.server.secret}) as resp:
+                        async with session.post("/sync/monster", data=mt_runs, params={"key": config.server.secret}) as resp:
                             if resp.ok:
                                 last_mt = cur_mt
                                 runs_last.update(mt_runs_last)
+                            else:
+                                print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
 
             to_send = []
             files = []
