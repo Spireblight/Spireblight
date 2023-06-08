@@ -26,7 +26,7 @@ class MonsterSave:
 
     @property
     def main_class(self) -> str:
-        return self._data["startingConditions"]["mainClassInfo"]["className"]
+        return _get_sanitized(self._data["startingConditions"]["mainClassInfo"]["className"])
 
     @property
     def main_exiled(self) -> bool:
@@ -34,7 +34,7 @@ class MonsterSave:
 
     @property
     def sub_class(self) -> str:
-        return self._data["startingConditions"]["subclassInfo"]["className"]
+        return _get_sanitized(self._data["startingConditions"]["subclassInfo"]["className"])
 
     @property
     def sub_exiled(self) -> bool:
