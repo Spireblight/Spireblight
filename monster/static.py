@@ -95,13 +95,20 @@ class Unknown(Base):
         self.name = name
         self.description = f"Could not find description for {name!r} (this is a bug)"
 
+_map = {
+    "cards": Card,
+    "artifacts": Artifact,
+}
+
 def load():
     _internal_cache.clear()
     _query_cache.clear()
-    for cls, file in ((Card, "cards"), (Artifact, "artifacts"), (Misc, "misc")):
-        with open(os.path.join("monster", f"{file}.json")) as f:
+    for file in os.listdir(os.path.join("monster", "_static")):
+        if not file.endswith(".json"):
+            continue
+        with open(os.path.join("monster", "_static", file)) as f:
             data = json.load(f)
             for d in data:
-                value = cls(d)
+                value = _map.get(file[:-5], Misc)(d)
                 _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)

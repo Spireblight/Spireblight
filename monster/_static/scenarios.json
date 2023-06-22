@@ -1,0 +1,190 @@
+[
+    {
+        "Name": "Test Scenario",
+        "ID": "4c98ac14-4636-4e58-b714-c4896ca2d42a"
+    },
+    {
+        "Name": "The First Defense",
+        "ID": "14eff3bb-54a0-43e1-9911-195f53b7ca9e"
+    },
+    {
+        "Name": "Heavens Priests",
+        "ID": "92df3af9-4594-4f46-8947-b92a1257ef18"
+    },
+    {
+        "Name": "Heavens Priests F T U E",
+        "ID": "fb37e7be-f53d-4bf9-aaaa-4ab2f6a2dd1c"
+    },
+    {
+        "Name": "Guardiansof Light",
+        "ID": "e07b4e63-f40b-4c35-8694-29e17cec3cf0"
+    },
+    {
+        "Name": "The Gathered Clergy",
+        "ID": "9e995fda-d828-472e-8eee-a21fc4534600"
+    },
+    {
+        "Name": "Swarming Attackers",
+        "ID": "5f162e66-f22a-48eb-ac3a-42ce0211d357"
+    },
+    {
+        "Name": "Disciple Railguard",
+        "ID": "e27778ba-8c8e-49c7-95d7-3954c62030d4"
+    },
+    {
+        "Name": "Disciple Railguard F T U E",
+        "ID": "60fe5de3-cd89-48aa-97ef-6fd9b416b842"
+    },
+    {
+        "Name": "Disciple Conduits",
+        "ID": "c82a7b70-aa70-4a12-9660-6e6a2f6a7782"
+    },
+    {
+        "Name": "Pyre Absorbers",
+        "ID": "c84e5e54-a5c5-4613-920d-45c1f37ef941"
+    },
+    {
+        "Name": "Penitent Prayers",
+        "ID": "85946241-bde3-492e-ae38-edd90c2eb6a7"
+    },
+    {
+        "Name": "Barbed Disciples",
+        "ID": "c94e9ca7-8af0-48de-bc83-dea3d01f168c"
+    },
+    {
+        "Name": "Barbed Disciples F T U E",
+        "ID": "3bcc07fb-fb4f-410c-b8f9-ea5dcd898baf"
+    },
+    {
+        "Name": "Daedalus Armor",
+        "ID": "45308b4f-7a2d-47ea-8a0e-f2a81c2f0c88"
+    },
+    {
+        "Name": "Daedalus Double Barrel",
+        "ID": "1d900873-a34d-49ca-879f-eba4ea35d7d7"
+    },
+    {
+        "Name": "Daedalus Explosive",
+        "ID": "07f32428-a905-434e-adde-283a9d84bbf6"
+    },
+    {
+        "Name": "Talos Armor",
+        "ID": "8a7387ea-0665-4fbe-915e-d68c908b988a"
+    },
+    {
+        "Name": "Talos Daze",
+        "ID": "b168f666-5bd6-4478-84a2-bf79c674daea"
+    },
+    {
+        "Name": "Talos Push Back",
+        "ID": "43f42ea3-163d-4019-a8a2-1022b6b9fd69"
+    },
+    {
+        "Name": "Clipped Guard",
+        "ID": "fa46597c-5ccd-41c3-8220-531c1986ef8b"
+    },
+    {
+        "Name": "Clipped Tormenters",
+        "ID": "9008ecff-9128-4d3e-931d-4a9a77d807f9"
+    },
+    {
+        "Name": "Protectorsofthe Clipped",
+        "ID": "51c3a7f3-2159-4761-9bcd-b43deb27be5e"
+    },
+    {
+        "Name": "Clipped Infiltration",
+        "ID": "eafa7209-4be2-4b99-8fea-05327f3b677f"
+    },
+    {
+        "Name": "Harvestersof Death",
+        "ID": "51a3e99e-8251-427f-b7ad-085efe686185"
+    },
+    {
+        "Name": "The Harpys Guard",
+        "ID": "d6d185ea-320b-43a6-bfe1-1e56a1490233"
+    },
+    {
+        "Name": "The Sycophantsof Seraph",
+        "ID": "be0baf16-b2f8-4027-b753-0e01bc47020d"
+    },
+    {
+        "Name": "Hidden Assault",
+        "ID": "cfe59607-f6df-4bf6-b68b-3f1bf01961ba"
+    },
+    {
+        "Name": "Archus A B",
+        "ID": "9f00c5b4-eedf-4908-afe5-a36b56d3ca47"
+    },
+    {
+        "Name": "Archus A C",
+        "ID": "c70386bb-35b3-4533-86e9-e02038704b66"
+    },
+    {
+        "Name": "Archus B C",
+        "ID": "ea8557dd-bd6f-4440-9226-55b4465765d4"
+    },
+    {
+        "Name": "Fel Armor",
+        "ID": "b62a8ac2-6504-4ed5-bf17-2b01e66fd962"
+    },
+    {
+        "Name": "Fel Junk",
+        "ID": "bb9d46d0-a799-4173-af34-17991a526ad7"
+    },
+    {
+        "Name": "Fel Junk F T U E",
+        "ID": "d67f26a2-efb4-4341-8a88-58c4031e48b9"
+    },
+    {
+        "Name": "Fel Rage",
+        "ID": "bbd0587d-d9de-4af0-aa51-bc733fa1f983"
+    },
+    {
+        "Name": "The Pyrewings",
+        "ID": "798810bd-328e-4a86-bf56-6ce5d9ef60aa"
+    },
+    {
+        "Name": "The Winged Horde",
+        "ID": "333ee837-4c99-432e-bab7-f08ae5bf7201"
+    },
+    {
+        "Name": "The Penitent",
+        "ID": "cffd86f5-dab1-4df8-ba64-0e36661a2cd8"
+    },
+    {
+        "Name": "Conduit Masters",
+        "ID": "59a5720d-8c32-4c92-9945-e49efaba7e0f"
+    },
+    {
+        "Name": "The Shadewings",
+        "ID": "375fbaa9-f355-447c-a53c-cc475d668ed2"
+    },
+    {
+        "Name": "The Pyrewing",
+        "ID": "6597c4e5-bca0-4169-8172-1f2b8baca5e5"
+    },
+    {
+        "Name": "Seraphthe Patient",
+        "ID": "07ba7037-151f-4cad-acf4-85567539eda6"
+    },
+    {
+        "Name": "Seraphthe Temperant",
+        "ID": "7686a3e3-9e1e-4f69-b7a1-506ac2129b05"
+    },
+    {
+        "Name": "Seraphthe Chaste",
+        "ID": "0587055b-d7a1-47e4-a12c-330cd67b4f61"
+    },
+    {
+        "Name": "Seraphthe Chaste F T U E",
+        "ID": "3722ca8b-a1fe-4f5a-86bc-d6ab6ea3f05f"
+    },
+    {
+        "Name": "Seraphthe Diligent",
+        "ID": "5a578bbe-f194-41ce-9a06-dd71441051c1"
+    },
+    {
+        "Name": "The Last Divinity",
+        "ID": "1107b45f-096e-410e-a76d-7142d6bedd62"
+    }
+]

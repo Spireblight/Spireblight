@@ -1,0 +1,226 @@
+[
+    {
+        "Name": "Artifact Merchant",
+        "ID": "f57bc1e9-4e86-4abf-af2a-0d56d2b3f59a"
+    },
+    {
+        "Name": "Dark Pact Temple Merchant",
+        "ID": "da9614b1-2c56-43d8-929b-659916577e01"
+    },
+    {
+        "Name": "Spell Upgrade Merchant",
+        "ID": "9a70610f-8900-4900-b96d-4f88faa0f105"
+    },
+    {
+        "Name": "Unit Upgrade Merchant",
+        "ID": "ed1b1cfa-9da2-4588-85fe-6360913ef41e"
+    },
+    {
+        "Name": "Required Starting Story Event Pool Data",
+        "ID": "2e1f2c35-6e08-465e-985d-beac5200a3d3"
+    },
+    {
+        "Name": "Starting Story Event Pool Data",
+        "ID": "01098e5f-cdf7-4717-a0e3-2dcc7073fa27"
+    },
+    {
+        "Name": "Story Event Pool Data",
+        "ID": "a183b211-8a77-4dcb-8790-125884ca9373"
+    },
+    {
+        "Name": "Test Pool",
+        "ID": "9e5c974e-f1a3-4ef3-b05f-f8a5c040897c"
+    },
+    {
+        "Name": "Event",
+        "ID": "73cbc00b-d181-4ea7-998f-55468ce89145"
+    },
+    {
+        "Name": "Merchant Pool Early",
+        "ID": "3ee2230a-fb7e-4a05-ab4a-462efe8058a2"
+    },
+    {
+        "Name": "Merchant Pool Final",
+        "ID": "fbc880f5-194f-4a43-a8fd-0c891b8a45ba"
+    },
+    {
+        "Name": "Merchant Pool First",
+        "ID": "908d2d54-6a53-4274-8e38-3fd825c04b1e"
+    },
+    {
+        "Name": "Merchant Pool Late",
+        "ID": "0ea81380-f598-4ddd-8053-568114edff6f"
+    },
+    {
+        "Name": "Pact All Nodes Pool",
+        "ID": "a7b300fc-c9db-472e-a7ea-d8dcb817efc9"
+    },
+    {
+        "Name": "Pact Artifact And Gold Pool",
+        "ID": "5ea074a4-7ba0-42e9-b293-566f4343e812"
+    },
+    {
+        "Name": "Pact Artifact Pool",
+        "ID": "baf57a18-9d6a-47dd-9dfa-0c731254726f"
+    },
+    {
+        "Name": "Pact Merchant Pool",
+        "ID": "b134ac7f-8ca5-4c97-a4ea-c5433d8c72e6"
+    },
+    {
+        "Name": "Random Chosen Banner",
+        "ID": "bb95648a-3335-445a-95ac-7ef11862ac0f"
+    },
+    {
+        "Name": "Random Chosen Main Class Unit",
+        "ID": "79d643b3-08e5-4114-8d04-feb8723bd49f"
+    },
+    {
+        "Name": "Random Chosen Sub Class Unit",
+        "ID": "673897a0-3316-48ba-babd-7dd576290f2a"
+    },
+    {
+        "Name": "Random Forge",
+        "ID": "43bc3467-45e4-450e-ac77-f29741a5ca91"
+    },
+    {
+        "Name": "Rewards Pact Nodes",
+        "ID": "aa6076cc-ac3b-45aa-a041-ae2bb0ee4df9"
+    },
+    {
+        "Name": "Rewards Simple Early Blessing Banner",
+        "ID": "2d17f829-a55f-40f6-8682-5f528c8fcf9e"
+    },
+    {
+        "Name": "Rewards Simple Final",
+        "ID": "3e3fda57-5882-4dec-86d8-549e29d8a8ed"
+    },
+    {
+        "Name": "Rewards Simple First",
+        "ID": "f22f75a9-871a-47b3-a097-ad1d01b9c82e"
+    },
+    {
+        "Name": "Rewards Simple Late",
+        "ID": "ddec01f8-46ea-4a7e-96a8-f280ba5f6e51"
+    },
+    {
+        "Name": "Rewards Simple T1 Early Bonus",
+        "ID": "60baf19a-343b-4450-ab61-7aa44bb9cf00"
+    },
+    {
+        "Name": "Reward Node",
+        "ID": "974c84e1-5e44-4d14-ba35-11bcd016b126"
+    },
+    {
+        "Name": "Reward Node After Boss1",
+        "ID": "dbb9889a-6800-43fc-8c23-b54a496328b4"
+    },
+    {
+        "Name": "Reward Node After Boss2",
+        "ID": "bd4d5ea5-a51a-435e-8c6d-30ef79c40904"
+    },
+    {
+        "Name": "Reward Node Blessing Only",
+        "ID": "e7725f90-afd6-4d69-938b-7cb9f7fd6013"
+    },
+    {
+        "Name": "Reward Node Blessing Only Pact",
+        "ID": "8f4447c6-9e23-41e2-965e-b80a8a91ab5d"
+    },
+    {
+        "Name": "Reward Node Both Packs After Normal Battle F T U E",
+        "ID": "c935154e-b9da-4c4c-9ffa-ec75c5926d26"
+    },
+    {
+        "Name": "Reward Node Both Packs After Normal Battle T1",
+        "ID": "02a6c4a9-f21a-4e75-a747-7a5ffcf5f62e"
+    },
+    {
+        "Name": "Reward Node Both Packs After Normal Battle T2",
+        "ID": "ee8e6ee3-3639-462b-8514-017763f84a2f"
+    },
+    {
+        "Name": "Reward Node Both Packs After Normal Battle T3",
+        "ID": "064d624d-726a-40b9-84d3-69454d9cb479"
+    },
+    {
+        "Name": "Reward Node Champion Upgrade",
+        "ID": "3287b9bb-140d-4dbd-aea9-0f5f84027836"
+    },
+    {
+        "Name": "Reward Node Coin",
+        "ID": "126c5cca-adee-457b-9e44-d59797d031ed"
+    },
+    {
+        "Name": "Reward Node Coin First",
+        "ID": "21555773-4973-4a42-ae2b-e29d91d73ccc"
+    },
+    {
+        "Name": "Reward Node Coin Late",
+        "ID": "4bc499b9-4207-4415-a22a-f670b9c5e56a"
+    },
+    {
+        "Name": "Reward Node Coin Pact",
+        "ID": "ea68b1b4-7e36-4de3-a459-13e2d4300f4e"
+    },
+    {
+        "Name": "Reward Node Duplicate Card",
+        "ID": "8b3b7ab6-eeac-4d59-bfcc-3810e4578aa1"
+    },
+    {
+        "Name": "Reward Node Duplicate Card After Normal Battle",
+        "ID": "54d865c1-adc6-448c-9958-9e2f10726a03"
+    },
+    {
+        "Name": "Reward Node Heal",
+        "ID": "c93db782-fb06-49f5-9075-e3abcafdeb82"
+    },
+    {
+        "Name": "Reward Node Level Up Unit",
+        "ID": "c4657bce-92a9-4d08-8a73-de1a8be2e52f"
+    },
+    {
+        "Name": "Reward Node Purge Only",
+        "ID": "e33a78d8-abf8-4673-8f3e-14c87e7b997c"
+    },
+    {
+        "Name": "Reward Node Purge Three",
+        "ID": "32ecbdbe-055a-4df6-94fb-85b83ce30751"
+    },
+    {
+        "Name": "Reward Node Purge Two",
+        "ID": "be526e1d-45a2-4395-976f-1a621b6966e7"
+    },
+    {
+        "Name": "Reward Node Unit Pack Awoken",
+        "ID": "fd71a63a-127d-4d16-99a9-f5f9c5991059"
+    },
+    {
+        "Name": "Reward Node Unit Pack Clan",
+        "ID": "64346907-2874-4635-9b3b-4a4f33445e67"
+    },
+    {
+        "Name": "Reward Node Unit Pack Hellhorned",
+        "ID": "be212f9d-8d0c-4f9e-bfce-dd75055c7ef0"
+    },
+    {
+        "Name": "Reward Node Unit Pack Remnant",
+        "ID": "904c4de0-5e5a-45c2-af71-dcbebf7bb69a"
+    },
+    {
+        "Name": "Reward Node Unit Pack Stygian",
+        "ID": "5f35b7b7-75d1-4957-9f78-7d2072237038"
+    },
+    {
+        "Name": "Reward Node Unit Pack Sub Clan",
+        "ID": "5133241e-f581-40b4-bcbd-507fb2477621"
+    },
+    {
+        "Name": "Reward Node Unit Pack Umbra",
+        "ID": "d9f22194-900b-4a96-aac1-cf634e153e91"
+    },
+    {
+        "Name": "Reward Node Unit Pack Wurm",
+        "ID": "f6764726-d4b7-4344-ab1b-7522b6c18d1d"
+    }
+]
