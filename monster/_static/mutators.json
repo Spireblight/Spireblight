@@ -1,294 +1,367 @@
 [
     {
         "Name": "Hashtag Blessed",
-        "ID": "3ccebb6e-5058-4eb4-93ad-d4c94bf1da6e"
+        "ID": "3ccebb6e-5058-4eb4-93ad-d4c94bf1da6e",
+        "Description": "Gain a random artifact after every battle."
     },
     {
         "Name": "Yeetpocalypse",
-        "ID": "67d6d4ac-1634-4aa5-b237-1cacad1f12d1"
+        "ID": "67d6d4ac-1634-4aa5-b237-1cacad1f12d1",
+        "Description": "You must purge a card after every battle."
     },
     {
         "Name": "Brawl",
-        "ID": "b75d5726-62ef-47ce-9378-ac3721594bab"
+        "ID": "b75d5726-62ef-47ce-9378-ac3721594bab",
+        "Description": "Friendly and enemy units get +5 Attack and +10 Health. Your Pyre gets +10 Attack."
     },
     {
         "Name": "Broken Valve",
-        "ID": "dd390c37-07e3-4bde-9c0d-4ca7c57512d9"
+        "ID": "dd390c37-07e3-4bde-9c0d-4ca7c57512d9",
+        "Description": "Start with Volatile Gauge."
     },
     {
         "Name": "Cheap Trick",
-        "ID": "3b68f4c7-ad9d-4b59-abef-756a37b058ef"
+        "ID": "3b68f4c7-ad9d-4b59-abef-756a37b058ef",
+        "Description": "Spells cost -1 Ember."
     },
     {
         "Name": "Acid Rain",
-        "ID": "088e5745-7127-4a2f-b041-8d48438d23b1"
+        "ID": "088e5745-7127-4a2f-b041-8d48438d23b1",
+        "Description": "Deal 2 damage to all units after combat."
     },
     {
         "Name": "Moneybags",
-        "ID": "fee18e5b-e123-46c7-8fd3-0ea8f2cd47f1"
+        "ID": "fee18e5b-e123-46c7-8fd3-0ea8f2cd47f1",
+        "Description": "Double Gold earned."
     },
     {
         "Name": "Duality",
-        "ID": "459c7ec3-9c35-4298-8873-bda051605210"
+        "ID": "459c7ec3-9c35-4298-8873-bda051605210",
+        "Description": "Double stacks of all status effects."
     },
     {
         "Name": "Seeing Double",
-        "ID": "559f443d-bbeb-40fc-aa86-772ef4c2c2dc"
+        "ID": "559f443d-bbeb-40fc-aa86-772ef4c2c2dc",
+        "Description": "When the first friendly unit is summoned each turn, create a copy."
     },
     {
         "Name": "Frontloaded",
-        "ID": "0421d885-09a3-48ec-ad5e-762127ac336e"
+        "ID": "0421d885-09a3-48ec-ad5e-762127ac336e",
+        "Description": "-3 Ember per turn. Gain 20 Ember at the beginning of each battle. Start with The Unbroken Horn."
     },
     {
         "Name": "Shields Up",
-        "ID": "387f73cb-cdbb-44a4-8708-6d42cf5f7455"
+        "ID": "387f73cb-cdbb-44a4-8708-6d42cf5f7455",
+        "Description": "Enemy units enter with Damage Shield."
     },
     {
         "Name": "Pain Train",
-        "ID": "e257311a-3cd3-4540-ad0e-02c30d8e18be"
+        "ID": "e257311a-3cd3-4540-ad0e-02c30d8e18be",
+        "Description": "Enemy units enter with Spikes 1."
     },
     {
         "Name": "Burn Bright",
-        "ID": "e76471de-c576-43c6-aaa7-d68ab1f64457"
+        "ID": "e76471de-c576-43c6-aaa7-d68ab1f64457",
+        "Description": "+2 Ember per turn."
     },
     {
         "Name": "Never Say Die",
-        "ID": "d7aa86b0-0d90-48c8-b2e1-c874a6e863d3"
+        "ID": "d7aa86b0-0d90-48c8-b2e1-c874a6e863d3",
+        "Description": "Friendly units get Endless."
     },
     {
         "Name": "Hollow",
-        "ID": "f22680e5-e802-4189-bd8f-1da364437a7e"
+        "ID": "f22680e5-e802-4189-bd8f-1da364437a7e",
+        "Description": "Friendly units get Heartless."
     },
     {
         "Name": "Fast Draw",
-        "ID": "a37c6a8d-71db-478f-a23b-79844916fbf0"
+        "ID": "a37c6a8d-71db-478f-a23b-79844916fbf0",
+        "Description": "Friendly units get Quick."
     },
     {
         "Name": "Tithe",
-        "ID": "717261f5-95d2-4524-9449-cfc6f8e98a74"
+        "ID": "717261f5-95d2-4524-9449-cfc6f8e98a74",
+        "Description": "Halve Gold earned."
     },
     {
         "Name": "Magic Hand",
-        "ID": "2dd0e035-96a9-46f3-8c52-eacbe82e871b"
+        "ID": "2dd0e035-96a9-46f3-8c52-eacbe82e871b",
+        "Description": "Cards are not discarded at the end of turn."
     },
     {
         "Name": "Small Hands",
-        "ID": "2f9a1535-c2db-4064-af4e-96791e04832c"
+        "ID": "2f9a1535-c2db-4064-af4e-96791e04832c",
+        "Description": "-2 cards per turn."
     },
     {
         "Name": "Armchair General",
-        "ID": "ebaa0d1c-7910-414b-9258-54620c22de77"
+        "ID": "ebaa0d1c-7910-414b-9258-54620c22de77",
+        "Description": "Your Champion enters with Sap 10 and Heartless."
     },
     {
         "Name": "My True Form",
-        "ID": "7963d201-6d49-4f87-981b-7a045d7cf581"
+        "ID": "7963d201-6d49-4f87-981b-7a045d7cf581",
+        "Description": "Start with Mark of a Champion and Mark of an Exile."
     },
     {
         "Name": "Arduous Arcana",
-        "ID": "431a7d3d-c003-4954-97e5-876a3cfc41fd"
+        "ID": "431a7d3d-c003-4954-97e5-876a3cfc41fd",
+        "Description": "Spells cost +1 Ember."
     },
     {
         "Name": "Early Lead",
-        "ID": "b0077a2c-589c-467c-8584-c6475cf2b4d5"
+        "ID": "b0077a2c-589c-467c-8584-c6475cf2b4d5",
+        "Description": "Start with Improved Firebox and Lost Luggage."
     },
     {
-        "Name": "Slowand Steady",
-        "ID": "95cd7890-fa1c-4f27-8f38-b2d27b1ea8ad"
+        "Name": "Slow and Steady",
+        "ID": "95cd7890-fa1c-4f27-8f38-b2d27b1ea8ad",
+        "Description": "Friendly units enter with +10 Attack and Sap 7."
     },
     {
         "Name": "The Elite",
-        "ID": "de33c00b-21c5-44ad-84fc-6dbed0cea9b0"
+        "ID": "de33c00b-21c5-44ad-84fc-6dbed0cea9b0",
+        "Description": "Start with Hammered Chestplates, Scorched Steel, and Worn Grindstone."
     },
     {
-        "Name": "If Ihada Hammer",
-        "ID": "b630f450-00d8-4f16-ba27-0ac33e13a187"
+        "Name": "If I had a Hammer",
+        "ID": "b630f450-00d8-4f16-ba27-0ac33e13a187",
+        "Description": "Start with Heph the Blacksmith and Good Ol' Wingmaker. Heph gains Intrinsic."
     },
     {
         "Name": "Life Insurance",
-        "ID": "e2ebf161-78dc-4356-8b1f-2b5540eed755"
+        "ID": "e2ebf161-78dc-4356-8b1f-2b5540eed755",
+        "Description": "Start with Golden Vault, Memorial Fund, and Rationing Scales."
     },
     {
         "Name": "Shardless",
-        "ID": "906e45aa-3aea-4fa1-8370-95877fc13318"
+        "ID": "906e45aa-3aea-4fa1-8370-95877fc13318",
+        "Description": "Disable all map nodes and events that provide Pact Shards."
     },
     {
         "Name": "Spellpiercer",
-        "ID": "db7388d6-6f6e-476d-b92b-a7f113e85c79"
+        "ID": "db7388d6-6f6e-476d-b92b-a7f113e85c79",
+        "Description": "Your spells gain Piercing."
     },
     {
         "Name": "Crystal Ball",
-        "ID": "d0ba2246-d754-49ea-91cf-6fad9d3f161e"
+        "ID": "d0ba2246-d754-49ea-91cf-6fad9d3f161e",
+        "Description": "Start with Cheater's Hand."
     },
     {
         "Name": "Heros Burden",
-        "ID": "6e3ba3b7-8941-490f-a3ca-d284a03dfd89"
+        "ID": "6e3ba3b7-8941-490f-a3ca-d284a03dfd89",
+        "Description": "Gain +15 Pact Shards after each battle."
     },
     {
         "Name": "Mansion",
-        "ID": "3be9b394-b663-468c-bdc3-19d13a9894e3"
+        "ID": "3be9b394-b663-468c-bdc3-19d13a9894e3",
+        "Description": "+2 Capacity on each floor."
     },
     {
         "Name": "Moth Magic",
-        "ID": "faf96ddc-f2d1-40e5-b0d7-91f42d4b0e25"
+        "ID": "faf96ddc-f2d1-40e5-b0d7-91f42d4b0e25",
+        "Description": "When a damage spell hits a unit, Ascend it."
     },
     {
         "Name": "Permadeath",
-        "ID": "9385ca5f-ec9e-40de-b5f8-556031ca9a79"
+        "ID": "9385ca5f-ec9e-40de-b5f8-556031ca9a79",
+        "Description": "Any non-Champion unit which dies is purged from your deck."
     },
     {
         "Name": "Musical Chairs",
-        "ID": "afcb1af2-64f5-4887-9f7b-7e509e326604"
+        "ID": "afcb1af2-64f5-4887-9f7b-7e509e326604",
+        "Description": "Shuffle the position of all units in the train after combat."
     },
     {
         "Name": "Junked Up",
-        "ID": "f65e2978-9ad4-48cc-9ea0-371c5d9e19c1"
+        "ID": "f65e2978-9ad4-48cc-9ea0-371c5d9e19c1",
+        "Description": "Add 8 Calcified Ember to your starting deck."
     },
     {
         "Name": "Heavy",
-        "ID": "0b429c83-1013-4a09-80e1-eae07e1e5371"
+        "ID": "0b429c83-1013-4a09-80e1-eae07e1e5371",
+        "Description": "Add 5 Deadweights to your starting deck."
     },
     {
-        "Name": "Twofor One",
-        "ID": "ee32b5c9-c46d-4146-8cb3-c8b811e555dc"
+        "Name": "Two for One",
+        "ID": "ee32b5c9-c46d-4146-8cb3-c8b811e555dc",
+        "Description": "Each time you draft a card, gain a second copy."
     },
     {
         "Name": "Come Prepared",
-        "ID": "50234273-58a2-48dd-8e99-b8fdecb3828f"
+        "ID": "50234273-58a2-48dd-8e99-b8fdecb3828f",
+        "Description": "Add 12 additional random cards to your starting deck."
     },
     {
         "Name": "Volatile Spells",
-        "ID": "a83bc048-7924-4beb-87bd-00419bda6be0"
+        "ID": "a83bc048-7924-4beb-87bd-00419bda6be0",
+        "Description": "The targets of spells are chosen randomly."
     },
     {
         "Name": "Hivemind",
-        "ID": "3894bbe3-6ad6-42ed-9f63-6b47371b4583"
+        "ID": "3894bbe3-6ad6-42ed-9f63-6b47371b4583",
+        "Description": "Friendly units count as all subtypes."
     },
     {
         "Name": "Strike Hard",
-        "ID": "626d64ba-8548-4a10-9240-b40d40b26485"
+        "ID": "626d64ba-8548-4a10-9240-b40d40b26485",
+        "Description": "All units get Multistrike 1."
     },
     {
         "Name": "Big Chungus",
-        "ID": "af623737-a208-4b85-bce3-e1066b4f4bcd"
+        "ID": "af623737-a208-4b85-bce3-e1066b4f4bcd",
+        "Description": "All friendly units get +1 Capacity."
     },
     {
         "Name": "Extra Pyre",
-        "ID": "b08cede3-8ae9-4bb1-889a-ce95f8ede93c"
+        "ID": "b08cede3-8ae9-4bb1-889a-ce95f8ede93c",
+        "Description": "Your Pyre gets +80 Health."
     },
     {
         "Name": "A New Challenger",
-        "ID": "8bf5c01f-cd2a-46d2-8ba5-c4f594bf2753"
+        "ID": "8bf5c01f-cd2a-46d2-8ba5-c4f594bf2753",
+        "Description": "Your Champion is randomly replaced by one that is not from your primary or allied clan."
     },
     {
         "Name": "Dantes Comedy",
-        "ID": "6389e319-b6e9-4ad6-8d68-36f39423113a"
+        "ID": "6389e319-b6e9-4ad6-8d68-36f39423113a",
+        "Description": "Start with Dante the Deceptive and 3 Dante's Candle. Dante gains Intrinsic."
     },
     {
         "Name": "Tissue Paper",
-        "ID": "f07c46c3-05e2-47bc-8ab4-f1d2be379d59"
+        "ID": "f07c46c3-05e2-47bc-8ab4-f1d2be379d59",
+        "Description": "Apply Fragile to non-boss enemy units when they enter the Pyre Room."
     },
     {
         "Name": "Arcane Allergy",
-        "ID": "41a4e559-1564-4a7f-84f5-1f217efe606b"
+        "ID": "41a4e559-1564-4a7f-84f5-1f217efe606b",
+        "Description": "Enemy units enter with Spell Weakness 1."
     },
     {
         "Name": "Ninja Training",
-        "ID": "4ab49486-ff49-45d0-9cf3-3f1c6f17bfc1"
+        "ID": "4ab49486-ff49-45d0-9cf3-3f1c6f17bfc1",
+        "Description": "Minor bosses enter with Stealth 5."
     },
     {
         "Name": "A Simple Plan",
-        "ID": "799c25e8-65f0-4afa-829a-808422bbca08"
+        "ID": "799c25e8-65f0-4afa-829a-808422bbca08",
+        "Description": "Non-Champion units cost +2 Ember. Start with Sketches of Salvation."
     },
     {
         "Name": "Sacrificial",
-        "ID": "c8515873-dd28-4f7c-9371-3efdb4a076e4"
+        "ID": "c8515873-dd28-4f7c-9371-3efdb4a076e4",
+        "Description": "Apply Fragile to the first friendly unit summoned each turn."
     },
     {
         "Name": "Final Shard",
-        "ID": "b4062daf-7e8e-43c1-b223-1393e9f2ecb7"
+        "ID": "b4062daf-7e8e-43c1-b223-1393e9f2ecb7",
+        "Description": "Your Pyre starts the run with Fragile and Damage Shield 2."
     },
     {
         "Name": "Starry Suffering",
-        "ID": "1f1c9724-91d0-4129-a462-c4e6aa22ca5f"
+        "ID": "1f1c9724-91d0-4129-a462-c4e6aa22ca5f",
+        "Description": "Friendly units enter with Dazed 2."
     },
     {
         "Name": "Googly Eyes",
-        "ID": "4a179db0-73c3-4f2f-acb9-f7470d70624a"
+        "ID": "4a179db0-73c3-4f2f-acb9-f7470d70624a",
+        "Description": "All units have googly eyes in battle."
     },
     {
         "Name": "Gravity",
-        "ID": "adb3bfb7-2c54-4742-b55e-053fe3217737"
+        "ID": "adb3bfb7-2c54-4742-b55e-053fe3217737",
+        "Description": "At the end of the turn, Descend friendly units."
     },
     {
-        "Name": "Wandof Cure Light Wounds",
-        "ID": "e9895424-feb8-4440-8e95-da6da579b5d8"
+        "Name": "Wand of Cure Light Wounds",
+        "ID": "e9895424-feb8-4440-8e95-da6da579b5d8",
+        "Description": "Restore 5 health to all units after combat."
     },
     {
         "Name": "Levity",
-        "ID": "9a465270-d3b8-4196-abdd-f7251d32a54f"
+        "ID": "9a465270-d3b8-4196-abdd-f7251d32a54f",
+        "Description": "Enemy units get Haste."
     },
     {
         "Name": "Vampiric Touch",
-        "ID": "5ce6bbf5-17a7-46ac-b1f0-22e1fb06d67d"
+        "ID": "5ce6bbf5-17a7-46ac-b1f0-22e1fb06d67d",
+        "Description": "All units enter with Lifesteal 3."
     },
     {
         "Name": "Bleeding Cash",
-        "ID": "4c17065c-6391-45ce-a009-39ed89e1ba9c"
+        "ID": "4c17065c-6391-45ce-a009-39ed89e1ba9c",
+        "Description": "Lose 1 Gold whenever a friendly unit takes damage."
     },
     {
-        "Name": "Zoom",
-        "ID": "b7530fba-69dd-4175-96de-6e204969a839"
+        "Name": "Zoom, Enhance",
+        "ID": "b7530fba-69dd-4175-96de-6e204969a839",
+        "Description": "All cards have 1 additional upgrade slot."
     },
     {
-        "Name": "Returnon Investment",
-        "ID": "cbacfccc-fc3b-43b9-b1d2-27a4c30ed628"
+        "Name": "Return on Investment",
+        "ID": "cbacfccc-fc3b-43b9-b1d2-27a4c30ed628",
+        "Description": "Spawn an additional Collector in battles that already have a Collector."
     },
     {
         "Name": "Highly Reactive",
-        "ID": "cf312f0e-b27b-40a2-b58b-a45a14eb1386"
+        "ID": "cf312f0e-b27b-40a2-b58b-a45a14eb1386",
+        "Description": "Triggered abilities on friendly units trigger an additional time."
     },
     {
         "Name": "Multi Pyre",
-        "ID": "3f33b066-6ec4-4430-8f6e-7636fbd1706c"
+        "ID": "3f33b066-6ec4-4430-8f6e-7636fbd1706c",
+        "Description": "Your Pyre gets Multistrike 1."
     },
     {
         "Name": "The Math Challenge",
-        "ID": "d32fad27-7d66-4d6e-8db7-6f35bcba988c"
+        "ID": "d32fad27-7d66-4d6e-8db7-6f35bcba988c",
+        "Description": "Room combat previews are disabled."
     },
     {
         "Name": "No Fluff",
-        "ID": "fa9f528e-ea3a-40d4-9864-ebde6401a4c7"
+        "ID": "fa9f528e-ea3a-40d4-9864-ebde6401a4c7",
+        "Description": "All cards have 1 fewer upgrade slot."
     },
     {
         "Name": "Buying Power",
-        "ID": "15413d8d-0e7b-44c8-9721-9f8ff53a8063"
+        "ID": "15413d8d-0e7b-44c8-9721-9f8ff53a8063",
+        "Description": "Merchants provide a card duplication service."
     },
     {
         "Name": "Fallen Champion",
-        "ID": "4bca64b3-2976-45b9-b49b-9f6368d5dab3"
+        "ID": "4bca64b3-2976-45b9-b49b-9f6368d5dab3",
+        "Description": "Remove the Champion from your starting deck."
     },
     {
         "Name": "Puny Things",
-        "ID": "475a377b-f240-43c4-9347-9372a1bea527"
+        "ID": "475a377b-f240-43c4-9347-9372a1bea527",
+        "Description": "Friendly units start at 1 Capacity."
     },
     {
         "Name": "One Track Mind",
-        "ID": "17317228-6269-4ab6-9e9f-0c372f76c709"
+        "ID": "17317228-6269-4ab6-9e9f-0c372f76c709",
+        "Description": "The path you take on the map is chosen automatically."
     },
     {
         "Name": "At Your Service",
-        "ID": "60eb92cd-7924-4765-b6df-1a02a70607a2"
+        "ID": "60eb92cd-7924-4765-b6df-1a02a70607a2",
+        "Description": "Start with 2 additional Train Stewards and Advanced Prototype."
     },
     {
-        "Name": "Luxuryin Limbo",
-        "ID": "f40a6d75-4643-40ad-bc4e-a04bd4fae9c8"
+        "Name": "Luxury in Limbo",
+        "ID": "f40a6d75-4643-40ad-bc4e-a04bd4fae9c8",
+        "Description": "Additional unit banners appear in Limbo."
     },
     {
         "Name": "Upgraded Drafts",
-        "ID": "d9a96deb-bbb3-4f0a-9c30-19fac8d04ee8"
+        "ID": "d9a96deb-bbb3-4f0a-9c30-19fac8d04ee8",
+        "Description": "Cards in reward packs and unit banners come with a random upgrade."
     },
     {
-        "Name": "Protectthe Pyre",
-        "ID": "3631921f-3e7a-4a53-8835-56c68a17a123"
+        "Name": "Protect the Pyre",
+        "ID": "3631921f-3e7a-4a53-8835-56c68a17a123",
+        "Description": "Start with Boon of the Blacksmith, Precious Plating, and Pyrewall."
     }
 ]
