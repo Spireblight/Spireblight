@@ -1400,6 +1400,19 @@ async def mt_clans(ctx: ContextType, save: MonsterSave):
         sub = f"{sub} (Exiled)"
     await ctx.reply(f"The clans are {main} and {sub}.")
 
+@mt_command("mutators")
+async def mt_mutators(ctx: ContextType, save: MonsterSave):
+    if (m := save.mutators):
+        val = ", ".join(f"{x.name} ({x.description})" for x in m)
+        await ctx.reply(f"The mutators are: {val}")
+
+@mt_command("challenge")
+async def mt_challenge(ctx: ContextType, save: MonsterSave):
+    if not save.challenge:
+        await ctx.reply("We are not currently playing an Expert Challenge.")
+    else:
+        await ctx.reply(f"We are currently playing the Expert Challenge {save.challenge.info}.")
+
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""

@@ -3,7 +3,7 @@ import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
 
-from monster.static import get_safe
+from monster.static import get, get_safe, Challenge, Mutator
 from webpage import router
 from utils import get_req_data
 
@@ -39,6 +39,16 @@ class MonsterSave:
     @property
     def sub_exiled(self) -> bool:
         return bool(self._data["startingConditions"]["subclassInfo"]["championIndex"])
+
+    @property
+    def challenge(self) -> Challenge | None:
+        ch = self._data["startingConditions"]["spChallengeId"]
+        if ch:
+            return get(ch)
+
+    @property
+    def mutators(self) -> list[Mutator]:
+        return [get(x) for x in self._data["startingConditions"]["mutators"]]
 
 _savefile = MonsterSave()
 

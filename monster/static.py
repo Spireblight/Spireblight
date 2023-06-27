@@ -16,6 +16,7 @@ __all__ = ["query", "get", "load"]
 
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
+_mutators: dict[str, Mutator] = {}
 
 def sanitize(x: str) -> str:
     x = x.lower()
@@ -86,6 +87,24 @@ class Artifact(Base):
             source = f" [from {self.source}]"
         return f"{self.name}{clan}{source}: {self.description}"
 
+class Mutator(Base):
+    def __init__(self, data: dict):
+        super().__init__(data)
+        _mutators[self.name] = self
+
+class Challenge(Base):
+    def __init__(self, data: dict):
+        super().__init__(data)
+        self._mutators = data["Mutators"]
+
+    @property
+    def mutators(self) -> list[Mutator]:
+        return [_mutators[x] for x in self._mutators]
+
+    @property
+    def info(self) -> str:
+        return f"{self.name} ({self.description}). Mutators: {', '.join(x.name for x in self.mutators)}"
+
 class Misc(Base):
     """For things like clan names."""
 
@@ -98,6 +117,8 @@ class Unknown(Base):
 _map = {
     "cards": Card,
     "artifacts": Artifact,
+    "mutators": Mutator,
+    "challenges": Challenge,
 }
 
 def load():
