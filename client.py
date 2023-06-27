@@ -89,39 +89,6 @@ async def main():
                                     except OSError:
                                         pass
 
-            if use_mt:
-                try:
-                    cur_mt = os.path.getmtime(mt_file)
-                except OSError:
-                    traceback.print_exc()
-                else:
-                    if cur_mt != last_mt:
-                        with open(mt_file) as f:
-                            mt_data = f.read()
-                        mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
-                        mt_runs = {"save": mt_data}
-                        mt_runs_last = {}
-                        for file in os.listdir(os.path.join(mt_folder, "run-history")):
-                            if not file.endswith(".db"):
-                                continue
-                            if file == "runHistory.db": # main one
-                                key = "main"
-                            elif file.startswith("runHistoryData"): # something like runHistoryData00.db
-                                key = file[14:16]
-                            else:
-                                key = file # just in case
-                            last = os.path.getmtime(os.path.join(mt_folder, "run-history", file))
-                            if runs_last.get(key) != last:
-                                with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
-                                    mt_runs[key] = f.read()
-                                    mt_runs_last[key] = last
-                        async with session.post("/sync/monster", data=mt_runs, params={"key": config.server.secret}) as resp:
-                            if resp.ok:
-                                last_mt = cur_mt
-                                runs_last.update(mt_runs_last)
-                            else:
-                                print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
-
             to_send = []
             files = []
             if possible is None and config.client.sync_runs: # don't check run files during a run
@@ -180,6 +147,39 @@ async def main():
                     async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.server.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                         if resp.ok:
                             has_save = False
+
+                if use_mt:
+                    try:
+                        cur_mt = os.path.getmtime(mt_file)
+                    except OSError:
+                        traceback.print_exc()
+                    else:
+                        if cur_mt != last_mt:
+                            with open(mt_file) as f:
+                                mt_data = f.read()
+                            mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
+                            mt_runs = {"save": mt_data}
+                            mt_runs_last = {}
+                            for file in os.listdir(os.path.join(mt_folder, "run-history")):
+                                if not file.endswith(".db"):
+                                    continue
+                                if file == "runHistory.db": # main one
+                                    key = "main"
+                                elif file.startswith("runHistoryData"): # something like runHistoryData00.db
+                                    key = file[14:16]
+                                else:
+                                    key = file # just in case
+                                last = os.path.getmtime(os.path.join(mt_folder, "run-history", file))
+                                if runs_last.get(key) != last:
+                                    with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
+                                        mt_runs[key] = f.read()
+                                        mt_runs_last[key] = last
+                            async with session.post("/sync/monster", data=mt_runs, params={"key": config.server.secret}) as resp:
+                                if resp.ok:
+                                    last_mt = cur_mt
+                                    runs_last.update(mt_runs_last)
+                                else:
+                                    print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
 
                 # update all profiles
                 data = {
