@@ -161,6 +161,7 @@ async def main():
                             mt_runs = {"save": mt_data}
                             mt_runs_last = {}
                             for file in os.listdir(os.path.join(mt_folder, "run-history")):
+                                break # otherwise, it might exceed the data limit. let's not.
                                 if not file.endswith(".db"):
                                     continue
                                 if file == "runHistory.db": # main one
