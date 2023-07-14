@@ -1413,6 +1413,21 @@ async def mt_challenge(ctx: ContextType, save: MonsterSave):
     else:
         await ctx.reply(f"We are currently playing the Expert Challenge {save.challenge.info}.")
 
+@mt_command("artifact")
+async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
+    l = list(save.artifacts)
+    if not index:
+        await ctx.reply(f"We have {len(l)} artifacts.")
+        return
+    if index < 0:
+        index = len(l) + index + 1
+    if index > len(l) or index <= 0:
+        await ctx.reply(f"We only have {len(l)} artifacts!")
+        return
+
+    relicData = l[index-1]
+    await ctx.reply(f"The artifact at position {index} is {relicData.info}")
+
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""

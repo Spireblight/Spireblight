@@ -1,9 +1,11 @@
+from typing import Generator
+
 import json
 import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
 
-from monster.static import get, get_safe, Challenge, Mutator
+from monster.static import get, get_safe, Challenge, Mutator, Artifact
 from webpage import router
 from utils import get_req_data
 
@@ -39,6 +41,11 @@ class MonsterSave:
     @property
     def sub_exiled(self) -> bool:
         return bool(self._data["startingConditions"]["subclassInfo"]["championIndex"])
+
+    @property
+    def artifacts(self) -> Generator[Artifact, None, None]:
+        for art in self._data["blessings"]:
+            yield get(art["relicDataID"])
 
     @property
     def challenge(self) -> Challenge | None:
