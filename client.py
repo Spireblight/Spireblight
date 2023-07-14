@@ -155,9 +155,8 @@ async def main():
                         traceback.print_exc()
                     else:
                         if cur_mt != last_mt:
-                            with open(mt_file) as f:
+                            with open(mt_file, "rb") as f:
                                 mt_data = f.read()
-                            mt_data = mt_data.encode("utf-8", "xmlcharrefreplace")
                             mt_runs = {"save": mt_data}
                             mt_runs_last = {}
                             for file in os.listdir(os.path.join(mt_folder, "run-history")):
