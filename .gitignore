@@ -6,6 +6,6 @@ last_run
 /lib64
 /env/
 !default-config.yml
-*.yml
+*-config.yml
 /static/bulma/
 /.vscode/

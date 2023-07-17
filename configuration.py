@@ -37,7 +37,7 @@ config = load_file("./default-config.yml")
 config.spire.steamdir = os.path.expanduser(config.spire.steamdir) 
 
 # Determine which extra file to load values from.
-if len(sys.argv) >= 2:
+if len(sys.argv) >= 2 and "unittest" not in sys.argv[0]: # there will be extra args when running tests
     # If we have specified a configuration file on the command line, use that.
     extra_file = sys.argv[1]
 else:
