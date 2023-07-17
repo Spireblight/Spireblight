@@ -5,9 +5,16 @@ import json
 import os
 
 from save import _savefile as s
+from runs import RunParser
 
 with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
     s.update_data(json.load(f), "THE_SILENT", "false")
+
+with open(os.path.join("test", "static", "watcher.json")) as f:
+    wa = RunParser("watcher.json", 0, json.load(f))
+
+with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
+    streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
 
 class TestSavefile(TestCase):
     def test_timestamp(self):
@@ -41,5 +48,9 @@ class TestSavefile(TestCase):
     def test_seeded(self):
         self.assertFalse(s.is_seeded)
 
-
+class TestPath(TestCase):
+    def test_length(self):
+        self.assertEqual(len(s.path), 45)
+        self.assertEqual(len(wa.path), 57)
+        self.assertEqual(len(streamer.path), 50)
 
