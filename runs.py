@@ -64,7 +64,7 @@ class RunParser(FileParser):
 
     @property
     def display_name(self) -> str:
-        return f"({self.character} {'victory' if self.won else 'loss'}) {self.timestamp}"
+        return f"({self.character} {self.verb}) {self.timestamp}"
 
     @property
     def profile(self):
@@ -72,7 +72,7 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        return datetime.datetime.fromtimestamp(self._data["timestamp"])
+        return datetime.datetime.utcfromtimestamp(self._data["timestamp"])
 
     @property
     def timedelta(self) -> datetime.timedelta:
