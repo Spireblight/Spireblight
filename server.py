@@ -36,7 +36,7 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, Base, Card
+from nameinternal import get, query, Base, Card, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -1573,6 +1573,36 @@ async def calculate_winrate_cmd(ctx: ContextType):
     losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
+
+@command("unmastered")
+async def unmastered(ctx: ContextType):
+    save = await get_savefile()
+    if save is not None and "unmastered" in save._cache:
+        await ctx.reply(save._cache["unmastered"])
+        return
+
+    cards = get_mastered().mastered_cards
+
+    final = []
+
+    for value in _internal_cache.values():
+        if value.cls_name != "card":
+            continue
+        value: Card
+        if value.mod is not None:
+            continue
+        if value.type == "Status" or value.rarity == "Special": # all "special" ones are already mastered
+            continue
+
+        if value.name not in cards:
+            final.append(value.name)
+
+    msg = f"The cards left to master are {', '.join(final)}."
+
+    if save is not None:
+        save._cache["unmastered"] = msg
+
+    await ctx.reply(msg)
 
 @command("mastered")
 async def mastered_stuff(ctx: ContextType, *card: str):
