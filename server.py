@@ -1569,10 +1569,10 @@ async def calculate_pb_cmd(ctx: ContextType):
 async def calculate_winrate_cmd(ctx: ContextType):
     """Display the current winrate for Baalor's 2022+ A20 Heart kills."""
     run_stats = get_run_stats()
-    wins = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
-    losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
+    wins = [run_stats.all_wins.all_character_count, run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
+    losses = [run_stats.all_losses.all_character_count, run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
-    await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
+    await ctx.reply(f"Baalor's winrate: Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}")
 
 @command("unmastered")
 async def unmastered(ctx: ContextType):
