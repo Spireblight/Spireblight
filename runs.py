@@ -31,6 +31,8 @@ _ts_cache: dict[int, RunParser] = {}
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
+    if not _ts_cache:
+        return None
     latest = _ts_cache[max(_ts_cache)]
     is_character_specific = False
     if character is not None:

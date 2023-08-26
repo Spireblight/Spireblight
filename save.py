@@ -61,7 +61,7 @@ class Savefile(FileParser):
             character = character[2:]
         if data is None and has_run == "true" and self._data is not None:
             maybe_run = get_latest_run(None, None)
-            if "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
+            if maybe_run is not None and "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
                 # optimize save -> run node generation
                 maybe_run._cache["old_path"] = self._cache["path"]
                 self._matches = True
@@ -341,7 +341,10 @@ class Savefile(FileParser):
 
     @property
     def rotating_streak(self) -> StreakInfo:
-        return get_latest_run(None, None).rotating_streak
+        last = get_latest_run(None, None)
+        if last is not None:
+            return last.rotating_streak
+        return StreakInfo(0, 0, True)
 
     @property
     def character_streak(self) -> StreakInfo:
@@ -445,7 +448,8 @@ async def current_run(req: Request):
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
-            raise HTTPFound(f"/runs/{latest.name}?redirect=true")
+            if latest is not None:
+                raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
     return convert_class_to_obj(context)
 

@@ -1509,7 +1509,8 @@ async def get_last_loss(ctx: ContextType):
 async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
     try:
         latest = get_latest_run(character, arg)
-    except KeyError:
+        latest.won # making sure it's not None
+    except (KeyError, AttributeError):
         await ctx.reply(f"Could not understand character {character}.")
         return
     value = "run"
