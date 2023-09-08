@@ -1552,12 +1552,51 @@ async def calculate_losses_cmd(ctx: ContextType):
     run_stats = get_run_stats()
     await ctx.reply(msg.format(run_stats, run_stats.year_losses[run_stats.current_year]))
 
+_display = []
+_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher")
+
+def _get_set_display():
+    if not _display: # we get
+        with open(os.path.join("data", "streak")) as f:
+            toggles = f.read().strip()
+
+        for i in toggles:
+            _display.append(int(i))
+
+    elif _display: # we set
+        with open(os.path.join("data", "streak"), "w") as f:
+            f.write("".join(str(i) for i in _display))
+
+@command("rotation", "display", flag="m")
+async def streak_display(ctx: ContextType, new: str):
+    """Change the !streak command display."""
+    value = "risdw"
+    word = []
+    for i, l in enumerate(value):
+        if l in new:
+            _display[i] = 1
+            word.append(_words[i])
+        else:
+            _display[i] = 0
+    _get_set_display()
+    await ctx.reply(f"Streak display changed to {', '.join(word)}.")
+
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
-    msg = "Current streak: Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
+    if not _display:
+        _get_set_display()
+    msg = []
+    for i, l in enumerate(_display):
+        if l:
+            word = _words[i]
+            arg = f"{word.lower()}_count" if word != "Rotating" else "all_character_count"
+            msg.append(f"{word}: {{0.{arg}}}")
+
+    final = f"Current streak: {' - '.join(msg)}"
+
     run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats.streaks))
+    await ctx.reply(final.format(run_stats.streaks))
 
 @command("pb")
 async def calculate_pb_cmd(ctx: ContextType):
