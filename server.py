@@ -1572,12 +1572,13 @@ async def streak_display(ctx: ContextType, new: str):
     """Change the !streak command display."""
     value = "risdw"
     word = []
+    _display.clear()
     for i, l in enumerate(value):
         if l in new:
-            _display[i] = 1
+            _display.append(1)
             word.append(_words[i])
         else:
-            _display[i] = 0
+            _display.append(0)
     _get_set_display()
     await ctx.reply(f"Streak display changed to {', '.join(word)}.")
 
