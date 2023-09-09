@@ -33,8 +33,6 @@ def load_file(filename: str) -> DotMap:
 # Load the default configuration file
 config = load_file("./default-config.yml")
 
-# Expand filepaths for *nix systems ('~/' becomes '/home/$USER').  Has no effect otherwise.
-config.spire.steamdir = os.path.expanduser(config.spire.steamdir) 
 
 # Determine which extra file to load values from.
 if len(sys.argv) >= 2 and "unittest" not in sys.argv[0]: # there will be extra args when running tests
@@ -64,4 +62,8 @@ for key in extra:
     config[key].update(extra[key])
 
 config.filename = extra_file
+
+# Expand filepaths for *nix systems ('~/' becomes '/home/$USER').  Has no effect otherwise.
+config.spire.steamdir = os.path.expanduser(config.spire.steamdir) 
+
 print("Configuration loaded:", json.dumps(config, indent=config.server.json_indent))
