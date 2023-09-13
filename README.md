@@ -107,3 +107,7 @@ Twitch chat messages can be tested without setting up a full Twitch developer ac
 3. Restart the server (`python ./main.py`)
 4. Navigate to the twitch channel you used and then the chat page
 5. Validate functionality by using commands in chat and checking for command list on site
+
+### Local Testing
+To run all unit tests locally, run this command from within the spireblight directory:
+`python -m unittest discover -v -s test -t .`
