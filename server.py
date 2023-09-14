@@ -36,7 +36,7 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, Base, Card, _internal_cache
+from nameinternal import get, query, sanitize, Base, Card, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -1305,32 +1305,40 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
-    data = query(relic)
 
-    if not data:
-        await ctx.reply(f"Could not find relic {relic!r}.")
-    elif data.cls_name != "relic":
-        await ctx.reply("Can only look for relics seen.")
-    elif data in save.relics_bare:
-        await ctx.reply(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
-    elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
-        match data.tier:
-            case "Boss":
-                s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
-            case "Starter":
-                s = "Starter relics can't exactly be seen during a run. What?"
-            case "Special":
-                s = "We can only see Special relics from events."
-            case a:
-                s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
-        await ctx.reply(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
-    elif save.available_relic(data):
-        await ctx.reply(f"We have not seen {data.name} yet! There's a chance we'll see it!")
+    if sanitize(relic) in ["boat", "boatthingy", "boatthingie"]:
+        relics = ["Anchor", "Horn Cleat", "Captains Wheel"]
     else:
-        s = ""
-        if data.pool:
-            s = " (or maybe it doesn't belong to this character)"
-        await ctx.reply(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+        relics = [relic]
+
+    replies = []
+    for relic in relics:
+        data = query(relic)
+        if not data:
+            replies.append(f"Could not find relic {relic!r}.")
+        elif data.cls_name != "relic":
+            replies.append("Can only look for relics seen.")
+        elif data in save.relics_bare:
+            replies.append(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
+        elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
+            match data.tier:
+                case "Boss":
+                    s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
+                case "Starter":
+                    s = "Starter relics can't exactly be seen during a run. What?"
+                case "Special":
+                    s = "We can only see Special relics from events."
+                case a:
+                    s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
+            replies.append(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
+        elif save.available_relic(data):
+            replies.append(f"We have not seen {data.name} yet! There's a chance we'll see it!")
+        else:
+            s = ""
+            if data.pool:
+                s = " (or maybe it doesn't belong to this character)"
+            replies.append(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+    await ctx.reply("\n".join(replies))
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
