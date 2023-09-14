@@ -6,6 +6,7 @@ import sys
 import os
 
 from dotmap import DotMap
+from platform import system
 
 # This is the minimal development config needed.
 DEFAULT_DEV_CONFIG = {
@@ -62,6 +63,17 @@ for key in extra:
     config[key].update(extra[key])
 
 config.filename = extra_file
+
+# If spire.steamdir is not being set via configs, detect the OS and
+# use the OS appropriate default spire steamdir:
+if not config.spire.steamdir:
+    system_os = system().lower()
+    if system_os == "windows":
+        config.spire.steamdir = 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+    elif system_os == "linux":
+        config.spire.steamdir = "~/.steam/steam/steamapps/common/SlayTheSpire"
+    else: # Other Operating systems do not have defaults set
+        raise NotImplementedError(f"No default spire.steamdir set for os: '{system_os}'\nSet spire steamdir manually in config file.")
 
 # Expand filepaths for *nix systems ('~/' becomes '/home/$USER').  Has no effect otherwise.
 config.spire.steamdir = os.path.expanduser(config.spire.steamdir) 

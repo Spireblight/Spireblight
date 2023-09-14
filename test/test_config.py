@@ -14,4 +14,4 @@ class TestConfigFile(TestCase):
         elif system_os == "linux":
             self.assertEqual(config.spire.steamdir, expanduser("~/.steam/steam/steamapps/common/SlayTheSpire"))
         else:
-            self.fail(f"No default spire.steamdir set for os: '{system_os}'\nSet spire steamdir manually in config file.")
+            self.fail(f"No default spire.steamdir set for os: '{system_os}'")
