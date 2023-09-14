@@ -98,10 +98,11 @@ server:
 spire:
   # Where the gamedata is located on your computer. This is used by the client to
   # figure out where to look for run files and autosaves.
-  # This needs single quotes because Windows uses backslashes.
+  # This needs single quotes because Windows uses backslashes. 
   # steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
   # For Linux:
   # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
+  # Leave blank if StS is installed in the default steam dir on win or linux 
   steamdir: ""
 
   # These are all the enabled mods (used for !info and run history pages)
