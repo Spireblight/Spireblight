@@ -1305,24 +1305,11 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
-    relics = [relic]
 
-    # Load relic sets
-    # TODO: make this not reload literally every time !seen is run
-    try:
-        with open("relic_sets.json", "r") as f:
-            j = json.load(f)
-        relic_sets = {frozenset(s['set_aliases']): s['relic_list'] for s in j['relic_sets']}
-    except FileNotFoundError:
-        pass
-    
-    # Check if the relic is referencing a relic set:
-    if relic_sets:
-        name = sanitize(relic)
-        print(relic_sets)
-        for set_names, relic_list in relic_sets.items():
-            if name in set_names:
-                relics = relic_list
+    if sanitize(relic) in ["boat", "boatthingy", "boatthingie"]:
+        relics = ["Anchor", "Horn Cleat", "Captains Wheel"]
+    else:
+        relics = [relic]
 
     replies = []
     for relic in relics:
