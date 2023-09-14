@@ -99,9 +99,10 @@ spire:
   # Where the gamedata is located on your computer. This is used by the client to
   # figure out where to look for run files and autosaves.
   # This needs single quotes because Windows uses backslashes.
-  steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+  # steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
   # For Linux:
   # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
+  steamdir: ""
 
   # These are all the enabled mods (used for !info and run history pages)
   enabled_mods: ["Slay the Spire", "Downfall", "The Packmaster"]
