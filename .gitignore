@@ -9,3 +9,4 @@ last_run
 *-config.yml
 /static/bulma/
 /.vscode/
+.python-version
