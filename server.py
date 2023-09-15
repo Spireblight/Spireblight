@@ -1650,7 +1650,7 @@ async def unmastered(ctx: ContextType):
     if len(final) > 1:
         msg = f"The cards left to master are {', '.join(final)}."
     elif len(final) == 1:
-        msg = f"The final card left to master is {', '.join(final)}."
+        msg = f"The final card left to master is {final[0]}."
     else:
         msg = "Mastery Challenge Complete! Nothing left to master! baalorEZ baalorX2"
 
