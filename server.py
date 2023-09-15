@@ -1657,7 +1657,7 @@ async def unmastered(ctx: ContextType):
     elif len(final) == 1:
         msg = f"The final card left to master is {', '.join(final)}."
     else:
-        msg = "Mastery Challenge Complete!   Nothing left to master!"
+        msg = "Mastery Challenge Complete! Nothing left to master! baalorEZ baalorX2"
 
     if save is not None:
         save._cache["unmastered"] = msg
