@@ -1304,15 +1304,10 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 @with_savefile("seen", "seenrelic", "available")
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
-    relic = sanitize(" ".join(relic))
+    relic = " ".join(relic)
 
-    # check for meme sets, otherwise run initial query  
-    if relic in ["boat", "boatthingy", "boatthingie", "fullboat"]:
+    if sanitize(relic) in ["boat", "boatthingy", "boatthingie"]:
         relics = ["Anchor", "Horn Cleat", "Captains Wheel"]
-    elif relic in ["egg", "eggs", "omlet", "omelet", "omelette"]:
-        relics = ["Frozen Egg", "Toxic Egg", "Molten Egg"]
-    elif relic in ["bottle", "bottles"]:
-        relics = ["Bottled Flame", "Bottled Lightning", "Bottled Tornado"]
     else:
         relics = [relic]
 
