@@ -10,6 +10,8 @@ import os
 from configuration import config
 from events import add_listener
 
+from typing import Dict, FrozenSet, List
+
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."
 
@@ -222,3 +224,17 @@ async def load():
         if not name.startswith("_"):
             with open(os.path.join("eng", file)) as f:
                 _cache[name] = json.load(f)
+
+def get_relic_sets() -> Dict[FrozenSet[str], List[str]]:
+    if _query_cache['relic_sets']:
+        return _query_cache['relic_sets']
+
+    # Load relic sets
+    try:
+        with open("relic_sets.json", "r") as f:
+            j = json.load(f)
+        _query_cache['relic_sets'] = {frozenset(s['set_aliases']): s['relic_list'] for s in j['relic_sets']}
+    except FileNotFoundError:
+        pass
+
+    return _query_cache["relic_sets"]
