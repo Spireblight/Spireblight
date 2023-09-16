@@ -1,0 +1,42 @@
+{
+    "relic_sets": [
+        {
+            "set_aliases": [
+                "boat",
+                "boatthingy",
+                "boatthingie",
+                "fullboat"
+            ],
+            "relic_list": [
+                "Anchor",
+                "Horn Cleat",
+                "Captains Wheel"
+            ]
+        },
+        {
+            "set_aliases": [
+                "egg",
+                "eggs",
+                "omlet",
+                "omelet",
+                "omelette"
+            ],
+            "relic_list": [
+                "Frozen Egg",
+                "Toxic Egg",
+                "Molten Egg"
+            ]
+        },
+        {
+            "set_aliases": [
+                "bottle",
+                "bottles"
+            ],
+            "relic_list": [
+                "Bottled Flame",
+                "Bottled Lightning",
+                "Bottled Tornado"
+            ]
+        }
+    ]
+}
