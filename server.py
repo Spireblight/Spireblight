@@ -1077,7 +1077,36 @@ async def giveaway_enter(ctx: ContextType):
     _ongoing_giveaway["users"].add(ctx.author.name)
 
 @command("info", "cardinfo", "relicinfo")
-async def card_info(ctx: ContextType, *line: str):
+async def card_info(ctx: ContextType, *line: str, _cache={}):
+    # TODO: improve this
+    mods = ["slaythespire", "downfall", "packmaster"]
+
+    line = " ".join(line).lower() + " ".join(mods) + " limit=1"
+
+    line = urllib.parse.quote(line)
+
+    if "session" not in _cache:
+        _cache["session"] = ClientSession()
+
+    session: ClientSession = _cache["session"]
+
+    async with session.get(f"https://slay.ocean.lol/s?{line}") as resp:
+        if resp.ok:
+            j = resp.json()
+            j = j['item']
+            desc = j['description'].replace('\n', ' ')
+            pack = j.get("pack")
+            mod = j['mod']
+            if pack:
+                mod = f"Pack: {pack}"
+            if mod == "Slay the Spire":
+                mod = None
+            text
+            if mod:
+                text = f" ({mod})"
+            await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
+            return
+
     line = " ".join(line)
     info: Base = query(line)
     if info is None:
