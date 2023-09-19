@@ -10,8 +10,6 @@ import os
 from configuration import config
 from events import add_listener
 
-from typing import Dict, FrozenSet, List
-
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."
 
@@ -128,6 +126,13 @@ class Relic(Base):
             pool = f" ({self.pool})"
         return f"{self.name} - {self.tier}{pool}: {self.description} {mod}"
 
+class RelicSet(Base):
+    cls_name = "relic_set"
+    def __init__(self, data: dict[str, list[str]]):
+        super().__init__(data)
+        self.relic_list: list[str] = data["relic_list"]
+        self.description: str = f"{data['description']}: {', '.join(data['relic_list'])}"
+
 class Potion(Base):
     cls_name = "potion"
     def __init__(self, data: dict[str, str]):
@@ -172,6 +177,7 @@ class Unknown(Base):
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,
+    "relic_set": RelicSet,
     "potions": Potion,
     "keywords": Keyword,
     "score_bonuses": ScoreBonus,
@@ -225,16 +231,13 @@ async def load():
             with open(os.path.join("eng", file)) as f:
                 _cache[name] = json.load(f)
 
-def get_relic_sets() -> Dict[FrozenSet[str], List[str]]:
-    if _query_cache['relic_sets']:
-        return _query_cache['relic_sets']
-
     # Load relic sets
     try:
         with open("relic_sets.json", "r") as f:
             j = json.load(f)
-        _query_cache['relic_sets'] = {frozenset(s['set_aliases']): s['relic_list'] for s in j['relic_sets']}
+        for relic_set in j['relic_sets']:
+            relset = RelicSet(relic_set)
+            for alias in relic_set['set_aliases']:
+                _query_cache[alias].append(relset)
     except FileNotFoundError:
         pass
-
-    return _query_cache["relic_sets"]

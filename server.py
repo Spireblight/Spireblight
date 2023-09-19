@@ -36,7 +36,7 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.year_run_stats import get_run_stats
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, sanitize, Base, Card, _internal_cache, get_relic_sets
+from nameinternal import get, query, sanitize, Base, Card, RelicSet, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -1308,14 +1308,9 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     relics = [relic]
     
     # Check if the relic is referencing a relic set:
-    relic_sets = get_relic_sets()
-    if relic_sets:
-        name = sanitize(relic)
-        print(relic_sets)
-        for set_names, relic_list in relic_sets.items():
-            if name in set_names:
-                relics = relic_list
-
+    relic_set = query(relic)
+    if relic_set.cls_name == RelicSet.cls_name:
+        relics = relic_set.relic_list
 
     replies = []
     for relic in relics:
