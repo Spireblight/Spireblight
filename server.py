@@ -1309,7 +1309,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     
     # Check if the relic is referencing a relic set:
     relic_set = query(relic)
-    if relic_set.cls_name == RelicSet.cls_name:
+    if isinstance(relic_set, RelicSet):
         relics = relic_set.relic_list
 
     replies = []
