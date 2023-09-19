@@ -1081,7 +1081,7 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
     # TODO: improve this
     mods = ["slaythespire", "downfall", "packmaster"]
 
-    line = " ".join(line).lower() + " ".join(mods) + " limit=1"
+    line = " ".join(line).lower() + " ".join(mods)
 
     line = urllib.parse.quote(line)
 
@@ -1090,7 +1090,7 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
 
     session: ClientSession = _cache["session"]
 
-    async with session.get(f"https://slay.ocean.lol/s?{line}") as resp:
+    async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
         if resp.ok:
             j = resp.json()
             j = j['item']
