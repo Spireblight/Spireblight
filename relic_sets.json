@@ -1,0 +1,48 @@
+{
+    "relic_sets": [
+        {
+            "name": "Full Boat",
+            "description": "Relics that provide block on the first 3 turns of combat",
+            "set_aliases": [
+                "boat",
+                "boatthingy",
+                "boatthingie",
+                "fullboat"
+            ],
+            "relic_list": [
+                "Anchor",
+                "Horn Cleat",
+                "Captains Wheel"
+            ]
+        },
+        {
+            "name": "Egg Relics",
+            "description": "Relics that upgrade future card picks",
+            "set_aliases": [
+                "egg",
+                "eggs",
+                "omlet",
+                "omelet",
+                "omelette"
+            ],
+            "relic_list": [
+                "Frozen Egg",
+                "Toxic Egg",
+                "Molten Egg"
+            ]
+        },
+        {
+            "name": "Bottles",
+            "description": "Relics that make a chosen card Innate",
+            "set_aliases": [
+                "bottle",
+                "bottles"
+            ],
+            "relic_list": [
+                "Bottled Flame",
+                "Bottled Lightning",
+                "Bottled Tornado"
+            ]
+        }
+    ]
+}
