@@ -1646,7 +1646,13 @@ async def unmastered(ctx: ContextType):
         if value.name not in cards:
             final.append(value.name)
 
-    msg = f"The cards left to master are {', '.join(final)}."
+    msg = ""
+    if len(final) > 1:
+        msg = f"The cards left to master are {', '.join(final)}."
+    elif len(final) == 1:
+        msg = f"The final card left to master is {final[0]}."
+    else:
+        msg = "Mastery Challenge Complete! Nothing left to master! baalorEZ baalorX2"
 
     if save is not None:
         save._cache["unmastered"] = msg
