@@ -1093,7 +1093,7 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
     async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
         if resp.ok:
             j = await resp.json()
-            j = j['item']
+            j = j[0]['item']
             desc = j['description'].replace('\n', ' ')
             pack = j.get("pack")
             mod = j['mod']
