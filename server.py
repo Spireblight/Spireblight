@@ -1101,7 +1101,7 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
                 mod = f"Pack: {pack}"
             if mod == "Slay the Spire":
                 mod = None
-            text
+            text = ""
             if mod:
                 text = f" ({mod})"
             await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
