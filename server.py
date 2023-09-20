@@ -1079,33 +1079,34 @@ async def giveaway_enter(ctx: ContextType):
 @command("info", "cardinfo", "relicinfo")
 async def card_info(ctx: ContextType, *line: str, _cache={}):
     # TODO: improve this
-    mods = ["slaythespire", "downfall", "packmaster"]
+    if False:
+        mods = ["slaythespire", "downfall", "packmaster"]
 
-    line = " ".join(line).lower() + " ".join(mods)
+        line = " ".join(line).lower() + " ".join(mods)
 
-    line = urllib.parse.quote(line)
+        line = urllib.parse.quote(line)
 
-    if "session" not in _cache:
-        _cache["session"] = ClientSession()
+        if "session" not in _cache:
+            _cache["session"] = ClientSession()
 
-    session: ClientSession = _cache["session"]
+        session: ClientSession = _cache["session"]
 
-    async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
-        if resp.ok:
-            j = await resp.json()
-            j = j[0]['item']
-            desc = j['description'].replace('\n', ' ')
-            pack = j.get("pack")
-            mod = j['mod']
-            if pack:
-                mod = f"Pack: {pack}"
-            if mod == "Slay the Spire":
-                mod = None
-            text = ""
-            if mod:
-                text = f" ({mod})"
-            await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
-            return
+        async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
+            if resp.ok:
+                j = await resp.json()
+                j = j[0]['item']
+                desc = j['description'].replace('\n', ' ')
+                pack = j.get("pack")
+                mod = j['mod']
+                if pack:
+                    mod = f"Pack: {pack}"
+                if mod == "Slay the Spire":
+                    mod = None
+                text = ""
+                if mod:
+                    text = f" ({mod})"
+                await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
+                return
 
     line = " ".join(line)
     info: Base = query(line)
