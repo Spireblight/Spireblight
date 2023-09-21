@@ -173,7 +173,7 @@ def readline(file: str) -> str:
     if ".." in file:
         return "Error: '..' in filename is not allowed."
     with open(os.path.join("text", file), "r") as f:
-        return random.choice(f.readlines())
+        return random.choice(f.readlines()).rstrip()
 
 def load(loop: asyncio.AbstractEventLoop):
     _cmds.clear()
