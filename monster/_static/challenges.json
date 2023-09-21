@@ -139,7 +139,7 @@
         "ID": "5634e92e-bd7d-48f1-88f5-96468bf1c40d",
         "Description": "The first unit you play every turn has Fragile, but there's extra Collectors and extra upgrade slots to make up for how annoying that is.",
         "Mutators": [
-            "Sactificial",
+            "Sacrificial",
             "Return on Investment",
             "Zoom, Enhance"
         ]
