@@ -1,0 +1,10 @@
+legs
+water
+spire
+train
+deck
+desk
+Heart
+game
+Abacus
+joke

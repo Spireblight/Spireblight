@@ -1,0 +1,10 @@
+refill
+stretch
+slay
+train
+shuffle
+raise
+lower
+bonk
+vote
+refund
