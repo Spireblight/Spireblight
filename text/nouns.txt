@@ -9,3 +9,6 @@ game
 Abacus
 joke
 morsel
+shard
+claw
+hand

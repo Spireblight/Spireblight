@@ -9,3 +9,7 @@ bonk
 vote
 refund
 eat
+pick
+draw
+talk to
+draft
