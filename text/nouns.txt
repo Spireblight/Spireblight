@@ -12,3 +12,6 @@ morsel
 shard
 claw
 hand
+chair
+tater
+dice

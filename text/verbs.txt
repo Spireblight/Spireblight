@@ -13,3 +13,5 @@ pick
 draw
 talk to
 draft
+shoot
+roll
