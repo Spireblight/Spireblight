@@ -15,3 +15,6 @@ talk to
 draft
 shoot
 roll
+skip
+lift
+learn

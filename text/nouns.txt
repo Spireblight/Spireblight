@@ -1,6 +1,6 @@
 legs
 water
-spire
+Spire
 train
 deck
 desk
@@ -15,3 +15,6 @@ hand
 chair
 tater
 dice
+Boot
+divinity
+lesson
