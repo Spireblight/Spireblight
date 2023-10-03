@@ -18,3 +18,5 @@ dice
 Boot
 divinity
 lesson
+curse
+card

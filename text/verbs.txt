@@ -18,3 +18,5 @@ roll
 skip
 lift
 learn
+master
+curse
