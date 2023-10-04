@@ -47,7 +47,7 @@
         },
         {
             "name": "Ninja Tools",
-            "description": "Relics that provide scaling and block when 3 attacks are played within a single turn.",
+            "description": "Relics that provide scaling and block when 3 attacks are played within a single turn",
             "set_aliases":[
                 "fullninja",
                 "ninja",
