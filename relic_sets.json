@@ -48,7 +48,7 @@
         {
             "name": "Ninja Tools",
             "description": "Relics that provide scaling and block when 3 attacks are played within a single turn",
-            "set_aliases":[
+            "set_aliases": [
                 "fullninja",
                 "ninja",
                 "ninjatools"
@@ -58,7 +58,20 @@
                 "Shuriken",
                 "Ornamental Fan"
             ]
-
+        },
+        {
+            "name": "Fruit Salad",
+            "description": "Relics that provide additional maximum health on pickup. Extra tasty when served on Lee's Waffle",
+            "set_aliases": [
+                "fruit",
+                "fruits",
+                "fruitsalad"
+            ],
+            "relic_list": [
+                "Strawberry",
+                "Pear",
+                "Mango"
+            ]
         }
     ]
 }
