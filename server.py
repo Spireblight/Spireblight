@@ -1485,7 +1485,7 @@ async def fairy_released(ctx: ContextType, *, _cache={"count": 0, "last": dateti
     """Get the count of fairy that have been released after the Heart."""
     for run in _runs_cache.values():
         if run.won and run.timestamp > _cache["last"]:
-            for pot in run.path[-1].discarded_potions:
+            for pot in run.path[-2].discarded_potions:
                 if pot.internal == "FairyPotion":
                     _cache["count"] += 1
 
