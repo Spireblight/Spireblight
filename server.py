@@ -47,7 +47,7 @@ from slice import get_current_run, CurrentRun
 from utils import format_for_slaytabase, getfile, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
-from runs import get_latest_run, get_parser
+from runs import get_latest_run, get_parser, _ts_cache as _runs_cache
 
 from typehints import ContextType, CommandType
 import events
@@ -1479,6 +1479,20 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply(f"The unequipped items are {'; '.join(save.items)}.")
     else:
         await ctx.reply("We have no unequipped items.")
+
+@command("fairyreleased", "released")
+async def fairy_released(ctx: ContextType, *, _cache={"count": 0, "last": datetime.datetime(2000, 1, 1)}):
+    """Get the count of fairy that have been released after the Heart."""
+    for run in _runs_cache.values():
+        if run.won and run.timestamp > _cache["last"]:
+            for pot in run.path[-1].discarded_potions:
+                if pot.internal == "FairyPotion":
+                    _cache["count"] += 1
+
+    if _runs_cache: # in case the cache is empty, don't error
+        _cache["last"] = run.timestamp
+
+    await ctx.reply(f"We have freed {_cache['count']} fairies at the top of the Spire!")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):

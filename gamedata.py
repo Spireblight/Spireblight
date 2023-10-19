@@ -1440,6 +1440,14 @@ class NodeData:
         return self._skipped_potions
 
     @property
+    def all_potions_received(self) -> list[Potion]:
+        return self.potions + self.potions_from_alchemize + self.potions_from_entropic
+
+    @property
+    def all_potions_dropped(self) -> list[Potion]:
+        return self.used_potions + self.discarded_potions
+
+    @property
     def floor_time(self) -> int:
         if self._floor_time is None:
             return 0
