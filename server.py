@@ -929,7 +929,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
 def _load_quotes():
     pass
 
-@command("quote")
+#@command("quote")
 async def quote_cmd(ctx: ContextType, *args: str):
     pass
 
