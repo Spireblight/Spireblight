@@ -70,6 +70,8 @@ _consts = {
     "website": config.server.url,
 }
 
+_quotes: list[tuple[str, str, int]] = []
+
 class Formatter(string.Formatter): # this does not support conversion or formatting
     def __init__(self):
         super().__init__()
@@ -924,6 +926,13 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case _:
             await ctx.reply(f"Unrecognized action {action}.")
 
+def _load_quotes():
+    pass
+
+@command("quote")
+async def quote_cmd(ctx: ContextType, *args: str):
+    pass
+
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
@@ -1481,18 +1490,16 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply("We have no unequipped items.")
 
 @command("fairyreleased", "released")
-async def fairy_released(ctx: ContextType, *, _cache={"count": 0, "last": 0}):
+async def fairy_released(ctx: ContextType):
     """Get the count of fairy that have been released after the Heart."""
+    count = 0
     for run in _runs_cache.values():
-        if run.won and run.timestamp.timestamp() > _cache["last"]:
+        if run.won:
             for pot in run.path[-2].discarded_potions:
                 if pot.internal == "FairyPotion":
-                    _cache["count"] += 1
+                    count += 1
 
-    if _runs_cache: # in case the cache is empty, don't error
-        _cache["last"] = run.timestamp.timestamp()
-
-    await ctx.reply(f"We have freed {_cache['count']} fairies at the top of the Spire!")
+    await ctx.reply(f"We have freed {count} fairies at the top of the Spire!")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
