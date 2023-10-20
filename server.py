@@ -1481,16 +1481,16 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply("We have no unequipped items.")
 
 @command("fairyreleased", "released")
-async def fairy_released(ctx: ContextType, *, _cache={"count": 0, "last": datetime.datetime(2000, 1, 1)}):
+async def fairy_released(ctx: ContextType, *, _cache={"count": 0, "last": 0}):
     """Get the count of fairy that have been released after the Heart."""
     for run in _runs_cache.values():
-        if run.won and run.timestamp > _cache["last"]:
+        if run.won and run.timestamp.timestamp() > _cache["last"]:
             for pot in run.path[-2].discarded_potions:
                 if pot.internal == "FairyPotion":
                     _cache["count"] += 1
 
     if _runs_cache: # in case the cache is empty, don't error
-        _cache["last"] = run.timestamp
+        _cache["last"] = run.timestamp.timestamp()
 
     await ctx.reply(f"We have freed {_cache['count']} fairies at the top of the Spire!")
 
