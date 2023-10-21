@@ -82,8 +82,8 @@ class ChallengeCharacter:
 @router.get("/400")
 @aiohttp_jinja2.template("400.jinja2")
 async def challenge(req: web.Request):
-    from cache.year_run_stats import get_run_stats # TODO: Fix circular imports with router
-    run_stats = get_run_stats()
+    from cache.run_stats import get_all_run_stats # TODO: Fix circular imports with router
+    run_stats = get_all_run_stats()
     kills = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
     losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     streak = [run_stats.streaks.ironclad_count, run_stats.streaks.silent_count, run_stats.streaks.defect_count, run_stats.streaks.watcher_count]

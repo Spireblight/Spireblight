@@ -86,6 +86,12 @@ class RunStats:
                 stat.watcher_count += 1
         stat.all_character_count += 1
 
+class RunStatsByDate(RunStats):
+    def __init__(self):
+        super().__init__()
+        self.start_date = None
+        self.end_date = None
+
 class RunLinkedListNode:
     def __init__(self):
         self.next: RunParser = None

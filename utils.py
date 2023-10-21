@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 
@@ -44,3 +45,40 @@ def convert_class_to_obj(obj: Any) -> dict[str, Any]:
 
 def format_for_slaytabase(val: str) -> str:
     return val.replace(":", "-").replace("'", "").replace(" ", "").lower()
+
+def parse_date_range(date_string: str) -> tuple[datetime]:
+    """valid date strings: YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)"""
+    start_date: datetime.datetime | None = None
+    end_date: datetime.datetime | None = None
+    if date_string[-1] == "+":
+        start_date = _parse_dates_with_optional_month_day(date_string[:-1])
+    elif date_string[-1] == "-":
+        end_date = _parse_dates_with_optional_month_day(date_string[:-1])
+    else:
+        date_parts = date_string.split("-")
+        second_date_start = -1
+        for i, s in enumerate(date_parts):
+            if len(s) == 4 and i != 0: # year
+                second_date_start = i
+        if second_date_start == -1:
+            raise TypeError("Range format was invalid")
+
+        start_date_string = "-".join(date_parts[:second_date_start])
+        end_date_string = "-".join(date_parts[second_date_start:])
+        start_date = _parse_dates_with_optional_month_day(start_date_string)
+        end_date = _parse_dates_with_optional_month_day(end_date_string)
+    return (start_date, end_date)
+
+
+def _parse_dates_with_optional_month_day(val: str) -> datetime:
+    """Base val should be in YYYY-MM-DD where MM and DD are optional, defaulted to 1"""
+    date_parts = val.split("-")
+    year = date_parts[0]
+    month = 1
+    day = 1
+    if (len(date_parts) > 1):
+        month = date_parts[1]
+    if (len(date_parts) > 2):
+        day = date_parts[2]
+    return datetime(year, month, day)
+
