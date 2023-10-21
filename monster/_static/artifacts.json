@@ -1,0 +1,1229 @@
+[
+    {
+        "Name": "Advanced Prototype",
+        "Description": "Steward units cards get +5 Attack, +5 Health, Damage Shield 2 and Multistrike 1.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "04397cf6-0fdd-4ae6-aa53-1e60d3ca7e46"
+    },
+    {
+        "Name": "Divine Advanced Prototype",
+        "Description": "Steward units cards get +10 Attack, +10 Health, Damage Shield 4 and Multistrike 2. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "252a868c-46d0-4e86-949a-6c3f3789ce5f"
+    },
+    {
+        "Name": "Boon of the Blacksmith",
+        "Description": "Your Pyre gets +15 Attack.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b6bae748-ab1a-4bfe-9ef8-4e5f7d43afc4"
+    },
+    {
+        "Name": "Capricious Reflection",
+        "Description": "Cards in reward packs and unit banners come with a random upgrade.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "9e0e5d4e-6d16-43f1-8cd4-cc4c2b431afd"
+    },
+    {
+        "Name": "Cheater's Hand",
+        "Description": "Draw +1 each turn, then return 1 card to the top of your draw pile.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a7a660fa-9f6f-4e01-b8cc-8a19bbcde44d"
+    },
+    {
+        "Name": "Cleansing Water",
+        "Description": "50% chance to remove all Buff effects on an enemy unit when it enters your train.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "1e972d81-fc2f-4d4a-ade9-46edeb246dbd"
+    },
+    {
+        "Name": "Divine Cleansing Water",
+        "Description": "100% chance to remove all Buff effects on an enemy unit when it enters your train. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "ef823703-22b8-4706-8bd2-8fa049529eb6"
+    },
+    {
+        "Name": "Concussive Coals",
+        "Description": "50% chance to apply Dazed when an enemy unit enters your train.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "2fe90c61-3b6e-4290-a984-e4ef6e8f3e2d"
+    },
+    {
+        "Name": "Divine Concussive Coals",
+        "Description": "100% chance to apply Dazed when an enemy unit enters your train. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "57851cf9-0273-45bf-a5ca-66ea38666ca4"
+    },
+    {
+        "Name": "Conscription Notice",
+        "Description": "When you first summon your Champion, gain a random unit card with +10 Attack, +10 Health, -1 Ember, and -1 Capacity.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "2b7ee5f7-cf89-40b0-ae47-c73c5c879751"
+    },
+    {
+        "Name": "Faulty Loader",
+        "Description": "Apply Dazed 3 and Melee Weakness 1 to enemy units on the bottom floor in the first wave of combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "6aa37e42-945b-4a18-a76c-c22831c207e9"
+    },
+    {
+        "Name": "Forever Flame",
+        "Description": "Units cost -2 Ember.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "1d4b98db-c6b4-44fb-b3cb-2242fdff06cb"
+    },
+    {
+        "Name": "Divine Forever Flame",
+        "Description": "Units cost -4 Ember. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "d82bfb2e-d029-4afa-ae9a-8e0770e8533d"
+    },
+    {
+        "Name": "Golden Vault",
+        "Description": "As long as you have at least 25 Gold, lose 25 Gold when you take Pyre damage in combat instead of taking damage.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a4c5a50a-23c3-440d-98fa-14f90d62d0b6"
+    },
+    {
+        "Name": "Guild Marker",
+        "Description": "Merchant costs are reduced by 25%.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "ffcb6931-e45e-4e27-bacf-4c649779c2be"
+    },
+    {
+        "Name": "Hammered Chestplates",
+        "Description": "Friendly units get +5 Health.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "fecb41b4-fd26-4f5c-aa1b-84152e090fa2"
+    },
+    {
+        "Name": "Divine Hammered Chestplates",
+        "Description": "Friendly units get +10 Health. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9c15b2b2-ab93-4026-b607-64baba6dc258"
+    },
+    {
+        "Name": "Hell's Banners",
+        "Description": "When you summon the second unit during a turn, gain 3 Ember.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "088041a7-fdbf-43d7-8ee6-b6720ce747b8"
+    },
+    {
+        "Name": "Improved Firebox",
+        "Description": "Gain 7 Ember on the first turn of battle.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b8071ec7-60b6-4526-bd2e-877ba90310d0"
+    },
+    {
+        "Name": "Infused Mallet",
+        "Description": "25% chance to deal 5 damage when an enemy unit enters your train.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "18217b11-1a34-436c-9c5a-7326c5b655a0"
+    },
+    {
+        "Name": "Divine Infused Mallet",
+        "Description": "25% chance to deal 10 damage when an enemy unit enters your train. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "936529ef-16f4-49d0-8836-330f930101c6"
+    },
+    {
+        "Name": "Iron Dropcage",
+        "Description": "Whenever you play a spell that would Ascend or Descend an enemy unit, also apply Dazed 2.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "8da05b19-a15f-4988-82b6-b47b2685fbb8"
+    },
+    {
+        "Name": "Jackstrips",
+        "Description": "Deal 2 damage whenever an enemy unit moves between floors.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "269a6f43-9982-4683-ac39-1a862e481898"
+    },
+    {
+        "Name": "Light's Gift",
+        "Description": "Apply Dazed to enemy units when they enter the floor below the Pyre Room.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "c6bd4947-2c30-4703-bf5c-80ec070efb67"
+    },
+    {
+        "Name": "Lightstone Casing",
+        "Description": "Spells gain an extra upgrade slot.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "60a7f580-0788-42f2-8896-cb8d22e849a5"
+    },
+    {
+        "Name": "Lost Luggage",
+        "Description": "At the start of battle, draw until you have 10 cards.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "2058bafa-a15c-4787-9b9e-4dc7fdf09b74"
+    },
+    {
+        "Name": "Mark of a Champion",
+        "Description": "When played, your Champion gains +50% attack.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "30ca6dec-dc12-4967-8f72-fca528a0d30c"
+    },
+    {
+        "Name": "Divine Mark of a Champion",
+        "Description": "When played, your Champion gains +100% attack. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "3d8af56e-917a-4dae-97ae-a8ca774dd131"
+    },
+    {
+        "Name": "Mark of an Exile",
+        "Description": "When played, your Champion gains +50% max health.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "87b60536-b452-4956-b823-3c02f005d38b"
+    },
+    {
+        "Name": "Divine Mark of an Exile",
+        "Description": "When played, your Champion gains +100% max health. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "b60f07fa-99e0-41f0-911d-bb490efdc2e3"
+    },
+    {
+        "Name": "Precious Plating",
+        "Description": "Your Pyre gets +40.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "832037fc-aa99-4822-b03b-7146aaad2b51"
+    },
+    {
+        "Name": "Pyrestone Housing",
+        "Description": "Units gain an extra upgrade slot.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "3203c2d3-58f3-4f38-888e-886d8faae758"
+    },
+    {
+        "Name": "Pyrewall",
+        "Description": "Your Pyre starts each battle with Armor 15.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "22fd0117-f7bf-405e-8a8e-863396c8a679"
+    },
+    {
+        "Name": "Divine Pyrewall",
+        "Description": "Your Pyre starts each battle with Armor 30. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "2ebcb820-bfa6-4d90-b98b-92a1191a9120"
+    },
+    {
+        "Name": "Rationing Scales",
+        "Description": "Before each battle, set Pyre health to 50. If this reduces Pyre health, gain 3 Gold for each health lost.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "b6e760cf-b6f7-455c-847f-05db085734f1"
+    },
+    {
+        "Name": "Refracting Lenses",
+        "Description": "When a card with Consume is played, restore 5 Pyre health.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "4821aca0-4bb9-4a2b-b196-5ffb5d6ede5e"
+    },
+    {
+        "Name": "Sinner's Salve",
+        "Description": "Blights and Scourges cost 0 Ember.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a19cac7c-b2e0-42bd-bc1e-d180e17a1c15"
+    },
+    {
+        "Name": "Sketches of Salvation",
+        "Description": "At the start of battle, summon 4 random units from your deck onto the middle floor.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "297c5b7b-efb1-4834-96e0-de4a7e42ccbc"
+    },
+    {
+        "Name": "Split Anvil",
+        "Description": "When you play a spell, spells in hand that cost less are reduced to 0 Ember for the turn.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9cc85dbb-d0ae-409b-8f26-41d2202eb1e0"
+    },
+    {
+        "Name": "Tempered Talisman",
+        "Description": "+3 Magic Power.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "6af9b270-c064-484b-8da4-d4a22d2fecff"
+    },
+    {
+        "Name": "Divine Tempered Talisman",
+        "Description": "+6 Magic Power. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "bac5342b-cd82-42d6-9306-41ab2548e698"
+    },
+    {
+        "Name": "The First Hellpact",
+        "Description": "X Cost cards get +3 to their X value when played.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "20dbb7f3-9b97-440a-8a23-3d7a00ed5d8d"
+    },
+    {
+        "Name": "Traitor's Quill",
+        "Description": "When a card with Consume is played, deal 30 damage to the front enemy unit.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "2d2450a5-4ed5-4d9a-bba2-15c9eb0eee6d"
+    },
+    {
+        "Name": "Divine Traitor's Quill",
+        "Description": "When a card with Consume is played, deal 60 damage to the front enemy unit. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "0dc37ac2-c028-493e-afad-23f2f88523ed"
+    },
+    {
+        "Name": "Vapor Funnel",
+        "Description": "Apply Dazed to enemy units when they enter the Pyre Room. Your Pyre gets -5 Attack.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "115c50c3-6cba-4589-82f5-30b0648f3db6"
+    },
+    {
+        "Name": "Volatile Gauge",
+        "Description": "When you draw any non-champion card, its cost is randomized between 1 Ember and 3 Ember. Draw +3 each turn.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "834f4c02-2987-469c-8634-eac97f2f67c8"
+    },
+    {
+        "Name": "Wing Clippings",
+        "Description": "Spells with Consume have a 50% chance to be discarded instead.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "51d95691-d59e-42f1-84ba-8c530743df69"
+    },
+    {
+        "Name": "Winged Indulgence",
+        "Description": "Enemies get -1 Attack.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b149030f-3d73-4c99-ab3b-a4875e39dcb1"
+    },
+    {
+        "Name": "Divine Winged Indulgence",
+        "Description": "Enemies get -2 Attack. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "7d7b0aa6-b60f-426f-b698-a880ee0b7cee"
+    },
+    {
+        "Name": "Winged Steel",
+        "Description": "When you play your third card of the turn, draw 1.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "f3f07b9b-1349-41d0-abab-bd5ec04d81e4"
+    },
+    {
+        "Name": "Divine Winged Steel",
+        "Description": "When you play your third card of the turn, draw 2. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "-",
+        "ID": "474d1169-4805-4385-8042-b7d9f4f18a7f"
+    },
+    {
+        "Name": "Worn Grindstone",
+        "Description": "Friendly units get +5 Attack.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "3197ba1d-d6e7-4bd5-a80c-d9848eebace3"
+    },
+    {
+        "Name": "Divine Worn Grindstone",
+        "Description": "Friendly units get +10 Attack. Remove this artifact after one combat.",
+        "Clan/Type": "Clanless",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "2d10de14-e967-4de2-8103-f496f9c1bca8"
+    },
+    {
+        "Name": "Ashes of the Fallen",
+        "Description": "Summon abilities trigger an additional time.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9e0deb69-6196-44a6-8220-85bd0df25f77"
+    },
+    {
+        "Name": "Collection of Tails",
+        "Description": "Rage does not decay.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b7822614-96ec-4ace-9029-6efc8adef374"
+    },
+    {
+        "Name": "Consumed Crown",
+        "Description": "Friendly units gain +2 Attack on Slay.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "4190af4b-a32f-42ab-acda-8f0d4f50c3a5"
+    },
+    {
+        "Name": "Divine Consumed Crown",
+        "Description": "Friendly units gain +4 Attack on Slay. Remove this artifact after one combat.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "c14d2134-9427-4fdc-a9fa-636d90e80ede"
+    },
+    {
+        "Name": "Grrrg's Goad",
+        "Description": "Demon units get Multistrike 1.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "94595f3a-4624-4408-977d-b166a98f23d2"
+    },
+    {
+        "Name": "Imp-cicle",
+        "Description": "At the start of your turn, add a random Imp unit to your hand.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "91211832-747e-4995-b4cb-7ca23c000f10"
+    },
+    {
+        "Name": "Queen's Tail",
+        "Description": "When you summon your first Imp each turn, gain +1 Ember and draw 1.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "0a6cff92-aefa-4d7f-ae71-615c8e30739b"
+    },
+    {
+        "Name": "Railhammer",
+        "Description": "Grant +4 stacks of Armor each time it is applied to friendly units.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "ba26070b-4f6b-4af0-a1ec-2af024b6af87"
+    },
+    {
+        "Name": "Resonant Shard",
+        "Description": "Rage adds an additional +1 Attack per stack.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b9bddf11-acaa-40fb-bc40-eee83e478424"
+    },
+    {
+        "Name": "Scorched Steel",
+        "Description": "Friendly units enter with Armor 5.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "68ef2523-5c2e-4660-b96d-00b1c0485f54"
+    },
+    {
+        "Name": "Divine Scorched Steel",
+        "Description": "Friendly units enter with Armor 10. Remove this artifact after one combat.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "58a75a4a-1e95-476a-9cd3-16a593d250f2"
+    },
+    {
+        "Name": "Scorching Restraints",
+        "Description": "Friendly units enter with Rage 3.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "55ca34e9-047b-4b93-b390-d8d228a43261"
+    },
+    {
+        "Name": "Divine Scorching Restraints",
+        "Description": "Friendly units enter with Rage 3. Remove this artifact after one combat.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b3c4f0af-b848-42a9-9818-3b01abf89463"
+    },
+    {
+        "Name": "The Unbroken Horn",
+        "Description": "Conserve Ember between turns.",
+        "Clan/Type": "Hellhorned",
+        "Source": "",
+        "DLC": "-",
+        "ID": "3e200d1f-7ba9-4a6e-a09d-5625f25b01ac"
+    },
+    {
+        "Name": "Channelheart",
+        "Description": "Sting spells get +20 Magic Power.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "0f6d3edc-d212-4e3a-877f-e9eb2ac78339"
+    },
+    {
+        "Name": "Cursed Vines",
+        "Description": "At start of turn, add a Vine Grasp spell with Purge to your hand.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "00063533-9277-485c-b100-13637a228f9a"
+    },
+    {
+        "Name": "Emblem of the Exiles",
+        "Description": "At the start of turn, the front friendly unit on each floor gains +5 Health.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "cb2c9d18-9a05-4523-acdc-6e4af73152aa"
+    },
+    {
+        "Name": "Divine Emblem of the Exiles",
+        "Description": "At the start of turn, the front friendly unit on each floor gains +10 Health. Remove this artifact after one combat.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "08f44eb7-c991-4dd4-a7d9-fa84e6b8788e"
+    },
+    {
+        "Name": "Gnarled Root",
+        "Description": "Friendly units get +1 Attack per stack of Spikes.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "a6c957cc-e9f5-49b7-a6a3-cd7e95393289"
+    },
+    {
+        "Name": "Petrified Crucible",
+        "Description": "Spikes deal +1 damage per stack.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "aa94ad34-ee09-464e-89ff-2a2c2867c097"
+    },
+    {
+        "Name": "Priory's Cloak",
+        "Description": "When a friendly unit is healed, deal damage to the front enemy unit equal to the amount healed.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "ae618996-fea4-431e-8911-f9715f96c898"
+    },
+    {
+        "Name": "Rootsplit Mask",
+        "Description": "Apply Rooted to enemy units when they enter the floor below the Pyre Room.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "4778bb46-27e4-49ae-aa5d-750813ceb6d0"
+    },
+    {
+        "Name": "Sap Tap",
+        "Description": "The first time each turn a friendly unit is healed, draw 1.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9a38370b-150c-45bd-9e3e-93a688a04850"
+    },
+    {
+        "Name": "The Bloating Fungus",
+        "Description": "Regen restores +1 health per stack.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "1fd244de-7d7b-4345-974b-4e5bf287a3df"
+    },
+    {
+        "Name": "Thorn Casing",
+        "Description": "Sting spells get +10 Magic Power and Piercing.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "2d367bde-7616-4804-a6c9-910060ae5fd7"
+    },
+    {
+        "Name": "Thornfruit",
+        "Description": "At the start of your turn, add a Sting spell to your hand.",
+        "Clan/Type": "Awoken",
+        "Source": "",
+        "DLC": "-",
+        "ID": "5e5d863b-514c-4026-a9b0-ffe56af2a3eb"
+    },
+    {
+        "Name": "A Forgotten Name",
+        "Description": "When you play your third spell of the turn, all cards gain +1 Magic Power for the rest of this battle.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "76166da7-d9aa-4c68-9a78-64914ec49f81"
+    },
+    {
+        "Name": "Divine A Forgotten Name",
+        "Description": "When you play your third spell of the turn, all cards gain +2 Magic Power for the rest of this battle. Remove this artifact after one combat.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "ef006619-4fc1-432c-98b2-ba670ba115bc"
+    },
+    {
+        "Name": "Cuttlebeard",
+        "Description": "Grant +2 stacks of Frostbite each time it is applied. Frostbite does not decay.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9cb2b9b2-0308-4f71-92e8-e96a30b87416"
+    },
+    {
+        "Name": "Founding Seal",
+        "Description": "Incant abilities trigger an additional time.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "410ba540-7c4f-4dc5-a84f-b1d8af508891"
+    },
+    {
+        "Name": "Icicle Fracture",
+        "Description": "At the end of the turn, apply Frozen to a random card in your hand.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "c07618e6-b679-4e2c-87a2-9203f52989cf"
+    },
+    {
+        "Name": "Kinstone Totem",
+        "Description": "When a card is discarded before the end of your turn, gain 1 Ember.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "44149a09-df55-4864-b5d9-f30c4e659999"
+    },
+    {
+        "Name": "Rules of Containment",
+        "Description": "Enemy units enter with Frostbite 2.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "270356af-16bd-4433-a0b2-3e5bb94ef890"
+    },
+    {
+        "Name": "Divine Rules of Containment",
+        "Description": "Enemy units enter with Frostbite 4. Remove this artifact after one combat.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "862aa81f-bc0b-4416-9635-35a8e8f2666b"
+    },
+    {
+        "Name": "Sigiled Seaweed",
+        "Description": "50% chance to apply Silence when an enemy unit enters your train.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "be9b4dd1-c0ba-41bd-a276-108ca7dad0fa"
+    },
+    {
+        "Name": "Tethys' Scales",
+        "Description": "50% chance to apply Spell Weakness 1 when an enemy unit enters your train.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "98989cbb-c729-4f87-8240-08f448db96d8"
+    },
+    {
+        "Name": "Titan's Claws",
+        "Description": "At the end of the turn, Frozen cards are reduced to 0 Ember until played or discarded.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "d2de397e-6fce-442f-a9e4-c3f3ee7bdbcf"
+    },
+    {
+        "Name": "Token of a Traitor",
+        "Description": "Playing a spell deals 2 damage to a random enemy unit on that floor.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b6e80269-efdd-4e28-97b3-8b19e8236b2e"
+    },
+    {
+        "Name": "Divine Token of a Traitor",
+        "Description": "Playing a spell deals 4 damage to a random enemy unit on that floor. Remove this artifact after one combat.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "3a4f2b0b-9a4c-46f4-ac21-ee8571832070"
+    },
+    {
+        "Name": "Totem Fragment",
+        "Description": "Apply Spell Weakness 2 to enemy units when they enter the floor below the Pyre Room.",
+        "Clan/Type": "Stygian Guard",
+        "Source": "",
+        "DLC": "-",
+        "ID": "5a96d89f-d7c0-49fa-88d1-8ec75a8f3140"
+    },
+    {
+        "Name": "Abandoned Antumbra",
+        "Description": "At start of turn, add a common or uncommon Morsel unit to hand.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "81958958-6481-4847-afe1-cb651a041f6c"
+    },
+    {
+        "Name": "Chain of Gems",
+        "Description": "Apply Damage Shield 2 to the first friendly unit summoned each turn.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "60a2a8a3-5f7a-4a9d-b427-5f261145fa1f"
+    },
+    {
+        "Name": "Divine Chain of Gems",
+        "Description": "Apply Damage Shield 4 to the first friendly unit summoned each turn. Remove this artifact after one combat.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "1195d5bb-a51f-4372-aa26-c9186d2f078b"
+    },
+    {
+        "Name": "Commemorative Spike",
+        "Description": "At the start of battle, summon a Morsel Miner on each floor.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "80a1b361-ee3a-43ae-86bd-da1ddac33a0a"
+    },
+    {
+        "Name": "Fossilized Fangs",
+        "Description": "Gorge abilities trigger an additional time.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b6613fe4-13c6-4462-8a0b-9af42850a851"
+    },
+    {
+        "Name": "Mask of Penumbra",
+        "Description": "When you summon your first Morsel unit each turn, draw 1.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "8b00c46d-374e-4afb-aa27-526873e242d1"
+    },
+    {
+        "Name": "Mine Jacks",
+        "Description": "+2 Capacity on the middle floor.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "775d24d8-98eb-4f22-ae50-d7069bf05757"
+    },
+    {
+        "Name": "Refined Void",
+        "Description": "Friendly units enter with Lifesteal 2.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "a6b0b657-8893-4cc8-bc62-ec09544c4306"
+    },
+    {
+        "Name": "Shadelamp",
+        "Description": "The first time each turn an enemy unit dies, add 2 Morsel units to hand.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "b6548209-3ccf-4deb-9896-f07d5df3dab9"
+    },
+    {
+        "Name": "Shadowbox",
+        "Description": "When you play your 20 th Morsel unit of the battle, deal 150 damage to all enemies on all floors.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "15f3c641-14ba-4305-8c9f-cdb2ebb4e572"
+    },
+    {
+        "Name": "Teeth of Gold",
+        "Description": "Deal 3 damage to the rear enemy unit when a Morsel unit is Eaten.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "38990528-6639-4cb2-b310-4e14193256a0"
+    },
+    {
+        "Name": "Winged Technology",
+        "Description": "Morsel units get Damage Shield 1.",
+        "Clan/Type": "Umbra",
+        "Source": "",
+        "DLC": "-",
+        "ID": "d1daea7e-3346-47df-a756-c839b044e5f3"
+    },
+    {
+        "Name": "Combustible Wax",
+        "Description": "Grant +3 stacks of Burnout each time it is applied.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "dc32326b-0952-4b3b-8bc8-cec909476c5f"
+    },
+    {
+        "Name": "Encased Ember",
+        "Description": "Gain 5 Ember when a Tomb unit dies.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "4a5b1613-568c-4bf6-8bf7-15f8bf013345"
+    },
+    {
+        "Name": "Exploding Candle",
+        "Description": "Deal 5 damage to enemy units when a Burnout unit dies.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "cb54fe76-9b3c-47f9-972c-424ec3ee39f7"
+    },
+    {
+        "Name": "Divine Exploding Candle",
+        "Description": "Deal 10 damage to enemy units when a Burnout unit dies. Remove this artifact after one combat.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "65eee28f-0d5b-4794-a46c-0659f9f7c77f"
+    },
+    {
+        "Name": "Fade's First Blade",
+        "Description": "Friendly units gain Rage 3 whenener they lose a stack of Burnout.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "85667d60-8053-4204-8c02-ba101dab7945"
+    },
+    {
+        "Name": "Flicker's Liquor",
+        "Description": "When you play a unit, a random card in hand is reduced to 0 Ember until played or discarded.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "128dd519-611c-4999-b7ac-e63ea027b1fa"
+    },
+    {
+        "Name": "Melting Spout",
+        "Description": "Tomb units get +30 Health and Burnout 1.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "61fdeafd-21c5-4009-a448-a5c286ac3fc0"
+    },
+    {
+        "Name": "Memorial Fund",
+        "Description": "Gain 5 Gold when a friendly unit dies.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "265d9fb6-934f-4b7d-ba12-d3a06c48b610"
+    },
+    {
+        "Name": "Mold Braces",
+        "Description": "Friendly units gain 'Extinguish: Apply Armor 5 to the front friendly unit'.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "19147050-9859-4cf1-b826-f258f6c48c42"
+    },
+    {
+        "Name": "Resin Block",
+        "Description": "When a friendly unit dies, apply +10 Attack to that unit.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "52c41ba0-f720-4b7e-9dd0-bd318be6acae"
+    },
+    {
+        "Name": "Votive Key",
+        "Description": "Apply Endless to the first friendly unit summoned each turn.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "22f5ff29-69be-4043-9fe1-245392ea3c95"
+    },
+    {
+        "Name": "Waxer Snuffer",
+        "Description": "Extinguish abilities trigger an additional time.",
+        "Clan/Type": "Melting Remnant",
+        "Source": "",
+        "DLC": "-",
+        "ID": "a5d67620-a9ec-4257-91b5-305336e11987"
+    },
+    {
+        "Name": "Wurmtooth",
+        "Description": "Clan starter cards are Infused. One card in each draft pack will be Infused.",
+        "Clan/Type": "Wurmkin",
+        "Source": "Starter",
+        "DLC": "The Last Divinity",
+        "ID": "815a25e7-2fed-4cb2-a568-79af12cd7116"
+    },
+    {
+        "Name": "Base Charge",
+        "Description": "At the start of battle, add 2 Echo to each floor.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a528a1b2-0d14-4fc5-9b8f-4b1f23722422"
+    },
+    {
+        "Name": "Bog Slime",
+        "Description": "When a spell with Consume is played, gain 1 Echo.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "217d553b-cddf-4a8c-a4c9-cfdb3c99389c"
+    },
+    {
+        "Name": "Carving Corusca",
+        "Description": "When a card with Extract is played, gain 1 Ember and 1 Echo.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "4d237444-5beb-43df-a545-c68a7ae86ba6"
+    },
+    {
+        "Name": "Decayed Decoy",
+        "Description": "Grant +1 stack of Reap each time it is applied.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "55c06c99-7cee-4d7e-ad17-f893722d8071"
+    },
+    {
+        "Name": "Dun Echo",
+        "Description": "One additional card in each draft pack will be Infused.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "9427e610-0c7b-4430-ab1f-c84049097168"
+    },
+    {
+        "Name": "Echo Seedling",
+        "Description": "The first time each battle a card with Consume is played, add 2 copies to hand.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "51368ce4-b037-49ef-801c-545405b78800"
+    },
+    {
+        "Name": "Encased Divinity",
+        "Description": "At the start of battle, the top floor gains 1 Echo that cannot be removed.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a66188b9-845d-475e-b6e6-7ea5335ec00b"
+    },
+    {
+        "Name": "Hardened Hull",
+        "Description": "When an Egg unit is summoned, remove Shell 3 and apply Armor 30.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "8c8a2a2c-500c-4b77-90fd-0d309b94bb2c"
+    },
+    {
+        "Name": "Mind Hoard",
+        "Description": "Increase by 1 on each floor.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "3a28026e-e44b-4456-b535-7134e7525240"
+    },
+    {
+        "Name": "Notice Stone",
+        "Description": "When a card with Consume is played, all cards gain +1 Magic Power for the rest of this battle.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "a4c87eb7-1c4e-4f63-af08-79f910e5a2e8"
+    },
+    {
+        "Name": "Divine Notice Stone",
+        "Description": "When a card with Consume is played, all cards gain +2 Magic Power for the rest of this battle. Remove this artifact after one combat.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "5a76e53c-0ca1-424a-afbc-0ff000d362cf"
+    },
+    {
+        "Name": "Serrated Mandibles",
+        "Description": "When one or more Echo are added to a floor, apply Reap 1 to a random enemy unit, twice.",
+        "Clan/Type": "Wurmkin",
+        "Source": "",
+        "DLC": "The Last Divinity",
+        "ID": "f302d4a1-13ba-4907-a26d-f0d8eead6f2e"
+    },
+    {
+        "Name": "Abandoned Stave",
+        "Description": "+1 Ember per turn for every 2 Blight cards in your deck.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Ember Deposits",
+        "DLC": "-",
+        "ID": "cb74adcf-b463-4424-a519-d1098ecd5373"
+    },
+    {
+        "Name": "Blank Pages",
+        "Description": "At start of turn, if you do not have a Champion in your hand, add a random one to your hand.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Let's give 'em Hell.",
+        "DLC": "The Last Divinity",
+        "ID": "6bb39014-9b03-4620-b088-f618a7e680b7"
+    },
+    {
+        "Name": "Blood for Blood",
+        "Description": "When your Pyre kills a unit, restore 5 Pyre health.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Train Graveyard",
+        "DLC": "-",
+        "ID": "d8142858-f12d-4fd6-9995-02f0d12d0b12"
+    },
+    {
+        "Name": "Broken Wheel",
+        "Description": "When a non-Champion unit dies, it is Purged.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "066368bb-085c-462c-b466-5ed911fef80a"
+    },
+    {
+        "Name": "Corrupted Cloud",
+        "Description": "At end of turn, deal 4 damage to friendly units.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "3edd9947-7cd6-45d9-bb7d-1e3609acc41b"
+    },
+    {
+        "Name": "Cracked Helmet",
+        "Description": "Damage spells get Piercing.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "088a9e01-d85a-4b20-805b-a7817bcf0c08"
+    },
+    {
+        "Name": "Dante's Cloak",
+        "Description": "+2 Magic Power' for every Blight card in your deck.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Mysterious Figure",
+        "DLC": "-",
+        "ID": "c1102381-a1f5-4d17-be35-8f51f820982a"
+    },
+    {
+        "Name": "Ember Stasis",
+        "Description": "Playing a Blight card deals 120 damage to the front enemy unit.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Penance Yard",
+        "DLC": "-",
+        "ID": "8d82ea2b-6672-49fd-8220-66bb12280bbc"
+    },
+    {
+        "Name": "Frozen Nostalgia",
+        "Description": "-1 Capacity on each floor. +15 Magic Power.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Iceberg",
+        "DLC": "-",
+        "ID": "003541f1-bbd8-4657-af8c-87809ec9dd16"
+    },
+    {
+        "Name": "Heaven's Gold",
+        "Description": "Your Pyre gets +1 Attack for every 10 Gold you have.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "The Historian",
+        "DLC": "-",
+        "ID": "d8e07e64-4a4b-46ab-be16-5ff90abaab37"
+    },
+    {
+        "Name": "History of the World",
+        "Description": "+3 Capacity on a random floor.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Iceberg",
+        "DLC": "-",
+        "ID": "ba36ec3c-9bb8-4428-b15b-d989cf70216b"
+    },
+    {
+        "Name": "Hope for Peace",
+        "Description": "Spells with Purge have Consume instead.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Armageddon Battlefield",
+        "DLC": "-",
+        "ID": "10648aee-8577-49b6-8659-318a7f922d5a"
+    },
+    {
+        "Name": "Immortality Potion",
+        "Description": "Friendly non-Morsel units get Endless.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "7d0d8fab-6457-45c1-bf17-4edeaf2c1670"
+    },
+    {
+        "Name": "Judgemental Fittings",
+        "Description": "Enemy units enter with Damage Shield 1.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "db206ec6-fea3-457c-9469-cef224e662ce"
+    },
+    {
+        "Name": "Penitent Remains",
+        "Description": "When summoned friendly units get +2 Attack for every Blight card in your deck.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Penance Yard",
+        "DLC": "-",
+        "ID": "3f6aa752-318e-42c0-bf7a-ba9ea3bbd3de"
+    },
+    {
+        "Name": "Petrified Heart",
+        "Description": "Friendly units get +10 Health and Heartless.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Train Graveyard",
+        "DLC": "-",
+        "ID": "76892922-e4c8-4de5-b28e-500797ac4826"
+    },
+    {
+        "Name": "Railforger's Hammer",
+        "Description": "+1 Capacity on each floor.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Iceberg",
+        "DLC": "-",
+        "ID": "32634a16-f477-463d-b697-e814197da535"
+    },
+    {
+        "Name": "Shard of Divinity",
+        "Description": "Your Pyre starts each battle with Armor 100.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Let's give 'em Hell.",
+        "DLC": "The Last Divinity",
+        "ID": "b6282e63-9c8e-477f-9797-ecd43412e47a"
+    },
+    {
+        "Name": "Vial of Tears",
+        "Description": "At end of turn, restore 5 health to friendly units.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Malicka Mutator",
+        "DLC": "The Last Divinity",
+        "ID": "0a34dd72-df76-43ec-bb18-20afa56f823b"
+    },
+    {
+        "Name": "Weathered Coldstones",
+        "Description": "When you play a Blight card, restore 5 Pyre health.",
+        "Clan/Type": "Concealed Caverns",
+        "Source": "Penance Yard",
+        "DLC": "-",
+        "ID": "714e922c-4a40-4c61-bdc3-bbc6c2d6c4dc"
+    },
+    {
+        "Name": "Fel's Remorse",
+        "Description": "+1 Ember per turn. Your Pyre gets +10 Attack and +30.",
+        "Clan/Type": "Major Enhancement",
+        "Source": "",
+        "DLC": "-",
+        "ID": "780f977e-4007-45ae-900f-c8929b2bf000",
+        "IDs": ["6eef1e2d-3bd5-4f04-bd88-d0c24d5eb691"]
+    },
+    {
+        "Name": "Herzal's Compound",
+        "Description": "Draw +1 each turn. Your Pyre gets +10 Attack and +30.",
+        "Clan/Type": "Major Enhancement",
+        "Source": "",
+        "DLC": "-",
+        "ID": "f9cc17ee-b7e5-45de-a02f-bd271e2dcd1a",
+        "IDs": ["341001b3-3fa9-47a5-9d88-eb04390b82fa"]
+    },
+    {
+        "Name": "Light of Seraph",
+        "Description": "+1 Capacity on each floor. Your Pyre gets +10 Attack and +30.",
+        "Clan/Type": "Major Enhancement",
+        "Source": "",
+        "DLC": "-",
+        "ID": "9291142a-dc6f-4834-89f1-ceda778e06ec",
+        "IDs": ["2d313e11-aa80-4116-b359-7560d3307544"]
+    }
+]

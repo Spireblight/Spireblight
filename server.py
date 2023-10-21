@@ -36,17 +36,18 @@ from aiohttp import ClientSession, ContentTypeError
 
 from cache.run_stats import get_all_run_stats, get_run_stats_by_date, get_run_stats_by_date_string, update_run_stats_by_date
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, Base, Card, Relic, Potion, Keyword, ScoreBonus
+from nameinternal import get, query, sanitize, Base, Card, RelicSet, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
+from monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from twitch import TwitchCommand
 from logger import logger
 from slice import get_current_run, CurrentRun
 from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
-from runs import get_latest_run, get_parser
+from runs import get_latest_run, get_parser, _ts_cache as _runs_cache
 
 from typehints import ContextType, CommandType
 import events
@@ -68,6 +69,8 @@ _consts = {
     "prefix": config.baalorbot.prefix,
     "website": config.server.url,
 }
+
+_quotes: list[tuple[str, str, int]] = []
 
 class Formatter(string.Formatter): # this does not support conversion or formatting
     def __init__(self):
@@ -148,7 +151,7 @@ def _create_cmd(output):
             msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
-        keywords = {"savefile": None, "profile": None, "readline": readline}
+        keywords = {"mt-save": None, "savefile": None, "profile": None, "readline": readline}
         if "$<profile" in msg:
             try:
                 keywords["profile"] = get_current_profile()
@@ -158,8 +161,12 @@ def _create_cmd(output):
             keywords["savefile"] = await get_savefile(ctx)
             if keywords["savefile"] is None:
                 return
+        if "$<mt-save" in msg:
+            keywords["mt-save"] = await get_mt_save(ctx)
+            if keywords["mt-save"] is None:
+                return
         msg = _formatter.vformat(msg, (), keywords)
-        # TODO: Add a flag to the command that says whethere it's a reply
+        # TODO: Add a flag to the command that says whether it's a reply
         # or a regular message.
         await ctx.reply(msg)
     return inner
@@ -168,7 +175,7 @@ def readline(file: str) -> str:
     if ".." in file:
         return "Error: '..' in filename is not allowed."
     with open(os.path.join("text", file), "r") as f:
-        return random.choice(f.readlines())
+        return random.choice(f.readlines()).rstrip()
 
 def load(loop: asyncio.AbstractEventLoop):
     _cmds.clear()
@@ -277,6 +284,16 @@ def slice_command(name: str, *aliases: str, **kwargs):
                 raise ValueError("No Slice & Dice run going on")
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
+    return inner
+
+def mt_command(name: str, *aliases: str, **kwargs):
+    def inner(func):
+        async def _mt_get(ctx) -> list:
+            res = await get_mt_save(ctx)
+            if res is None:
+                raise ValueError("No savefile")
+            return [res]
+        return command(name, *aliases, **kwargs)(func, wrapper_func=_mt_get)
     return inner
 
 class TwitchConn(TBot):
@@ -909,6 +926,13 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case _:
             await ctx.reply(f"Unrecognized action {action}.")
 
+def _load_quotes():
+    pass
+
+#@command("quote")
+async def quote_cmd(ctx: ContextType, *args: str):
+    pass
+
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
@@ -1062,9 +1086,49 @@ async def giveaway_enter(ctx: ContextType):
     _ongoing_giveaway["users"].add(ctx.author.name)
 
 @command("info", "cardinfo", "relicinfo")
-async def card_info(ctx: ContextType, *line: str):
+async def card_info(ctx: ContextType, *line: str, _cache={}):
+    # TODO: improve this
+    if False:
+        mods = ["slaythespire", "downfall", "packmaster"]
+
+        line = " ".join(line).lower() + " ".join(mods)
+
+        line = urllib.parse.quote(line)
+
+        if "session" not in _cache:
+            _cache["session"] = ClientSession()
+
+        session: ClientSession = _cache["session"]
+
+        async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
+            if resp.ok:
+                j = await resp.json()
+                j = j[0]['item']
+                desc = j['description'].replace('\n', ' ')
+                pack = j.get("pack")
+                mod = j['mod']
+                if pack:
+                    mod = f"Pack: {pack}"
+                if mod == "Slay the Spire":
+                    mod = None
+                text = ""
+                if mod:
+                    text = f" ({mod})"
+                await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
+                return
+
     line = " ".join(line)
     info: Base = query(line)
+    if info is None:
+        await ctx.reply(f"Could not find info for {line!r}")
+        return
+
+    await ctx.reply(info.info)
+
+@command("mtinfo")
+async def mt_info(ctx: ContextType, *line: str):
+    line = " ".join(line)
+    info = mt_query(line)
     if info is None:
         await ctx.reply(f"Could not find info for {line!r}")
         return
@@ -1165,7 +1229,7 @@ async def is_seeded(ctx: ContextType, save: Savefile):
 async def run_playtime(ctx: ContextType, save: Savefile):
     """Display the current playtime for the run."""
     start = save.timestamp - save.timedelta
-    seconds = int(time.time()) - start.timestamp()
+    seconds = int(time.time() - start.timestamp())
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     await ctx.reply(f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}")
@@ -1280,32 +1344,41 @@ async def relics_page2(ctx: ContextType, save: Savefile):
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
-    data = query(relic)
+    relics = [relic]
+    
+    # Check if the relic is referencing a relic set:
+    relic_set = query(relic)
+    if isinstance(relic_set, RelicSet):
+        relics = relic_set.relic_list
 
-    if not data:
-        await ctx.reply(f"Could not find relic {relic!r}.")
-    elif data.cls_name != "relic":
-        await ctx.reply("Can only look for relics seen.")
-    elif data in save.relics_bare:
-        await ctx.reply(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
-    elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
-        match data.tier:
-            case "Boss":
-                s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
-            case "Starter":
-                s = "Starter relics can't exactly be seen during a run. What?"
-            case "Special":
-                s = "We can only see Special relics from events."
-            case a:
-                s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
-        await ctx.reply(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
-    elif save.available_relic(data):
-        await ctx.reply(f"We have not seen {data.name} yet! There's a chance we'll see it!")
-    else:
-        s = ""
-        if data.pool:
-            s = " (or maybe it doesn't belong to this character)"
-        await ctx.reply(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+    replies = []
+    for relic in relics:
+        data = query(relic)
+        if not data:
+            replies.append(f"Could not find relic {relic!r}.")
+        elif data.cls_name != "relic":
+            replies.append("Can only look for relics seen.")
+        elif data in save.relics_bare:
+            replies.append(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
+        elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
+            match data.tier:
+                case "Boss":
+                    s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
+                case "Starter":
+                    s = "Starter relics can't exactly be seen during a run. What?"
+                case "Special":
+                    s = "We can only see Special relics from events."
+                case a:
+                    s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
+            replies.append(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
+        elif save.available_relic(data):
+            replies.append(f"We have not seen {data.name} yet! There's a chance we'll see it!")
+        else:
+            s = ""
+            if data.pool:
+                s = " (or maybe it doesn't belong to this character)"
+            replies.append(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+    await ctx.reply("\n".join(replies))
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
 async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
@@ -1365,6 +1438,44 @@ async def score(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f'Current Score: {save.score} points')
 
+@mt_command("clans")
+async def mt_clans(ctx: ContextType, save: MonsterSave):
+    main = save.main_class
+    if save.main_exiled:
+        main = f"{main} (Exiled)"
+    sub = save.sub_class
+    if save.sub_exiled:
+        sub = f"{sub} (Exiled)"
+    await ctx.reply(f"The clans are {main} and {sub}.")
+
+@mt_command("mutators")
+async def mt_mutators(ctx: ContextType, save: MonsterSave):
+    if (m := save.mutators):
+        val = ", ".join(f"{x.name} ({x.description})" for x in m)
+        await ctx.reply(f"The mutators are: {val}")
+
+@mt_command("challenge")
+async def mt_challenge(ctx: ContextType, save: MonsterSave):
+    if not save.challenge:
+        await ctx.reply("We are not currently playing an Expert Challenge.")
+    else:
+        await ctx.reply(f"We are currently playing the Expert Challenge {save.challenge.info}.")
+
+@mt_command("artifact")
+async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
+    l = list(save.artifacts)
+    if not index:
+        await ctx.reply(f"We have {len(l)} artifacts.")
+        return
+    if index < 0:
+        index = len(l) + index + 1
+    if index > len(l) or index <= 0:
+        await ctx.reply(f"We only have {len(l)} artifacts!")
+        return
+
+    relicData = l[index-1]
+    await ctx.reply(f"The artifact at position {index} is {relicData.info}")
+
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""
@@ -1377,6 +1488,18 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply(f"The unequipped items are {'; '.join(save.items)}.")
     else:
         await ctx.reply("We have no unequipped items.")
+
+@command("fairyreleased", "released")
+async def fairy_released(ctx: ContextType):
+    """Get the count of fairy that have been released after the Heart."""
+    count = 0
+    for run in _runs_cache.values():
+        if run.won:
+            for pot in run.path[-2].discarded_potions:
+                if pot.internal == "FairyPotion":
+                    count += 1
+
+    await ctx.reply(f"We have freed {count} fairies at the top of the Spire!")
 
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
@@ -1446,7 +1569,8 @@ async def get_last_loss(ctx: ContextType):
 async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
     try:
         latest = get_latest_run(character, arg)
-    except KeyError:
+        latest.won # making sure it's not None
+    except (KeyError, AttributeError):
         await ctx.reply(f"Could not understand character {character}.")
         return
     value = "run"
@@ -1495,13 +1619,55 @@ async def calculate_wins_cmd(ctx: ContextType, *date_string: str):
 async def calculate_losses_cmd(ctx: ContextType, *date_string: str):
     """Display the cumulative number of losses for the year-long challenge."""
     msg = "A20 Heart losses in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    await _send_run_stats_message(ctx, msg, date_string)
+    run_stats = get_run_stats()
+    await ctx.reply(msg.format(run_stats, run_stats.year_losses[run_stats.current_year]))
+
+_display = []
+_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher")
+
+def _get_set_display():
+    if not _display: # we get
+        with open(os.path.join("data", "streak")) as f:
+            toggles = f.read().strip()
+
+        for i in toggles:
+            _display.append(int(i))
+
+    elif _display: # we set
+        with open(os.path.join("data", "streak"), "w") as f:
+            f.write("".join(str(i) for i in _display))
+
+@command("rotation", "display", flag="m")
+async def streak_display(ctx: ContextType, new: str):
+    """Change the !streak command display."""
+    value = "risdw"
+    word = []
+    _display.clear()
+    for i, l in enumerate(value):
+        if l in new:
+            _display.append(1)
+            word.append(_words[i])
+        else:
+            _display.append(0)
+    _get_set_display()
+    await ctx.reply(f"Streak display changed to {', '.join(word)}.")
 
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType, *date_string: str):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
-    msg = "Current streak: Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
-    await _send_run_stats_message(ctx, msg, date_string)
+    if not _display:
+        _get_set_display()
+    msg = []
+    for i, l in enumerate(_display):
+        if l:
+            word = _words[i]
+            arg = f"{word.lower()}_count" if word != "Rotating" else "all_character_count"
+            msg.append(f"{word}: {{0.{arg}}}")
+
+    final = f"Current streak: {' - '.join(msg)}"
+
+    run_stats = get_run_stats()
+    await ctx.reply(final.format(run_stats.streaks))
 
 @command("pb")
 async def calculate_pb_cmd(ctx: ContextType, *date_string: str):
@@ -1521,31 +1687,47 @@ async def calculate_pb_cmd(ctx: ContextType, *date_string: str):
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, *date_string: str):
     """Display the current winrate for Baalor's 2022+ A20 Heart kills."""
-    run_stats = None
-    if date_string is None:
-        run_stats = get_run_stats_by_date()
-    else:
-        try:
-            run_stats = get_run_stats_by_date_string("".join(date_string))
-        except:
-            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
-            return
-    wins = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
-    losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
+    run_stats = get_run_stats()
+    wins = [run_stats.all_wins.all_character_count, run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
+    losses = [run_stats.all_losses.all_character_count, run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
-    await ctx.reply(f"Baalor's winrate: Ironclad: {rate[0]:.2%} - Silent: {rate[1]:.2%} - Defect: {rate[2]:.2%} - Watcher: {rate[3]:.2%}")
+    await ctx.reply(f"Baalor's winrate: Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}")
 
-async def _send_run_stats_message(ctx: ContextType, msg: str, date_string: tuple[str, ...]):
-    run_stats = None
-    if date_string is None:
-        run_stats = get_run_stats_by_date()
+@command("unmastered")
+async def unmastered(ctx: ContextType):
+    save = await get_savefile()
+    if save is not None and "unmastered" in save._cache:
+        await ctx.reply(save._cache["unmastered"])
+        return
+
+    cards = get_mastered().mastered_cards
+
+    final = []
+
+    for value in _internal_cache.values():
+        if value.cls_name != "card":
+            continue
+        value: Card
+        if value.mod is not None:
+            continue
+        if value.type == "Status" or value.rarity == "Special": # all "special" ones are already mastered
+            continue
+
+        if value.name not in cards:
+            final.append(value.name)
+
+    msg = ""
+    if len(final) > 1:
+        msg = f"The cards left to master are {', '.join(final)}."
+    elif len(final) == 1:
+        msg = f"The final card left to master is {final[0]}."
     else:
-        try:
-            run_stats = get_run_stats_by_date_string("".join(date_string))
-        except:
-            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
-            return
-    await ctx.reply(msg.format(run_stats.streaks))
+        msg = "Mastery Challenge Complete! Nothing left to master! baalorEZ baalorX2"
+
+    if save is not None:
+        save._cache["unmastered"] = msg
+
+    await ctx.reply(msg)
 
 @command("mastered")
 async def mastered_stuff(ctx: ContextType, *card: str):

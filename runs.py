@@ -31,6 +31,8 @@ _ts_cache: dict[int, RunParser] = {}
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
+    if not _ts_cache:
+        return None
     latest = _ts_cache[max(_ts_cache)]
     is_character_specific = False
     if character is not None:
@@ -64,7 +66,7 @@ class RunParser(FileParser):
 
     @property
     def display_name(self) -> str:
-        return f"({self.character} {'victory' if self.won else 'loss'}) {self.timestamp}"
+        return f"({self.character} {self.verb}) {self.timestamp}"
 
     @property
     def profile(self):
@@ -72,7 +74,7 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        return datetime.datetime.fromtimestamp(self._data["timestamp"])
+        return datetime.datetime.utcfromtimestamp(self._data["timestamp"])
 
     @property
     def timedelta(self) -> datetime.timedelta:

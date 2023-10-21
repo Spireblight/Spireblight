@@ -1,0 +1,22 @@
+refill
+stretch
+slay
+train
+shuffle
+raise
+lower
+bonk
+vote
+refund
+eat
+pick
+draw
+talk to
+draft
+shoot
+roll
+skip
+lift
+learn
+master
+curse

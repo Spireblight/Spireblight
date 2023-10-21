@@ -1,5 +1,6 @@
 from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
+import traceback
 import asyncio
 import pickle
 import time
@@ -8,13 +9,16 @@ import os
 from configuration import config
 
 async def main():
-    print("Client running. Will periodically check for the savefile and send it over!")
+    print("Client running. Will periodically check for the savefile and send it over!\n")
     has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
     last = 0
     last_slots = 0
     lasp = [0, 0, 0]
     last_sd = 0
+    last_mt = 0
+    runs_last = {}
     use_sd = False
+    use_mt = False
     user = None
     try:
         with open("last_run") as f:
@@ -29,10 +33,18 @@ async def main():
         time.sleep(3)
         return
     try:
-        use_sd = config.slice.enabled
         user = os.environ["USERPROFILE"]
+        use_sd = config.slice.enabled
+        use_mt = config.mt.enabled
     except (AttributeError, KeyError):
-        use_sd = False
+        use_sd = use_mt = False
+
+    print(f"User profile folder: {user}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
+
+    if use_mt:
+        mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
+        mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
+        print(f"\nFolder: {mt_folder}\nSavefile: {mt_file}")
 
     async with ClientSession(config.server.url) as session:
         while True:
@@ -56,22 +68,26 @@ async def main():
                     possible = None
 
             if use_sd:
-                cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
-                if cur_sd != last_sd:
-                    with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
-                        sd_data = f.read()
-                    sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
-                    async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
-                        if resp.ok:
-                            last_sd = cur_sd
-                            curses = await resp.read()
-                            if curses and config.slice.curses:
-                                decoded: list[str] = pickle.loads(curses)
-                                try:
-                                    with open(config.slice.curses, "w") as f:
-                                        f.write("\n".join(decoded))
-                                except OSError:
-                                    pass
+                try:
+                    cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
+                except OSError:
+                    pass
+                else:
+                    if cur_sd != last_sd:
+                        with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
+                            sd_data = f.read()
+                        sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
+                        async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
+                            if resp.ok:
+                                last_sd = cur_sd
+                                curses = await resp.read()
+                                if curses and config.slice.curses:
+                                    decoded: list[str] = pickle.loads(curses)
+                                    try:
+                                        with open(config.slice.curses, "w") as f:
+                                            f.write("\n".join(decoded))
+                                    except OSError:
+                                        pass
 
             to_send = []
             files = []
@@ -132,6 +148,39 @@ async def main():
                         if resp.ok:
                             has_save = False
 
+                if use_mt:
+                    try:
+                        cur_mt = os.path.getmtime(mt_file)
+                    except OSError:
+                        traceback.print_exc()
+                    else:
+                        if cur_mt != last_mt:
+                            with open(mt_file, "rb") as f:
+                                mt_data = f.read()
+                            mt_runs = {"save": mt_data}
+                            mt_runs_last = {}
+                            for file in os.listdir(os.path.join(mt_folder, "run-history")):
+                                break # otherwise, it might exceed the data limit. let's not.
+                                if not file.endswith(".db"):
+                                    continue
+                                if file == "runHistory.db": # main one
+                                    key = "main"
+                                elif file.startswith("runHistoryData"): # something like runHistoryData00.db
+                                    key = file[14:16]
+                                else:
+                                    key = file # just in case
+                                last = os.path.getmtime(os.path.join(mt_folder, "run-history", file))
+                                if runs_last.get(key) != last:
+                                    with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
+                                        mt_runs[key] = f.read()
+                                        mt_runs_last[key] = last
+                            async with session.post("/sync/monster", data=mt_runs, params={"key": config.server.secret}) as resp:
+                                if resp.ok:
+                                    last_mt = cur_mt
+                                    runs_last.update(mt_runs_last)
+                                else:
+                                    print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
+
                 # update all profiles
                 data = {
                     "slots": b"",
@@ -160,7 +209,7 @@ async def main():
                     except OSError:
                         continue
 
-                if data:
+                if any(data.values()):
                     async with session.post("/sync/profile", data=data, params={"key": config.server.secret, "start": start}) as resp:
                         if resp.ok:
                             lasp = tobe_lasp
@@ -170,8 +219,12 @@ async def main():
 
                 if possible is not None and cur != last:
                     content = ""
-                    with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
-                        content = f.read()
+                    try:
+                        with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
+                            content = f.read()
+                    except OSError:
+                        possible = None
+                        continue
                     content = content.encode("utf-8", "xmlcharrefreplace")
                     char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
                     async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.server.secret, "has_run": "false", "start": start}) as resp:

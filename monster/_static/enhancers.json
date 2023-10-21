@@ -1,0 +1,202 @@
+[
+    {
+        "Name": "Card Duplicator",
+        "ID": "81be1dda-5523-4e26-af12-03ae8c9ce262"
+    },
+    {
+        "Name": "Duplicate Spell",
+        "ID": "584ed916-e6b5-4483-b9b7-be25f730b45e"
+    },
+    {
+        "Name": "Powerstone",
+        "ID": "015f4d9d-3a87-4053-8e30-45a80fdf78ee"
+    },
+    {
+        "Name": "Surgestone",
+        "ID": "07de18ca-a585-4200-b139-63c5d4661140"
+    },
+    {
+        "Name": "Emberstone Spell",
+        "ID": "7301ebb3-4d99-46b9-b4bd-aeabf530fd0a"
+    },
+    {
+        "Name": "Seekstone",
+        "ID": "51277981-c504-434e-9698-1277dd5bc1f4"
+    },
+    {
+        "Name": "Stackstone",
+        "ID": "72f61ae8-7e0f-4066-a3fb-a1273f3aa273"
+    },
+    {
+        "Name": "Freezestone",
+        "ID": "a13a7545-0bc8-4c30-aa0e-da651894cebb"
+    },
+    {
+        "Name": "Truestone",
+        "ID": "fb9ac600-7c4c-4a48-8951-91d354394169"
+    },
+    {
+        "Name": "Keepstone",
+        "ID": "0454db73-87f1-4767-ae96-053928acc008"
+    },
+    {
+        "Name": "Eternalstone Remove Consume",
+        "ID": "4cd37328-eb6e-4c4e-aa61-53492dfe8035"
+    },
+    {
+        "Name": "Unit Replicator",
+        "ID": "1f97beaf-81ab-40ad-819f-108ea86780bd"
+    },
+    {
+        "Name": "Eternalstone Add Endless",
+        "ID": "2ce018b5-2b43-4ecf-8567-696d4fd8c119"
+    },
+    {
+        "Name": "Largestone",
+        "ID": "e1646fd5-9245-431a-a07f-580c3a033347"
+    },
+    {
+        "Name": "Thornstone",
+        "ID": "16beb502-1f53-42c0-b4fb-61da62401475"
+    },
+    {
+        "Name": "Furystone",
+        "ID": "d00f4776-f11a-4c9c-a62f-bf9a95eaa52a"
+    },
+    {
+        "Name": "Wickstone",
+        "ID": "ba976851-189e-4499-8e22-3fd76914c382"
+    },
+    {
+        "Name": "Runestone",
+        "ID": "70dbb13a-a4f0-44bd-bcd5-9c5b94860cf5"
+    },
+    {
+        "Name": "Shieldstone",
+        "ID": "3ec7e45c-0820-45b7-910c-e50e817bcf23"
+    },
+    {
+        "Name": "Summonstone",
+        "ID": "90a9bd0f-a35a-49e1-80c6-7228505c725b"
+    },
+    {
+        "Name": "Emberstone Unit",
+        "ID": "d27a11b4-84b5-4082-b75a-d20badf0ca31"
+    },
+    {
+        "Name": "Frenzystone",
+        "ID": "0016b165-11a9-4a26-8837-3b2895bc39f8"
+    },
+    {
+        "Name": "Speedstone",
+        "ID": "74d5a105-cc4a-4de4-8189-d346e2a6de53"
+    },
+    {
+        "Name": "Smallstone",
+        "ID": "0690d498-a4cd-46fc-b9ae-18fcc34a4b6b"
+    },
+    {
+        "Name": "Strengthstone",
+        "ID": "e8095d27-518c-4dd8-9f19-4306b42940f9"
+    },
+    {
+        "Name": "Battlestone",
+        "ID": "247c99a2-1076-4cef-be8a-1b8441ea75d3"
+    },
+    {
+        "Name": "Heartstone",
+        "ID": "f0c610cd-0b6b-48af-8c61-9d23dbdfea34"
+    },
+    {
+        "Name": "Trample Umbra",
+        "ID": "d11e1174-521a-4aa1-bc78-538645c2ce94"
+    },
+    {
+        "Name": "Card Replicator",
+        "ID": "88a1c4c8-b3e6-4e1e-8b3f-f65fe5c09882"
+    },
+    {
+        "Name": "Card Replicator0 Cost Annihilate",
+        "ID": "15b51631-7f09-42a7-8041-341f676fa491"
+    },
+    {
+        "Name": "Major Refraction",
+        "ID": "bb9f4b80-45be-4aad-811b-5c5450a5c11f"
+    },
+    {
+        "Name": "Spell Railspike",
+        "ID": "fc38cd31-4aa5-4710-81ac-12b3c6611389"
+    },
+    {
+        "Name": "Monster Railspike",
+        "ID": "af3618de-70d1-4b2e-980b-4b85fbcf83f4"
+    },
+    {
+        "Name": "Improved Spikedriver",
+        "ID": "481b0afa-6b62-4abf-9b92-a3e68c501c08"
+    },
+    {
+        "Name": "Improved Railspike",
+        "ID": "eeef8380-bc30-49a5-aff0-a125599bb554"
+    },
+    {
+        "Name": "Minor Refraction",
+        "ID": "3e025f03-d52f-494a-a61e-c8ec504d1061"
+    },
+    {
+        "Name": "Extremestone",
+        "ID": "84e3a785-d463-4f9e-a415-67b90fefd9aa"
+    },
+    {
+        "Name": "Purgestone",
+        "ID": "0303d8f4-adb3-4200-b96e-cb51fe40630a"
+    },
+    {
+        "Name": "Twinstone",
+        "ID": "5328c6bf-b1ba-4192-b775-40568d4232d3"
+    },
+    {
+        "Name": "Valuestone",
+        "ID": "3a1021b3-807e-462d-a3aa-45d3a5356b97"
+    },
+    {
+        "Name": "Emberstone",
+        "ID": "7301ebb3-4d99-46b9-b4bd-aeabf530fd0a"
+    },
+    {
+        "Name": "Corruptstone",
+        "ID": "c172bdb3-bbb2-4332-9248-8f0eb023dcc1"
+    },
+    {
+        "Name": "Eternalstone",
+        "ID": "4cd37328-eb6e-4c4e-aa61-53492dfe8035"
+    },
+    {
+        "Name": "Immortalstone",
+        "ID": "2ce018b5-2b43-4ecf-8567-696d4fd8c119"
+    },
+    {
+        "Name": "Echo Stone",
+        "ID": "9e2d80ca-4035-4610-bfa4-ccd22732dc5a"
+    },
+    {
+        "Name": "Sunderstone",
+        "ID": "57dc22eb-f03e-4de3-a484-6fc41a48f07b"
+    },
+    {
+        "Name": "Sapstone",
+        "ID": "aad701f2-c210-4354-a985-c84576eb48cb"
+    },
+    {
+        "Name": "Hephs Consolation",
+        "ID": "fe8b3452-5a8b-4ca8-9094-81d85191e4b1"
+    },
+    {
+        "Name": "Spell Duplicate",
+        "ID": "44767239-41a0-47f1-815e-29c4e8573ca3"
+    },
+    {
+        "Name": "Unhinged Power",
+        "ID": "4567dc52-8f10-47d8-b7b4-a7ca8af964a8"
+    }
+]

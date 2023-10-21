@@ -1,0 +1,110 @@
+[
+    {
+        "Name": "Level1 Gold For Spikes",
+        "ID": "2e67a682-8628-410b-8431-abde54d998b0"
+    },
+    {
+        "Name": "Level2 Gold For Spikes",
+        "ID": "6102dccc-a49b-4c53-bfd7-a4306d0f743b"
+    },
+    {
+        "Name": "T1 Gold For Enemy Armor",
+        "ID": "54086e77-3ae0-4fc6-ba3a-bea2d0a8b77d"
+    },
+    {
+        "Name": "T1 Gold For Enemy Extra Attack",
+        "ID": "1020bb09-084a-4d80-992a-81c17d004b6c"
+    },
+    {
+        "Name": "T1 Gold For Enemy Extra Health",
+        "ID": "63234215-d438-4a1a-9c07-6d8a3a4e31f2"
+    },
+    {
+        "Name": "T1 Gold For Invasion",
+        "ID": "59a2c19e-3a60-4e7e-9222-d03423212bd9"
+    },
+    {
+        "Name": "T1 Gold For Less Ember",
+        "ID": "2e24d1d9-6f7b-49e7-b378-f7b0bd65cef9"
+    },
+    {
+        "Name": "T1 Gold For Spell Shield",
+        "ID": "ca7bb694-c8ee-423e-a3eb-c3d9a354da32"
+    },
+    {
+        "Name": "T1 Gold For Stealth",
+        "ID": "60bf877a-c81b-4465-9bdf-86daec2b4f10"
+    },
+    {
+        "Name": "T2 Artifact For Enemy Multistrike",
+        "ID": "536645ea-12cb-4a6e-b0e5-3ecf026f536c"
+    },
+    {
+        "Name": "T2 Artifact For Heal On Ascend",
+        "ID": "c52f7c5d-815d-454c-963f-20ce2523e1ba"
+    },
+    {
+        "Name": "T2 Artifact For Spikes",
+        "ID": "254aa597-649a-47a8-8098-bc56cbb0406b"
+    },
+    {
+        "Name": "T2 Gold For Enemy Armor",
+        "ID": "46f70d3f-d9c1-4929-bdb3-a64123618527"
+    },
+    {
+        "Name": "T2 Gold For Enemy Extra Attack",
+        "ID": "e347ed1f-4307-4765-b28a-ff63caa008d5"
+    },
+    {
+        "Name": "T2 Gold For Enemy Extra Health",
+        "ID": "a2ddbd87-eb8b-44ae-ab0c-39d6d75e8d0a"
+    },
+    {
+        "Name": "T2 Gold For Invasion",
+        "ID": "481c8c15-8598-40fe-9c93-382f7fd479af"
+    },
+    {
+        "Name": "T2 Gold For Less Ember",
+        "ID": "78f3f6f9-ac15-443e-a916-caaff68a74ad"
+    },
+    {
+        "Name": "T2 Gold For Spell Shield",
+        "ID": "a05ef6a0-c306-42db-8fb8-7fca7ffd3441"
+    },
+    {
+        "Name": "T3 Gold For Enemy Armor",
+        "ID": "ca0a020e-8e2c-4f56-93d7-c9dcfeb53d3f"
+    },
+    {
+        "Name": "T3 Gold For Enemy Extra Attack",
+        "ID": "1bf8065a-71b6-40b8-9310-e92451d7f0a4"
+    },
+    {
+        "Name": "T3 Gold For Enemy Extra Health",
+        "ID": "9c04def9-7772-4a63-9fda-b8043c27e1ef"
+    },
+    {
+        "Name": "T3 Gold For Heal On Ascend",
+        "ID": "b1b76d68-2fdf-4012-b436-dbe6bb0b013a"
+    },
+    {
+        "Name": "T3 Gold For Invasion",
+        "ID": "52488856-83ea-47be-a531-d8db5cfeef69"
+    },
+    {
+        "Name": "T3 Gold For Less Ember",
+        "ID": "67bbc264-bfcc-4237-bc53-038088eca400"
+    },
+    {
+        "Name": "T3 Gold For Spell Shield",
+        "ID": "d1fbc3d3-c8d9-4a3f-aa9b-af70a872f06c"
+    },
+    {
+        "Name": "T3 Gold For Spikes",
+        "ID": "b4c32258-0dc5-4723-a14f-59cf4f88bd59"
+    },
+    {
+        "Name": "T3 Gold For Stealth",
+        "ID": "2bfd4184-32b8-4ea6-8a8e-c19826b67d00"
+    }
+]

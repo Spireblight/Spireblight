@@ -5,6 +5,7 @@ import base64
 import json
 import time
 import math
+import os
 
 from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 
@@ -21,6 +22,8 @@ from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run, StreakInfo
 
 import score as _s
+
+from configuration import config
 
 __all__ = ["get_savefile", "Savefile"]
 
@@ -43,7 +46,13 @@ class Savefile(FileParser):
     def __init__(self):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
-        super().__init__(None)
+        data = None
+        try:
+            with open(os.path.join("data", "spire-save.json"), "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            pass
+        super().__init__(data)
         self._last = time.time()
         self._matches = False
 
@@ -52,7 +61,7 @@ class Savefile(FileParser):
             character = character[2:]
         if data is None and has_run == "true" and self._data is not None:
             maybe_run = get_latest_run(None, None)
-            if "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
+            if maybe_run is not None and "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
                 # optimize save -> run node generation
                 maybe_run._cache["old_path"] = self._cache["path"]
                 self._matches = True
@@ -332,7 +341,10 @@ class Savefile(FileParser):
 
     @property
     def rotating_streak(self) -> StreakInfo:
-        return get_latest_run(None, None).rotating_streak
+        last = get_latest_run(None, None)
+        if last is not None:
+            return last.rotating_streak
+        return StreakInfo(0, 0, True)
 
     @property
     def character_streak(self) -> StreakInfo:
@@ -436,7 +448,8 @@ async def current_run(req: Request):
     if not _savefile.in_game and not redirect:
         if _savefile._matches and time.time() - _savefile._last <= 60:
             latest = get_latest_run(None, None)
-            raise HTTPFound(f"/runs/{latest.name}?redirect=true")
+            if latest is not None:
+                raise HTTPFound(f"/runs/{latest.name}?redirect=true")
 
     return convert_class_to_obj(context)
 
@@ -468,6 +481,11 @@ async def receive_save(req: Request):
             j["basemod:mod_saves"] = {}
 
     _savefile.update_data(j, name, req.query["has_run"])
+    with open(os.path.join("data", "spire-save.json"), "w") as f:
+        if j:
+            json.dump(j, f, indent=config.server.json_indent)
+        else:
+            f.write("{}")
     logger.debug(f"Updated data. Final transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()

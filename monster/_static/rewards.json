@@ -1,0 +1,874 @@
+[
+    {
+        "Name": "Additional Gold Reward",
+        "ID": "d00ca132-5d00-4724-becd-6ea8939dfd5d"
+    },
+    {
+        "Name": "Additional Health Reward",
+        "ID": "13ceb30e-f653-4493-9210-8dac0f41c2f0"
+    },
+    {
+        "Name": "Rewards Unlocked Reward",
+        "ID": "4d17b1b0-f6d3-4ae3-b2ff-f859bd19f1f6"
+    },
+    {
+        "Name": "Blessing Draft Boss",
+        "ID": "3ba5d3bc-17d2-4cd2-9121-371f8c2e8043"
+    },
+    {
+        "Name": "Blessing Draft Boss Level6",
+        "ID": "d0529826-7792-463c-8807-cb22f2583b8a"
+    },
+    {
+        "Name": "Blessing Draft Reward",
+        "ID": "67f2e2e9-7c55-4c4e-9022-003aa66055de"
+    },
+    {
+        "Name": "Blessing Draft Reward Big",
+        "ID": "aa0b3f17-611f-4213-8ea7-01ca10c9142b"
+    },
+    {
+        "Name": "Blessing Draft Reward No Choice",
+        "ID": "cfabca2a-07a7-498c-b704-b26faac736b6"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Awoken",
+        "ID": "ddc71f3d-e2b2-4abd-8de4-accb646db775"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Hellhorned",
+        "ID": "f978c42e-d89c-4637-b991-f16a6c6f5d4b"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Main Or Allied",
+        "ID": "8a8782bf-3faf-4dd7-8f5d-413c1b269c3d"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Remnant",
+        "ID": "f95c94cf-4a5f-4f77-a27c-3c239b84aa3c"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Stygian",
+        "ID": "9167ab85-50aa-49ce-89a0-8c065a36a47c"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Umbra",
+        "ID": "10fd6b15-787c-495d-bd0b-def279c4503b"
+    },
+    {
+        "Name": "Card Draft Level Up Unit Wurm",
+        "ID": "92278d7c-6c8e-4f44-aa51-a0af91b86531"
+    },
+    {
+        "Name": "Card Draft Main Class Reward",
+        "ID": "4209cb86-420d-4ac6-9545-433cf9b4f2ef"
+    },
+    {
+        "Name": "Card Draft Main Class Uncommon Reward",
+        "ID": "df88fc93-f575-476e-860d-40e2a35d25f3"
+    },
+    {
+        "Name": "Card Draft Rare Reward",
+        "ID": "92f18544-c545-44cc-a80f-93f6feecec5e"
+    },
+    {
+        "Name": "Card Draft Sub Class Reward",
+        "ID": "3352f7ea-208b-4a59-8fa1-c9e022111b16"
+    },
+    {
+        "Name": "Card Draft Sub Class Uncommon Reward",
+        "ID": "f05cc7a7-ce79-494c-973e-401aa8ad9a1c"
+    },
+    {
+        "Name": "Card Draft Uncommon Reward",
+        "ID": "aee2da7b-22f4-49fd-8dca-fb6e1b544b04"
+    },
+    {
+        "Name": "Champion Upgrade Reward",
+        "ID": "1a6c7fad-93f2-4357-a9e1-49492f9a59d1"
+    },
+    {
+        "Name": "Champion Upgrade Reward Ftue",
+        "ID": "e24ee653-e511-4627-af7e-559a1708255e"
+    },
+    {
+        "Name": "Duplicator Generic",
+        "ID": "5133c74a-2a9c-456c-8839-2f393c7d067f"
+    },
+    {
+        "Name": "Duplicator Generic Merchant",
+        "ID": "abfa0d0a-c2f6-409f-98a4-2eb5cb6b98ca"
+    },
+    {
+        "Name": "Duplicator Spell",
+        "ID": "adce38ca-8cf0-4106-9372-f70c420c43e2"
+    },
+    {
+        "Name": "Duplicator Unit",
+        "ID": "5bfd363f-e37f-45b6-be82-bcfd1149e7cb"
+    },
+    {
+        "Name": "Full Heal Reward",
+        "ID": "933f82da-b9ec-4566-9d81-f0b4a5f5970a"
+    },
+    {
+        "Name": "Gigantic Gold Reward",
+        "ID": "4a62c52d-889b-4bfe-93f9-67e260257e94"
+    },
+    {
+        "Name": "Gold Reward25",
+        "ID": "e849e9ac-e1d1-4d35-96f6-ee5edbb80550"
+    },
+    {
+        "Name": "Gold Reward50",
+        "ID": "376fc22f-3390-43cc-aaf8-047265ed5428"
+    },
+    {
+        "Name": "Gold Reward75",
+        "ID": "3177f0f9-7d66-4844-9739-3960e05246e8"
+    },
+    {
+        "Name": "Gold Reward100",
+        "ID": "3895a6c9-6793-4c45-8286-01731b877c91"
+    },
+    {
+        "Name": "Gold Reward125",
+        "ID": "87f9d947-62f4-4d56-aed3-7000eec50d20"
+    },
+    {
+        "Name": "Gold Reward150",
+        "ID": "39d3d781-d7eb-4fbf-8d57-3542a92206d5"
+    },
+    {
+        "Name": "Gold Reward200",
+        "ID": "42dd076a-71dc-4ccd-9e15-c082369b720f"
+    },
+    {
+        "Name": "Gold Reward250",
+        "ID": "dd943b8c-e0d2-4765-93a8-1d99f84ed839"
+    },
+    {
+        "Name": "Gold Reward_ Ambush Free Gold",
+        "ID": "b0d6e27f-94fd-4408-8732-f091274659cd"
+    },
+    {
+        "Name": "Gold Reward_ Ambush Wager",
+        "ID": "30f208df-16ea-4043-b544-2b324fd664e9"
+    },
+    {
+        "Name": "Gold Reward Level7 Trials",
+        "ID": "74ab90af-6ec7-4c09-89e7-3fafbb5faae2"
+    },
+    {
+        "Name": "Health Restore Map",
+        "ID": "b518a613-0bab-4de5-9ce3-c1d088b7ad1c"
+    },
+    {
+        "Name": "Health Restore Merchant",
+        "ID": "da824503-3d9f-4de5-935d-ae3b8f8b32f6"
+    },
+    {
+        "Name": "Huge Gold Reward",
+        "ID": "943feed2-37be-4092-b306-d61db8a69b04"
+    },
+    {
+        "Name": "Large Gold Reward",
+        "ID": "72c058f1-6f8e-427d-b04b-1159e94ec049"
+    },
+    {
+        "Name": "Purge Mandory Reward",
+        "ID": "ac9f4bd1-7af5-454f-bd8b-e6379fef4e85"
+    },
+    {
+        "Name": "Purge Reward",
+        "ID": "5d700f1d-f163-4d15-bc79-69be1a23f3d6"
+    },
+    {
+        "Name": "Purge Reward Merchant",
+        "ID": "ec45eeb1-8cf5-4c23-8a61-7be8c558e3d3"
+    },
+    {
+        "Name": "Purge Three Reward",
+        "ID": "d675190a-0d77-4432-995e-a4e16247fc03"
+    },
+    {
+        "Name": "Purge Two Reward",
+        "ID": "b68b3835-45b0-4caf-b6ed-32bcec56c2f9"
+    },
+    {
+        "Name": "Reroll Merchant Reward Data",
+        "ID": "8c570170-ec8b-4638-ba96-af277c0fb4c3"
+    },
+    {
+        "Name": "Reroll Merchant Reward Data Artifact Only",
+        "ID": "15f64927-1a39-4aa4-b53e-da3ac58d051d"
+    },
+    {
+        "Name": "Test Card Reward",
+        "ID": "62bbf068-6486-4c98-a1c5-2ea5892cab1d"
+    },
+    {
+        "Name": "Test Relic Reward",
+        "ID": "d2d4251e-bed4-44b1-98e4-9f9041150c6a"
+    },
+    {
+        "Name": "Unit Synthesis Upgrade Reward",
+        "ID": "ea5ee935-25c5-4be6-bf5a-66f20345e27d"
+    },
+    {
+        "Name": "Annihilate Damage Room Reward",
+        "ID": "be8d19c8-57b2-40e0-be5d-4a9ae610ba7e"
+    },
+    {
+        "Name": "Annihilate Kill Reward",
+        "ID": "40846511-507a-4663-9c9a-f442d060ddfe"
+    },
+    {
+        "Name": "Annihilate Shield Reward",
+        "ID": "c68bed54-3a72-41be-937c-d11da2940733"
+    },
+    {
+        "Name": "Annihilate To Consume Blessing Reward",
+        "ID": "86288311-a525-438e-b474-5276c6179efe"
+    },
+    {
+        "Name": "Armor Piercing Damage Reward",
+        "ID": "982cbb45-d7ff-4183-9c59-a5f56468c68b"
+    },
+    {
+        "Name": "Back Targeting Blessing Reward",
+        "ID": "321a48ef-0861-458f-978e-6453dadf8a0f"
+    },
+    {
+        "Name": "Blight Blessing Attack Buff Reward",
+        "ID": "4df1423a-365a-4f5d-98a7-bd63e8f1184f"
+    },
+    {
+        "Name": "Blight Blessing Card Draw Reward",
+        "ID": "0d6e7aa0-4307-484b-b75a-31b09cd58a67"
+    },
+    {
+        "Name": "Blight Blessing Damage Reward",
+        "ID": "83c61158-e305-422a-8467-540811597932"
+    },
+    {
+        "Name": "Blight Dante Candle Reward",
+        "ID": "6f43b84f-92fa-46c1-b9e9-0ca9c75ea807"
+    },
+    {
+        "Name": "Blight Deadweight Reward",
+        "ID": "a169049b-4dfd-40ce-b978-5a429d6b492b"
+    },
+    {
+        "Name": "Blight Ember Reward",
+        "ID": "a481a9ec-f24a-4495-9398-cbb9b07f1483"
+    },
+    {
+        "Name": "Blight Pyre Damage Reward",
+        "ID": "e55de0c4-6194-4beb-aa36-5c9afbd1b1ab"
+    },
+    {
+        "Name": "Blood Merchant_ Health Buff Heartless",
+        "ID": "93274412-5975-4116-88fc-9af1542ed32b"
+    },
+    {
+        "Name": "Blood Merchant_ Pyre Heal On Kill",
+        "ID": "aefd35a6-35c0-47ef-8c37-84f12a905790"
+    },
+    {
+        "Name": "Bone Dog Reward",
+        "ID": "84bcef15-05e4-4d00-9494-87235a0713c9"
+    },
+    {
+        "Name": "Build Card Reward",
+        "ID": "aa455f0a-7ea8-469f-9766-25f34ffb8992"
+    },
+    {
+        "Name": "Capacity Decrease Relic Reward",
+        "ID": "53db2d2e-339e-4ee7-8967-cf71d170c303"
+    },
+    {
+        "Name": "Capacity Increase Relic Reward",
+        "ID": "cb07b225-edf4-4bc7-a275-8d63fdacb933"
+    },
+    {
+        "Name": "Card Annihilate Duplicator Reward",
+        "ID": "5ac06595-b24f-4028-a2ae-040828fb5c5a"
+    },
+    {
+        "Name": "Card Draft Main Class Single Card Reward",
+        "ID": "53e13caf-66d2-4f30-b189-2163fc313e6b"
+    },
+    {
+        "Name": "Card Draft Sub Class Single Card Reward",
+        "ID": "c5fdfb32-8044-4dc7-92f2-24601552dfd5"
+    },
+    {
+        "Name": "Card Duplicator Reward",
+        "ID": "7ad92d5c-baec-4090-a94b-dd6a5ed1ea15"
+    },
+    {
+        "Name": "Chaos Guise Reward",
+        "ID": "10c59101-5867-40cc-ba39-04b62e833523"
+    },
+    {
+        "Name": "Class1 Card Draft Rare Reward",
+        "ID": "30d30167-7a65-4c96-9e6a-d6e77bf45d2b"
+    },
+    {
+        "Name": "Class2 Card Draft Rare Reward",
+        "ID": "804c6002-31a7-4a35-b3ba-93386dc1377a"
+    },
+    {
+        "Name": "Class3 Card Draft Rare Reward",
+        "ID": "605a5c03-aa45-4669-8ae2-dbf9fb9818f1"
+    },
+    {
+        "Name": "Class4 Card Draft Rare Reward",
+        "ID": "f36f92e6-d0a3-482b-b76c-23d6ffdc5d09"
+    },
+    {
+        "Name": "Class5 Card Draft Rare Reward",
+        "ID": "d64d72d4-1536-4313-8025-db3f190d964b"
+    },
+    {
+        "Name": "Class6 Card Draft Rare Reward",
+        "ID": "9fea319e-2d3e-4716-a951-a6408867a296"
+    },
+    {
+        "Name": "Class1 Spike Reward",
+        "ID": "8fd29c76-9dce-4aa6-92dd-38d22172773e"
+    },
+    {
+        "Name": "Class2 Spike Reward",
+        "ID": "43a78948-7197-43a2-a525-953dfe4b162a"
+    },
+    {
+        "Name": "Class3 Spike Reward",
+        "ID": "63751a0c-4bd7-44b4-85ae-29469a339dcf"
+    },
+    {
+        "Name": "Class4 Spike Reward",
+        "ID": "23d43390-7297-486a-aba2-6329aafbe32c"
+    },
+    {
+        "Name": "Class5 Spike Reward",
+        "ID": "57fdcb87-4c13-4660-8063-c80341e6ef05"
+    },
+    {
+        "Name": "Class6 Spike Reward",
+        "ID": "2319765e-fb2f-4c20-ab5f-5b568c37866c"
+    },
+    {
+        "Name": "Class1 Tome Reward",
+        "ID": "295561df-4b15-487e-83a5-b3341add711a"
+    },
+    {
+        "Name": "Class2 Tome Reward",
+        "ID": "56e616dd-84b5-4114-8fcb-7214b9bcb200"
+    },
+    {
+        "Name": "Class3 Tome Reward",
+        "ID": "f4771429-94a4-4444-8ccb-f82e21bc2540"
+    },
+    {
+        "Name": "Class4 Tome Reward",
+        "ID": "31c5efb2-085f-44b6-8e9d-ef26b54a95a2"
+    },
+    {
+        "Name": "Class5 Tome Reward",
+        "ID": "91cd0f8e-42e1-4713-a275-0648fc75898d"
+    },
+    {
+        "Name": "Class6 Tome Reward",
+        "ID": "7e68e7df-47d9-499d-aece-aea04e961739"
+    },
+    {
+        "Name": "Coloring Book Blessing Reward",
+        "ID": "753e654f-026e-45d3-97ca-72a6a75deffd"
+    },
+    {
+        "Name": "Crystal Reward Data_ Low",
+        "ID": "2a21207e-1e21-45ca-a958-17464b80f415"
+    },
+    {
+        "Name": "Damage To Back Card Reward",
+        "ID": "55b9932c-1b39-4d8f-b837-1a93a76203f6"
+    },
+    {
+        "Name": "Damage To Front Card Reward",
+        "ID": "f1ad1311-cbc9-4a0d-9d52-8f6071afdf99"
+    },
+    {
+        "Name": "Dante Reward",
+        "ID": "10993c8f-f9dc-405a-9292-a762f8c8a093"
+    },
+    {
+        "Name": "Delayed Consume Upgrade",
+        "ID": "ee001df2-e80a-4795-a591-afc072dda05a"
+    },
+    {
+        "Name": "Delayed Consume Upgrade Final",
+        "ID": "9c6217c3-533f-43a8-9e9e-b922a8348dd0"
+    },
+    {
+        "Name": "Delayed Remove And Cache Card Reward_ Consume",
+        "ID": "2da136d7-0fff-46a6-a7e0-fe894a50f32d"
+    },
+    {
+        "Name": "Delayed Remove And Cache Card Reward_ Spell",
+        "ID": "46d58c6e-d5c4-46d3-baef-5c7d2c797b71"
+    },
+    {
+        "Name": "Delayed Remove And Cache Card Reward_ Unit",
+        "ID": "15d37998-bfd1-4dea-be84-19841309a936"
+    },
+    {
+        "Name": "Delayed Spell Upgrade_ Copy",
+        "ID": "3f3eff0c-b4ad-4824-a288-1101410815d4"
+    },
+    {
+        "Name": "Delayed Spell Upgrade_ Gold",
+        "ID": "22fd3b7e-f573-4bd7-b0ed-618571a235b4"
+    },
+    {
+        "Name": "Delayed Spell Upgrade_ Random Spell",
+        "ID": "8fa34c0c-0849-4c21-a2c1-032651d4fc63"
+    },
+    {
+        "Name": "Delayed Spell Upgrade Final_ Copy",
+        "ID": "56bf05dc-3675-4494-b5ec-ea750bdc2f92"
+    },
+    {
+        "Name": "Delayed Spell Upgrade Final_ Gold",
+        "ID": "2ecb67bd-39d1-4f05-8ccb-81a5d58974c6"
+    },
+    {
+        "Name": "Delayed Spell Upgrade Final_ Random Spell",
+        "ID": "3de7837e-de3e-4a7f-99d4-8dcb8457101b"
+    },
+    {
+        "Name": "Delayed Unit Upgrade_ Endless",
+        "ID": "bf50498b-ebb2-4734-9684-2eb8dbcbcc8f"
+    },
+    {
+        "Name": "Delayed Unit Upgrade_ Heal",
+        "ID": "75a0b506-e397-4b48-bb22-0ed0be66575d"
+    },
+    {
+        "Name": "Delayed Unit Upgrade_ Units",
+        "ID": "cc92c434-8a06-4640-aa9f-7798aa71aeda"
+    },
+    {
+        "Name": "Delayed Unit Upgrade Final_ Endless",
+        "ID": "31fca9dc-a6c2-4d72-b243-e003b8938bd0"
+    },
+    {
+        "Name": "Delayed Unit Upgrade Final_ Heal",
+        "ID": "060f5e88-b88f-4c52-8288-f9084a3d9cba"
+    },
+    {
+        "Name": "Delayed Unit Upgrade Final_ Units",
+        "ID": "04061e18-eb27-4acd-b613-48e3ab208932"
+    },
+    {
+        "Name": "Double Damage Reward",
+        "ID": "72b083b2-cb48-4478-b6ca-f81ef0913d1c"
+    },
+    {
+        "Name": "Duplicate Card Reward",
+        "ID": "65df006f-d8db-48d3-aa8c-c4ae7689f877"
+    },
+    {
+        "Name": "Ember Bless Convert Reward",
+        "ID": "d877fbd0-a2ed-454b-92b9-12be84c52dc2"
+    },
+    {
+        "Name": "Enemy Recruit_ Melee Weakness",
+        "ID": "5bd3b55c-eeed-4937-a213-d8d3480c8d98"
+    },
+    {
+        "Name": "Enemy Recruit_ Sap",
+        "ID": "7f95ee48-e7ee-4dc6-844c-51893a31cd0a"
+    },
+    {
+        "Name": "Enemy Recruit Reward",
+        "ID": "dd72c2ad-c8d4-49c3-a3e3-ae7fbcdb8019"
+    },
+    {
+        "Name": "Exhaust Relic Reward",
+        "ID": "590b45d1-9640-4262-a004-82ea744b830b"
+    },
+    {
+        "Name": "Fear Card Reward",
+        "ID": "14f6294d-1b36-438c-bf4d-5629a4cd527d"
+    },
+    {
+        "Name": "Final Artifact Reward",
+        "ID": "df30577f-f567-4ed3-bb9b-2c0b048f42ac"
+    },
+    {
+        "Name": "Final Artifact Reward_ Shard",
+        "ID": "bd307d7b-d4a2-44ac-aae2-568ca6ecc5f8"
+    },
+    {
+        "Name": "Fireball Spawn Card Reward",
+        "ID": "722a6728-d802-49bf-9915-f96ffc105aff"
+    },
+    {
+        "Name": "Foresight Blessing Reward",
+        "ID": "990928a3-773d-44a9-9f48-ef6a34a5a460"
+    },
+    {
+        "Name": "Free Purge Reward Data",
+        "ID": "6d4666ae-75b3-4b55-ad17-141ad92e0b16"
+    },
+    {
+        "Name": "Free Purge Reward Data_ Bone Dog",
+        "ID": "13851a64-5908-4557-a360-d9eba0b36eb8"
+    },
+    {
+        "Name": "Full Floor Damage Purge Reward",
+        "ID": "45323851-8f16-4ff1-91aa-745225ad59a3"
+    },
+    {
+        "Name": "Full Floor Heal Purge Reward",
+        "ID": "a86b3442-2635-4fd6-9258-9452ae339c3c"
+    },
+    {
+        "Name": "Heal To Back Card Reward",
+        "ID": "408f10ad-9c24-4fea-b679-3a4ee85ad3f2"
+    },
+    {
+        "Name": "Heal To Front Card Reward",
+        "ID": "9d074e94-1062-45dd-9d4d-9a43f8233495"
+    },
+    {
+        "Name": "Helldriver Demon Buff Blessing",
+        "ID": "a141ffd7-658f-4812-9bcf-33a442d148ce"
+    },
+    {
+        "Name": "Helldriver Demon Health Buff",
+        "ID": "179a5f4f-8426-4bac-8924-98a5ca6c53f1"
+    },
+    {
+        "Name": "Helldriver Imp Cost Blessing",
+        "ID": "b0b884d7-b329-4bf6-ae13-586483c9d27b"
+    },
+    {
+        "Name": "Helldriver Imp Damage Buff",
+        "ID": "bf83e165-8ad6-4e0b-bd2f-686e59478f37"
+    },
+    {
+        "Name": "Helldriver Upgrade Demon",
+        "ID": "59fee6bd-3905-482b-bfcd-fe3a26762934"
+    },
+    {
+        "Name": "Helldriver Upgrade Imp",
+        "ID": "91ed832c-80f3-4d2f-b007-51c1a49a2986"
+    },
+    {
+        "Name": "Heph Big Hit Reward",
+        "ID": "9f966684-ea64-4b0d-b2b2-4262a6751501"
+    },
+    {
+        "Name": "Heph Hammer Reward",
+        "ID": "8ea78d14-3072-4e70-b7fd-09c8df9da839"
+    },
+    {
+        "Name": "Heph Hit Reward",
+        "ID": "72082672-7067-4895-b8b7-ce2da16b94e7"
+    },
+    {
+        "Name": "Heph Recruit_ Upgrade Attack",
+        "ID": "928e8f7e-34d7-4978-b7c7-6a8578282a3f"
+    },
+    {
+        "Name": "Heph Unit Reward",
+        "ID": "d24c8d90-db34-4109-b677-5dcc76e79632"
+    },
+    {
+        "Name": "Hero Ascend Card Reward",
+        "ID": "e662c180-616e-41b7-b091-e4b4d918ddbe"
+    },
+    {
+        "Name": "Imp Changer Blessing Reward",
+        "ID": "ca69abf3-922d-4d08-aa95-12ad353d01a8"
+    },
+    {
+        "Name": "Imp Doll Card Reward",
+        "ID": "2659db6d-60d1-47b0-aaa2-408516d3c7f3"
+    },
+    {
+        "Name": "Kill Rally Reward",
+        "ID": "a63c386b-b8cb-441d-8aff-c9218b91d5f3"
+    },
+    {
+        "Name": "Magic Junk Reward",
+        "ID": "ce2444db-28eb-4cdb-9a9d-e5865aca56a0"
+    },
+    {
+        "Name": "Malicka Heal_1",
+        "ID": "720885af-d7b9-4336-99ed-b405bb184011"
+    },
+    {
+        "Name": "Malicka Heal_2",
+        "ID": "6b80cdef-0680-4cf3-a2a6-033f49cbb6d8"
+    },
+    {
+        "Name": "Malicka Heal_3",
+        "ID": "ceb69325-711a-4038-a62b-4c63bf04ea95"
+    },
+    {
+        "Name": "Malicka Heal_4",
+        "ID": "84396759-ed21-4af9-9c5d-47fd7a3af454"
+    },
+    {
+        "Name": "Acid Rain Relic Reward",
+        "ID": "bce23fb9-16d5-4360-883f-7d0f3c24b647"
+    },
+    {
+        "Name": "All Spells Piercing Relic Reward",
+        "ID": "83f517ae-7248-460a-8aed-aefb6bc8f705"
+    },
+    {
+        "Name": "All Units Endless Relic Reward",
+        "ID": "0e34bd09-2fca-4c45-bd2c-29c04219b5f9"
+    },
+    {
+        "Name": "Permadeath Relic Reward",
+        "ID": "e6380eec-4b97-413d-9c59-80e3dab22c61"
+    },
+    {
+        "Name": "Shields Up Relic Reward",
+        "ID": "b4f2d528-c850-4f0e-9a80-163bba65b3f8"
+    },
+    {
+        "Name": "Wand Wounds Relic Reward",
+        "ID": "942a313e-5580-4c53-ad19-0a5f30637412"
+    },
+    {
+        "Name": "Map Skip Reward Data",
+        "ID": "ccb73235-02cb-403d-8385-d0f66c742e87"
+    },
+    {
+        "Name": "Monster Followers Reward",
+        "ID": "62c99a22-30c8-4bd1-be79-985217a2dfca"
+    },
+    {
+        "Name": "Overcharge_ Buff Train",
+        "ID": "32219148-8c5e-40fe-9b7f-6a5e353c4b55"
+    },
+    {
+        "Name": "Overcharge_ Heal Train",
+        "ID": "c25f303e-15c2-4569-b4ba-99adfd611456"
+    },
+    {
+        "Name": "Overcharge_ Strengthstone",
+        "ID": "96157ce0-81d3-40f6-9a74-e528698ed051"
+    },
+    {
+        "Name": "Pamphlet Card Reward",
+        "ID": "2dfe195d-6945-497a-bdee-357586807b88"
+    },
+    {
+        "Name": "Pickpocket Reward",
+        "ID": "cb8b9525-c571-46af-b363-9b6e83a0e0aa"
+    },
+    {
+        "Name": "Potion Damage Attract Card Reward",
+        "ID": "701f319b-69da-465d-8506-aee03d60f869"
+    },
+    {
+        "Name": "Potion Damage Shield Card Reward",
+        "ID": "5c75558e-4bae-4124-abfa-9c6d72a8ae94"
+    },
+    {
+        "Name": "Potion Dazed Card Reward",
+        "ID": "3f6a2fab-3550-4c19-a5b0-9e08451394b9"
+    },
+    {
+        "Name": "Pyre Book Blessing Reward",
+        "ID": "5ffdb6b5-6a56-4d3e-9e22-6e6e75b813d0"
+    },
+    {
+        "Name": "Pyre Upgrade Damage Gold Scaling Reward",
+        "ID": "ffce38cc-02a6-4d5e-b5f1-8bc307af9f52"
+    },
+    {
+        "Name": "Random Capacity Increase Relic Reward",
+        "ID": "6972868b-3708-4a11-9d86-3df7ba918c31"
+    },
+    {
+        "Name": "Random Damage Card Reward",
+        "ID": "ad581e5f-d1a9-4cd2-9969-6dd627d1ef9b"
+    },
+    {
+        "Name": "Random Status Card Reward",
+        "ID": "2286cd57-3d8c-4299-a5c3-12c67c1190ae"
+    },
+    {
+        "Name": "Raw Pyre Blessing Reward",
+        "ID": "b4c401c7-b5f1-4d95-9c1a-cf9088681a6f"
+    },
+    {
+        "Name": "Replay Death Reward",
+        "ID": "99c29d4f-0c71-49eb-b193-56faddf33d2e"
+    },
+    {
+        "Name": "Replay Revenge Reward",
+        "ID": "3c20ef5d-b6c0-4975-88d8-77112695f018"
+    },
+    {
+        "Name": "Replay Spawn Reward",
+        "ID": "b5333a41-214c-4e34-b5e9-3874bde1b274"
+    },
+    {
+        "Name": "Replicating Extinguish Unit Reward",
+        "ID": "2cdeffeb-3b0c-4a52-ad85-f43fd4f3b612"
+    },
+    {
+        "Name": "Replicating Spell Reward",
+        "ID": "fe621d3c-5a0b-4b56-8334-90f36887a1ed"
+    },
+    {
+        "Name": "Room Target Ambush Reward",
+        "ID": "601cebcc-00ae-4451-852e-c5d54a1f2a07"
+    },
+    {
+        "Name": "Room Target Poison Reward",
+        "ID": "504926ca-3e44-43a6-8da4-caf7f8990fad"
+    },
+    {
+        "Name": "Scaling Blight Energy Add Reward",
+        "ID": "7dc82336-0df2-4bab-b1d9-a2775bae63cc"
+    },
+    {
+        "Name": "Scaling Blight Magic Power Blessing Reward",
+        "ID": "2d65dbc8-1fd4-4d10-8f1b-f078a6d8e748"
+    },
+    {
+        "Name": "Shard Event_ Blessing Draft Reward_1",
+        "ID": "8362a877-7a01-4259-b497-412c4efe37d4"
+    },
+    {
+        "Name": "Shard Event_ Blessing Draft Reward_2",
+        "ID": "eb5017a7-5195-47ba-a8a2-fe834c0618ef"
+    },
+    {
+        "Name": "Shard Event_ Blessing Draft Reward_3",
+        "ID": "8d4f38c7-b4f8-476d-95e1-05eb927b5fde"
+    },
+    {
+        "Name": "Shard Event_ Heal",
+        "ID": "09307afa-6a9e-4c53-837e-892deb6173be"
+    },
+    {
+        "Name": "Shrink Ray_ Upgrade Large",
+        "ID": "dd0b7546-c910-4f47-8bbf-2f656e6bfd16"
+    },
+    {
+        "Name": "Shrink Ray_ Upgrade Small",
+        "ID": "d1ca7d3e-b96d-4f0a-9f0c-752229bf905d"
+    },
+    {
+        "Name": "Single Kill Card Reward",
+        "ID": "b344982c-ab4d-43ea-99af-3c8bd32b1c37"
+    },
+    {
+        "Name": "Spell Merge_ Duplicate Reward",
+        "ID": "f810bd94-818b-4aad-8fbf-8b9e9b7d82b1"
+    },
+    {
+        "Name": "Spell Merge Reward",
+        "ID": "8c1c66ec-e406-4742-9ee1-0fb5b97ba30a"
+    },
+    {
+        "Name": "Spike Scaling Card Reward",
+        "ID": "3a4b862b-32a1-4102-b657-4ab7b6fda630"
+    },
+    {
+        "Name": "Spike Scaling Card Reward_ Armor",
+        "ID": "1dcfc957-3d68-4c70-8c98-7ed4571c1b8b"
+    },
+    {
+        "Name": "Spike Scaling Card Reward_ Double",
+        "ID": "4f42a333-2858-45a9-bbf7-7264abe09b0f"
+    },
+    {
+        "Name": "Splitter Boost Reward_ Spell",
+        "ID": "cfd041da-261a-43f8-aedf-d9679ba62b04"
+    },
+    {
+        "Name": "Splitter Boost Reward_ Unit",
+        "ID": "07619591-77d2-4619-a749-9e0c35f75576"
+    },
+    {
+        "Name": "Tower Damage Card Reward",
+        "ID": "22cb568e-01be-42e1-ad42-54c4381cc8c7"
+    },
+    {
+        "Name": "Train Damage Blessing Reward",
+        "ID": "003ce685-8f81-42e0-838f-28b4ff2f1216"
+    },
+    {
+        "Name": "Train Heal Card Reward",
+        "ID": "7b46db8a-59c9-46cd-98fa-8179e6f9346d"
+    },
+    {
+        "Name": "Train Hook Card Reward",
+        "ID": "cac01999-dd2a-4cb3-b081-68c397b620b5"
+    },
+    {
+        "Name": "Train Trapdoor Card Reward",
+        "ID": "02b82772-8999-4f48-a530-7eb8f87b3cd1"
+    },
+    {
+        "Name": "Upgrade Animus Attack",
+        "ID": "f5fb7d5b-2b3f-4673-948e-96bf81aa05e9"
+    },
+    {
+        "Name": "Upgrade Buff Magic",
+        "ID": "43c5d066-f4c5-4b7a-b108-fc43fa3956d1"
+    },
+    {
+        "Name": "Upgrade Buff Massive Exhaust",
+        "ID": "094a94ba-3481-477e-95f8-432242cfa54a"
+    },
+    {
+        "Name": "Upgrade Cost Less Reward",
+        "ID": "8eda94fa-e2aa-434d-b0eb-23201e674cd9"
+    },
+    {
+        "Name": "Upgraded Junk Reward",
+        "ID": "9d945109-cd1b-4131-8cc2-dee97a1cb15f"
+    },
+    {
+        "Name": "Upgrade Golem Health",
+        "ID": "0fc42e35-bddf-49a2-a9b3-18eec49c1e2c"
+    },
+    {
+        "Name": "Upgrade Regen Reward",
+        "ID": "5181308e-1cf8-49e2-a65b-92ccfc409580"
+    },
+    {
+        "Name": "Upgrade Small Reward",
+        "ID": "93b4297e-c074-44f4-9872-d79cbf3e667f"
+    },
+    {
+        "Name": "Upgrade Spikes Reward",
+        "ID": "d6a66cad-99f9-4093-bdc1-78598ed94fb2"
+    },
+    {
+        "Name": "Upgrade Summon Draw Reward",
+        "ID": "abd19cd2-8788-4eb8-95f2-7807cc004c48"
+    },
+    {
+        "Name": "Upgrade Unit Health",
+        "ID": "03579f90-54df-4bf3-b661-35c033b79642"
+    },
+    {
+        "Name": "X Cost Gold Card Reward",
+        "ID": "155b3959-7733-4f0f-8460-12e226cb636c"
+    }
+]

@@ -1,0 +1,1860 @@
+{
+    "neow_bonuses_skipped_log": [
+        "TEN_PERCENT_HP_BONUS",
+        "TRANSFORM_TWO_CARDS",
+        "BOSS_RELIC"
+    ],
+    "potions_obtained_entropic_brew": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ],
+    "neow_costs_skipped_log": [
+        "NONE",
+        "CURSE",
+        "NONE"
+    ],
+    "gold_per_floor": [
+        112,
+        128,
+        23,
+        42,
+        52,
+        79,
+        79,
+        112,
+        112,
+        146,
+        146,
+        172,
+        182,
+        182,
+        182,
+        255,
+        255,
+        268,
+        268,
+        268,
+        284,
+        296,
+        296,
+        328,
+        328,
+        328,
+        355,
+        372,
+        372,
+        384,
+        411,
+        423,
+        509,
+        521,
+        552,
+        353,
+        353,
+        353,
+        115,
+        148,
+        148,
+        173,
+        173,
+        198,
+        225,
+        250,
+        270,
+        303,
+        303,
+        303,
+        303,
+        303,
+        303,
+        41,
+        69,
+        69
+    ],
+    "floor_reached": 57,
+    "playtime": 6130,
+    "items_purged": [
+        "Strike_P+1"
+    ],
+    "score": 3453,
+    "play_id": "29e2d798-8cf2-435e-bf4f-26bc4e783460",
+    "local_time": "20230616163458",
+    "score_breakdown": [
+        "Floors Climbed (57): 285",
+        "Enemies Slain (12): 24",
+        "Exordium Elites Killed (4): 40",
+        "City Elites Killed (2): 40",
+        "Beyond Elites Killed (5): 150",
+        "Bosses Slain (5): 750",
+        "Librarian: 25",
+        "Champion (8): 200",
+        "Perfect (1): 50",
+        "Overkill: 25",
+        "C-c-c-combo: 25",
+        "Ascension (20): 1589",
+        "Heartbreaker: 250"
+    ],
+    "is_ascension_mode": true,
+    "potions_obtained_alchemize": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ],
+    "campfire_choices": [
+        {
+            "floor": 7,
+            "key": "REST"
+        },
+        {
+            "data": "Omniscience",
+            "floor": 11,
+            "key": "SMITH"
+        },
+        {
+            "data": "Defend_P",
+            "floor": 15,
+            "key": "PURGE"
+        },
+        {
+            "data": "Strike_P",
+            "floor": 23,
+            "key": "PURGE"
+        },
+        {
+            "data": "Defend_P",
+            "floor": 25,
+            "key": "PURGE"
+        },
+        {
+            "data": "Writhe",
+            "floor": 30,
+            "key": "PURGE"
+        },
+        {
+            "data": "Strike_P+1",
+            "floor": 32,
+            "key": "PURGE"
+        },
+        {
+            "floor": 41,
+            "key": "RECALL"
+        },
+        {
+            "data": "CrushJoints",
+            "floor": 49,
+            "key": "SMITH"
+        },
+        {
+            "data": "Scrawl",
+            "floor": 53,
+            "key": "SMITH"
+        }
+    ],
+    "lesson_learned_per_floor": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Collect"
+        ],
+        [],
+        [],
+        [
+            "Worship"
+        ],
+        [
+            "Judgement"
+        ],
+        [],
+        [],
+        [
+            "Strike_P"
+        ],
+        [],
+        [
+            "ThirdEye"
+        ],
+        [],
+        [
+            "CutThroughFate"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+            "FearNoEvil"
+        ],
+        [],
+        [
+            "Tantrum"
+        ],
+        [],
+        [
+            "DeusExMachina"
+        ],
+        [],
+        [
+            "CutThroughFate"
+        ],
+        [
+            "LessonLearned"
+        ],
+        [
+            "Vigilance"
+        ],
+        [],
+        [
+            "Adaptation"
+        ],
+        [
+            "Vault"
+        ],
+        [],
+        [],
+        [],
+        [
+            "Omniscience"
+        ],
+        [],
+        []
+    ],
+    "neow_cost": "NONE",
+    "improvable_cards": {},
+    "seed_source_timestamp": 1306965833438400,
+    "shop_contents": [
+        {
+            "floor": 3,
+            "relics": [
+                "TungstenRod",
+                "CloakClasp",
+                "Frozen Eye"
+            ],
+            "cards": [
+                "LessonLearned",
+                "CrushJoints",
+                "DeceiveReality",
+                "EmptyBody",
+                "Nirvana",
+                "Metamorphosis"
+            ],
+            "potions": [
+                "DuplicationPotion",
+                "AttackPotion",
+                "StancePotion"
+            ]
+        },
+        {
+            "floor": 36,
+            "relics": [
+                "Meat on the Bone",
+                "Medical Kit"
+            ],
+            "cards": [
+                "Ragnarok",
+                "TalkToTheHand",
+                "Alpha",
+                "DeusExMachina",
+                "Good Instincts",
+                "Master of Strategy"
+            ],
+            "potions": [
+                "LiquidBronze",
+                "AttackPotion",
+                "SkillPotion"
+            ]
+        },
+        {
+            "floor": 39,
+            "relics": [
+                "Boot",
+                "Shovel"
+            ],
+            "cards": [
+                "SandsOfTime",
+                "JustLucky",
+                "Vengeance",
+                "Perseverance",
+                "Adaptation",
+                "Purity",
+                "The Bomb"
+            ],
+            "potions": [
+                "Explosive Potion",
+                "Regen Potion",
+                "Block Potion"
+            ]
+        },
+        {
+            "floor": 54,
+            "relics": [
+                "Blood Vial",
+                "Strange Spoon"
+            ],
+            "cards": [
+                "EmptyFist",
+                "SashWhip",
+                "Vengeance",
+                "Evaluate",
+                "LikeWater",
+                "Apotheosis"
+            ],
+            "potions": [
+                "SpeedPotion",
+                "Weak Potion",
+                "SpeedPotion"
+            ]
+        }
+    ],
+    "circlet_count": 0,
+    "master_deck": [
+        "AscendersBane",
+        "Eruption",
+        "Vigilance+1",
+        "Omniscience+1",
+        "JustLucky+1",
+        "WheelKick",
+        "Discovery",
+        "CrushJoints+1",
+        "Worship+1",
+        "Tantrum+1",
+        "CutThroughFate+1",
+        "DeusExMachina+1",
+        "Judgement+1",
+        "WaveOfTheHand+1",
+        "MentalFortress+1",
+        "Meditate+1",
+        "Adaptation+1",
+        "Collect+1",
+        "LessonLearned+1",
+        "ThirdEye+1",
+        "Scrawl+1",
+        "CutThroughFate+1",
+        "Omniscience+1",
+        "Adaptation",
+        "Thinking Ahead",
+        "Bandage Up",
+        "WheelKick+1",
+        "FearNoEvil+1",
+        "Prostrate+1",
+        "Vault+1",
+        "SpiritShield",
+        "Prostrate+1",
+        "Nirvana+1",
+        "Bandage Up",
+        "Wallop+1"
+    ],
+    "potion_use_per_floor": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "BottledMiracle"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Block Potion"
+        ],
+        [],
+        [
+            "LiquidMemories"
+        ],
+        [],
+        [],
+        [
+            "Ancient Potion"
+        ],
+        [],
+        [],
+        [],
+        [
+            "ColorlessPotion"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "PowerPotion"
+        ],
+        []
+    ],
+    "relics": [
+        "PureWater",
+        "StrikeDummy",
+        "Peace Pipe",
+        "HornCleat",
+        "Mummified Hand",
+        "Pocketwatch",
+        "Astrolabe",
+        "Whetstone",
+        "GoldenEye",
+        "MawBank",
+        "SlaversCollar",
+        "PreservedInsect",
+        "Orrery",
+        "Darkstone Periapt",
+        "MealTicket",
+        "Regal Pillow",
+        "Art of War",
+        "Anchor",
+        "Oddly Smooth Stone",
+        "Pantograph",
+        "Toy Ornithopter",
+        "Bottled Lightning"
+    ],
+    "potions_floor_usage": [
+        10,
+        22,
+        24,
+        27,
+        31,
+        56
+    ],
+    "damage_taken": [
+        {
+            "damage": 7,
+            "enemies": "Cultist",
+            "floor": 1,
+            "turns": 4
+        },
+        {
+            "damage": 0,
+            "enemies": "Small Slimes",
+            "floor": 2,
+            "turns": 2
+        },
+        {
+            "damage": 0,
+            "enemies": "2 Louse",
+            "floor": 4,
+            "turns": 2
+        },
+        {
+            "damage": 19,
+            "enemies": "Large Slime",
+            "floor": 5,
+            "turns": 4
+        },
+        {
+            "damage": 14,
+            "enemies": "Gremlin Nob",
+            "floor": 6,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Lagavulin",
+            "floor": 8,
+            "turns": 3
+        },
+        {
+            "damage": 12,
+            "enemies": "3 Sentries",
+            "floor": 10,
+            "turns": 7
+        },
+        {
+            "damage": 0,
+            "enemies": "Gremlin Nob",
+            "floor": 12,
+            "turns": 2
+        },
+        {
+            "damage": 0,
+            "enemies": "Blue Slaver",
+            "floor": 13,
+            "turns": 2
+        },
+        {
+            "damage": 2,
+            "enemies": "Hexaghost",
+            "floor": 16,
+            "turns": 4
+        },
+        {
+            "damage": 3,
+            "enemies": "Shell Parasite",
+            "floor": 18,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Spheric Guardian",
+            "floor": 21,
+            "turns": 2
+        },
+        {
+            "damage": 11,
+            "enemies": "Centurion and Healer",
+            "floor": 22,
+            "turns": 4
+        },
+        {
+            "damage": 0,
+            "enemies": "Gremlin Leader",
+            "floor": 24,
+            "turns": 3
+        },
+        {
+            "damage": 12,
+            "enemies": "Slavers",
+            "floor": 27,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "3 Cultists",
+            "floor": 28,
+            "turns": 4
+        },
+        {
+            "damage": 0,
+            "enemies": "Snake Plant",
+            "floor": 31,
+            "turns": 4
+        },
+        {
+            "damage": 2,
+            "enemies": "Champ",
+            "floor": 33,
+            "turns": 5
+        },
+        {
+            "damage": 9,
+            "enemies": "Orb Walker",
+            "floor": 35,
+            "turns": 5
+        },
+        {
+            "damage": 0,
+            "enemies": "Nemesis",
+            "floor": 40,
+            "turns": 1
+        },
+        {
+            "damage": 0,
+            "enemies": "Reptomancer",
+            "floor": 42,
+            "turns": 1
+        },
+        {
+            "damage": 14,
+            "enemies": "Nemesis",
+            "floor": 44,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Reptomancer",
+            "floor": 46,
+            "turns": 2
+        },
+        {
+            "damage": 0,
+            "enemies": "3 Darklings",
+            "floor": 47,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Giant Head",
+            "floor": 48,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Donu and Deca",
+            "floor": 50,
+            "turns": 6
+        },
+        {
+            "damage": 13,
+            "enemies": "Time Eater",
+            "floor": 51,
+            "turns": 8
+        },
+        {
+            "damage": 0,
+            "enemies": "Shield and Spear",
+            "floor": 55,
+            "turns": 3
+        },
+        {
+            "damage": 17,
+            "enemies": "The Heart",
+            "floor": 56,
+            "turns": 7
+        }
+    ],
+    "green_key_taken_log": 10,
+    "seed_played": "4419556474416818896",
+    "neow_bonus_log": {
+        "cardsObtained": [
+            "Omniscience"
+        ],
+        "cardsUpgraded": [],
+        "cardsRemoved": [],
+        "cardsTransformed": [],
+        "relicsObtained": [],
+        "maxHpGained": 0,
+        "goldGained": 0,
+        "damageTaken": 0,
+        "goldLost": 0,
+        "maxHpLost": 0
+    },
+    "potions_obtained": [
+        {
+            "floor": 2,
+            "key": "GamblersBrew"
+        },
+        {
+            "floor": 6,
+            "key": "BottledMiracle"
+        },
+        {
+            "floor": 8,
+            "key": "Block Potion"
+        },
+        {
+            "floor": 10,
+            "key": "Weak Potion"
+        },
+        {
+            "floor": 16,
+            "key": "LiquidMemories"
+        },
+        {
+            "floor": 22,
+            "key": "PowerPotion"
+        },
+        {
+            "floor": 24,
+            "key": "Ancient Potion"
+        },
+        {
+            "floor": 27,
+            "key": "ColorlessPotion"
+        },
+        {
+            "floor": 40,
+            "key": "Explosive Potion"
+        },
+        {
+            "floor": 44,
+            "key": "SneckoOil"
+        }
+    ],
+    "is_trial": false,
+    "path_per_floor": [
+        "M",
+        "M",
+        "$",
+        "M",
+        "M",
+        "E",
+        "R",
+        "E",
+        "T",
+        "E",
+        "R",
+        "E",
+        "M",
+        "?",
+        "R",
+        "B",
+        null,
+        "M",
+        "?",
+        "?",
+        "M",
+        "M",
+        "R",
+        "E",
+        "R",
+        "T",
+        "E",
+        "M",
+        "?",
+        "R",
+        "M",
+        "R",
+        "B",
+        null,
+        "M",
+        "$",
+        "?",
+        "?",
+        "$",
+        "E",
+        "R",
+        "E",
+        "T",
+        "E",
+        "T",
+        "E",
+        "M",
+        "E",
+        "R",
+        "B",
+        "B",
+        null,
+        "R",
+        "$",
+        "E",
+        "B",
+        null
+    ],
+    "character_chosen": "WATCHER",
+    "basemod:card_modifiers": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "items_purchased": [
+        "Discovery",
+        "PreservedInsect",
+        "Adaptation",
+        "Orrery",
+        "Bandage Up",
+        "Toy Ornithopter"
+    ],
+    "campfire_rested": 1,
+    "item_purchase_floors": [
+        3,
+        36,
+        36,
+        39,
+        54,
+        54
+    ],
+    "current_hp_per_floor": [
+        54,
+        54,
+        54,
+        54,
+        35,
+        21,
+        41,
+        41,
+        41,
+        29,
+        29,
+        29,
+        29,
+        34,
+        34,
+        32,
+        63,
+        60,
+        60,
+        60,
+        60,
+        49,
+        49,
+        49,
+        49,
+        49,
+        37,
+        37,
+        37,
+        37,
+        37,
+        37,
+        35,
+        64,
+        55,
+        55,
+        45,
+        45,
+        45,
+        49,
+        49,
+        53,
+        53,
+        43,
+        43,
+        51,
+        59,
+        67,
+        67,
+        73,
+        60,
+        70,
+        70,
+        73,
+        73,
+        69
+    ],
+    "gold": 69,
+    "neow_bonus": "ONE_RANDOM_RARE_CARD",
+    "is_prod": false,
+    "is_daily": false,
+    "rewards_skipped": [
+        {
+            "floor": 12,
+            "relics": [],
+            "potions": [
+                "Dexterity Potion"
+            ]
+        },
+        {
+            "floor": 47,
+            "relics": [],
+            "potions": [
+                "LiquidBronze"
+            ]
+        }
+    ],
+    "chose_seed": false,
+    "campfire_upgraded": 3,
+    "win_rate": 0,
+    "floor_exit_playtime": [
+        156,
+        207,
+        238,
+        393,
+        527,
+        716,
+        744,
+        873,
+        877,
+        1089,
+        1119,
+        1176,
+        1245,
+        1258,
+        1270,
+        1477,
+        1613,
+        1742,
+        1758,
+        1801,
+        1841,
+        1993,
+        2012,
+        2161,
+        2174,
+        2185,
+        2334,
+        2662,
+        2689,
+        2696,
+        2823,
+        2872,
+        3130,
+        3197,
+        3443,
+        3557,
+        3589,
+        3594,
+        3681,
+        3834,
+        3838,
+        3965,
+        3969,
+        4122,
+        4129,
+        4241,
+        4431,
+        4566,
+        4626,
+        4869,
+        5253,
+        5268,
+        5280,
+        5331,
+        5557,
+        6130
+    ],
+    "timestamp": 1686947698,
+    "blue_key_relic_skipped_log": {
+        "floor": 26,
+        "relicID": "Matryoshka"
+    },
+    "path_taken": [
+        "M",
+        "M",
+        "?",
+        "M",
+        "M",
+        "E",
+        "R",
+        "E",
+        "T",
+        "E",
+        "R",
+        "E",
+        "M",
+        "?",
+        "R",
+        "BOSS",
+        "M",
+        "?",
+        "?",
+        "M",
+        "M",
+        "R",
+        "E",
+        "R",
+        "T",
+        "E",
+        "M",
+        "?",
+        "R",
+        "M",
+        "R",
+        "BOSS",
+        "M",
+        "$",
+        "?",
+        "?",
+        "$",
+        "E",
+        "R",
+        "E",
+        "T",
+        "E",
+        "?",
+        "E",
+        "?",
+        "E",
+        "R",
+        "BOSS",
+        "BOSS",
+        "R",
+        "$",
+        "E",
+        "BOSS"
+    ],
+    "build_version": "2022-12-18",
+    "purchased_purges": 1,
+    "victory": true,
+    "max_hp_per_floor": [
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73,
+        73
+    ],
+    "relic_stats": {
+        "Darkstone Periapt": 0,
+        "Regal Pillow": 0,
+        "counters": [
+            29,
+            103
+        ],
+        "Astrolabe": [
+            "WaveOfTheHand",
+            "MentalFortress",
+            "Meditate"
+        ],
+        "PreservedInsect": 431,
+        "Whetstone": [
+            "JustLucky",
+            "Strike_P"
+        ],
+        "GoldenEye": [
+            120
+        ],
+        "MawBank": 84,
+        "Peace Pipe": 5,
+        "Mummified Hand": [
+            80
+        ],
+        "Pantograph": 6,
+        "MealTicket": 3,
+        "Art of War": [
+            6
+        ],
+        "Bottled Lightning": "Omniscience",
+        "PureWater": [
+            25
+        ],
+        "obtain_stats": [
+            {
+                "Darkstone Periapt": 40,
+                "Regal Pillow": 43,
+                "Astrolabe": 17,
+                "Oddly Smooth Stone": 46,
+                "PreservedInsect": 36,
+                "Whetstone": 24,
+                "GoldenEye": 27,
+                "MawBank": 29,
+                "Peace Pipe": 8,
+                "SlaversCollar": 34,
+                "Anchor": 45,
+                "HornCleat": 9,
+                "Mummified Hand": 10,
+                "Pantograph": 48,
+                "Orrery": 39,
+                "MealTicket": 42,
+                "Art of War": 44,
+                "Bottled Lightning": 55,
+                "PureWater": 0,
+                "StrikeDummy": 6,
+                "Toy Ornithopter": 54,
+                "Pocketwatch": 12
+            },
+            {
+                "Darkstone Periapt": 20,
+                "Regal Pillow": 21,
+                "Astrolabe": 10,
+                "Oddly Smooth Stone": 23,
+                "PreservedInsect": 19,
+                "Whetstone": 14,
+                "GoldenEye": 15,
+                "MawBank": 16,
+                "Peace Pipe": 6,
+                "SlaversCollar": 18,
+                "Anchor": 22,
+                "HornCleat": 6,
+                "Mummified Hand": 7,
+                "Pantograph": 25,
+                "Orrery": 19,
+                "MealTicket": 21,
+                "Art of War": 22,
+                "Bottled Lightning": 28,
+                "PureWater": 0,
+                "StrikeDummy": 5,
+                "Toy Ornithopter": 27,
+                "Pocketwatch": 8
+            },
+            {
+                "Darkstone Periapt": 67,
+                "Regal Pillow": 68,
+                "Astrolabe": 33,
+                "Oddly Smooth Stone": 73,
+                "PreservedInsect": 66,
+                "Whetstone": 45,
+                "GoldenEye": 48,
+                "MawBank": 52,
+                "Peace Pipe": 18,
+                "SlaversCollar": 61,
+                "Anchor": 71,
+                "HornCleat": 18,
+                "Mummified Hand": 25,
+                "Pantograph": 79,
+                "Orrery": 66,
+                "MealTicket": 68,
+                "Art of War": 71,
+                "Bottled Lightning": 96,
+                "PureWater": 0,
+                "StrikeDummy": 15,
+                "Toy Ornithopter": 93,
+                "Pocketwatch": 27
+            }
+        ],
+        "Toy Ornithopter": 5,
+        "Pocketwatch": [
+            59
+        ]
+    },
+    "card_choices": [
+        {
+            "not_picked": [
+                "Evaluate",
+                "Protect"
+            ],
+            "picked": "JustLucky",
+            "floor": 1
+        },
+        {
+            "not_picked": [
+                "Vengeance",
+                "Perseverance"
+            ],
+            "picked": "WheelKick",
+            "floor": 2
+        },
+        {
+            "not_picked": [
+                "SashWhip",
+                "Halt",
+                "Protect"
+            ],
+            "picked": "SKIP",
+            "floor": 4
+        },
+        {
+            "not_picked": [
+                "SashWhip",
+                "Halt",
+                "Protect"
+            ],
+            "picked": "SKIP",
+            "floor": 4
+        },
+        {
+            "not_picked": [
+                "SignatureMove",
+                "ClearTheMind"
+            ],
+            "picked": "CrushJoints",
+            "floor": 5
+        },
+        {
+            "not_picked": [
+                "WreathOfFlame",
+                "EmptyFist"
+            ],
+            "picked": "Worship",
+            "floor": 6
+        },
+        {
+            "not_picked": [
+                "Crescendo",
+                "Wish"
+            ],
+            "picked": "Tantrum",
+            "floor": 8
+        },
+        {
+            "not_picked": [
+                "PathToVictory",
+                "BowlingBash"
+            ],
+            "picked": "CutThroughFate",
+            "floor": 10
+        },
+        {
+            "not_picked": [
+                "ClearTheMind",
+                "FlyingSleeves"
+            ],
+            "picked": "DeusExMachina",
+            "floor": 12
+        },
+        {
+            "not_picked": [
+                "Prostrate",
+                "CutThroughFate",
+                "Tantrum"
+            ],
+            "picked": "SKIP",
+            "floor": 13
+        },
+        {
+            "not_picked": [
+                "Vault",
+                "Scrawl"
+            ],
+            "picked": "Judgement",
+            "floor": 16
+        },
+        {
+            "not_picked": [
+                "CrushJoints",
+                "BowlingBash",
+                "SashWhip"
+            ],
+            "picked": "SKIP",
+            "floor": 18
+        },
+        {
+            "not_picked": [
+                "ReachHeaven",
+                "EmptyMind",
+                "EmptyFist",
+                "Meditate",
+                "Collect",
+                "WindmillStrike",
+                "JustLucky",
+                "FearNoEvil",
+                "Protect",
+                "EmptyBody",
+                "Crescendo",
+                "ThirdEye",
+                "SashWhip",
+                "Study",
+                "Evaluate",
+                "CutThroughFate",
+                "InnerPeace",
+                "Halt",
+                "FollowUp"
+            ],
+            "picked": "Adaptation",
+            "floor": 20
+        },
+        {
+            "not_picked": [
+                "Evaluate",
+                "SashWhip"
+            ],
+            "picked": "Collect",
+            "floor": 21
+        },
+        {
+            "not_picked": [
+                "TalkToTheHand+1",
+                "WheelKick"
+            ],
+            "picked": "LessonLearned",
+            "floor": 22
+        },
+        {
+            "not_picked": [
+                "Conclude",
+                "Tantrum"
+            ],
+            "picked": "ThirdEye",
+            "floor": 24
+        },
+        {
+            "not_picked": [
+                "Evaluate",
+                "EmptyBody"
+            ],
+            "picked": "Scrawl",
+            "floor": 27
+        },
+        {
+            "not_picked": [
+                "ClearTheMind",
+                "Halt"
+            ],
+            "picked": "CutThroughFate",
+            "floor": 28
+        },
+        {
+            "not_picked": [
+                "EmptyBody",
+                "ClearTheMind",
+                "FlurryOfBlows+1"
+            ],
+            "picked": "SKIP",
+            "floor": 31
+        },
+        {
+            "not_picked": [
+                "SpiritShield",
+                "Devotion"
+            ],
+            "picked": "Omniscience",
+            "floor": 33
+        },
+        {
+            "not_picked": [
+                "Protect",
+                "BowlingBash",
+                "Evaluate"
+            ],
+            "picked": "SKIP",
+            "floor": 35
+        },
+        {
+            "not_picked": [
+                "Blind",
+                "Good Instincts"
+            ],
+            "picked": "Thinking Ahead",
+            "floor": 37
+        },
+        {
+            "not_picked": [
+                "Jack Of All Trades",
+                "Impatience"
+            ],
+            "picked": "Bandage Up",
+            "floor": 37
+        },
+        {
+            "not_picked": [
+                "Metamorphosis",
+                "Forethought",
+                "Finesse"
+            ],
+            "picked": "SKIP",
+            "floor": 37
+        },
+        {
+            "not_picked": [
+                "LessonLearned",
+                "FollowUp"
+            ],
+            "picked": "WheelKick+1",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "FollowUp",
+                "FlyingSleeves"
+            ],
+            "picked": "FearNoEvil",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "Fasting2",
+                "FlyingSleeves",
+                "Consecrate"
+            ],
+            "picked": "SKIP",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "FlurryOfBlows",
+                "PathToVictory+1",
+                "Tantrum"
+            ],
+            "picked": "SKIP",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "FlyingSleeves",
+                "Crescendo",
+                "Protect+1"
+            ],
+            "picked": "SKIP",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "Protect",
+                "Consecrate+1"
+            ],
+            "picked": "Prostrate+1",
+            "floor": 40
+        },
+        {
+            "not_picked": [
+                "Study+1",
+                "FlyingSleeves"
+            ],
+            "picked": "Vault",
+            "floor": 42
+        },
+        {
+            "not_picked": [
+                "CrushJoints",
+                "WindmillStrike+1",
+                "BowlingBash+1"
+            ],
+            "picked": "SKIP",
+            "floor": 44
+        },
+        {
+            "not_picked": [
+                "LikeWater+1",
+                "Swivel"
+            ],
+            "picked": "SpiritShield",
+            "floor": 46
+        },
+        {
+            "not_picked": [
+                "SandsOfTime",
+                "Adaptation"
+            ],
+            "picked": "Prostrate+1",
+            "floor": 47
+        },
+        {
+            "not_picked": [
+                "Consecrate",
+                "Weave"
+            ],
+            "picked": "Nirvana+1",
+            "floor": 48
+        },
+        {
+            "not_picked": [
+                "ClearTheMind",
+                "Wish"
+            ],
+            "picked": "Wallop+1",
+            "floor": 55
+        }
+    ],
+    "player_experience": 9570303,
+    "relics_obtained": [
+        {
+            "floor": 6,
+            "key": "StrikeDummy"
+        },
+        {
+            "floor": 8,
+            "key": "Peace Pipe"
+        },
+        {
+            "floor": 9,
+            "key": "HornCleat"
+        },
+        {
+            "floor": 10,
+            "key": "Mummified Hand"
+        },
+        {
+            "floor": 12,
+            "key": "Pocketwatch"
+        },
+        {
+            "floor": 24,
+            "key": "Whetstone"
+        },
+        {
+            "floor": 27,
+            "key": "GoldenEye"
+        },
+        {
+            "floor": 40,
+            "key": "Darkstone Periapt"
+        },
+        {
+            "floor": 42,
+            "key": "MealTicket"
+        },
+        {
+            "floor": 43,
+            "key": "Regal Pillow"
+        },
+        {
+            "floor": 44,
+            "key": "Art of War"
+        },
+        {
+            "floor": 45,
+            "key": "Anchor"
+        },
+        {
+            "floor": 46,
+            "key": "Oddly Smooth Stone"
+        },
+        {
+            "floor": 48,
+            "key": "Pantograph"
+        },
+        {
+            "floor": 55,
+            "key": "Bottled Lightning"
+        }
+    ],
+    "event_choices": [
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Donut",
+            "damage_taken": 0,
+            "max_hp_gain": 5,
+            "max_hp_loss": 0,
+            "event_name": "Big Fish",
+            "floor": 14,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Ignored",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Ghosts",
+            "floor": 19,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Read",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "The Library",
+            "floor": 20,
+            "gold_loss": 0,
+            "cards_obtained": [
+                "Adaptation"
+            ]
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Opened",
+            "damage_taken": 0,
+            "relics_obtained": [
+                "MawBank"
+            ],
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "The Mausoleum",
+            "floor": 29,
+            "gold_loss": 0,
+            "cards_obtained": [
+                "Writhe"
+            ]
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Memory 3",
+            "damage_taken": 10,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "SensoryStone",
+            "floor": 37,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Ignored",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Tomb of Lord Red Mask",
+            "floor": 38,
+            "gold_loss": 0
+        }
+    ],
+    "is_beta": false,
+    "boss_relics": [
+        {
+            "not_picked": [
+                "Pandora's Box",
+                "Philosopher's Stone"
+            ],
+            "picked": "Astrolabe"
+        },
+        {
+            "not_picked": [
+                "Black Star",
+                "VioletLotus"
+            ],
+            "picked": "SlaversCollar"
+        }
+    ],
+    "items_purged_floors": [
+        39
+    ],
+    "is_endless": false,
+    "potions_floor_spawned": [
+        2,
+        6,
+        8,
+        10,
+        12,
+        16,
+        22,
+        24,
+        27,
+        40,
+        44,
+        47
+    ],
+    "ascension_level": 20,
+    "potion_discard_per_floor": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "GamblersBrew"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Weak Potion"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "Explosive Potion"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+    ]
+}

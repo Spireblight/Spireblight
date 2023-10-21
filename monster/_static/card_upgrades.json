@@ -1,0 +1,2110 @@
+[
+    {
+        "Name": "Add Burnout To Tombs",
+        "ID": "357893be-cf62-4347-a393-c5d37c9ed758"
+    },
+    {
+        "Name": "Add Damage Shield To Morsels",
+        "ID": "cd9f3315-56f6-4400-bef7-a77c16ed8c83"
+    },
+    {
+        "Name": "Add Endless",
+        "ID": "48122577-aea5-4fa2-b286-0046c866c717"
+    },
+    {
+        "Name": "Add Endless To Non Morsels",
+        "ID": "c62d9641-8948-4c00-b67d-60f0e728c1c1"
+    },
+    {
+        "Name": "Add Heal Immunity",
+        "ID": "15cdbcd8-481b-465c-bbf1-048c648f2f7f"
+    },
+    {
+        "Name": "Add Multistrike To Demons",
+        "ID": "d4d2f3a0-a191-45f4-850a-98feb26f86b5"
+    },
+    {
+        "Name": "Add Purge",
+        "ID": "4e24e9f5-b716-4eba-aea5-f8b6da1cbe3d"
+    },
+    {
+        "Name": "Better Stewards",
+        "ID": "1bd7981d-10cd-4652-ac7d-726a5df9ca99"
+    },
+    {
+        "Name": "Better Stewards_ Divine",
+        "ID": "742d6773-eff9-4bef-8fd2-202383803060"
+    },
+    {
+        "Name": "Conscription Upgrade",
+        "ID": "4e1c5353-4002-4889-825e-df736bad483c"
+    },
+    {
+        "Name": "Fragile Stealth Attack",
+        "ID": "f2caa82f-0ebb-46c3-97cd-5894a6da542e"
+    },
+    {
+        "Name": "Free From Blessing",
+        "ID": "988193e9-2933-4c84-a957-71b97809170e"
+    },
+    {
+        "Name": "Free Spell Blessing",
+        "ID": "13e8decf-3a0e-4bc5-a6e8-197d9f032087"
+    },
+    {
+        "Name": "Reduce Cost On Freeze",
+        "ID": "279af5a6-1a0b-4663-9e1a-6be3987f5a86"
+    },
+    {
+        "Name": "Sting Buff Piercing",
+        "ID": "04128a02-8289-422c-aad8-7a6a80a632ab"
+    },
+    {
+        "Name": "Sting Buff Power",
+        "ID": "9037e99a-d4cb-43cf-a3dd-e8bf88349be1"
+    },
+    {
+        "Name": "Upgrade Max Hp Front Unit Upgrade",
+        "ID": "ffe70826-48cb-430a-92b0-67c0562b4a81"
+    },
+    {
+        "Name": "Upgrade Max Hp Front Unit Upgrade_ Divine",
+        "ID": "99924d60-2e6b-490b-8d66-d6c9a489a0f6"
+    },
+    {
+        "Name": "Alabaster Guardian_ Upgrade A",
+        "ID": "16115183-86cf-489d-be5d-6eed50a74752"
+    },
+    {
+        "Name": "Barrel Explosive_ Upgrade A",
+        "ID": "46669e43-b0e5-4cc8-848d-10c038402ba5"
+    },
+    {
+        "Name": "Boss_ Gain Capacity_ Upgrade",
+        "ID": "c7ab1921-5fd6-4fdb-bec3-66219fafcc55"
+    },
+    {
+        "Name": "Boss_ Gain Shard Status_ Upgrade",
+        "ID": "0eb555ab-886f-46c4-ab66-af167ae0ad32"
+    },
+    {
+        "Name": "Boss_ Level1_ Upgrade A",
+        "ID": "59e06401-2c37-47e1-a693-503007f6c430"
+    },
+    {
+        "Name": "Boss_ Level1_ Upgrade B",
+        "ID": "24ed0f79-7859-4a36-8928-55665c8a48c0"
+    },
+    {
+        "Name": "Boss_ Level1_ Upgrade C",
+        "ID": "92be88a0-0e36-4908-accf-e442f5d54937"
+    },
+    {
+        "Name": "Boss_ Level1_ Upgrade D",
+        "ID": "bb54a1cc-543a-4bee-bf85-1031ca20e8ff"
+    },
+    {
+        "Name": "Boss_ Level1 Junker_ Upgrade A",
+        "ID": "32070e65-8599-4a38-b21e-f28d03610b24"
+    },
+    {
+        "Name": "Boss_ Level1 Junker_ Upgrade B",
+        "ID": "62841eac-cab8-4b32-b6c4-03dfcb888e20"
+    },
+    {
+        "Name": "Boss_ Level1 Junker_ Upgrade C",
+        "ID": "61b151f1-f9f3-4115-97d0-a2f8a4da45bc"
+    },
+    {
+        "Name": "Boss_ Level1 Junker_ Upgrade D",
+        "ID": "e1f3ff6e-a4a2-4096-bcdb-9f2e5dbd7c60"
+    },
+    {
+        "Name": "Boss_ Level1 Junker_ Upgrade E",
+        "ID": "f0404002-30d8-432a-bbf8-efa63417917c"
+    },
+    {
+        "Name": "Boss_ Level2_ Upgrade A",
+        "ID": "b3501a6e-1f30-4a4a-b6c2-9b2613c098d6"
+    },
+    {
+        "Name": "Boss_ Level2_ Upgrade B",
+        "ID": "7eebd296-454d-4406-9ead-7858773c39dd"
+    },
+    {
+        "Name": "Boss_ Level2_ Upgrade C",
+        "ID": "f8406d43-7223-4f33-a1f8-7c502ada168e"
+    },
+    {
+        "Name": "Boss_ Level2_ Upgrade D",
+        "ID": "4aa3a415-fbdb-4cef-acc3-47025d91204e"
+    },
+    {
+        "Name": "Boss_ Level2 A E Mage_ Upgrade A",
+        "ID": "d8e196b5-f570-4c7d-8381-236bbadc3dca"
+    },
+    {
+        "Name": "Boss_ Level2 A E Mage_ Upgrade B",
+        "ID": "cbefe10b-5442-4976-ba99-f9baa712df56"
+    },
+    {
+        "Name": "Boss_ Level2 A E Mage_ Upgrade C",
+        "ID": "1039e136-0ecf-46e4-8cbf-590b3135f0df"
+    },
+    {
+        "Name": "Boss_ Level2 A E Mage_ Upgrade D",
+        "ID": "74219802-86ed-4d81-bf61-52b464f845b9"
+    },
+    {
+        "Name": "Boss_ Level2 Shield Guy_ Upgrade A",
+        "ID": "6da521f5-85ac-4932-be13-2f2a7340f7e4"
+    },
+    {
+        "Name": "Boss_ Level2 Shield Guy_ Upgrade B",
+        "ID": "c19f4374-ebe0-4e79-bd64-deb31eee2413"
+    },
+    {
+        "Name": "Boss_ Level2 Shield Guy_ Upgrade C",
+        "ID": "1a30dce1-ef2b-4543-a6fb-9f7e51bd3ebe"
+    },
+    {
+        "Name": "Boss_ Level2 Shield Guy_ Upgrade D",
+        "ID": "a2cc4bf0-a16b-4350-99a6-ce076b34e728"
+    },
+    {
+        "Name": "Boss_ Level3 Armor_ Upgrade A",
+        "ID": "038e7f05-4260-45d9-a643-8273c7566861"
+    },
+    {
+        "Name": "Boss_ Level3 Armor_ Upgrade B",
+        "ID": "9afec4c2-193d-41db-88b8-91e07672395b"
+    },
+    {
+        "Name": "Boss_ Level3 Armor_ Upgrade C",
+        "ID": "e0ce2a74-7e18-45a5-be7a-a8ea2229c422"
+    },
+    {
+        "Name": "Boss_ Level3 Explosive_ Upgrade A",
+        "ID": "99eaffa7-a7d2-404c-9814-6a8234024be4"
+    },
+    {
+        "Name": "Boss_ Level3 Explosive_ Upgrade B",
+        "ID": "547d9f0f-b8cc-46c2-984f-f00539548d92"
+    },
+    {
+        "Name": "Boss_ Level3 Explosive_ Upgrade C",
+        "ID": "9045a117-ab9f-4b2e-8d14-95c0f606cb1e"
+    },
+    {
+        "Name": "Boss_ Level3 Stronger Barrels_ Upgrade A",
+        "ID": "e19fe457-6b8e-4d15-ba85-6a5ce3135c18"
+    },
+    {
+        "Name": "Boss_ Level3 Stronger Barrels_ Upgrade B",
+        "ID": "52178f32-b03c-492e-ba25-40cff9add1e2"
+    },
+    {
+        "Name": "Boss_ Level3 Stronger Barrels_ Upgrade C",
+        "ID": "b10bd7ed-20da-461a-bf7c-8ef9c770b262"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Armor On Kill_ Upgrade A",
+        "ID": "3ea75d1b-de58-4e17-9d1c-02d546f1e1f9"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Armor On Kill_ Upgrade B",
+        "ID": "47b9cb16-22d1-4e46-913c-8d8fb3ce86e9"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Armor On Kill_ Upgrade C",
+        "ID": "14e2d06f-19fa-4fb4-ae00-b58db61aacb4"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Daze_ Upgrade A",
+        "ID": "0badd590-7a55-4abd-98da-49eda3b8886b"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Daze_ Upgrade B",
+        "ID": "b31463e0-a033-4b10-8ed2-7d8e4afd47c7"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Daze_ Upgrade C",
+        "ID": "9b352d34-ac72-43a2-b746-0cdd3befad72"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Push_ Upgrade A",
+        "ID": "c1f8c738-6c96-4973-96b4-e4eac1608a78"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Push_ Upgrade B",
+        "ID": "f2703b74-7908-4d63-86f4-d0b8cf73e0d5"
+    },
+    {
+        "Name": "Boss_ Level3 Talos Push_ Upgrade C",
+        "ID": "2ccd5954-37b3-465a-bcaf-371011a89ed6"
+    },
+    {
+        "Name": "Boss_ Level4_ Upgrade A",
+        "ID": "7a81812d-3b41-4476-92f1-5ad63416702c"
+    },
+    {
+        "Name": "Boss_ Level4_ Upgrade B",
+        "ID": "26e4a4a3-02e8-482b-8101-a1a3772269ee"
+    },
+    {
+        "Name": "Boss_ Level4_ Upgrade C",
+        "ID": "781f4a76-0644-4777-81ea-c5109f25ab20"
+    },
+    {
+        "Name": "Boss_ Level4 Growth_ Upgrade A",
+        "ID": "23810e50-6064-4677-92a5-c81d05ddd8a7"
+    },
+    {
+        "Name": "Boss_ Level4 Growth_ Upgrade B",
+        "ID": "768521c6-96eb-4ddb-beea-14c43773129a"
+    },
+    {
+        "Name": "Boss_ Level4 Growth_ Upgrade C",
+        "ID": "8ac656b7-0944-48e4-8df4-ec1cd0308e5a"
+    },
+    {
+        "Name": "Boss_ Level4 Junker Boss_ Upgrade A",
+        "ID": "0b4187fd-f4fe-47db-aca3-37973a95efa1"
+    },
+    {
+        "Name": "Boss_ Level4 Junker Boss_ Upgrade B",
+        "ID": "dc949987-9f70-4624-b50b-a45f5db360ff"
+    },
+    {
+        "Name": "Boss_ Level4 Junker Boss_ Upgrade C",
+        "ID": "41dfc067-ee12-40ae-8e1d-5a479ebf5721"
+    },
+    {
+        "Name": "Boss_ Level5_ Upgrade A",
+        "ID": "31a5355e-ae21-4204-901f-e6a8f0069b62"
+    },
+    {
+        "Name": "Boss_ Level5_ Upgrade B",
+        "ID": "01390dac-64e9-414f-ac4e-de25acc5a1d8"
+    },
+    {
+        "Name": "Boss_ Level5_ Upgrade C",
+        "ID": "a737e107-1f3d-48e7-ad64-58131849826c"
+    },
+    {
+        "Name": "Boss_ Level5 Caster_ Upgrade A",
+        "ID": "7a85db9b-d064-40ad-b824-230490248f0c"
+    },
+    {
+        "Name": "Boss_ Level5 Caster_ Upgrade B",
+        "ID": "817ed9dd-5d9f-4580-ac70-c4f7b58e6611"
+    },
+    {
+        "Name": "Boss_ Level5 Caster_ Upgrade C",
+        "ID": "143158b2-c50c-4a18-be8f-e3e420854940"
+    },
+    {
+        "Name": "Boss_ Level5 Ultimate Stealth_ Upgrade A",
+        "ID": "c3ce1302-b192-41d0-a7a9-fd7d884b0651"
+    },
+    {
+        "Name": "Boss_ Level5 Ultimate Stealth_ Upgrade B",
+        "ID": "ab129deb-9b84-4be6-9525-d33915751e16"
+    },
+    {
+        "Name": "Boss_ Level5 Ultimate Stealth_ Upgrade C",
+        "ID": "fa5b7f64-7722-4dab-bd2a-0205f9e23740"
+    },
+    {
+        "Name": "Boss_ Level6 Archus_ Upgrade20",
+        "ID": "0b169a03-044a-4f09-93af-b36ccab36dd8"
+    },
+    {
+        "Name": "Boss_ Level6 Archus_ Upgrade A",
+        "ID": "6a58f95c-16f7-40b2-9d12-a97f25e0b5cf"
+    },
+    {
+        "Name": "Boss_ Level6 Archus_ Upgrade B",
+        "ID": "7979e6f4-c767-46c5-aa30-56310dd4d0b8"
+    },
+    {
+        "Name": "Boss_ Level6 Archus_ Upgrade C",
+        "ID": "964ed681-5b61-4617-bbe0-6d9ab6c39d2c"
+    },
+    {
+        "Name": "Boss_ Level6 Archus_ Upgrade H",
+        "ID": "a03b8c3f-aaa3-4ffc-963a-30221fbd80b2"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Armor_ Upgrade A",
+        "ID": "195b6fe6-d0e4-4167-8e31-f61ccd3412f6"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Armor_ Upgrade B",
+        "ID": "55d30ccb-1f36-4efd-975a-147147bf75b7"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Armor_ Upgrade C",
+        "ID": "d489ebf3-0197-4099-b7f2-9f428a285e49"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Junk_ Upgrade A",
+        "ID": "d6b995a7-d7ef-4462-888a-45ea80defe00"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Junk_ Upgrade B",
+        "ID": "2e398664-7adb-4b6b-aa23-4f1fa37843fd"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Junk_ Upgrade C",
+        "ID": "16518e61-3e71-48f0-b3b1-9d0aa568237d"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Rage_ Upgrade A",
+        "ID": "8f7d3271-dbef-4e28-a269-cf23a9535e31"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Rage_ Upgrade B",
+        "ID": "cf098179-0ddb-4104-b56c-4b995c18b98c"
+    },
+    {
+        "Name": "Boss_ Level6 Fel Rage_ Upgrade C",
+        "ID": "d157eeef-8930-43a9-8265-a6f3a6a63b99"
+    },
+    {
+        "Name": "Boss_ Level7_ Upgrade A",
+        "ID": "28ec0c63-d886-4f7f-93d2-d7c64838b0c5"
+    },
+    {
+        "Name": "Boss_ Level7_ Upgrade B",
+        "ID": "59430275-e148-4513-934a-e172e47d10f9"
+    },
+    {
+        "Name": "Boss_ Level7_ Upgrade C",
+        "ID": "7f07fe9e-26ef-44b8-85dd-4d8136f74725"
+    },
+    {
+        "Name": "Boss_ Level7 Shield_ Upgrade A",
+        "ID": "06f2f5e0-b6e0-4bdc-ac0b-3a48e347d842"
+    },
+    {
+        "Name": "Boss_ Level7 Shield_ Upgrade B",
+        "ID": "7d3fbb72-a0b2-47fe-b2e1-97510df479a3"
+    },
+    {
+        "Name": "Boss_ Level7 Shield_ Upgrade C",
+        "ID": "bccf8102-2661-4400-b0ac-2ba523c70e34"
+    },
+    {
+        "Name": "Boss_ Level8 Attacker_ Upgrade A",
+        "ID": "b5e2f1c0-850f-4a71-98c4-333762bad859"
+    },
+    {
+        "Name": "Boss_ Level8 Attacker_ Upgrade B",
+        "ID": "4b1044a4-0df5-49a0-a630-810f20a7d6a0"
+    },
+    {
+        "Name": "Boss_ Level8 Attacker_ Upgrade C",
+        "ID": "61fa1b37-ca5e-473f-a1d7-6869200ee463"
+    },
+    {
+        "Name": "Boss_ Level8 Debuff Units_ Upgrade A",
+        "ID": "53c38f96-b532-46fd-bf2a-15ddef7b6763"
+    },
+    {
+        "Name": "Boss_ Level8 Debuff Units_ Upgrade B",
+        "ID": "c676349e-521a-4f3b-9943-44a7db311af8"
+    },
+    {
+        "Name": "Boss_ Level8 Debuff Units_ Upgrade C",
+        "ID": "09d2aca4-7fff-48d6-8f5b-635edd1b9c0f"
+    },
+    {
+        "Name": "Boss_ Level8 Debuff Units_ Upgrade D",
+        "ID": "7501465a-60bc-470d-a130-e351f85640e2"
+    },
+    {
+        "Name": "Boss_ Level8 Purify_ Upgrade A",
+        "ID": "2b6bdeb6-1201-4f36-9655-a8e8569b7340"
+    },
+    {
+        "Name": "Boss_ Level8 Purify_ Upgrade B",
+        "ID": "48e8f377-1825-434c-bf5b-4bf9c329d8d8"
+    },
+    {
+        "Name": "Boss_ Level8 Purify_ Upgrade C",
+        "ID": "d258946f-8245-4492-a830-912b51f57fe7"
+    },
+    {
+        "Name": "Boss_ Level8 Purify_ Upgrade D",
+        "ID": "06b5f7a7-b9bf-4e2b-a7b6-91a5945393c3"
+    },
+    {
+        "Name": "Boss_ Level8 Spell Consume_ Upgrade A",
+        "ID": "cc66da85-8fa8-4f8a-b981-399d5941dc01"
+    },
+    {
+        "Name": "Boss_ Level8 Spell Consume_ Upgrade B",
+        "ID": "ce0d8d41-0195-41cf-ad1f-fc7ab884364b"
+    },
+    {
+        "Name": "Boss_ Level8 Spell Consume_ Upgrade C",
+        "ID": "b72b969b-d173-419e-b50e-43d45cf2d958"
+    },
+    {
+        "Name": "Boss_ Level9_ Covenant25_ Upgrade",
+        "ID": "691c49f9-894d-43e0-8437-d78b9cb597f2"
+    },
+    {
+        "Name": "Boss_ Level9_ Gain Attack_ Upgrade",
+        "ID": "da51fb0b-daff-4c04-b787-940f0efe0147"
+    },
+    {
+        "Name": "Boss_ Level9_ Gain Health_ Upgrade",
+        "ID": "35e7dbbe-cd48-49a5-8555-c6d88c5cf281"
+    },
+    {
+        "Name": "Boss_ Level9_ Gain Pyre Lock_ Upgrade",
+        "ID": "2c6062fd-209c-4527-b022-0fa9a40844b0"
+    },
+    {
+        "Name": "Plating",
+        "ID": "f895e89b-f141-4ce2-93ab-9849d90649a5"
+    },
+    {
+        "Name": "Explosive",
+        "ID": "9bce2977-33ae-4712-8354-436cd827300a"
+    },
+    {
+        "Name": "Explosive I I",
+        "ID": "e00b42a8-574f-4c0d-809d-5a1325a2e0b3"
+    },
+    {
+        "Name": "Explosive I I I",
+        "ID": "b93ecc14-e5d5-4120-b4d5-1c2be8692b99"
+    },
+    {
+        "Name": "Cultivating",
+        "ID": "f8032f84-d804-4b2e-ad51-679f949f5eb2"
+    },
+    {
+        "Name": "Cultivating I I",
+        "ID": "09621571-ddd8-4ee9-bf99-55c846d565bd"
+    },
+    {
+        "Name": "Cultivating I I I",
+        "ID": "48ab11a5-012e-489a-a095-afe7bd783c83"
+    },
+    {
+        "Name": "Bristling",
+        "ID": "15a21677-588c-427d-bef0-9b191458ad36"
+    },
+    {
+        "Name": "Bristling I I",
+        "ID": "fb36955d-ee11-4efd-af41-7a7aa4f17055"
+    },
+    {
+        "Name": "Bristling I I I",
+        "ID": "552a48c3-8298-48e8-89a0-fc525f2eab32"
+    },
+    {
+        "Name": "Predator",
+        "ID": "7f7a9349-f708-45b3-bfe6-202316e9a612"
+    },
+    {
+        "Name": "Predator I I",
+        "ID": "35030105-93bd-470b-95b8-63cda41a7bb5"
+    },
+    {
+        "Name": "Predator I I I",
+        "ID": "6084cb44-6002-4fe1-bcb2-14805ed08725"
+    },
+    {
+        "Name": "Strangler",
+        "ID": "23179c5e-62aa-4a86-b861-c5aa6c594708"
+    },
+    {
+        "Name": "Strangler I I",
+        "ID": "f539c91f-0877-4122-a4ff-07c8bf905dc2"
+    },
+    {
+        "Name": "Strangler I I I",
+        "ID": "3309b5b7-24fc-4bf7-919b-a22b6c4832cd"
+    },
+    {
+        "Name": "Thornlord",
+        "ID": "410a0c39-4d2a-4c62-a9ce-c1401e9259de"
+    },
+    {
+        "Name": "Thornlord I I",
+        "ID": "beceeab5-0940-4f08-946e-d8c8ea14a81c"
+    },
+    {
+        "Name": "Thornlord I I I",
+        "ID": "c13711f6-cdad-4951-ae72-d847048df6f1"
+    },
+    {
+        "Name": "Bonus Both Strength",
+        "ID": "1e836209-cbf5-4c80-94fb-fa5a273cae22"
+    },
+    {
+        "Name": "Bonus Damage Power",
+        "ID": "57812025-fe2e-4976-bd57-08f0772b8b66"
+    },
+    {
+        "Name": "Bonus Damage Big Strength",
+        "ID": "5fbc770f-ab5a-4344-8674-babe3ef66f75"
+    },
+    {
+        "Name": "Bonus Health Vitality",
+        "ID": "52960e8c-c8bd-4b81-a9fe-0773f0986b06"
+    },
+    {
+        "Name": "Bonus Health Big Vitality",
+        "ID": "384ca36e-4ed3-4964-b17a-49411a82aabe"
+    },
+    {
+        "Name": "Disruption",
+        "ID": "aa354729-d0a0-4fd0-8027-648c38e43fa5"
+    },
+    {
+        "Name": "Reaper",
+        "ID": "96f93f28-0d3c-4b62-aabc-f7de6b655995"
+    },
+    {
+        "Name": "Reaper I I",
+        "ID": "86d92229-18f2-4644-8d01-08e195de9253"
+    },
+    {
+        "Name": "Reaper I I I",
+        "ID": "0bc77389-97b7-4073-b00e-111293e706a4"
+    },
+    {
+        "Name": "Brawler",
+        "ID": "6057fccd-90dc-4c97-b64b-cca5a02f4766"
+    },
+    {
+        "Name": "Brawler I I",
+        "ID": "b1476ffd-d425-46d6-89d6-975921a8f58c"
+    },
+    {
+        "Name": "Brawler I I I",
+        "ID": "142535b6-ad20-4fa3-8a6b-4fff4ad45784"
+    },
+    {
+        "Name": "Wrathful",
+        "ID": "bbedbbd7-cf93-4b27-920a-36815e404a9a"
+    },
+    {
+        "Name": "Wrathful I I",
+        "ID": "71ca2e13-c5de-426d-997a-45d0f9e21a34"
+    },
+    {
+        "Name": "Wrathful I I I",
+        "ID": "93e65477-e418-4da8-b456-e3e3d9d269fa"
+    },
+    {
+        "Name": "Imp Parade",
+        "ID": "2c5a6dd2-3320-4d90-8fd8-af32a4f913e7"
+    },
+    {
+        "Name": "Imp Parade I I",
+        "ID": "acd50cf0-3ff0-43d1-81b7-c7abc4eac9c7"
+    },
+    {
+        "Name": "Imp Parade I I I",
+        "ID": "edbe43ea-fb4e-4690-8999-4bc666f421f5"
+    },
+    {
+        "Name": "Royalty",
+        "ID": "44c23e85-cc98-49ca-a54c-92b1aae3a367"
+    },
+    {
+        "Name": "Royalty I I",
+        "ID": "0ee32709-3e94-4447-98ad-a810c48bbe84"
+    },
+    {
+        "Name": "Royalty I I I",
+        "ID": "01b23394-aaa3-4d39-8b1b-b5c279865208"
+    },
+    {
+        "Name": "Imperialist",
+        "ID": "8bf00bfe-347c-41c6-8ce8-a6f998e2393c"
+    },
+    {
+        "Name": "Imperialist I I",
+        "ID": "6bb263bd-22f5-4893-bc13-6624188e96e8"
+    },
+    {
+        "Name": "Imperialist I I I",
+        "ID": "dd997c0f-f913-451f-8011-1f5dd6fd9a54"
+    },
+    {
+        "Name": "Stalker",
+        "ID": "68104e88-aa37-4818-bdd8-78e097150672"
+    },
+    {
+        "Name": "Swiftness",
+        "ID": "5268467f-2aca-4653-ae07-0058e50e208e"
+    },
+    {
+        "Name": "Anger",
+        "ID": "1d5c40c2-456c-4f35-bb47-47d71886ec25"
+    },
+    {
+        "Name": "Regeneration",
+        "ID": "1400e547-72e0-4ec9-83e2-b58fc0eaf84d"
+    },
+    {
+        "Name": "Burn Bright",
+        "ID": "93da2f34-0c5d-4191-9416-ab6d0177c42e"
+    },
+    {
+        "Name": "Burn Bright I I",
+        "ID": "3a2a536d-5c20-460b-ba37-8e9d240b04c1"
+    },
+    {
+        "Name": "Burn Bright I I I",
+        "ID": "1928313f-4511-4b6f-ad32-dc7b7461d6c1"
+    },
+    {
+        "Name": "Accumulator",
+        "ID": "190e29a6-9c5f-4e85-97e3-abc5c6ca9dda"
+    },
+    {
+        "Name": "Accumulator I I",
+        "ID": "176205b6-ae99-451c-b58a-7b6c08b51f20"
+    },
+    {
+        "Name": "Accumulator I I I",
+        "ID": "d5a114ea-412a-432a-9283-c11f7a44a3fb"
+    },
+    {
+        "Name": "Dark Calling",
+        "ID": "5ed5a523-6c23-45dd-9f8d-3543a52ac6fe"
+    },
+    {
+        "Name": "Dark Calling I I",
+        "ID": "3c935a9d-761d-48e9-a375-a3582a9abed5"
+    },
+    {
+        "Name": "Dark Calling I I I",
+        "ID": "24d93a75-44b0-4fbb-b030-f093ea2132fe"
+    },
+    {
+        "Name": "Lightin Darkness",
+        "ID": "fb0e2685-851e-4ce8-82c7-01e1e4d745b4"
+    },
+    {
+        "Name": "Lightin Darkness I I",
+        "ID": "7d35fa63-4048-4b94-9540-e8fb0dbf6e51"
+    },
+    {
+        "Name": "Lightin Darkness I I I",
+        "ID": "0fa013a9-cc45-4954-b510-171cb96e250b"
+    },
+    {
+        "Name": "Fire Light",
+        "ID": "eb4f67b9-f3ad-40db-9212-4ed647e17296"
+    },
+    {
+        "Name": "Fire Light I I",
+        "ID": "2c87b675-8681-4662-82b7-ae22b1e254d2"
+    },
+    {
+        "Name": "Fire Light I I I",
+        "ID": "b3b74373-3afe-40fc-ae2c-8a77f5817f10"
+    },
+    {
+        "Name": "Eternal Flame",
+        "ID": "738b4ac0-d62b-4d79-8340-e6dc154b1b5f"
+    },
+    {
+        "Name": "Eternal Flame I I",
+        "ID": "5a3b4148-0c24-45cb-9ff2-5c0a19a0be7b"
+    },
+    {
+        "Name": "Eternal Flame I I I",
+        "ID": "83b1594a-96c3-4984-9dc2-73db6f193e14"
+    },
+    {
+        "Name": "Little Icarus",
+        "ID": "08749cab-1cdb-451b-9164-b60be12c4b52"
+    },
+    {
+        "Name": "Little Icarus I I",
+        "ID": "0ccb5d0a-7bb9-4843-9139-8dd0b784d4c2"
+    },
+    {
+        "Name": "Little Icarus I I I",
+        "ID": "0d8186aa-0906-46d9-a41c-cfee1f997c5c"
+    },
+    {
+        "Name": "Thorny",
+        "ID": "bd2ab9ad-1a0c-4985-a7ba-80523dce130d"
+    },
+    {
+        "Name": "Direchannel",
+        "ID": "ca5e1e1a-09c5-44c7-b626-9d9f4a2b7eb2"
+    },
+    {
+        "Name": "Direchannel I I",
+        "ID": "65112eea-9b24-4318-82f6-5647b55679e3"
+    },
+    {
+        "Name": "Direchannel I I I",
+        "ID": "71b42d6e-5e0b-435c-8dfb-c93269415a46"
+    },
+    {
+        "Name": "Titanchannel",
+        "ID": "462e09b7-886b-4d7c-8875-26cbca27c0c8"
+    },
+    {
+        "Name": "Titanchannel I I",
+        "ID": "bf30a732-abd2-4e51-ad50-cebfa387425a"
+    },
+    {
+        "Name": "Titanchannel I I I",
+        "ID": "67d682a3-00b6-4ad1-bb5d-6838c21621bd"
+    },
+    {
+        "Name": "Coldchannel",
+        "ID": "c347b104-bc74-45ac-8239-df44ba4176ee"
+    },
+    {
+        "Name": "Coldchannel I I",
+        "ID": "b9d7d5f5-3fc8-438a-b8db-eed365ad9bad"
+    },
+    {
+        "Name": "Coldchannel I I I",
+        "ID": "7885ff96-ca87-4a02-b80c-58c503f3f4c5"
+    },
+    {
+        "Name": "Chillwind",
+        "ID": "204f8182-3291-442c-af2c-39ce5aad63fa"
+    },
+    {
+        "Name": "Chillwind I I",
+        "ID": "b7a75711-9b32-47c7-aa82-027169a1d538"
+    },
+    {
+        "Name": "Chillwind I I I",
+        "ID": "b5abbfe2-2f7d-4449-9ea2-5d287b0b7ef3"
+    },
+    {
+        "Name": "Conduit",
+        "ID": "87fb9df8-c3cd-4d08-9bec-88c90880d804"
+    },
+    {
+        "Name": "Conduit I I",
+        "ID": "ba7b86f5-b775-47fb-91c2-039d09c779e9"
+    },
+    {
+        "Name": "Conduit I I I",
+        "ID": "210e1833-3cf8-4f84-ab8d-1c8a9f35e404"
+    },
+    {
+        "Name": "Handheld Totem",
+        "ID": "723ff87f-8aea-403b-85cd-561a15816c84"
+    },
+    {
+        "Name": "Handheld Totem I I",
+        "ID": "27e907d6-e3dd-411c-82cd-61a63e7b5829"
+    },
+    {
+        "Name": "Handheld Totem I I I",
+        "ID": "47fd83c4-d80c-47e3-b1f1-fe25028d322c"
+    },
+    {
+        "Name": "Architect",
+        "ID": "cd4363b1-3d2d-4fca-9c8f-b2add13bf929"
+    },
+    {
+        "Name": "Architect I I",
+        "ID": "cd0de392-000c-46d5-9ed0-c5c0e50ab24f"
+    },
+    {
+        "Name": "Architect I I I",
+        "ID": "de7a72f5-c278-49fc-b396-cae1233d0c24"
+    },
+    {
+        "Name": "Monstrous",
+        "ID": "52fcb0d7-2a46-44ef-8ea6-7cafa44b25df"
+    },
+    {
+        "Name": "Monstrous I I",
+        "ID": "208f3fb4-72cc-4eda-b970-fb5b5cd7b194"
+    },
+    {
+        "Name": "Monstrous I I I",
+        "ID": "6e0b7f50-ed86-4658-bad4-c353421f5444"
+    },
+    {
+        "Name": "Glutton",
+        "ID": "5a85e2f8-8197-4cc0-a4b8-02cd8ed0a20e"
+    },
+    {
+        "Name": "Glutton I I",
+        "ID": "c37e7693-e0f7-4149-be80-7091715be579"
+    },
+    {
+        "Name": "Glutton I I I",
+        "ID": "bd4485de-039e-41f9-b174-9212f8fc2ca7"
+    },
+    {
+        "Name": "Aggressive Edible",
+        "ID": "8fe99a49-7f4a-4884-ab76-249b04089bac"
+    },
+    {
+        "Name": "Aggressive Edible I I",
+        "ID": "dfefaf5a-cc8b-4206-8b80-8f658cd021d6"
+    },
+    {
+        "Name": "Aggressive Edible I I I",
+        "ID": "979c74ac-9854-443d-b70b-84adae711cdf"
+    },
+    {
+        "Name": "Stalwart Snack",
+        "ID": "05a69f55-1e8b-49ad-927d-88d41a6fffa6"
+    },
+    {
+        "Name": "Stalwart Snack I I",
+        "ID": "f41b5501-8e6c-429b-a0f6-b0fe737d7927"
+    },
+    {
+        "Name": "Stalwart Snack I I I",
+        "ID": "a4c5f903-3a18-41ad-a8a1-c61d705a8a89"
+    },
+    {
+        "Name": "Superfood",
+        "ID": "001f38cc-8ec6-4fdf-a24b-31c6d688b889"
+    },
+    {
+        "Name": "Superfood I I",
+        "ID": "46bf51a2-e00b-4c9f-8ecb-980c8cc07415"
+    },
+    {
+        "Name": "Superfood I I I",
+        "ID": "6676d9a1-3261-4122-8a5a-0ab0924650eb"
+    },
+    {
+        "Name": "The Corruptor",
+        "ID": "401f4e60-5879-4183-b204-53f391489c44"
+    },
+    {
+        "Name": "The Corruptor I I",
+        "ID": "05ec6f6f-5a52-4bb9-967f-3a47b21426f9"
+    },
+    {
+        "Name": "The Corruptor I I I",
+        "ID": "783817cc-10fb-4950-af7b-b42e12b07064"
+    },
+    {
+        "Name": "The Decayer",
+        "ID": "2940cb92-d4da-4f0b-a88f-ecbd454c4f36"
+    },
+    {
+        "Name": "The Decayer I I",
+        "ID": "a168d788-7b47-4cd5-bce2-0e59aff36d5a"
+    },
+    {
+        "Name": "The Decayer I I I",
+        "ID": "f63ebb48-26c3-47b7-926d-e8972d997c44"
+    },
+    {
+        "Name": "The Infector",
+        "ID": "5d70a79f-1c26-4ad7-a549-f4bb1a7b9121"
+    },
+    {
+        "Name": "The Infector I I",
+        "ID": "e53c2bb3-f09c-46e1-b2b5-f115bad35b40"
+    },
+    {
+        "Name": "The Infector I I I",
+        "ID": "2e3164cc-59a2-4966-a1d0-412b2e45b463"
+    },
+    {
+        "Name": "The Shellsmith",
+        "ID": "0ae4c1de-dfc0-4753-8d02-025ea8cfd445"
+    },
+    {
+        "Name": "The Shellsmith I I",
+        "ID": "ee65baf1-dc09-4b46-b75d-849f499db428"
+    },
+    {
+        "Name": "The Shellsmith I I I",
+        "ID": "86e73cf7-63df-4a22-85bb-29f0de135f59"
+    },
+    {
+        "Name": "The Repeater",
+        "ID": "9871c640-ba99-426a-9fca-31ba5124f79e"
+    },
+    {
+        "Name": "The Repeater I I",
+        "ID": "882d6764-a8f9-4cda-98e5-a313ea5378ec"
+    },
+    {
+        "Name": "The Repeater I I I",
+        "ID": "51244a47-e709-48d6-9e6e-bbe0e5ba8e2c"
+    },
+    {
+        "Name": "Wurm2 Summoned Unit20 H P",
+        "ID": "9f8cc862-aaed-493e-9dd1-9f6c33c6ec8f"
+    },
+    {
+        "Name": "Wurm2 Summoned Unit40 H P",
+        "ID": "54d00d03-e2e8-46d8-84f5-3d6e16e38d5d"
+    },
+    {
+        "Name": "Wurm2 Summoned Unit60 H P",
+        "ID": "59052808-9c20-4fd5-ba44-6a1fb1f9a5d6"
+    },
+    {
+        "Name": "The Marshlord",
+        "ID": "194d0632-41ce-470d-a6a1-fadd845e5628"
+    },
+    {
+        "Name": "The Marshlord I I",
+        "ID": "f2ba172d-faef-4539-9a39-f0eb1af33723"
+    },
+    {
+        "Name": "The Marshlord I I I",
+        "ID": "cf48bcc3-248e-4e10-ba1b-637afd9af28c"
+    },
+    {
+        "Name": "Alpha Fiend Synthesis Trigger",
+        "ID": "a43fcaec-f2f7-418e-bbc5-bbb62547df6b"
+    },
+    {
+        "Name": "Alpha Fiend Trigger",
+        "ID": "5438dad3-5d7f-4ef5-9311-728d5c7c45b9"
+    },
+    {
+        "Name": "Awoken Hollow Synthesis Trigger",
+        "ID": "0e687eb0-d4a4-4c95-8a33-3266720369b8"
+    },
+    {
+        "Name": "Awoken Hollow Trigger",
+        "ID": "498310cc-fe77-40b2-9c57-b7f17db0f61e"
+    },
+    {
+        "Name": "Formless Child Synthesis Trigger",
+        "ID": "e05ad126-8a2e-4bb3-affe-d7ddf4abbdf2"
+    },
+    {
+        "Name": "Minus666 Health",
+        "ID": "10c215e1-0317-4e83-b551-d601b7858219"
+    },
+    {
+        "Name": "Molten Morsel Trigger",
+        "ID": "12faba37-4edb-4e6a-8e84-d46b7b096852"
+    },
+    {
+        "Name": "Morsel Excavator Trigger",
+        "ID": "b8ef5e43-dacf-4bab-a48c-329f288e09ca"
+    },
+    {
+        "Name": "Morsel Jeweler Trigger",
+        "ID": "258928a0-164c-46bb-8930-aa64803634d8"
+    },
+    {
+        "Name": "Morsel Miner Trigger",
+        "ID": "2a43f664-585d-4fc1-a7ac-b234ef239780"
+    },
+    {
+        "Name": "Offering Monument Trigger",
+        "ID": "a0931833-9151-4214-8c0a-c808a3c9cc1a"
+    },
+    {
+        "Name": "Plus1 Attack",
+        "ID": "148c9002-8403-4850-9b21-5511f73a51ec"
+    },
+    {
+        "Name": "Plus1 Attack1 Health",
+        "ID": "a517c4ab-24f9-483f-b90f-b7fc123bf1f0"
+    },
+    {
+        "Name": "Plus1 Attack Synthesis",
+        "ID": "bd4d4eeb-e26e-4b29-9ad3-165efd690e84"
+    },
+    {
+        "Name": "Plus2 Attack",
+        "ID": "c7c68726-bd6d-403e-9d23-a005344f2774"
+    },
+    {
+        "Name": "Plus2 Attack2 Armor",
+        "ID": "e6979e9f-6fc2-4c4b-9f9b-dfa5b18de374"
+    },
+    {
+        "Name": "Plus2 Attack2 Health",
+        "ID": "b964c93d-d2ab-45d2-ab29-94c2e41e72a9"
+    },
+    {
+        "Name": "Plus2 Attack2 Health Synthesis",
+        "ID": "2bdd9c52-56ac-4c31-9b5f-5c4b80cb6f96"
+    },
+    {
+        "Name": "Plus2 Attack Synthesis",
+        "ID": "4ffaa7ee-6beb-4b8f-999b-d1d302d68f6a"
+    },
+    {
+        "Name": "Plus3 Attack",
+        "ID": "e2fb539a-be4a-4c99-9187-9dc89b0a90f6"
+    },
+    {
+        "Name": "Plus3 Attack3 Health",
+        "ID": "a0c1a8fa-a066-4c19-b9d4-eda29e2d3d5e"
+    },
+    {
+        "Name": "Plus4 Attack4 Health",
+        "ID": "fa52757c-9491-4c78-aaef-732f69fb03be"
+    },
+    {
+        "Name": "Plus5 Attack",
+        "ID": "069b201b-ee72-4daf-99d8-914d56f1bad5"
+    },
+    {
+        "Name": "Plus5 Attack5 Health",
+        "ID": "5b38fa40-8776-4a23-af0c-22845e4ea552"
+    },
+    {
+        "Name": "Plus5 Attack Synthesis",
+        "ID": "a2a57b5d-79e5-480e-bb99-bbb9bd56ab62"
+    },
+    {
+        "Name": "Plus6 Attack6 Health Synthesis",
+        "ID": "16c67f85-c36b-4da0-ba22-82822ef056cd"
+    },
+    {
+        "Name": "Plus10 Attack",
+        "ID": "6d9f8b4d-8be0-4bd1-bd7e-edff5b557a31"
+    },
+    {
+        "Name": "Plus10 Attack10 Health Synthesis",
+        "ID": "add811f0-f720-4224-a7d1-4eed12ebec0c"
+    },
+    {
+        "Name": "Rubble Morsel Trigger",
+        "ID": "ae726e44-0b89-4455-9835-bfa55d2ef6fe"
+    },
+    {
+        "Name": "Shadow Morsel Trigger",
+        "ID": "477e608b-5764-4619-acb3-aaad2eee5be1"
+    },
+    {
+        "Name": "Shattered Shell Synthesis Trigger",
+        "ID": "37f8864e-9c82-4865-a89c-748f21e1a54f"
+    },
+    {
+        "Name": "Shattered Shell Trigger",
+        "ID": "214658eb-db42-4734-879c-ff7414d8f21b"
+    },
+    {
+        "Name": "Siren Sea Synthesis Trigger",
+        "ID": "f8664ae2-3a25-4a5a-a798-a1af03f27958"
+    },
+    {
+        "Name": "Siren Sea Trigger",
+        "ID": "f58c320b-da4e-494e-9761-5f7c5179e7e9"
+    },
+    {
+        "Name": "Add Attack On Kill Trigger Upgrade",
+        "ID": "a8bf7a64-1a75-405e-9e43-8afa7ee31106"
+    },
+    {
+        "Name": "Add Attack On Kill Trigger Upgrade_ Divine",
+        "ID": "27b76315-6f5a-48ef-aeab-331a65feacd2"
+    },
+    {
+        "Name": "Add Attack On Kill Upgrade",
+        "ID": "3e264569-a52c-4f57-bdc3-b141479f2dd7"
+    },
+    {
+        "Name": "Add Attack Per Blight Upgrade",
+        "ID": "fe563101-a349-454f-bd20-917292b18288"
+    },
+    {
+        "Name": "Attack On Kill Trigger1",
+        "ID": "51405589-c12f-4f9a-88c5-3eddc3f8019b"
+    },
+    {
+        "Name": "Attack On Kill Trigger2",
+        "ID": "81ba39e4-3ecf-4290-8a03-14b03fcb396f"
+    },
+    {
+        "Name": "Attack On Kill Trigger3",
+        "ID": "213409ac-1bec-4281-ba87-ccb07b858e70"
+    },
+    {
+        "Name": "Delayed_ Revenge Heal Final Trigger",
+        "ID": "ba45ae16-e8e4-4d89-8af3-94e90dc05b56"
+    },
+    {
+        "Name": "Delayed_ Revenge Heal Trigger",
+        "ID": "9ef95899-5761-4231-824b-3b5cae3a43db"
+    },
+    {
+        "Name": "Heal On Harvest Trigger1",
+        "ID": "72ae9e9c-dcf4-4219-a23d-c0bd1830172a"
+    },
+    {
+        "Name": "Heal On Harvest Trigger2",
+        "ID": "e027678a-a6b1-40ed-8ca5-3c44c0f97d1a"
+    },
+    {
+        "Name": "Heal On Harvest Trigger3",
+        "ID": "55569850-35b4-4243-970b-fb2109e889bf"
+    },
+    {
+        "Name": "Shardtail Attack On Rally1",
+        "ID": "8123b13c-0aa8-4ba1-a54a-b93a3772e80b"
+    },
+    {
+        "Name": "Shardtail Attack On Rally2",
+        "ID": "a96b3d0a-959a-45a8-a95a-81a1d4754b24"
+    },
+    {
+        "Name": "Shardtail Attack On Rally3",
+        "ID": "09617b16-d0eb-4ae6-8387-6d97299a8835"
+    },
+    {
+        "Name": "Stat On Eat Trigger1",
+        "ID": "487e5007-9f43-47d0-9dfd-1d5f2b129d34"
+    },
+    {
+        "Name": "Stat On Eat Trigger2",
+        "ID": "875f5778-e7a9-4197-80a8-2e77044bc52e"
+    },
+    {
+        "Name": "Stat On Eat Trigger3",
+        "ID": "ae2ccfdf-25d7-4731-b160-b48ba065038c"
+    },
+    {
+        "Name": "Wyldenten Buff On Incant1",
+        "ID": "3ccd12c7-3001-494b-aef5-920314878661"
+    },
+    {
+        "Name": "Wyldenten Buff On Incant2",
+        "ID": "e289311e-d08c-4fae-91dc-a4dd67799751"
+    },
+    {
+        "Name": "Wyldenten Buff On Incant3",
+        "ID": "4d37769f-45ca-4f51-bc38-71a85a88090a"
+    },
+    {
+        "Name": "Wickless Baron Synthesis Trigger",
+        "ID": "fbd0c65d-0a31-4b6e-a52d-43b95ff5ac3e"
+    },
+    {
+        "Name": "Wickless Baron Trigger",
+        "ID": "a6758619-a7ee-40fa-b050-672461dc0b90"
+    },
+    {
+        "Name": "Wurm Corrupt Trigger",
+        "ID": "3f1cad98-4271-4db5-ae48-dee1b7bf98cc"
+    },
+    {
+        "Name": "Wurm Transfuser Synthesis Trigger",
+        "ID": "5c333a61-0875-4f87-9c40-7315370a21a0"
+    },
+    {
+        "Name": "Wurm Transfuser Trigger",
+        "ID": "a342f80c-b77b-4902-99c9-f80e8577a160"
+    },
+    {
+        "Name": "Wurm Trigger",
+        "ID": "f137cc11-c092-478b-8d7e-8f3354f11caf"
+    },
+    {
+        "Name": "Build Card_ Buff",
+        "ID": "3c2387a0-b279-455e-9961-4364268c0602"
+    },
+    {
+        "Name": "Build Card_ Damage",
+        "ID": "4c054ac9-a4b9-4f5c-b429-fdf5686e233a"
+    },
+    {
+        "Name": "Build Card_ Heal",
+        "ID": "cba53ad8-37d4-448a-b08b-47bbcfa74b4b"
+    },
+    {
+        "Name": "Build Card_ Ascend",
+        "ID": "4a5a2630-9208-46d2-921b-1fe55e887ebf"
+    },
+    {
+        "Name": "Build Card_ Descend",
+        "ID": "6c0f8b96-3007-4429-9572-f05ea090e8cb"
+    },
+    {
+        "Name": "Build Card_ Pull Forward",
+        "ID": "36489e14-573f-49c4-b0ab-981e90060ae9"
+    },
+    {
+        "Name": "Build Card_ Push Back",
+        "ID": "bd90293e-69dc-43eb-9aa3-04f8b8caaabf"
+    },
+    {
+        "Name": "Build Card_ Add Capacity",
+        "ID": "7cd44bed-4834-4dac-a4d3-f332bf56b5c6"
+    },
+    {
+        "Name": "Build Card_ Card Draw",
+        "ID": "868eaf14-af9e-484d-aabe-69345ea90523"
+    },
+    {
+        "Name": "Build Card_ Gain Gold",
+        "ID": "b3ef84e9-e313-40f3-8f04-8a2b34690c1e"
+    },
+    {
+        "Name": "Build Card_ Add Armor",
+        "ID": "223b9583-9be8-4c9c-928c-5a24d97f7dcc"
+    },
+    {
+        "Name": "Build Card_ Add Frostbite",
+        "ID": "940e0577-0aec-42c3-af9e-c7fc70685f5c"
+    },
+    {
+        "Name": "Build Card_ Add Rage",
+        "ID": "80ec3287-eb7b-4b96-9283-2bb9a35287a4"
+    },
+    {
+        "Name": "Build Card_ Add Regen",
+        "ID": "61a78ee2-60ec-46ad-873a-64996779a7b0"
+    },
+    {
+        "Name": "Build Card_ Add Sap",
+        "ID": "2f3df2f1-f27f-4795-ae12-6b2895fa7944"
+    },
+    {
+        "Name": "Build Card_ Add Spikes",
+        "ID": "0232d875-2636-4289-a309-a4a70eae82d6"
+    },
+    {
+        "Name": "Sunderstone",
+        "ID": "a1685f1f-0a01-4271-8284-fa5b7cac5f7d"
+    },
+    {
+        "Name": "Sapstone",
+        "ID": "c6d74041-efd4-4c02-876c-7461dfdbf230"
+    },
+    {
+        "Name": "Hephs Consolation",
+        "ID": "82c86cbe-b64b-4deb-a7a0-ea8e66d53471"
+    },
+    {
+        "Name": "Madeto Fit",
+        "ID": "6c914fe4-5978-4e8b-b01b-b05ede267a2b"
+    },
+    {
+        "Name": "Major Refraction",
+        "ID": "fabdbbf5-da2a-4fb8-99b6-d2062d47743d"
+    },
+    {
+        "Name": "Spell Railspike",
+        "ID": "534f3b84-2712-46e5-80c9-1b7dbf7a7111"
+    },
+    {
+        "Name": "Monster Railspike",
+        "ID": "be00c02a-6299-485c-99db-bbe3942abcc1"
+    },
+    {
+        "Name": "The Safe Stuff",
+        "ID": "d3517e63-2ffa-4c93-98a4-b6a61cae6822"
+    },
+    {
+        "Name": "Replicate On Death",
+        "ID": "2138ec2b-4e5e-464e-afe7-491dbfdafe8a"
+    },
+    {
+        "Name": "Improved Spikedriver",
+        "ID": "904f1055-f2ce-462b-a88f-019f804c2b2a"
+    },
+    {
+        "Name": "Replicate On Kill",
+        "ID": "1643e6fd-bda6-43fd-8853-816320292851"
+    },
+    {
+        "Name": "Improved Railspike",
+        "ID": "c1f77cf3-3133-44c8-9d58-2343bc2b4e1f"
+    },
+    {
+        "Name": "Minor Refraction",
+        "ID": "494430f0-2b5a-43a6-81bb-6af178e020bc"
+    },
+    {
+        "Name": "Unhinged Power",
+        "ID": "08b6e98b-d55a-414d-905f-dc7433be396a"
+    },
+    {
+        "Name": "The Strong Stuff",
+        "ID": "03ce9138-8894-4557-af68-29261ad56234"
+    },
+    {
+        "Name": "Heavens Finest",
+        "ID": "42257562-2740-482e-af8d-c72762811aa3"
+    },
+    {
+        "Name": "Awoken Cycle Of Life",
+        "ID": "3c86d5f0-79a5-4984-8611-c79a871425c4"
+    },
+    {
+        "Name": "Awoken Starter Buff",
+        "ID": "2cc188de-a416-4712-9533-862465dd1b19"
+    },
+    {
+        "Name": "Awoken Steel Enhancer",
+        "ID": "6c183c19-8e36-4f67-99bf-0df34510c42d"
+    },
+    {
+        "Name": "Awoken Trade Health For Attack Buff",
+        "ID": "8ddbb352-06df-41c0-b8cc-d6653d9104fe"
+    },
+    {
+        "Name": "Copy On Play Trait Upgrade",
+        "ID": "513224dd-223f-48ed-bf0a-afd486aef98b"
+    },
+    {
+        "Name": "Draw Spell Enhance",
+        "ID": "e69f732a-e7d0-4525-8012-5cbf2aea39a1"
+    },
+    {
+        "Name": "Draw Unit Enhance",
+        "ID": "287e6541-4307-4fb9-b61d-8f3d1d9081d4"
+    },
+    {
+        "Name": "Draw X Cards Make Cheaper",
+        "ID": "2571537a-2c44-4731-8c41-97da633bbdbb"
+    },
+    {
+        "Name": "Formless Child Enhancer",
+        "ID": "828772f2-d8d3-4021-a8ae-bfa934c04679"
+    },
+    {
+        "Name": "Furnace Tap",
+        "ID": "4334a83c-e2d4-40ef-81cc-5677a2d5d00d"
+    },
+    {
+        "Name": "Little Fade Spikes1",
+        "ID": "be6a64f5-e88e-42d6-aa29-9e21cff98428"
+    },
+    {
+        "Name": "Little Fade Spikes2",
+        "ID": "3cf08549-063f-4bad-890d-9e56b758ff54"
+    },
+    {
+        "Name": "Little Fade Spikes3",
+        "ID": "cc2dd5e6-6521-43ee-8f1f-8020e7deb4e4"
+    },
+    {
+        "Name": "Magic",
+        "ID": "dd0f999f-491f-4ca1-9721-59aeab1436ca"
+    },
+    {
+        "Name": "Martyr Champion Baseline",
+        "ID": "2cf6d41b-c366-4881-8189-9dac12bccdf8"
+    },
+    {
+        "Name": "Molluscmage Magic Power",
+        "ID": "301e0c4e-0616-45ab-8d4e-10db16a386ec"
+    },
+    {
+        "Name": "Molluscmage Magic Power Synthesis",
+        "ID": "8d49c1a3-c1e9-44d3-81f6-f4ae4c3a2bba"
+    },
+    {
+        "Name": "Primordium Base On Eaten",
+        "ID": "2b9d957f-06c4-4a3c-b14f-065e1f85d1b8"
+    },
+    {
+        "Name": "Prism Retrieval",
+        "ID": "58f0a74d-75c7-4b61-b0e6-727d9f431b72"
+    },
+    {
+        "Name": "Pyre Gro",
+        "ID": "26905380-eebb-4b9c-ad05-2fcf9efdd962"
+    },
+    {
+        "Name": "Raise",
+        "ID": "8e99fcbd-5415-4bc9-9133-7131b0fb33a6"
+    },
+    {
+        "Name": "Raise For Champion Level1",
+        "ID": "9513edec-ba75-4546-9425-ee9f3ae99a45"
+    },
+    {
+        "Name": "Raise For Champion Level2",
+        "ID": "5e0cbe36-6dd3-4ff7-8a2b-46903655356f"
+    },
+    {
+        "Name": "Raise For Champion Level3",
+        "ID": "1a1c9058-bcb4-4b97-8a80-b7865f5a897d"
+    },
+    {
+        "Name": "Raise Plus Wicked Blaze",
+        "ID": "4e5ac8f8-0616-4135-8240-84b336019635"
+    },
+    {
+        "Name": "Remnant Champ Buff Friendly1",
+        "ID": "42849eec-c299-40ce-a344-3fc490ee052b"
+    },
+    {
+        "Name": "Remnant Champ Buff Friendly2",
+        "ID": "6ee9fe0a-9232-4209-94f3-b007595494e5"
+    },
+    {
+        "Name": "Remnant Champ Buff Friendly3",
+        "ID": "b08bb9ad-ea6b-4eaf-9862-effb8bfb7623"
+    },
+    {
+        "Name": "Remnant Champ Increase Cost1",
+        "ID": "f5b3eaea-c18e-4ffc-ab45-2bedb8da557e"
+    },
+    {
+        "Name": "Remnant Champ Increase Cost2",
+        "ID": "fc630e72-53be-4b73-b2e8-85614c1986c8"
+    },
+    {
+        "Name": "Remnant Champ Increase Cost3",
+        "ID": "0310a786-57cd-4771-802e-bbfa5b060d3d"
+    },
+    {
+        "Name": "Remnant Pact",
+        "ID": "e90daf43-a1c5-4fcb-a012-b3a2c0064fcb"
+    },
+    {
+        "Name": "Sacrificial Ressurection",
+        "ID": "78bda620-962d-48b5-a9e8-22a659951850"
+    },
+    {
+        "Name": "Sharpen",
+        "ID": "2dcfaf51-7882-43c3-8745-e0513fa93ba3"
+    },
+    {
+        "Name": "Wicked Bulwark",
+        "ID": "e7a8a903-7aa1-42d2-babe-278467527142"
+    },
+    {
+        "Name": "Wicklash",
+        "ID": "01dfd329-23a2-4f65-abfc-91b47500b8dc"
+    },
+    {
+        "Name": "Wurm Banner Scale Per Corrupt",
+        "ID": "6759f6ad-769d-46ba-b6dd-16460d1909eb"
+    },
+    {
+        "Name": "Wurm Echoes Of The Past Attack",
+        "ID": "2f55fb6e-402c-4a49-a4c8-e9e0dae98329"
+    },
+    {
+        "Name": "Wurm Echo Infusion Health",
+        "ID": "02af9e5b-b5b3-46e0-bbc7-eddf4aab5823"
+    },
+    {
+        "Name": "Wurm Echo Transfer Attack",
+        "ID": "a2918f1f-9804-489c-a5e8-deec352a3aa5"
+    },
+    {
+        "Name": "Wurm Enhance Consume",
+        "ID": "c8de8e5d-c001-41ef-85fb-fb28ea2ce3fd"
+    },
+    {
+        "Name": "Wurm Enhance Corrupt",
+        "ID": "829a2b9c-f28b-4f2b-bc5d-f6a18092a0af"
+    },
+    {
+        "Name": "Wurm Return Enhance Corrupt",
+        "ID": "2d744be5-cf16-4126-83fa-d6df9d99229c"
+    },
+    {
+        "Name": "X Cost Burnout Enhance",
+        "ID": "31243b24-f327-42c8-84ad-b014e6fec675"
+    },
+    {
+        "Name": "Wickstone",
+        "ID": "713808a9-4120-4007-bc1d-5ccd545970ce"
+    },
+    {
+        "Name": "Shieldstone",
+        "ID": "6abbc48c-daba-4292-a1c1-38d98d8b86ad"
+    },
+    {
+        "Name": "Immortalstone",
+        "ID": "2aade38c-4687-40ce-9507-2a9e80cb139c"
+    },
+    {
+        "Name": "Runestone",
+        "ID": "f0def9ab-cd9e-4d7d-a57c-7a7aecbbf3b7"
+    },
+    {
+        "Name": "Frenzystone",
+        "ID": "fe8b9475-4e26-43b6-9073-d77bba555ca4"
+    },
+    {
+        "Name": "Speedstone",
+        "ID": "0246348a-ac42-43fb-879f-13aa3348adb3"
+    },
+    {
+        "Name": "Furystone",
+        "ID": "bdbb24ab-1618-4a67-b9a2-bf0bbbb6a52f"
+    },
+    {
+        "Name": "Healy",
+        "ID": "32dfdbca-c487-427a-8ace-e342d657815f"
+    },
+    {
+        "Name": "Thornstone",
+        "ID": "f6d8dc2b-1873-4828-90fa-7c3a70bfd98d"
+    },
+    {
+        "Name": "Smashstone",
+        "ID": "ef773d34-b2cd-445b-9a95-f9d5bdf4617f"
+    },
+    {
+        "Name": "Echo Stone",
+        "ID": "1b2642b2-3ae9-46e6-b7cf-f0fd3c4a53f8"
+    },
+    {
+        "Name": "Battlestone",
+        "ID": "3e4c660f-c844-4b21-aa7c-7a8e9c575db7"
+    },
+    {
+        "Name": "Strengthstone",
+        "ID": "840ea307-781f-49f5-a341-2007e5bb3c7d"
+    },
+    {
+        "Name": "Heartstone",
+        "ID": "32c1b067-d47d-4841-b166-1a227378a937"
+    },
+    {
+        "Name": "Colossal",
+        "ID": "75c7f2c8-8bdd-4e93-8276-a0aa6e4c76dc"
+    },
+    {
+        "Name": "Surgestone",
+        "ID": "83e2c6c5-8ebf-4160-8818-fdae82d2abfe"
+    },
+    {
+        "Name": "Twinstone",
+        "ID": "a75fc092-ca72-476b-b518-01e9ecb8d6a3"
+    },
+    {
+        "Name": "Infernus Augment",
+        "ID": "eb8575de-c10b-41df-9d79-0ea592134c84"
+    },
+    {
+        "Name": "Replacer",
+        "ID": "18278842-ba01-4184-adf4-a0da0af83be9"
+    },
+    {
+        "Name": "Resin Block",
+        "ID": "1f0a08f2-ab63-442e-a089-a1063bf7e7aa"
+    },
+    {
+        "Name": "Soul Reduction",
+        "ID": "0c18c27e-8fcf-4091-ad90-ac96d73a0a2a"
+    },
+    {
+        "Name": "Infery Augment",
+        "ID": "3d33d00e-fb96-422c-a2ad-6d47cceab7c1"
+    },
+    {
+        "Name": "Valuestone",
+        "ID": "9b01dffb-7fb5-4dc5-b560-10997e05e209"
+    },
+    {
+        "Name": "Extremestone",
+        "ID": "d70861ce-5fba-408f-b005-248774ce233f"
+    },
+    {
+        "Name": "Magic Power",
+        "ID": "a26e51bd-84bf-4808-baee-8d66a41e38e7"
+    },
+    {
+        "Name": "Largestone",
+        "ID": "64500555-8a22-4328-bbc8-3220b2d17293"
+    },
+    {
+        "Name": "Smallstone",
+        "ID": "5fd2e782-b074-4f43-8a4c-97fb074963e3"
+    },
+    {
+        "Name": "Powerstone",
+        "ID": "571cd1d6-6959-48ae-831d-86f07de8329e"
+    },
+    {
+        "Name": "Shrink",
+        "ID": "16af0109-8143-498b-a425-21585b8e23e1"
+    },
+    {
+        "Name": "Emberstone",
+        "ID": "413e67f5-63a0-4ccc-9763-19251392cda0"
+    },
+    {
+        "Name": "Purgestone",
+        "ID": "b359ce67-01a3-43f2-b20a-e37ccaabc6d0"
+    },
+    {
+        "Name": "Eternalstone",
+        "ID": "84f045a9-3dbe-41fe-9ba5-590dc6f68244"
+    },
+    {
+        "Name": "Scorch Buff Friendly",
+        "ID": "48d29ea9-b926-4c69-be95-0d72024009bb"
+    },
+    {
+        "Name": "Corruptstone",
+        "ID": "83a6c9ec-0e40-48e6-8a4c-695a68b7e990"
+    },
+    {
+        "Name": "Seekstone",
+        "ID": "9aacad12-3e85-4ae7-a007-1c8eba568441"
+    },
+    {
+        "Name": "Summonstone",
+        "ID": "a6c69443-e9b6-4198-8369-3bddfa94d2dc"
+    },
+    {
+        "Name": "Stackstone",
+        "ID": "0fc9f6e7-df71-4045-9867-67453769adf8"
+    },
+    {
+        "Name": "Freezestone",
+        "ID": "e0af4fe5-75c0-4017-ae5e-5a87099aa6c5"
+    },
+    {
+        "Name": "Truestone",
+        "ID": "bfedbfa7-4060-4204-affa-adf9bc4f460e"
+    },
+    {
+        "Name": "Keepstone",
+        "ID": "f43e7cdb-fa8d-4760-88bf-c6f34f72d918"
+    },
+    {
+        "Name": "Unit Cost Lower Ember",
+        "ID": "28417c84-cf72-49df-9bd0-22580e4dcf3e"
+    },
+    {
+        "Name": "Dante Champion",
+        "ID": "f5a38cf8-48ca-4b4d-98f6-1e23ef0b7217"
+    },
+    {
+        "Name": "Dazed2",
+        "ID": "a58a8742-9864-4eb6-a80d-e6df4893de4f"
+    },
+    {
+        "Name": "Heph Champion",
+        "ID": "afc91566-4295-454d-97a6-98b4a1a2610e"
+    },
+    {
+        "Name": "Lifesteal3",
+        "ID": "c52225a2-b99b-456e-b4e4-f01c1d5eea3c"
+    },
+    {
+        "Name": "Multistrike1",
+        "ID": "5f8cd2bf-a568-4736-857a-a4cd62aea46d"
+    },
+    {
+        "Name": "Piercing",
+        "ID": "72c17fdc-24a4-4961-ae29-c3af66249347"
+    },
+    {
+        "Name": "Heavens Aid_ Add Gold",
+        "ID": "f7f43d94-3765-4101-a25e-a329bd3048aa"
+    },
+    {
+        "Name": "Heavens Aid_ Buff Endless",
+        "ID": "8098fcd2-e07b-4c23-bbdb-09295fbfb77b"
+    },
+    {
+        "Name": "Heavens Aid_ Random Spell",
+        "ID": "d030057a-0e5e-41f6-8583-25b96d49a08b"
+    },
+    {
+        "Name": "Heavens Aid_ Remove Consume",
+        "ID": "6d389810-2b6d-49f3-8ca2-4474c89ed7a8"
+    },
+    {
+        "Name": "Heavens Aid_ Revenge Heal",
+        "ID": "e993c90b-7eb8-4406-9cd6-cda322232fea"
+    },
+    {
+        "Name": "Heavens Aid_ Spawn Random Unit",
+        "ID": "2b733240-9e9a-471b-8140-3bf637083edd"
+    },
+    {
+        "Name": "Heavens Aid_ Spell Copy",
+        "ID": "b07fcc74-ee9a-4586-8db0-2d7b8a9cb710"
+    },
+    {
+        "Name": "Heavens Finest_ Add Gold Final",
+        "ID": "053ed320-5848-4995-91df-26ba17a6a1fa"
+    },
+    {
+        "Name": "Heavens Finest_ Buff Endless Final",
+        "ID": "876537ea-ca19-4b41-b835-0458911703f5"
+    },
+    {
+        "Name": "Heavens Finest_ Random Spell Final",
+        "ID": "27e8c248-46a3-4ea1-b5ec-ee4d75ccfa99"
+    },
+    {
+        "Name": "Heavens Finest_ Remove Consume Final",
+        "ID": "cfe420a7-8277-4ba0-b61d-bc2298a0123e"
+    },
+    {
+        "Name": "Heavens Finest_ Revenge Heal Final",
+        "ID": "b77a06a5-ca34-44a7-8619-c914f2e79fcb"
+    },
+    {
+        "Name": "Heavens Finest_ Spawn Random Unit Final",
+        "ID": "9a5f99e3-ad2b-4d6e-8961-58b1df6cfe53"
+    },
+    {
+        "Name": "Heavens Finest_ Spell Copy Final",
+        "ID": "4d2aefc0-ed84-44c4-bfd7-14d3aef6308b"
+    },
+    {
+        "Name": "Heavens Finest_ Zero Cost",
+        "ID": "42257562-2740-482e-af8d-c72762811aa3"
+    },
+    {
+        "Name": "Alloyed Construct Synthesis",
+        "ID": "8cf6e5f1-0def-41f6-bc32-b77cd2ae3c97"
+    },
+    {
+        "Name": "Alpha Fiend Synthesis",
+        "ID": "56f99a5a-426b-4e05-ad2a-528dd85fe30a"
+    },
+    {
+        "Name": "Basic Demon Synthesis",
+        "ID": "763c9ba3-df01-4ff2-bd18-2e88b1f55b96"
+    },
+    {
+        "Name": "Blank Synthesis",
+        "ID": "42a3e514-9265-43f2-a7ee-76082db2414b"
+    },
+    {
+        "Name": "Bounty Stalker Synthesis",
+        "ID": "e03b31b4-3d79-4f27-9401-136889835021"
+    },
+    {
+        "Name": "Consumer Of Crowns Synthesis",
+        "ID": "041ab0de-0817-4b39-aef2-8b6ddd5f2440"
+    },
+    {
+        "Name": "Deranged Brute Synthesis",
+        "ID": "513972af-3f60-4042-8256-3ddf9c228535"
+    },
+    {
+        "Name": "Draff Synthesis",
+        "ID": "e08a30c1-6993-49ec-ab44-bbcad16b4ff4"
+    },
+    {
+        "Name": "Dreg Synthesis",
+        "ID": "bf92018c-3ee8-4c5c-91b4-aef9c4890204"
+    },
+    {
+        "Name": "Edge Prior Synthesis",
+        "ID": "77ea58ac-e9fe-43cf-a965-6088ae1ef213"
+    },
+    {
+        "Name": "Husk Hermit Synthesis",
+        "ID": "4549b0e7-ec70-4be9-8666-bd87a4597a82"
+    },
+    {
+        "Name": "Lady Of The House Synthesis",
+        "ID": "446ca8b6-f57e-4334-92b0-3cfde84c8ce3"
+    },
+    {
+        "Name": "Lady Of The Reformed Synthesis",
+        "ID": "e27a4158-56b7-4d9f-875e-bbbbbff0a5c2"
+    },
+    {
+        "Name": "Molten Encasement Synthesis",
+        "ID": "4a9b4098-2770-4e34-a24b-e877b1674286"
+    },
+    {
+        "Name": "Monster Aggressive Imp Synthesis",
+        "ID": "301ce67d-e78e-4365-8112-7dca86a6a699"
+    },
+    {
+        "Name": "Monster Animus Bow Synthesis",
+        "ID": "c7ec1441-9e95-4823-b2d0-3ad68f8c10dd"
+    },
+    {
+        "Name": "Monster Animus Sword Synthesis",
+        "ID": "0feb1e42-673e-4901-8d54-deee5da29e35"
+    },
+    {
+        "Name": "Monster Apex Imp Synthesis",
+        "ID": "716ce6f8-ce9f-4717-b193-d295648cd8ef"
+    },
+    {
+        "Name": "Monster Basher Synthesis",
+        "ID": "ef400fe6-df9c-4fae-926e-131dc2cda92c"
+    },
+    {
+        "Name": "Monster Blighted Totem Synthesis",
+        "ID": "ce7a2053-70eb-49aa-9ca2-9538f4ed40c9"
+    },
+    {
+        "Name": "Monster Bog Chrysalis Synthesis",
+        "ID": "2e7d7ae2-af63-46f9-8a2d-9d3f8fa16851"
+    },
+    {
+        "Name": "Monster Bogdeep Cocoon Synthesis",
+        "ID": "b7dcdf80-eff2-4d61-b923-22b5b8541462"
+    },
+    {
+        "Name": "Monster Bog Fly Synthesis",
+        "ID": "96b7e25e-dc27-4c3c-b397-fb3a346cf6a7"
+    },
+    {
+        "Name": "Monster Chaos Basic Synthesis",
+        "ID": "811e7430-7e8c-445d-827b-c61917745d01"
+    },
+    {
+        "Name": "Monster Coldsting Siren Synthesis",
+        "ID": "a53b88db-c7b4-4417-b6b7-9973f52dc72f"
+    },
+    {
+        "Name": "Monster Coldstrike Siren Synthesis",
+        "ID": "6f9837dd-5fb7-4cb8-ae55-99098f33cbd7"
+    },
+    {
+        "Name": "Monster Combatative Siren Synthesis",
+        "ID": "128a1b86-62c5-4de8-9ceb-bc10fa9893f0"
+    },
+    {
+        "Name": "Monster Copycat Synthesis",
+        "ID": "3514523a-9a87-4a86-9499-7b564cfd129e"
+    },
+    {
+        "Name": "Monster Dante Synthesis",
+        "ID": "ee35ffc0-2dda-4114-9bba-d552d8694861"
+    },
+    {
+        "Name": "Monster Daze On Death Synthesis",
+        "ID": "a6363bf7-a7b3-4aa8-8118-0f67b5ea0721"
+    },
+    {
+        "Name": "Monster Death Eater Synthesis",
+        "ID": "5d47a4f2-4247-4915-ba38-0eff4277f369"
+    },
+    {
+        "Name": "Monster Devourer Synthesis",
+        "ID": "e7a8efdf-86c7-4841-989c-ebe4ce05c666"
+    },
+    {
+        "Name": "Monster Draining Hunter Synthesis",
+        "ID": "b222be77-5b3c-43aa-8800-8b3ae2cb0da8"
+    },
+    {
+        "Name": "Monster Draining Salvager Synthesis",
+        "ID": "a3ca372b-dbad-4d37-8728-9c284e8ef2dd"
+    },
+    {
+        "Name": "Monster Eel Gorgon Synthesis",
+        "ID": "901b45f0-420f-4564-876d-48f3cd3cc0df"
+    },
+    {
+        "Name": "Monster Embered Infery Synthesis",
+        "ID": "6f6a670f-4b0b-46be-86cb-8ce978019b48"
+    },
+    {
+        "Name": "Monster Ember Furnace Synthesis",
+        "ID": "a8f5add0-0889-45aa-9075-c2ebc4ba43b8"
+    },
+    {
+        "Name": "Monster Enlightened Infery Synthesis",
+        "ID": "61b0267f-4464-4e1d-9ddc-728c15027d72"
+    },
+    {
+        "Name": "Monster Enlightened Siren Synthesis",
+        "ID": "6877fa45-cca3-43b9-951f-bbfac7c7049b"
+    },
+    {
+        "Name": "Monster Epicure Synthesis",
+        "ID": "ddf89c88-9fa7-49bc-a8c0-cbcab2a4bc7d"
+    },
+    {
+        "Name": "Monster First Of Kin Synthesis",
+        "ID": "0529843f-97ba-4ae0-ad9d-adb01ea726b1"
+    },
+    {
+        "Name": "Monster Frozen Totem Synthesis",
+        "ID": "4b185d2a-d5ce-4429-85ec-f480dd514e33"
+    },
+    {
+        "Name": "Monster Glareminder Synthesis",
+        "ID": "961cc68d-d822-4932-a975-910c4b48bd62"
+    },
+    {
+        "Name": "Monster Glugsider Synthesis",
+        "ID": "caebc2fb-aff1-40b8-8219-6787947e1e39"
+    },
+    {
+        "Name": "Monster Glutton Synthesis",
+        "ID": "90f14f2b-aa36-4ce0-b4c4-091fd3b7ab6b"
+    },
+    {
+        "Name": "Monster Gorger Synthesis",
+        "ID": "45d4f5df-b005-48b2-a1f7-d22e91631fa2"
+    },
+    {
+        "Name": "Monster Heph Synthesis",
+        "ID": "09070a52-394f-4372-8c66-39331ab5cfa4"
+    },
+    {
+        "Name": "Monster Hoard Totem Synthesis",
+        "ID": "3d898321-c086-4864-aa41-bfec2d719013"
+    },
+    {
+        "Name": "Monster Hollow Golem Synthesis",
+        "ID": "92a5b6a4-ded1-42c1-848d-37add589f546"
+    },
+    {
+        "Name": "Monster Iron Maiden Synthesis",
+        "ID": "0dc20680-315a-495e-9f98-9c9b16e16f88"
+    },
+    {
+        "Name": "Monster Keeper Of Echoes Synthesis",
+        "ID": "4bbac830-7371-4034-9aea-a0fd7894a68b"
+    },
+    {
+        "Name": "Monster Kinhost Carapace Synthesis",
+        "ID": "14c07e05-6a0d-4124-b7a3-383b74b3d346"
+    },
+    {
+        "Name": "Monster Kinhost Vessel Synthesis",
+        "ID": "8b6e8c19-1d35-4482-88b3-7b8fbcf44af1"
+    },
+    {
+        "Name": "Monster Magic Totem Synthesis",
+        "ID": "b20e7e1b-e035-4067-b3f6-b7a3a2bbbce3"
+    },
+    {
+        "Name": "Monster Merchant Synthesis",
+        "ID": "ddccd121-78fb-4adc-b9ad-d4dd0ea11624"
+    },
+    {
+        "Name": "Monster Monstrosity Synthesis",
+        "ID": "bd617baf-c92a-419d-8db7-3e9cfa42d530"
+    },
+    {
+        "Name": "Monster Morsel Made Synthesis",
+        "ID": "b9afca12-f5c9-4909-aee8-faddd27b755b"
+    },
+    {
+        "Name": "Monster Prosperity Totem Synthesis",
+        "ID": "3aa0b519-671a-4b22-b6fb-2b68f092b084"
+    },
+    {
+        "Name": "Monster Queens Imp Synthesis",
+        "ID": "53e647b4-273a-4977-aab4-cd249f3a6d86"
+    },
+    {
+        "Name": "Monster Replicating Extinguish Synthesis",
+        "ID": "36158054-03d7-4927-9cb4-f5b9e34adcd6"
+    },
+    {
+        "Name": "Monster Runebound Guardian Synthesis",
+        "ID": "f07ad3d9-d55d-425f-aeb4-c09b9f625003"
+    },
+    {
+        "Name": "Monster Runebound Protector Synthesis",
+        "ID": "8510d022-9ca0-47a1-9174-2ef622bfeb6e"
+    },
+    {
+        "Name": "Monster Shardsoul Carver Synthesis",
+        "ID": "c3f38c61-1d1b-4f66-8d20-5b4e9a2cc238"
+    },
+    {
+        "Name": "Monster Splitter Large Synthesis",
+        "ID": "4e66263d-85ff-409f-bad4-57822eed69a2"
+    },
+    {
+        "Name": "Monster Steelsinger Synthesis",
+        "ID": "a96ecd01-2f37-4c51-a24e-5d6e94372f4d"
+    },
+    {
+        "Name": "Monster Tomb Exploding Synthesis",
+        "ID": "b7900c2b-fd08-4c32-963d-ef31936e11c5"
+    },
+    {
+        "Name": "Monster Totem Healing Synthesis",
+        "ID": "dcfe8218-869a-49c4-8109-984fc1ed6bc4"
+    },
+    {
+        "Name": "Monster Unstable Infery Synthesis",
+        "ID": "2b9a149b-6229-4dde-835b-688bcc5c22a7"
+    },
+    {
+        "Name": "Paraffin Thug Synthesis",
+        "ID": "5fe33c62-dba9-4789-8a88-25406467567d"
+    },
+    {
+        "Name": "Parafin Enforcer Synthesis",
+        "ID": "7dae3ff7-bf26-437b-9c26-46c8618ca860"
+    },
+    {
+        "Name": "Railbeater Synthesis",
+        "ID": "79d99314-abeb-4b54-a1b1-b634d20dbc23"
+    },
+    {
+        "Name": "Remnant Host Synthesis",
+        "ID": "c6f37177-7351-4c94-9602-21284b52e73c"
+    },
+    {
+        "Name": "Shadowsiege Synthesis",
+        "ID": "5b43660f-3b63-4a8a-992e-8d271759b337"
+    },
+    {
+        "Name": "Shard Channeler Synthesis",
+        "ID": "31a4dfbb-d52a-4d64-bc3f-d976ec1e5eeb"
+    },
+    {
+        "Name": "Shattered Shell Synthesis",
+        "ID": "7e01c47a-3cba-43a4-b0ab-a2e7d39bce7f"
+    },
+    {
+        "Name": "Steelworker Synthesis",
+        "ID": "197f2e73-db8b-4133-9b7d-6d0ab6409293"
+    },
+    {
+        "Name": "Train Steward Synthesis",
+        "ID": "c2d0cf45-7694-4fae-bda1-addf0c24f0a7"
+    },
+    {
+        "Name": "Transcendimp Synthesis",
+        "ID": "3271635a-dfce-4e39-aca5-e9926cae619f"
+    },
+    {
+        "Name": "Vinemother Synthesis",
+        "ID": "b592f351-6fbc-42bb-8d7c-c0da3cae4085"
+    },
+    {
+        "Name": "Votivary Synthesis",
+        "ID": "a2da45f5-a808-4920-bf5d-f45c690ce387"
+    },
+    {
+        "Name": "Welder Helper Synthesis",
+        "ID": "81223c2d-3ec5-4406-b6ec-d3a3a7d76d07"
+    },
+    {
+        "Name": "Wickless Baron Synthesis",
+        "ID": "7b8ab761-1547-4c9c-8d1a-8af2592e1e04"
+    },
+    {
+        "Name": "Wickless Tycoon Synthesis",
+        "ID": "2b403845-29c9-4ec7-853e-0e795b4c0fcc"
+    },
+    {
+        "Name": "Wildwood Custodian Synthesis",
+        "ID": "baa69ed4-f7bc-4812-a565-c8bd71e701ea"
+    },
+    {
+        "Name": "Wilting Sapwood Synthesis",
+        "ID": "2690c470-8953-460c-8d44-473424e6c084"
+    }
+]

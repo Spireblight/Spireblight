@@ -1,0 +1,206 @@
+[
+    {
+        "Name": "Ambush",
+        "ID": "cce5b4ae-0496-44d3-9dd0-74abb39e86e9"
+    },
+    {
+        "Name": "Blood Merchant",
+        "ID": "bc0c0356-d1d8-494f-b5bc-802519b200b8"
+    },
+    {
+        "Name": "Bone Dog",
+        "ID": "808c3104-2115-45e7-8dc7-b6a1152a6c4b"
+    },
+    {
+        "Name": "Build Card",
+        "ID": "55329d46-298d-4019-9d24-e9894bf04cd5"
+    },
+    {
+        "Name": "Capacity Breaking",
+        "ID": "36db4ebe-8e03-43e0-8a57-f6433f17eff0"
+    },
+    {
+        "Name": "Card Swapper",
+        "ID": "907a7cfb-3547-4215-9d04-5c4f6465ba62"
+    },
+    {
+        "Name": "Class Potions",
+        "ID": "784ec491-a9fe-4cdf-9214-5f5ff0cbd295"
+    },
+    {
+        "Name": "Class Spikes",
+        "ID": "c7e80788-f295-4970-bfdf-5bde2d812eb0"
+    },
+    {
+        "Name": "Class Tomes",
+        "ID": "fd1a076e-96ac-47bb-a53e-63df53729be5"
+    },
+    {
+        "Name": "Copier",
+        "ID": "be1fbe72-5eaf-4831-8083-24d10e7620f7"
+    },
+    {
+        "Name": "Cursed Ember",
+        "ID": "655db809-1e36-45b2-8442-a8a39f04e088"
+    },
+    {
+        "Name": "Ember Followup",
+        "ID": "083eeee6-b9cf-460b-bbf9-10e38506bc4b"
+    },
+    {
+        "Name": "Delayed Upgrade",
+        "ID": "7838fb3d-656f-40e7-a106-b932fd34ac9e"
+    },
+    {
+        "Name": "Delayed Upgrade_ Final",
+        "ID": "4caddb67-c0b3-4a08-981a-3980e0fa3253"
+    },
+    {
+        "Name": "Delayed Upgrade_ Followup",
+        "ID": "2ba9434c-d79c-4793-86c1-aac30fe02223"
+    },
+    {
+        "Name": "Enemy Recruit",
+        "ID": "af1c3835-46d5-446c-a04c-a93e884db1f7"
+    },
+    {
+        "Name": "Gamble Event",
+        "ID": "eb406e98-2959-4fd7-b994-d75fedcb7247"
+    },
+    {
+        "Name": "Gimme Gold",
+        "ID": "0e59ee5a-73fe-46ab-9c4b-8dc22e5c4f8c"
+    },
+    {
+        "Name": "Gold Rewards",
+        "ID": "9dfec9db-9e21-4406-86e8-d14c74e95f77"
+    },
+    {
+        "Name": "Malicka_ Mutator_ S T A R T",
+        "ID": "7468dbbd-8730-4b25-beca-d028b44cb2e3"
+    },
+    {
+        "Name": "Shards_ Heph Ending_ S T A R T",
+        "ID": "a450f8a6-2961-4cbe-9fc1-2e8115de6812"
+    },
+    {
+        "Name": "Shards_ High_ S T A R T",
+        "ID": "a7859748-93cc-4bdb-9b37-dcb45b089c32"
+    },
+    {
+        "Name": "Shards_ Low_ S T A R T",
+        "ID": "95d51577-2873-4d84-b248-3b8a6b5b32e7"
+    },
+    {
+        "Name": "Shards_ Mid_ S T A R T",
+        "ID": "47702938-a0e2-4931-be0e-85358fe900bb"
+    },
+    {
+        "Name": "Heph Recruit",
+        "ID": "21ab2d63-1741-4f2b-9929-41286a5c1ec6"
+    },
+    {
+        "Name": "Heph Recruit Followup",
+        "ID": "0711fcc1-2bfc-40e6-a3ff-7d19121d7f22"
+    },
+    {
+        "Name": "Hidden Upgrade",
+        "ID": "54b8ec87-567e-4728-8547-f4be8af96afb"
+    },
+    {
+        "Name": "Hidden Followup",
+        "ID": "e2312918-6e2a-450d-820e-d15e8e0bb5d8"
+    },
+    {
+        "Name": "Malicka_ Mutator_1",
+        "ID": "904165a8-11c2-48cd-987c-307faef39574"
+    },
+    {
+        "Name": "Malicka_ Mutator_2",
+        "ID": "f7a2e68c-20c3-4354-9be8-13d509f69e5c"
+    },
+    {
+        "Name": "Malicka_ Purge",
+        "ID": "bc8a81cb-604e-4adf-a15c-a678d59f5e87"
+    },
+    {
+        "Name": "Malicka_ Purge_2",
+        "ID": "ae547e10-7625-43ff-b06c-5499a82ac273"
+    },
+    {
+        "Name": "Malicka_ Purge_3",
+        "ID": "83a73065-8d02-421b-8a4a-fef6e5601efa"
+    },
+    {
+        "Name": "Malicka_ Purge_4",
+        "ID": "fa972baa-965f-41e0-87f6-057f0871d316"
+    },
+    {
+        "Name": "Nonclass Cards",
+        "ID": "2060724f-413b-4662-b7b6-d1f06bed425d"
+    },
+    {
+        "Name": "Overcharge",
+        "ID": "efc21e97-ce30-44be-bbdd-ad5d6fe57e4a"
+    },
+    {
+        "Name": "Paid Blessing",
+        "ID": "1abcc30b-9d65-4bf1-abf4-22ca9ba336df"
+    },
+    {
+        "Name": "Purgeable Curse",
+        "ID": "f2feab57-ddf2-4a22-87e0-bd9f8960fe5a"
+    },
+    {
+        "Name": "Purgeable Followup",
+        "ID": "1ad5382d-a5b2-4e74-9400-15874bca194d"
+    },
+    {
+        "Name": "Shard_ Heph Artifact",
+        "ID": "2997b92c-8b1c-4c62-8cc9-78c06ff0fe68"
+    },
+    {
+        "Name": "Shard_ True Ending",
+        "ID": "a55bae53-338f-42fa-82d1-9faf8408be8b"
+    },
+    {
+        "Name": "Shard_3",
+        "ID": "eda1fef8-2480-4d41-b9a0-c49141166ace"
+    },
+    {
+        "Name": "Shard_1",
+        "ID": "60a67129-e86f-472e-b522-277f348380b1"
+    },
+    {
+        "Name": "Shard_2",
+        "ID": "c9b8ae1a-6e9c-47d2-89a6-ae3cd373256c"
+    },
+    {
+        "Name": "Shrink Ray",
+        "ID": "bc2ca9d3-c836-42f5-bbb3-803299e6fe08"
+    },
+    {
+        "Name": "Spell Merge",
+        "ID": "9eb8b669-0a5a-4880-884c-1a907b39b38f"
+    },
+    {
+        "Name": "Steroids Prototype",
+        "ID": "1525f3bd-38b0-49fe-bae7-bb55906a5eed"
+    },
+    {
+        "Name": "Train Upgrade",
+        "ID": "c70dee6b-5bf9-4f56-97d3-93a12e498d57"
+    },
+    {
+        "Name": "Unit Quest",
+        "ID": "69df0c82-81fb-493e-aad4-198cf12ff98f"
+    },
+    {
+        "Name": "Unit Quest_ Spell Followup",
+        "ID": "c1809d1d-c3e1-406f-bb14-898c35d09c3e"
+    },
+    {
+        "Name": "Unit Quest_ Unit Followup",
+        "ID": "26e61da6-c205-4693-b79d-d3ab253b5bb7"
+    }
+]

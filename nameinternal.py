@@ -43,7 +43,7 @@ def get(name: str) -> Base:
     if name in _internal_cache:
         return _internal_cache[name]
 
-    raise ValueError(f"Could not find item {name}")
+    return Unknown(name)
 
 def get_card(card: str) -> str:
     name, _, upgrades = card.partition("+")
@@ -126,6 +126,13 @@ class Relic(Base):
             pool = f" ({self.pool})"
         return f"{self.name} - {self.tier}{pool}: {self.description} {mod}"
 
+class RelicSet(Base):
+    cls_name = "relic_set"
+    def __init__(self, data: dict[str, list[str]]):
+        super().__init__(data)
+        self.relic_list: list[str] = data["relic_list"]
+        self.description: str = f"{data['description']}: {', '.join(data['relic_list'])}"
+
 class Potion(Base):
     cls_name = "potion"
     def __init__(self, data: dict[str, str]):
@@ -156,9 +163,21 @@ class ScoreBonus(Base):
         super().__init__(data)
         self.format_string: str = data.get("format_string", self.name)
 
+class Unknown(Base):
+    cls_name = "<unknown>"
+    def __init__(self, name: str):
+        self.internal = name
+        self.name = name
+        self.description = f"Could not find description for {name!r} (this is a bug)"
+        self.mod = None
+
+    def __getattr__(self, attr: str):
+        return f"<Unknown attribute {attr}>"
+
 _str_to_cls: dict[str, Base] = {
     "cards": Card,
     "relics": Relic,
+    "relic_set": RelicSet,
     "potions": Potion,
     "keywords": Keyword,
     "score_bonuses": ScoreBonus,
@@ -211,3 +230,14 @@ async def load():
         if not name.startswith("_"):
             with open(os.path.join("eng", file)) as f:
                 _cache[name] = json.load(f)
+
+    # Load relic sets
+    try:
+        with open("relic_sets.json", "r") as f:
+            j = json.load(f)
+        for relic_set in j['relic_sets']:
+            relset = RelicSet(relic_set)
+            for alias in relic_set['set_aliases']:
+                _query_cache[alias].append(relset)
+    except FileNotFoundError:
+        pass
