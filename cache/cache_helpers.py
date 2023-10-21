@@ -21,6 +21,9 @@ class Statistic:
             self.defect_count = 0
             self.watcher_count = 0
 
+    def __str__(self) -> str:
+        return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}'
+
     @property
     def is_loaded(self) -> bool:
         return self.all_character_count is not None and self.ironclad_count is not None and self.silent_count is not None and self.defect_count is not None and self.watcher_count is not None 
@@ -39,6 +42,13 @@ class RunStats:
         self.pb = Statistic(set_default=True)
         self.streaks = Statistic()
         self.last_timestamp: datetime.datetime = None
+
+    def __str__(self) -> str:
+        return f'all_wins: {self.all_wins}\nall_losses: {self.all_losses}\nstreaks: {self.streaks}'
+
+    @property
+    def date_range_string(self) -> str:
+        return "all-time"
 
     def add_win(self, char: str, run_date: datetime):
         date = run_date.date()
@@ -86,11 +96,28 @@ class RunStats:
                 stat.watcher_count += 1
         stat.all_character_count += 1
 
+    def clear(self):
+        self.__init__()
+
 class RunStatsByDate(RunStats):
     def __init__(self):
         super().__init__()
         self.start_date = None
         self.end_date = None
+
+    @property
+    def date_range_string(self) -> str:
+        date_str = ""
+        format = "%Y/%m/%d"
+        if self.start_date is None and self.end_date is None:
+            date_str = "all-time"
+        elif self.start_date is not None and self.end_date is None:
+            date_str = f'after {self.start_date.strftime(format)}'
+        elif self.start_date is None and self.end_date is not None:
+            date_str = f'before {self.end_date.strftime(format)}'
+        else:
+            date_str = f'{self.start_date.strftime(format)} - {self.end_date.strftime(format)}'
+        return date_str
 
 class RunLinkedListNode:
     def __init__(self):
