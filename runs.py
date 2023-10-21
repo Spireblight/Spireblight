@@ -13,7 +13,7 @@ import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
 from response_objects.profiles import ProfilesResponse
-from cache.year_run_stats import update_run_stats
+from cache.run_stats import update_all_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
 from nameinternal import get, Potion
@@ -288,7 +288,7 @@ def _update_cache():
                         prev_loss = cur
                 prev = cur
     
-    update_run_stats()
+    update_all_run_stats()
     update_mastery_stats()
 
     # I don't actually know how long this cache updating is going to take...
