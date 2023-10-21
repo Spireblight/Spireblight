@@ -73,17 +73,17 @@ def parse_date_range(date_string: str) -> tuple[datetime]:
     return (start_date, end_date)
 
 
-def _parse_dates_with_optional_month_day(val: str, isEndOfDay: bool = False) -> datetime:
-    """Base val should be in YYYY-MM-DD where MM and DD are optional, defaulted to 1"""
+def _parse_dates_with_optional_month_day(val: str, isEndDate: bool = False) -> datetime:
+    """Base val should be in YYYY-MM-DD where MM and DD are optional, defaulted to start or end of year"""
     date_parts = val.split("-")
     year = int(date_parts[0])
-    month = 1
-    day = 1
+    month = 12 if isEndDate else 1
+    day = 31 if isEndDate else 1
     if (len(date_parts) > 1):
         month = int(date_parts[1])
     if (len(date_parts) > 2):
         day = int(date_parts[2])
-    if isEndOfDay:
+    if isEndDate:
         return datetime(year, month, day, hour=23, minute=59, second=59)
     else:
         return datetime(year, month, day)

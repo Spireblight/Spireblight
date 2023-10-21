@@ -33,7 +33,11 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
                 break
             if var in annotations:
                 expected = annotations[var]
-                if expected == int:
+                if isinstance(expected, type(Optional[int])):
+                    if arg is None:
+                        continue
+                    expected = expected.__args__[0] # using the non-None arg
+                elif expected == int:
                     try:
                         arg = int(arg)
                     except ValueError:

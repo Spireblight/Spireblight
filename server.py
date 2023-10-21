@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Generator, Callable
+from typing import Generator, Callable, Optional
 
 from collections import defaultdict
 
@@ -1610,24 +1610,24 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
     await ctx.reply("Run stats have been updated for the given range")
 
 @command("kills", "wins")
-async def calculate_wins_cmd(ctx: ContextType, *date_string: str):
+async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of wins for an optional date range."""
     msg = "A20 Heart kills ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     await _send_standard_run_stats_message(ctx, msg, "all_wins", date_string)
 
 @command("losses")
-async def calculate_losses_cmd(ctx: ContextType, *date_string: str):
+async def calculate_losses_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of losses for an optional date range."""
     msg = "A20 Heart losses ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     await _send_standard_run_stats_message(ctx, msg, "all_losses", date_string)
 
-async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name: str, date_string: tuple[str, ...]):
+async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name: str, date_string: Optional[str] = None):
     run_stats = None
-    if len("".join(date_string)) == 0:
+    if date_string is None:
         run_stats = get_run_stats_by_date()
     else:
         try:
-            run_stats = get_run_stats_by_date_string("".join(date_string))
+            run_stats = get_run_stats_by_date_string(date_string)
         except:
             await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
             return
@@ -1680,29 +1680,29 @@ async def calculate_streak_cmd(ctx: ContextType):
     await ctx.reply(final.format(run_stats.streaks))
 
 @command("pb")
-async def calculate_pb_cmd(ctx: ContextType, *date_string: str):
+async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills for an optional date range."""
     msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     run_stats = None
-    if len("".join(date_string)) == 0:
+    if date_string is None:
         run_stats = get_all_run_stats()
     else:
         try:
-            run_stats = get_run_stats_by_date_string("".join(date_string))
+            run_stats = get_run_stats_by_date_string(date_string)
         except:
             await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
             return
     await ctx.reply(msg.format(run_stats, run_stats.pb))
 
 @command("winrate")
-async def calculate_winrate_cmd(ctx: ContextType, *date_string: str):
+async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the winrate for Baalor's A20 Heart kills for an optional date range."""
     run_stats = None
-    if len("".join(date_string)) == 0:
+    if date_string is None:
         run_stats = get_run_stats_by_date()
     else:
         try:
-            run_stats = get_run_stats_by_date_string("".join(date_string))
+            run_stats = get_run_stats_by_date_string(date_string)
         except:
             await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
             return
