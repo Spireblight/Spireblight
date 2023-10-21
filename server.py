@@ -1613,14 +1613,25 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
 async def calculate_wins_cmd(ctx: ContextType, *date_string: str):
     """Display the cumulative number of wins for the year-long challenge."""
     msg = "A20 Heart kills in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    await _send_run_stats_message(ctx, msg, date_string)
+    await _send_standard_run_stats_message(ctx, msg, "all_wins", date_string)
 
 @command("losses")
 async def calculate_losses_cmd(ctx: ContextType, *date_string: str):
     """Display the cumulative number of losses for the year-long challenge."""
-    msg = "A20 Heart losses in {0.current_year}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    run_stats = get_run_stats()
-    await ctx.reply(msg.format(run_stats, run_stats.year_losses[run_stats.current_year]))
+    msg = "A20 Heart losses for {0.}: Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
+    await _send_standard_run_stats_message(ctx, msg, "all_losses", date_string)
+
+async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name: str, date_string: tuple[str, ...]):
+    run_stats = None
+    if date_string is None:
+        run_stats = get_run_stats_by_date()
+    else:
+        try:
+            run_stats = get_run_stats_by_date_string("".join(date_string))
+        except:
+            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+            return
+    await ctx.reply(msg.format(run_stats[prop_name]))
 
 _display = []
 _words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher")
@@ -1665,29 +1676,35 @@ async def calculate_streak_cmd(ctx: ContextType, *date_string: str):
             msg.append(f"{word}: {{0.{arg}}}")
 
     final = f"Current streak: {' - '.join(msg)}"
-
-    run_stats = get_run_stats()
-    await ctx.reply(final.format(run_stats.streaks))
+    await _send_standard_run_stats_message(ctx, final, "streaks", date_string)
 
 @command("pb")
 async def calculate_pb_cmd(ctx: ContextType, *date_string: str):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills."""
     msg = "Baalor's PB A20H Streaks | Rotating: {0.all_character_count} - Ironclad: {0.ironclad_count} - Silent: {0.silent_count} - Defect: {0.defect_count} - Watcher: {0.watcher_count}"
     run_stats = None
-    if (date_string is not None):
+    if date_string is None:
+        run_stats = get_all_run_stats()
+    else:
         try:
             run_stats = get_run_stats_by_date_string("".join(date_string))
         except:
             await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
             return
-    else:
-        run_stats = get_all_run_stats()
     await ctx.reply(msg.format(run_stats.pb))
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, *date_string: str):
     """Display the current winrate for Baalor's 2022+ A20 Heart kills."""
-    run_stats = get_run_stats()
+    run_stats = None
+    if date_string is None:
+        run_stats = get_run_stats_by_date()
+    else:
+        try:
+            run_stats = get_run_stats_by_date_string("".join(date_string))
+        except:
+            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+            return
     wins = [run_stats.all_wins.all_character_count, run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
     losses = [run_stats.all_losses.all_character_count, run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
     rate = [a/(a+b) for a, b in zip(wins, losses)]
