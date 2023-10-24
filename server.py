@@ -1604,7 +1604,7 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
     try:
         date_tuple = parse_date_range(date_string)
     except:
-        await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+        await ctx.reply("Invalid date string. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
         return
     update_range(date_tuple[0], date_tuple[1])
     await ctx.reply("Run stats have been updated for the given range")
@@ -1628,8 +1628,11 @@ async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name
     else:
         try:
             run_stats = get_run_stats_by_date_string(date_string)
-        except:
-            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+        except ValueError:
+            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            return
+        except TypeError:
+            await ctx.reply("Start date is after end date")
             return
     await ctx.reply(msg.format(run_stats, getattr(run_stats, prop_name)))
 
@@ -1689,8 +1692,11 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     else:
         try:
             run_stats = get_run_stats_by_date_string(date_string)
-        except:
-            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+        except ValueError:
+            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            return
+        except TypeError:
+            await ctx.reply("Start date is after end date")
             return
     await ctx.reply(msg.format(run_stats, run_stats.pb))
 
@@ -1703,8 +1709,11 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
     else:
         try:
             run_stats = get_run_stats_by_date_string(date_string)
-        except:
-            await ctx.reply("Invalid date string. Use YYYY-MM-DD-YYYY-MM-DD (MM and DD optional), YYYY-MM-DD+ (no end date), YYYY-MM-DD- (no start date)")
+        except ValueError:
+            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            return
+        except TypeError:
+            await ctx.reply("Start date is after end date")
             return
     wins = [run_stats.all_wins.all_character_count, run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
     losses = [run_stats.all_losses.all_character_count, run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]

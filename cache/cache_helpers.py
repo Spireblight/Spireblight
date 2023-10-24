@@ -112,7 +112,7 @@ class RunStatsByDate(RunStats):
         if self.start_date is None and self.end_date is None:
             date_str = "all-time"
         elif self.start_date is not None and self.end_date is None:
-            date_str = f'after {self.start_date.strftime(format)}'
+            date_str = f'starting with {self.start_date.strftime(format)}'
         elif self.start_date is None and self.end_date is not None:
             date_str = f'before {self.end_date.strftime(format)}'
         else:
