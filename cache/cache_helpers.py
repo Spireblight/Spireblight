@@ -16,10 +16,13 @@ class Statistic:
         self.watcher_count = None
         if set_default:
             self.all_character_count = 0
-            self.ironclad_count = 0
-            self.silent_count = 0
-            self.defect_count = 0
-            self.watcher_count = 0
+            self.set_char_defaults()            
+
+    def set_char_defaults(self):
+        self.ironclad_count = 0
+        self.silent_count = 0
+        self.defect_count = 0
+        self.watcher_count = 0
 
     def __str__(self) -> str:
         return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}'

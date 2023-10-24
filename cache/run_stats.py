@@ -14,6 +14,7 @@ __all__ = ["update_all_run_stats",
 
 def update_all_run_stats():
     _update_run_stats(_all_run_stats)
+    _update_run_stats(_run_stats_by_date)
 
 def update_range(start_date: datetime | None, end_date: datetime | None):
     _run_stats_by_date.clear()
@@ -70,6 +71,7 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                 if run_stats.streaks.is_loaded:
                     continue
                 
+                run_stats.streaks.set_char_defaults()
                 if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
                     run_stats.streaks.ironclad_count = run.character_streak.streak
                 elif run_stats.streaks.silent_count is None and run.character == "Silent":
