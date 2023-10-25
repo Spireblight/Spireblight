@@ -71,7 +71,7 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                 if run_stats.streaks.is_loaded:
                     continue
                 
-                run_stats.streaks.set_char_defaults()
+                run_stats.streaks.is_loaded =  True
                 if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
                     run_stats.streaks.ironclad_count = run.character_streak.streak
                 elif run_stats.streaks.silent_count is None and run.character == "Silent":
