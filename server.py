@@ -1601,6 +1601,11 @@ async def wall_card(ctx: ContextType):
 @command("range", flag="me")
 async def set_run_stats_by_date(ctx: ContextType, date_string: str):
     """Update the default range for the run stats by date, this is separate from the all-time stats run cache."""
+    if date_string == "reset":
+        update_range(None, None)
+        await ctx.reply("Range has been reset for all-time stats")
+        return
+
     try:
         date_tuple = parse_date_range(date_string)
     except:

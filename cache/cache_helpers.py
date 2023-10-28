@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 
 class Statistic:
     def __init__(self, *, set_default: bool = False):
-        self._is_loaded = False
         self.all_character_count = None
         self.ironclad_count = None
         self.silent_count = None
@@ -25,16 +24,9 @@ class Statistic:
     def __str__(self) -> str:
         return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}'
 
-    @property
-    def is_loaded(self) -> bool:
-        return self._is_loaded
-    
-    @is_loaded.setter
-    def is_loaded(self, val):
-        self._is_loaded = val
-
 class RunStats:
     def __init__(self):
+        self._is_loaded = False
         self.current_year = datetime.datetime.now().year
         self.all_wins = Statistic(set_default=True)
         self.all_losses = Statistic(set_default=True)
@@ -50,6 +42,14 @@ class RunStats:
 
     def __str__(self) -> str:
         return f'all_wins: {self.all_wins}\nall_losses: {self.all_losses}\nstreaks: {self.streaks}'
+
+    @property
+    def is_loaded(self) -> bool:
+        return self._is_loaded
+    
+    @is_loaded.setter
+    def is_loaded(self, val):
+        self._is_loaded = val
 
     @property
     def date_range_string(self) -> str:

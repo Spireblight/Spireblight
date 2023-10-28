@@ -1,9 +1,22 @@
 from datetime import datetime
+import json
+import os
 from cache.cache_helpers import RunStats, RunStatsByDate
 from sts_profile import get_profile
 from logger import logger
-from utils import parse_date_range
+from utils import parse_date_range, parse_dates_with_optional_month_day
 
+class _RangeCache():
+    def __init__(self) -> None:
+        # Because nulls are a valid state (all-time), we need a distinction between the file saying the dates are null or 
+        # we haven't set a date so we're not trying to read from the file every time we see nulls
+        self.is_loaded = False
+        self.dateDict: dict[str, str] = {
+            "start_date": None,
+            "end_date": None
+        }
+
+_range = _RangeCache()
 _all_run_stats = RunStats()
 _run_stats_by_date = RunStatsByDate()
 
@@ -16,7 +29,34 @@ def update_all_run_stats():
     _update_run_stats(_all_run_stats)
     _update_run_stats(_run_stats_by_date)
 
+def _write_range_to_file(start_date: datetime | None, end_date: datetime | None):
+    _range.dateDict["start_date"] = start_date.strftime("%Y/%m/%d") if start_date is not None else None
+    _range.dateDict["end_date"] = end_date.strftime("%Y/%m/%d") if end_date is not None else None
+    _range.is_loaded = True
+    jsonObj = json.dumps(_range.dateDict)
+    with open(os.path.join("data", "range.json"), "w") as f:
+        f.write(jsonObj)
+
+def _set_range_from_file():
+    dateDict = {}
+    try:
+        with open(os.path.join("data", "range.json")) as f:
+            dateDict = json.load(f)
+    except:
+        dateDict["start_date"] = None
+        dateDict["end_date"] = None
+    _range.dateDict["start_date"] = dateDict["start_date"]
+    _range.dateDict["end_date"] = dateDict["end_date"]
+    _range.is_loaded = True
+    _run_stats_by_date.clear()
+    if _range.dateDict["start_date"] is not None:
+        _run_stats_by_date.start_date = parse_dates_with_optional_month_day(_range.dateDict["start_date"])
+    if _range.dateDict["end_date"] is not None:
+        _run_stats_by_date.end_date = parse_dates_with_optional_month_day(_range.dateDict["end_date"])
+    _update_run_stats(_run_stats_by_date, _run_stats_by_date.start_date, _run_stats_by_date.end_date)
+
 def update_range(start_date: datetime | None, end_date: datetime | None):
+    _write_range_to_file(start_date, end_date)
     _run_stats_by_date.clear()
     _run_stats_by_date.start_date = start_date
     _run_stats_by_date.end_date = end_date
@@ -31,8 +71,8 @@ def get_run_stats_by_date_string(date_string: str) -> RunStatsByDate:
 def get_run_stats_by_date(start_date: datetime | None = None, end_date: datetime | None = None) -> RunStatsByDate:
     # return the cached range stats if dates are the exact same or both are none
     if (start_date is None and end_date is None) or (start_date == _run_stats_by_date.start_date and end_date == _run_stats_by_date.end_date):
-        if not _run_stats_by_date.streaks.is_loaded:
-            _update_run_stats(_run_stats_by_date, _run_stats_by_date.start_date, _run_stats_by_date.end_date)
+        if start_date is None and end_date is None and not _range.is_loaded:
+            _set_range_from_file()
         return _run_stats_by_date
     run_stats_by_date = RunStatsByDate()
     run_stats_by_date.start_date = start_date
@@ -48,7 +88,7 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
         runs = []
 
     if runs:
-        if not run_stats.streaks.is_loaded:
+        if not run_stats.is_loaded:
             run_stats.streaks.all_character_count = 0
 
             for run in runs[1:]:
@@ -68,10 +108,10 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                 else:
                     run_stats.add_loss(run.character, run.timestamp)
 
-                if run_stats.streaks.is_loaded:
+                if run_stats.is_loaded:
                     continue
                 
-                run_stats.streaks.is_loaded =  True
+                run_stats.is_loaded =  True
                 if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
                     run_stats.streaks.ironclad_count = run.character_streak.streak
                 elif run_stats.streaks.silent_count is None and run.character == "Silent":
