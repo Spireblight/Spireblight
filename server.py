@@ -244,6 +244,7 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
     update_db()
 
 def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
+    """This decorator builds TwitchCommand and DiscordCommand versions of commands while leaving the original functions untouched."""
     def inner(func, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
@@ -260,7 +261,7 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
                 _to_add_discord.append(dcmd)
             else:
                 DConn.add_command(dcmd)
-        return tcmd
+        return func
     return inner
 
 def with_savefile(name: str, *aliases: str, **kwargs):
