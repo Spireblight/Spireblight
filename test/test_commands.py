@@ -8,22 +8,17 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
     @patch("server.query")
     async def test_discord_command_card_with_art_error(self, mock_query):
         # Set up required mocks
-        context = AsyncMock()
-        context.reply
+        context = MagicMock()
+        context.reply = AsyncMock()
         mock_query.return_value = None
 
-        # Find command in discord command list
-        card_with_art = None
-        for cmd in server._to_add_discord:
-            if cmd.name == "card":
-                card_with_art = cmd
-
         # Invoke command using mocked context and desired command keywords
-        await card_with_art(context, "Error")
+        await server.card_with_art(context, "Error")
 
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("Error")
         context.reply.assert_awaited_once_with("Could not find card 'Error'")
+    
 
     @patch("server.query")
     async def test_discord_command_card_with_art_not_a_card(self, mock_query):
@@ -33,14 +28,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         info = MagicMock(cls_name="relic")
         mock_query.return_value = info
 
-        # Find command in discord command list
-        card_with_art = None
-        for cmd in server._to_add_discord:
-            if cmd.name == "card":
-                card_with_art = cmd
-
         # Invoke command using mocked context and desired command keywords
-        await card_with_art(context, "anchor")
+        await server.card_with_art(context, "anchor")
 
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("anchor")
@@ -56,14 +45,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         info = MagicMock(cls_name="card", mod=None, internal="Clumsy")
         mock_query.return_value = info
 
-        # Find desired command in discord command list
-        card_with_art = None
-        for cmd in server._to_add_discord:
-            if cmd.name == "card":
-                card_with_art = cmd
-
         # Invoke command using mocked context and desired command keywords
-        await card_with_art(context, "clumsy")
+        await server.card_with_art(context, "clumsy")
 
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("clumsy")
@@ -79,14 +62,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         info = MagicMock(cls_name="card", mod="Downfall", internal="hermit:Snapshot")
         mock_query.return_value = info
 
-        # Find command in discord command list
-        card_with_art = None
-        for cmd in server._to_add_discord:
-            if cmd.name == "card":
-                card_with_art = cmd
-
         # Invoke command using mocked context and desired command keywords
-        await card_with_art(context, "snapshot")
+        await server.card_with_art(context, "snapshot")
 
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("snapshot")
