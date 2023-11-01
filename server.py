@@ -1454,7 +1454,7 @@ async def mt_mutators(ctx: ContextType, save: MonsterSave):
         val = ", ".join(f"{x.name} ({x.description})" for x in m)
         await ctx.reply(f"The mutators are: {val}")
 
-@mt_command("challenge")
+#@mt_command("challenge")
 async def mt_challenge(ctx: ContextType, save: MonsterSave):
     if not save.challenge:
         await ctx.reply("We are not currently playing an Expert Challenge.")
