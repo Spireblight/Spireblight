@@ -5,10 +5,12 @@ import server
 
 
 class TestDiscordCommands(IsolatedAsyncioTestCase):
-    async def test_discord_command_card_with_art_error(self):
+    @patch("server.query")
+    async def test_discord_command_card_with_art_error(self, mock_query):
         # Set up required mocks
         context = AsyncMock()
         context.reply
+        mock_query.return_value = None
 
         # Find command in discord command list
         card_with_art = None
@@ -16,8 +18,11 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             if cmd.name == "card":
                 card_with_art = cmd
 
+        # Invoke command using mocked context and desired command keywords
         await card_with_art(context, "Error")
 
+        # Validate that expected calls and awaits were made
+        mock_query.assert_called_once_with("Error")
         context.reply.assert_awaited_once_with("Could not find card 'Error'")
 
     @patch("server.query")
@@ -25,7 +30,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Set up required mocks
         context = AsyncMock()
         context.reply
-        mock_query.cls_name = "relic"
+        info = MagicMock(cls_name="relic")
+        mock_query.return_value = info
 
         # Find command in discord command list
         card_with_art = None
@@ -36,6 +42,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Invoke command using mocked context and desired command keywords
         await card_with_art(context, "anchor")
 
+        # Validate that expected calls and awaits were made
+        mock_query.assert_called_once_with("anchor")
         context.reply.assert_awaited_once_with(
             "Can only find art for cards. Use !info instead."
         )
@@ -45,7 +53,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Set up required mocks
         context = AsyncMock()
         context.reply
-        info = MagicMock(cls_name = "card", mod = None, internal = "Clumsy")
+        info = MagicMock(cls_name="card", mod=None, internal="Clumsy")
         mock_query.return_value = info
 
         # Find desired command in discord command list
@@ -57,7 +65,8 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Invoke command using mocked context and desired command keywords
         await card_with_art(context, "clumsy")
 
-        # Validate that ctx.reply was awaited with the expected result
+        # Validate that expected calls and awaits were made
+        mock_query.assert_called_once_with("clumsy")
         context.reply.assert_awaited_once_with(
             "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/slay%20the%20spire/cards/clumsy.png"
         )
@@ -67,7 +76,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Set up required mocks
         context = AsyncMock()
         context.reply
-        info = MagicMock(cls_name = "card", mod = "Downfall", internal = "hermit:Snapshot")
+        info = MagicMock(cls_name="card", mod="Downfall", internal="hermit:Snapshot")
         mock_query.return_value = info
 
         # Find command in discord command list
@@ -77,9 +86,10 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
                 card_with_art = cmd
 
         # Invoke command using mocked context and desired command keywords
-        await card_with_art(context, "clumsy")
+        await card_with_art(context, "snapshot")
 
-        # Validate that ctx.reply was awaited with the expected result
+        # Validate that expected calls and awaits were made
+        mock_query.assert_called_once_with("snapshot")
         context.reply.assert_awaited_once_with(
             "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/downfall/cards/hermit-snapshot.png"
         )
