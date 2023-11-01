@@ -13,7 +13,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Find command in discord command list
         card_with_art = None
         for cmd in server._to_add_discord:
-            if cmd.name is "card":
+            if cmd.name == "card":
                 card_with_art = cmd
 
         await card_with_art(context, "Error")
@@ -30,7 +30,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Find command in discord command list
         card_with_art = None
         for cmd in server._to_add_discord:
-            if cmd.name is "card":
+            if cmd.name == "card":
                 card_with_art = cmd
 
         # Invoke command using mocked context and desired command keywords
@@ -51,7 +51,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Find desired command in discord command list
         card_with_art = None
         for cmd in server._to_add_discord:
-            if cmd.name is "card":
+            if cmd.name == "card":
                 card_with_art = cmd
 
         # Invoke command using mocked context and desired command keywords
@@ -73,7 +73,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Find command in discord command list
         card_with_art = None
         for cmd in server._to_add_discord:
-            if cmd.name is "card":
+            if cmd.name == "card":
                 card_with_art = cmd
 
         # Invoke command using mocked context and desired command keywords
