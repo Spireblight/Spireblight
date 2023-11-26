@@ -212,15 +212,17 @@ class RunParser(FileParser):
                 nonlocal streak_total, position_in_streak, is_ongoing
                 current_run: RunParser = self.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)
                 if current_run is not None:
+                    last_char = self.character
                     while current_run.won:
-                        # iterate the streak
-                        streak_total += 1
-
-                        # only iterate the position if the Win came before the current run
-                        if is_prev:
-                            position_in_streak += 1
+                        # If rotating, only iterate if not same char
+                        if is_character_streak or current_run.character != last_char:
+                            streak_total += 1
+                            # only iterate the position if the Win came before the current run
+                            if is_prev:
+                                position_in_streak += 1
 
                         if (run := current_run.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)) is not None:
+                            last_char = current_run.character
                             current_run = run
                         else:
                             break
