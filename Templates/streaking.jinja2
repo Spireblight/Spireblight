@@ -1,0 +1,75 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  A man and his streaking
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <h1 class="title has-text-centered">
+      The Grandmastery Challenge
+    </h1>
+
+    <p>
+      The blobs of completed runs are clickable links.  For demonstative purposes, a run that
+      breaks a streak is included within it but marked with a sad red color.
+    </p>
+  </section>
+
+  {% for streak in streaks %}
+    {% if streak.winning_streak %}
+      <section class="section">
+        <div class="container">
+          <div class="box run-header streak is-paddingless">
+            <div class="avatar">
+              <img class="{{ streak.character | lower }}"
+                src="/static/characters/{{ streak.character | lower }}-face.png"/>
+            </div>
+
+            <div class="wide p-4">
+              <div class="top">
+                <div class="title">
+                  {{ streak.character }} streak of <b>{{ streak.streak }}</b>
+                </div>
+                <div class="dates">
+                  {{ streak.start }} -
+                  {% if streak.ongoing %}
+                    <span>ongoing</span>
+                  {% else %}
+                    {{ streak.end }}
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="score-grid">
+                {% for x in range(20) %}
+                  {% if x < streak.length %}
+                    {% with run=streak.runs[x] %}
+                      <a href="/runs/{{ run.name }}" title="{{ run.character }} {{ run.verb }}">
+                        <div class="blob {{ run.verb }}">
+                          <div>{{ x+1 }}</div>
+                        </div>
+                      </a>
+                    {% endwith %}
+                  {% else %}
+                    <div class="blob unplayed">
+                      <div>{{ x+1 }}</div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    {% else %}
+      <section class="section">
+        <div class="losing">
+          ... {{ streak.runs | length }} runs that never streaked ...
+        </div>
+      </section>
+    {% endif %}
+  {% endfor %}
+  <section class="section"></section>
+{% endblock %}

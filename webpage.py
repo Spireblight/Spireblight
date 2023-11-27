@@ -116,6 +116,102 @@ async def challenge(req: web.Request):
         "stream_days_left": stream_days_left,
     }
 
+
+class StreakContainer:
+    """
+    Collection of runs that form a winning or losing streak.
+
+    The `winning_streak` attribute denotes if the streak contains wins
+    or not.  The notion of losing streaks are used on the streak page to
+    show how many runs were between the streaks.
+
+    The `ongoing` attribute denotes if the streak is still going.  If
+    it's True, this is shown on the streak date in the UI.
+
+    The `runs` attribute is the list of runs in the streak.  If the
+    streak is over, the losing run that broke it should be in there as
+    well so it can be shown in the UI as the one that broke it.
+
+    """
+
+    # TODO(olivia): I have no good idea how to make this better.  Please help
+    # me improve it.  As long as this lives in webpage.py this will cause a
+    # circular import if it's in the
+    from runs import RunParser
+
+    def __init__(self, winning_streak: bool, ongoing: bool, *runs):
+        self.winning_streak = winning_streak
+        # TODO(olivia): Perhaps this could be calculated by looking at the
+        # status of the latest run?  A lost streak will always have a lost run
+        # as its last one.
+        self.ongoing = ongoing
+        self.runs = runs
+
+    @property
+    def start(self):
+        return self.runs[0].timestamp.strftime("%b %-d")
+
+    @property
+    def end(self):
+        return self.runs[-1].timestamp.strftime("%b %-d")
+
+    @property
+    def character(self):
+        return self.runs[0].character
+
+    @property
+    def length(self):
+        return len(self.runs)
+
+    @property
+    def streak(self):
+        """Counts the amount of runs that were actually the streak.
+
+        Without this, the streak would show one too many once it's over."""
+        return len([x for x in self.runs if x.won])
+
+@router.get("/streaking")
+@aiohttp_jinja2.template("streaking.jinja2")
+async def streaking(req: web.Request):
+    from runs import get_parser as run
+
+    # TODO(olivia): 👼
+    # Dummy data to test the function out with.
+    hey_someone_make_a_function_that_returns_this_pls = [
+        StreakContainer(True, False,
+            run(1699384470),
+            run(1699391738),
+            run(1699470539),
+            run(1699476690),
+            run(1699558220),
+            run(1699565425),
+            run(1699990351),
+            run(1699996118),
+            run(1700076296),
+            run(1700084198),
+            run(1700161441),
+        ),
+
+        StreakContainer(False, False,
+            run(1684439012),
+            run(1685041066),
+        ),
+
+        StreakContainer(True, False,
+            run(1683658810),
+            run(1683847240),
+            run(1684266057),
+            run(1684439012),
+            run(1685041066),
+            run(1685652492),
+            run(1686160250),
+            run(1686260704),
+        ),
+    ]
+    return {
+        "streaks": hey_someone_make_a_function_that_returns_this_pls,
+    }
+
 @router.get("/discord")
 @aiohttp_jinja2.template("socials/discord.jinja2")
 async def discord(req: web.Request):

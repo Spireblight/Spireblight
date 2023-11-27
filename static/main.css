@@ -523,3 +523,70 @@ nav.breadcrumb {
 .ahead-behind img {
   height: 1.5em;
 }
+
+.streak {
+
+}
+.streak .wide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+.streak .top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.streak .dates {
+  font-size: 0.75em;
+}
+.streak .dates span {
+  font-style: italic;
+  opacity: 0.8;
+}
+.streak .score-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  /* grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); */
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+}
+.streak .score-grid .blob {
+
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid rgba(0,0,0, 0.5); */
+}
+.streak .score-grid .blob div {
+  /* font-size: 0.8em; */
+
+}
+
+.streak .score-grid .blob.victory {
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0.4em 0.3em 0.4em rgba(0,0,0, 0.5);
+  background-color: rgba(34,124,25,0.5);
+}
+.streak .score-grid .blob.loss {
+  color: rgba(255,255,255,0.6);
+  font-weight: bold;
+  box-shadow: inset 0.4em 0.3em 0.4em rgba(0,0,0, 0.5);
+  background-color: rgba(100,5,25,0.5);
+}
+.streak .score-grid .blob.unplayed {
+  font-weight: normal;
+  background-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+  box-shadow: inset 0.2em 0.2em 0.2em rgba(0,0,0,0.5);
+}
+
+.losing {
+  text-align: center;
+}
