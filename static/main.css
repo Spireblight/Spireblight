@@ -550,8 +550,8 @@ nav.breadcrumb {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(2, 1fr);
   /* grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); */
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  grid-column-gap: 15px;
+  grid-row-gap: 7px;
 }
 .streak .score-grid .blob {
 
@@ -562,10 +562,19 @@ nav.breadcrumb {
   justify-content: center;
   align-items: center;
   /* border: 1px solid rgba(0,0,0, 0.5); */
+  text-align: center;
 }
-.streak .score-grid .blob div {
-  /* font-size: 0.8em; */
 
+.streak .score-grid .blob .count {
+  /* font-size: 0.8em; */
+}
+.streak .score-grid .blob .count span {
+  font-size: 0.6em;
+  opacity: 0.6;
+}
+.streak .score-grid .blob .verb {
+  font-size: 0.5em;
+  opacity: 0.5;
 }
 
 .streak .score-grid .blob.victory {
@@ -589,4 +598,5 @@ nav.breadcrumb {
 
 .losing {
   text-align: center;
+  opacity: 0.6;
 }
