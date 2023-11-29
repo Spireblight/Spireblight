@@ -164,6 +164,18 @@ class StreakContainer:
         return len(self.runs)
 
     @property
+    def target(self):
+        """
+        The amount of blobs to show for this group.
+
+        If less than 20, show 20.
+        After 20, show ten more for every ten passed.
+        """
+        if self.length <= 20:
+            return 20
+        return 10 * (math.floor(self.length / 10) + 1)
+
+    @property
     def streak(self):
         """Counts the amount of runs that were actually the streak.
 
@@ -179,6 +191,16 @@ async def streaking(req: web.Request):
     # Dummy data to test the function out with.
     hey_someone_make_a_function_that_returns_this_pls = [
         StreakContainer(True, False,
+            run(1699384470),
+            run(1699391738),
+            run(1699470539),
+            run(1699476690),
+            run(1699558220),
+            run(1699565425),
+            run(1699990351),
+            run(1699996118),
+            run(1700076296),
+            run(1700084198),
             run(1699384470),
             run(1699391738),
             run(1699470539),
