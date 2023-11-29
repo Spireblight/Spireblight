@@ -13,17 +13,21 @@
 
       <p class="mb-4">
         This page shows the character streaks we've been able to reach during the Grandmastery
-        Challenge.  Our goal is to reach 20 on all characters.  A streak group is shown after three
-        consecutive wins.
+        Challenge.  Our goal is to reach 20 on all characters!
+
+      </p>
+
+      <p class="mb-4">
+        A streak group is shown after three consecutive wins.
       </p>
 
       <p>
         The blobs of completed runs are clickable links.  For demonstrative purposes, the run that
         breaks a streak is included within said streak but marked as a loss.
       </p>
+      <hr/>
     </section>
   </div>
-
 
   {% for streak in streaks %}
     {% if streak.winning_streak %}
@@ -55,18 +59,16 @@
                 <div class="score-grid">
                   {% for x in range(streak.target) %}
                     {% if x < streak.length %}
-                      {% with run=streak.runs[x] %}
-                        <a href="/runs/{{ run.name }}" title="{{ run.character }} {{ run.verb }}">
-                          <div class="blob {{ run.verb }}">
-                            <div class="text">
-                              <div class="count">{{ x+1 }}</div>
-                              <div class="verb">
-                                {% if run.won %}
-                                  win
-                                {% else %}
-                                  loss
-                                {% endif %}
-                              </div>
+                      {% with run=streak.get_run(x) %}
+                        <a class="blob {{ run.verb }}" href="/runs/{{ run.name }}">
+                          <div class="text">
+                            <div class="count">{{ x+1 }}</div>
+                            <div class="verb">
+                              {% if run.won %}
+                                win
+                              {% else %}
+                                loss
+                              {% endif %}
                             </div>
                           </div>
                         </a>
@@ -88,11 +90,27 @@
     {% else %}
       <div class="columns is-centered">
         <section class="section column is-8 is-centered">
-          <div class="losing">
-            « {{ streak.runs | length }} runs that never streaked »
-          </div>
+          {% if streak.ongoing %}
+            <div class="ongoing">
+              <h2 class="subtitle">
+                Currently not on a streak.  It's about to happen, Twitch chat!
+                <img alt="pog" src="/static/misc/pogchamp.png"/>
+              </h2>
+              {% if streak.runs | length > 2 %}
+                <p class="losing">
+                  (We've had <a href="/profile/0/runs">{{ streak.runs | length }} runs</a> that didn't streak, but let's not
+                  focus on that.)
+                </p>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="losing">
+              « {{ streak.runs | length }} runs that never streaked »
+            </div>
+          {% endif %}
         </section>
       </div>
     {% endif %}
   {% endfor %}
+  <hr/>
 {% endblock %}

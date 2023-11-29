@@ -551,10 +551,9 @@ nav.breadcrumb {
   grid-template-rows: repeat(2, 1fr);
   /* grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); */
   grid-column-gap: 15px;
-  grid-row-gap: 7px;
+  grid-row-gap: 10px;
 }
 .streak .score-grid .blob {
-
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -599,4 +598,11 @@ nav.breadcrumb {
 .losing {
   text-align: center;
   opacity: 0.6;
+}
+.ongoing .subtitle {
+  text-align: center;
+  font-weight: bold;
+}
+.ongoing img {
+  width: 1.5em;
 }
