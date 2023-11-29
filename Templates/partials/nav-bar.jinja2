@@ -1,0 +1,45 @@
+<nav class="pagination mt-4 mb-4" role="navigation" aria-label="pagination">
+  {% if page > 1 %}
+    <a href="/profile/{{ profile.index }}/runs/{{ page-1 }}" class="pagination-previous">Previous</a>
+  {% endif %}
+  {% if page < pages %}
+    <a href="/profile/{{ profile.index }}/runs/{{ page+1 }}" class="pagination-next">Next page</a>
+  {% endif %}
+
+  <ul class="pagination-list">
+    {% with number=1 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+
+    {% if page < 4 %}
+      {% with number=2 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=3 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=4 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=5 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+
+      <li>
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+    {% elif page > pages-4 %}
+      <li>
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+      {% with number=pages-4 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=pages-3 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=pages-2 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=pages-1 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+    {% else %}
+      <li>
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+
+      {% with number=page-1 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=page %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+      {% with number=page+1 %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+
+      <li>
+        <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+    {% endif %}
+
+    {% with number=pages %} {% include "partials/nav-button.jinja2" %} {% endwith %}
+  </ul>
+</nav>

@@ -9,12 +9,17 @@
       <li class="is-active"><a href="/profile/{{ profile.index }}/runs">{{ profile.name }}</a></li>
     </ul>
   </nav>
+
   <div id="run-list" class="container">
-    {% for run in profile.runs %}
+    {% include "partials/nav-bar.jinja2" %}
+
+    {% for run in profile.paged_runs(page) %}
       <a href="/runs/{{ run.name }}"
         class="{{ run.character | lower }} {{ run.verb }} run">
         {% include "partials/run_header.jinja2" %}
       </a>
     {% endfor %}
+
+    {% include "partials/nav-bar.jinja2" %}
   </div>
 {% endblock %}

@@ -1,0 +1,8 @@
+<li>
+  <a class="pagination-link {% if number == page %}is-current{% endif %}"
+    href="/profile/{{ profile.index }}/runs/{{ number }}"
+    aria-label="Goto page {{ number }}"
+    {% if number == page %}aria-current="number"{% endif %}>
+    {{ number }}
+  </a>
+</li>

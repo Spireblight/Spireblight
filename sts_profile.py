@@ -3,12 +3,14 @@ from __future__ import annotations
 from typing import Generator, TYPE_CHECKING
 
 import zipfile
+import math
 import time
 import json
 import os
 import io
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
+from itertools import islice
 
 import aiohttp_jinja2
 
@@ -42,6 +44,8 @@ def profile_from_request(req: Request) -> Profile:
     return profile
 
 class Profile:
+    RUNS_PER_PAGE = 50
+
     def __init__(self, index: int, data: dict[str, str]):
         self.index = index
         self._prefix = ""
@@ -90,13 +94,35 @@ class Profile:
             if _ts_cache[ts]._profile == self.index:
                 yield _ts_cache[ts]
 
+    def paged_runs(self, page):
+        page -= 1 # UI serves the page number one-indexed, we want zero-indexed
+        start = page * self.RUNS_PER_PAGE
+        end = start + self.RUNS_PER_PAGE
+        print(page, start, end)
+        return islice(self.runs, start, end)
+
+    @property
+    def pages(self):
+        return math.floor(sum(1 for _ in self.runs) / self.RUNS_PER_PAGE) + 1
+
 @router.get("/profile/{profile}/runs")
+@router.get("/profile/{profile}/runs/{page}")
 @aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
     profile = profile_from_request(req)
-    from runs import _update_cache
-    _update_cache()
-    return {"profile": profile}
+
+    try:
+        page = int(req.match_info.get("page", 1))
+        if page < 1:
+            page = 1
+    except:
+        page = 1
+
+    return {
+        "profile": profile,
+        "page": page,
+        "pages": profile.pages,
+    }
 
 @router.get("/profile/{profile}/runs/{timestamp}.zip")
 @router.get("/profile/{profile}/runs.zip")
