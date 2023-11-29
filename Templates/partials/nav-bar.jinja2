@@ -1,6 +1,6 @@
 <nav class="pagination mt-4 mb-4" role="navigation" aria-label="pagination">
   {% if page > 1 %}
-    <a href="/profile/{{ profile.index }}/runs/{{ page-1 }}" class="pagination-previous">Previous</a>
+    <a href="/profile/{{ profile.index }}/runs/{{ page-1 }}" class="pagination-previous">Previous page</a>
   {% endif %}
   {% if page < pages %}
     <a href="/profile/{{ profile.index }}/runs/{{ page+1 }}" class="pagination-next">Next page</a>
