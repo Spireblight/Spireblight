@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import math
 
 from typing import TYPE_CHECKING
 
@@ -153,3 +154,112 @@ class MasteryStats:
         self.mastered_relics: dict[str, RunParser] = {}
         self.colors: dict[str, str] = {}
         self.last_run_timestamp: datetime.datetime = None
+
+
+class StreakCache:
+    """
+    A streak superclass that contains StreakContainer objects.
+
+    """
+
+    def __init__(self, since: datetime.datetime):
+        self.since = since
+        self.containers = []
+
+    def __repr__(self):
+        return f"StreakCache of {len(self.containers)}: {self.containers}"
+
+    def clear(self):
+        self.containers = []
+
+    def prepend(self, containers):
+        self.containers.insert(0, containers)
+
+    @property
+    def latest(self):
+        return self.containers[0]
+
+class StreakContainer:
+    """
+    Collection of runs that form a winning or losing streak.
+
+    The `winning_streak` attribute denotes if the streak contains wins
+    or not.  The notion of losing streaks are used on the streak page to
+    show how many runs were between the streaks.
+
+    The `ongoing` attribute denotes if the streak is still going.  If
+    it's True, this is shown on the streak date in the UI.
+
+    The `runs` attribute is the list of runs in the streak.  If the
+    streak is over, the losing run that broke it should be in there as
+    well so it can be shown in the UI as the one that broke it.
+
+    """
+
+    def __init__(self, winning_streak: bool, runs):
+        self.winning_streak = winning_streak
+        self.ongoing = False
+        self.runs = runs
+
+    def __repr__(self):
+        return f"Streaks<{self.character} {self.verb} of {self.length}>"
+
+    def append(self, runs):
+        self.runs += runs
+
+    def get_run(self, x):
+        return self.display_runs[x]
+
+    @property
+    def display_runs(self):
+        """
+        The runs, but with the losing run included if this is a winning streak that is over.
+
+        """
+        if self.ongoing:
+            return self.runs
+        return self.runs + [self.runs[-1].matched.next_char]
+
+    @property
+    def start(self):
+        return self.runs[0].timestamp.strftime("%b %-d")
+
+    @property
+    def end(self):
+        return self.runs[-1].timestamp.strftime("%b %-d")
+
+    @property
+    def character(self):
+        return self.runs[0].character
+
+    @property
+    def verb(self):
+        return self.runs[0].verb
+
+    @property
+    def length(self):
+        return len(self.display_runs)
+
+    @property
+    def target(self):
+        """
+        The amount of blobs to show for this group.
+
+        If less than 20, show 20.
+        After 20, show ten more for every ten passed.
+        """
+        if self.length <= 20:
+            return 20
+        return 10 * (math.floor(self.length / 10) + 1)
+
+    @property
+    def streak(self):
+        """
+        Counts the amount of runs that were the actual streak.
+
+        Without this, the streak would show one too many once it's over
+        since we care to show the losing run inside the streak
+        collection.
+
+        """
+        return len([x for x in self.runs if x.won])

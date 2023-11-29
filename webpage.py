@@ -116,6 +116,15 @@ async def challenge(req: web.Request):
         "stream_days_left": stream_days_left,
     }
 
+
+@router.get("/streaking")
+@aiohttp_jinja2.template("streaking.jinja2")
+async def streaking(req: web.Request):
+    from cache.streaks import _streak_collections
+    return {
+        "streaks": _streak_collections.containers,
+    }
+
 @router.get("/discord")
 @aiohttp_jinja2.template("socials/discord.jinja2")
 async def discord(req: web.Request):

@@ -16,6 +16,7 @@ from response_objects.profiles import ProfilesResponse
 from cache.run_stats import update_all_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
+from cache.streaks import update_streak_collections
 from nameinternal import get, Potion
 from sts_profile import get_profile
 from gamedata import FileParser, KeysObtained
@@ -63,6 +64,9 @@ class RunParser(FileParser):
         self._profile = profile
         self._character_streak = None
         self._rotating_streak = None
+
+    def __repr__(self):
+        return f"Run<{self.display_name}>"
 
     @property
     def display_name(self) -> str:
@@ -289,9 +293,10 @@ def _update_cache():
                             cur.matched.prev_loss = prev_loss
                         prev_loss = cur
                 prev = cur
-    
+
     update_all_run_stats()
     update_mastery_stats()
+    update_streak_collections()
 
     # I don't actually know how long this cache updating is going to take...
     # I think it's as optimized as I could make it while still being safe,
