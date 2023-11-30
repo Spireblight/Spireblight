@@ -525,13 +525,14 @@ nav.breadcrumb {
 }
 
 .streak {
-
+  max-width: 748px;
 }
 .streak .wide {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
+  max-width: 680px;
 }
 .streak .top {
   display: flex;
@@ -546,30 +547,34 @@ nav.breadcrumb {
   opacity: 0.8;
 }
 
-@media only screen and (min-width: 1024px) {
-  .streak .score-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 15px;
-    grid-row-gap: 10px;
-  }
+.score-grid {
+   display: flex;
+   flex-flow: wrap;
+   justify-content: center;
+   align-items: center;
 }
-@media only screen and (max-width: 1024px) {
-  .streak .score-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
-  }
+
+.streak .avatar {
+  flex-shrink: 0;
+}
+
+@media only screen and (max-width: 960px) {
   .streak .avatar {
     display: none;
-    margin-right: -100px;
   }
 }
 
+@media only screen and (min-width: 960px) {
+  .streak .avatar {
+    /* margin-right: 0; */
+    margin-right: -62px;
+    /* margin-left: 1rem; */
+  }
+}
+
+
 .streak .score-grid .blob {
+  margin: 0.3em;
   height: 50px;
   width: 50px;
   border-radius: 100%;
