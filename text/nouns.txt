@@ -20,3 +20,5 @@ divinity
 lesson
 curse
 card
+Shovel
+Dark Embrace

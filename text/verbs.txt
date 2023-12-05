@@ -20,3 +20,5 @@ lift
 learn
 master
 curse
+dig
+kill
