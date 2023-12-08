@@ -22,3 +22,7 @@ curse
 card
 Shovel
 Dark Embrace
+Ironclad
+Silent
+Defect
+Watcher
