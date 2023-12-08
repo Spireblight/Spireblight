@@ -22,3 +22,7 @@ master
 curse
 dig
 kill
+channel
+exhaust
+tell
+corrupt
