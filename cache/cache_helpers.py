@@ -213,10 +213,16 @@ class StreakContainer:
     @property
     def display_runs(self):
         """
-        The runs, but with the losing run included if this is a winning streak that is over.
+        The runs, but with possible added context runs:
+        - The losing run included if this is a winning streak that is over.
+        - The current run if we are live and the stream is ongoing.
 
         """
         if self.ongoing:
+            from save import _savefile
+
+            if _savefile.character is not None and _savefile.character == self.character:
+                return self.runs + [_savefile]
             return self.runs
         return self.runs + [self.runs[-1].matched.next_char]
 

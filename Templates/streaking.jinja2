@@ -60,18 +60,27 @@
                   {% for x in range(streak.target) %}
                     {% if x < streak.length %}
                       {% with run=streak.get_run(x) %}
-                        <a class="blob {{ run.verb }}" href="/runs/{{ run.name }}">
-                          <div class="text">
-                            <div class="count">{{ x+1 }}</div>
-                            <div class="verb">
-                              {% if run.won %}
-                                win
-                              {% else %}
-                                loss
-                              {% endif %}
+                        {% if run.done %}
+                          <a class="blob {{ run.verb }}" href="/runs/{{ run.name }}">
+                            <div class="text">
+                              <div class="count">{{ x+1 }}</div>
+                              <div class="verb">
+                                {% if run.won %}
+                                  win
+                                {% else %}
+                                  loss
+                                {% endif %}
+                              </div>
                             </div>
-                          </div>
-                        </a>
+                          </a>
+                        {% else %}
+                          <a class="blob live" href="/current">
+                            <div class="text">
+                              <div class="count">{{ x+1 }}</div>
+                              <div class="verb">live!</div>
+                            </div>
+                          </a>
+                        {% endif %}
                       {% endwith %}
                     {% else %}
                       <div class="blob unplayed">
