@@ -121,6 +121,9 @@ async def challenge(req: web.Request):
 @aiohttp_jinja2.template("streaking.jinja2")
 async def streaking(req: web.Request):
     from cache.streaks import _streak_collections
+    from runs import _update_cache
+    _update_cache()
+
     return {
         "streaks": _streak_collections.containers,
     }

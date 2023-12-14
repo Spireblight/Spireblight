@@ -111,6 +111,9 @@ class Profile:
 async def runs_page(req: Request):
     profile = profile_from_request(req)
 
+    from runs import _update_cache
+    _update_cache()
+
     try:
         page = int(req.match_info.get("page", 1))
         if page < 1:
