@@ -33,7 +33,7 @@ class RunStats:
         self.all_losses = Statistic(set_default=True)
         self.year_wins: dict[int, Statistic] = {
             self.current_year: Statistic(set_default=True)
-        } 
+        }
         self.year_losses: dict[int, Statistic] = {
             self.current_year: Statistic(set_default=True)
         }
@@ -47,7 +47,7 @@ class RunStats:
     @property
     def is_loaded(self) -> bool:
         return self._is_loaded
-    
+
     @is_loaded.setter
     def is_loaded(self, val):
         self._is_loaded = val
@@ -63,7 +63,7 @@ class RunStats:
 
         self._increment_stat(self.all_wins, char)
         self._increment_stat(self.year_wins[date.year], char)
-        
+
     def add_loss(self, char: str, run_date: datetime):
         date = run_date.date()
         if not date.year in self.year_losses:
@@ -235,6 +235,12 @@ class StreakContainer:
         # We use 'display_runs' here so that if the streak is over we show the date of the run that
         # broke the streak.
         return self.display_runs[-1].timestamp.strftime("%b %-d")
+
+    @property
+    def runs_url(self):
+        start = self.runs[0].timestamp.strftime("%s")
+        end = self.runs[-1].timestamp.strftime("%s")
+        return f"/profile/0/runs/by-timestamp/{start}..{end}/"
 
     @property
     def character(self):

@@ -11,6 +11,7 @@ import io
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotFound
 from itertools import islice
+from datetime import datetime
 
 import aiohttp_jinja2
 
@@ -126,6 +127,39 @@ async def runs_page(req: Request):
         "page": page,
         "pages": profile.pages,
     }
+
+@router.get("/profile/{profile}/runs/by-timestamp/{timestamp}/")
+@aiohttp_jinja2.template("runs_timestamp.jinja2")
+async def runs_by_timestamp(req: Request):
+    profile = profile_from_request(req)
+    from runs import _update_cache
+    _update_cache()
+    try:
+        timestamp = req.match_info.get("timestamp", "")
+        start, _, end = timestamp.partition("..")
+        start = int(start) if start else 0
+        end = int(end) if end else time.time()
+    except ValueError:
+        raise HTTPForbidden(reason="Timestamp must be integers if given.")
+    has_runs = False
+
+    runs = []
+    for run in profile.runs:
+        if start <= run.timestamp.timestamp() <= end:
+            runs.append(run)
+            has_runs = True
+
+    if not has_runs:
+        raise HTTPForbidden(reason="No run file matches the given range.")
+
+    return {
+        "profile": profile,
+        "runs": runs,
+        "back": req.rel_url.query.get('back'),
+        "start": datetime.utcfromtimestamp(start),
+        "end": datetime.utcfromtimestamp(end),
+    }
+
 
 @router.get("/profile/{profile}/runs/{timestamp}.zip")
 @router.get("/profile/{profile}/runs.zip")

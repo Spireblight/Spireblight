@@ -1,0 +1,39 @@
+{% extends "base.jinja2" %}
+{% block title %}
+  Streak runs
+{% endblock %}
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/streaking">Streaking</a></li>
+      <li class="is-active">
+        <a>
+          {% if runs | length == 1 %}
+            Run on {{ start.strftime("%b %-d") }}
+          {% else %}
+            Runs between
+            {{ start.strftime("%b %-d") }} and
+            {{ end.strftime("%b %-d") }}
+          {% endif %}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div id="run-list" class="container">
+    <nav class="pagination mt-4 mb-4" role="navigation" aria-label="pagination">
+      <a href="{{ back }}" class="pagination-previous">Back</a>
+    </nav>
+
+    {% for run in runs %}
+      <a href="/runs/{{ run.name }}"
+        class="{{ run.character | lower }} {{ run.verb }} run">
+        {% include "partials/run_header.jinja2" %}
+      </a>
+    {% endfor %}
+
+    <nav class="pagination mt-4 mb-4" role="navigation" aria-label="pagination">
+      <a href="{{ back }}" class="pagination-previous">Back</a>
+    </nav>
+  </div>
+{% endblock %}

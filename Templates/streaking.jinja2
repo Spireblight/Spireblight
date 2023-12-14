@@ -115,7 +115,11 @@
             </div>
           {% else %}
             <div class="losing">
-              « {{ streak.runs | length }} runs that never streaked »
+              «
+              <a href="{{ streak.runs_url }}?back=/streaking">
+                {{ streak.runs | length }} run{% if streak.runs | length > 1 %}s{% endif %}
+              </a>
+              that never streaked »
             </div>
           {% endif %}
         </section>
