@@ -226,7 +226,9 @@ class StreakContainer:
 
     @property
     def end(self):
-        return self.runs[-1].timestamp.strftime("%b %-d")
+        # We use 'display_runs' here so that if the streak is over we show the date of the run that
+        # broke the streak.
+        return self.display_runs[-1].timestamp.strftime("%b %-d")
 
     @property
     def character(self):
