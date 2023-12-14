@@ -550,7 +550,6 @@ nav.breadcrumb {
 .score-grid {
    display: flex;
    flex-flow: wrap;
-   justify-content: center;
    align-items: center;
 }
 
@@ -571,7 +570,6 @@ nav.breadcrumb {
     /* margin-left: 1rem; */
   }
 }
-
 
 .streak .score-grid .blob {
   margin: 0.3em;
@@ -594,7 +592,6 @@ nav.breadcrumb {
 }
 .streak .score-grid .blob .verb {
   font-size: 0.5em;
-  opacity: 0.5;
 }
 
 .streak .score-grid .blob.victory {
@@ -604,7 +601,7 @@ nav.breadcrumb {
   background-color: rgb(58, 132, 83);
 }
 .streak .score-grid .blob.loss {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.8);
   font-weight: bold;
   box-shadow: inset 0.4em 0.3em 0.4em rgba(0,0,0, 0.5);
   background-color: rgb(94, 28, 28);
@@ -612,7 +609,7 @@ nav.breadcrumb {
 .streak .score-grid .blob.unplayed {
   font-weight: normal;
   background-color: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.7);
   box-shadow: inset 0.2em 0.2em 0.2em rgba(0,0,0,0.5);
 }
 
