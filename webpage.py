@@ -133,6 +133,11 @@ async def streaking(req: web.Request):
 async def discord(req: web.Request):
     return {}
 
+@router.get("/mods")
+@aiohttp_jinja2.template("mods.jinja2")
+async def mods(req: web.Request):
+    return {}
+
 #@router.get("/redirects")
 async def redirected_totals(req: web.Request):
     with open(os.path.join("data", "redirects.json")) as f:
