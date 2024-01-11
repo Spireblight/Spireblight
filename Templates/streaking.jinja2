@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-  <div class="columns is-centered">
-    <section class="section column is-half is-centered mt-4">
+  <section class="section columns is-centered">
+    <div class="column is-half mt-4">
       <h1 class="title has-text-centered">
         The Grandmastery Challenge
       </h1>
@@ -26,8 +26,8 @@
         breaks a streak is included within said streak but marked as a loss.
       </p>
       <hr/>
-    </section>
-  </div>
+    </div>
+  </section>
 
   {% for streak in streaks %}
     {% if streak.winning_streak %}
