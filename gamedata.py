@@ -793,7 +793,7 @@ class FileParser(ABC):
     def _removals(self) -> list[tuple[str, int]]:
         event_removals = []
         for event in self._data[self.prefix + "event_choices"]:
-            event_removals.extend((event.get("cards_removed", []), event["floor"]))
+            event_removals.append((event.get("cards_removed", []), event["floor"]))
 
         store_removals = zip(self._data.get(self.prefix + "items_purged", []), self._data.get(self.prefix + "items_purged_floor", []))
 
