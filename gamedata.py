@@ -807,7 +807,7 @@ class FileParser(ABC):
         return all_removals
 
     def get_removals(self) -> Generator[CardData, None, None]:
-        removals = {x[0] for x in self._removals}
+        removals = [x[0] for x in self._removals]
         for card in removals:
             yield CardData(card, removals)
 
