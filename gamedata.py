@@ -790,13 +790,24 @@ class FileParser(ABC):
             yield from card.as_cards()
 
     @property
-    @abstractmethod
-    def _removals(self) -> list[str]:
-        raise NotImplementedError
+    def _removals(self) -> list[tuple[str, int]]:
+        event_removals = []
+        for event in self._data[self.prefix + "event_choices"]:
+            event_removals.extend((event.get("cards_removed", []), event["floor"]))
+
+        store_removals = zip(self._data.get(self.prefix + "items_purged", []), self._data.get(self.prefix + "items_purged_floor", []))
+
+        # missing Empty Cage
+        all_removals = []
+        for card in self.neow_bonus.cards_removed:
+            all_removals.append((card, 0))
+        all_removals.extend(event_removals)
+        all_removals.extend(store_removals)
+        return all_removals
 
     def get_removals(self) -> Generator[CardData, None, None]:
-        removals = self._removals
-        for card in set(removals):
+        removals = {x[0] for x in self._removals}
+        for card in removals:
             yield CardData(card, removals)
 
     @property
@@ -804,9 +815,10 @@ class FileParser(ABC):
         return bool(self._removals)
 
     @property
-    def removals(self) -> Generator[str, None, None]:
-        for card in self.get_removals():
-            yield from card.as_cards()
+    def removals(self) -> Generator[tuple[str, int], None, None]:
+        for card, floor in self._removals:
+            cdata = CardData(card, [])
+            yield (cdata.name, floor)
 
     def master_deck_as_html(self):
         return self._cards_as_html(self.get_cards())

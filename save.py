@@ -328,18 +328,6 @@ class Savefile(FileParser):
         return bottles
 
     @property
-    def _removals(self) -> list[str]:
-        event_removals = []
-        for event in self._data["metric_event_choices"]:
-            event_removals.extend(event.get("cards_removed", []))                
-        
-        store_removals = self._data.get("metric_items_purged", [])
-
-        # missing Empty Cage
-        all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
-        return all_removals
-
-    @property
     def rotating_streak(self) -> StreakInfo:
         last = get_latest_run(None, None)
         if last is not None:

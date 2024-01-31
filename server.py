@@ -1204,6 +1204,17 @@ async def bluekey(ctx: ContextType, save: Savefile):
 
     await ctx.reply("RunHistoryPlus is not running; cannot get data.")
 
+@with_savefile("removals", "removed")
+async def cards_removed(ctx: ContextType, save: Savefile):
+    """Display which cards were removed."""
+    removed = []
+    for card, floor in save.removals:
+        removed.append(f"{card} on floor {floor}")
+    if not removed:
+        await ctx.reply("We did not remove any cards yet.")
+    else:
+        await ctx.reply(f"We removed {len(removed)} cards: {', '.join(removed)}.")
+
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, save: Savefile):
     """Display what the Neow bonus was."""

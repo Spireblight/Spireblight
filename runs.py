@@ -175,18 +175,6 @@ class RunParser(FileParser):
         return f"{minutes:>02}:{seconds:>02}"
 
     @property
-    def _removals(self) -> list[str]:
-        event_removals = []
-        for event in self._data["event_choices"]:
-            event_removals.extend(event.get("cards_removed", []))                
-        
-        store_removals = self._data.get("items_purged", [])
-
-        # missing Empty Cage
-        all_removals = self.neow_bonus.cards_removed + event_removals + store_removals
-        return all_removals
-
-    @property
     def character_streak(self) -> StreakInfo:
         """Get the run position in the character streak."""
         streak = self._character_streak
