@@ -7,6 +7,16 @@ a {
   font-weight: bold;
 }
 
+/* These lines makes the footer stick to the bottom nicely */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+#grid {
+  flex: 1;
+}
+
 /* This is to override the Bulma default. So spacey */
 /* (and we don't like things that are Spacey - not since 2017. :baalorSmug:) */
 section.section {
