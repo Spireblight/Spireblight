@@ -655,3 +655,23 @@ nav.breadcrumb {
 .ongoing img {
   width: 1.5em;
 }
+
+.gridjs-wrapper {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+}
+.gridjs-search input {
+  color: #dbdbdb;
+  background-color: #333339 !important;
+  border: 1px solid #111117 !important;
+}
+.gridjs-tbody .gridjs-tr:nth-child(even) td {
+  background-color: #16161c !important;
+}
+
+.channel.shorts {
+  /* No idea why Bulma is like this, but without this the last element is not*/
+  /* given any of the margin-bottom. */
+  margin-bottom: 1.5rem;
+}

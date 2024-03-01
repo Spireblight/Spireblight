@@ -35,6 +35,8 @@ async def main():
         tasks.add(loop.create_task(server.Twitch_startup()))
     if config.discord.enabled:
         tasks.add(loop.create_task(server.Discord_startup()))
+    if config.youtube.get("playlist_sheet"):
+        tasks.add(loop.create_task(server.Youtube_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 

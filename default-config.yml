@@ -62,6 +62,10 @@ youtube:
   # probably never be lower than 3600.
   cache_timeout: 3600
 
+  # The export URL to the sheet with links to all Youtube playlists.
+  # Can be queried without an API key.
+  playlist_sheet: "https://docs.google.com/spreadsheets/d/1aM27I_YIQZXDEM7MJBU0Mu5-G8vwWMwWKOojRYJySY4/export?format=csv&gid=0"
+
 baalorbot:
   # What prefix the bot listens to
   prefix: "!"
