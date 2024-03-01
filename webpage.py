@@ -2,6 +2,7 @@ import datetime
 import math
 import time
 import json
+import csv
 import os
 
 from aiohttp import web, ClientSession
@@ -126,6 +127,26 @@ async def streaking(req: web.Request):
 
     return {
         "streaks": _streak_collections.containers,
+    }
+
+@router.get("/youtube")
+@aiohttp_jinja2.template("youtube.jinja2")
+async def youtube(req: web.Request):
+    playlists = []
+    try:
+        with open('data/playlists.csv') as playfile:
+            # We're using DictReader with a defined set of fields so that if any keys are added to
+            # the sheet the display code here won't break.
+            reader = csv.DictReader(playfile, fieldnames=("Game", "Youtube Link", "Origin"))
+            # Skip the header line (needed when setting fieldnames)
+            next(reader)
+            # Serialize from a special object down to a pure list so we can json dump
+            playlists = [x for x in reader]
+    except FileNotFoundError:
+        logger.warn("Playlist data not found.  Game table will be empty.")
+
+    return {
+        "playlists": json.dumps(playlists),
     }
 
 @router.get("/discord")
