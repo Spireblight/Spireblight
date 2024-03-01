@@ -9,6 +9,7 @@ from collections import defaultdict
 import urllib.parse
 import traceback
 import datetime
+import aiohttp
 import asyncio
 import random
 import string
@@ -1908,3 +1909,11 @@ async def Discord_startup():
 
 async def Discord_cleanup():
     await DConn.close()
+
+async def Youtube_startup():
+    async with aiohttp.ClientSession() as session:
+        async with session.get(config.youtube.playlist_sheet) as response:
+            csv = await response.text()
+            with open('data/playlists.csv', 'w') as playlists:
+                playlists.write(csv)
+        logger.info("Youtube playlist sheet downloaded")
