@@ -81,6 +81,9 @@
        var game = row.cells[0].data
        var url = row.cells[3].data;
        var icon = '<i title="On Steam" class="fa-brands fa-steam"></i>&nbsp;';
+       if (!url.startsWith("https://store.steampowered.com")) {
+         var icon = '<i title="On the interwebs" class="fa-solid fa-external-link"></i>&nbsp;';
+       }
        return `${icon}<a href="${url}" target="_blank">${game}</a>`
        /* return `<b>${cell}</b>` */
      }
