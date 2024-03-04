@@ -14,7 +14,7 @@
     <div class="columns is-centered">
       <div class="column is-half mt-4">
         <h1 class="title has-text-centered">
-          Youtube channels
+          Youtube content
         </h1>
       </div>
     </div>
@@ -58,15 +58,12 @@
     </div>
   </section>
 
-  <section class="section columns is-centered">
-    <div class="column is-half mt-4">
-      <h1 class="subtitle has-text-centered">
-        Content per game
-      </h1>
+  <section class="columns is-centered">
+    <div class="column is-half mt-4 is-size-7">
       <p>
         The table below contains links to videos and playlists of all the games that Baalor has
         played on the stream.  You can sort by clicking on the headers, and you can filter in the
-        search field by typing in keywords like "sponsored".
+        search field by typing in keywords like "sponsored" or "baba".
       </p>
 
       <p class="chart-disclaimer has-text-centered m-4 is-size-7">
@@ -80,9 +77,12 @@
   <section class="section">
     <div id="nom-nom-playlists" class="container"></div>
     <script type="text/javascript">
-     function formatGame(cell) {
-       /* return `<i title="On Steam" class="fa-brands fa-steam"> </i><b>${cell}</b>` */
-       return `<b>${cell}</b>`
+     function formatGame(row) {
+       var game = row.cells[0].data
+       var url = row.cells[3].data;
+       var icon = '<i title="On Steam" class="fa-brands fa-steam"></i>&nbsp;';
+       return `${icon}<a href="${url}" target="_blank">${game}</a>`
+       /* return `<b>${cell}</b>` */
      }
 
      function formatYoutube(cell) {
@@ -103,12 +103,13 @@
      }
 
 
+     // https://gridjs.io/docs/examples/html-cells for the formatter parts.
      new gridjs.Grid({
        columns: [
          {
            id: "Game",
            name: "Game",
-           formatter: (cell) => gridjs.html(formatGame(cell)),
+           formatter: (_, row) => gridjs.html(formatGame(row)),
          },
          {
            id: "Youtube Link",
@@ -118,6 +119,12 @@
          {
            id: "Origin",
            name: "Origin",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Steam Link",
+           name: "Steam Link",
+           hidden: true,
            formatter: (cell) => gridjs.html(`${cell}`),
          },
        ],

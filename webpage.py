@@ -137,7 +137,9 @@ async def youtube(req: web.Request):
         with open('data/playlists.csv') as playfile:
             # We're using DictReader with a defined set of fields so that if any keys are added to
             # the sheet the display code here won't break.
-            reader = csv.DictReader(playfile, fieldnames=("Game", "Youtube Link", "Origin"))
+            reader = csv.DictReader(playfile, fieldnames=(
+                "Game", "Youtube Link", "Origin", "Steam Link",
+            ))
             # Skip the header line (needed when setting fieldnames)
             next(reader)
             # Serialize from a special object down to a pure list so we can json dump
