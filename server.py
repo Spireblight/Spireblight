@@ -964,9 +964,12 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
         case "add":
             if line is not None:
                 author = None
-                if rest[-2] == "-": # attributing the quote to someone
-                    line = " ".join(rest[:-2])
-                    author = rest[-1]
+                try:
+                    if rest[-2] == "-": # attributing the quote to someone
+                        line = " ".join(rest[:-2])
+                        author = rest[-1]
+                except IndexError:
+                    pass
                 _quotes.append(Quote(line, author, ctx.author.display_name, datetime.datetime.now()))
                 update = True
                 await ctx.reply(f"Quote #{len(_quotes) - 1} successfully added!")
@@ -985,19 +988,21 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                 elif i < len(_quotes):
                     _quotes[i].line = line
                     update = True
+                    await ctx.reply("It is done. No one will remember this.")
                 else:
                     await ctx.reply("No such quote.")
 
         case "author":
             try:
                 i = int(rest[0])
-                author = rest[1]
+                author = " ".join(rest[1:])
             except (ValueError, IndexError):
                 await ctx.reply("Invalid input or not enough arguments.")
             else:
                 if i < len(_quotes):
                     _quotes[i].author = author
                     update = True
+                    await ctx.reply("The author of this quote has been properly attributed.")
                 else:
                     await ctx.reply("No such quote.")
 
