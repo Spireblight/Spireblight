@@ -1,4 +1,4 @@
-# (c) Anilyka Barry, 2022
+# (c) Anilyka Barry, 2022-2024
 
 from __future__ import annotations
 
@@ -71,7 +71,7 @@ _consts = {
     "website": config.server.url,
 }
 
-_quotes: list[tuple[str, str, int]] = []
+_quotes: list[Quote] = []
 
 class Formatter(string.Formatter): # this does not support conversion or formatting
     def __init__(self):
@@ -214,6 +214,22 @@ def load(loop: asyncio.AbstractEventLoop):
         loop.create_task(_launch_timers(to_start))
     except FileNotFoundError:
         pass
+
+    try:
+        with getfile("quotes.json", "r") as f:
+            j = json.load(f)
+        for line, author, adder, isq, ts in j:
+            q = Quote(line, author, adder, datetime.datetime.fromtimestamp(ts))
+            if not isq:
+                q.is_quote = False
+            _quotes.append(q)
+    except FileNotFoundError:
+        pass
+
+def _update_quotes():
+    q = [x.to_json() for x in _quotes]
+    with getfile("quotes.json", "w") as f:
+        json.dump(q, f, indent=config.server.json_indent)
 
 async def _launch_timers(timers: list[Timer]):
     for timer in timers:
@@ -928,12 +944,155 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case _:
             await ctx.reply(f"Unrecognized action {action}.")
 
-def _load_quotes():
-    pass
+class Quote:
+    def __init__(self, line: str, author: Optional[str], added_by: str, ts: datetime.datetime):
+        self.line = line
+        self.author = author
+        self.added_by = added_by
+        self.is_quote = True
+        self.ts = ts
 
-#@command("quote")
-async def quote_cmd(ctx: ContextType, *args: str):
-    pass
+    def to_json(self):
+        return [self.line, self.author, self.added_by, self.is_quote, self.ts.timestamp() if self.ts is not None else 0]
+
+@command("quote", "randomquote")
+async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
+    """Edit the quote database or pull a specific or random quote."""
+    update = False
+    line = " ".join(rest)
+    match arg:
+        case "add":
+            if line is not None:
+                author = None
+                if rest[-2] == "-": # attributing the quote to someone
+                    line = " ".join(rest[:-2])
+                    author = rest[-1]
+                _quotes.append(Quote(line, author, ctx.author.display_name, datetime.datetime.now()))
+                update = True
+                await ctx.reply(f"Quote #{len(_quotes) - 1} successfully added!")
+
+        case "edit":
+            try:
+                i = int(rest[0])
+                line = " ".join(rest[1:])
+            except ValueError:
+                await ctx.reply("Give me a number for the quote to edit.")
+            except IndexError:
+                await ctx.reply("You want me to edit what, exactly?")
+            else:
+                if not line:
+                    await ctx.reply("Replace it with what? Use 'delete' to delete.")
+                elif i < len(_quotes):
+                    _quotes[i].line = line
+                    update = True
+                else:
+                    await ctx.reply("No such quote.")
+
+        case "author":
+            try:
+                i = int(rest[0])
+                author = rest[1]
+            except (ValueError, IndexError):
+                await ctx.reply("Invalid input or not enough arguments.")
+            else:
+                if i < len(_quotes):
+                    _quotes[i].author = author
+                    update = True
+                else:
+                    await ctx.reply("No such quote.")
+
+        case "no-adder" | "noadder":
+            try:
+                i = int(rest[0])
+            except (ValueError, IndexError):
+                await ctx.reply("No argument or not a number.")
+            else:
+                if i < len(_quotes):
+                    _quotes[i].added_by = None
+                    update = True
+                    await ctx.reply("Done. No one added this quote.")
+                else:
+                    await ctx.reply("No such quote.")
+
+        case "no-quote" | "noquote":
+            try:
+                i = int(rest[0])
+            except (ValueError, IndexError):
+                await ctx.reply("No argument or not a number.")
+            else:
+                if i < len(_quotes):
+                    _quotes[i].is_quote = False
+                    update = True
+                    await ctx.reply("This is no longer a quote.")
+                else:
+                    await ctx.reply("No such quote.")
+
+        case "timestamp" | "ts":
+            try:
+                i = int(rest[0])
+                date = [int(x) for x in rest[1:]]
+            except (ValueError, IndexError):
+                await ctx.reply("Need to be all numbers.")
+            else:
+                if i < len(_quotes):
+                    try:
+                        d = datetime.datetime(*date)
+                    except ValueError as e:
+                        await ctx.reply(f"Error: {e.args[0]}")
+                    else:
+                        _quotes[i].ts = d
+                        update = True
+                        await ctx.reply(f"Timestamp successfully changed to {d.isoformat()[:10]}. You have rewritten history.")
+                else:
+                    await ctx.reply("No such quote.")
+
+        case "delete" | "remove":
+            try:
+                i = int(rest[0])
+            except (ValueError, IndexError):
+                await ctx.reply("Nothing to delete or invalid input.")
+            else:
+                if i < len(_quotes):
+                    del _quotes[i]
+                    update = True
+                    await ctx.reply("This quote is now gone forever.")
+                else:
+                    await ctx.reply("I don't even HAVE that many quotes!")
+
+        case "random":
+            if not _quotes:
+                await ctx.reply("There are no quotes.")
+                return
+            i = random.randint(0, len(_quotes) - 1)
+            await ctx.reply(_get_quote(i))
+
+        case e:
+            try:
+                i = int(e)
+            except ValueError:
+                await ctx.reply("I'm afraid I don't understand what that means.")
+            else:
+                if i < len(_quotes):
+                    await ctx.reply(_get_quote(i))
+                else:
+                    await ctx.reply("No such quote.")
+
+    if update:
+        _update_quotes()
+
+def _get_quote(i: int):
+    q = _quotes[i]
+    if not q.is_quote:
+        return q.line
+    author = ""
+    if q.author is not None:
+        author = f" - {q.author}"
+    added_by = ", on {ts}"
+    # Keep that information, but don't display it for now. maybe later
+    #if q.added_by:
+    #    added_by = f" (Added by {q.added_by} on {{ts}})"
+    added_by = added_by.format(ts=q.ts.isoformat()[:10])
+    return f'Quote #{i}: "{q.line}"{author}{added_by}'
 
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
