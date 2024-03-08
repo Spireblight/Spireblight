@@ -1042,7 +1042,7 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                 if i < len(_quotes):
                     try:
                         d = datetime.datetime(*date)
-                    except ValueError as e:
+                    except Exception as e:
                         await ctx.reply(f"Error: {e.args[0]}")
                     else:
                         _quotes[i].ts = d
