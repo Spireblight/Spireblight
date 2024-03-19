@@ -30,7 +30,7 @@ _profiles: dict[int, Profile] = {}
 _slots: dict[str, str] = {}
 
 def get_profile(x: int) -> Profile:
-    return _profiles[x]
+    return _profiles.get(x, None)
 
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
