@@ -161,8 +161,8 @@ async def runs_by_timestamp(req: Request):
     }
 
 
-@router.get("/profile/{profile}/runs/{timestamp}.zip")
-@router.get("/profile/{profile}/runs.zip")
+@router.get("/profile/{profile}/runs/archive/{timestamp}.zip")
+@router.get("/profile/{profile}/runs/archive.zip")
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
     from runs import _update_cache
