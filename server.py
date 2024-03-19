@@ -154,10 +154,11 @@ def _create_cmd(output):
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
         keywords = {"mt-save": None, "savefile": None, "profile": None, "readline": readline}
         if "$<profile" in msg:
-            try:
-                keywords["profile"] = get_current_profile()
-            except KeyError: # in case we have nothing
+            profile = get_current_profile()
+            if profile is None:
                 msg = f"Error: command requires an existing profile, and none exist."
+            else:
+                keywords["profile"] = profile
         if "$<savefile" in msg:
             keywords["savefile"] = await get_savefile(ctx)
             if keywords["savefile"] is None:
@@ -1763,11 +1764,8 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
 async def wall_card(ctx: ContextType):
     """Fetch the card in the wall for the ladder savefile."""
     for i in range(2):
-        try:
-            p = get_profile(i)
-        except KeyError:
-            continue
-        if "ladder" in p.name.lower():
+        p = get_profile(i)
+        if p is not None and "ladder" in p.name.lower():
             break
     else:
         await ctx.reply("Error: could not find Ladder savefile.")

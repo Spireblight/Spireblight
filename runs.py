@@ -298,10 +298,9 @@ def _update_cache():
 async def pick_profile(req: Request):
     profiles = []
     for i in range(3):
-        try:
-            profiles.append(get_profile(i))
-        except KeyError:
-            continue
+        profile = get_profile(i)
+        if profile is not None:
+            profiles.append(profile)
 
     if not profiles:
         raise HTTPNotImplemented(reason="No run files were found")

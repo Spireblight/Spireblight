@@ -38,8 +38,8 @@ def get_current_profile() -> Profile:
 def profile_from_request(req: Request) -> Profile:
     try:
         profile = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
+        if profile is None:
+            raise HTTPNotFound()
     except ValueError:
         raise HTTPForbidden(reason="profile must be integer")
     return profile
