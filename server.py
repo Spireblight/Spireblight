@@ -159,8 +159,10 @@ def _create_cmd(output):
             except KeyError: # in case we have nothing
                 msg = f"Error: command requires an existing profile, and none exist."
         if "$<savefile" in msg:
-            keywords["savefile"] = await get_savefile(ctx)
+            keywords["savefile"] = await get_savefile()
+            # No save file found:
             if keywords["savefile"] is None:
+                await ctx.reply("Not in a run.")
                 return
         if "$<mt-save" in msg:
             keywords["mt-save"] = await get_mt_save(ctx)
@@ -281,13 +283,17 @@ def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = Fal
         return func
     return inner
 
-def with_savefile(name: str, *aliases: str, **kwargs):
+def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwargs):
     """Decorator for commands that require a save."""
     def inner(func):
         async def _savefile_get(ctx) -> list:
-            res = await get_savefile(ctx)
+            res = await get_savefile()
             if res is None:
                 raise ValueError("No savefile")
+            if res.character is None and not optional_save:
+                if ctx is not None:
+                    await ctx.reply("Not in a run.")
+                return
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
@@ -1902,9 +1908,8 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
     rate = [0 if (a+b==0) else a/(a+b) for a, b in zip(wins, losses)]
     await ctx.reply(f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}")
 
-@command("unmastered")
-async def unmastered(ctx: ContextType):
-    save = await get_savefile()
+@with_savefile("unmastered", optional_save=True)
+async def unmastered(ctx: ContextType, save: Savefile):
     if save is not None and "unmastered" in save._cache:
         await ctx.reply(save._cache["unmastered"])
         return
