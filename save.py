@@ -14,7 +14,6 @@ import aiohttp_jinja2
 from response_objects.run_single import RunResponse
 from nameinternal import get, get_card, Relic, Potion
 from sts_profile import get_current_profile
-from typehints import ContextType
 from gamedata import FileParser, BottleRelic, KeysObtained
 from webpage import router
 from logger import logger
@@ -478,10 +477,5 @@ async def receive_save(req: Request):
 
     return Response()
 
-async def get_savefile(ctx: ContextType | None = None) -> Savefile:
-    if _savefile.character is None:
-        if ctx is not None:
-            await ctx.reply("Not in a run.")
-        return
-
+async def get_savefile() -> Savefile:
     return _savefile
