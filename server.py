@@ -1988,6 +1988,11 @@ async def current_mastery_check(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f"There are no new cards in this run that can be mastered.")
 
+@with_savefile("cwbgh", optional_save=True)
+async def calipers(ctx: ContextType, save: Optional[Savefile]):
+    # if not save:
+    await ctx.reply("Calipers would be good here baalorCalipers baalorSmug")
+
 @router.get("/commands")
 @template("commands.jinja2")
 async def commands_page(req: Request):
