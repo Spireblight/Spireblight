@@ -85,15 +85,44 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         context.reply = AsyncMock()
 
         # Invoke command using mocked context and desired command keywords
-        await server.calipers(context, "calipers")
+        await server.calipers(context, None)
 
         # Validate that expected calls and awaits were made
         context.reply.assert_awaited_once_with(
             "Calipers would be good here baalorCalipers baalorSmug"
         )
 
-    async def test_command_cwbgh_with_save_no_calipers(self):
-        pass
+    @patch("server.query")
+    async def test_command_cwbgh_with_save_no_calipers(self, mock_query):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        info = MagicMock(cls_name="relic", name="calipers")
+        mock_query.return_value = info
+        mock_save = MagicMock()
 
-    async def test_command_cwbgh_with_save_has_calipers(self):
-        pass
+        # Invoke command using mocked context and desired command keywords
+        await server.calipers(context, mock_save)
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Calipers would be good here baalorCalipers baalorSmug"
+        )
+
+    @patch("server.query")
+    async def test_command_cwbgh_with_save_has_calipers(self, mock_query):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        info = "Calipers"
+        mock_query.return_value = info
+        mock_save = MagicMock()
+        mock_save.relics_bare = [info]
+
+        # Invoke command using mocked context and desired command keywords
+        await server.calipers(context, mock_save)
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Calipers ARE good here! baalorCalipers baalorSmug"
+        )
