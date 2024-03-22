@@ -99,7 +99,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         context.reply = AsyncMock()
         info = MagicMock(cls_name="relic", name="calipers")
         mock_query.return_value = info
-        mock_save = MagicMock()
+        mock_save = MagicMock(spec_set=server.Savefile)
 
         # Invoke command using mocked context and desired command keywords
         await server.calipers(context, mock_save)
@@ -116,7 +116,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         context.reply = AsyncMock()
         info = "Calipers"
         mock_query.return_value = info
-        mock_save = MagicMock()
+        mock_save = MagicMock(spec_set=server.Savefile)
         mock_save.relics_bare = [info]
 
         # Invoke command using mocked context and desired command keywords
