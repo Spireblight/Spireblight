@@ -14,10 +14,11 @@ _streak_collections = StreakCache(datetime(2023, 10, 24))
 
 def update_streak_collections():
     # First we grab all the runs from the BaalorA20 profile.
-    all_runs = list(get_profile(0).runs)
-    if not all_runs:
+    profile = get_profile(0)
+    if profile is None or not profile.runs:
         logger.info(f"No runs found to group into streak")
         return
+    all_runs = profile.runs
 
     # We build a list of all runs that have happened the cutoff date, sorted with the earliest runs
     # first in the list
