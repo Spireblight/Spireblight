@@ -293,7 +293,9 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
             if res.character is None and not optional_save:
                 if ctx is not None:
                     await ctx.reply("Not in a run.")
-                return
+                raise ValueError("Not in a run")
+            if res.character is None and optional_save:
+                return [None]
             return [res]
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
     return inner
@@ -1990,11 +1992,12 @@ async def current_mastery_check(ctx: ContextType, save: Savefile):
 
 @with_savefile("cwbgh", optional_save=True)
 async def calipers(ctx: ContextType, save: Optional[Savefile]):
+    msg = "Calipers would be good here baalorCalipers baalorSmug"
     if save:
         if query("calipers") in save.relics_bare:
-            await ctx.reply("Calipers ARE good here! baalorCalipers baalorSmug")
+            msg = "Calipers ARE good here! baalorCalipers baalorSmug"
             return
-    await ctx.reply("Calipers would be good here baalorCalipers baalorSmug")
+    await ctx.reply(msg)
 
 @router.get("/commands")
 @template("commands.jinja2")
