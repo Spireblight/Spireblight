@@ -1996,7 +1996,6 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
     if save:
         if query("calipers") in save.relics_bare:
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
-            return
     await ctx.reply(msg)
 
 @router.get("/commands")
