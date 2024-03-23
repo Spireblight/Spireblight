@@ -19,7 +19,6 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("Error")
         context.reply.assert_awaited_once_with("Could not find card 'Error'")
-    
 
     @patch("server.query")
     async def test_command_card_with_art_not_a_card(self, mock_query):
@@ -114,7 +113,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
-        info = "Calipers"
+        info = "calipers"
         mock_query.return_value = info
         mock_save = MagicMock(spec_set=server.Savefile)
         mock_save.relics_bare = [info]
