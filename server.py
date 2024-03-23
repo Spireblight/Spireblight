@@ -1659,12 +1659,12 @@ async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
     relicData = l[index-1]
     await ctx.reply(f"The artifact at position {index} is {relicData.info}")
 
-@slice_command("curses")
+#@slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""
     await ctx.reply(f"We are running Classic on {save.difficulty} with {'; '.join(save.curses)}.")
 
-@slice_command("items")
+#@slice_command("items")
 async def items(ctx: ContextType, save: CurrentRun):
     """Display the current run's unequipped items."""
     if save.items:
