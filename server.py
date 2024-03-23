@@ -1990,7 +1990,7 @@ async def current_mastery_check(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f"There are no new cards in this run that can be mastered.")
 
-@with_savefile("cwbgh", optional_save=True)
+@with_savefile("cwbgh", "cwbg", optional_save=True)
 async def calipers(ctx: ContextType, save: Optional[Savefile]):
     msg = "Calipers would be good here baalorCalipers baalorSmug"
     if save:
