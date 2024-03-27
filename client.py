@@ -69,12 +69,12 @@ async def main():
 
             if use_sd:
                 try:
-                    cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-2"))
+                    cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-3"))
                 except OSError:
                     pass
                 else:
                     if cur_sd != last_sd:
-                        with open(os.path.join(user, ".prefs", "slice-and-dice-2")) as f:
+                        with open(os.path.join(user, ".prefs", "slice-and-dice-3")) as f:
                             sd_data = f.read()
                         sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
                         async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:

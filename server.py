@@ -44,7 +44,7 @@ from wrapper import wrapper
 from monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from twitch import TwitchCommand
 from logger import logger
-from slice import get_current_run, CurrentRun
+from slice import get_runs, CurrentRun
 from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
@@ -303,12 +303,12 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
 def slice_command(name: str, *aliases: str, **kwargs):
     def inner(func):
         async def _slice_get(ctx) -> list:
-            res = get_current_run()
-            if res is None:
+            res = get_runs()
+            if not res:
                 if ctx:
                     await ctx.reply("We are not playing Slice & Dice currently.")
                 raise ValueError("No Slice & Dice run going on")
-            return [res]
+            return [res["classic"]] # FIXME: Does not support multiple S&D runs at once
         return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
     return inner
 
@@ -1661,12 +1661,12 @@ async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
     relicData = l[index-1]
     await ctx.reply(f"The artifact at position {index} is {relicData.info}")
 
-#@slice_command("curses")
+@slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""
-    await ctx.reply(f"We are running Classic on {save.difficulty} with {'; '.join(save.curses)}.")
+    await ctx.reply(f"We are running Classic on {save.difficulty} with {'; '.join(save.modifiers)}.")
 
-#@slice_command("items")
+@slice_command("items")
 async def items(ctx: ContextType, save: CurrentRun):
     """Display the current run's unequipped items."""
     if save.items:
