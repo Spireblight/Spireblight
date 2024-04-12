@@ -199,7 +199,8 @@ def load(loop: asyncio.AbstractEventLoop):
     try:
         with getfile("disabled", "r") as f:
             for disabled in f.readlines():
-                TConn.commands[disabled].enabled = False
+                pass
+                # TConn.commands[disabled].enabled = False
     except FileNotFoundError:
         pass
 
@@ -1530,7 +1531,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
     """Output whether a given relic has been seen."""
     relic = " ".join(relic)
     relics = [relic]
-    
+
     # Check if the relic is referencing a relic set:
     relic_set = query(relic)
     if isinstance(relic_set, RelicSet):
