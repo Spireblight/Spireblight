@@ -1870,7 +1870,7 @@ async def calculate_streak_cmd(ctx: ContextType, date_string: Optional[str] = No
 
     final = f"Current streak: {' - '.join(msg)}"
     if date_string is None:
-        run_stats = get_all_run_stats()
+        run_stats = get_run_stats_by_date()
     else:
         try:
             run_stats = get_run_stats_by_date_string(date_string)
