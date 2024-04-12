@@ -1857,7 +1857,7 @@ async def streak_display(ctx: ContextType, new: str):
     await ctx.reply(f"Streak display changed to {', '.join(word)}.")
 
 @command("streak")
-async def calculate_streak_cmd(ctx: ContextType, date_string: Optional[str] = None):
+async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
     if not _display:
         _get_set_display()
@@ -1869,17 +1869,7 @@ async def calculate_streak_cmd(ctx: ContextType, date_string: Optional[str] = No
             msg.append(f"{word}: {{0.{arg}}}")
 
     final = f"Current streak: {' - '.join(msg)}"
-    if date_string is None:
-        run_stats = get_run_stats_by_date()
-    else:
-        try:
-            run_stats = get_run_stats_by_date_string(date_string)
-        except ValueError:
-            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
-            return
-        except TypeError:
-            await ctx.reply("Start date is after end date")
-            return
+    run_stats = get_all_run_stats()
     await ctx.reply(final.format(run_stats.streaks))
 
 @command("pb")
