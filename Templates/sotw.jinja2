@@ -1,0 +1,13 @@
+{% extends "base.jinja2" %}
+
+
+{% block title %}
+  Seed of the week
+{% endblock %}
+
+{% block content %}
+<form action="/sotw/submit-run" method="post" enctype="multipart/form-data">
+  <input type="file" name="Choose your file from the saves folder" accept=".run">  
+  <button type="submit">Upload</button>
+</form>
+{% endblock %}
