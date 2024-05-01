@@ -37,3 +37,4 @@ die
 equip
 choose
 blame
+caption
