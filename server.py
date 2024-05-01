@@ -49,6 +49,7 @@ from utils import format_for_slaytabase, getfile, parse_date_range, update_db, g
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache
+from sotw import placeholder
 
 from typehints import ContextType, CommandType
 import events

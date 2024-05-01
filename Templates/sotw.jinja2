@@ -6,8 +6,16 @@
 {% endblock %}
 
 {% block content %}
-<form action="/sotw/submit-run" method="post" enctype="multipart/form-data">
-  <input type="file" name="Choose your file from the saves folder" accept=".run">  
-  <button type="submit">Upload</button>
-</form>
+  <section class="section">
+    Current seed is [UNDEFINED]
+    <br>
+    * Note that SotW runs must be played on PC/Mac with the
+    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2181005326" target="_blank">
+      RNGfix
+    </a> mod active
+  </section>
+  <form action="/sotw/submit-run" method="post" enctype="multipart/form-data">
+    <input type="file" name="Choose your file from the saves folder" accept=".run">  
+    <button type="submit">Upload</button>
+  </form>
 {% endblock %}
