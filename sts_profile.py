@@ -168,9 +168,13 @@ async def runs_as_zipfile(req: Request) -> Response:
     _update_cache()
     try:
         timestamp = req.match_info.get("timestamp", "")
-        start, _, end = timestamp.partition("..")
-        start = int(start) if start else 0
-        end = int(end) if end else time.time()
+        if timestamp:
+            start, _, end = timestamp.partition("..")
+            start = int(start) if start else 0
+            end = int(end) if end else time.time()
+        else:
+            start = 0
+            end = time.time()
     except ValueError:
         raise HTTPForbidden(reason="Timestamp must be integers if given.")
     has_file = False
