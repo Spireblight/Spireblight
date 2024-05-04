@@ -160,7 +160,6 @@ async def runs_by_timestamp(req: Request):
         "end": datetime.fromtimestamp(end),
     }
 
-@router.get("/archive/{profile}/all.zip")
 @router.get("/archive/{profile}/{timestamp}.zip")
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
@@ -168,7 +167,7 @@ async def runs_as_zipfile(req: Request) -> Response:
     _update_cache()
     try:
         timestamp = req.match_info.get("timestamp", "")
-        if timestamp:
+        if timestamp not in ("all", "runs"):
             start, _, end = timestamp.partition("..")
             start = int(start) if start else 0
             end = int(end) if end else time.time()
