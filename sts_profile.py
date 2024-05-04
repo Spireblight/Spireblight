@@ -128,7 +128,7 @@ async def runs_page(req: Request):
         "pages": profile.pages,
     }
 
-@router.get("/profile/{profile}/runs/by-timestamp/{timestamp}/")
+@router.get("/profile/{profile}/runs/by-timestamp/{timestamp}")
 @aiohttp_jinja2.template("runs_timestamp.jinja2")
 async def runs_by_timestamp(req: Request):
     profile = profile_from_request(req)
@@ -156,13 +156,12 @@ async def runs_by_timestamp(req: Request):
         "profile": profile,
         "runs": runs,
         "back": req.rel_url.query.get('back'),
-        "start": datetime.utcfromtimestamp(start),
-        "end": datetime.utcfromtimestamp(end),
+        "start": datetime.fromtimestamp(start), # TODO: Map to UTC
+        "end": datetime.fromtimestamp(end),
     }
 
-
-@router.get("/profile/{profile}/runs/archive/{timestamp}.zip")
-@router.get("/profile/{profile}/runs/archive.zip")
+@router.get("/archive/{profile}/all.zip")
+@router.get("/archive/{profile}/{timestamp}.zip")
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
     from runs import _update_cache
