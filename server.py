@@ -1073,6 +1073,27 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                 else:
                     await ctx.reply("I don't even HAVE that many quotes!")
 
+        case "search" | "find":
+            if not line:
+                await ctx.reply("You need to search for something!")
+                return
+
+            line = line.lower()
+            found = []
+            for i, q in enumerate(_quotes):
+                if line in q.line.lower():
+                    found.append(i)
+            match len(found):
+                case 0:
+                    await ctx.reply("No quotes match this. Maybe try narrowing it down?")
+                case 1:
+                    await ctx.reply(_get_quote(found[0]))
+                case n:
+                    if n > 20: # sanity threshold
+                        await ctx.reply("Too many quotes match this. Try a narrower search.")
+                    else:
+                        await ctx.reply(f"The quotes with this text are {', '.join(found)}.")
+
         case "random":
             if not _quotes:
                 await ctx.reply("There are no quotes.")
