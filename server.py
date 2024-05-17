@@ -1092,7 +1092,7 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                     if n > 20: # sanity threshold
                         await ctx.reply("Too many quotes match this. Try a narrower search.")
                     else:
-                        await ctx.reply(f"The quotes with this text are {', '.join(found)}.")
+                        await ctx.reply(f"The quotes with this text are {', '.join(str(x) for x in found)}.")
 
         case "random":
             if not _quotes:
