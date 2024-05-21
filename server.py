@@ -1107,7 +1107,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except ValueError:
                 await ctx.reply("I'm afraid I don't understand what that means.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 < i < len(_quotes):
                     await ctx.reply(_get_quote(i))
                 else:
                     await ctx.reply("No such quote.")
