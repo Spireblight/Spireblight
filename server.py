@@ -548,7 +548,7 @@ class Timer:
                 continue
             if maybe_cmd == "current":
                 save = await get_savefile()
-                if save is None:
+                if not save.in_game:
                     self.commands.append(maybe_cmd)
                     continue
             cmd = maybe_cmd
