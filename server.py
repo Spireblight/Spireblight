@@ -992,9 +992,11 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except IndexError:
                 await ctx.reply("You want me to edit what, exactly?")
             else:
+                if i < 0:
+                    i += len(_quotes)
                 if not line:
                     await ctx.reply("Replace it with what? Use 'delete' to delete.")
-                elif i < len(_quotes):
+                elif 0 <= i < len(_quotes):
                     _quotes[i].line = line
                     update = True
                     await ctx.reply("It is done. No one will remember this.")
@@ -1008,7 +1010,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except (ValueError, IndexError):
                 await ctx.reply("Invalid input or not enough arguments.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 <= i < len(_quotes):
                     _quotes[i].author = author
                     update = True
                     await ctx.reply("The author of this quote has been properly attributed.")
@@ -1021,7 +1025,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except (ValueError, IndexError):
                 await ctx.reply("No argument or not a number.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 <= i < len(_quotes):
                     _quotes[i].added_by = None
                     update = True
                     await ctx.reply("Done. No one added this quote.")
@@ -1034,7 +1040,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except (ValueError, IndexError):
                 await ctx.reply("No argument or not a number.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 <= i < len(_quotes):
                     _quotes[i].is_quote = False
                     update = True
                     await ctx.reply("This is no longer a quote.")
@@ -1048,7 +1056,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except (ValueError, IndexError):
                 await ctx.reply("Need to be all numbers.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 <= i < len(_quotes):
                     try:
                         d = datetime.datetime(*date)
                     except Exception as e:
@@ -1066,7 +1076,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             except (ValueError, IndexError):
                 await ctx.reply("Nothing to delete or invalid input.")
             else:
-                if i < len(_quotes):
+                if i < 0:
+                    i += len(_quotes)
+                if 0 <= i < len(_quotes):
                     del _quotes[i]
                     update = True
                     await ctx.reply("This quote is now gone forever.")
@@ -1109,7 +1121,7 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             else:
                 if i < 0:
                     i += len(_quotes)
-                if 0 < i < len(_quotes):
+                if 0 <= i < len(_quotes):
                     await ctx.reply(_get_quote(i))
                 else:
                     await ctx.reply("No such quote.")
