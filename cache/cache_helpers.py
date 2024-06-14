@@ -240,7 +240,7 @@ class StreakContainer:
     def runs_url(self):
         start = self.runs[0].timestamp.strftime("%s")
         end = self.runs[-1].timestamp.strftime("%s")
-        return f"/profile/0/runs/by-timestamp/{start}..{end}/"
+        return f"/profile/0/runs/by-timestamp/{start}..{end}"
 
     @property
     def character(self):
