@@ -30,7 +30,7 @@ _profiles: dict[int, Profile] = {}
 _slots: dict[str, str] = {}
 
 def get_profile(x: int) -> Profile:
-    return _profiles[x]
+    return _profiles.get(x, None)
 
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
@@ -38,8 +38,8 @@ def get_current_profile() -> Profile:
 def profile_from_request(req: Request) -> Profile:
     try:
         profile = get_profile(int(req.match_info["profile"]))
-    except KeyError:
-        raise HTTPNotFound()
+        if profile is None:
+            raise HTTPNotFound()
     except ValueError:
         raise HTTPForbidden(reason="profile must be integer")
     return profile

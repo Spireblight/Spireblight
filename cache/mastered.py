@@ -17,10 +17,11 @@ _mastery_stats = MasteryStats()
 __all__ = ["update_mastery_stats", "get_mastered", "get_current_masteries"]
 
 def update_mastery_stats():
-    try:
-        runs = list(get_profile(0).runs) # BaalorA20 profile
-    except KeyError:
+    profile = get_profile(0)
+    if profile is None:
         runs = []
+    else:
+        runs = list(profile.runs)
 
     if _mastery_stats.last_run_timestamp is None:
         for run in runs:
