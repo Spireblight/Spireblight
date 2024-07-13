@@ -66,47 +66,6 @@
             Ascension {{ run.ascension_level }}
           </div>
         </div>
-
-        {% if run.won %}
-          <div class="streak">
-            {% if run.rotating_streak.streak == 1 %}
-              <div class="first">
-                First in <br/> rotating streak
-              </div>
-            {% else %}
-              <div>
-                <span class="big">{{ run.rotating_streak.position }}</span>
-                /
-                <span class="big">{{ run.rotating_streak.streak }}</span>
-                rotating
-              </div>
-              <div>
-                {{ run.character_streak.position }} / {{ run.character_streak.streak }}
-                {{ run.character }} streak
-              </div>
-            {% endif %}
-          </div>
-        {% elif not run.done %}
-          <div class="streak current">
-            <div>
-              {% if run.rotating_streak.streak <= 1 %}
-                No streak yet
-              {% else %}
-                <span class="big">{{ run.rotating_streak.streak }}</span> rotating
-              {% endif %}
-            </div>
-            {% if run.character_streak.streak > 1 %}
-              <div>
-                {{ run.character_streak.position }} {{ run.character }} streak
-              </div>
-            {% endif %}
-          </div>
-        {% else %}
-          <div class="streak lost">
-            no streak <br/> because ded :(
-          </div>
-        {% endif %}
-
       </div>
     </div>
   </div>
