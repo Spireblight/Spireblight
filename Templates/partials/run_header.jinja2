@@ -69,20 +69,16 @@
 
         {% if run.won %}
           <div class="streak">
-            {% if run.character_streak.streak > 2 %}
-              <div>
-                {{ run.character_streak.position }} / {{ run.character_streak.streak }}
-                {{ run.character }} streak
-              </div>
-            {% endif %}
+            <div>
+              {{ run.character_streak.position }} / {{ run.character_streak.streak }}
+              {{ run.character }} streak
+            </div>
           </div>
         {% elif not run.done %}
           <div class="streak current">
-            {% if run.character_streak.streak > 2 %}
-              <div>
-                {{ run.character_streak.position }} {{ run.character }} streak
-              </div>
-            {% endif %}
+            <div>
+              {{ run.character_streak.position }} {{ run.character }} streak
+            </div>
           </div>
         {% else %}
           <div class="streak lost">
