@@ -69,7 +69,7 @@ config.filename = extra_file
 if not config.spire.steamdir:
     system_os = system().lower()
     if system_os == "windows":
-        config.spire.steamdir = 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+        config.spire.steamdir = r'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
     elif system_os == "linux":
         config.spire.steamdir = "~/.steam/steam/steamapps/common/SlayTheSpire"
     else: # Other Operating systems do not have defaults set
