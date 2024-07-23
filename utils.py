@@ -8,7 +8,14 @@ import json
 
 from configuration import config
 
-__all__ = ["get_req_data", "getfile", "update_db"]
+__all__ = [
+    "get_req_data",
+    "getfile",
+    "update_db",
+    "convert_class_to_obj",
+    "format_for_slaytabase",
+    "parse_date_range",
+]
 
 async def get_req_data(req: Request, *keys: str) -> list[str]:
     pw = req.query.get("key")
