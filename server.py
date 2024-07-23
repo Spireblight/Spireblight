@@ -1214,6 +1214,46 @@ async def stream_uptime(ctx: ContextType):
     else:
         await ctx.reply("Stream is offline (if this is wrong, the Twitch API broke).")
 
+# DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
+# TODO:
+# - Cover all basic cases (classic, extended, more)
+# - When receiving the run file at the end, automatically resolve prediction
+# - (optional) Figure out announcement so the bot can tell chat to vote
+# - Test the heck out of it (does not need to be automated tests)
+# - Implement create, info, resolve, cancel
+# - Have enough text variety that it doesn't get repetitive
+# - Refuse to create a prediction if a Neow bonus was picked
+# 
+# More info:
+# - Type 'classic' is prediction with only win/lose options
+# - Type 'extended' is 5 outcomes (death in each act+win)
+# - Other types do not need to be about a Spire outcome (e.g. FTL)
+# - Character is *optional* and could be used for text
+# - If a savefile exists (but no Neow bonus was picked), use character from that and ignore 'char' argument
+# - Duration is is to be coerced to an int but we should accept things like "5m" and be clever about it
+# - If for a Spire run outcome, and a savefile is detected, disallow resolving or cancelling it
+# - TwitchIO's PartialUser (of which User is a subclass) has method end_prediction
+
+@command("prediction", "pred", flag="m")
+async def handle_prediction(ctx: ContextType, type: str = "info", *args: str):
+    # TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction
+    match type:
+        case "start" | "create":
+            values = {
+                "char": None,
+                "type": "classic",
+                "duration": "300",
+            }
+            for pair in args:
+                key, eq, val = pair.partition("=")
+                val = val.replace("_", " ") # just in case
+                if not eq:
+                    return await ctx.reply(f"Needs key-value pair ('{pair}' is invalid).")
+                if key in values:
+                    values[key] = val
+                else:
+                    return await ctx.reply(f"Error: key {key} is not recognized.")
+
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
@@ -1278,6 +1318,7 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
             await ctx.reply("uhhh, no one entered??")
             return
 
+        # TODO: replace with random.sample, maybe?
         users = random.choices(list(_ongoing_giveaway["users"]), k=_ongoing_giveaway["count"])
         _ongoing_giveaway["users"].clear()
         if len(users) == 1:

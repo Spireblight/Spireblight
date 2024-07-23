@@ -1,0 +1,23 @@
+{
+    "classic": {
+        "titles": [
+            "Will the run make it?",
+            "Will we win?",
+            "Is Baalor going to win this?",
+            "Will the Spire be Slain today?",
+            "Is this the run?"
+        ],
+        "victory": [
+            "This IS the run!",
+            "We will win, no doubt!",
+            "Baalor will Slay that Spire!",
+            "Oh yeah, we win, no doubt!"
+        ],
+        "defeat": [
+            "Oh, we're toast.",
+            "We don't survive this.",
+            "The Spire will Slay US!",
+            "Baalor won't make it."
+        ]
+    }
+}
