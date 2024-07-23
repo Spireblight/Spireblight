@@ -52,9 +52,9 @@ def parse_date_range(date_string: str) -> tuple[datetime]:
     start_date: datetime.datetime | None = None
     end_date: datetime.datetime | None = None
     if date_string[-1] == "+":
-        start_date = parse_dates_with_optional_month_day(date_string[:-1])
+        start_date = _parse_dates_with_optional_month_day(date_string[:-1])
     elif date_string[-1] == "-":
-        end_date = parse_dates_with_optional_month_day(date_string[:-1])
+        end_date = _parse_dates_with_optional_month_day(date_string[:-1])
     else:
         date_parts = date_string.split("-")
         if len(date_string) == 4 and len(date_parts) == 1:
@@ -64,14 +64,14 @@ def parse_date_range(date_string: str) -> tuple[datetime]:
         if len(date_parts) > 2:
             raise ValueError("Range format is invalid")
 
-        start_date = parse_dates_with_optional_month_day(date_parts[0])
-        end_date = parse_dates_with_optional_month_day(date_parts[-1], True)
+        start_date = _parse_dates_with_optional_month_day(date_parts[0])
+        end_date = _parse_dates_with_optional_month_day(date_parts[-1], True)
 
         if end_date is not None and end_date < start_date:
             raise TypeError("Start date was after End Date")
     return (start_date, end_date)
 
-def parse_dates_with_optional_month_day(val: str, isEndDate: bool = False) -> datetime:
+def _parse_dates_with_optional_month_day(val: str, isEndDate: bool = False) -> datetime:
     """Base val should be in YYYY/MM/DD where MM and DD are optional, defaulted to start or end of year"""
     date_parts = val.split("/")
     year = int(date_parts[0])

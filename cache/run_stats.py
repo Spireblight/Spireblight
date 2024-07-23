@@ -4,7 +4,7 @@ import os
 from cache.cache_helpers import RunStats, RunStatsByDate
 from sts_profile import get_profile
 from logger import logger
-from utils import parse_date_range, parse_dates_with_optional_month_day
+from utils import parse_date_range, _parse_dates_with_optional_month_day
 
 class _RangeCache():
     def __init__(self) -> None:
@@ -50,9 +50,9 @@ def _set_range_from_file():
     _range.is_loaded = True
     _run_stats_by_date.clear()
     if _range.dateDict["start_date"] is not None:
-        _run_stats_by_date.start_date = parse_dates_with_optional_month_day(_range.dateDict["start_date"])
+        _run_stats_by_date.start_date = _parse_dates_with_optional_month_day(_range.dateDict["start_date"])
     if _range.dateDict["end_date"] is not None:
-        _run_stats_by_date.end_date = parse_dates_with_optional_month_day(_range.dateDict["end_date"])
+        _run_stats_by_date.end_date = _parse_dates_with_optional_month_day(_range.dateDict["end_date"])
     _update_run_stats(_run_stats_by_date, _run_stats_by_date.start_date, _run_stats_by_date.end_date)
 
 def update_range(start_date: datetime | None, end_date: datetime | None):
