@@ -17,6 +17,7 @@ from sts_profile import get_current_profile
 from gamedata import FileParser, BottleRelic, KeysObtained
 from webpage import router
 from logger import logger
+from events import invoke
 from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run, StreakInfo
 
@@ -82,6 +83,10 @@ class Savefile(FileParser):
     @property
     def in_game(self) -> bool:
         return self.character is not None
+
+    @property
+    def act(self) -> int:
+        return self._data["act_num"]
 
     @property
     def timestamp(self) -> datetime.datetime:
@@ -467,7 +472,11 @@ async def receive_save(req: Request):
         if "basemod:mod_saves" not in j: # make sure this key exists
             j["basemod:mod_saves"] = {}
 
+    in_run = _savefile.in_game
     _savefile.update_data(j, name, req.query["has_run"])
+    if _savefile.in_game ^ in_run:
+        run = get_latest_run(None, None)
+        await invoke("run_end", run)
     with open(os.path.join("data", "spire-save.json"), "w") as f:
         if j:
             json.dump(j, f, indent=config.server.json_indent)

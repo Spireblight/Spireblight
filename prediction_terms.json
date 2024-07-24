@@ -1,11 +1,16 @@
 {
     "classic": {
-        "titles": [
+        "title": [
             "Will the run make it?",
             "Will we win?",
             "Is Baalor going to win this?",
             "Will the Spire be Slain today?",
             "Is this the run?"
+        ],
+        "char_title": [
+            "Will the {} make it?",
+            "Does the {} get to win?",
+            "Can we pilot the {} to victory?"
         ],
         "victory": [
             "This IS the run!",

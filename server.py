@@ -20,7 +20,7 @@ import sys
 import re
 import os
 
-from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot
+from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot, Context as TContext
 from twitchio.ext.routines import routine, Routine
 from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflineData
 from twitchio.channel import Channel
@@ -44,11 +44,12 @@ from wrapper import wrapper
 from monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from twitch import TwitchCommand
 from logger import logger
+from events import add_listener
 from slice import get_runs, CurrentRun
 from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data
 from disc import DiscordCommand
 from save import get_savefile, Savefile
-from runs import get_latest_run, get_parser, _ts_cache as _runs_cache
+from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
 
 from typehints import ContextType, CommandType
 import events
@@ -125,6 +126,8 @@ _to_add_twitch: list[TwitchCommand] = []
 _to_add_discord: list[DiscordCommand] = []
 
 _timers: dict[str, Timer] = {}
+
+_prediction_terms = {}
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -203,6 +206,10 @@ def load(loop: asyncio.AbstractEventLoop):
                 # TConn.commands[disabled].enabled = False
     except FileNotFoundError:
         pass
+
+    _prediction_terms.clear()
+    with open("prediction_terms.json", "r") as f:
+        _prediction_terms.update(json.load(f))
 
     try:
         to_start = []
@@ -1234,13 +1241,34 @@ async def stream_uptime(ctx: ContextType):
 # - If for a Spire run outcome, and a savefile is detected, disallow resolving or cancelling it
 # - TwitchIO's PartialUser (of which User is a subclass) has method end_prediction
 
-@command("prediction", "pred", flag="m")
-async def handle_prediction(ctx: ContextType, type: str = "info", *args: str):
+_prediction = {
+    "running": False,
+    "id": None,
+    "outcomes": {},
+    "type": None,
+    "context": None,
+}
+
+async def start_prediction(ctx: TContext, title: str, outcomes: list[str], duration: int):
+    pass
+
+async def resolve_prediction(ctx: TContext, id: str, winner: str):
+    pass
+
+@add_listener("run_end")
+async def auto_resolve_pred(run: RunParser):
+    pass
+
+@command("prediction", "pred", discord=False, flag="m")
+async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
     # TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction
     match type:
         case "start" | "create":
+            if _prediction["running"]:
+                return await ctx.reply("A prediction is already running.")
+
             values = {
-                "char": None,
+                "char": None, # limited to 15 characters, if any
                 "type": "classic",
                 "duration": "300",
             }
@@ -1253,6 +1281,19 @@ async def handle_prediction(ctx: ContextType, type: str = "info", *args: str):
                     values[key] = val
                 else:
                     return await ctx.reply(f"Error: key {key} is not recognized.")
+
+            outcomes = []
+            title = None
+
+            match values["type"]:
+                case "classic":
+                    if (c := values["char"]) is not None:
+                        if len(c) > 15:
+                            return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
+                        title = random.choice(_prediction_terms["classic"]["char_title"]).format(c)
+                    else:
+                        title = random.choice(_prediction_terms["classic"]["title"])
+
 
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
