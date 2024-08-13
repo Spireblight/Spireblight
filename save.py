@@ -474,7 +474,7 @@ async def receive_save(req: Request):
 
     in_run = _savefile.in_game
     _savefile.update_data(j, name, req.query["has_run"])
-    if _savefile.in_game ^ in_run:
+    if in_run and not _savefile.in_game:
         run = get_latest_run(None, None)
         await invoke("run_end", run)
     with open(os.path.join("data", "spire-save.json"), "w") as f:

@@ -26,7 +26,7 @@ from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflin
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
-from twitchio.models import Stream
+from twitchio.models import Stream, Prediction
 
 import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
@@ -46,7 +46,7 @@ from twitch import TwitchCommand
 from logger import logger
 from events import add_listener
 from slice import get_runs, CurrentRun
-from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data
+from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data, post_prediction
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
@@ -1243,21 +1243,27 @@ async def stream_uptime(ctx: ContextType):
 
 _prediction = {
     "running": False,
-    "id": None,
-    "outcomes": {},
     "type": None,
-    "context": None,
+    "pred": None,
 }
 
 async def start_prediction(ctx: TContext, title: str, outcomes: list[str], duration: int):
-    pass
+    user = await ctx.channel.user()
+    value = await post_prediction(ctx._ws._client._http, user.id, title, outcomes, duration)
+    _prediction["pred"] = value
+    _prediction["running"] = True
 
-async def resolve_prediction(ctx: TContext, id: str, winner: str):
-    pass
+async def resolve_prediction(index: int):
+    pred: Prediction = _prediction["pred"]
+    outcome = pred.outcomes[index]
+    await pred.user.end_prediction(config.twitch.oauth_token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
+    _prediction["running"] = False
+    _prediction["type"] = None
+    _prediction["pred"] = None
 
 @add_listener("run_end")
 async def auto_resolve_pred(run: RunParser):
-    pass
+    pass # TODO: automatically resolve based on type
 
 @command("prediction", "pred", discord=False, flag="m")
 async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
