@@ -94,6 +94,10 @@ class NeowBonus:
         return self.parser._data.get("neow_bonus_log")
 
     @property
+    def choice_made(self) -> bool:
+        return bool(self.parser._data["neow_bonus"])
+
+    @property
     def picked(self) -> str:
         cost = self.parser._data["neow_cost"]
         bonus = self.parser._data["neow_bonus"]
@@ -121,6 +125,7 @@ class NeowBonus:
                 yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
     # All of the Neow Bonus keys should exist together, if more are added, we shouldn't need to add checks for them
+    # dear past self: wtf is the above supposed to mean? 02/09/24
     @property
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser._data:

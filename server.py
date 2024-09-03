@@ -1223,13 +1223,13 @@ async def stream_uptime(ctx: ContextType):
 
 # DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
 # TODO:
-# - Cover all basic cases (classic, extended, more)
-# - When receiving the run file at the end, automatically resolve prediction
-# - (optional) Figure out announcement so the bot can tell chat to vote
-# - Test the heck out of it (does not need to be automated tests)
-# - Implement create, info, resolve, cancel
-# - Have enough text variety that it doesn't get repetitive
-# - Refuse to create a prediction if a Neow bonus was picked
+# [X] Cover all basic cases (classic, extended, more)
+# [X] When receiving the run file at the end, automatically resolve prediction
+# [ ] (optional) Figure out announcement so the bot can tell chat to vote
+# [ ] Test the heck out of it (does not need to be automated tests)
+# [ ] Implement create, info, resolve, cancel, sync
+# [ ] Have enough text variety that it doesn't get repetitive
+# [ ] Refuse to create a prediction if a Neow bonus was picked
 # 
 # More info:
 # - Type 'classic' is prediction with only win/lose options
@@ -1263,7 +1263,14 @@ async def resolve_prediction(index: int):
 
 @add_listener("run_end")
 async def auto_resolve_pred(run: RunParser):
-    pass # TODO: automatically resolve based on type
+    if _prediction["running"]:
+        match _prediction["type"]:
+            case "classic":
+                await resolve_prediction(not run.won)
+            case "extended":
+                await resolve_prediction(run.acts_beaten)
+            case a:
+                raise RuntimeError(f"Unsupported prediction type {a!r} encountered.")
 
 @command("prediction", "pred", discord=False, flag="m")
 async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
@@ -1286,20 +1293,46 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 if key in values:
                     values[key] = val
                 else:
-                    return await ctx.reply(f"Error: key {key} is not recognized.")
+                    return await ctx.reply(f"Error: key {key!r} is not recognized.")
 
-            outcomes = []
-            title = None
+            try:
+                duration = int(values["duration"])
+            except ValueError:
+                return await ctx.reply("Duration must be an integer if specified.")
 
             match values["type"]:
                 case "classic":
-                    if (c := values["char"]) is not None:
-                        if len(c) > 15:
-                            return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
-                        title = random.choice(_prediction_terms["classic"]["char_title"]).format(c)
-                    else:
-                        title = random.choice(_prediction_terms["classic"]["title"])
+                    save = await get_savefile()
+                    if save.neow_bonus.choice_made:
+                        return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
+                    outcomes = [
+                        random.choice(_prediction_terms["classic"]["victory"]),
+                        random.choice(_prediction_terms["classic"]["defeat"]),
+                    ]
 
+                case "extended":
+                    save = await get_savefile()
+                    if save.neow_bonus.choice_made:
+                        return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
+                    outcomes = [
+                        random.choice(_prediction_terms["extended"]["act1_death"]),
+                        random.choice(_prediction_terms["extended"]["act2_death"]),
+                        random.choice(_prediction_terms["extended"]["act3_death"]),
+                        random.choice(_prediction_terms["extended"]["act4_death"]),
+                        random.choice(_prediction_terms["extended"]["victory"]),
+                    ]
+
+                case a:
+                    return await ctx.reply(f"Error: prediction type {a!r} is not recognized.")
+
+            if (c := values["char"]) is not None:
+                if len(c) > 15:
+                    return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
+                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(c)
+            else:
+                title = random.choice(_prediction_terms[values["type"]]["title"])
+
+            await start_prediction(ctx, title, outcomes, duration)
 
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
@@ -1515,11 +1548,17 @@ async def cards_removed(ctx: ContextType, save: Savefile):
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, save: Savefile):
     """Display what the Neow bonus was."""
-    await ctx.reply(f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}")
+    if not save.neow_bonus.choice_made:
+        await ctx.reply("No Neow bonus taken yet.")
+    else:
+        await ctx.reply(f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}")
 
 @with_savefile("neowskipped", "skippedbonus")
 async def neow_skipped(ctx: ContextType, save: Savefile):
-    await ctx.reply(f"Options skipped: {', '.join(save.neow_bonus.skipped)}")
+    if not save.neow_bonus.choice_made:
+        await ctx.reply("No Neow bonus taken yet.")
+    else:
+        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.skipped)}")
 
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, save: Savefile):

@@ -24,5 +24,35 @@
             "The Spire will Slay US!",
             "Baalor won't make it."
         ]
+    },
+    "extended": {
+        "title": [
+            "How far will we make it?",
+            "Where will Baalor get to?"
+        ],
+        "char_title": [
+            "How far will the {} make it?",
+            "How far can Baalor get the {}?"
+        ],
+        "act1_death": [
+            "Not even past Act 1",
+            "Can't beat Act 1"
+        ],
+        "act2_death": [
+            "We will die in Act 2",
+            "Baalor will fall to Act 2"
+        ],
+        "act3_death": [
+            "Act 3 will do us in",
+            "Can't quite make it past Act 3"
+        ],
+        "act4_death": [
+            "Almost, but not quite past Act 4",
+            "Can't beat Act 4"
+        ],
+        "victory": [
+            "VICTORY!",
+            "The Spire will be Slain!"
+        ]
     }
 }
