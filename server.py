@@ -1229,7 +1229,7 @@ async def stream_uptime(ctx: ContextType):
 # [ ] Test the heck out of it (does not need to be automated tests)
 # [ ] Implement create, info, resolve, cancel, sync
 # [ ] Have enough text variety that it doesn't get repetitive
-# [ ] Refuse to create a prediction if a Neow bonus was picked
+# [X] Refuse to create a prediction if a Neow bonus was picked
 # 
 # More info:
 # - Type 'classic' is prediction with only win/lose options
@@ -1295,6 +1295,10 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 else:
                     return await ctx.reply(f"Error: key {key!r} is not recognized.")
 
+            save = await get_savefile()
+            if save.in_game and save.neow_bonus.choice_made:
+                return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
+
             try:
                 duration = int(values["duration"])
             except ValueError:
@@ -1302,18 +1306,12 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
 
             match values["type"]:
                 case "classic":
-                    save = await get_savefile()
-                    if save.neow_bonus.choice_made:
-                        return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
                     outcomes = [
                         random.choice(_prediction_terms["classic"]["victory"]),
                         random.choice(_prediction_terms["classic"]["defeat"]),
                     ]
 
                 case "extended":
-                    save = await get_savefile()
-                    if save.neow_bonus.choice_made:
-                        return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
                     outcomes = [
                         random.choice(_prediction_terms["extended"]["act1_death"]),
                         random.choice(_prediction_terms["extended"]["act2_death"]),
@@ -1325,14 +1323,21 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 case a:
                     return await ctx.reply(f"Error: prediction type {a!r} is not recognized.")
 
-            if (c := values["char"]) is not None:
-                if len(c) > 15:
+            char = values["char"]
+            if save.in_game:
+                char = save.character
+
+            if char is not None:
+                if len(char) > 15:
                     return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
-                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(c)
+                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(char)
             else:
                 title = random.choice(_prediction_terms[values["type"]]["title"])
 
             await start_prediction(ctx, title, outcomes, duration)
+
+        case "info":
+            pass
 
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
