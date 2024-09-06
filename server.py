@@ -336,16 +336,16 @@ class TwitchConn(TBot):
         self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
         self._session: ClientSession | None = None
-        self._token: str = None
+        self._spotify_token: str = None
         self._expires_at: int | float = 0
-        self._refresh_token: str = None
+        self._spotify_refresh_token: str = None
         try:
             with open(os.path.join("data", "spotify_refresh_token"), "r") as f:
-                self._refresh_token = f.read().strip()
+                self._spotify_refresh_token = f.read().strip()
         except OSError:
             pass
 
-    async def get_new_token(self):
+    async def refresh_spotify_token(self):
         if not config.spotify.enabled:
             return
 
@@ -360,10 +360,10 @@ class TwitchConn(TBot):
                 "Authorization": f"Basic {value}",
             }
 
-        if self._refresh_token:
+        if self._spotify_refresh_token:
             params = {
                 "grant_type": "refresh_token",
-                "refresh_token": self._refresh_token,
+                "refresh_token": self._spotify_refresh_token,
             }
 
         else:
@@ -376,16 +376,16 @@ class TwitchConn(TBot):
         async with self._session.post("https://accounts.spotify.com/api/token", headers=headers, params=params) as resp:
             if resp.ok:
                 content = await resp.json()
-                self._token = content["access_token"]
+                self._spotify_token = content["access_token"]
                 self._expires_at = (datetime.datetime.now() + datetime.timedelta(seconds=content["expires_in"])).timestamp()
                 if "refresh_token" in content:
-                    self._refresh_token = content["refresh_token"]
+                    self._spotify_refresh_token = content["refresh_token"]
                     try:
                         with open(os.path.join("data", "spotify_refresh_token"), "w") as f:
-                            f.write(self._refresh_token)
+                            f.write(self._spotify_refresh_token)
                     except OSError: # oh no
-                        logger.error(f"Could not write refresh token to file: {self._refresh_token}")
-                return self._token
+                        logger.error(f"Could not write refresh token to file: {self._spotify_refresh_token}")
+                return self._spotify_token
             return None
 
     async def spotify_call(self):
@@ -395,8 +395,8 @@ class TwitchConn(TBot):
         if self._session is None:
             self._session = ClientSession()
 
-        if not self._token or self._expires_at < time.time():
-            token = await self.get_new_token()
+        if not self._spotify_token or self._expires_at < time.time():
+            token = await self.refresh_spotify_token()
             if not token:
                 return None
 
@@ -405,7 +405,7 @@ class TwitchConn(TBot):
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {self._token}",
+                "Authorization": f"Bearer {self._spotify_token}",
                 }) as resp:
             try:
                 return await resp.json()
@@ -462,7 +462,7 @@ class TwitchConn(TBot):
 
     async def event_new_chatter(self, user: Chatter, channel: Channel, message: str):
         if "youtube" in message.lower() or "yt" in message.lower():
-            await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
+            pass #await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
 
     async def event_raid(self, user: Chatter, channel: Channel, viewer_count: int):
         if viewer_count < 10:
@@ -2227,9 +2227,86 @@ async def individual_cmd(req: Request):
 
     return d
 
+_oauth_state = None
+
+@router.post("/twitch/check-token")
+async def check_token_validity(req: Request):
+    await get_req_data(req) # check if the key is OK
+    if not config.twitch.enabled:
+        return Response(text="DISABLED")
+    if not config.twitch.extended.enabled:
+        return Response(text="NOT_EXTENDED")
+    if not (config.twitch.extended.client_id and config.twitch.extended.client_secret):
+        return Response(text="NO_CREDENTIALS")
+
+    token = await get_oauth_token()
+
+    if token and (await validate_token()):
+        return Response(text="WORKING")
+
+    # Need to authenticate for the first time (presumably)
+
+    import secrets, urllib.parse
+
+    global _oauth_state
+    _oauth_state = secrets.token_urlsafe(32)
+
+    params = {
+        "client_id": config.twitch.extended.client_id,
+        "redirect_uri": f"{config.server.url}/twitch/receive-token",
+        "response_type": "code",
+        "scope": " ".join(config.twitch.extended.scopes),
+        "state": _oauth_state,
+    }
+
+    url = "https://id.twitch.tv/oauth2/authorize" + urllib.parse.urlencode(params)
+
+    return Response(text=f"NEEDS_CONNECTION:{url}")
+
+@router.view("/twitch/receive-token")
+async def get_new_token(req: Request):
+    values = req.query
+    global _oauth_state
+    if values["state"] != _oauth_state:
+        return
+
+    _oauth_state = None
+
+    if "error" in values or "code" not in values:
+        return # idk man, not much you can do
+
+    client = ClientSession()
+
+async def validate_token():
+    """Return bool of whether, after validation, we have a valid OAuth token."""
+
+async def refresh_token():
+    try:
+        f = getfile("twitch-refresh")
+    except FileNotFoundError:
+        return
+
+    # refresh token here & return it
+
+async def get_oauth_token():
+    try:
+        token = getfile("twitch-oauth", "r").read().strip()
+    except FileNotFoundError:
+        token = await refresh_token()
+        if token is None:
+            getfile("twitch-oauth", "w")
+            getfile("twitch-refresh", "w")
+
+    return token
+
 async def Twitch_startup():
     global TConn
-    TConn = TwitchConn(token=config.twitch.oauth_token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
+    if config.twitch.extended.enabled:
+        token = await get_oauth_token()
+    else:
+        token = config.twitch.oauth_token
+
+    TConn = TwitchConn(token=token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
     for cmd in _to_add_twitch:
         TConn.add_command(cmd)
     load(asyncio.get_event_loop())

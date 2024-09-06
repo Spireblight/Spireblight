@@ -5,7 +5,7 @@ __all__ = ["logger"]
 
 os.makedirs("data", exist_ok=True)
 
-logger = logging.getLogger("Twitch-Discord-Bot")
+logger = logging.getLogger("Spireblight")
 logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter("{asctime} :: {levelname:>8} - {message}", "(%Y-%m-%d %H:%M:%S)", "{")
