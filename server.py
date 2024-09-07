@@ -27,6 +27,7 @@ from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream, Prediction
+from twitchio.client import Client
 
 import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
@@ -335,6 +336,7 @@ class TwitchConn(TBot):
         super().__init__(*args, **kwargs)
         self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
+        self.app: Client = None
         self._session: ClientSession | None = None
         self._spotify_token: str = None
         self._expires_at: int | float = 0
@@ -471,6 +473,26 @@ class TwitchConn(TBot):
         await channel.send(f"Welcome along {user.display_name} with your {viewer_count} friends! "
                            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
                            f"last I checked, they were playing some {chan.game_name}!")
+
+    async def event_token_expired(self):
+        # shamelessly stolen from TwitchIO with one change
+        reft = getfile("twitch-refresh", "r").read()
+        url = ("https://id.twitch.tv/oauth2/token?grant_type=refresh_token&"
+              f"refresh_token={reft}&client_id={self._http.client_id}&client_secret={self._http.client_secret}")
+        if self._session is None:
+            self._session = ClientSession()
+        async with self._session.post(url) as resp:
+            if resp.status > 300 or resp.status < 200:
+                raise RuntimeError("Unable to generate a token: " + await resp.text())
+            data = await resp.json()
+            token = data["access_token"]
+            refresh_token = data.get("refresh_token", None)
+            logger.info("Invalid or no token found, generated new token: %s", self.token)
+        with getfile("twitch-oauth", "w") as f:
+            f.write(token)
+        with getfile("twitch-refresh", "w") as f:
+            f.write(refresh_token)
+        return token
 
     def __getattr__(self, name: str):
         if name.startswith("event_"): # calling events -- insert our own event system in
@@ -1222,12 +1244,14 @@ async def stream_uptime(ctx: ContextType):
         await ctx.reply("Stream is offline (if this is wrong, the Twitch API broke).")
 
 # DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
+# im merging it and you cant stop me. suck it, past faely!!!
 # TODO:
 # [X] Cover all basic cases (classic, extended, more)
 # [X] When receiving the run file at the end, automatically resolve prediction
 # [ ] (optional) Figure out announcement so the bot can tell chat to vote
 # [ ] Test the heck out of it (does not need to be automated tests)
 # [ ] Implement create, info, resolve, cancel, sync
+# [ ] Add a way to lock in prediction after... something
 # [ ] Have enough text variety that it doesn't get repetitive
 # [X] Refuse to create a prediction if a Neow bonus was picked
 # 
@@ -1249,14 +1273,14 @@ _prediction = {
 
 async def start_prediction(ctx: TContext, title: str, outcomes: list[str], duration: int):
     user = await ctx.channel.user()
-    value = await post_prediction(ctx._ws._client._http, user.id, title, outcomes, duration)
+    value = await post_prediction(TConn.app, user.id, title, outcomes, duration)
     _prediction["pred"] = value
     _prediction["running"] = True
 
 async def resolve_prediction(index: int):
     pred: Prediction = _prediction["pred"]
     outcome = pred.outcomes[index]
-    await pred.user.end_prediction(config.twitch.oauth_token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
+    await pred.user.end_prediction(TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
     _prediction["running"] = False
     _prediction["type"] = None
     _prediction["pred"] = None
@@ -1307,17 +1331,17 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
             match values["type"]:
                 case "classic":
                     outcomes = [
-                        random.choice(_prediction_terms["classic"]["victory"]),
-                        random.choice(_prediction_terms["classic"]["defeat"]),
+                        random.choice(_prediction_terms["classic"]["victory"])[:25],
+                        random.choice(_prediction_terms["classic"]["defeat"])[:25],
                     ]
 
                 case "extended":
                     outcomes = [
-                        random.choice(_prediction_terms["extended"]["act1_death"]),
-                        random.choice(_prediction_terms["extended"]["act2_death"]),
-                        random.choice(_prediction_terms["extended"]["act3_death"]),
-                        random.choice(_prediction_terms["extended"]["act4_death"]),
-                        random.choice(_prediction_terms["extended"]["victory"]),
+                        random.choice(_prediction_terms["extended"]["act1_death"])[:25],
+                        random.choice(_prediction_terms["extended"]["act2_death"])[:25],
+                        random.choice(_prediction_terms["extended"]["act3_death"])[:25],
+                        random.choice(_prediction_terms["extended"]["act4_death"])[:25],
+                        random.choice(_prediction_terms["extended"]["victory"])[:25],
                     ]
 
                 case a:
@@ -1330,14 +1354,37 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
             if char is not None:
                 if len(char) > 15:
                     return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
-                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(char)
+                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(char)[:45]
             else:
-                title = random.choice(_prediction_terms[values["type"]]["title"])
+                title = random.choice(_prediction_terms[values["type"]]["title"])[:45]
 
+            _prediction["type"] = values["type"]
             await start_prediction(ctx, title, outcomes, duration)
+            await ctx.send("baalorWaffle Predict with your channel points on the outcome of this run! baalorWaffle")
 
-        case "info":
-            pass
+        case "info" | "cancel":
+            await ctx.reply("Sadly, that's not been implemented yet.")
+
+        case "resolve":
+            if not _prediction["running"]:
+                return await ctx.reply("No prediction is running.")
+
+            if not args:
+                return await ctx.reply("Please provide a number to resolve the prediction with.")
+
+            try:
+                idx = int(args[0])
+            except ValueError:
+                return await ctx.reply("This should be a number, not... whatever this is.")
+
+            if 0 <= idx < len(_prediction["pred"].outcomes):
+                await resolve_prediction(idx)
+                await ctx.send("Results are in! Did you win?")
+            else:
+                await ctx.reply("And how do you plan to do that?")
+
+        case a:
+            await ctx.reply(f"I don't know what {a!r} means.")
 
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
@@ -2239,9 +2286,7 @@ async def check_token_validity(req: Request):
     if not (config.twitch.extended.client_id and config.twitch.extended.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    token = await get_oauth_token()
-
-    if token and (await validate_token()):
+    if TConn is not None:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -2249,7 +2294,7 @@ async def check_token_validity(req: Request):
     import secrets, urllib.parse
 
     global _oauth_state
-    _oauth_state = secrets.token_urlsafe(32)
+    _oauth_state = secrets.token_urlsafe(16)
 
     params = {
         "client_id": config.twitch.extended.client_id,
@@ -2259,7 +2304,7 @@ async def check_token_validity(req: Request):
         "state": _oauth_state,
     }
 
-    url = "https://id.twitch.tv/oauth2/authorize" + urllib.parse.urlencode(params)
+    url = "https://id.twitch.tv/oauth2/authorize?" + urllib.parse.urlencode(params)
 
     return Response(text=f"NEEDS_CONNECTION:{url}")
 
@@ -2277,39 +2322,54 @@ async def get_new_token(req: Request):
 
     client = ClientSession()
 
-async def validate_token():
-    """Return bool of whether, after validation, we have a valid OAuth token."""
+    form = {
+        "client_id": config.twitch.extended.client_id,
+        "client_secret": config.twitch.extended.client_secret,
+        "code": values["code"],
+        "grant_type": "authorization_code",
+        "redirect_uri": f"{config.server.url}/twitch/receive-token",
+    }
 
-async def refresh_token():
-    try:
-        f = getfile("twitch-refresh")
-    except FileNotFoundError:
-        return
+    import urllib.parse
+    enc = urllib.parse.urlencode(form)
 
-    # refresh token here & return it
+    async with client.post(f"https://id.twitch.tv/oauth2/token?{enc}") as resp:
+        if resp.ok:
+            data = await resp.json()
+            with getfile("twitch-oauth", "w") as f:
+                f.write(data["access_token"])
+            with getfile("twitch-refresh", "w") as f:
+                f.write(data["refresh_token"])
+
+    logger.critical("OAuth handshake complete. Restart the process.")
+    return Response(text="Handshake successful! You may now close this tab.")
 
 async def get_oauth_token():
     try:
-        token = getfile("twitch-oauth", "r").read().strip()
+        return getfile("twitch-oauth", "r").read().strip()
     except FileNotFoundError:
-        token = await refresh_token()
-        if token is None:
-            getfile("twitch-oauth", "w")
-            getfile("twitch-refresh", "w")
-
-    return token
+        getfile("twitch-oauth", "w")
+        getfile("twitch-refresh", "w")
 
 async def Twitch_startup():
     global TConn
-    if config.twitch.extended.enabled:
-        token = await get_oauth_token()
-    else:
-        token = config.twitch.oauth_token
 
-    TConn = TwitchConn(token=token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
+    TConn = TwitchConn(token=config.twitch.oauth_token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
+    TConn._http.client_id = config.twitch.extended.client_id
+    TConn._http.client_secret = config.twitch.extended.client_secret
     for cmd in _to_add_twitch:
         TConn.add_command(cmd)
     load(asyncio.get_event_loop())
+
+    if config.twitch.extended.enabled:
+        app = Client.from_client_credentials(
+            config.twitch.extended.client_id,
+            config.twitch.extended.client_secret,
+        )
+        token = await get_oauth_token()
+        if token:
+            app._http.token = token
+        TConn.app = app
 
     esbot = EventSubBot.from_client_credentials(
         config.server.websocket_client.id,

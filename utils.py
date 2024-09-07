@@ -2,7 +2,7 @@ import calendar
 from datetime import datetime
 from typing import Any
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
-from twitchio import models, http as _http
+from twitchio import models, client, http as _http
 
 import os
 import json
@@ -44,18 +44,18 @@ async def get_req_data(req: Request, *keys: str) -> list[str]:
 
 # TODO: Merge this upstream to TwitchIO eventually
 # DEPCHECK
-async def post_prediction(http: _http.TwitchHTTP, broadcaster_id: int, title: str, outcomes: list[str], prediction_window: int):
+async def post_prediction(app: client.Client, broadcaster_id: int, title: str, outcomes: list[str], prediction_window: int):
     body = {
         "broadcaster_id": broadcaster_id,
         "title": title,
         "prediction_window": prediction_window,
         "outcomes": [{"title": x} for x in outcomes],
     }
-    val = await http.request(
-        _http.Route("POST", "predictions", body=body, token=config.twitch.oauth_token),
+    val = await app._http.request(
+        _http.Route("POST", "predictions", body=body, token=app._http.token),
         paginate=False,
     )
-    return models.Prediction(http, val[0])
+    return models.Prediction(app._http, val[0])
 
 def getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
