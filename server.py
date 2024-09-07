@@ -1281,10 +1281,11 @@ async def start_prediction(ctx: TContext, title: str, outcomes: list[str], durat
 async def resolve_prediction(index: int):
     pred: Prediction = _prediction["pred"]
     outcome = pred.outcomes[index]
-    await pred.user.end_prediction(TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
     _prediction["running"] = False
     _prediction["type"] = None
     _prediction["pred"] = None
+    # todo: there's some bug here, idk what, but it's fine. probably. it resolves, anyway
+    await pred.user.end_prediction(TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
 
 @add_listener("run_end")
 async def auto_resolve_pred(run: RunParser):

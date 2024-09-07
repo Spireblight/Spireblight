@@ -31,8 +31,9 @@
             "Where will we get to?"
         ],
         "char_title": [
-            "Will {} make it?",
-            "Can the {} win?"
+            "Will the {} make it?",
+            "Can the {} win?",
+            "How far does {} get?"
         ],
         "act1_death": [
             "Not even past Act 1",
