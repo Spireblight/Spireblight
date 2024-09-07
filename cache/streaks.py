@@ -18,11 +18,13 @@ def update_streak_collections():
     if profile is None or not profile.runs:
         logger.info(f"No runs found to group into streak")
         return
-    all_runs = profile.runs
+    all_runs = list(profile.runs)
+    all_runs.reverse()
+
 
     # We build a list of all runs that have happened the cutoff date, sorted with the earliest runs
     # first in the list
-    runs = [x for x in reversed(all_runs) if x.timestamp > _streak_collections.since]
+    runs = [x for x in all_runs if x.timestamp > _streak_collections.since]
 
     logger.info(f"Grouping streaks of %s runs", len(runs))
 
