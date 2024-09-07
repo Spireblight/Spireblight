@@ -2339,7 +2339,7 @@ async def get_new_token(req: Request):
             with getfile("twitch-refresh", "w") as f:
                 f.write(data["refresh_token"])
 
-    logger.critical("OAuth handshake complete. Restart the process.")
+    TConn.app._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
 
 async def get_oauth_token():
