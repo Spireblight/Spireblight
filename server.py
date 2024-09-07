@@ -27,7 +27,6 @@ from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
 from twitchio.models import Stream, Prediction
-from twitchio.client import Client
 
 import discord
 from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
@@ -337,7 +336,7 @@ class TwitchConn(TBot):
         super().__init__(*args, **kwargs)
         self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
-        self.app: Client = None
+        self.app: AppClient = None
         self._session: ClientSession | None = None
         self._spotify_token: str = None
         self._expires_at: int | float = 0
@@ -475,6 +474,18 @@ class TwitchConn(TBot):
                            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
                            f"last I checked, they were playing some {chan.game_name}!")
 
+    def __getattr__(self, name: str):
+        if name.startswith("event_"): # calling events -- insert our own event system in
+            name = name[6:]
+            evt = events.get(name)
+            if evt:
+                async def invoke(*args, **kwargs):
+                    for e in evt:
+                        e.invoke(args, kwargs)
+                return invoke
+        raise AttributeError(name)
+
+class AppClient(TBot):
     async def event_token_expired(self):
         # shamelessly stolen from TwitchIO with one change
         reft = getfile("twitch-refresh", "r").read()
@@ -494,17 +505,6 @@ class TwitchConn(TBot):
         with getfile("twitch-refresh", "w") as f:
             f.write(refresh_token)
         return token
-
-    def __getattr__(self, name: str):
-        if name.startswith("event_"): # calling events -- insert our own event system in
-            name = name[6:]
-            evt = events.get(name)
-            if evt:
-                async def invoke(*args, **kwargs):
-                    for e in evt:
-                        e.invoke(args, kwargs)
-                return invoke
-        raise AttributeError(name)
 
 class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
@@ -2340,6 +2340,8 @@ async def get_new_token(req: Request):
             with getfile("twitch-refresh", "w") as f:
                 f.write(data["refresh_token"])
 
+    await client.close()
+
     TConn.app._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
 
@@ -2361,7 +2363,7 @@ async def Twitch_startup():
     load(asyncio.get_event_loop())
 
     if config.twitch.extended.enabled:
-        app = Client.from_client_credentials(
+        app = AppClient.from_client_credentials(
             config.twitch.extended.client_id,
             config.twitch.extended.client_secret,
         )
