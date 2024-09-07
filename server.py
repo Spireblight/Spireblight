@@ -2284,7 +2284,7 @@ async def check_token_validity(req: Request):
     if not (config.twitch.extended.client_id and config.twitch.extended.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if TConn is not None:
+    if TConn.app._http.token is not None:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
