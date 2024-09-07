@@ -47,6 +47,31 @@ async def main():
         print(f"\nFolder: {mt_folder}\nSavefile: {mt_file}")
 
     async with ClientSession(config.server.url) as session:
+        # Check if the app is registered, prompt it if not
+        try:
+            async with session.post("/twitch/check-token", params={"key": config.server.secret}) as resp:
+                if resp.ok:
+                    text = await resp.text()
+                    match text:
+                        case "DISABLED":
+                            print("\nTwitch connectivity is disabled.")
+                        case "NOT_EXTENDED":
+                            print("\nExtended OAuth functionality is not enabled. Some features will be unavailable.")
+                        case "NO_CREDENTIALS":
+                            print("\nExtended OAuth is not properly set-up. Contact the server owner.")
+                        case "WORKING":
+                            print("\nExtended OAuth validated.")
+                        case a:
+                            if a.startswith("NEEDS_CONNECTION"):
+                                nc, cl, url = a.partition(":")
+                                import webbrowser
+                                webbrowser.open_new_tab(url)
+                            else:
+                                print(f"\nERROR: Unrecognized return value:\n\n{a}")
+
+        except (ClientError, ServerDisconnectedError):
+            print("\nServer is offline, cannot confirm OAuth mode.\nYou may safely ignore this if you previously authorized the app.")
+
         while True:
             time.sleep(timeout)
             start = time.time()

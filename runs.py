@@ -121,6 +121,11 @@ class RunParser(FileParser):
         return int(self._data["floor_reached"])
 
     @property
+    def acts_beaten(self) -> int:
+        """Return how many acts were beaten."""
+        return self._data["path_per_floor"].count(None) # None is a boss chest, act 4 transition, AND final screen
+
+    @property
     def final_health(self) -> tuple[int, int]:
         return self._data["current_hp_per_floor"][-1], self._data["max_hp_per_floor"][-1]
 

@@ -19,6 +19,21 @@ twitch:
   # you're testing things out.
   channel: <channel not set>
 
+  # This indicates whether we should use extended or classic access.
+  # Classic access needs a simple OAuth token, and no additional fluff.
+  # Extended uses the full Authorization Grant Flow mechanism
+  # This mode requires connecting the client to the streamer's Twitch account
+  # To set it up, set this to true, start the server, and then start the client
+  # Once it has been authorized, the bot will start with proper credentials
+  # Using Extended mode allows for more features, defined in scopes
+  # To update scopes, you need to force a re-auth by deleting the token
+  extended:
+    enabled: false
+    # This is the publicly-available Client ID
+    client_id: <value not set>
+    client_secret: <value not set>
+    scopes: []
+
   timers:
     # The default interval for new timers
     default_interval: 900
