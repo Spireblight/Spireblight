@@ -91,6 +91,10 @@
      function formatYoutube(cell) {
        console.log(cell);
        var url = cell;
+       if (url === "") {
+         // If the URL is empty, it means that there's no VOD available.
+         return 'No vod :('
+       }
        var text = 'Youtube link';
        if (url.startsWith("https://youtu.be/")) {
          text = 'Video';
