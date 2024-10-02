@@ -311,7 +311,7 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
 
 def slice_command(name: str, *aliases: str, **kwargs):
     def inner(func):
-        async def _slice_get(ctx) -> list:
+        async def _slice_get(ctx: ContextType | None) -> list:
             res = get_runs()
             if not res:
                 if ctx:

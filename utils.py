@@ -1,6 +1,6 @@
 import calendar
 from datetime import datetime
-from typing import Any
+from typing import Any, Iterable
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 from twitchio import models, client, http as _http
 
@@ -16,6 +16,7 @@ __all__ = [
     "update_db",
     "convert_class_to_obj",
     "format_for_slaytabase",
+    "complete_match",
     "parse_date_range",
 ]
 
@@ -70,6 +71,15 @@ def convert_class_to_obj(obj: Any) -> dict[str, Any]:
 
 def format_for_slaytabase(val: str) -> str:
     return val.replace(":", "-").replace("'", "").replace(" ", "").lower()
+
+def complete_match(string: str, matches: Iterable[str]) -> list:
+    possible_matches = set()
+    for possible in matches:
+        if string == possible:
+            return [string]
+        if possible.startswith(string) or string in possible:
+            possible_matches.add(possible)
+    return sorted(possible_matches)
 
 def parse_date_range(date_string: str) -> tuple[datetime]:
     """valid date strings: YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"""

@@ -324,11 +324,23 @@ class Savefile(FileParser):
     def bottles(self) -> list[BottleRelic]:
         bottles = []
         if self._data.get("bottled_flame"):
-            bottles.append(BottleRelic("Bottled Flame", get_card(f"{self._data['bottled_flame']}+{self._data['bottled_flame_upgrade']}")))
+            if (fu := self._data['bottled_flame_upgrade']) > 0:
+                fc = get_card(f"{self._data['bottled_flame']}+{fu}")
+            else:
+                fc = get_card(f"{self._data['bottled_flame']}")
+            bottles.append(BottleRelic("Bottled Flame", fc))
         if self._data.get("bottled_lightning"):
-            bottles.append(BottleRelic("Bottled Lightning", get_card(f"{self._data['bottled_lightning']}+{self._data['bottled_lightning_upgrade']}")))
+            if (lu := self._data['bottled_lightning_upgrade']) > 0:
+                lc = get_card(f"{self._data['bottled_lightning']}+{lu}")
+            else:
+                lc = get_card(f"{self._data['bottled_lightning']}")
+            bottles.append(BottleRelic("Bottled Lightning", lc))
         if self._data.get("bottled_tornado"):
-            bottles.append(BottleRelic("Bottled Tornado", get_card(f"{self._data['bottled_tornado']}+{self._data['bottled_tornado_upgrade']}")))
+            if (tu := self._data['bottled_tornado_upgrade']) > 0:
+                tc = get_card(f"{self._data['bottled_tornado']}+{tu}")
+            else:
+                tc = get_card(f"{self._data['bottled_tornado']}")
+            bottles.append(BottleRelic("Bottled Tornado", tc))
         return bottles
 
     @property

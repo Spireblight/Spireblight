@@ -9,6 +9,7 @@ import os
 
 from configuration import config
 from events import add_listener
+from utils import complete_match
 
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."
@@ -32,10 +33,11 @@ def sanitize(x: str) -> str:
 
 def query(name: str, type: str | None = None):
     name = sanitize(name)
-    if name in _query_cache:
-        ret = _query_cache[name].pop(0)
+    res = complete_match(name, _query_cache)
+    if len(res) == 1:
+        ret = _query_cache[res[0]].pop(0)
         # this makes sure to cycle through cards if there are multiple
-        _query_cache[name].append(ret)
+        _query_cache[res[0]].append(ret)
         return ret
     return None
 
