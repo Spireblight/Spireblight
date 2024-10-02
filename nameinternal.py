@@ -51,7 +51,7 @@ def get_card(card: str) -> str:
     name, _, upgrades = card.partition("+")
     inst = get(name)
     match upgrades:
-        case "":
+        case "" | "0":
             return inst.name
         case "1":
             return f"{inst.name}+"
