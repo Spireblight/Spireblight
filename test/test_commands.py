@@ -1,3 +1,5 @@
+import datetime
+
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch, AsyncMock, MagicMock
 
@@ -70,6 +72,25 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         context.reply.assert_awaited_once_with(
             "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/downfall/cards/hermit-snapshot.png"
         )
+
+    @patch("server._update_quotes")
+    async def test_quote_add(self, mock_update):
+        context = MagicMock()
+        context.reply = AsyncMock()
+
+        now = datetime.datetime.now()
+
+        await server.quote_stuff(context, "add", "Meow!", "-", "Faely, not wanting to write these tests")
+
+        context.reply.assert_awaited_once_with("Quote #0 successfully added!")
+
+        context.reply = AsyncMock()
+
+        await server.quote_stuff(context)
+
+        context.reply.assert_awaited_once_with(f'Quote #0: "Meow!" - Faely, not wanting to write these tests, on {now.year}-{now.month:02}-{now.day:02}')
+
+        mock_update.assert_called_once()
 
     # Game specific commands
 
