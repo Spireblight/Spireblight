@@ -20,7 +20,12 @@ import sys
 import re
 import os
 
-from twitchio.ext.commands import Cooldown as TCooldown, Bucket as TBucket, Bot as TBot, Context as TContext
+from twitchio.ext.commands import (
+    Cooldown as TCooldown,
+    Bucket as TBucket,
+    Bot as TBot,
+    Context as TContext,
+)
 from twitchio.ext.routines import routine, Routine
 from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflineData
 from twitchio.channel import Channel
@@ -29,13 +34,23 @@ from twitchio.errors import HTTPException
 from twitchio.models import Stream, Prediction
 
 import discord
-from discord.ext.commands import Cooldown as DCooldown, BucketType as DBucket, Bot as DBot, command as _dcommand
+from discord.ext.commands import (
+    Cooldown as DCooldown,
+    BucketType as DBucket,
+    Bot as DBot,
+    command as _dcommand,
+)
 
 from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession, ContentTypeError
 
-from cache.run_stats import get_all_run_stats, get_run_stats_by_date, get_run_stats_by_date_string, update_range
+from cache.run_stats import (
+    get_all_run_stats,
+    get_run_stats_by_date,
+    get_run_stats_by_date_string,
+    update_range,
+)
 from cache.mastered import get_current_masteries, get_mastered
 from nameinternal import get, query, sanitize, Base, Card, RelicSet, _internal_cache
 from sts_profile import get_profile, get_current_profile
@@ -46,7 +61,14 @@ from twitch import TwitchCommand
 from logger import logger
 from events import add_listener
 from slice import get_runs, CurrentRun
-from utils import format_for_slaytabase, getfile, parse_date_range, update_db, get_req_data, post_prediction
+from utils import (
+    format_for_slaytabase,
+    getfile,
+    parse_date_range,
+    update_db,
+    get_req_data,
+    post_prediction,
+)
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
@@ -64,7 +86,7 @@ logger.info("Setting up")
 # Twitch bot server defined here - process started in main.py
 
 _DEFAULT_BURST = 1
-_DEFAULT_RATE  = 3.0
+_DEFAULT_RATE = 3.0
 
 _consts = {
     "discord": config.discord.invite_links.main,
@@ -74,13 +96,16 @@ _consts = {
 
 _quotes: list[Quote] = []
 
-class Formatter(string.Formatter): # this does not support conversion or formatting
+
+class Formatter(string.Formatter):  # this does not support conversion or formatting
     def __init__(self):
         super().__init__()
         self._re = re.compile(r".+(\(.+\)).*")
 
-    def parse(self, format_string: str) -> Generator[tuple[str, str | None, str | None, None]]:
-        if format_string is None: # recursion
+    def parse(
+        self, format_string: str
+    ) -> Generator[tuple[str, str | None, str | None, None]]:
+        if format_string is None:  # recursion
             yield ("", None, None, None)
             return
         start = 0
@@ -94,7 +119,7 @@ class Formatter(string.Formatter): # this does not support conversion or formatt
 
             lit = format_string[start:idx]
 
-            field = format_string[idx+2:end]
+            field = format_string[idx + 2 : end]
 
             called = None
             call_args = self._re.match(field)
@@ -105,22 +130,23 @@ class Formatter(string.Formatter): # this does not support conversion or formatt
                 called = called[1:-1]
 
             yield (lit, field, called, None)
-            start = end+1
+            start = end + 1
 
     def format_field(self, value: Callable, call_args: str) -> str:
         if call_args:
             return value(call_args)
         return str(value)
 
+
 _formatter = Formatter()
 
 _perms = {
     "": "Everyone",
     "m": "Moderator",
-    "e": "Editor", # this has no effect in discord
+    "e": "Editor",  # this has no effect in discord
 }
 
-_cmds: dict[str, dict[str, list[str] | bool | int | float]] = {} # internal json
+_cmds: dict[str, dict[str, list[str] | bool | int | float]] = {}  # internal json
 
 _to_add_twitch: list[TwitchCommand] = []
 _to_add_discord: list[DiscordCommand] = []
@@ -128,6 +154,7 @@ _to_add_discord: list[DiscordCommand] = []
 _timers: dict[str, Timer] = {}
 
 _prediction_terms = {}
+
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -149,13 +176,21 @@ def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
 
     return _sanitize
 
+
 def _create_cmd(output):
-    async def inner(ctx: ContextType, *s, output: str=output):
+    async def inner(ctx: ContextType, *s, output: str = output):
         try:
-            msg = output.format(user=ctx.author.display_name, text=" ".join(s), words=s, **_consts)
+            msg = output.format(
+                user=ctx.author.display_name, text=" ".join(s), words=s, **_consts
+            )
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
-        keywords = {"mt-save": None, "savefile": None, "profile": None, "readline": readline}
+        keywords = {
+            "mt-save": None,
+            "savefile": None,
+            "profile": None,
+            "readline": readline,
+        }
         if "$<profile" in msg:
             profile = get_current_profile()
             if profile is None:
@@ -176,13 +211,16 @@ def _create_cmd(output):
         # TODO: Add a flag to the command that says whether it's a reply
         # or a regular message.
         await ctx.reply(msg)
+
     return inner
+
 
 def readline(file: str) -> str:
     if ".." in file:
         return "Error: '..' in filename is not allowed."
     with open(os.path.join("text", file), "r") as f:
         return random.choice(f.readlines()).rstrip()
+
 
 def load(loop: asyncio.AbstractEventLoop):
     _cmds.clear()
@@ -197,7 +235,7 @@ def load(loop: asyncio.AbstractEventLoop):
             *d.get("aliases", []),
             flag=d.get("flag", ""),
             burst=d.get("burst", _DEFAULT_BURST),
-            rate=d.get("rate", _DEFAULT_RATE)
+            rate=d.get("rate", _DEFAULT_RATE),
         )(_create_cmd(d["output"]))
         c.enabled = d.get("enabled", True)
     try:
@@ -237,15 +275,18 @@ def load(loop: asyncio.AbstractEventLoop):
     except FileNotFoundError:
         pass
 
+
 def _update_quotes():
     q = [x.to_json() for x in _quotes]
     with getfile("quotes.json", "w") as f:
         json.dump(q, f, indent=config.server.json_indent)
 
+
 async def _launch_timers(timers: list[Timer]):
     for timer in timers:
         timer.start()
         await asyncio.sleep(config.twitch.timers.stagger_interval)
+
 
 def _update_timers():
     final = {}
@@ -257,7 +298,17 @@ def _update_timers():
     with getfile("timers.json", "w") as f:
         json.dump(final, f, indent=config.server.json_indent)
 
-def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: str = None, burst: int = None, rate: float = None, output: str):
+
+def add_cmd(
+    name: str,
+    *,
+    aliases: list[str] = None,
+    source: str = None,
+    flag: str = None,
+    burst: int = None,
+    rate: float = None,
+    output: str,
+):
     _cmds[name] = {"output": output}
     if aliases is not None:
         _cmds[name]["aliases"] = aliases
@@ -271,29 +322,47 @@ def add_cmd(name: str, *, aliases: list[str] = None, source: str = None, flag: s
         _cmds[name]["rate"] = rate
     update_db()
 
-def command(name: str, *aliases: str, flag: str = "", force_argcount: bool = False, burst: int = _DEFAULT_BURST, rate: float = _DEFAULT_RATE, twitch: bool = True, discord: bool = True):
+
+def command(
+    name: str,
+    *aliases: str,
+    flag: str = "",
+    force_argcount: bool = False,
+    burst: int = _DEFAULT_BURST,
+    rate: float = _DEFAULT_RATE,
+    twitch: bool = True,
+    discord: bool = True,
+):
     """This decorator builds TwitchCommand and DiscordCommand versions of commands while leaving the original functions untouched."""
+
     def inner(func, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
-        #wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
+        # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
-            tcmd = TwitchCommand(name=name, aliases=list(aliases), func=wrapped, flag=flag)
+            tcmd = TwitchCommand(
+                name=name, aliases=list(aliases), func=wrapped, flag=flag
+            )
             if TConn is None:
                 _to_add_twitch.append(tcmd)
             else:
                 TConn.add_command(tcmd)
         if discord:
-            dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases), flag=flag)(wrapped)
+            dcmd = _dcommand(name, DiscordCommand, aliases=list(aliases), flag=flag)(
+                wrapped
+            )
             if DConn is None:
                 _to_add_discord.append(dcmd)
             else:
                 DConn.add_command(dcmd)
         return func
+
     return inner
+
 
 def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwargs):
     """Decorator for commands that require a save."""
+
     def inner(func):
         async def _savefile_get(ctx) -> list:
             res = await get_savefile()
@@ -306,8 +375,11 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
             if res.character is None and optional_save:
                 return [None]
             return [res]
+
         return command(name, *aliases, **kwargs)(func, wrapper_func=_savefile_get)
+
     return inner
+
 
 def slice_command(name: str, *aliases: str, **kwargs):
     def inner(func):
@@ -317,9 +389,12 @@ def slice_command(name: str, *aliases: str, **kwargs):
                 if ctx:
                     await ctx.reply("We are not playing Slice & Dice currently.")
                 raise ValueError("No Slice & Dice run going on")
-            return [res["classic"]] # FIXME: Does not support multiple S&D runs at once
+            return [res["classic"]]  # FIXME: Does not support multiple S&D runs at once
+
         return command(name, *aliases, **kwargs)(func, wrapper_func=_slice_get)
+
     return inner
+
 
 def mt_command(name: str, *aliases: str, **kwargs):
     def inner(func):
@@ -328,8 +403,11 @@ def mt_command(name: str, *aliases: str, **kwargs):
             if res is None:
                 raise ValueError("No savefile")
             return [res]
+
         return command(name, *aliases, **kwargs)(func, wrapper_func=_mt_get)
+
     return inner
+
 
 class TwitchConn(TBot):
     def __init__(self, *args, **kwargs):
@@ -354,13 +432,15 @@ class TwitchConn(TBot):
         if self._session is None:
             self._session = ClientSession()
 
-        value = base64.urlsafe_b64encode(f"{config.spotify.id}:{config.spotify.secret}".encode("utf-8"))
+        value = base64.urlsafe_b64encode(
+            f"{config.spotify.id}:{config.spotify.secret}".encode("utf-8")
+        )
         value = value.decode("utf-8")
 
         headers = {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": f"Basic {value}",
-            }
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": f"Basic {value}",
+        }
 
         if self._spotify_refresh_token:
             params = {
@@ -369,24 +449,33 @@ class TwitchConn(TBot):
             }
 
         else:
-            params={
+            params = {
                 "grant_type": "authorization_code",
                 "code": config.spotify.code,
                 "redirect_uri": f"{config.server.url}/spotify",
             }
 
-        async with self._session.post("https://accounts.spotify.com/api/token", headers=headers, params=params) as resp:
+        async with self._session.post(
+            "https://accounts.spotify.com/api/token", headers=headers, params=params
+        ) as resp:
             if resp.ok:
                 content = await resp.json()
                 self._spotify_token = content["access_token"]
-                self._expires_at = (datetime.datetime.now() + datetime.timedelta(seconds=content["expires_in"])).timestamp()
+                self._expires_at = (
+                    datetime.datetime.now()
+                    + datetime.timedelta(seconds=content["expires_in"])
+                ).timestamp()
                 if "refresh_token" in content:
                     self._spotify_refresh_token = content["refresh_token"]
                     try:
-                        with open(os.path.join("data", "spotify_refresh_token"), "w") as f:
+                        with open(
+                            os.path.join("data", "spotify_refresh_token"), "w"
+                        ) as f:
                             f.write(self._spotify_refresh_token)
-                    except OSError: # oh no
-                        logger.error(f"Could not write refresh token to file: {self._spotify_refresh_token}")
+                    except OSError:  # oh no
+                        logger.error(
+                            f"Could not write refresh token to file: {self._spotify_refresh_token}"
+                        )
                 return self._spotify_token
             return None
 
@@ -408,7 +497,8 @@ class TwitchConn(TBot):
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {self._spotify_token}",
-                }) as resp:
+            },
+        ) as resp:
             try:
                 return await resp.json()
             except ContentTypeError:
@@ -425,10 +515,18 @@ class TwitchConn(TBot):
             pass
 
     async def event_ready(self):
-        self.live_channels[config.twitch.channel] = live = bool(await self.fetch_streams(user_logins=[config.twitch.channel]))
+        self.live_channels[config.twitch.channel] = live = bool(
+            await self.fetch_streams(user_logins=[config.twitch.channel])
+        )
 
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
-        user = Chatter(tags=tags, name=tags["login"], channel=channel, bot=self, websocket=self._connection)
+        user = Chatter(
+            tags=tags,
+            name=tags["login"],
+            channel=channel,
+            bot=self,
+            websocket=self._connection,
+        )
         match tags["msg-id"]:
             case "sub" | "resub":
                 total = 0
@@ -443,11 +541,22 @@ class TwitchConn(TBot):
                         subtype = f"Tier {subtype[0]}"
                 except (KeyError, ValueError):
                     pass
-                self.run_event("subscription", user, channel, total, consecutive, subtype)
-            case "subgift" | "anonsubgift" | "submysterygift" | "giftpaidupgrade" | "rewardgift" | "anongiftpaidupgrade":
+                self.run_event(
+                    "subscription", user, channel, total, consecutive, subtype
+                )
+            case (
+                "subgift"
+                | "anonsubgift"
+                | "submysterygift"
+                | "giftpaidupgrade"
+                | "rewardgift"
+                | "anongiftpaidupgrade"
+            ):
                 self.run_event("gift_sub", user, channel, tags)
             case "raid":
-                self.run_event("raid", user, channel, int(tags["msg-param-viewerCount"]))
+                self.run_event(
+                    "raid", user, channel, int(tags["msg-param-viewerCount"])
+                )
             case "unraid":
                 self.run_event("unraid", user, channel, tags)
             case "ritual":
@@ -455,7 +564,14 @@ class TwitchConn(TBot):
             case "bitsbadgetier":
                 self.run_event("bits_badge", user, channel, tags)
 
-    async def event_subscription(self, user: Chatter, channel: Channel, total: int, consecutive: int | None, subtype: str):
+    async def event_subscription(
+        self,
+        user: Chatter,
+        channel: Channel,
+        total: int,
+        consecutive: int | None,
+        subtype: str,
+    ):
         pass
 
     async def event_ritual(self, user: Chatter, channel: Channel, tags: dict):
@@ -464,33 +580,42 @@ class TwitchConn(TBot):
 
     async def event_new_chatter(self, user: Chatter, channel: Channel, message: str):
         if "youtube" in message.lower() or "yt" in message.lower():
-            pass #await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
+            pass  # await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
 
     async def event_raid(self, user: Chatter, channel: Channel, viewer_count: int):
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)
-        await channel.send(f"Welcome along {user.display_name} with your {viewer_count} friends! "
-                           f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
-                           f"last I checked, they were playing some {chan.game_name}!")
+        await channel.send(
+            f"Welcome along {user.display_name} with your {viewer_count} friends! "
+            f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
+            f"last I checked, they were playing some {chan.game_name}!"
+        )
 
     def __getattr__(self, name: str):
-        if name.startswith("event_"): # calling events -- insert our own event system in
+        if name.startswith(
+            "event_"
+        ):  # calling events -- insert our own event system in
             name = name[6:]
             evt = events.get(name)
             if evt:
+
                 async def invoke(*args, **kwargs):
                     for e in evt:
                         e.invoke(args, kwargs)
+
                 return invoke
         raise AttributeError(name)
+
 
 class AppClient(TBot):
     async def event_token_expired(self):
         # shamelessly stolen from TwitchIO with one change
         reft = getfile("twitch-refresh", "r").read()
-        url = ("https://id.twitch.tv/oauth2/token?grant_type=refresh_token&"
-              f"refresh_token={reft}&client_id={self._http.client_id}&client_secret={self._http.client_secret}")
+        url = (
+            "https://id.twitch.tv/oauth2/token?grant_type=refresh_token&"
+            f"refresh_token={reft}&client_id={self._http.client_id}&client_secret={self._http.client_secret}"
+        )
         if self._session is None:
             self._session = ClientSession()
         async with self._session.post(url) as resp:
@@ -499,12 +624,15 @@ class AppClient(TBot):
             data = await resp.json()
             token = data["access_token"]
             refresh_token = data.get("refresh_token", None)
-            logger.info("Invalid or no token found, generated new token: %s", self.token)
+            logger.info(
+                "Invalid or no token found, generated new token: %s", self.token
+            )
         with getfile("twitch-oauth", "w") as f:
             f.write(token)
         with getfile("twitch-refresh", "w") as f:
             f.write(refresh_token)
         return token
+
 
 class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
@@ -513,11 +641,14 @@ class EventSubBot(TBot):
     async def event_eventsub_notification_stream_end(self, evt: StreamOfflineData):
         TConn.live_channels[evt.broadcaster.name] = False
 
+
 class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        if message.content.startswith(config.baalorbot.prefix) or isinstance(message.channel, discord.DMChannel):
+        if message.content.startswith(config.baalorbot.prefix) or isinstance(
+            message.channel, discord.DMChannel
+        ):
             content = message.content.lstrip(config.baalorbot.prefix).split()
             if not content:
                 return
@@ -537,6 +668,7 @@ class DiscordConn(DBot):
                 self.remove_listener(event, name)
         return value
 
+
 class Timer:
     def __init__(self, name: str, interval: int, *, loop=None):
         self.name = name
@@ -550,7 +682,9 @@ class Timer:
     def set_routine(self):
         if self.running:
             self._routine.stop()
-        self._routine = Routine(coro=self._coro_internal, delta=float(self.interval), loop=self.loop)
+        self._routine = Routine(
+            coro=self._coro_internal, delta=float(self.interval), loop=self.loop
+        )
         self._routine.before_routine(self.before_ready)
         self._routine.error(self.on_error)
         if self.running:
@@ -571,10 +705,10 @@ class Timer:
                 return
             maybe_cmd = self.commands.pop(0)
             if maybe_cmd not in _cmds and maybe_cmd not in TConn.commands:
-                i -= 1 # we're not adding it back, so it's fine
+                i -= 1  # we're not adding it back, so it's fine
                 continue
             if not TConn.commands[maybe_cmd].enabled:
-                self.commands.append(maybe_cmd) # in case it gets enabled again
+                self.commands.append(maybe_cmd)  # in case it gets enabled again
                 continue
             if maybe_cmd == "current":
                 save = await get_savefile()
@@ -587,17 +721,23 @@ class Timer:
         try:
             msg = msg.format(**_consts)
         except KeyError:
-            logger.error(f"Command {cmd} of timer {self.name} needs non-constant formatting. Sending raw line.")
+            logger.error(
+                f"Command {cmd} of timer {self.name} needs non-constant formatting. Sending raw line."
+            )
         await chan.send(msg)
         self.commands.append(cmd)
-        _update_timers() # keep track of command ordering
+        _update_timers()  # keep track of command ordering
 
     async def before_ready(self):
         await TConn.wait_for_ready()
 
     async def on_error(self, error: Exception):
         logger.error(f"Error in timer {self.name}:")
-        logger.error("\n".join(traceback.format_exception(type(error), error, error.__traceback__)))
+        logger.error(
+            "\n".join(
+                traceback.format_exception(type(error), error, error.__traceback__)
+            )
+        )
 
     def start(self):
         if not self.running:
@@ -608,9 +748,11 @@ class Timer:
         self._routine.stop()
         self.running = False
 
+
 @command("timers", flag="me")
 async def timers_list(ctx: ContextType):
     await ctx.reply(f"The existing timers are {', '.join(_timers)}.")
+
 
 @command("timer", flag="me")
 async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -643,18 +785,24 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.reply(f"Timer {name} already exists.")
                 return
             if name.startswith("auto_"):
-                await ctx.reply(f"Cannot manually create automatic timers. Use 'auto {name[5:]}' instead.")
+                await ctx.reply(
+                    f"Cannot manually create automatic timers. Use 'auto {name[5:]}' instead."
+                )
                 return
             interval = config.twitch.timers.default_interval
             if args:
                 interval = args[0]
             _timers[name] = Timer(name, interval)
             _update_timers()
-            await ctx.reply(f"Timer {name} has been created! Use 'add {name} <commands>' to add commands to it.")
+            await ctx.reply(
+                f"Timer {name} has been created! Use 'add {name} <commands>' to add commands to it."
+            )
 
         case "add":
             if name not in _timers:
-                await ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                await ctx.reply(
+                    f"Timer {name} doesn't exist. Use 'create {name}' first."
+                )
                 return
             if not args:
                 await ctx.reply("No commands to add.")
@@ -665,11 +813,15 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 if cmd is not None and cmd.name not in t.commands:
                     t.commands.append(cmd.name)
             _update_timers()
-            await ctx.reply(f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s.")
+            await ctx.reply(
+                f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s."
+            )
 
         case "delete" | "remove":
             if name not in _timers:
-                await ctx.reply(f"Timer {name} doesn't exist. Use 'create {name}' first.")
+                await ctx.reply(
+                    f"Timer {name} doesn't exist. Use 'create {name}' first."
+                )
                 return
             t = _timers[name]
             t.stop()
@@ -684,7 +836,9 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             timer_name = f"auto_{cmd.name}"
             if timer_name in _timers:
-                await ctx.reply(f"Automatic timer {name} ({timer_name}) already exists; starting it.")
+                await ctx.reply(
+                    f"Automatic timer {name} ({timer_name}) already exists; starting it."
+                )
                 _timers[timer_name].start()
                 return
             interval = config.twitch.timers.default_interval
@@ -694,14 +848,18 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
             t.commands.append(cmd.name)
             t.start()
             _update_timers()
-            await ctx.reply(f"Automatic timer {name} ({timer_name}) has been created and started.")
+            await ctx.reply(
+                f"Automatic timer {name} ({timer_name}) has been created and started."
+            )
 
         case "status" | "info":
             if name not in _timers:
                 await ctx.reply(f"Timer {name} does not exist.")
                 return
             t = _timers[name]
-            await ctx.reply(f"Timer {name} has an interval of {t.interval}s with commands {', '.join(t.commands)} and is currently {t.running and 'running' or 'stopped'}.")
+            await ctx.reply(
+                f"Timer {name} has an interval of {t.interval}s with commands {', '.join(t.commands)} and is currently {t.running and 'running' or 'stopped'}."
+            )
 
         case "start":
             if name not in _timers:
@@ -738,7 +896,10 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
             t.interval = interval
             t.set_routine()
             _update_timers()
-            await ctx.reply(f"Timer {name} has been set to interval {interval}. If it was running, it will complete the existing interval.")
+            await ctx.reply(
+                f"Timer {name} has been set to interval {interval}. If it was running, it will complete the existing interval."
+            )
+
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
@@ -772,7 +933,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer(in_mapping=False):
                 return
             if name in aliases:
-                await ctx.reply(f"Error: {name} is an alias to {aliases[name][0].name}. Use 'unalias {aliases[name][0].name} {name}' first.")
+                await ctx.reply(
+                    f"Error: {name} is an alias to {aliases[name][0][0]['name']}. Use 'unalias {aliases[name][0][0]['name']} {name}' first."
+                )
                 return
             flag = ""
             if args[0].startswith("+"):
@@ -792,7 +955,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer():
                 return
             if name in aliases:
-                await ctx.reply(f"Error: cannot edit alias. Use 'edit {aliases[name][0].name}' instead.")
+                await ctx.reply(
+                    f"Error: cannot edit alias. Use 'edit {aliases[name][0].name}' instead."
+                )
                 return
             if name not in _cmds:
                 await ctx.reply(f"Error: cannot edit built-in command {name}.")
@@ -809,13 +974,17 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             update_db()
             for cmd in cmds[name]:
                 cmd._callback = _create_cmd(msg)
-            await ctx.reply(f"Command {name} edited successfully! Permission: {_perms[flag]}")
+            await ctx.reply(
+                f"Command {name} edited successfully! Permission: {_perms[flag]}"
+            )
 
         case "remove" | "delete":
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.reply(f"Error: cannot delete alias. Use 'remove {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead.")
+                await ctx.reply(
+                    f"Error: cannot delete alias. Use 'remove {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead."
+                )
                 return
             if name not in _cmds:
                 await ctx.reply(f"Error: cannot delete built-in command {name}.")
@@ -832,7 +1001,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.reply(f"Error: cannot enable alias. Use 'enable {aliases[name][0].name}' instead.")
+                await ctx.reply(
+                    f"Error: cannot enable alias. Use 'enable {aliases[name][0].name}' instead."
+                )
                 return
             if all(cmds[name]):
                 await ctx.reply(f"Command {name} is already enabled.")
@@ -853,7 +1024,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
-                await ctx.reply(f"Error: cannot disable alias. Use 'disable {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead.")
+                await ctx.reply(
+                    f"Error: cannot disable alias. Use 'disable {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead."
+                )
                 return
             if not all(cmds[name]):
                 await ctx.reply(f"Command {name} is already disabled.")
@@ -870,12 +1043,16 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 f.writelines(disabled)
             await ctx.reply(f"Command {name} has been disabled.")
 
-        case "alias": # cannot sanely sanitize this
+        case "alias":  # cannot sanely sanitize this
             if not args:
                 if name not in _cmds and name in aliases:
-                    await ctx.reply(f"Alias {name} is bound to {aliases[name][0].name}.")
+                    await ctx.reply(
+                        f"Alias {name} is bound to {aliases[name][0].name}."
+                    )
                 elif _cmds[name].get("aliases"):
-                    await ctx.reply(f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}")
+                    await ctx.reply(
+                        f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}"
+                    )
                 else:
                     await ctx.reply(f"Command {name} does not have any aliases.")
                 return
@@ -889,7 +1066,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.reply("Error: cannot alias built-in commands.")
                 return
             if set(args) & cmds.keys():
-                await ctx.reply(f"Error: aliases {set(args) & cmds.keys()} already exist as commands.")
+                await ctx.reply(
+                    f"Error: aliases {set(args) & cmds.keys()} already exist as commands."
+                )
                 return
             for arg in args:
                 if TConn is not None:
@@ -900,7 +1079,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 _cmds[name]["aliases"] = []
             _cmds[name]["aliases"].extend(args)
             update_db()
-            await ctx.reply(f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}")
+            await ctx.reply(
+                f"Command {name} now has aliases {', '.join(_cmds[name]['aliases'])}"
+            )
 
         case "unalias":
             if not args:
@@ -922,7 +1103,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 await ctx.reply("Error: cannot unalias built-in commands.")
                 return
             if aliases[args[0]][0] != name:
-                await ctx.reply(f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]][0].name}).")
+                await ctx.reply(
+                    f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]][0].name})."
+                )
                 return
             if TConn is not None:
                 TConn._command_aliases.pop(args[0], None)
@@ -946,10 +1129,14 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                     if name in aliases:
                         name = aliases[name]
                     cd = cmds[name]._cooldowns[0]
-                    await ctx.reply(f"Command {name} has a cooldown of {cd._per/cd._rate}s.")
+                    await ctx.reply(
+                        f"Command {name} has a cooldown of {cd._per/cd._rate}s."
+                    )
                 return
             if name in aliases:
-                await ctx.reply(f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead.")
+                await ctx.reply(
+                    f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead."
+                )
                 return
             cd: TCooldown = cmds[name]._cooldowns.pop()
             try:
@@ -961,7 +1148,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                     await ctx.reply("Error: invalid argument.")
                     return
                 else:
-                    burst = cd._rate # _rate is actually the burst, it's weird
+                    burst = cd._rate  # _rate is actually the burst, it's weird
             else:
                 try:
                     rate = float(args[1])
@@ -976,15 +1163,22 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 _cmds[name]["burst"] = burst
                 _cmds[name]["rate"] = rate
                 update_db()
-            await ctx.reply(f"Command {name} now has a cooldown of {rate/burst}s.") # this isn't 100% accurate, but close enough
+            await ctx.reply(
+                f"Command {name} now has a cooldown of {rate/burst}s."
+            )  # this isn't 100% accurate, but close enough
             if name not in _cmds:
-                await ctx.reply("Warning: settings on built-in commands do not persist past a restart.")
+                await ctx.reply(
+                    "Warning: settings on built-in commands do not persist past a restart."
+                )
 
         case _:
             await ctx.reply(f"Unrecognized action {action}.")
 
+
 class Quote:
-    def __init__(self, line: str, author: Optional[str], added_by: str, ts: datetime.datetime):
+    def __init__(
+        self, line: str, author: Optional[str], added_by: str, ts: datetime.datetime
+    ):
         self.line = line
         self.author = author
         self.added_by = added_by
@@ -992,7 +1186,14 @@ class Quote:
         self.ts = ts
 
     def to_json(self):
-        return [self.line, self.author, self.added_by, self.is_quote, self.ts.timestamp() if self.ts is not None else 0]
+        return [
+            self.line,
+            self.author,
+            self.added_by,
+            self.is_quote,
+            self.ts.timestamp() if self.ts is not None else 0,
+        ]
+
 
 @command("quote", "randomquote")
 async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
@@ -1004,12 +1205,16 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             if line is not None:
                 author = None
                 try:
-                    if rest[-2] == "-": # attributing the quote to someone
+                    if rest[-2] == "-":  # attributing the quote to someone
                         line = " ".join(rest[:-2])
                         author = rest[-1]
                 except IndexError:
                     pass
-                _quotes.append(Quote(line, author, ctx.author.display_name, datetime.datetime.now()))
+                _quotes.append(
+                    Quote(
+                        line, author, ctx.author.display_name, datetime.datetime.now()
+                    )
+                )
                 update = True
                 await ctx.reply(f"Quote #{len(_quotes) - 1} successfully added!")
 
@@ -1045,7 +1250,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                 if 0 <= i < len(_quotes):
                     _quotes[i].author = author
                     update = True
-                    await ctx.reply("The author of this quote has been properly attributed.")
+                    await ctx.reply(
+                        "The author of this quote has been properly attributed."
+                    )
                 else:
                     await ctx.reply("No such quote.")
 
@@ -1096,7 +1303,9 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                     else:
                         _quotes[i].ts = d
                         update = True
-                        await ctx.reply(f"Timestamp successfully changed to {d.isoformat()[:10]}. You have rewritten history.")
+                        await ctx.reply(
+                            f"Timestamp successfully changed to {d.isoformat()[:10]}. You have rewritten history."
+                        )
                 else:
                     await ctx.reply("No such quote.")
 
@@ -1127,14 +1336,20 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                     found.append(i)
             match len(found):
                 case 0:
-                    await ctx.reply("No quotes match this. Maybe try narrowing it down?")
+                    await ctx.reply(
+                        "No quotes match this. Maybe try narrowing it down?"
+                    )
                 case 1:
                     await ctx.reply(_get_quote(found[0]))
                 case n:
-                    if n > 20: # sanity threshold
-                        await ctx.reply("Too many quotes match this. Try a narrower search.")
+                    if n > 20:  # sanity threshold
+                        await ctx.reply(
+                            "Too many quotes match this. Try a narrower search."
+                        )
                     else:
-                        await ctx.reply(f"The quotes with this text are {', '.join(str(x) for x in found)}.")
+                        await ctx.reply(
+                            f"The quotes with this text are {', '.join(str(x) for x in found)}."
+                        )
 
         case "random":
             if not _quotes:
@@ -1159,6 +1374,7 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
     if update:
         _update_quotes()
 
+
 def _get_quote(i: int):
     q = _quotes[i]
     if not q.is_quote:
@@ -1168,18 +1384,21 @@ def _get_quote(i: int):
         author = f" - {q.author}"
     added_by = ", on {ts}"
     # Keep that information, but don't display it for now. maybe later
-    #if q.added_by:
+    # if q.added_by:
     #    added_by = f" (Added by {q.added_by} on {{ts}})"
     added_by = added_by.format(ts=q.ts.isoformat()[:10])
     return f'Quote #{i}: "{q.line}"{author}{added_by}'
+
 
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
     if not name:
-        await ctx.reply(f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
-                       f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
-                       f"my source code is available at {__github__}, and the website is {config.server.url}")
+        await ctx.reply(
+            f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
+            f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
+            f"my source code is available at {__github__}, and the website is {config.server.url}"
+        )
         return
 
     tcmd = dcmd = None
@@ -1187,12 +1406,17 @@ async def help_cmd(ctx: ContextType, name: str = ""):
         tcmd = TConn.get_command(name)
     if DConn is not None:
         dcmd = DConn.get_command(name)
-    cmd = (tcmd or dcmd)
+    cmd = tcmd or dcmd
     if cmd:
-        await ctx.reply(f"Full information about this command can be viewed at {config.server.url}/commands/{cmd.name}")
+        await ctx.reply(
+            f"Full information about this command can be viewed at {config.server.url}/commands/{cmd.name}"
+        )
         return
 
-    await ctx.reply(f"Could not find matching command. You may view all existing commands here: {config.server.url}/commands")
+    await ctx.reply(
+        f"Could not find matching command. You may view all existing commands here: {config.server.url}/commands"
+    )
+
 
 @command("support", "shoutout", "so")
 async def shoutout(ctx: ContextType, name: str):
@@ -1215,13 +1439,20 @@ async def shoutout(ctx: ContextType, name: str):
         viewers = stream.viewer_count
         started_at = stream.started_at
         # somehow, doing now() - started_at triggers an error due to conflicting timestamps
-        td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - started_at.timestamp()))
-        msg.append(f"they are currently live with {viewers} viewers playing {game}! They have been live for {str(td).partition('.')[0]}")
+        td = datetime.timedelta(
+            seconds=(datetime.datetime.now().timestamp() - started_at.timestamp())
+        )
+        msg.append(
+            f"they are currently live with {viewers} viewers playing {game}! They have been live for {str(td).partition('.')[0]}"
+        )
 
     else:
-        msg.append(f"last time they were live, they were seen playing {chan.game_name}!")
+        msg.append(
+            f"last time they were live, they were seen playing {chan.game_name}!"
+        )
 
     await ctx.send(" ".join(msg))
+
 
 @command("title")
 async def stream_title(ctx: ContextType):
@@ -1233,16 +1464,22 @@ async def stream_title(ctx: ContextType):
     else:
         await ctx.reply("Could not connect to the Twitch API (or stream is offline).")
 
+
 @command("uptime")
 async def stream_uptime(ctx: ContextType):
     """Display the stream uptime."""
     live: list[Stream] = await TConn.fetch_streams(user_logins=[config.twitch.channel])
 
     if live:
-        td = datetime.timedelta(seconds=(datetime.datetime.now().timestamp() - live[0].started_at.timestamp()))
+        td = datetime.timedelta(
+            seconds=(
+                datetime.datetime.now().timestamp() - live[0].started_at.timestamp()
+            )
+        )
         await ctx.reply(f"The stream has been live for {str(td).partition('.')[0]}")
     else:
         await ctx.reply("Stream is offline (if this is wrong, the Twitch API broke).")
+
 
 # DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
 # im merging it and you cant stop me. suck it, past faely!!!
@@ -1255,7 +1492,7 @@ async def stream_uptime(ctx: ContextType):
 # [ ] Add a way to lock in prediction after... something
 # [ ] Have enough text variety that it doesn't get repetitive
 # [X] Refuse to create a prediction if a Neow bonus was picked
-# 
+#
 # More info:
 # - Type 'classic' is prediction with only win/lose options
 # - Type 'extended' is 5 outcomes (death in each act+win)
@@ -1272,11 +1509,15 @@ _prediction = {
     "pred": None,
 }
 
-async def start_prediction(ctx: TContext, title: str, outcomes: list[str], duration: int):
+
+async def start_prediction(
+    ctx: TContext, title: str, outcomes: list[str], duration: int
+):
     user = await ctx.channel.user()
     value = await post_prediction(TConn.app, user.id, title, outcomes, duration)
     _prediction["pred"] = value
     _prediction["running"] = True
+
 
 async def resolve_prediction(index: int):
     pred: Prediction = _prediction["pred"]
@@ -1285,7 +1526,10 @@ async def resolve_prediction(index: int):
     _prediction["type"] = None
     _prediction["pred"] = None
     # todo: there's some bug here, idk what, but it's fine. probably. it resolves, anyway
-    await pred.user.end_prediction(TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id)
+    await pred.user.end_prediction(
+        TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id
+    )
+
 
 @add_listener("run_end")
 async def auto_resolve_pred(run: RunParser):
@@ -1298,6 +1542,7 @@ async def auto_resolve_pred(run: RunParser):
             case a:
                 raise RuntimeError(f"Unsupported prediction type {a!r} encountered.")
 
+
 @command("prediction", "pred", discord=False, flag="m")
 async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
     # TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction
@@ -1307,15 +1552,17 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 return await ctx.reply("A prediction is already running.")
 
             values = {
-                "char": None, # limited to 15 characters, if any
+                "char": None,  # limited to 15 characters, if any
                 "type": "classic",
                 "duration": "300",
             }
             for pair in args:
                 key, eq, val = pair.partition("=")
-                val = val.replace("_", " ") # just in case
+                val = val.replace("_", " ")  # just in case
                 if not eq:
-                    return await ctx.reply(f"Needs key-value pair ('{pair}' is invalid).")
+                    return await ctx.reply(
+                        f"Needs key-value pair ('{pair}' is invalid)."
+                    )
                 if key in values:
                     values[key] = val
                 else:
@@ -1323,7 +1570,9 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
 
             save = await get_savefile()
             if save.in_game and save.neow_bonus.choice_made:
-                return await ctx.reply("Cannot start a prediction after a Neow bonus was picked.")
+                return await ctx.reply(
+                    "Cannot start a prediction after a Neow bonus was picked."
+                )
 
             try:
                 duration = int(values["duration"])
@@ -1347,7 +1596,9 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                     ]
 
                 case a:
-                    return await ctx.reply(f"Error: prediction type {a!r} is not recognized.")
+                    return await ctx.reply(
+                        f"Error: prediction type {a!r} is not recognized."
+                    )
 
             char = values["char"]
             if save.in_game:
@@ -1355,14 +1606,20 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
 
             if char is not None:
                 if len(char) > 15:
-                    return await ctx.reply("Character ('char') cannot be longer than 15 characters if provided.")
-                title = random.choice(_prediction_terms[values["type"]]["char_title"]).format(char)[:45]
+                    return await ctx.reply(
+                        "Character ('char') cannot be longer than 15 characters if provided."
+                    )
+                title = random.choice(
+                    _prediction_terms[values["type"]]["char_title"]
+                ).format(char)[:45]
             else:
                 title = random.choice(_prediction_terms[values["type"]]["title"])[:45]
 
             _prediction["type"] = values["type"]
             await start_prediction(ctx, title, outcomes, duration)
-            await ctx.send("baalorWaffle Predict with your channel points on the outcome of this run! baalorWaffle")
+            await ctx.send(
+                "baalorWaffle Predict with your channel points on the outcome of this run! baalorWaffle"
+            )
 
         case "info" | "cancel":
             await ctx.reply("Sadly, that's not been implemented yet.")
@@ -1372,12 +1629,16 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 return await ctx.reply("No prediction is running.")
 
             if not args:
-                return await ctx.reply("Please provide a number to resolve the prediction with.")
+                return await ctx.reply(
+                    "Please provide a number to resolve the prediction with."
+                )
 
             try:
                 idx = int(args[0])
             except ValueError:
-                return await ctx.reply("This should be a number, not... whatever this is.")
+                return await ctx.reply(
+                    "This should be a number, not... whatever this is."
+                )
 
             if 0 <= idx < len(_prediction["pred"].outcomes):
                 await resolve_prediction(idx)
@@ -1388,12 +1649,15 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
         case a:
             await ctx.reply(f"I don't know what {a!r} means.")
 
+
 @command("playing", "nowplaying", "spotify", "np")
 async def now_playing(ctx: ContextType):
     """Return the currently-playing song on Spotify (if any)."""
     if not config.server.debug and not TConn.live_channels[config.twitch.channel]:
         # just in case
-        TConn.live_channels[config.twitch.channel] = live = bool(await TConn.fetch_streams(user_logins=[config.twitch.channel]))
+        TConn.live_channels[config.twitch.channel] = live = bool(
+            await TConn.fetch_streams(user_logins=[config.twitch.channel])
+        )
         if not live:
             await ctx.reply("That's kinda creepy, not gonna lie...")
             return
@@ -1402,17 +1666,22 @@ async def now_playing(ctx: ContextType):
     if j is None:
         await ctx.reply("Could not get token from Spotify API. Retry in a few seconds.")
     elif "error" in j:
-        await ctx.reply(f"Something went wrong with the Spotify API ({j['status']}: {j['message']})")
+        await ctx.reply(
+            f"Something went wrong with the Spotify API ({j['status']}: {j['message']})"
+        )
     elif j["is_playing"]:
-        await ctx.reply(f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}.")
+        await ctx.reply(
+            f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}."
+        )
     else:
         await ctx.reply("We are not currently listening to anything.")
 
+
 @router.get("/playing")
 async def now_playing_client(req: Request):
-    await get_req_data(req) # just checking if key is OK
+    await get_req_data(req)  # just checking if key is OK
 
-    if TConn is None: # no Twitch, no Spotify
+    if TConn is None:  # no Twitch, no Spotify
         raise HTTPServiceUnavailable(reason="Need Twitch connection for Spotify")
 
     data = await TConn.spotify_call()
@@ -1421,12 +1690,14 @@ async def now_playing_client(req: Request):
         return Response(text=json.dumps(data), content_type="application/json")
     raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
+
 _ongoing_giveaway = {
     "running": False,
     "count": 0,
     "users": set(),
     "starter": None,
 }
+
 
 @command("giveaway", flag="m")
 async def giveaway_handle(ctx: ContextType, count: int = 1):
@@ -1439,7 +1710,9 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
             _ongoing_giveaway["count"] = count
         else:
             _ongoing_giveaway["count"] = 1
-        await ctx.send(f"A giveaway has started! Type {config.baalorbot.prefix}enter to enter!")
+        await ctx.send(
+            f"A giveaway has started! Type {config.baalorbot.prefix}enter to enter!"
+        )
 
     elif _ongoing_giveaway["starter"] != ctx.author.name:
         await ctx.reply("Only the person who started the giveaway can resolve it!")
@@ -1447,18 +1720,23 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
     else:
         _ongoing_giveaway["running"] = False
         _ongoing_giveaway["starter"] = None
-        _ongoing_giveaway["users"].discard(None) # just in case
+        _ongoing_giveaway["users"].discard(None)  # just in case
         if not _ongoing_giveaway["users"]:
             await ctx.reply("uhhh, no one entered??")
             return
 
         # TODO: replace with random.sample, maybe?
-        users = random.choices(list(_ongoing_giveaway["users"]), k=_ongoing_giveaway["count"])
+        users = random.choices(
+            list(_ongoing_giveaway["users"]), k=_ongoing_giveaway["count"]
+        )
         _ongoing_giveaway["users"].clear()
         if len(users) == 1:
             await ctx.send(f"Congratulations to {users[0]}, you have won the giveaway!")
         else:
-            await ctx.send(f"Congratulations to the following users for winning the giveaway: {', '.join(users)}")
+            await ctx.send(
+                f"Congratulations to the following users for winning the giveaway: {', '.join(users)}"
+            )
+
 
 @command("enter", burst=25, rate=1.0)
 async def giveaway_enter(ctx: ContextType):
@@ -1469,6 +1747,7 @@ async def giveaway_enter(ctx: ContextType):
         return
 
     _ongoing_giveaway["users"].add(ctx.author.name)
+
 
 @command("info", "cardinfo", "relicinfo")
 async def card_info(ctx: ContextType, *line: str, _cache={}):
@@ -1488,10 +1767,10 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
         async with session.get(f"https://slay.ocean.lol/s?{line}%20limit=1") as resp:
             if resp.ok:
                 j = await resp.json()
-                j = j[0]['item']
-                desc = j['description'].replace('\n', ' ')
+                j = j[0]["item"]
+                desc = j["description"].replace("\n", " ")
                 pack = j.get("pack")
-                mod = j['mod']
+                mod = j["mod"]
                 if pack:
                     mod = f"Pack: {pack}"
                 if mod == "Slay the Spire":
@@ -1499,7 +1778,9 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
                 text = ""
                 if mod:
                     text = f" ({mod})"
-                await ctx.reply(f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}")
+                await ctx.reply(
+                    f"{j['name']} ({j['rarity']} {j['type']}): {desc} - {j['character'][0]}{text}"
+                )
                 return
 
     line = " ".join(line)
@@ -1509,6 +1790,7 @@ async def card_info(ctx: ContextType, *line: str, _cache={}):
         return
 
     await ctx.reply(info.info)
+
 
 @command("mtinfo")
 async def mt_info(ctx: ContextType, *line: str):
@@ -1520,6 +1802,7 @@ async def mt_info(ctx: ContextType, *line: str):
 
     await ctx.reply(info.info)
 
+
 @command("card", "cardart")
 async def card_with_art(ctx: ContextType, *line: str):
     line = " ".join(line)
@@ -1528,7 +1811,9 @@ async def card_with_art(ctx: ContextType, *line: str):
         await ctx.reply(f"Could not find card {line!r}")
         return
     if info.cls_name != "card":
-        await ctx.reply(f"Can only find art for cards. Use {config.baalorbot.prefix}info instead.")
+        await ctx.reply(
+            f"Can only find art for cards. Use {config.baalorbot.prefix}info instead."
+        )
         return
 
     info: Card
@@ -1538,7 +1823,10 @@ async def card_with_art(ctx: ContextType, *line: str):
     id = format_for_slaytabase(info.internal)
     link = f"{mod}/cards/{id}.png"
 
-    await ctx.reply(f"You can view this card and the upgrade with the art here: {base}{link}")
+    await ctx.reply(
+        f"You can view this card and the upgrade with the art here: {base}{link}"
+    )
+
 
 @with_savefile("cache", flag="m")
 async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
@@ -1571,6 +1859,7 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
         case a:
             await ctx.reply(f"Argument {a!r} not recognized.")
 
+
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: Savefile):
     """Display what was skipped for the Sapphire key."""
@@ -1581,12 +1870,15 @@ async def bluekey(ctx: ContextType, save: Savefile):
     for node in save.path:
         try:
             if node.blue_key:
-                await ctx.reply(f"We skipped {node.key_relic} on floor {node.floor} for the Sapphire key.")
+                await ctx.reply(
+                    f"We skipped {node.key_relic} on floor {node.floor} for the Sapphire key."
+                )
                 return
         except AttributeError:
             continue
 
     await ctx.reply("RunHistoryPlus is not running; cannot get data.")
+
 
 @with_savefile("removals", "removed")
 async def cards_removed(ctx: ContextType, save: Savefile):
@@ -1599,13 +1891,17 @@ async def cards_removed(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f"We removed {len(removed)} cards: {', '.join(removed)}.")
 
+
 @with_savefile("neow", "neowbonus")
 async def neowbonus(ctx: ContextType, save: Savefile):
     """Display what the Neow bonus was."""
     if not save.neow_bonus.choice_made:
         await ctx.reply("No Neow bonus taken yet.")
     else:
-        await ctx.reply(f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}")
+        await ctx.reply(
+            f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
+        )
+
 
 @with_savefile("neowskipped", "skippedbonus")
 async def neow_skipped(ctx: ContextType, save: Savefile):
@@ -1614,18 +1910,27 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.skipped)}")
 
+
 @with_savefile("seed", "currentseed")
 async def seed_cmd(ctx: ContextType, save: Savefile):
     """Display the run's current seed."""
-    await ctx.reply(f"Current seed: {save.seed}{' (set manually)' if save.is_seeded else ''}")
+    await ctx.reply(
+        f"Current seed: {save.seed}{' (set manually)' if save.is_seeded else ''}"
+    )
+
 
 @with_savefile("seeded", "isthisseeded")
 async def is_seeded(ctx: ContextType, save: Savefile):
     """Display whether the current run is seeded."""
     if save.is_seeded:
-        await ctx.reply(f"This run is seeded! See '{config.baalorbot.prefix}seed' for the seed.")
+        await ctx.reply(
+            f"This run is seeded! See '{config.baalorbot.prefix}seed' for the seed."
+        )
     else:
-        await ctx.reply("This run is not seeded! Everything you're seeing is unplanned!")
+        await ctx.reply(
+            "This run is not seeded! Everything you're seeing is unplanned!"
+        )
+
 
 @with_savefile("playtime", "runtime", "time", "played")
 async def run_playtime(ctx: ContextType, save: Savefile):
@@ -1634,12 +1939,18 @@ async def run_playtime(ctx: ContextType, save: Savefile):
     seconds = int(time.time() - start.timestamp())
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
-    await ctx.reply(f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}")
+    await ctx.reply(
+        f"This run has been going on for {hours}:{minutes:>02}:{seconds:>02}"
+    )
+
 
 @with_savefile("shopremoval", "cardremoval", "removal")
 async def shop_removal_cost(ctx: ContextType, save: Savefile):
     """Display the current shop removal cost."""
-    await ctx.reply(f"Current card removal cost: {save.current_purge} (removed {save.purge_totals} card{'' if save.purge_totals == 1 else 's'})")
+    await ctx.reply(
+        f"Current card removal cost: {save.current_purge} (removed {save.purge_totals} card{'' if save.purge_totals == 1 else 's'})"
+    )
+
 
 @with_savefile("shopprices", "shopranges", "shoprange", "ranges", "shop", "prices")
 async def shop_prices(ctx: ContextType, save: Savefile):
@@ -1657,6 +1968,7 @@ async def shop_prices(ctx: ContextType, save: Savefile):
         f"Card removal: {save.current_purge}"
     )
 
+
 @with_savefile("rest", "heal", "restheal")
 async def campfire_heal(ctx: ContextType, save: Savefile):
     """Display the current heal at campfires."""
@@ -1673,8 +1985,9 @@ async def campfire_heal(ctx: ContextType, save: Savefile):
 
     await ctx.reply(f"Current campfire heal: {base} HP{extra}")
 
+
 @with_savefile("nloth")
-async def nloth_traded(ctx: ContextType, save: Savefile): # JSON_FP_PROP
+async def nloth_traded(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
     """Display which relic was traded for N'loth's Gift."""
     if "Nloth's Gift" not in save._data["relics"]:
         await ctx.reply("We do not have N'loth's Gift.")
@@ -1682,15 +1995,20 @@ async def nloth_traded(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
     for evt in save._data["metric_event_choices"]:
         if evt["event_name"] == "N'loth":
-            await ctx.reply(f"We traded {get(evt['relics_lost'][0]).name} for N'loth's Gift.")
+            await ctx.reply(
+                f"We traded {get(evt['relics_lost'][0]).name} for N'loth's Gift."
+            )
             return
     else:
         await ctx.reply("Something went terribly wrong.")
 
-@with_savefile("eventchances", "event") # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+
+@with_savefile(
+    "eventchances", "event"
+)  # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
 async def event_likelihood(ctx: ContextType, save: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""
-    elite, hallway, shop, chest = save._data["event_chances"] # JSON_FP_PROP
+    elite, hallway, shop, chest = save._data["event_chances"]  # JSON_FP_PROP
     # elite likelihood is only for the "Deadly Events" custom modifier
 
     await ctx.reply(
@@ -1702,7 +2020,10 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
         f"See {config.baalorbot.prefix}eventrng for more information."
     )
 
-@with_savefile("rare", "rarecard", "rarechance") # see comment in save.py -- this is not entirely accurate
+
+@with_savefile(
+    "rare", "rarecard", "rarechance"
+)  # see comment in save.py -- this is not entirely accurate
 async def rare_card_chances(ctx: ContextType, save: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
     regular, elites, shops = save.rare_chance
@@ -1711,6 +2032,7 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
         f"in normal fight card rewards, {elites:.2%} in elite fight "
         f"card rewards, and {shops:.2%} in shops."
     )
+
 
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
@@ -1725,8 +2047,11 @@ async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
         await ctx.reply(f"We only have {len(l)} relics!")
         return
 
-    relicData = l[index-1]
-    await ctx.reply(f"The relic at position {index} is {relicData.name}: {relicData.relic.description}")
+    relicData = l[index - 1]
+    await ctx.reply(
+        f"The relic at position {index} is {relicData.name}: {relicData.relic.description}"
+    )
+
 
 @with_savefile("allrelics", "offscreen", "page2")
 async def relics_page2(ctx: ContextType, save: Savefile):
@@ -1741,6 +2066,7 @@ async def relics_page2(ctx: ContextType, save: Savefile):
         relics.append(relic.name)
 
     await ctx.reply(f"The relics past page 1 are {', '.join(relics)}")
+
 
 @with_savefile("seen", "seenrelic", "available")
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
@@ -1761,7 +2087,9 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
         elif data.cls_name != "relic":
             replies.append("Can only look for relics seen.")
         elif data in save.relics_bare:
-            replies.append(f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}.")
+            replies.append(
+                f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}."
+            )
         elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
             match data.tier:
                 case "Boss":
@@ -1772,18 +2100,25 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
                     s = "We can only see Special relics from events."
                 case a:
                     s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
-            replies.append(f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}")
+            replies.append(
+                f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}"
+            )
         elif save.available_relic(data):
-            replies.append(f"We have not seen {data.name} yet! There's a chance we'll see it!")
+            replies.append(
+                f"We have not seen {data.name} yet! There's a chance we'll see it!"
+            )
         else:
             s = ""
             if data.pool:
                 s = " (or maybe it doesn't belong to this character)"
-            replies.append(f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris")
+            replies.append(
+                f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris"
+            )
     await ctx.reply("\n".join(replies))
 
+
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
-async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
+async def skipped_boss_relics(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
     """Display the boss relics that were taken and skipped."""
     l: list[dict] = save._data["metric_boss_relics"]
 
@@ -1807,13 +2142,14 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile): # JSON_FP_PROP
 
     await ctx.reply(" ".join(msg))
 
+
 @with_savefile("bottle", "bottled", "bottledcards", "bottledcard")
 async def bottled_cards(ctx: ContextType, save: Savefile):
     """List all bottled cards."""
     emoji_dict = {
         "Bottled Flame": "\N{FIRE}",
         "Bottled Lightning": "\N{HIGH VOLTAGE SIGN}",
-        "Bottled Tornado": "\N{CLOUD WITH TORNADO}"
+        "Bottled Tornado": "\N{CLOUD WITH TORNADO}",
     }
     bottle_strings: list[str] = []
     for bottle in save.bottles:
@@ -1824,6 +2160,7 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply("We do not have any bottled cards.")
 
+
 @with_savefile("custom", "modifiers")
 async def modifiers(ctx: ContextType, save: Savefile):
     """List all custom modifiers for the run."""
@@ -1832,13 +2169,15 @@ async def modifiers(ctx: ContextType, save: Savefile):
     else:
         await ctx.reply("This is a standard run.")
 
+
 @with_savefile("score")
 async def score(ctx: ContextType, save: Savefile):
     """Display the current score of the run"""
     if save.modded:
-        await ctx.reply(f'Current Score: ~{save.score} points')
+        await ctx.reply(f"Current Score: ~{save.score} points")
     else:
-        await ctx.reply(f'Current Score: {save.score} points')
+        await ctx.reply(f"Current Score: {save.score} points")
+
 
 @mt_command("clans")
 async def mt_clans(ctx: ContextType, save: MonsterSave):
@@ -1850,18 +2189,23 @@ async def mt_clans(ctx: ContextType, save: MonsterSave):
         sub = f"{sub} (Exiled)"
     await ctx.reply(f"The clans are {main} and {sub}.")
 
+
 @mt_command("mutators")
 async def mt_mutators(ctx: ContextType, save: MonsterSave):
-    if (m := save.mutators):
+    if m := save.mutators:
         val = ", ".join(f"{x.name} ({x.description})" for x in m)
         await ctx.reply(f"The mutators are: {val}")
 
-#@mt_command("challenge")
+
+# @mt_command("challenge")
 async def mt_challenge(ctx: ContextType, save: MonsterSave):
     if not save.challenge:
         await ctx.reply("We are not currently playing an Expert Challenge.")
     else:
-        await ctx.reply(f"We are currently playing the Expert Challenge {save.challenge.info}.")
+        await ctx.reply(
+            f"We are currently playing the Expert Challenge {save.challenge.info}."
+        )
+
 
 @mt_command("artifact")
 async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
@@ -1875,13 +2219,17 @@ async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
         await ctx.reply(f"We only have {len(l)} artifacts!")
         return
 
-    relicData = l[index-1]
+    relicData = l[index - 1]
     await ctx.reply(f"The artifact at position {index} is {relicData.info}")
+
 
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""
-    await ctx.reply(f"We are running Classic on {save.difficulty} with {'; '.join(save.modifiers)}.")
+    await ctx.reply(
+        f"We are running Classic on {save.difficulty} with {'; '.join(save.modifiers)}."
+    )
+
 
 @slice_command("items")
 async def items(ctx: ContextType, save: CurrentRun):
@@ -1890,6 +2238,7 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply(f"The unequipped items are {'; '.join(save.items)}.")
     else:
         await ctx.reply("We have no unequipped items.")
+
 
 @command("fairyreleased", "released")
 async def fairy_released(ctx: ContextType):
@@ -1903,6 +2252,7 @@ async def fairy_released(ctx: ContextType):
 
     await ctx.reply(f"We have freed {count} fairies at the top of the Spire!")
 
+
 @command("last")
 async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
     """Get the last run/win/loss."""
@@ -1915,7 +2265,7 @@ async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
         value = [arg1.lower()]
     match value:
         case None:
-            pass # nothing to worry about
+            pass  # nothing to worry about
         case ["win"] | ["victory"] | ["w"]:
             won = True
         case ["loss"] | ["death"] | ["l"]:
@@ -1949,29 +2299,33 @@ async def get_last(ctx: ContextType, arg1: str = "", arg2: str = ""):
             char = "Watcher"
         case _:
             if char is not None:
-                char = char.capitalize() # might be a mod character
+                char = char.capitalize()  # might be a mod character
 
     await _last_run(ctx, char, won)
+
 
 @command("lastrun")
 async def get_last_run(ctx: ContextType):
     """Get the last run."""
     await _last_run(ctx, None, None)
 
+
 @command("lastwin", "lastvictory")
 async def get_last_win(ctx: ContextType):
     """Get the last win."""
     await _last_run(ctx, None, True)
+
 
 @command("lastloss", "lastdeath")
 async def get_last_loss(ctx: ContextType):
     """Get the last loss."""
     await _last_run(ctx, None, False)
 
+
 async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
     try:
         latest = get_latest_run(character, arg)
-        latest.won # making sure it's not None
+        latest.won  # making sure it's not None
     except (KeyError, AttributeError):
         await ctx.reply(f"Could not understand character {character}.")
         return
@@ -1982,7 +2336,10 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
         value = f"winning {value}"
     elif arg is not None:
         value = f"lost {value}"
-    await ctx.reply(f"The last {value}'s history can be viewed at {config.server.url}/runs/{latest.name}")
+    await ctx.reply(
+        f"The last {value}'s history can be viewed at {config.server.url}/runs/{latest.name}"
+    )
+
 
 @command("wall")
 async def wall_card(ctx: ContextType):
@@ -1995,7 +2352,10 @@ async def wall_card(ctx: ContextType):
         await ctx.reply("Error: could not find Ladder savefile.")
         return
 
-    await ctx.reply(f"Current card in the {config.baalorbot.prefix}hole in the wall for the ladder savefile: {p.hole_card}")
+    await ctx.reply(
+        f"Current card in the {config.baalorbot.prefix}hole in the wall for the ladder savefile: {p.hole_card}"
+    )
+
 
 @command("range", flag="me")
 async def set_run_stats_by_date(ctx: ContextType, date_string: str):
@@ -2008,10 +2368,13 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
     try:
         date_tuple = parse_date_range(date_string)
     except:
-        await ctx.reply("Invalid date string. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+        await ctx.reply(
+            "Invalid date string. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"
+        )
         return
     update_range(date_tuple[0], date_tuple[1])
     await ctx.reply("Run stats have been updated for the given range")
+
 
 @command("kills", "wins")
 async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None):
@@ -2019,13 +2382,17 @@ async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None
     msg = "A20 Heart kills ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     await _send_standard_run_stats_message(ctx, msg, "all_wins", date_string)
 
+
 @command("losses")
 async def calculate_losses_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of losses for an optional date range."""
     msg = "A20 Heart losses ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
     await _send_standard_run_stats_message(ctx, msg, "all_losses", date_string)
 
-async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name: str, date_string: Optional[str] = None):
+
+async def _send_standard_run_stats_message(
+    ctx: ContextType, msg: str, prop_name: str, date_string: Optional[str] = None
+):
     run_stats = None
     if date_string is None:
         run_stats = get_run_stats_by_date()
@@ -2033,27 +2400,32 @@ async def _send_standard_run_stats_message(ctx: ContextType, msg: str, prop_name
         try:
             run_stats = get_run_stats_by_date_string(date_string)
         except ValueError:
-            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            await ctx.reply(
+                "Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"
+            )
             return
         except TypeError:
             await ctx.reply("Start date is after end date")
             return
     await ctx.reply(msg.format(run_stats, getattr(run_stats, prop_name)))
 
+
 _display = []
 _words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher")
 
+
 def _get_set_display():
-    if not _display: # we get
+    if not _display:  # we get
         with open(os.path.join("data", "streak")) as f:
             toggles = f.read().strip()
 
         for i in toggles:
             _display.append(int(i))
 
-    elif _display: # we set
+    elif _display:  # we set
         with open(os.path.join("data", "streak"), "w") as f:
             f.write("".join(str(i) for i in _display))
+
 
 @command("rotation", "display", flag="m")
 async def streak_display(ctx: ContextType, new: str):
@@ -2070,6 +2442,7 @@ async def streak_display(ctx: ContextType, new: str):
     _get_set_display()
     await ctx.reply(f"Streak display changed to {', '.join(word)}.")
 
+
 @command("streak")
 async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
@@ -2079,12 +2452,15 @@ async def calculate_streak_cmd(ctx: ContextType):
     for i, l in enumerate(_display):
         if l:
             word = _words[i]
-            arg = f"{word.lower()}_count" if word != "Rotating" else "all_character_count"
+            arg = (
+                f"{word.lower()}_count" if word != "Rotating" else "all_character_count"
+            )
             msg.append(f"{word}: {{0.{arg}}}")
 
     final = f"Current streak: {' - '.join(msg)}"
     run_stats = get_all_run_stats()
     await ctx.reply(final.format(run_stats.streaks))
+
 
 @command("pb")
 async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
@@ -2097,12 +2473,15 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
         try:
             run_stats = get_run_stats_by_date_string(date_string)
         except ValueError:
-            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            await ctx.reply(
+                "Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"
+            )
             return
         except TypeError:
             await ctx.reply("Start date is after end date")
             return
     await ctx.reply(msg.format(run_stats, run_stats.pb))
+
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
@@ -2114,15 +2493,32 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
         try:
             run_stats = get_run_stats_by_date_string(date_string)
         except ValueError:
-            await ctx.reply("Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)")
+            await ctx.reply(
+                "Invalid date string or start date was after end date. Use YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"
+            )
             return
         except TypeError:
             await ctx.reply("Start date is after end date")
             return
-    wins = [run_stats.all_wins.all_character_count, run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
-    losses = [run_stats.all_losses.all_character_count, run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
-    rate = [0 if (a+b==0) else a/(a+b) for a, b in zip(wins, losses)]
-    await ctx.reply(f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}")
+    wins = [
+        run_stats.all_wins.all_character_count,
+        run_stats.all_wins.ironclad_count,
+        run_stats.all_wins.silent_count,
+        run_stats.all_wins.defect_count,
+        run_stats.all_wins.watcher_count,
+    ]
+    losses = [
+        run_stats.all_losses.all_character_count,
+        run_stats.all_losses.ironclad_count,
+        run_stats.all_losses.silent_count,
+        run_stats.all_losses.defect_count,
+        run_stats.all_losses.watcher_count,
+    ]
+    rate = [0 if (a + b == 0) else a / (a + b) for a, b in zip(wins, losses)]
+    await ctx.reply(
+        f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}"
+    )
+
 
 @with_savefile("unmastered", optional_save=True)
 async def unmastered(ctx: ContextType, save: Savefile):
@@ -2140,7 +2536,9 @@ async def unmastered(ctx: ContextType, save: Savefile):
         value: Card
         if value.mod is not None:
             continue
-        if value.type == "Status" or value.rarity == "Special": # all "special" ones are already mastered
+        if (
+            value.type == "Status" or value.rarity == "Special"
+        ):  # all "special" ones are already mastered
             continue
 
         if value.name not in cards:
@@ -2159,18 +2557,19 @@ async def unmastered(ctx: ContextType, save: Savefile):
 
     await ctx.reply(msg)
 
+
 @command("mastered")
 async def mastered_stuff(ctx: ContextType, *card: str):
     """Tell us whether a certain card or relic is mastered."""
     mastery_stats = get_mastered()
-    #total = (75 * 4) + 39 + 13 # 178 relics
-    #chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
-    #d = defaultdict(dict)
+    # total = (75 * 4) + 39 + 13 # 178 relics
+    # chars = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
+    # d = defaultdict(dict)
 
-    #for card, (color, char, ts) in cards.items():
+    # for card, (color, char, ts) in cards.items():
     #    d[color][card] = (char, ts)
 
-    #msg = ["Current mastery progression:"]
+    # msg = ["Current mastery progression:"]
 
     info = query("".join(card))
     if info is None:
@@ -2191,18 +2590,24 @@ async def mastered_stuff(ctx: ContextType, *card: str):
             return
 
     if info.name in d:
-        await ctx.reply(f"The {info.cls_name} {info.name} IS mastered! Run: {config.server.url}/runs/{d[info.name].name}")
+        await ctx.reply(
+            f"The {info.cls_name} {info.name} IS mastered! Run: {config.server.url}/runs/{d[info.name].name}"
+        )
     else:
         await ctx.reply(f"The {info.cls_name} {info.name} is NOT mastered.")
+
 
 @with_savefile("candidates")
 async def current_mastery_check(ctx: ContextType, save: Savefile):
     """Output what cards in the current run can be mastered if won."""
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
     if cards_can_master:
-        await ctx.reply(f"The cards that can be mastered this run are: {', '.join(cards_can_master)}")
+        await ctx.reply(
+            f"The cards that can be mastered this run are: {', '.join(cards_can_master)}"
+        )
     else:
         await ctx.reply(f"There are no new cards in this run that can be mastered.")
+
 
 @with_savefile("cwbgh", "cwbg", optional_save=True)
 async def calipers(ctx: ContextType, save: Optional[Savefile]):
@@ -2211,6 +2616,7 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
         if query("calipers") in save.relics_bare:
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
     await ctx.reply(msg)
+
 
 @router.get("/commands")
 @template("commands.jinja2")
@@ -2225,6 +2631,7 @@ async def commands_page(req: Request):
     d["commands"].sort()
     return d
 
+
 @router.get("/commands/{name}")
 @template("command_single.jinja2")
 async def individual_cmd(req: Request):
@@ -2235,14 +2642,16 @@ async def individual_cmd(req: Request):
         tcmd: TwitchCommand = TConn.get_command(name)
     if DConn is not None:
         dcmd: DiscordCommand = DConn.get_command(name)
-    cmd = (tcmd or dcmd)
+    cmd = tcmd or dcmd
     if cmd is None:
         raise HTTPNotFound()
     if name in _cmds:
         d["builtin"] = False
         output: str = _cmds[name]["output"]
         try:
-            output = output.format(user="<username>", text="<text>", words="<words>", **_consts)
+            output = output.format(
+                user="<username>", text="<text>", words="<words>", **_consts
+            )
         except KeyError:
             pass
         out = []
@@ -2273,11 +2682,13 @@ async def individual_cmd(req: Request):
 
     return d
 
+
 _oauth_state = None
+
 
 @router.post("/twitch/check-token")
 async def check_token_validity(req: Request):
-    await get_req_data(req) # check if the key is OK
+    await get_req_data(req)  # check if the key is OK
     if not config.twitch.enabled:
         return Response(text="DISABLED")
     if not config.twitch.extended.enabled:
@@ -2307,6 +2718,7 @@ async def check_token_validity(req: Request):
 
     return Response(text=f"NEEDS_CONNECTION:{url}")
 
+
 @router.view("/twitch/receive-token")
 async def get_new_token(req: Request):
     values = req.query
@@ -2317,7 +2729,7 @@ async def get_new_token(req: Request):
     _oauth_state = None
 
     if "error" in values or "code" not in values:
-        return # idk man, not much you can do
+        return  # idk man, not much you can do
 
     client = ClientSession()
 
@@ -2330,6 +2742,7 @@ async def get_new_token(req: Request):
     }
 
     import urllib.parse
+
     enc = urllib.parse.urlencode(form)
 
     async with client.post(f"https://id.twitch.tv/oauth2/token?{enc}") as resp:
@@ -2345,6 +2758,7 @@ async def get_new_token(req: Request):
     TConn.app._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
 
+
 async def get_oauth_token():
     try:
         return getfile("twitch-oauth", "r").read().strip()
@@ -2352,10 +2766,16 @@ async def get_oauth_token():
         getfile("twitch-oauth", "w")
         getfile("twitch-refresh", "w")
 
+
 async def Twitch_startup():
     global TConn
 
-    TConn = TwitchConn(token=config.twitch.oauth_token, prefix=config.baalorbot.prefix, initial_channels=[config.twitch.channel], case_insensitive=True)
+    TConn = TwitchConn(
+        token=config.twitch.oauth_token,
+        prefix=config.baalorbot.prefix,
+        initial_channels=[config.twitch.channel],
+        case_insensitive=True,
+    )
     TConn._http.client_id = config.twitch.extended.client_id
     TConn._http.client_secret = config.twitch.extended.client_secret
     for cmd in _to_add_twitch:
@@ -2375,30 +2795,42 @@ async def Twitch_startup():
     esbot = EventSubBot.from_client_credentials(
         config.server.websocket_client.id,
         config.server.websocket_client.secret,
-        prefix=config.baalorbot.prefix
+        prefix=config.baalorbot.prefix,
     )
-    TConn.esclient = EventSubClient(esbot, config.server.webhook.secret, f"{config.server.url}/eventsub")
-    #await TConn.eventsub_setup()
+    TConn.esclient = EventSubClient(
+        esbot, config.server.webhook.secret, f"{config.server.url}/eventsub"
+    )
+    # await TConn.eventsub_setup()
 
     await TConn.connect()
+
 
 async def Twitch_cleanup():
     await TConn.close()
 
+
 async def Discord_startup():
     global DConn
-    DConn = DiscordConn(config.baalorbot.prefix, case_insensitive=True, owner_ids=config.baalorbot.owners, help_command=None, intents=discord.Intents.all())
+    DConn = DiscordConn(
+        config.baalorbot.prefix,
+        case_insensitive=True,
+        owner_ids=config.baalorbot.owners,
+        help_command=None,
+        intents=discord.Intents.all(),
+    )
     for cmd in _to_add_discord:
         DConn.add_command(cmd)
     await DConn.start(config.discord.oauth_token)
 
+
 async def Discord_cleanup():
     await DConn.close()
+
 
 async def Youtube_startup():
     async with aiohttp.ClientSession() as session:
         async with session.get(config.youtube.playlist_sheet) as response:
             csv = await response.text()
-            with open('data/playlists.csv', 'w') as playlists:
+            with open("data/playlists.csv", "w") as playlists:
                 playlists.write(csv)
         logger.info("Youtube playlist sheet downloaded")
