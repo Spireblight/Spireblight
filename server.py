@@ -602,7 +602,7 @@ class TwitchConn(TBot):
 
                 async def invoke(*args, **kwargs):
                     for e in evt:
-                        e.invoke(args, kwargs)
+                        await e.invoke(args, kwargs)
 
                 return invoke
         raise AttributeError(name)

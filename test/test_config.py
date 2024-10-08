@@ -10,7 +10,7 @@ class TestConfigFile(TestCase):
     def test_default_spire_steamdir(self):
         system_os = system().lower()
         if system_os == "windows":
-            self.assertEqual(config.spire.steamdir, 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire')
+            self.assertEqual(config.spire.steamdir, r'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire')
         elif system_os == "linux":
             self.assertEqual(config.spire.steamdir, expanduser("~/.steam/steam/steamapps/common/SlayTheSpire"))
         else:
