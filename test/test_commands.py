@@ -6,6 +6,67 @@ from unittest.mock import patch, AsyncMock, MagicMock
 import server
 
 
+class TestCommandCommand(IsolatedAsyncioTestCase):
+    @patch("server.TConn", autospec=True)
+    async def test_command_command_add_success(self, TConn):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "add", "test_in_prod", "We're testing in prod!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Command test_in_prod added! Permission: Everyone"
+        )
+
+        TConn.add_command.assert_called_once()
+
+    @patch("server.TConn")
+    async def test_command_command_add_failure_already_added(self, TConn):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        TConn.commands = {"test_in_prod": ["We're testing in prod!"]}
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "add", "test_in_prod", "We're testing in prod!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Error: command test_in_prod already exists!"
+        )
+
+        TConn.add_command.assert_not_called()
+
+    @patch("server.TConn")
+    async def test_command_command_add_failure_already_alias(self, TConn):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        cmd = MagicMock(spec=server.CommandType)
+        cmd.name = "tests"
+        TConn.commands = {"tests": [cmd]}
+        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "add", "test_in_prod", "We're testing in prod!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Error: test_in_prod is an alias to tests. Use 'unalias tests test_in_prod' first."
+        )
+
+        TConn.add_command.assert_not_called()
+
+
 # Test non-game specific commands
 class TestDiscordCommands(IsolatedAsyncioTestCase):
     @patch("server.query")
