@@ -392,7 +392,8 @@ class NeowBonus:
 
     def bonus_TRANSFORM_TWO_CARDS(self):
         if self.mod_data is not None:
-            return f"transformed {' and '.join(get(x).name for x in self.mod_data['cardsTransformed'])} into {' and '.join(get(x).name for x in self.mod_data['cardsObtained'])}"
+            # in case the cost is "gain a curse", the curse will be the first item. this guarantees we only get the last two cards
+            return f"transformed {' and '.join(get(x).name for x in self.mod_data['cardsTransformed'])} into {' and '.join(get(x).name for x in self.mod_data['cardsObtained'][-2:])}"
         return "transformed two cards"
 
     def bonus_ONE_RARE_RELIC(self):
