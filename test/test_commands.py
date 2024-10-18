@@ -7,8 +7,9 @@ import server
 
 
 class TestCommandCommand(IsolatedAsyncioTestCase):
+    @patch("server.update_db")
     @patch("server.TConn", autospec=True)
-    async def test_command_command_add_success(self, TConn):
+    async def test_command_command_add_success(self, TConn, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
@@ -24,9 +25,31 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         )
 
         TConn.add_command.assert_called_once()
+        update_db.assert_called_once()
 
+    @patch("server.update_db")
+    @patch("server.TConn", autospec=True)
+    async def test_command_command_add_success_with_valid_flag(self, TConn, update_db):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "add", "test_in_prod", "+m", "We're testing in prod!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with(
+            "Command test_in_prod added! Permission: Moderator"
+        )
+
+        TConn.add_command.assert_called_once()
+        update_db.assert_called_once()
+
+    @patch("server.update_db")
     @patch("server.TConn")
-    async def test_command_command_add_failure_already_added(self, TConn):
+    async def test_command_command_add_failure_already_added(self, TConn, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
@@ -43,9 +66,11 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         )
 
         TConn.add_command.assert_not_called()
+        update_db.assert_not_called()
 
+    @patch("server.update_db")
     @patch("server.TConn")
-    async def test_command_command_add_failure_already_alias(self, TConn):
+    async def test_command_command_add_failure_already_alias(self, TConn, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
@@ -65,6 +90,66 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         )
 
         TConn.add_command.assert_not_called()
+        update_db.assert_not_called()
+
+    @patch("server.update_db")
+    @patch("server.TConn")
+    async def test_command_command_add_failure_unknown_flag(self, TConn, update_db):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        cmd = MagicMock(spec=server.CommandType)
+        cmd.name = "tests"
+        TConn.commands = {"tests": [cmd]}
+        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "add", "flag", "+z", "This isn't a proper flag!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with("Error: flag not recognized.")
+
+        TConn.add_command.assert_not_called()
+        update_db.assert_not_called()
+
+    @patch("server.update_db")
+    @patch("server.TConn")
+    async def test_command_command_add_failure_no_output(self, TConn, update_db):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+        cmd = MagicMock(spec=server.CommandType)
+        cmd.name = "tests"
+        TConn.commands = {"tests": [cmd]}
+        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(context, "add", "flag")
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with("Error: no output provided.")
+
+        TConn.add_command.assert_not_called()
+        update_db.assert_not_called()
+
+
+# TODO: test_command_command_edit_success(self, TConn):
+# TODO: test_command_command_edit_success_with_valid_flag(self, TConn):
+# TODO: test_command_command_edit_failure_no_output(self, TConn):
+# TODO: test_command_command_edit_failure_does_not_exist(self, TConn):
+# TODO: test_command_command_edit_failure_built-in_command(self, TConn):
+# TODO: test_command_command_edit_failure_alias(self, TConn):
+# TODO: test_command_command_edit_failure_unknown_flag(self, TConn):
+
+# TODO: test_command_command_remove(self, TConn):
+# TODO: test_command_command_enable(self, TConn):
+# TODO: test_command_command_disable(self, TConn):
+# TODO: test_command_command_alias(self, TConn):
+# TODO: test_command_command_unalias(self, TConn):
+
+# TODO: test_command_command_unknown_action(self, TConn):
 
 
 # Test non-game specific commands

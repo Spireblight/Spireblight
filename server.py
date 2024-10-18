@@ -299,6 +299,7 @@ def _update_timers():
         json.dump(final, f, indent=config.server.json_indent)
 
 
+# Adds non built-in commands to internal json structure
 def add_cmd(
     name: str,
     *,
@@ -903,7 +904,7 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
-    """Syntax: command <action> <name> <output>"""
+    """Syntax: command <action> <name> [+flag] <output>"""
     args = list(args)
     msg = " ".join(args)
     name = name.lstrip(config.baalorbot.prefix)
@@ -930,6 +931,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
         case "add":
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(in_mapping=False):
                 return
             if name in aliases:
@@ -952,6 +954,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             await ctx.reply(f"Command {name} added! Permission: {_perms[flag]}")
 
         case "edit":
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer():
                 return
             if name in aliases:
@@ -979,6 +982,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             )
 
         case "remove" | "delete":
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
@@ -998,6 +1002,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             await ctx.reply(f"Command {name} has been deleted.")
 
         case "enable":
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
@@ -1021,6 +1026,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             await ctx.reply(f"Command {name} has been enabled.")
 
         case "disable":
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
             if name in aliases:
@@ -1120,6 +1126,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case "cooldown" | "cd":
             await ctx.reply("Cooldown cannot be changed currently")
             return
+            # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
             if not args:
