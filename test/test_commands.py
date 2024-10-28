@@ -1,18 +1,62 @@
 import datetime
 
+from typing import Dict, List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch, AsyncMock, MagicMock
 
 import server
+from twitch import TwitchCommand
+
+
+class Command:
+    name: str
+    output: str
+    aliases: List[str]
+    enabled: bool
+    flag: str
+
+    def __init__(
+        self, name: str, output: str, aliases: List[str] = None, enabled=True, flag=""
+    ):
+        self.name = name
+        self.output = output
+        self.aliases = aliases
+        self.enabled = enabled
+        self.flag = flag
+
+
+class TConnMock(MagicMock):
+    ### Mock Twitch Connection that holds state for testing ###
+    ### Usage: TConn = TConnMock([Command, Command]) # Command objects
+    # def __init__(self):
+    #     super().__init__()
+
+    def _setup(self, commands: List[Command]):
+        self.commands: Dict[str, TwitchCommand] = dict()
+        self._command_aliases: Dict[str, str] = dict()
+
+        for command in commands:
+            func = server._create_cmd(command.output)
+            func.__required__ = 0
+            self.commands[command.name] = TwitchCommand(
+                name=command.name,
+                flag=command.flag,
+                func=func,
+            )
+            if command.aliases:
+                for alias in command.aliases:
+                    self._command_aliases[alias] = command.name
 
 
 class TestCommandCommand(IsolatedAsyncioTestCase):
     @patch("server.update_db")
-    @patch("server.TConn", autospec=True)
-    async def test_command_command_add_success(self, TConn, update_db):
+    @patch("server.TConn")
+    async def test_command_command_add_success(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
+
+        server.TConn = TConnMock()
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(
@@ -24,15 +68,17 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
             "Command test_in_prod added! Permission: Everyone"
         )
 
-        TConn.add_command.assert_called_once()
+        server.TConn.add_command.assert_called_once()
         update_db.assert_called_once()
 
     @patch("server.update_db")
     @patch("server.TConn", autospec=True)
-    async def test_command_command_add_success_with_valid_flag(self, TConn, update_db):
+    async def test_command_command_add_success_with_valid_flag(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
+
+        server.TConn = TConnMock()
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(
@@ -44,16 +90,19 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
             "Command test_in_prod added! Permission: Moderator"
         )
 
-        TConn.add_command.assert_called_once()
+        server.TConn.add_command.assert_called_once()
         update_db.assert_called_once()
 
     @patch("server.update_db")
     @patch("server.TConn")
-    async def test_command_command_add_failure_already_added(self, TConn, update_db):
+    async def test_command_command_add_failure_already_added(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
-        TConn.commands = {"test_in_prod": ["We're testing in prod!"]}
+        server.TConn = TConnMock()
+        server.TConn._setup(
+            [Command(name="test_in_prod", output="We're testing in prod!")]
+        )
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(
@@ -65,7 +114,7 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
             "Error: command test_in_prod already exists!"
         )
 
-        TConn.add_command.assert_not_called()
+        server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
     @patch("server.update_db")
@@ -74,10 +123,16 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
-        cmd = MagicMock(spec=server.CommandType)
-        cmd.name = "tests"
-        TConn.commands = {"tests": [cmd]}
-        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+        server.TConn = TConnMock()
+        server.TConn._setup(
+            [
+                Command(
+                    name="tests",
+                    output="We're testing in prod!",
+                    aliases=["test_in_prod"],
+                )
+            ]
+        )
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(
@@ -94,14 +149,12 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
 
     @patch("server.update_db")
     @patch("server.TConn")
-    async def test_command_command_add_failure_unknown_flag(self, TConn, update_db):
+    async def test_command_command_add_failure_unknown_flag(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
-        cmd = MagicMock(spec=server.CommandType)
-        cmd.name = "tests"
-        TConn.commands = {"tests": [cmd]}
-        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+
+        server.TConn = TConnMock()
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(
@@ -111,19 +164,17 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         # Validate that expected calls and awaits were made
         context.reply.assert_awaited_once_with("Error: flag not recognized.")
 
-        TConn.add_command.assert_not_called()
+        server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
     @patch("server.update_db")
     @patch("server.TConn")
-    async def test_command_command_add_failure_no_output(self, TConn, update_db):
+    async def test_command_command_add_failure_no_output(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
         context.reply = AsyncMock()
-        cmd = MagicMock(spec=server.CommandType)
-        cmd.name = "tests"
-        TConn.commands = {"tests": [cmd]}
-        TConn._command_aliases = {"test_in_prod": [{"name": cmd.name}]}
+
+        server.TConn = TConnMock()
 
         # Invoke command using mocked context and desired command keywords
         await server.command_cmd(context, "add", "flag")
@@ -131,25 +182,98 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         # Validate that expected calls and awaits were made
         context.reply.assert_awaited_once_with("Error: no output provided.")
 
-        TConn.add_command.assert_not_called()
+        server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
+    @patch("server.update_db")
+    @patch("server.TConn", autospec=True)
+    async def test_command_command_edit_success(self, _, update_db):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
 
-# TODO: test_command_command_edit_success(self, TConn):
-# TODO: test_command_command_edit_success_with_valid_flag(self, TConn):
-# TODO: test_command_command_edit_failure_no_output(self, TConn):
-# TODO: test_command_command_edit_failure_does_not_exist(self, TConn):
-# TODO: test_command_command_edit_failure_built-in_command(self, TConn):
-# TODO: test_command_command_edit_failure_alias(self, TConn):
-# TODO: test_command_command_edit_failure_unknown_flag(self, TConn):
+        server.TConn = TConnMock()
+        server.TConn._setup(
+            [Command(name="test_in_prod", output="We're testing in prod!")]
+        )
 
-# TODO: test_command_command_remove(self, TConn):
-# TODO: test_command_command_enable(self, TConn):
-# TODO: test_command_command_disable(self, TConn):
-# TODO: test_command_command_alias(self, TConn):
-# TODO: test_command_command_unalias(self, TConn):
+        # Check initial command output
+        await server.TConn.commands["test_in_prod"].invoke(context=context)
+        context.reply.assert_awaited_with("We're testing in prod!")
 
-# TODO: test_command_command_unknown_action(self, TConn):
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(
+            context, "edit", "test_in_prod", "We're testing in production!"
+        )
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_with(
+            "Command test_in_prod edited successfully! Permission: Everyone"
+        )
+
+        await server.TConn.commands["test_in_prod"].invoke(context=context)
+        context.reply.assert_awaited_with("We're testing in production!")
+        update_db.assert_called_once()
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_success_with_valid_flag(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_failure_no_output(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_failure_does_not_exist(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_failure_built-in_command(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_failure_alias(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_edit_failure_unknown_flag(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_remove(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_enable(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_disable(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_alias(self, TConn, update_db):
+
+    # @patch("server.update_db")
+    # @patch("server.TConn", autospec=True)
+    # # TODO: test_command_command_unalias(self, TConn, update_db):
+
+    @patch("server.update_db")
+    @patch("server.TConn")
+    async def test_command_command_unknown_action(self, TConn, update_db):
+        # Set up required mocks
+        context = MagicMock()
+        context.reply = AsyncMock()
+
+        # Invoke command using mocked context and desired command keywords
+        await server.command_cmd(context, "flibble", "test This should fail.")
+
+        # Validate that expected calls and awaits were made
+        context.reply.assert_awaited_once_with("Unrecognized action flibble.")
+
+        TConn.add_command.assert_not_called()
+        update_db.assert_not_called()
 
 
 # Test non-game specific commands
@@ -226,7 +350,9 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
 
         now = datetime.datetime.now()
 
-        await server.quote_stuff(context, "add", "Meow!", "-", "Faely, not wanting to write these tests")
+        await server.quote_stuff(
+            context, "add", "Meow!", "-", "Faely, not wanting to write these tests"
+        )
 
         context.reply.assert_awaited_once_with("Quote #0 successfully added!")
 
@@ -234,7 +360,9 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
 
         await server.quote_stuff(context)
 
-        context.reply.assert_awaited_once_with(f'Quote #0: "Meow!" - Faely, not wanting to write these tests, on {now.year}-{now.month:02}-{now.day:02}')
+        context.reply.assert_awaited_once_with(
+            f'Quote #0: "Meow!" - Faely, not wanting to write these tests, on {now.year}-{now.month:02}-{now.day:02}'
+        )
 
         mock_update.assert_called_once()
 

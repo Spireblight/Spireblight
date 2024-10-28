@@ -926,7 +926,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             for alias in dcmd.aliases:
                 if alias not in aliases:
                     aliases[alias] = []
-                aliases[alias].append(dcmd)
+                aliases[alias].append(dcmd.name)
 
     sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
@@ -936,7 +936,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: {name} is an alias to {aliases[name][0][0]['name']}. Use 'unalias {aliases[name][0][0]['name']} {name}' first."
+                    f"Error: {name} is an alias to {aliases[name][0]}. Use 'unalias {aliases[name][0]} {name}' first."
                 )
                 return
             flag = ""
@@ -959,7 +959,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: cannot edit alias. Use 'edit {aliases[name][0].name}' instead."
+                    f"Error: cannot edit alias. Use 'edit {aliases[name][0]}' instead."
                 )
                 return
             if name not in _cmds:
@@ -987,7 +987,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: cannot delete alias. Use 'remove {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead."
+                    f"Error: cannot delete alias. Use 'remove {aliases[name][0]}' or 'unalias {aliases[name][0]} {name}' instead."
                 )
                 return
             if name not in _cmds:
@@ -1007,7 +1007,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: cannot enable alias. Use 'enable {aliases[name][0].name}' instead."
+                    f"Error: cannot enable alias. Use 'enable {aliases[name][0]}' instead."
                 )
                 return
             if all(cmds[name]):
@@ -1031,7 +1031,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: cannot disable alias. Use 'disable {aliases[name][0].name}' or 'unalias {aliases[name][0].name} {name}' instead."
+                    f"Error: cannot disable alias. Use 'disable {aliases[name][0]}' or 'unalias {aliases[name][0]} {name}' instead."
                 )
                 return
             if not all(cmds[name]):
@@ -1052,9 +1052,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
         case "alias":  # cannot sanely sanitize this
             if not args:
                 if name not in _cmds and name in aliases:
-                    await ctx.reply(
-                        f"Alias {name} is bound to {aliases[name][0].name}."
-                    )
+                    await ctx.reply(f"Alias {name} is bound to {aliases[name][0]}.")
                 elif _cmds[name].get("aliases"):
                     await ctx.reply(
                         f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}"
@@ -1142,7 +1140,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if name in aliases:
                 await ctx.reply(
-                    f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name]}' instead."
+                    f"Error: cannot edit alias cooldown. Use 'cooldown {aliases[name][0]}' instead."
                 )
                 return
             cd: TCooldown = cmds[name]._cooldowns.pop()
