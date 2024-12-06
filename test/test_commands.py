@@ -36,7 +36,7 @@ class TConnMock(MagicMock):
         self._command_aliases: Dict[str, str] = dict()
 
         for command in commands:
-            func = server._create_cmd(command.output)
+            func = server._create_cmd(command.output, command.name)
             func.__required__ = 0
             self.commands[command.name] = TwitchCommand(
                 name=command.name,

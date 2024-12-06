@@ -22,6 +22,11 @@ if config.server.debug:
 
 logger.info("Starting the bot")
 
+if sys.platform == "win32": # postgres compat
+    asyncio.set_event_loop_policy(
+        asyncio.WindowsSelectorEventLoopPolicy()
+    )
+
 async def main():
     await events.invoke("setup_init")
     loop = asyncio.get_event_loop()
