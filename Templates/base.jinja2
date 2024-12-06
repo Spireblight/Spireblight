@@ -23,6 +23,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
+    {# HTMX lets us load data into the pages without a full reload 👀
+    https://htmx.org/ #}
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
     <meta charset="UTF-8">
@@ -116,7 +120,7 @@
         </ul>
       </aside>
 
-      <div id="content">
+      <div id="content" {% if autorefresh %}hx-get="/current?content_only=1" hx-trigger="every 10s"{% endif %}>
         {% block content %}{% endblock %}
       </div>
 
