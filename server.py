@@ -177,7 +177,26 @@ def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     return _sanitize
 
 
-def _create_cmd(output):
+def _create_cmd(output: str, name: str):
+    def count(x: str = "") -> str:
+        # we expect something to increase or decrease
+        # but if it's invalid, just return existing count
+        # we don't want text commands to fail for no reason
+        update = False
+        match x:
+            case "increase" | "++":
+                inner.count += 1
+                update = True
+            case "decrease" | "--":
+                inner.count -= 1
+                update = True
+
+        if update:
+            _cmds[name]["count"] = inner.count
+            update_db()
+
+        return str(inner.count)
+
     async def inner(ctx: ContextType, *s, output: str = output):
         try:
             msg = output.format(
@@ -190,6 +209,7 @@ def _create_cmd(output):
             "savefile": None,
             "profile": None,
             "readline": readline,
+            "count": count,
         }
         if "$<profile" in msg:
             profile = get_current_profile()
@@ -212,6 +232,7 @@ def _create_cmd(output):
         # or a regular message.
         await ctx.reply(msg)
 
+    inner.count = 0
     return inner
 
 
@@ -236,8 +257,9 @@ def load(loop: asyncio.AbstractEventLoop):
             flag=d.get("flag", ""),
             burst=d.get("burst", _DEFAULT_BURST),
             rate=d.get("rate", _DEFAULT_RATE),
-        )(_create_cmd(d["output"]))
+        )(_create_cmd(d["output"], name))
         c.enabled = d.get("enabled", True)
+        c.count = d.get("count", c.count)
     try:
         with getfile("disabled", "r") as f:
             for disabled in f.readlines():
@@ -950,7 +972,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 add_cmd(name, flag=flag, output=msg)
             else:
                 add_cmd(name, output=msg)
-            command(name, flag=flag)(_create_cmd(msg))
+            command(name, flag=flag)(_create_cmd(msg, name))
             await ctx.reply(f"Command {name} added! Permission: {_perms[flag]}")
 
         case "edit":
@@ -976,7 +998,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 _cmds[name]["flag"] = flag
             update_db()
             for cmd in cmds[name]:
-                cmd._callback = _create_cmd(msg)
+                cmd._callback = _create_cmd(msg, name)
             await ctx.reply(
                 f"Command {name} edited successfully! Permission: {_perms[flag]}"
             )
@@ -1914,6 +1936,11 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
         await ctx.reply("No Neow bonus taken yet.")
     else:
         await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.skipped)}")
+
+
+@with_savefile("pandora", "pbox", "pandorasbox")
+async def what_if_box(ctx: ContextType, save: Savefile):
+    """Tell us what the Pandora's Box gave us."""
 
 
 @with_savefile("seed", "currentseed")
