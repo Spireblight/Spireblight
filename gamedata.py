@@ -126,6 +126,11 @@ class NeowBonus:
 
     # All of the Neow Bonus keys should exist together, if more are added, we shouldn't need to add checks for them
     # dear past self: wtf is the above supposed to mean? 02/09/24
+    # I figured it out! I think!
+    # it means that the neow_*_skipped_log and similar are added by the same mod,
+    # and so if other keys are added, the checks here will be sufficient
+    # that's my best guess, anyway. 06/01/25
+    # oh btw that's dd/mm/yy because im not a backwater rube
     @property
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser._data:
