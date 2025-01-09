@@ -787,6 +787,8 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
        to the timer `name` - it does not start the timer. If it is running,
        it will seamlessly integrate the new command at the current point in
        the rotation.
+    - `remove <name> <commands> will remove all of the commands (space-separated)
+       to the timer `name` - it does not stop or delete the timer.
     - `delete <name>` completely removes a timer and associated commands.
        This cannot be undone.
     - `auto <name> [interval]` creates a new timer with the given interval,
@@ -840,7 +842,25 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s."
             )
 
-        case "delete" | "remove":
+        case "remove":
+            if name not in _timers:
+                await ctx.reply(
+                    f"Timer {name} doesn't exist. Use 'create {name}' first."
+                )
+                return
+            if not args:
+                await ctx.reply("No commands to remove.")
+                return
+            t = _timers[name]
+            for arg in args:
+                if arg in t.commands:
+                    t.commands.remove(arg)
+            _update_timers()
+            await ctx.reply(
+                f"Timer {name} now has commands {', '.join(t.commands)} on an interval of {t.interval}s."
+            )
+
+        case "delete":
             if name not in _timers:
                 await ctx.reply(
                     f"Timer {name} doesn't exist. Use 'create {name}' first."
