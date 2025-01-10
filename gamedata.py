@@ -461,9 +461,10 @@ class NeowBonus:
         return hasattr(self, f"bonus_{self.parser._data['neow_bonus']}")
 
     @property
-    def cards(self) -> list[str]:
+    def cards(self) -> list[CardData]:
         try:
-            return [get(x).name for x in self.get_cards()]
+            l = self.get_cards()
+            return [CardData(x, l) for x in l]
         except ValueError:
             return []
 
@@ -494,7 +495,7 @@ class NeowBonus:
 
         return num
 
-    def relic_delta(self) -> int:
+    def relic_delta(self) -> int: # does not handle calling bell
         num = 1
         if self.parser._data["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
             num += 1
