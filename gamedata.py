@@ -807,7 +807,7 @@ class FileParser(ABC):
             for removed in event.get("cards_removed", []):
                 event_removals.append((removed, event["floor"]))
 
-        store_removals = zip(self._data.get(self.prefix + "items_purged", []), self._data.get(self.prefix + "items_purged_floor", []))
+        store_removals = zip(self._data.get(self.prefix + "items_purged", []), self._data.get(self.prefix + "items_purged_floors", []))
 
         # missing Empty Cage
         all_removals = []
