@@ -89,8 +89,8 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
 
     if runs:
         if not run_stats.is_loaded:
+            run_stats.is_loaded =  True
             run_stats.streaks.all_character_count = 0
-
             for run in runs[1:]:
                 if run.modded or run.modifiers:
                     logger.info(f"Found modded or custom run in stats: {run.name}")
@@ -107,11 +107,7 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                     run_stats.add_win(run.character, run.timestamp)
                 else:
                     run_stats.add_loss(run.character, run.timestamp)
-
-                if run_stats.is_loaded:
-                    continue
                 
-                run_stats.is_loaded =  True
                 if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
                     run_stats.streaks.ironclad_count = run.character_streak.streak
                 elif run_stats.streaks.silent_count is None and run.character == "Silent":
