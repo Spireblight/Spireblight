@@ -73,6 +73,8 @@ from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
 
+from brotatoexporterclient import BrotatoExporterClient
+
 from typehints import ContextType, CommandType
 import events
 
@@ -2669,6 +2671,32 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
     await ctx.reply(msg)
 
+@command("tater")
+async def tater(ctx: ContextType):
+    """If we are playing Brotato, display the current character that we are playing as."""
+    
+    if not BEClient:
+        await ctx.reply("Not in a run.")
+        return
+    
+    cur_run_state = BEClient.get_current_state()
+
+    cur_character = cur_run_state.get("current_character", "-")
+    if cur_character == "-":
+        await ctx.reply("Not in a run.")
+        return
+
+    display_character_items = []
+    for item in cur_character.split("_"):
+        if item == "character": # remove leading character item
+            continue
+        # sanity check
+        if len(item) < 2:
+            continue
+        display_character_items.append(item[0].upper() + item[1:])
+    display_character = " ".join(display_character_items)
+    
+    await ctx.reply(f"Currently playing {display_character}")
 
 @router.get("/commands")
 @template("commands.jinja2")
@@ -2886,3 +2914,17 @@ async def Youtube_startup():
             with open("data/playlists.csv", "w") as playlists:
                 playlists.write(csv)
         logger.info("Youtube playlist sheet downloaded")
+
+async def Brotato_exporter_startup():
+    global BEClient
+    BEClient = BrotatoExporterClient(
+        config.server.brotato_exporter_client.host, 
+        config.server.brotato_exporter_client.user_token, 
+        config.server.brotato_exporter_client.secure_host, 
+        subbed_fields=["current_character"]
+    )
+
+    await BEClient.connect()
+
+async def Brotato_exporter_cleanup():
+    await BEClient.close()

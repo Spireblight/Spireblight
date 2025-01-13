@@ -42,6 +42,8 @@ async def main():
         tasks.add(loop.create_task(server.Discord_startup()))
     if config.youtube.get("playlist_sheet"):
         tasks.add(loop.create_task(server.Youtube_startup()))
+    if config.server.brotato_exporter_client.enabled:
+        tasks.add(loop.create_task(server.Brotato_exporter_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 
@@ -55,6 +57,9 @@ async def main():
             await server.Twitch_cleanup()
         if config.discord.enabled:
             await server.Discord_cleanup()
+        if config.server.brotato_exporter_client.enabled:
+            await server.Brotato_exporter_cleanup()
+
         loop.close()
 
 if __name__ == "__main__":
