@@ -1045,17 +1045,19 @@ class RelicData:
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
+    def get_stats(self) -> int | float | str | list[str] | None:
+        if "basemod:mod_saves" in self.parser._data:
+            return self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.name}")
+        if "relic_stats" in self.parser._data:
+            return self.parser._data["relic_stats"].get(self.relic.name)
+
     def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
         desc = []
         try:
             text = get_relic_stats(self.relic.name) # FIXME
         except KeyError: # no stats for these
             return []
-        stats = None
-        if "basemod:mod_saves" in self.parser._data:
-            stats = self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.name}")
-        elif "relic_stats" in self.parser._data:
-            stats = self.parser._data["relic_stats"].get(self.relic.name)
+        stats = self.get_stats()
         if stats is None:
             return []
 
@@ -1064,7 +1066,7 @@ class RelicData:
         if self.relic.name == "White Beast Statue":
             # if this is a savefile, only the last number matters. run files should be unaffected
             stats = [stats[-1]]
-        if self.relic.name == "Snecko Eye":
+        elif self.relic.name == "Snecko Eye":
             # special handling for this
             per_turn = False
             stats[-1] = stats[-1] / sum(stats[:-1])

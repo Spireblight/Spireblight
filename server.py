@@ -72,6 +72,7 @@ from utils import (
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
+from gamedata import RelicData
 
 from typehints import ContextType, CommandType
 import events
@@ -1961,6 +1962,25 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
 @with_savefile("pandora", "pbox", "pandorasbox")
 async def what_if_box(ctx: ContextType, save: Savefile):
     """Tell us what the Pandora's Box gave us."""
+    pbox = None
+    for data in save.relics:
+        if data.name == "Pandora's Box":
+            pbox = data
+            break
+
+    # what if n'loth steals our box?
+    if pbox is None and "Nloth's Gift" in save._data["relics"]:
+        for evt in save._data["metric_event_choices"]:
+            if evt["event_name"] == "N'loth":
+                pbox = RelicData(save, evt['relics_lost'][0])
+                break
+
+    if pbox is not None:
+        cards = pbox.get_stats()
+        formatted = ", ".join(get(x).name for x in cards)
+        await ctx.reply(f"Pandora's Box gave us {formatted}")
+    else:
+        await ctx.reply("We do not have Pandora's Box.")
 
 
 @with_savefile("seed", "currentseed")
