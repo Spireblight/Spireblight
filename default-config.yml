@@ -137,6 +137,10 @@ mt:
   # Monster Train data
   enabled: false
 
+brotato:
+    # Brotato data
+    enabled: false
+
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/

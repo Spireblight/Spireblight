@@ -16,9 +16,11 @@ async def main():
     lasp = [0, 0, 0]
     last_sd = 0
     last_mt = 0
+    last_bro = 0
     runs_last = {}
     use_sd = False
     use_mt = False
+    use_bro = False
     user = None
     try:
         with open("last_run") as f:
@@ -36,8 +38,9 @@ async def main():
         user = os.environ["USERPROFILE"]
         use_sd = config.slice.enabled
         use_mt = config.mt.enabled
+        use_bro = config.brotato.enabled
     except (AttributeError, KeyError):
-        use_sd = use_mt = False
+        use_sd = use_mt = use_bro = False
 
     print(f"User profile folder: {user}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
 
@@ -45,6 +48,14 @@ async def main():
         mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
         mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
         print(f"\nFolder: {mt_folder}\nSavefile: {mt_file}")
+
+    if use_bro:
+        bro_file = None
+        raise NotImplementedError
+        # TODO: Determine brotato folder and save location
+        # bro_folder = os.path.join()
+        # bro_file = os.path.join(bro_folder)
+        # print(f"\nFolder: {bro_folder}\nSavefile: {bro_file}")
 
     async with ClientSession(config.server.url) as session:
         # Check if the app is registered, prompt it if not
@@ -205,6 +216,30 @@ async def main():
                                     runs_last.update(mt_runs_last)
                                 else:
                                     print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
+
+
+                if use_bro:
+                    # TODO: Brotato check for save file changes, send to server
+                    raise NotImplementedError
+                    # try:
+                    #     cur_bro = os.path.getmtime(bro_file)
+                    # except OSError:
+                    #     traceback.print_exc()
+                    # if cur_bro != last_bro:
+                    #     with open(bro_file, "rb") as f:
+                    #         bro_data = f.read()
+                    #     bro_runs = {"save": bro_data}
+                    #     async with session.post(
+                    #         "/sync/brotato",
+                    #         data=bro_runs,
+                    #         params={"key": config.server.secret},
+                    #     ) as resp:
+                    #         if resp.ok:
+                    #             last_bro = cur_bro
+                    #         else:
+                    #             print(
+                    #                 f"ERROR: Brotato data not properly sent:\n{resp.reason}"
+                    #             )
 
                 # update all profiles
                 data = {
