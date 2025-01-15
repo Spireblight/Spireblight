@@ -1972,7 +1972,8 @@ async def what_if_box(ctx: ContextType, save: Savefile):
     if pbox is None and "Nloth's Gift" in save._data["relics"]:
         for evt in save._data["metric_event_choices"]:
             if evt["event_name"] == "N'loth":
-                pbox = RelicData(save, evt['relics_lost'][0])
+                if evt["relics_lost"][0] == "Pandora's Box":
+                    pbox = RelicData(save, "Pandora's Box")
                 break
 
     if pbox is not None:
