@@ -114,6 +114,14 @@ server:
   webhook:
     secret: <secret not set>
 
+  # Client for interacting with the Brotato Exporter (https://github.com/benw10-1/brotato-exporter) mod.
+  # Only needs to be enabled for the `!tater` command for now.
+  brotato_exporter_client:
+    enabled: false
+    host: "localhost:8081"
+    secure_host: false
+    user_token: <secret not set>
+
 spire:
   # Where the gamedata is located on your computer. This is used by the client to
   # figure out where to look for run files and autosaves.
