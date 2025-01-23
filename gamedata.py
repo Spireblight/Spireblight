@@ -1040,8 +1040,6 @@ class RelicData:
                 if self.relic in node.relics:
                     obtained = node
             desc.append(f"Obtained on floor {obtained.floor}")
-            if obtained.floor == 0:
-                node = obtained
             if node is not None:
                 desc.extend(self.get_details(obtained, node)) # node will be the last node
             self._description = "\n".join(desc)
@@ -1052,9 +1050,9 @@ class RelicData:
 
     def get_stats(self) -> int | float | str | list[str] | None:
         if "basemod:mod_saves" in self.parser._data:
-            return self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.name}")
+            return self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.internal}")
         if "relic_stats" in self.parser._data:
-            return self.parser._data["relic_stats"].get(self.relic.name)
+            return self.parser._data["relic_stats"].get(self.relic.internal)
 
     def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
         desc = []
