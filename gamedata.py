@@ -1057,7 +1057,7 @@ class RelicData:
     def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
         desc = []
         try:
-            text = get_relic_stats(self.relic.name) # FIXME
+            text = get_relic_stats(self.relic.internal) # FIXME
         except KeyError: # no stats for these
             return []
         stats = self.get_stats()
