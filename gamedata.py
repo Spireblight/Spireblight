@@ -996,6 +996,9 @@ class FileParser(ABC):
         raise NotImplementedError
 
     def get_floor(self, floor: int) -> NodeData | None:
+        # technically this can give NeowBonus, but since the signatures are designed to match for most things, this is fine
+        if floor == 0:
+            return self.neow_bonus
         for node in self.path:
             if node.floor == floor:
                 return node
@@ -1037,6 +1040,8 @@ class RelicData:
                 if self.relic in node.relics:
                     obtained = node
             desc.append(f"Obtained on floor {obtained.floor}")
+            if obtained.floor == 0:
+                node = obtained
             if node is not None:
                 desc.extend(self.get_details(obtained, node)) # node will be the last node
             self._description = "\n".join(desc)
