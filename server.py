@@ -2686,10 +2686,10 @@ async def current_mastery_check(ctx: ContextType, save: Savefile):
 async def calipers(ctx: ContextType, save: Optional[Savefile]):
     msg = "Calipers would be good here baalorCalipers baalorSmug"
     if save:
-        if query("calipers") in save.relics_bare:
+        if 'Barricade' in save.deck_card_ids:
+            msg = "Who needs calipers when we have Barricade!? baalorStare"
+        elif query("calipers") in save.relics_bare:
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
-        elif 'Barricade' in save.deck_card_ids:
-            msg = "We have Calipers at home! baalorSmug\nAt home: Barricade"
         elif 'Blur' in save.deck_card_ids:
             msg = "We have Calipers at home! baalorSmug\nAt home: Blur"
     await ctx.reply(msg)
