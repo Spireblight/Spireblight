@@ -2688,6 +2688,10 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
     if save:
         if query("calipers") in save.relics_bare:
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
+        elif 'Barricade' in save.deck_card_ids:
+            msg = "We have Calipers at home! baalorSmug\nAt home: Barricade"
+        elif 'Blur' in save.deck_card_ids:
+            msg = "We have Calipers at home! baalorSmug\nAt home: Blur"
     await ctx.reply(msg)
 
 
