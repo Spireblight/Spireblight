@@ -720,6 +720,12 @@ class Timer:
         live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
         chan = TConn.get_channel(config.twitch.channel)
         if not live or not chan:
+            if self.name.startswith("auto_"): # stream ended, kill this timer
+                self.stop()
+                del _timers[self.name]
+                _update_timers()
+                # XXX: This is now the only reference of itself
+                # It should get GC'd properly, but might have issues
             return
         cmd = None
         i = 0
@@ -796,7 +802,8 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
        if specified, and exactly one command `name`. It immediately starts it.
        This is basically used for single-command sponsored timers and the like.
        The internal timer name will be `auto_` followed by the command name,
-       and can be edited normally afterwards.
+       and can be edited normally afterwards. It will automatically delete
+       itself when the stream ends.
     - `status <name>` outputs the commands and interval tied to this timer.
     - `start <name>` starts the given timer.
     - `stop <name>` stops the given timer.
@@ -893,7 +900,7 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
             t.start()
             _update_timers()
             await ctx.reply(
-                f"Automatic timer {name} ({timer_name}) has been created and started."
+                f"Automatic timer {name} ({timer_name}) has been created and started. It will self-remove after stream."
             )
 
         case "status" | "info":
