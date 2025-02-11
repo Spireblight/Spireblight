@@ -2694,6 +2694,28 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
             msg = "We have Calipers at home! baalorSmug\nAt home: Blur"
     await ctx.reply(msg)
 
+@with_savefile("mods")
+async def active_mods(ctx: ContextType, save: Savefile):
+
+    names = [x.name for x in save.mods]
+    mods = ", ".join(names[:-1])
+    mods += f", and {names[-1]}"
+    msg = f"For this run, we're using the mods {mods}"
+    await ctx.reply(msg)
+
+@with_savefile("mod")
+async def active_mod_info(ctx: ContextType, save: Savefile, *modname):
+    modname = " ".join(modname)
+
+    mod = save.find_mod(modname)
+
+    if mod is None:
+        msg = f"Couldn't find any mod called {modname}"
+    else:                                
+        msg = f"{mod.name} was created by {mod.authors_formatted}.\nDescription: {mod.description_formatted}\nTry it out here: {mod.mod_url}"
+
+    await ctx.reply(msg)
+
 
 @router.get("/commands")
 @template("commands.jinja2")
