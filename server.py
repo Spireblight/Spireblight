@@ -2694,27 +2694,37 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
             msg = "We have Calipers at home! baalorSmug\nAt home: Blur"
     await ctx.reply(msg)
 
-@with_savefile("mods")
+@with_savefile("mods", optional_save=True)
 async def active_mods(ctx: ContextType, save: Savefile):
+    # use the old message if we don't have info from activemods
+    if save and save.has_activemods:
+        names = [x.name for x in save.mods]
+        mods = ", ".join(names[:-1])
+        mods += f", and {names[-1]}"
+        msg = f"For this run, we're using the mods {mods}\nFor more info, try !mod [mod name]"
+    else:
+        msg = "Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods"
 
-    names = [x.name for x in save.mods]
-    mods = ", ".join(names[:-1])
-    mods += f", and {names[-1]}"
-    msg = f"For this run, we're using the mods {mods}"
     await ctx.reply(msg)
 
 @with_savefile("mod")
 async def active_mod_info(ctx: ContextType, save: Savefile, *modname):
-    modname = " ".join(modname)
+    # don't do anything if we don't have info from activemods
+    if save.has_activemods:
+        modname = " ".join(modname).strip()
 
-    mod = save.find_mod(modname)
+        if len(modname) == 0:
+            choice = random.choice([x.name for x in save.mods])
+            msg = f"This can tell you information about a specific mod.  Use it like this: !mod {choice}"
+        else:
+            mod = save.find_mod(modname)
 
-    if mod is None:
-        msg = f"Couldn't find any mod called {modname}"
-    else:                                
-        msg = f"{mod.name} was created by {mod.authors_formatted}.\nDescription: {mod.description_formatted}\nTry it out here: {mod.mod_url}"
+            if mod is None:
+                msg = f"Couldn't find any mod called {modname}"
+            else:                                
+                msg = f"{mod.name} was created by {mod.authors_formatted}.\nDescription: {mod.description_formatted}\nTry it out here: {mod.mod_url}"
 
-    await ctx.reply(msg)
+        await ctx.reply(msg)
 
 
 @router.get("/commands")

@@ -1,7 +1,62 @@
+from trie import Trie
+from utils import edit_distance
 
+ACTIVEMODS_KEY = "activemods:active_mods"
+
+class ActiveMods():
+    def __init__(self, data):
+        self._activemods = {}
+        self._trie = Trie()
+
+        if ACTIVEMODS_KEY in data:
+            for x in data[ACTIVEMODS_KEY]:
+                m = ActiveMod(x)
+                self._activemods[m.normalized_name] = m
+                self._trie.insert(m.normalized_name)
+
+    @property
+    def all_mods(self):
+        return self._activemods.values()
+
+    def normalize(self, string):
+        return string.lower().replace(" ", "")
+
+    def edit_distance_ratio(self, distance, word):
+        return (len(word)-distance)/len(word)
+    
+    def find_mod(self, mod_name):
+        mod_name = self.normalize(mod_name)
+
+        # it's pointless...
+        if len(mod_name) == 0:
+            return None
+        
+        # easy, they entered the name correctly
+        if mod_name in self._activemods:
+            return self._activemods[mod_name]
+        
+        names = self._trie.search(mod_name)
+
+        # still pretty easy...
+        if len(names) == 1:
+            return self._activemods[names[0]]
+
+        # getting annoying...
+        if len(names) < 3:
+            # sort by edit distance
+            distances = sorted([(name, edit_distance(name, mod_name)) for name in names], key=lambda x: x[1])
+
+            # and check the first one
+            name, distance = distances[0]
+            # close enough, i guess
+            if self.edit_distance_ratio(distance, name) > 0.9:
+                return self._activemods[potential[0]]
+            
+        # nope, we give up
+        return None
+        
 
 class ActiveMod():
-
     def __init__(self, data: dict):
         """
         See https://github.com/drummeur/activemods/blob/master/schema.json for the dict schema.
@@ -53,11 +108,8 @@ class ActiveMod():
         else:
             self.optional_dependencies = []
 
-        # temporarily making mod_url a property to take care of the InfoMod url
-        # make sure to change this back to "mod_url" when fixing ActiveMods, too
-
-        if "steam_workshop_url" in data:
-            self._mod_url = data["steam_workshop_url"]
+        if "mod_url" in data:
+            self._mod_url = data["mod_url"]
             #self._mod_url = data["mod_url"]
         else:
             self._mod_url = ""
@@ -73,7 +125,7 @@ class ActiveMod():
     @property
     def mod_url(self) -> str:
         # infomod is hardcoded until custom URLs are implemented into ActiveMods
-        if self.modid == "obj_infomod2":
+        if self.modid == "ojb_infomod2":
             return "https://casey-c.github.io/slaythespire/infomod.html"
         else:
             return self._mod_url
@@ -124,3 +176,7 @@ class ActiveMod():
             desc = self.description
 
         return desc
+
+    @property
+    def normalized_name(self):
+        return self.name.lower().replace(" ", "")

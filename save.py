@@ -20,7 +20,7 @@ from logger import logger
 from events import invoke
 from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run, StreakInfo
-from activemodinfo import ActiveMod
+from activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 import score as _s
 
@@ -57,6 +57,7 @@ class Savefile(FileParser):
         self._last = time.time()
         self._matches = False
         self._activemods = None
+        
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
@@ -427,50 +428,23 @@ class Savefile(FileParser):
     def deck_card_ids(self) -> list[str]:
         return [card["id"] for card in self._data["cards"]]
 
-    def _get_mods(self) -> list[ActiveMod]:
-        """
-        Get a list of dicts containing the ActiveMods data.
-        Use this helper method to prevent issues with the field not being present in some save files.
-        Lazily caches the ActiveMod instances
-        See this page for the dict schema: https://github.com/drummeur/activemods/blob/master/schema.json
-        """
-
+    @property
+    def has_activemods(self) -> bool:
+        return ACTIVEMODS_KEY in self._data
+    
+    @property
+    def activemods(self) -> ActiveMods:
         if self._activemods is None:
-            self._activemods = []
-
-            if "activemods:active_mods" in self._data:
-                logger.debug(self._data["activemods:active_mods"])
-                for x in self._data["activemods:active_mods"]:
-                    self._activemods.append(ActiveMod(x))
+            self._activemods = ActiveMods(self._data)
 
         return self._activemods
 
-    def find_mod(self, mod_name: str, ignore_caps=True, ignore_spaces=True) -> dict | None:
-        """
-        Find a mod, based on its name.
-        """
-
-        names = [x.name for x in self.mods]
-
-        if ignore_caps:
-            mod_name = mod_name.lower()
-            names = [x.lower() for x in names]
-
-        if ignore_spaces:
-            mod_name = mod_name.replace(" ", "")
-            names = [x.replace(" ", "") for x in names]
-
-        result = None
-
-        if mod_name in names:
-            idx = names.index(mod_name)
-            result = self.mods[idx]
-
-        return result
+    def find_mod(self, mod_name: str) -> ActiveMod | None:
+        return self.activemods.find_mod(mod_name)
     
     @property
     def mods(self) -> list[ActiveMod]:
-        return self._get_mods()
+        return self.activemods.all_mods
 
 _savefile = Savefile()
 
