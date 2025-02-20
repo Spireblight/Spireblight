@@ -2206,11 +2206,13 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
         await ctx.reply("We have not picked any boss relics yet.")
         return
 
+    skip_template = "We saw {1}, {2} and {3} at the end of Act {0} and skipped all that junk! BaalorBoot"
     template = "We picked {1} at the end of Act {0}, and skipped {2} and {3}."
     msg = []
     i = 1
     for item in l:
-        msg.append(
+        if "picked" in item.keys():
+            msg.append(
             template.format(
                 i,
                 get(item["picked"]).name,
@@ -2218,6 +2220,13 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
                 get(item["not_picked"][1]).name,
             )
         )
+        else:
+            msg.append(skip_template.format(
+                i,
+                get(item["not_picked"][0]).name,
+                get(item["not_picked"][1]).name,
+                get(item["not_picked"][2]).name,
+            ))
         i += 1
 
     await ctx.reply(" ".join(msg))
