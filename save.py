@@ -20,6 +20,7 @@ from logger import logger
 from events import invoke
 from utils import convert_class_to_obj, get_req_data
 from runs import get_latest_run, StreakInfo
+from activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 import score as _s
 
@@ -55,6 +56,8 @@ class Savefile(FileParser):
         super().__init__(data)
         self._last = time.time()
         self._matches = False
+        self._activemods = None
+        
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
@@ -424,6 +427,24 @@ class Savefile(FileParser):
     @property
     def deck_card_ids(self) -> list[str]:
         return [card["id"] for card in self._data["cards"]]
+
+    @property
+    def has_activemods(self) -> bool:
+        return ACTIVEMODS_KEY in self._data
+    
+    @property
+    def activemods(self) -> ActiveMods:
+        if self._activemods is None:
+            self._activemods = ActiveMods(self._data)
+
+        return self._activemods
+
+    def find_mod(self, mod_name: str) -> ActiveMod | None:
+        return self.activemods.find_mod(mod_name)
+    
+    @property
+    def mods(self) -> list[ActiveMod]:
+        return self.activemods.all_mods
 
 _savefile = Savefile()
 

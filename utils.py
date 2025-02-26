@@ -120,3 +120,31 @@ def _parse_dates_with_optional_month_day(val: str, isEndDate: bool = False) -> d
         return datetime(year, month, day, hour=23, minute=59, second=59)
     else:
         return datetime(year, month, day)
+
+
+def edit_distance(left, right):
+    m = len(left) + 1
+    n = len(right) + 1
+
+    d = [[0 for _ in range(0, n)] for _ in range(0, m)]
+
+    for i in range(1, m):
+        d[i][0] = i
+
+    for i in range(1, n):
+        d[0][i] = i
+
+    for i in range(1, m):
+        for j in range(1, n):
+            if left[i-1] == right[j-1]:
+                subCost = 0
+            else:
+                subCost = 1
+
+            d[i][j] = min(
+                d[i-1][j] + 1, # deletion
+                d[i][j-1] + 1, # insertion
+                d[i-1][j-1] + subCost # substitution
+            )
+
+    return d[len(left)][len(right)]

@@ -24,6 +24,7 @@ from webpage import router
 from logger import logger
 from events import add_listener
 from utils import convert_class_to_obj, get_req_data
+from activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 __all__ = ["get_latest_run"]
 
@@ -64,6 +65,7 @@ class RunParser(FileParser):
         self._profile = profile
         self._character_streak = None
         self._rotating_streak = None
+        self._activemods = None
 
     def __repr__(self):
         return f"Run<{self.display_name}>"
@@ -230,6 +232,24 @@ class RunParser(FileParser):
             loop_cached_runs(is_prev=False)
             return StreakInfo(streak_total, position_in_streak, is_ongoing)
         return StreakInfo(0, 0, False)
+
+    @property
+    def has_activemods(self) -> bool:
+        return ACTIVEMODS_KEY in self._data
+    
+    @property
+    def activemods(self) -> ActiveMods:
+        if self._activemods is None:
+            self._activemods = ActiveMods(self._data)
+
+        return self._activemods
+
+    def find_mod(self, mod_name: str) -> ActiveMod | None:
+        return self.activemods.find_mod(mod_name)
+    
+    @property
+    def mods(self) -> list[ActiveMod]:
+        return self.activemods.all_mods
 
 class StreakInfo(NamedTuple):
     streak: int
