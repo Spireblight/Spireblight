@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator, Iterable, NamedTuple, TYPE_CHECKING
+from typing import Any, Generator, Iterable, NamedTuple, Optional, TYPE_CHECKING
 
 import urllib.parse
 import collections
@@ -35,7 +35,131 @@ if TYPE_CHECKING:
 
 __all__ = ["FileParser"]
 
-class NeowBonus:
+def _make_property(name: str, vtype: type, default, doc: str) -> property:
+    if not isinstance(default, vtype):
+        raise TypeError("The default value must be an instance of the value type.")
+
+    cname = "_" + name.replace(" ", "_").casefold()
+
+    def getter(self):
+        if (c := getattr(self, cname)) is None:
+            return default
+        return c
+
+    def setter(self, value):
+        try:
+            v = vtype(value)
+        except ValueError:
+            raise ValueError(f"Node property {name} needs value of type {vtype}.")
+        else:
+            setattr(self, cname, value)
+
+    def deleter(self):
+        setattr(self, cname, None)
+
+    getter.__annotations__["return"] = vtype
+    setter.__annotations__["value"] = vtype
+
+    return property(getter, setter, deleter, doc)
+
+class BaseNode(ABC):
+    """This the common base class for all path nodes, including Neow.
+
+    This provides basic utility functions that subclasses may use.
+
+    This also has abstract methods and properties that need to be overridden.
+
+    Subclasses can - and should - implement their own 'get_description' method.
+    This takes one argument, type 'collections.defaultdict[int, list[str]]',
+    and should modify that mapping in-place. Returning any non-None value will
+    raise an error. The method should **NOT** attempt to call the superclass
+    version of it with super(). BaseNode's 'description' method walks through
+    the entire superclass tree, including third-party classes, in Method
+    Resolution Order, and calls each existing 'get_description' method in each
+    class. Failure to implement this method in a direct subclass will raise an
+    error, though additional classes in the MRO without one will pass silently.
+
+    Built-in index keys all use even numbers. Result will be joined together
+    with newlines, and returned in ascending order. Custom code should only add
+    data to odd indices. Ranges are provided here; refer to the relevant
+    subclass for details. Calling order between various methods is not
+    guaranteed - appending to a key already used may have unexpected results.
+
+    0     - Basic stuff; only for things that all nodes share
+    2     - Event-specific combat setup
+    4     - Combat results (damage taken, turns elapsed, etc.)
+    6     - Unique values (key obtained, campfire option, etc.)
+    8     - Neow bonus
+    10-20 - Potion usage data
+    30-36 - Relic obtention data
+    40-62 - Event results
+    70-78 - Shop contents
+    100   - Special stuff; reserved for bugged or modded content
+"""
+
+    def __init__(self):
+        super().__init__()
+        self._floor: Optional[int] = None
+        self._floor_time: Optional[int] = None
+        self._current_hp: Optional[int] = None
+        self._max_hp: Optional[int] = None
+        self._gold: Optional[int] = None
+
+    floor = _make_property("floor", int, 0, "Return the current floor.")
+    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.")
+    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.")
+    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
+    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
+
+    @property
+    def name(self) -> str:
+        return "<Undefined>"
+
+    def description(self) -> str:
+        """Return a newline-separated description for the current node.
+
+        Refer to BaseNode's docstring for implementation details."""
+
+        to_append = collections.defaultdict(list)
+        done = []
+        for cls in type(self).__mro__:
+            try:
+                fn = cls.get_description
+            except AttributeError:
+                continue # support multi-classing if you're Emily Axford
+            if fn in done:
+                continue
+            if fn(self, to_append) is not None: # returned something
+                raise RuntimeError(f"'{cls.__name__}.get_description()' returned a non-None value.")
+            done.append(fn)
+            if not to_append:
+                continue
+            try:
+                if (n := max(to_append)) > 100:
+                    raise ValueError(f"Class {cls.__name__!r} used out-of-bounds index {n} (max 99)")
+                if (n := min(to_append)) < 0:
+                    raise ValueError(f"Class {cls.__name__!r} used negative index {n} (positive values only)")
+            except TypeError as e:
+                raise TypeError(f"Class {cls.__name__!r} did not use a number-like type") from e
+
+        final = []
+        desc = list(to_append.items())
+        desc.sort(key=lambda x: x[0])
+        for i, text in desc:
+            final.extend(text)
+
+        return "\n".join(final)
+
+    def escaped_description(self) -> str:
+        return self.description().replace("\n", "<br>").replace("'", "\\'")
+
+    # Every subclass must implement these methods and properties
+
+    @abstractmethod
+    def get_description(self, to_append: dict[int, list[str]]):
+        """Add each individual node's description, as needed."""
+
+class NeowBonus(BaseNode):
 
     all_bonuses = {
         "THREE_CARDS": "Choose one of three cards to obtain.",
@@ -85,7 +209,14 @@ class NeowBonus:
     }
 
     def __init__(self, parser: FileParser):
+        super().__init__()
         self.parser = parser
+        self.current_hp, self.max_hp = self.get_hp()
+        self.gold = self.get_gold()
+
+    @property
+    def name(self) -> str:
+        return "Neow bonus"
 
     @property
     def mod_data(self) -> dict[str, Any] | None:
@@ -141,32 +272,6 @@ class NeowBonus:
             costs = self.parser._data.get("neow_costs_skipped_log")
 
         return bool(bonuses and costs)
-
-    @property
-    def current_hp(self) -> int:
-        try:
-            return self.get_hp()[0]
-        except ValueError: # modded character; we don't have the data
-            return 0 # make it 0 so it doesn't break stuff
-
-    @property
-    def max_hp(self) -> int:
-        try:
-            return self.get_hp()[1]
-        except ValueError:
-            return 0
-
-    @property
-    def gold(self) -> int:
-        return self.get_gold()
-
-    @property
-    def floor(self) -> int:
-        return 0
-
-    @property
-    def floor_time(self) -> int:
-        return 0
 
     @property
     def cards_obtained(self) -> list[str]:
@@ -438,6 +543,9 @@ class NeowBonus:
         if self.mod_data is not None:
             return f"took {self.mod_data['damageTaken']} damage"
         return "took damage (current HP / 10, rounded down, * 3)"
+
+    def get_description(self, to_append: dict[int, list[str]]):
+        to_append[8].append(self.as_str())
 
     def as_str(self) -> str:
         neg = getattr(self, f"cost_{self.parser._data['neow_cost']}", None)
@@ -968,7 +1076,7 @@ class FileParser(ABC):
                     node._fights_count = fights_count
                     turns_count += node.turns_delta()
                     node._turns_count = turns_count
-                    node._floor_time = t - prev
+                    node.floor_time = t - prev
                 prev = t
                 self._cache["path"].append(node)
 
@@ -1183,38 +1291,16 @@ class CardData: # TODO: metadata + scaling cards (for savefile)
             return f"{self.count}x {self.name}"
         return self.name
 
-class NodeData:
+class NodeData(BaseNode):
     """Contain relevant information for Spire nodes.
 
     Subclasses should define the following class variables:
     - room_type :: a human-readable name for the node
     - map_icon  :: the filename for the icon in the icons/ folder
 
-    The recommended creation mechanism for NodeData classes is to call
+    The recommended creation mechanism for NodeData subclasses is to call
     the class method `from_parser` with either a Run History parser or a
     Savefile parser, and the floor number.
-
-    Subclasses can - and should - write their own 'get_description' method.
-    This takes one argument, type 'collections.defaultdict[int, list[str]]',
-    and should modify that mapping in-place. Returning any non-None value
-    will raise an error. The method should **NOT** attempt to call the
-    superclass version of it with super(); that will be done automatically.
-
-    Built-in index keys all use even numbers. Result will be joined together
-    with newlines, and printed in ascending order. Custom code should only add
-    data to odd indices. Ranges are provided here; refer to the relevant
-    subclass for details. Calling order between various methods is not
-    guaranteed - appending to a key already used may have unexpected results.
-
-    0     - Basic stuff; only for things that all nodes share
-    2     - Event-specific combat setup
-    4     - Combat results (damage taken, turns elapsed, etc.)
-    6     - Unique values (key obtained, campfire option, etc.)
-    10-20 - Potion usage data
-    30-36 - Relic obtention data
-    40-62 - Event results
-    70-78 - Shop contents
-    99    - Special stuff; reserved for bugged or modded content
 
     """
 
@@ -1225,11 +1311,7 @@ class NodeData:
     def __init__(self): # TODO: Keep track of the deck per node
         if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
-        self._floor = None
-        self._maxhp = None
-        self._curhp = None
-        self._gold = None
-        self._floor_time = None
+        super().__init__()
         self._card_count = None
         self._relic_count = None
         self._potion_count = None
@@ -1258,11 +1340,11 @@ class NodeData:
         prefix = parser.prefix
 
         self = cls(*extra)
-        self._floor = floor
+        self.floor = floor
         try:
-            self._maxhp = parser.max_hp_counts[floor]
-            self._curhp = parser.current_hp_counts[floor]
-            self._gold = parser.gold_counts[floor]
+            self.current_hp = parser.current_hp_counts[floor]
+            self.max_hp = parser.max_hp_counts[floor]
+            self.gold = parser.gold_counts[floor]
 
             self._usedpotions = parser.potions_use[floor]
             self._potions_from_alchemize = parser.potions_alchemize[floor]
@@ -1270,9 +1352,9 @@ class NodeData:
             self._discarded = parser.potions_discarded[floor]
         except IndexError:
             try:
-                self._maxhp = parser.max_hp_counts[floor - 1]
-                self._curhp = parser.current_hp_counts[floor - 1]
-                self._gold = parser.gold_counts[floor - 1]
+                self.current_hp = parser.current_hp_counts[floor - 1]
+                self.max_hp = parser.max_hp_counts[floor - 1]
+                self.gold = parser.gold_counts[floor - 1]
             except IndexError:
                 pass
 
@@ -1303,38 +1385,8 @@ class NodeData:
 
     def description(self) -> str:
         if "description" not in self._cache:
-            to_append = collections.defaultdict(list)
-            done = []
-            for cls in type(self).__mro__:
-                try:
-                    fn = cls.get_description
-                except AttributeError:
-                    continue # support multi-classing if you're Emily Axford
-                if fn in done:
-                    continue
-                if fn(self, to_append) is not None: # returned something
-                    raise RuntimeError(f"'{cls.__name__}.get_description()' returned a non-None value.")
-                done.append(fn)
-                if not to_append:
-                    continue
-                try:
-                    if (n := max(to_append)) > 99:
-                        raise ValueError(f"Class {cls.__name__!r} used out-of-bounds index {n} (max 99)")
-                    if (n := min(to_append)) < 0:
-                        raise ValueError(f"Class {cls.__name__!r} used negative index {n} (positive values only)")
-                except TypeError as e:
-                    raise TypeError(f"Class {cls.__name__!r} did not use a number-like type") from e
-
-            final = []
-            desc = list(to_append.items())
-            desc.sort(key=lambda x: x[0])
-            for i, text in desc:
-                final.extend(text)
-            self._cache["description"] = "\n".join(final)
+            self._cache["description"] = super().description()
         return self._cache["description"]
-
-    def escaped_description(self) -> str:
-        return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     def get_description(self, to_append: dict[int, list[str]]):
         to_append[0].append(f"{self.room_type}")
@@ -1382,34 +1434,6 @@ class NodeData:
         if self.skipped:
             to_append[36].append("Skipped:")
             to_append[36].extend(f"- {x}" for x in self.skipped)
-
-    @property
-    def name(self) -> str:
-        return ""
-
-    @property
-    def floor(self) -> int:
-        if self._floor is None:
-            return 0
-        return self._floor
-
-    @property
-    def max_hp(self) -> int:
-        if self._maxhp is None:
-            return 1
-        return self._maxhp
-
-    @property
-    def current_hp(self) -> int:
-        if self._curhp is None:
-            return 0
-        return self._curhp
-
-    @property
-    def gold(self) -> int:
-        if self._gold is None:
-            return 0
-        return self._gold
 
     @property
     def picked(self) -> list[str]:
@@ -1477,12 +1501,6 @@ class NodeData:
     @property
     def all_potions_dropped(self) -> list[Potion]:
         return self.used_potions + self.discarded_potions
-
-    @property
-    def floor_time(self) -> int:
-        if self._floor_time is None:
-            return 0
-        return self._floor_time
 
     def card_delta(self) -> int:
         return len(self.picked)
