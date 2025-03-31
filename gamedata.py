@@ -94,7 +94,7 @@ class BaseNode(ABC):
     30-36 - Relic obtention data
     40-62 - Event results
     70-78 - Shop contents
-    100   - Special stuff; reserved for bugged or modded content
+    100+  - Special stuff; reserved for bugged or modded content
 """
 
     def __init__(self):
@@ -114,6 +114,26 @@ class BaseNode(ABC):
     @property
     def name(self) -> str:
         return "<Undefined>"
+
+    def card_delta(self) -> int:
+        """How many cards were added or removed on this floor."""
+        return 0
+
+    def relic_delta(self) -> int:
+        """How many relics were gained or lost on this floor."""
+        return 0
+
+    def potion_delta(self) -> int:
+        """How many potions were obtained, used, or discarded on this floor."""
+        return 0
+
+    def fights_delta(self) -> int:
+        """How many fights were fought on this floor."""
+        return 0
+
+    def turns_delta(self) -> int:
+        """How many turns were spent on this floor."""
+        return 0
 
     def description(self) -> str:
         """Return a newline-separated description for the current node.
@@ -135,8 +155,6 @@ class BaseNode(ABC):
             if not to_append:
                 continue
             try:
-                if (n := max(to_append)) > 100:
-                    raise ValueError(f"Class {cls.__name__!r} used out-of-bounds index {n} (max 99)")
                 if (n := min(to_append)) < 0:
                     raise ValueError(f"Class {cls.__name__!r} used negative index {n} (positive values only)")
             except TypeError as e:
@@ -616,12 +634,6 @@ class NeowBonus(BaseNode):
             if potion["floor"] == 0:
                 num += 1
         return num
-
-    def fights_delta(self) -> int:
-        return 0
-
-    def turns_delta(self) -> int:
-        return 0
 
     @property
     def card_count(self) -> int:
@@ -1511,12 +1523,6 @@ class NodeData(BaseNode):
     def potion_delta(self) -> int:
         count = len(self.potions) + len(self.potions_from_alchemize) + len(self.potions_from_entropic)
         return count - len(self.used_potions) - len(self.discarded_potions)
-
-    def fights_delta(self) -> int:
-        return 0
-
-    def turns_delta(self) -> int:
-        return 0
 
     @property
     def card_count(self) -> int:
