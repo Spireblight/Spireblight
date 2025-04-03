@@ -129,7 +129,8 @@ class BaseNode(ABC):
     40-62 - Event results
     70-78 - Shop contents
     100+  - Special stuff; reserved for bugged or modded content
-"""
+
+    """
 
     def __init__(self):
         super().__init__()
@@ -1840,7 +1841,7 @@ class EmptyEvent(NodeData):
     map_icon = "event.png"
 
     def get_description(self, to_append: dict[int, list[str]]):
-        to_append[99].append(
+        to_append[100].append(
             "Something happened here, but I'm not sure what...\n"
             "This is a bug with a mod. Please report this to the mod creators:\n"
             "'Missing event data in JSON'\n"
@@ -1856,7 +1857,7 @@ class AmbiguousEvent(NodeData):
         self._events = events
 
     def get_description(self, to_append: dict[int, list[str]]):
-        to_append[99].append(
+        to_append[100].append(
             "This event is ambiguous; multiple events map to it:\n" +
             ", ".join(x["event_name"] for x in self._events) + " -\n" +
             "This is a bug with a mod. Please report this to the mod creators."

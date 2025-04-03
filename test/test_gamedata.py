@@ -9,6 +9,8 @@ from runs import RunParser
 
 # TODO: make profiles work for testing
 
+wa = streamer = None
+
 with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
     s.update_data(json.load(f), "THE_SILENT", "false")
 
@@ -17,6 +19,8 @@ with open(os.path.join("test", "static", "watcher.json")) as f:
 
 with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
     streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
+
+assert wa is not None and streamer is not None, "could not load test run files"
 
 class TestFileParser(TestCase):
     def test_character(self):
@@ -78,6 +82,13 @@ class TestRunParser(TestCase):
         self.assertEqual(k.ruby_key_floor, 41)
         self.assertEqual(k.emerald_key_floor, 10)
         self.assertEqual(k.sapphire_key_floor, 26)
+
+class TestRelicData(TestCase):
+    def test_save(self):
+        template = "Obtained on floor {}"
+        it = iter(s.relics)
+        relic = next(it)
+        self.assertEqual(relic.name, "Ring of the Snake")
 
 class TestNeow(TestCase):
     pass
