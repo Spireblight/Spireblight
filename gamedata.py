@@ -35,26 +35,60 @@ if TYPE_CHECKING:
 
 __all__ = ["FileParser"]
 
-def _make_property(name: str, vtype: type, default, doc: str) -> property:
+def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: bool) -> property:
+    """Create a property for various node information.
+
+    If the class contains a member '_get_{name}', then that function is called
+    with no arguments when getting the value. If the return value matches the
+    provided vtype, it will return it. If it is None, the default will be
+    returned instead.
+
+    'allow_change' determines whether resetting/deleting the value after it's
+    been set once is allowed.
+
+    Getting the value after it has been deleted will return the default value.
+
+    A matching method on the class will automatically set 'allow_change=False'.
+
+    """
+
     if not isinstance(default, vtype):
         raise TypeError("The default value must be an instance of the value type.")
 
     cname = "_" + name.replace(" ", "_").casefold()
+    meth = f"_get{cname}"
+    changed = False
 
-    def getter(self):
-        if (c := getattr(self, cname)) is None:
+    def getter(self: BaseNode):
+        try:
+            fn = getattr(self, meth)
+        except AttributeError:
+            value = getattr(self, cname)
+        else:
+            value = fn()
+        if value is None:
             return default
-        return c
+        return value
 
-    def setter(self, value):
+    def setter(self: BaseNode, value):
+        nonlocal changed
+        if hasattr(self, meth):
+            raise TypeError(f"Property {name} depends on a method; cannot modify.")
+        if changed and not allow_change:
+            raise RuntimeError(f"Not allowed to change the {name} attribute.")
         try:
             v = vtype(value)
         except ValueError:
             raise ValueError(f"Node property {name} needs value of type {vtype}.")
         else:
             setattr(self, cname, value)
+            changed = True
 
-    def deleter(self):
+    def deleter(self: BaseNode):
+        if hasattr(self, meth):
+            raise TypeError(f"Property {name} depends on a method; cannot delete.")
+        if not allow_change:
+            raise RuntimeError(f"Not allowed to delete the {name} attribute.")
         setattr(self, cname, None)
 
     getter.__annotations__["return"] = vtype
@@ -105,11 +139,11 @@ class BaseNode(ABC):
         self._max_hp: Optional[int] = None
         self._gold: Optional[int] = None
 
-    floor = _make_property("floor", int, 0, "Return the current floor.")
-    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.")
-    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.")
-    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
-    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
+    floor = _make_property("floor", int, 0, "Return the current floor.", allow_change=False)
+    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.", allow_change=True)
+    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.", allow_change=True)
+    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.", allow_change=True)
+    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.", allow_change=True)
 
     @property
     def name(self) -> str:
