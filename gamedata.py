@@ -35,6 +35,10 @@ if TYPE_CHECKING:
 
 __all__ = ["FileParser"]
 
+# XXX Make sure to remove private member access from outside the class
+# search for #PRIV# in this file for places that need modified
+# also JSON_FP_PROP needs to be checked for FileParser
+
 def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: bool) -> property:
     """Create a property for various node information.
 
@@ -278,17 +282,17 @@ class NeowBonus(BaseNode):
     def name(self) -> str:
         return "Neow bonus"
 
-    @property
+    @property #PRIV#
     def mod_data(self) -> dict[str, Any] | None:
         if "basemod:mod_saves" in self.parser._data:
             return self.parser._data["basemod:mod_saves"].get("NeowBonusLog")
         return self.parser._data.get("neow_bonus_log")
 
-    @property
+    @property #PRIV#
     def choice_made(self) -> bool:
         return bool(self.parser._data["neow_bonus"])
 
-    @property
+    @property #PRIV#
     def picked(self) -> str:
         cost = self.parser._data["neow_cost"]
         bonus = self.parser._data["neow_bonus"]
@@ -296,7 +300,7 @@ class NeowBonus(BaseNode):
             return self.all_bonuses.get(bonus, bonus)
         return f"{self.all_costs.get(cost, cost)} {self.all_bonuses.get(bonus, bonus)}"
 
-    @property
+    @property #PRIV#
     def skipped(self) -> Generator[str, None, None]:
         if "basemod:mod_saves" in self.parser._data:
             bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
@@ -322,7 +326,7 @@ class NeowBonus(BaseNode):
     # and so if other keys are added, the checks here will be sufficient
     # that's my best guess, anyway. 06/01/25
     # oh btw that's dd/mm/yy because im not a backwater rube
-    @property
+    @property #PRIV#
     def has_data(self) -> bool:
         if "basemod:mod_saves" in self.parser._data:
             bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
@@ -393,7 +397,7 @@ class NeowBonus(BaseNode):
             base += self.mod_data["maxHpGained"]
             return (cur, base)
 
-        match self.parser._data["neow_cost"]:
+        match self.parser._data["neow_cost"]: #PRIV#
             case "TEN_PERCENT_HP_LOSS": # actually hardcoded
                 base -= bonus
                 if cur > base:
@@ -401,7 +405,7 @@ class NeowBonus(BaseNode):
             case "PERCENT_DAMAGE":
                 cur -= (cur // 10) * 3
 
-        match self.parser._data["neow_bonus"]:
+        match self.parser._data["neow_bonus"]: #PRIV#
             case "TEN_PERCENT_HP_BONUS":
                 base += bonus
                 cur += bonus
@@ -430,15 +434,15 @@ class NeowBonus(BaseNode):
                 base += 300
             return base
 
-        if self.parser._data["neow_cost"] == "NO_GOLD":
+        if self.parser._data["neow_cost"] == "NO_GOLD": #PRIV#
             base = 0
 
-        match self.parser._data["neow_bonus"]:
+        match self.parser._data["neow_bonus"]: #PRIV#
             case "HUNDRED_GOLD":
                 base += 100
             case "TWO_FIFTY_GOLD":
                 base += 250
-            case "ONE_RARE_RELIC":
+            case "ONE_RARE_RELIC": #PRIV#
                 if self.parser._data["relics"][1] == "Old Coin": # this can break if N'loth is involved
                     base += 300
 
@@ -480,7 +484,7 @@ class NeowBonus(BaseNode):
             for x in self.mod_data["cardsUpgraded"]:
                 index = cards.index(x)
                 cards.insert(index, f"{x}+1")
-        for x in self.parser._data[self.parser.prefix + "card_choices"]:
+        for x in self.parser._data[self.parser.prefix + "card_choices"]: #PRIV#
             if x["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     cards.append(x["picked"])
@@ -491,7 +495,7 @@ class NeowBonus(BaseNode):
 
     def bonus_THREE_CARDS(self):
         prefix = self.parser.prefix
-        for cards in self.parser._data[prefix + "card_choices"]:
+        for cards in self.parser._data[prefix + "card_choices"]: #PRIV#
             if cards["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     return f"picked {get(cards['picked']).name} over {' and '.join(get(x).name for x in cards['not_picked'])}"
@@ -524,7 +528,7 @@ class NeowBonus(BaseNode):
     def bonus_THREE_ENEMY_KILL(self):
         return "got Neow's Lament to get three fights with enemies having 1 HP"
 
-    def bonus_THREE_SMALL_POTIONS(self):
+    def bonus_THREE_SMALL_POTIONS(self): #PRIV#
         potions = []
         skipped = []
         prefix = self.parser.prefix
@@ -635,7 +639,7 @@ class NeowBonus(BaseNode):
 
         return msg
 
-    @property
+    @property #PRIV#
     def has_info(self) -> bool:
         return hasattr(self, f"bonus_{self.parser._data['neow_bonus']}")
 
@@ -656,15 +660,15 @@ class NeowBonus(BaseNode):
             num += 1
 
         prefix = self.parser.prefix
-        for cards in self.parser._data[prefix + "card_choices"]:
+        for cards in self.parser._data[prefix + "card_choices"]: #PRIV#
             if cards["floor"] == 0:
                 if cards["picked"] != "SKIP":
                     num += 1
 
-        if self.parser._data["neow_cost"] == "CURSE":
+        if self.parser._data["neow_cost"] == "CURSE": #PRIV#
             num += 1
 
-        match self.parser._data["neow_bonus"]:
+        match self.parser._data["neow_bonus"]: #PRIV#
             case "REMOVE_CARD":
                 num -= 1
             case "REMOVE_TWO":
@@ -675,7 +679,7 @@ class NeowBonus(BaseNode):
         return num
 
     def relic_delta(self) -> int: # does not handle calling bell
-        num = 1
+        num = 1 #PRIV#
         if self.parser._data["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
             num += 1
         return num
@@ -683,7 +687,7 @@ class NeowBonus(BaseNode):
     def potion_delta(self) -> int:
         num = 0
         prefix = self.parser.prefix
-        for potion in self.parser._data[prefix + "potions_obtained"]:
+        for potion in self.parser._data[prefix + "potions_obtained"]: #PRIV#
             if potion["floor"] == 0:
                 num += 1
         return num
@@ -735,7 +739,7 @@ class FileParser(ABC):
     prefix = ""
     done = False
 
-    def __init__(self, data: dict[str, Any]): # TODO: fix all JSON_FP_PROP instances
+    def __init__(self, data: dict[str, Any]):
         self._data = data
         self.neow_bonus = NeowBonus(self)
         self._cache = {"self": self} # this lets us do on-the-fly debugging
@@ -957,7 +961,7 @@ class FileParser(ABC):
         raise NotImplementedError
 
     @property
-    @abstractmethod
+    @abstractmethod #PRIV# why is this like that
     def _master_deck(self) -> list[str]:
         raise NotImplementedError
 
@@ -1130,7 +1134,7 @@ class FileParser(ABC):
                     potion_count = node.potion_count
                     fights_count = node.fights_count
                     turns_count = node.turns_count
-                else:
+                else: #PRIV#
                     card_count += node.card_delta()
                     node._card_count = card_count
                     relic_count += node.relic_delta()
@@ -1219,7 +1223,7 @@ class RelicData:
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
-    def get_stats(self) -> int | float | str | list[str] | None:
+    def get_stats(self) -> int | float | str | list[str] | None: #PRIV#
         if "basemod:mod_saves" in self.parser._data:
             return self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.internal}")
         if "relic_stats" in self.parser._data:
@@ -1598,7 +1602,7 @@ class NodeData(BaseNode):
             return 1
         return self._turns_count
 
-def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]:
+def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]: #PRIV#
     """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
     prefix = parser.prefix
     on_map = parser._data[prefix + "path_taken"]
