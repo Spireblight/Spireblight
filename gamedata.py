@@ -133,6 +133,8 @@ class BaseNode(ABC):
 
     """
 
+    room_type = ""
+
     def __init__(self, parser: FileParser, *extra):
         super().__init__(*extra)
         self.parser = parser
@@ -154,7 +156,7 @@ class BaseNode(ABC):
 
     @property
     def name(self) -> str:
-        return "<Undefined>"
+        return ""
 
     def card_delta(self) -> int:
         """How many cards were added or removed on this floor."""
@@ -214,9 +216,14 @@ class BaseNode(ABC):
 
     # Every subclass must implement these methods and properties
 
-    @abstractmethod
     def get_description(self, to_append: dict[int, list[str]]):
         """Add each individual node's description, as needed."""
+        if self.room_type:
+            to_append[0].append(f"{self.room_type}")
+        to_append[0].append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
+
+        if self.name:
+            to_append[0].append(self.name)
 
 class NeowBonus(BaseNode):
 
@@ -350,7 +357,7 @@ class NeowBonus(BaseNode):
             return self.mod_data.get("cardsUpgraded", [])
         return []
 
-    def get_hp(self) -> tuple[int, int]:
+    def _get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
         if self.parser.character is None:
             return 0, 0
@@ -1161,8 +1168,7 @@ class FileParser(ABC):
     def score_breakdown(self) -> list[str]:
         raise NotImplementedError
 
-    def get_floor(self, floor: int) -> NodeData | None:
-        # technically this can give NeowBonus, but since the signatures are designed to match for most things, this is fine
+    def get_floor(self, floor: int) -> BaseNode | None:
         if floor == 0:
             return self.neow_bonus
         for node in self.path:
@@ -1199,8 +1205,7 @@ class RelicData:
     def description(self) -> str:
         if self._description is None:
             desc = []
-            # NeowBonus isn't quite NodeData, but it has a similar-enough signature to just work
-            obtained: NodeData = self.parser.neow_bonus
+            obtained: BaseNode = self.parser.neow_bonus
             node = None
             for node in self.parser.path:
                 if self.relic in node.relics:
@@ -1356,9 +1361,8 @@ class NodeData(BaseNode):
     - room_type :: a human-readable name for the node
     - map_icon  :: the filename for the icon in the icons/ folder
 
-    The recommended creation mechanism for NodeData subclasses is to call
-    the class method `from_parser` with either a Run History parser or a
-    Savefile parser, and the floor number.
+    To instantiate a subclass, call the class with a FileParser instance
+    (either RunParser or Savefile) and the floor number
 
     """
 
@@ -1366,10 +1370,11 @@ class NodeData(BaseNode):
     map_icon = "<UNDEFINED>"
     end_of_act = False
 
-    def __init__(self): # TODO: Keep track of the deck per node
+    def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
         if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
-        super().__init__()
+        super().__init__(parser, *extra)
+        self.floor = floor
         self._card_count = None
         self._relic_count = None
         self._potion_count = None
@@ -1397,8 +1402,7 @@ class NodeData(BaseNode):
 
         prefix = parser.prefix
 
-        self = cls(*extra)
-        self.floor = floor
+        self = cls(parser, floor, *extra)
         try:
             self.current_hp = parser.current_hp_counts[floor]
             self.max_hp = parser.max_hp_counts[floor]
@@ -1447,12 +1451,6 @@ class NodeData(BaseNode):
         return self._cache["description"]
 
     def get_description(self, to_append: dict[int, list[str]]):
-        to_append[0].append(f"{self.room_type}")
-        to_append[0].append(f"{self.current_hp}/{self.max_hp} - {self.gold} gold")
-
-        if self.name:
-            to_append[0].append(self.name)
-
         if self.potions:
             to_append[10].append("Potions obtained:")
             to_append[10].extend(f"- {x.name}" for x in self.potions)
