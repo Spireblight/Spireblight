@@ -820,7 +820,7 @@ class FileParser(ABC):
 
     def get_removals(self) -> Generator[CardData, None, None]:
         removals = [x[0] for x in self._removals]
-        for card in removals:
+        for card in set(removals): # remove duplicates
             yield CardData(card, removals)
 
     @property
