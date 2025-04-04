@@ -52,7 +52,7 @@ def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: b
 
     """
 
-    if not isinstance(default, vtype):
+    if not (vtype is None or isinstance(default, vtype)):
         raise TypeError("The default value must be an instance of the value type.")
 
     cname = "_" + name.replace(" ", "_").casefold()
@@ -77,7 +77,8 @@ def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: b
         if changed and not allow_change:
             raise RuntimeError(f"Not allowed to change the {name} attribute.")
         try:
-            v = vtype(value)
+            if vtype is not None: # passing None as the value type means no type-checking
+                value = vtype(value)
         except ValueError:
             raise ValueError(f"Node property {name} needs value of type {vtype}.")
         else:
@@ -132,13 +133,18 @@ class BaseNode(ABC):
 
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parser: FileParser, *extra):
+        super().__init__(*extra)
+        self.parser = parser
         self._floor: Optional[int] = None
         self._floor_time: Optional[int] = None
         self._current_hp: Optional[int] = None
         self._max_hp: Optional[int] = None
         self._gold: Optional[int] = None
+
+    # there is actually no default, and will error if it isn't set
+    # we set it in __init__, so this helps ensure subclasses actually call us
+    parser = _make_property("parser", None, None, "The underlying file parser.", allow_change=False)
 
     floor = _make_property("floor", int, 0, "Return the current floor.", allow_change=False)
     floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.", allow_change=True)
@@ -260,12 +266,6 @@ class NeowBonus(BaseNode):
         "TWO_STARTER_CARDS": "Add two starter cards.",
         "ONE_STARTER_CARD": "Add a starter card.",
     }
-
-    def __init__(self, parser: FileParser):
-        super().__init__()
-        self.parser = parser
-        self.current_hp, self.max_hp = self.get_hp()
-        self.gold = self.get_gold()
 
     @property
     def name(self) -> str:
@@ -404,7 +404,18 @@ class NeowBonus(BaseNode):
 
         return (cur, base)
 
-    def get_gold(self) -> int:
+    # these three will get automatically called by the matching properties
+
+    def _get_current_hp(self) -> int:
+        """Return our current HP after the Neow bonus."""
+        return self._get_hp()[0]
+
+    def _get_max_hp(self) -> int:
+        """Return our max HP after the Neow bonus."""
+        return self._get_hp()[1]
+
+    def _get_gold(self) -> int:
+        """Return how much gold we have after the Neow bonus."""
         base = 99
         if self.mod_data is not None:
             base += (self.mod_data["goldGained"] - self.mod_data["goldLost"])
