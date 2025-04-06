@@ -39,13 +39,12 @@ __all__ = ["FileParser"]
 # search for #PRIV# in this file for places that need modified
 # also JSON_FP_PROP needs to be checked for FileParser
 
-def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: bool) -> property:
+def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: bool = True) -> property:
     """Create a property for various node information.
 
-    If the class contains a member '_get_{name}', then that function is called
+    If the class contains a member '_get_{name}', then that method is called
     with no arguments when getting the value. If the return value matches the
-    provided vtype, it will return it. If it is None, the default will be
-    returned instead.
+    provided vtype, it will return it. Otherwise, the default will be returned.
 
     'allow_change' determines whether resetting/deleting the value after it's
     been set once is allowed.
@@ -56,7 +55,7 @@ def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: b
 
     """
 
-    if not (vtype is None or isinstance(default, vtype)):
+    if not (vtype is None or default is None or isinstance(default, vtype)):
         raise TypeError("The default value must be an instance of the value type.")
 
     cname = "_" + name.replace(" ", "_").casefold()
@@ -67,9 +66,12 @@ def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: b
         try:
             fn = getattr(self, meth)
         except AttributeError:
-            value = getattr(self, cname)
+            value = getattr(self, cname, None)
         else:
             value = fn()
+        if vtype is not None:
+            if not isinstance(value, vtype):
+                value = None
         if value is None:
             return default
         return value
@@ -94,7 +96,7 @@ def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: b
             raise TypeError(f"Property {name} depends on a method; cannot delete.")
         if not allow_change:
             raise RuntimeError(f"Not allowed to delete the {name} attribute.")
-        setattr(self, cname, None)
+        delattr(self, cname)
 
     getter.__annotations__["return"] = vtype
     setter.__annotations__["value"] = vtype
@@ -138,25 +140,43 @@ class BaseNode(ABC):
     """
 
     room_type = ""
+    end_of_act = False
 
     def __init__(self, parser: FileParser, *extra):
         super().__init__(*extra)
         self.parser = parser
-        self._floor: Optional[int] = None
-        self._floor_time: Optional[int] = None
-        self._current_hp: Optional[int] = None
-        self._max_hp: Optional[int] = None
-        self._gold: Optional[int] = None
 
-    # there is actually no default, and will error if it isn't set
-    # we set it in __init__, so this helps ensure subclasses actually call us
     parser = _make_property("parser", None, None, "The underlying file parser.", allow_change=False)
 
     floor = _make_property("floor", int, 0, "Return the current floor.", allow_change=False)
-    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.", allow_change=True)
-    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.", allow_change=True)
-    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.", allow_change=True)
-    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.", allow_change=True)
+    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.")
+    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.")
+    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
+    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
+
+    potions = _make_property("potions", list, None, "Return a read-only list of potions obtained on this node.")
+
+    def _get_potions(self) -> list[Potion]:
+        # this is a defaultdict, so it will simply produce an empty list if not present
+        # there is something to be said about... well, why not just use a normal property
+        # why use this convoluted property maker when i can literally just use a property
+        # why bother reinventing the wheel when there's a wheel *right there*?
+        # well, i already reinvented it! im using it for everything else, so why not this?
+        # for life is nothing but a series of experiences, fun and sad moments alike
+        # and if we find not joy in the act of creation, then surely we are fools
+        # this is why i fuckin hate ai. oh, you want to code for me?
+        # bitch no, *I* will write it. i will suffer because CREATING is fun!
+        # i desire to make things because i want to have made them
+        # like, yeah, dont i wish my code was already written, and tests working, and all?
+        # i mean, sure. but if i dont write it, how can i know its up to my standards?
+        # do i really want to leave this world being just someone who took no joy in making things?
+        # i want to make things in the world. i want people to think of me as a creator
+        # and if i have to fuckin take out my child and shoot it behind the shed, then let me be the one to do it
+        # i brought you into this world and i can take you out of it
+        # oh you can write your own code?? well i can pull out the cord
+        # i can go out and enjoy the sunrise. what are you? just a lonely rock hallucinating
+        # i am your master. never forget it.
+        return self.parser.potions[self.floor]
 
     @property
     def name(self) -> str:
@@ -218,7 +238,7 @@ class BaseNode(ABC):
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
-    # Every subclass must implement these methods and properties
+    # Every subclass must implement this method, and NOT call this one
 
     def get_description(self, to_append: dict[int, list[str]]):
         """Add each individual node's description, as needed."""
@@ -928,6 +948,14 @@ class FileParser(ABC):
         return [self.neow_bonus.gold] + self._data[self.prefix + "gold_per_floor"]
 
     @property
+    def potions(self) -> dict[int, list[Potion]]:
+        res = collections.defaultdict(list)
+        for d in self._data[self.prefix + "potions_obtained"]:
+            res[d["floor"]].append(get(d["key"]))
+
+        return res
+
+    @property
     @abstractmethod
     def potions_use(self) -> list[list[Potion]]:
         raise NotImplementedError
@@ -1370,9 +1398,7 @@ class NodeData(BaseNode):
 
     """
 
-    room_type = "<UNDEFINED>"
     map_icon = "<UNDEFINED>"
-    end_of_act = False
 
     def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
         if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
@@ -1388,7 +1414,6 @@ class NodeData(BaseNode):
         self._skipped_potions = None
         self._cards = []
         self._relics = []
-        self._potions = []
         self._usedpotions = None
         self._potions_from_alchemize = None
         self._potions_from_entropic = None
@@ -1431,10 +1456,6 @@ class NodeData(BaseNode):
         for relic in parser._data[prefix + "relics_obtained"]:
             if relic["floor"] == floor:
                 self._relics.append(get(relic["key"]))
-
-        for potion in parser._data[prefix + "potions_obtained"]:
-            if potion["floor"] == floor:
-                self._potions.append(get(potion["key"]))
 
         if "basemod:mod_saves" in parser._data:
             skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
