@@ -155,6 +155,9 @@ class BaseNode(ABC):
     gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
 
     potions = _make_property("potions", list, None, "Return a read-only list of potions obtained on this node.")
+    picked = _make_property("picked", list, None, "Return the cards picked this floor.")
+    skipped = _make_property("skipped", list, None, "Return the cards skipped this floor.")
+    relics = _make_property("relics", list, None, "Return the relics obtained this floor.")
 
     def _get_potions(self) -> list[Potion]:
         # this is a defaultdict, so it will simply produce an empty list if not present
@@ -181,6 +184,15 @@ class BaseNode(ABC):
         # dear past self
         # what the fuck
         return self.parser.potions[self.floor]
+
+    def _get_picked(self) -> list[str]:
+        return self.parser.card_choices[0][self.floor]
+
+    def _get_skipped(self) -> list[str]:
+        return self.parser.card_choices[1][self.floor]
+
+    def _get_relics(self) -> list[Relic]:
+        return self.parser.relics_obtained[self.floor]
 
     @property
     def name(self) -> str:
@@ -993,6 +1005,18 @@ class FileParser(ABC):
         raise NotImplementedError
 
     @property
+    def card_choices(self) -> tuple[dict[int, list[str]], dict[int, list[str]]]:
+        picked = collections.defaultdict(list)
+        skipped = collections.defaultdict(list)
+        for d in self._data[self.prefix + "card_choices"]:
+            if (c := d["picked"]) != "SKIP":
+                picked[d["floor"]].append(get_card(c))
+            for card in d["not_picked"]:
+                skipped[d["floor"]].append(get_card(card))
+
+        return picked, skipped
+
+    @property
     @abstractmethod #PRIV# why is this like that
     def _master_deck(self) -> list[str]:
         raise NotImplementedError
@@ -1109,6 +1133,14 @@ class FileParser(ABC):
     def relics_bare(self) -> list[Relic]:
         # could be a generator, but we want easy contain check
         return [x.relic for x in self.relics]
+
+    @property
+    def relics_obtained(self) -> dict[int, list[Relic]]:
+        res = collections.defaultdict(list)
+        for relic in self._data[self.prefix + "relics_obtained"]:
+            res[relic["floor"]].append(get(relic["key"]))
+
+        return res
 
     @property
     def seed(self) -> str:
@@ -1402,10 +1434,10 @@ class NodeData(BaseNode):
 
     """
 
-    map_icon = "<UNDEFINED>"
+    map_icon = ""
 
     def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
-        if self.room_type == NodeData.room_type or self.map_icon == NodeData.map_icon:
+        if not (self.room_type and self.map_icon):
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
         super().__init__(parser, *extra)
         self.floor = floor
@@ -1416,8 +1448,6 @@ class NodeData(BaseNode):
         self._turns_count = None
         self._skipped_relics = None
         self._skipped_potions = None
-        self._cards = []
-        self._relics = []
         self._usedpotions = None
         self._potions_from_alchemize = None
         self._potions_from_entropic = None
@@ -1452,14 +1482,6 @@ class NodeData(BaseNode):
                 self.gold = parser.gold_counts[floor - 1]
             except IndexError:
                 pass
-
-        for cards in parser._data[prefix + "card_choices"]:
-            if cards["floor"] == floor and cards not in self._cards:
-                self._cards.append(cards)
-
-        for relic in parser._data[prefix + "relics_obtained"]:
-            if relic["floor"] == floor:
-                self._relics.append(get(relic["key"]))
 
         if "basemod:mod_saves" in parser._data:
             skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
@@ -1519,21 +1541,6 @@ class NodeData(BaseNode):
         if self.skipped:
             to_append[36].append("Skipped:")
             to_append[36].extend(f"- {x}" for x in self.skipped)
-
-    @property
-    def picked(self) -> list[str]:
-        ret = []
-        for cards in self._cards:
-            if cards["picked"] != "SKIP":
-                ret.append(get_card(cards["picked"]))
-        return ret
-
-    @property
-    def skipped(self) -> list[str]:
-        ret = []
-        for cards in self._cards:
-            ret.extend(get_card(x) for x in cards["not_picked"])
-        return ret
 
     @property
     def relics(self) -> list[Relic]:
