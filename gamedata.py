@@ -176,6 +176,10 @@ class BaseNode(ABC):
         # oh you can write your own code?? well i can pull out the cord
         # i can go out and enjoy the sunrise. what are you? just a lonely rock hallucinating
         # i am your master. never forget it.
+        #
+        # ...
+        # dear past self
+        # what the fuck
         return self.parser.potions[self.floor]
 
     @property
