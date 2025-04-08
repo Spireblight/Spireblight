@@ -154,44 +154,24 @@ class BaseNode(ABC):
     max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
     gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
 
-    potions = _make_property("potions", list, None, "Return a read-only list of potions obtained on this node.")
-    picked = _make_property("picked", list, None, "Return the cards picked this floor.")
-    skipped = _make_property("skipped", list, None, "Return the cards skipped this floor.")
-    relics = _make_property("relics", list, None, "Return the relics obtained this floor.")
-
-    def _get_potions(self) -> list[Potion]:
-        # this is a defaultdict, so it will simply produce an empty list if not present
-        # there is something to be said about... well, why not just use a normal property
-        # why use this convoluted property maker when i can literally just use a property
-        # why bother reinventing the wheel when there's a wheel *right there*?
-        # well, i already reinvented it! im using it for everything else, so why not this?
-        # for life is nothing but a series of experiences, fun and sad moments alike
-        # and if we find not joy in the act of creation, then surely we are fools
-        # this is why i fuckin hate ai. oh, you want to code for me?
-        # bitch no, *I* will write it. i will suffer because CREATING is fun!
-        # i desire to make things because i want to have made them
-        # like, yeah, dont i wish my code was already written, and tests working, and all?
-        # i mean, sure. but if i dont write it, how can i know its up to my standards?
-        # do i really want to leave this world being just someone who took no joy in making things?
-        # i want to make things in the world. i want people to think of me as a creator
-        # and if i have to fuckin take out my child and shoot it behind the shed, then let me be the one to do it
-        # i brought you into this world and i can take you out of it
-        # oh you can write your own code?? well i can pull out the cord
-        # i can go out and enjoy the sunrise. what are you? just a lonely rock hallucinating
-        # i am your master. never forget it.
-        #
-        # ...
-        # dear past self
-        # what the fuck
+    @property
+    def potions(self) -> list[Potion]:
+        """Return a read-only list of potions obtained on this node."""
         return self.parser.potions[self.floor]
 
-    def _get_picked(self) -> list[str]:
+    @property
+    def picked(self) -> list[str]:
+        """Return the cards picked this floor."""
         return self.parser.card_choices[0][self.floor]
 
-    def _get_skipped(self) -> list[str]:
+    @property
+    def skipped(self) -> list[str]:
+        """Return the cards skipped this floor."""
         return self.parser.card_choices[1][self.floor]
 
-    def _get_relics(self) -> list[Relic]:
+    @property
+    def relics(self) -> list[Relic]:
+        """Return the relics obtained this floor."""
         return self.parser.relics_obtained[self.floor]
 
     @property
