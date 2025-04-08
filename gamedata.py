@@ -154,6 +154,12 @@ class BaseNode(ABC):
     max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
     gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
 
+    card_count = _make_property("card count", int, 0, "Return the total number of cards in the deck.")
+    relic_count = _make_property("relic count", int, 1, "Return the total number of relics we have.")
+    potion_count = _make_property("potion count", int, 0, "Return how many potions we currently have.")
+    fights_count = _make_property("fights count", int, 0, "Return how many fights were fought so far this run.")
+    turns_count = _make_property("turns count", int, 0, "Return how many combat turns have passed.")
+
     @property
     def potions(self) -> list[Potion]:
         """Return a read-only list of potions obtained on this node."""
@@ -211,15 +217,15 @@ class BaseNode(ABC):
 
     def card_delta(self) -> int:
         """How many cards were added or removed on this floor."""
-        return 0
+        return len(self.picked)
 
     def relic_delta(self) -> int:
         """How many relics were gained or lost on this floor."""
-        return 0
+        return len(self.relics)
 
     def potion_delta(self) -> int:
         """How many potions were obtained, used, or discarded on this floor."""
-        return 0
+        return len(self.all_potions_received) - len(self.all_potions_dropped)
 
     def fights_delta(self) -> int:
         """How many fights were fought on this floor."""
@@ -1241,17 +1247,17 @@ class FileParser(ABC):
                     potion_count = node.potion_count
                     fights_count = node.fights_count
                     turns_count = node.turns_count
-                else: #PRIV#
+                else:
                     card_count += node.card_delta()
-                    node._card_count = card_count
+                    node.card_count = card_count
                     relic_count += node.relic_delta()
-                    node._relic_count = relic_count
+                    node.relic_count = relic_count
                     potion_count += node.potion_delta()
-                    node._potion_count = potion_count
+                    node.potion_count = potion_count
                     fights_count += node.fights_delta()
-                    node._fights_count = fights_count
+                    node.fights_count = fights_count
                     turns_count += node.turns_delta()
-                    node._turns_count = turns_count
+                    node.turns_count = turns_count
                     node.floor_time = t - prev
                 prev = t
                 self._cache["path"].append(node)
@@ -1585,46 +1591,6 @@ class NodeData(BaseNode):
         if self._skipped_potions is None:
             return []
         return self._skipped_potions
-
-    def card_delta(self) -> int:
-        return len(self.picked)
-
-    def relic_delta(self) -> int:
-        return len(self.relics)
-
-    def potion_delta(self) -> int:
-        count = len(self.potions) + len(self.potions_from_alchemize) + len(self.potions_from_entropic)
-        return count - len(self.used_potions) - len(self.discarded_potions)
-
-    @property
-    def card_count(self) -> int:
-        if self._card_count is None:
-            return 0
-        return self._card_count
-
-    @property
-    def relic_count(self) -> int:
-        if self._relic_count is None:
-            return 1
-        return self._relic_count
-
-    @property
-    def potion_count(self) -> int:
-        if self._potion_count is None:
-            return 0
-        return self._potion_count
-
-    @property
-    def fights_count(self) -> int:
-        if self._fights_count is None:
-            return 1
-        return self._fights_count
-
-    @property
-    def turns_count(self) -> int:
-        if self._turns_count is None:
-            return 1
-        return self._turns_count
 
 def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]: #PRIV#
     """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
