@@ -122,6 +122,8 @@ class RunParser(FileParser):
     def floor_reached(self) -> int:
         return int(self._data["floor_reached"])
 
+    floor = floor_reached
+
     @property
     def acts_beaten(self) -> int:
         """Return how many acts were beaten."""
@@ -130,39 +132,6 @@ class RunParser(FileParser):
     @property
     def final_health(self) -> tuple[int, int]:
         return self._data["current_hp_per_floor"][-1], self._data["max_hp_per_floor"][-1]
-
-    def _potion_handling(self, key: str) -> list[list[Potion]]:
-        final = [[]] # empty list for Neow
-        # this needs RHP, so it might not be present
-        # but we want a list anyway, which is why we iterate like this
-        for i in range(self.floor_reached):
-            potions = []
-            try:
-                for x in self._data[key][i]:
-                    potions.append(get(x))
-            except (KeyError, IndexError):
-                # Either we don't have RHP, or the floor isn't stored somehow
-                pass
-
-            final.append(potions)
-
-        return final
-
-    @property
-    def potions_use(self) -> list[list[Potion]]:
-        return self._potion_handling("potion_use_per_floor")
-
-    @property
-    def potions_alchemize(self) -> list[list[Potion]]:
-        return self._potion_handling("potions_obtained_alchemize")
-
-    @property
-    def potions_entropic(self) -> list[list[Potion]]:
-        return self._potion_handling("potions_obtained_entropic_brew")
-
-    @property
-    def potions_discarded(self) -> list[list[Potion]]:
-        return self._potion_handling("potion_discard_per_floor")
 
     @property
     def score(self) -> int:

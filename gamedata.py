@@ -175,7 +175,38 @@ class BaseNode(ABC):
         return self.parser.relics_obtained[self.floor]
 
     @property
+    def used_potions(self) -> list[Potion]:
+        """Return which potions were used on this floor."""
+        return self.parser.potions_use[self.floor]
+
+    @property
+    def potions_from_alchemize(self) -> list[Potion]:
+        """Return the potions obtained through Alchemize on this floor."""
+        return self.parser.potions_alchemize[self.floor]
+
+    @property
+    def potions_from_entropic(self) -> list[Potion]:
+        """Return the potions obtained through Entropic Brew on this floor."""
+        return self.parser.potions_entropic[self.floor]
+
+    @property
+    def discarded_potions(self) -> list[Potion]:
+        """Return potions which were mercilessly discarded on this floor."""
+        return self.parser.potions_discarded[self.floor]
+
+    @property
+    def all_potions_received(self) -> list[Potion]:
+        """Return all potions which were received on this floor."""
+        return self.potions + self.potions_from_alchemize + self.potions_from_entropic
+
+    @property
+    def all_potions_dropped(self) -> list[Potion]:
+        """Return all potions which were used or discarded this floor."""
+        return self.used_potions + self.discarded_potions
+
+    @property
     def name(self) -> str:
+        """Return the name to display for the node."""
         return ""
 
     def card_delta(self) -> int:
@@ -752,6 +783,13 @@ class FileParser(ABC):
         "image": "image/png",
     }
 
+    _potion_mapping = {
+        "use": ("PotionUseLog", "potion_use_per_floor"),
+        "alchemize": ("potionsObtainedAlchemizeLog", "potions_obtained_alchemize"),
+        "entropic": ("potionsObtainedEntropicBrewLog", "potions_obtained_entropic_brew"),
+        "discarded": ("PotionDiscardLog", "potion_discard_per_floor"),
+    }
+
     prefix = ""
     done = False
 
@@ -890,6 +928,11 @@ class FileParser(ABC):
 
     @property
     @abstractmethod
+    def floor(self) -> int:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
     def timestamp(self) -> datetime.datetime:
         raise NotImplementedError
 
@@ -951,25 +994,45 @@ class FileParser(ABC):
 
         return res
 
+    def _handle_potions(self, key: str) -> list[list[Potion]]:
+        final = [[]] # empty list for Neow
+        if key not in self._potion_mapping:
+            raise ValueError(f"Key {key} is not a valid potion action.")
+        mapping = self._data
+        idx = 1
+        if self.prefix == "metric_": # savefile
+            mapping = mapping["basemod:mod_saves"]
+            idx = 0
+        # this needs RHP, so it might not be present
+        # but we want a list anyway, which is why we iterate like this
+        for i in range(self.floor):
+            potions = []
+            try:
+                for x in mapping[self._potion_mapping[key][idx]]:
+                    potions.append(get(x))
+            except (KeyError, IndexError):
+                # Either we don't have RHP, or the floor isn't stored somehow
+                pass
+
+            final.append(potions)
+
+        return final
+
     @property
-    @abstractmethod
     def potions_use(self) -> list[list[Potion]]:
-        raise NotImplementedError
+        return self._handle_potions("use")
 
     @property
-    @abstractmethod
     def potions_alchemize(self) -> list[list[Potion]]:
-        raise NotImplementedError
+        return self._handle_potions("alchemize")
 
     @property
-    @abstractmethod
     def potions_entropic(self) -> list[list[Potion]]:
-        raise NotImplementedError
+        return self._handle_potions("entropic")
 
     @property
-    @abstractmethod
     def potions_discarded(self) -> list[list[Potion]]:
-        raise NotImplementedError
+        return self._handle_potions("discarded")
 
     @property
     def ascension_level(self) -> int:
@@ -1428,10 +1491,6 @@ class NodeData(BaseNode):
         self._turns_count = None
         self._skipped_relics = None
         self._skipped_potions = None
-        self._usedpotions = None
-        self._potions_from_alchemize = None
-        self._potions_from_entropic = None
-        self._discarded = None
         self._cache = {}
 
     # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
@@ -1443,18 +1502,11 @@ class NodeData(BaseNode):
         subclasses should call it to create a new instance. Extra arguments
         will be passed to `__init__` for instance creation."""
 
-        prefix = parser.prefix
-
         self = cls(parser, floor, *extra)
         try:
             self.current_hp = parser.current_hp_counts[floor]
             self.max_hp = parser.max_hp_counts[floor]
             self.gold = parser.gold_counts[floor]
-
-            self._usedpotions = parser.potions_use[floor]
-            self._potions_from_alchemize = parser.potions_alchemize[floor]
-            self._potions_from_entropic = parser.potions_entropic[floor]
-            self._discarded = parser.potions_discarded[floor]
         except IndexError:
             try:
                 self.current_hp = parser.current_hp_counts[floor - 1]
@@ -1523,56 +1575,16 @@ class NodeData(BaseNode):
             to_append[36].extend(f"- {x}" for x in self.skipped)
 
     @property
-    def relics(self) -> list[Relic]:
-        return self._relics
-
-    @property
     def skipped_relics(self) -> list[Relic]:
         if self._skipped_relics is None:
             return []
         return self._skipped_relics
 
     @property
-    def potions(self) -> list[Potion]:
-        return self._potions
-
-    @property
-    def used_potions(self) -> list[Potion]:
-        if self._usedpotions is None:
-            return []
-        return self._usedpotions
-
-    @property
-    def potions_from_alchemize(self) -> list[Potion]:
-        if self._potions_from_alchemize is None:
-            return []
-        return self._potions_from_alchemize
-
-    @property
-    def potions_from_entropic(self) -> list[Potion]:
-        if self._potions_from_entropic is None:
-            return []
-        return self._potions_from_entropic
-
-    @property
-    def discarded_potions(self) -> list[Potion]:
-        if self._discarded is None:
-            return []
-        return self._discarded
-
-    @property
     def skipped_potions(self) -> list[Potion]:
         if self._skipped_potions is None:
             return []
         return self._skipped_potions
-
-    @property
-    def all_potions_received(self) -> list[Potion]:
-        return self.potions + self.potions_from_alchemize + self.potions_from_entropic
-
-    @property
-    def all_potions_dropped(self) -> list[Potion]:
-        return self.used_potions + self.discarded_potions
 
     def card_delta(self) -> int:
         return len(self.picked)

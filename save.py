@@ -218,38 +218,7 @@ class Savefile(FileParser):
     def current_floor(self) -> int:
         return self._data["metric_floor_reached"]
 
-    def _potion_handling(self, key: str) -> list[list[Potion]]:
-        final = [[]] # empty list for Neow
-        # this needs RHP, so it might not be present
-        # but we want a list anyway, which is why we iterate like this
-        for i in range(self.current_floor):
-            potions = []
-            try:
-                for x in self._data["basemod:mod_saves"][key][i]:
-                    potions.append(get(x))
-            except (KeyError, IndexError):
-                # Either we don't have RHP, or the floor isn't stored somehow
-                pass
-
-            final.append(potions)
-
-        return final
-
-    @property
-    def potions_use(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionUseLog")
-
-    @property
-    def potions_alchemize(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedAlchemizeLog")
-
-    @property
-    def potions_entropic(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedEntropicBrewLog")
-
-    @property
-    def potions_discarded(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionDiscardLog")
+    floor = current_floor
 
     @property
     def potion_chance(self) -> int:
