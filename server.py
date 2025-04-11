@@ -2713,13 +2713,12 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
 @with_savefile("mods", optional_save=True)
 async def active_mods(ctx: ContextType, save: Savefile):
     # use the old message if we don't have info from activemods
+    msg = "Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods"
     if save and save.has_activemods:
         names = [x.name for x in save.mods]
         mods = ", ".join(names[:-1])
         mods += f", and {names[-1]}"
-        msg = f"For this run, we're using the mods {mods}\nFor more info, try !mod [mod name]"
-    else:
-        msg = "Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods"
+        msg += f"\nFor this run, we're using the mods {mods}.\nFor more info, try !mod [mod name]"
 
     await ctx.reply(msg)
 
