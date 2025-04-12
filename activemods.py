@@ -110,7 +110,6 @@ class ActiveMod():
 
         if "mod_url" in data:
             self._mod_url = data["mod_url"]
-            #self._mod_url = data["mod_url"]
         else:
             self._mod_url = ""
             
@@ -124,9 +123,11 @@ class ActiveMod():
         
     @property
     def mod_url(self) -> str:
-        # infomod is hardcoded until custom URLs are implemented into ActiveMods
+        # infomod and mapmarks are hardcoded until custom URLs are implemented into ActiveMods
         if self.modid == "ojb_infomod2":
             return "https://casey-c.github.io/slaythespire/infomod.html"
+        elif self.modid == "ojb_mapmarks":
+            return "https://github.com/casey-c/mapmarks"
         else:
             return self._mod_url
 
