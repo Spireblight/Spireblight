@@ -1490,6 +1490,13 @@ class NodeData(BaseNode):
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
         super().__init__(parser, *extra)
         self.floor = floor
+        if not self._set_hp_gold(floor):
+            # in case our current floor doesn't have data, get previous floor
+            # this can happen with the post-Heart victory screen
+            # and also maybe during an ongoing run while getting the current node
+            # if this assignment fails too, just let it
+            self._set_hp_gold(floor - 1)
+
         self._card_count = None
         self._relic_count = None
         self._potion_count = None
@@ -1498,6 +1505,25 @@ class NodeData(BaseNode):
         self._skipped_relics = None
         self._skipped_potions = None
         self._cache = {}
+
+    def _set_hp_gold(self, floor: int) -> bool:
+        """Set the gold as well as current and max HP for this node.
+        
+        Return True if assignment succeeded, False otherwise."""
+
+        try:
+            # delay assignment in case a later one fails
+            # we don't want some of them to be assigned and others not
+            cur_hp = self.parser.current_hp_counts[floor]
+            max_hp = self.parser.max_hp_counts[floor]
+            gold = self.parser.gold_counts[floor]
+        except IndexError:
+            return False
+
+        self.current_hp = cur_hp
+        self.max_hp = max_hp
+        self.gold = gold
+        return True
 
     # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
     @classmethod
@@ -1509,17 +1535,6 @@ class NodeData(BaseNode):
         will be passed to `__init__` for instance creation."""
 
         self = cls(parser, floor, *extra)
-        try:
-            self.current_hp = parser.current_hp_counts[floor]
-            self.max_hp = parser.max_hp_counts[floor]
-            self.gold = parser.gold_counts[floor]
-        except IndexError:
-            try:
-                self.current_hp = parser.current_hp_counts[floor - 1]
-                self.max_hp = parser.max_hp_counts[floor - 1]
-                self.gold = parser.gold_counts[floor - 1]
-            except IndexError:
-                pass
 
         if "basemod:mod_saves" in parser._data:
             skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
