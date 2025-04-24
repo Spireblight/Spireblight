@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator, Iterable, NamedTuple, Optional, TYPE_CHECKING
+from typing import Any, Generator, Iterable, NamedTuple, TYPE_CHECKING
 
 import urllib.parse
 import collections
@@ -12,6 +12,7 @@ from abc import ABC, abstractmethod
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 
+from typehints import *
 from utils import format_for_slaytabase
 
 try:
@@ -146,7 +147,7 @@ class BaseNode(ABC):
         super().__init__(*extra)
         self.parser = parser
 
-    parser = _make_property("parser", None, None, "The underlying file parser.", allow_change=False)
+    parser = _make_property("parser", object, None, "The underlying file parser.", allow_change=False)
 
     floor = _make_property("floor", int, 0, "Return the current floor.", allow_change=False)
     floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.")
@@ -209,6 +210,14 @@ class BaseNode(ABC):
     def all_potions_dropped(self) -> list[Potion]:
         """Return all potions which were used or discarded this floor."""
         return self.used_potions + self.discarded_potions
+
+    @property
+    def skipped_relics(self) -> list[Relic]:
+        return self.parser.skipped_rewards[0][self.floor]
+
+    @property
+    def skipped_potions(self) -> list[Potion]:
+        return self.parser.skipped_rewards[1][self.floor]
 
     @property
     def name(self) -> str:
@@ -392,25 +401,25 @@ class NeowBonus(BaseNode):
 
     @property
     def cards_obtained(self) -> list[str]:
-        if self.has_data:
+        if self.has_data and self.mod_data:
             return self.mod_data.get("cardsObtained", [])
         return []
 
     @property
     def cards_removed(self) -> list[str]:
-        if self.has_data:
+        if self.has_data and self.mod_data:
             return self.mod_data.get("cardsRemoved", [])
         return []
 
     @property
     def cards_transformed(self) -> list[str]:
-        if self.has_data:
+        if self.has_data and self.mod_data:
             return self.mod_data.get("cardsTransformed", [])
         return []
 
     @property
     def cards_upgraded(self) -> list[str]:
-        if self.has_data:
+        if self.has_data and self.mod_data:
             return self.mod_data.get("cardsUpgraded", [])
         return []
 
@@ -539,7 +548,7 @@ class NeowBonus(BaseNode):
                 cards.insert(index, f"{x}+1")
         for x in self.parser._data[self.parser.prefix + "card_choices"]: #PRIV#
             if x["floor"] == 0:
-                if cards["picked"] != "SKIP":
+                if x["picked"] != "SKIP":
                     cards.append(x["picked"])
 
         return cards
@@ -802,7 +811,7 @@ class FileParser(ABC):
     def __init__(self, data: dict[str, Any]):
         self._data = data
         self.neow_bonus = NeowBonus(self)
-        self._cache = {"self": self} # this lets us do on-the-fly debugging
+        self._cache: dict[str, Any] = {"self": self} # this lets us do on-the-fly debugging
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str | bytes] = {}
 
@@ -811,7 +820,7 @@ class FileParser(ABC):
             self._cache["boss_chest_iter"] = iter(self._data[self.prefix + "boss_relics"])
 
         try: # with a savefile, it's possible to try to get the same floor twice, which will the last one
-            return next(self._cache["boss_chest_iter"])
+            return next(self._cache["boss_chest_iter"]) # type: ignore
         except StopIteration:
             return self._data[self.prefix + "boss_relics"][-1]
 
@@ -967,6 +976,24 @@ class FileParser(ABC):
         return ""
 
     @property
+    def skipped_rewards(self) -> tuple[RelicRewards, PotionRewards]:
+        rels = collections.defaultdict(list)
+        pots = collections.defaultdict(list)
+        if self.prefix == "metric_": # savefile
+            skipped = self._data["basemod:mod_saves"].get("RewardsSkippedLog")
+        else:
+            skipped = self._data.get("rewards_skipped")
+
+        if skipped:
+            for choice in skipped:
+                if (r := choice["relics"]):
+                    rels[choice["floor"]].extend(get(x) for x in r)
+                if (p := choice["potions"]):
+                    pots[choice["floor"]].extend(get(x) for x in p)
+
+        return rels, pots
+
+    @property
     def character(self) -> str | None:
         if self._character is None:
             return None
@@ -993,14 +1020,14 @@ class FileParser(ABC):
         return [self.neow_bonus.gold] + self._data[self.prefix + "gold_per_floor"]
 
     @property
-    def potions(self) -> dict[int, list[Potion]]:
+    def potions(self) -> PotionRewards:
         res = collections.defaultdict(list)
         for d in self._data[self.prefix + "potions_obtained"]:
             res[d["floor"]].append(get(d["key"]))
 
         return res
 
-    def _handle_potions(self, key: str) -> list[list[Potion]]:
+    def _handle_potions(self, key: str) -> PotionsListing:
         final = [[]] # empty list for Neow
         if key not in self._potion_mapping:
             raise ValueError(f"Key {key} is not a valid potion action.")
@@ -1025,19 +1052,19 @@ class FileParser(ABC):
         return final
 
     @property
-    def potions_use(self) -> list[list[Potion]]:
+    def potions_use(self) -> PotionsListing:
         return self._handle_potions("use")
 
     @property
-    def potions_alchemize(self) -> list[list[Potion]]:
+    def potions_alchemize(self) -> PotionsListing:
         return self._handle_potions("alchemize")
 
     @property
-    def potions_entropic(self) -> list[list[Potion]]:
+    def potions_entropic(self) -> PotionsListing:
         return self._handle_potions("entropic")
 
     @property
-    def potions_discarded(self) -> list[list[Potion]]:
+    def potions_discarded(self) -> PotionsListing:
         return self._handle_potions("discarded")
 
     @property
@@ -1054,7 +1081,7 @@ class FileParser(ABC):
         raise NotImplementedError
 
     @property
-    def card_choices(self) -> tuple[dict[int, list[str]], dict[int, list[str]]]:
+    def card_choices(self) -> tuple[CardRewards, CardRewards]:
         picked = collections.defaultdict(list)
         skipped = collections.defaultdict(list)
         for d in self._data[self.prefix + "card_choices"]:
@@ -1110,7 +1137,7 @@ class FileParser(ABC):
         return bool(self._removals)
 
     @property
-    def removals(self) -> Generator[tuple[str, int], None, None]:
+    def removals(self) -> Generator[ItemFloor, None, None]:
         for card, floor in self._removals:
             cdata = CardData(card, [])
             yield (cdata.name, floor)
@@ -1184,7 +1211,7 @@ class FileParser(ABC):
         return [x.relic for x in self.relics]
 
     @property
-    def relics_obtained(self) -> dict[int, list[Relic]]:
+    def relics_obtained(self) -> RelicRewards:
         res = collections.defaultdict(list)
         for relic in self._data[self.prefix + "relics_obtained"]:
             res[relic["floor"]].append(get(relic["key"]))
@@ -1497,11 +1524,6 @@ class NodeData(BaseNode):
             # if this assignment fails too, just let it
             self._set_hp_gold(floor - 1)
 
-        self._card_count = None
-        self._relic_count = None
-        self._potion_count = None
-        self._fights_count = None
-        self._turns_count = None
         self._skipped_relics = None
         self._skipped_potions = None
         self._cache = {}

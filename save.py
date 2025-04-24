@@ -47,7 +47,7 @@ class Savefile(FileParser):
     def __init__(self):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
-        data = None
+        data = {}
         try:
             with open(os.path.join("data", "spire-save.json"), "r") as f:
                 data = json.load(f)
