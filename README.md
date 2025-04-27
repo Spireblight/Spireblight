@@ -7,11 +7,11 @@ elsewhere, I will move the stuff out of the repo.
 
 ## Installation
 
-This needs Python 3.10. To set up the project, you should only need create a
+This needs Python 3.10 or higher. To set up the project, you should only need create a
 virtualenv and install the requirements:
 
 ```bash
-python3.10 -m venv env
+python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
