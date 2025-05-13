@@ -2430,6 +2430,28 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
     )
 
 
+@command("next")
+async def next_run(ctx: ContextType):
+    """Return which character is next in the rotation."""
+    save = await get_savefile()
+    if save.character is not None and save.profile.index == 0:
+        return await ctx.reply("You're watching it right now!")
+
+    latest = get_latest_run(None, None)
+    while latest.profile.index != 0:
+        latest = latest.matched.prev
+
+    c = ("Ironclad", "Silent", "Defect", "Watcher")
+    try:
+        i = c.index(latest.character)
+    except ValueError:
+        return await ctx.reply("Something went wrong.")
+
+    if i == 3:
+        i = -1
+
+    await ctx.reply(f"The next run will be with {c[i+1]}.")
+
 @command("wall")
 async def wall_card(ctx: ContextType):
     """Fetch the card in the wall for the ladder savefile."""
