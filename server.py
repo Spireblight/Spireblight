@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Generator, Callable, Optional
+from typing import Generator, Callable, Optional, Iterable
 
 from collections import defaultdict
 
@@ -31,7 +31,7 @@ from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflin
 from twitchio.channel import Channel
 from twitchio.chatter import Chatter
 from twitchio.errors import HTTPException
-from twitchio.models import Stream, Prediction
+from twitchio.models import Stream, Prediction, Clip as TClip
 
 import discord
 from discord.ext.commands import (
@@ -96,6 +96,7 @@ _consts = {
 }
 
 _quotes: list[Quote] = []
+_clips: list[Clip] = [None] # means un-itialized
 
 
 class Formatter(string.Formatter):  # this does not support conversion or formatting
@@ -290,14 +291,14 @@ def load(loop: asyncio.AbstractEventLoop):
     try:
         with getfile("quotes.json", "r") as f:
             j = json.load(f)
+    except FileNotFoundError:
+        pass
+    else:
         for line, author, adder, isq, ts in j:
             q = Quote(line, author, adder, datetime.datetime.fromtimestamp(ts))
             if not isq:
                 q.is_quote = False
             _quotes.append(q)
-    except FileNotFoundError:
-        pass
-
 
 def _update_quotes():
     q = [x.to_json() for x in _quotes]
@@ -1444,6 +1445,170 @@ def _get_quote(i: int):
     added_by = added_by.format(ts=q.ts.isoformat()[:10])
     return f'Quote #{i}: "{q.line}"{author}{added_by}'
 
+
+def _update_clips():
+    c = [x.to_json() for x in _clips]
+    with getfile("clips.json", "w") as f:
+        json.dump(c, f, indent=config.server.json_indent)
+
+
+async def setup_clips():
+    assert _clips == [None], "already been setup"
+    clips = []
+    maps = {}
+    try:
+        with getfile("clips.json", "r") as f:
+            cj = json.load(f)
+    except FileNotFoundError:
+        pass
+    else:
+        for id, adder, tags in cj:
+            clips.append(id)
+            maps[id] = (adder, tags)
+
+    assert TConn is not None, "need Twitch active for this"
+
+    if clips:
+        try:
+            result = await TConn.fetch_clips(clips)
+        except HTTPException:
+            return # idk
+
+        for clip in result:
+            _clips.append(Clip(clip, *maps[clip.id]))
+
+    if _clips.pop(0) is not None: # remove None, confirm it's been setup
+        raise RuntimeError("Clips got setup twice, somehow")
+
+
+class Clip:
+    def __init__(self, data: TClip, added_by: str, tags: Iterable[str]):
+        self.data = data
+        self.added_by = added_by
+        self.tags = set(tags)
+
+    @property
+    def cf_tags(self):
+        return [x.casefold() for x in self.tags]
+
+    def to_json(self):
+        return [self.data.id, self.added_by, tuple(self.tags)]
+
+    def __contains__(self, value: str):
+        value = value.casefold()
+        return value in self.cf_tags or value in self.data.title.casefold()
+
+    def __eq__(self, value):
+        return isinstance(value, Clip) and self.data.id == value.data.id
+
+
+async def get_clip_info(url: str) -> TClip:
+    assert _clips != [None], "setup clips first"
+    if "/clip/" in url:
+        id = urllib.parse.urlparse(url).path.partition("/clip/")[2]
+    elif "clips.twitch.tv" in url:
+        id = urllib.parse.urlparse(url).path[1:]
+    else:
+        id = url # idk man
+
+    return ( await TConn.fetch_clips([id]) )[0]
+
+
+@command("clip")
+async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
+    """Add a new clip or find a clip."""
+    if _clips == [None]: # need to setup
+        await setup_clips()
+    if _clips == [None]:
+        return await ctx.reply("The Twitch API broke, can't setup clips.")
+
+    if "/clip/" in arg or "clips.twitch.tv" in arg: # TODO: Check for duplicates
+        try:
+            res = await get_clip_info(arg)
+        except HTTPException:
+            return await ctx.reply("This isn't a clip (or the Twitch API broke).")
+        adder = ctx.author.display_name
+        cl = Clip(res, adder, rest)
+        _clips.append(cl)
+        _update_clips()
+        return await ctx.reply(f"Clip {cl.data.title!r} has been added!")
+
+    arg = arg.casefold()
+
+    match arg:
+        case "tags":
+            try:
+                i = int(rest[0])
+                tags = rest[1:]
+            except (ValueError, IndexError):
+                return await ctx.reply("I need a clip number to edit tags.")
+            if i < 0:
+                i += len(_clips)
+            if not (0 <= i < len(_clips)):
+                return await ctx.reply("No such clip.")
+            clip = _clips[i]
+            if not tags:
+                return await ctx.reply(f"This clip has the tags {', '.join(clip.tags)}.")
+            for x in tags:
+                fn = clip.tags.add
+                if x[0] == "-":
+                    x = x[1:]
+                    fn = clip.tags.discard
+                fn(x)
+            _update_clips()
+            await ctx.reply("Tags have been updated.")
+
+        case "random":
+            if not _clips:
+                return await ctx.reply("We have no clips!")
+            clip = random.choice(_clips)
+            await ctx.reply(f"https://clips.twitch.tv/{clip.data.id}")
+
+        case "delete" | "remove":
+            try:
+                i = int(rest[0])
+            except (ValueError, IndexError):
+                return await ctx.reply("I need a clip number to delete.")
+            if i < 0:
+                i += len(_clips)
+            if not (0 <= i < len(_clips)):
+                return await ctx.reply("No such clip.")
+            await ctx.reply(f"Clip deleted. Enjoy it one last time: https://clips.twitch.tv/{_clips[i].data.id}")
+            del _clips[i]
+            _update_clips()
+
+        case _:
+            try:
+                i = int(arg)
+            except ValueError:
+                pass
+            else:
+                if i < 0:
+                    i += len(_clips)
+                if not (0 <= i < len(_clips)):
+                    return await ctx.reply("No such clip.")
+                return await ctx.reply(f"Clip #{i}: https://clips.twitch.tv/{_clips[i].data.id}")
+                
+            # searching for a specific clip
+            possible: list[tuple[int, Clip]] = []
+            tags = (arg,) + rest
+            for i, c in enumerate(_clips):
+                matched = 0
+                for tag in tags:
+                    if tag in c:
+                        matched += 1
+                if matched == len(tags):
+                    possible.append((i, c))
+
+            match len(possible):
+                case 0:
+                    return await ctx.reply("No clips match all of those tags.")
+                case 1:
+                    return await ctx.reply(f"Clip #{possible[0][0]}: https://clips.twitch.tv/{possible[0][1].data.id}")
+                case n:
+                    if n <= 10:
+                        return await ctx.reply(f"The clips that match are {', '.join(str(x[0]) for x in possible)}.")
+                    return await ctx.reply("Too many clips match. Try adding more keywords to narrow it down?")
 
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
