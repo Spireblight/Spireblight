@@ -1522,13 +1522,15 @@ async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
     if _clips == [None]:
         return await ctx.reply("The Twitch API broke, can't setup clips.")
 
-    if "/clip/" in arg or "clips.twitch.tv" in arg: # TODO: Check for duplicates
+    if "/clip/" in arg or "clips.twitch.tv" in arg:
         try:
             res = await get_clip_info(arg)
         except HTTPException:
             return await ctx.reply("This isn't a clip (or the Twitch API broke).")
         adder = ctx.author.display_name
         cl = Clip(res, adder, rest)
+        if cl in _clips:
+            return await ctx.reply("That clip exists already!")
         _clips.append(cl)
         _update_clips()
         return await ctx.reply(f"Clip {cl.data.title!r} has been added!")
