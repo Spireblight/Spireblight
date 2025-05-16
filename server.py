@@ -1563,8 +1563,8 @@ async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
         case "random":
             if not _clips:
                 return await ctx.reply("We have no clips!")
-            clip = random.choice(_clips)
-            await ctx.reply(f"https://clips.twitch.tv/{clip.data.id}")
+            i = random.randint(0, len(_clips) - 1)
+            await ctx.reply(f"Clip #{i}: https://clips.twitch.tv/{_clips[i].data.id}")
 
         case "delete" | "remove":
             try:
