@@ -40,70 +40,6 @@ __all__ = ["FileParser"]
 # search for #PRIV# in this file for places that need modified
 # also JSON_FP_PROP needs to be checked for FileParser
 
-def _make_property(name: str, vtype: type, default, doc: str, *, allow_change: bool = True) -> property:
-    """Create a property for various node information.
-
-    If the class contains a member '_get_{name}', then that method is called
-    with no arguments when getting the value. If the return value matches the
-    provided vtype, it will return it. Otherwise, the default will be returned.
-
-    'allow_change' determines whether resetting/deleting the value after it's
-    been set once is allowed.
-
-    Getting the value after it has been deleted will return the default value.
-
-    A matching method on the class will automatically set 'allow_change=False'.
-
-    """
-
-    if not (vtype is None or default is None or isinstance(default, vtype)):
-        raise TypeError("The default value must be an instance of the value type.")
-
-    cname = "_" + name.replace(" ", "_").casefold()
-    meth = f"_get{cname}"
-    changed = False
-
-    def getter(self: BaseNode):
-        try:
-            fn = getattr(self, meth)
-        except AttributeError:
-            value = getattr(self, cname, None)
-        else:
-            value = fn()
-        if vtype is not None:
-            if not isinstance(value, vtype):
-                value = None
-        if value is None:
-            return default
-        return value
-
-    def setter(self: BaseNode, value):
-        nonlocal changed
-        if hasattr(self, meth):
-            raise TypeError(f"Property {name} depends on a method; cannot modify.")
-        if changed and not allow_change:
-            raise RuntimeError(f"Not allowed to change the {name} attribute.")
-        try:
-            if vtype is not None: # passing None as the value type means no type-checking
-                value = vtype(value)
-        except ValueError:
-            raise ValueError(f"Node property {name} needs value of type {vtype}.")
-        else:
-            setattr(self, cname, value)
-            changed = True
-
-    def deleter(self: BaseNode):
-        if hasattr(self, meth):
-            raise TypeError(f"Property {name} depends on a method; cannot delete.")
-        if not allow_change:
-            raise RuntimeError(f"Not allowed to delete the {name} attribute.")
-        delattr(self, cname)
-
-    getter.__annotations__["return"] = vtype
-    setter.__annotations__["value"] = vtype
-
-    return property(getter, setter, deleter, doc)
-
 class BaseNode(ABC):
     """This the common base class for all path nodes, including Neow.
 
@@ -143,23 +79,27 @@ class BaseNode(ABC):
     room_type = ""
     end_of_act = False
 
+    # the following are handled differently in each branch
+    # as such, we only tell the type checkers what they are
+    # if a subclass does not implement these, it is a bug
+
+    current_hp: int
+    max_hp: int
+    gold: int
+
+    floor: int
+
     def __init__(self, parser: FileParser, *extra):
         super().__init__(*extra)
         self.parser = parser
 
-    parser = _make_property("parser", object, None, "The underlying file parser.", allow_change=False)
+        self.card_count: int = 0
+        self.relic_count: int = 1
+        self.potion_count: int = 0
+        self.fights_count: int = 0
+        self.turns_count: int = 0
 
-    floor = _make_property("floor", int, 0, "Return the current floor.", allow_change=False)
-    floor_time = _make_property("floor time", int, 0, "Return the time that was spent on the floor.")
-    current_hp = _make_property("current HP", int, 0, "Return the current HP when exiting the node.")
-    max_hp = _make_property("max HP", int, 1, "Return the max HP when exiting the node.")
-    gold = _make_property("gold", int, 0, "Return the amount of gold when exiting the node.")
-
-    card_count = _make_property("card count", int, 0, "Return the total number of cards in the deck.")
-    relic_count = _make_property("relic count", int, 1, "Return the total number of relics we have.")
-    potion_count = _make_property("potion count", int, 0, "Return how many potions we currently have.")
-    fights_count = _make_property("fights count", int, 0, "Return how many fights were fought so far this run.")
-    turns_count = _make_property("turns count", int, 0, "Return how many combat turns have passed.")
+        self.floor_time: float = 0.0
 
     @property
     def potions(self) -> list[Potion]:
@@ -342,6 +282,8 @@ class NeowBonus(BaseNode):
         "ONE_STARTER_CARD": "Add a starter card.",
     }
 
+    floor = 0
+
     @property
     def name(self) -> str:
         return "Neow bonus"
@@ -479,17 +421,18 @@ class NeowBonus(BaseNode):
 
         return (cur, base)
 
-    # these three will get automatically called by the matching properties
-
-    def _get_current_hp(self) -> int:
+    @property
+    def current_hp(self) -> int:
         """Return our current HP after the Neow bonus."""
         return self._get_hp()[0]
 
-    def _get_max_hp(self) -> int:
+    @property
+    def max_hp(self) -> int:
         """Return our max HP after the Neow bonus."""
         return self._get_hp()[1]
 
-    def _get_gold(self) -> int:
+    @property
+    def gold(self) -> int:
         """Return how much gold we have after the Neow bonus."""
         base = 99
         if self.mod_data is not None:
@@ -1255,6 +1198,7 @@ class FileParser(ABC):
         """Return the run's path. This is cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
+            floor_time: tuple[float, ...]
             if "basemod:mod_saves" in self._data:
                 floor_time = self._data["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
             else:
@@ -1269,7 +1213,7 @@ class FileParser(ABC):
                 try:
                     t = floor_time[node.floor - 1]
                 except IndexError:
-                    t = 0
+                    t = 0.0
                 if cached: # don't recompute the deltas -- just grab their cached counts
                     card_count = node.card_count
                     relic_count = node.relic_count
