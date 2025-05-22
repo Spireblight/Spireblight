@@ -213,10 +213,12 @@ class BaseNode(ABC):
 
     @property
     def skipped_relics(self) -> list[Relic]:
+        """Return a list of relics that were offered but skipped here."""
         return self.parser.skipped_rewards[0][self.floor]
 
     @property
     def skipped_potions(self) -> list[Potion]:
+        """Return a list of potions that were offered but skipped here."""
         return self.parser.skipped_rewards[1][self.floor]
 
     @property
@@ -1524,8 +1526,6 @@ class NodeData(BaseNode):
             # if this assignment fails too, just let it
             self._set_hp_gold(floor - 1)
 
-        self._skipped_relics = None
-        self._skipped_potions = None
         self._cache = {}
 
     def _set_hp_gold(self, floor: int) -> bool:
@@ -1556,20 +1556,7 @@ class NodeData(BaseNode):
         subclasses should call it to create a new instance. Extra arguments
         will be passed to `__init__` for instance creation."""
 
-        self = cls(parser, floor, *extra)
-
-        if "basemod:mod_saves" in parser._data:
-            skipped = parser._data["basemod:mod_saves"].get("RewardsSkippedLog")
-        else:
-            skipped = parser._data.get("rewards_skipped")
-
-        if skipped:
-            for choice in skipped:
-                if choice["floor"] == floor:
-                    self._skipped_relics = [get(x) for x in choice["relics"]]
-                    self._skipped_potions = [get(x) for x in choice["potions"]]
-
-        return self
+        return cls(parser, floor, *extra)
 
     def description(self) -> str:
         if "description" not in self._cache:
@@ -1616,18 +1603,6 @@ class NodeData(BaseNode):
         if self.skipped:
             to_append[36].append("Skipped:")
             to_append[36].extend(f"- {x}" for x in self.skipped)
-
-    @property
-    def skipped_relics(self) -> list[Relic]:
-        if self._skipped_relics is None:
-            return []
-        return self._skipped_relics
-
-    @property
-    def skipped_potions(self) -> list[Potion]:
-        if self._skipped_potions is None:
-            return []
-        return self._skipped_potions
 
 def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]: #PRIV#
     """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
