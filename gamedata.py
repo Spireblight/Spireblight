@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generator, Iterable, NamedTuple, TYPE_CHECKING
+from typing import Any, Generator, Iterable, NamedTuple, Optional, TYPE_CHECKING
 
 import urllib.parse
 import collections
@@ -190,6 +190,8 @@ class BaseNode(ABC):
         """Return a newline-separated description for the current node.
 
         Refer to BaseNode's docstring for implementation details."""
+
+        # TODO: Move away from numbers and use Enums
 
         to_append = collections.defaultdict(list)
         done = []
@@ -760,6 +762,9 @@ class FileParser(ABC):
         self._character: str | None = None
         self._graph_cache: dict[tuple[str, str, tuple, str | None, str | None], str | bytes] = {}
 
+    def __str__(self):
+        return f"{self.__class__.__name__}<{self.timestamp}>"
+
     def get_boss_chest(self) -> dict[str, str | list[str]]:
         if "boss_chest_iter" not in self._cache:
             self._cache["boss_chest_iter"] = iter(self._data[self.prefix + "boss_relics"])
@@ -1055,6 +1060,40 @@ class FileParser(ABC):
         for card in self.get_cards():
             yield from card.as_cards()
 
+    def get_purchases(self, floor: int): # TODO: make this better (all floors, objects, etc.)
+        """Return a mapping of purchases for a given floor."""
+        bought = {"cards": [], "relics": [], "potions": []}
+        for i, purchased in enumerate(self._data[self.prefix + "item_purchase_floors"]):
+            if purchased == floor:
+                value = self._data[self.prefix + "items_purchased"][i]
+                name, _, upgrades = value.partition("+")
+                item = get(name)
+                match item.cls_name:
+                    case "card":
+                        bought["cards"].append(get_card(value))
+                    case "relic":
+                        bought["relics"].append(item)
+                    case "potion":
+                        bought["potions"].append(item)
+
+    def get_shop_contents(self):
+        d = ()
+        if "shop_contents" in self._data:
+            d = self._data["shop_contents"]
+        elif "basemod:mod_saves" in self._data:
+            d = self._data["basemod:mod_saves"].get("ShopContentsLog", ())
+
+        results = {}
+        for data in d:
+            contents = {"relics": [], "cards": [], "potions": []}
+            for relic in data["relics"]:
+                contents["relics"].append(get(relic))
+            for card in data["cards"]:
+                contents["cards"].append(get_card(card))
+            for potion in data["potions"]:
+                contents["potions"].append(get(potion))
+            results[data["floor"]] = contents
+
     @property
     def _removals(self) -> list[tuple[str, int]]:
         event_removals = []
@@ -1323,7 +1362,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             case ("T", "?"):
                 cls = EventTreasure
             case ("?", "?"):
-                cls = EventNode # not actually a NodeData subclass, but it returns one
+                cls = event_node # not actually a NodeData subclass, but it returns one
             case ("R", "R"):
                 cls = Campfire
             case ("B", "BOSS"):
@@ -1350,7 +1389,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
             last_changed = floor
 
         try:
-            value: NodeData = cls.from_parser(parser, floor)
+            value: NodeData = cls(parser, floor)
         except ValueError: # this can happen for savefiles if we're on the latest floor
             if taken_len == floor:
                 continue # we're on the last floor
@@ -1386,6 +1425,12 @@ class RelicData:
         self.parser = parser
         self.relic: Relic = get(relic)
         self._description = None
+
+    def __str__(self) -> str:
+        return self.relic.name
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parser}, {self.relic.name})"
 
     def description(self) -> str:
         if self._description is None:
@@ -1547,13 +1592,20 @@ class NodeData(BaseNode):
     - map_icon  :: the filename for the icon in the icons/ folder
 
     To instantiate a subclass, call the class with a FileParser instance
-    (either RunParser or Savefile) and the floor number
+    (either RunParser or Savefile) and the floor number.
+
+    To change behaviour, you need to subclass the relevant subclass and alter
+    the behaviour there. Some features rely on objects being instances of
+    specific NodeData subclasses (e.g. Treasure) and will fail otherwise.
+    There is no mechanism currently for overriding which subclasses are
+    returned by the node path parser.
 
     """
 
     map_icon = ""
 
     def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
+        """Create a NodeData instance from a parser and floor number."""
         if not (self.room_type and self.map_icon):
             raise ValueError(f"Cannot create NodeData subclass {self.__class__.__name__!r}")
         super().__init__(parser, *extra)
@@ -1585,17 +1637,6 @@ class NodeData(BaseNode):
         self.max_hp = max_hp
         self.gold = gold
         return True
-
-    # TODO: create abstract properties on FileParser to implement on the subclasses so we don't need all of these if/elifs
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        """Create a NodeData instance from a parser and floor number.
-
-        This is the recommended way to create NodeData instances. All
-        subclasses should call it to create a new instance. Extra arguments
-        will be passed to `__init__` for instance creation."""
-
-        return cls(parser, floor, *extra)
 
     def description(self) -> str:
         if "description" not in self._cache:
@@ -1646,20 +1687,14 @@ class NodeData(BaseNode):
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
 
-    def __init__(self, damage: dict, *extra):
-        super().__init__(*extra)
-        self._damage = damage
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        prefix = parser.prefix
-        for damage in parser._data[prefix + "damage_taken"]:
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        for damage in parser._data[parser.prefix + "damage_taken"]: #PRIV#
             if damage["floor"] == floor:
                 break
         else:
             raise ValueError("no fight result yet")
-
-        return super().from_parser(parser, floor, damage, *extra)
+        self._damage = damage
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.name != self.fought:
@@ -1701,39 +1736,23 @@ class Treasure(NodeData):
     room_type = "Treasure"
     map_icon = "treasure_chest.png"
 
-    def __init__(self, has_blue_key: bool, relic: str, *extra):
-        super().__init__(*extra)
-        self._bluekey = has_blue_key
-        self._key_relic = relic
+    def __init__(self,  parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        self.key_relic = self._get_relic()
+        self.blue_key = (self.key_relic is not None)
+
+    def _get_relic(self) -> Optional[Relic]: #PRIV#
+        d = self.parser._data.get("basemod:mod_saves", ())
+        if "BlueKeyRelicSkippedLog" in d:
+            if d["BlueKeyRelicSkippedLog"]["floor"] == self.floor:
+                return get(d["BlueKeyRelicSkippedLog"]["relicID"])
+        elif "blue_key_relic_skipped_log" in self.parser._data:
+            if self.parser._data["blue_key_relic_skipped_log"]["floor"] == self.floor:
+                return get(self.parser._data["blue_key_relic_skipped_log"]["relicID"])
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.blue_key:
             to_append[6].append(f"Skipped {self.key_relic} for the Sapphire key")
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        has_blue_key = False
-        relic = ""
-        d = parser._data.get("basemod:mod_saves", ())
-        if "BlueKeyRelicSkippedLog" in d:
-            if d["BlueKeyRelicSkippedLog"]["floor"] == floor:
-                relic = get(d["BlueKeyRelicSkippedLog"]["relicID"]).name
-                has_blue_key = True
-        elif "blue_key_relic_skipped_log" in parser._data:
-            if parser._data["blue_key_relic_skipped_log"]["floor"] == floor:
-                relic = get(parser._data["blue_key_relic_skipped_log"]["relicID"]).name
-                has_blue_key = True
-        return super().from_parser(parser, floor, has_blue_key, relic, *extra)
-
-    @property
-    def blue_key(self) -> bool:
-        return self._bluekey
-
-    @property
-    def key_relic(self) -> str | None:
-        if not self.blue_key:
-            return None
-        return self._key_relic
 
 class EventTreasure(Treasure):
     room_type = "Unknown (Treasure)"
@@ -1743,54 +1762,43 @@ class EliteEncounter(EncounterBase):
     room_type = "Elite"
     map_icon = "fight_elite.png"
 
-    def __init__(self, damage: dict, has_key: bool, *extra):
-        super().__init__(damage, *extra)
-        self._has_key = has_key
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        if "basemod:mod_saves" in parser._data:
+            key_floor = parser._data["basemod:mod_saves"].get("greenKeyTakenLog")
+        else:
+            key_floor = parser._data.get("green_key_taken_log")
+        self.has_key = (key_floor is not None and int(key_floor) == floor)
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.has_key:
             to_append[6].append("Got the Emerald Key")
 
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        if "basemod:mod_saves" in parser._data:
-            key_floor = parser._data["basemod:mod_saves"].get("greenKeyTakenLog")
-        else:
-            key_floor = parser._data.get("green_key_taken_log")
-        has_key = (key_floor is not None and int(key_floor) == floor)
-        return super().from_parser(parser, floor, has_key, *extra)
-
-    @property
-    def has_key(self) -> bool:
-        return self._has_key
-
 class EventElite(EliteEncounter):
     room_type = "Unknown (Elite)"
     map_icon = "event.png"
 
-class EventNode:
-    end_of_act = False
+def event_node(parser: FileParser, floor: int, *extra) -> BaseNode:
+    events = []
+    for event in parser._data[parser.prefix + "event_choices"]: #PRIV#
+        if event["floor"] == floor:
+            events.append(event)
+    if not events:
+        return EmptyEvent(parser, floor, *extra)
+    if events[0]["event_name"] == "Colosseum":
+        return Colosseum(parser, floor, events, *extra)
+    if len(events) != 1:
+        for a in events:
+            for b in events:
+                if a != b: # I'm not quite sure how this happens, but sometimes an event will be in twice?
+                    return AmbiguousEvent(parser, floor, events, *extra)
+    event = events[0]
+    for dmg in parser._data[parser.prefix + "damage_taken"]:
+        if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
+            return EventFight(parser, floor, event, *extra)
+    return Event(parser, floor, event, *extra)
 
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra) -> NodeData:
-        events = []
-        for event in parser._data[parser.prefix + "event_choices"]:
-            if event["floor"] == floor:
-                events.append(event)
-        if not events:
-            return EmptyEvent.from_parser(parser, floor, *extra)
-        if events[0]["event_name"] == "Colosseum":
-            return Colosseum.from_parser(parser, floor, events, *extra)
-        if len(events) != 1:
-            for a in events:
-                for b in events:
-                    if a != b: # I'm not quite sure how this happens, but sometimes an event will be in twice?
-                        return AmbiguousEvent.from_parser(parser, floor, events, *extra)
-        event = events[0]
-        for dmg in parser._data[parser.prefix + "damage_taken"]:
-            if dmg["floor"] == floor: # not passing dmg in, as EncounterBase fills it in
-                return EventFight.from_parser(parser, floor, event, *extra)
-        return Event.from_parser(parser, floor, event, *extra)
+event_node.end_of_act = False
 
 class EmptyEvent(NodeData):
     room_type = "Unknown (Bugged)"
@@ -1808,8 +1816,8 @@ class AmbiguousEvent(NodeData):
     room_type = "Unknown (Ambiguous)"
     map_icon = "event.png"
 
-    def __init__(self, events: list[dict[str, Any]], *extra):
-        super().__init__(*extra)
+    def __init__(self, parser: FileParser, floor: int, events: list[dict[str, Any]], *extra):
+        super().__init__(parser, floor, *extra)
         self._events = events
 
     def get_description(self, to_append: dict[int, list[str]]):
@@ -1823,8 +1831,8 @@ class Event(NodeData):
     room_type = "Unknown"
     map_icon = "event.png"
 
-    def __init__(self, event: dict[str, Any], *extra):
-        super().__init__(*extra)
+    def __init__(self, parser: FileParser, floor: int, event: dict[str, Any], *extra):
+        super().__init__(parser, floor, *extra)
         self._event = event
 
     def get_description(self, to_append: dict[int, list[str]]):
@@ -1938,12 +1946,8 @@ class EventFight(Event, EncounterBase):
 
     """
 
-    def __init__(self, damage: dict[str, Any], event: dict[str, Any], *extra):
-        # swap the argument ordering around, as EncounterBase inserts damage first
-        super().__init__(event, damage, *extra)
-
 class Colosseum(Event):
-    def __init__(self, damages: list[dict[str, int | str]], events: list[dict[str, Any]], *extra):
+    def __init__(self, parser: FileParser, floor: int, events: list[dict[str, Any]], *extra):
         event = {
             "damage_healed": 0,
             "gold_gain": 0,
@@ -1956,22 +1960,18 @@ class Colosseum(Event):
         }
         if len(events) == 1:
             event["player_choice"] = "Escaped"
-        super().__init__(event, *extra)
-        self._damages = damages
+        super().__init__(parser, floor, event, *extra)
+        dmg = []
+        for damage in parser._data[parser.prefix + "damage_taken"]:
+            if damage["floor"] == floor:
+                dmg.append(damage)
+        self._damages = dmg
 
     def get_description(self, to_append: dict[int, list[str]]):
         for i, dmg in enumerate(self._damages, 1):
             to_append[4].append(f"Fight {i} ({dmg['enemies']}):")
             to_append[4].append(f"{dmg['damage']} damage")
             to_append[4].append(f"{dmg['turns']} turns")
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        dmg = []
-        for damage in parser._data[parser.prefix + "damage_taken"]:
-            if damage["floor"] == floor:
-                dmg.append(damage)
-        return super(Event, cls).from_parser(parser, floor, dmg, *extra)
 
     @property
     def damage(self) -> int:
@@ -1987,15 +1987,19 @@ class Merchant(NodeData):
     room_type = "Merchant"
     map_icon = "shop.png"
 
-    def __init__(self, bought: dict[str, list[str]], purged: str | None, contents: dict[str, list[str]] | None, *extra):
-        super().__init__(*extra)
-        self._bought = bought
-        self._purged = purged
-        self._contents = contents
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        self.bought = parser.get_purchases(floor)
+        self.purged = []
+        for card, floor in self.parser.removals:
+            if floor == self.floor:
+                self.purged.append(card)
+
+        self.contents = self.parser.get_shop_contents()[self.floor]
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.purged:
-            to_append[70].append(f"* Removed {self.purged}")
+            to_append[70].append(f"* Removed {', '.join(self.purged)}")
         if self.contents:
             to_append[72].append("Skipped:")
             if self.contents["relics"]:
@@ -2007,49 +2011,6 @@ class Merchant(NodeData):
             if self.contents["potions"]:
                 to_append[78].append("* Potions")
                 to_append[78].extend(f"  - {x.name}" for x in self.contents["potions"])
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        bought = {"cards": [], "relics": [], "potions": []}
-        purged = None
-        contents = None
-        for i, purchased in enumerate(parser._data[parser.prefix + "item_purchase_floors"]):
-            if purchased == floor:
-                value = parser._data[parser.prefix + "items_purchased"][i]
-                name, _, upgrades = value.partition("+")
-                item = get(name)
-                match item.cls_name:
-                    case "card":
-                        bought["cards"].append(get_card(value))
-                    case "relic":
-                        bought["relics"].append(item)
-                    case "potion":
-                        bought["potions"].append(item)
-
-        try:
-            index = parser._data[parser.prefix + "items_purged_floors"].index(floor)
-        except ValueError:
-            pass
-        else:
-            purged = get_card(parser._data[parser.prefix + "items_purged"][index])
-
-        d = ()
-        if "shop_contents" in parser._data:
-            d = parser._data["shop_contents"]
-        elif "basemod:mod_saves" in parser._data:
-            d = parser._data["basemod:mod_saves"].get("ShopContentsLog", ())
-        if d:
-            contents = {"relics": [], "cards": [], "potions": []}
-        for data in d:
-            if data["floor"] == floor:
-                for relic in data["relics"]:
-                    contents["relics"].append(get(relic))
-                for card in data["cards"]:
-                    contents["cards"].append(get_card(card))
-                for potion in data["potions"]:
-                    contents["potions"].append(get(potion))
-
-        return super().from_parser(parser, floor, bought, purged, contents, *extra)
 
     @property
     def picked(self) -> list[str]:
@@ -2063,20 +2024,8 @@ class Merchant(NodeData):
     def potions(self) -> list[Potion]:
         return super().potions + self.bought["potions"]
 
-    @property
-    def bought(self) -> dict[str, list[str | Relic | Potion]]:
-        return self._bought
-
-    @property
-    def purged(self) -> str | None:
-        return self._purged
-
-    @property
-    def contents(self) -> dict[str, list[str | Relic | Potion]] | None:
-        return self._contents
-
     def card_delta(self) -> int:
-        return super().card_delta() - (self.purged is not None)
+        return super().card_delta() - len(self.purged)
 
 class EventMerchant(Merchant):
     room_type = "Unknown (Merchant)"
@@ -2107,23 +2056,17 @@ class Campfire(NodeData):
     room_type = "Rest Site"
     map_icon = "rest.png"
 
-    def __init__(self, key: str, data: str | None, *extra):
-        super().__init__(*extra)
-        self._key = key
-        self._data = data
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        self._key = None
+        self._data = None
+        for rest in parser._data[parser.prefix + "campfire_choices"]:
+            if rest["floor"] == floor:
+                self._key = rest["key"]
+                self._data = rest.get("data")
 
     def get_description(self, to_append: dict[int, list[str]]) -> str:
         to_append[6].append(self.action)
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        key = None
-        data = None
-        for rest in parser._data[parser.prefix + "campfire_choices"]:
-            if rest["floor"] == floor:
-                key = rest["key"]
-                data = rest.get("data")
-        return super().from_parser(parser, floor, key, data, *extra)
 
     @property
     def action(self) -> str:
@@ -2152,14 +2095,8 @@ class BossChest(NodeData):
     map_icon = "boss_chest.png"
     end_of_act = True
 
-    def __init__(self, picked: str | None, skipped: list[str], *extra):
-        super().__init__(*extra)
-        if picked is not None:
-            self._relics.append(picked)
-        self._skipped = skipped
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
         boss_relics = parser.get_boss_chest()
         picked = None
         skipped = []
@@ -2167,7 +2104,13 @@ class BossChest(NodeData):
             picked = get(boss_relics["picked"])
         for relic in boss_relics["not_picked"]:
             skipped.append(get(relic))
-        return super().from_parser(parser, floor, picked, skipped, *extra)
+
+        self._picked = picked
+        self._skipped = skipped
+
+    @property
+    def relics(self) -> list[Relic]:
+        return [self._picked]
 
     @property
     def skipped_relics(self) -> list[Relic]:
@@ -2182,21 +2125,15 @@ class Victory(NodeData):
     room_type = "Victory!"
     map_icon = "event.png"
 
-    def __init__(self, score: int | None, data: list[str], *extra):
-        self._score = score
-        self._data = data
-        super().__init__(*extra)
+    def __init__(self, parser: FileParser, floor: int, *extra):
+        super().__init__(parser, floor, *extra)
+        self._score = parser._data.get("score", 0)
+        self._data = parser._data.get("score_breakdown", [])
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.score:
             to_append[6].extend(self.score_breakdown)
             to_append[6].append(f"Score: {self.score}")
-
-    @classmethod
-    def from_parser(cls, parser: FileParser, floor: int, *extra):
-        score = parser._data.get("score", 0)
-        breakdown = parser._data.get("score_breakdown", [])
-        return super().from_parser(parser, floor, score, breakdown, *extra)
 
     @property
     def floor_time(self) -> int:

@@ -72,7 +72,7 @@ from utils import (
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
-from gamedata import RelicData
+from gamedata import RelicData, Treasure
 
 from typehints import ContextType, CommandType
 import events
@@ -2115,14 +2115,12 @@ async def bluekey(ctx: ContextType, save: Savefile):
         return
 
     for node in save.path:
-        try:
+        if isinstance(node, Treasure):
             if node.blue_key:
                 await ctx.reply(
                     f"We skipped {node.key_relic} on floor {node.floor} for the Sapphire key."
                 )
                 return
-        except AttributeError:
-            continue
 
     await ctx.reply("RunHistoryPlus is not running; cannot get data.")
 
