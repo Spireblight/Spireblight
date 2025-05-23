@@ -1266,6 +1266,104 @@ class FileParser(ABC):
                 return node
         return None
 
+def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]: #PRIV#
+    """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
+    prefix = parser.prefix
+    on_map = parser._data[prefix + "path_taken"]
+    # maybe_cached will not be None if this is a savefile we're iterating through
+    # which means we already know previous floors, so just use that.
+    # to be safe, regenerate the last floor, since it might have changed
+    # (e.g. the last time we saw it, we were in-combat, and now we're out of it)
+    # this is also used for run files for which we had the savefile
+    if maybe_cached:
+        maybe_cached.pop()
+    nodes = []
+    error = False
+    taken_len = len(parser._data[prefix + "path_taken"])
+    actual_len = len([x for x in parser._data[prefix + "path_per_floor"] if x is not None])
+    last_changed = 0
+    offset = 1
+    for floor, actual in enumerate(parser._data[prefix + "path_per_floor"], 1):
+        iterate = True
+        # Slay the Streamer boss pick
+        if actual_len > taken_len and actual == "T" and floor == last_changed + 10:
+            taken_len += 1 # keep track
+            offset += 1
+            iterate = False
+        # make sure we step through the iterator even if it's cached
+        node = [actual, None]
+        if iterate and node[0] is not None:
+            node[1] = on_map[floor-offset]
+        elif iterate:
+            offset += 1
+
+        nodes.append(node)
+
+        if maybe_cached:
+            maybe_node = maybe_cached.pop(0)
+            if floor == maybe_node.floor: # if it's not, then something's wrong. just regen it
+                yield maybe_node, True
+                continue
+
+        if not iterate:
+            continue
+
+        match node:
+            case ("M", "M"):
+                cls = NormalEncounter
+            case ("M", "?"):
+                cls = EventEncounter
+            case ("E", "E"):
+                cls = EliteEncounter
+            case ("E", "?"): # only happens if the Deadly Events modifier is on
+                cls = EventElite
+            case ("$", "$"):
+                cls = Merchant
+            case ("$", "?"):
+                cls = EventMerchant
+            case ("T", "T"):
+                cls = Treasure
+            case ("T", "?"):
+                cls = EventTreasure
+            case ("?", "?"):
+                cls = EventNode # not actually a NodeData subclass, but it returns one
+            case ("R", "R"):
+                cls = Campfire
+            case ("B", "BOSS"):
+                cls = Boss
+            case ("C", "C"):
+                cls = Courier
+            case ("-", "-"):
+                cls = Empty
+            case ("P", "P"):
+                cls = SWF
+            case (None, None):
+                if floor < 50: # kind of a hack for the first two acts
+                    cls = BossChest
+                elif len(parser._data[prefix + "max_hp_per_floor"]) < floor:
+                    cls = Victory
+                else:
+                    cls = Act4Transition
+            case (a, b):
+                logger.warning(f"Error: the combination of map node {b!r} and content {a!r} is undefined (run: {getattr(parser, 'name', 'savefile')})")
+                error = True
+                continue
+
+        if cls.end_of_act:
+            last_changed = floor
+
+        try:
+            value: NodeData = cls.from_parser(parser, floor)
+        except ValueError: # this can happen for savefiles if we're on the latest floor
+            if taken_len == floor:
+                continue # we're on the last floor
+            raise
+        else:
+            yield value, False
+
+    if error:
+        logger.error("\n".join(f"Actual: {str(x):<4} | Map: {y}" for x, y in nodes))
+
 class KeysObtained:
     """Contain information about the obtained keys."""
 
@@ -1547,104 +1645,6 @@ class NodeData(BaseNode):
         if self.skipped:
             to_append[36].append("Skipped:")
             to_append[36].extend(f"- {x}" for x in self.skipped)
-
-def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Generator[tuple[NodeData, bool], None, None]: #PRIV#
-    """Get the map nodes. This should only ever be called from 'FileParser.path' to get the cache."""
-    prefix = parser.prefix
-    on_map = parser._data[prefix + "path_taken"]
-    # maybe_cached will not be None if this is a savefile we're iterating through
-    # which means we already know previous floors, so just use that.
-    # to be safe, regenerate the last floor, since it might have changed
-    # (e.g. the last time we saw it, we were in-combat, and now we're out of it)
-    # this is also used for run files for which we had the savefile
-    if maybe_cached:
-        maybe_cached.pop()
-    nodes = []
-    error = False
-    taken_len = len(parser._data[prefix + "path_taken"])
-    actual_len = len([x for x in parser._data[prefix + "path_per_floor"] if x is not None])
-    last_changed = 0
-    offset = 1
-    for floor, actual in enumerate(parser._data[prefix + "path_per_floor"], 1):
-        iterate = True
-        # Slay the Streamer boss pick
-        if actual_len > taken_len and actual == "T" and floor == last_changed + 10:
-            taken_len += 1 # keep track
-            offset += 1
-            iterate = False
-        # make sure we step through the iterator even if it's cached
-        node = [actual, None]
-        if iterate and node[0] is not None:
-            node[1] = on_map[floor-offset]
-        elif iterate:
-            offset += 1
-
-        nodes.append(node)
-
-        if maybe_cached:
-            maybe_node = maybe_cached.pop(0)
-            if floor == maybe_node.floor: # if it's not, then something's wrong. just regen it
-                yield maybe_node, True
-                continue
-
-        if not iterate:
-            continue
-
-        match node:
-            case ("M", "M"):
-                cls = NormalEncounter
-            case ("M", "?"):
-                cls = EventEncounter
-            case ("E", "E"):
-                cls = EliteEncounter
-            case ("E", "?"): # only happens if the Deadly Events modifier is on
-                cls = EventElite
-            case ("$", "$"):
-                cls = Merchant
-            case ("$", "?"):
-                cls = EventMerchant
-            case ("T", "T"):
-                cls = Treasure
-            case ("T", "?"):
-                cls = EventTreasure
-            case ("?", "?"):
-                cls = EventNode # not actually a NodeData subclass, but it returns one
-            case ("R", "R"):
-                cls = Campfire
-            case ("B", "BOSS"):
-                cls = Boss
-            case ("C", "C"):
-                cls = Courier
-            case ("-", "-"):
-                cls = Empty
-            case ("P", "P"):
-                cls = SWF
-            case (None, None):
-                if floor < 50: # kind of a hack for the first two acts
-                    cls = BossChest
-                elif len(parser._data[prefix + "max_hp_per_floor"]) < floor:
-                    cls = Victory
-                else:
-                    cls = Act4Transition
-            case (a, b):
-                logger.warning(f"Error: the combination of map node {b!r} and content {a!r} is undefined (run: {getattr(parser, 'name', 'savefile')})")
-                error = True
-                continue
-
-        if cls.end_of_act:
-            last_changed = floor
-
-        try:
-            value: NodeData = cls.from_parser(parser, floor)
-        except ValueError: # this can happen for savefiles if we're on the latest floor
-            if taken_len == floor:
-                continue # we're on the last floor
-            raise
-        else:
-            yield value, False
-
-    if error:
-        logger.error("\n".join(f"Actual: {str(x):<4} | Map: {y}" for x, y in nodes))
 
 class EncounterBase(NodeData):
     """A base data class for Spire node encounters."""
