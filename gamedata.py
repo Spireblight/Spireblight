@@ -1165,27 +1165,24 @@ class FileParser(ABC):
 
     @property
     def seed(self) -> str:
-        if "seed" not in self._cache:
-            c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
+        c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
-            try:
-                seed = int(self._data["seed"]) # might be stored as a str
-            except KeyError:
-                seed = int(self._data["seed_played"])
+        try:
+            seed = int(self._data["seed"]) # might be stored as a str
+        except KeyError:
+            seed = int(self._data["seed_played"])
 
-            # this is a bit weird, but lets us convert a negative number, if any, into a positive one
-            num = int.from_bytes(seed.to_bytes(20, "big", signed=True).lstrip(b"\xff"), "big")
-            s = []
+        # this is a bit weird, but lets us convert a negative number, if any, into a positive one
+        num = int.from_bytes(seed.to_bytes(20, "big", signed=True).lstrip(b"\xff"), "big")
+        s = []
 
-            while num:
-                num, i = divmod(num, 35)
-                s.append(c[i])
+        while num:
+            num, i = divmod(num, 35)
+            s.append(c[i])
 
-            s.reverse() # everything's backwards, for some reason... but this works
+        s.reverse() # everything's backwards, for some reason... but this works
 
-            self._cache["seed"] = "".join(s)
-
-        return self._cache["seed"]
+        return "".join(s)
 
     @property
     def is_seeded(self) -> bool:
