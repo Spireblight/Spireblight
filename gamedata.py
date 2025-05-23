@@ -92,13 +92,6 @@ class BaseNode(ABC):
     def __init__(self, parser: FileParser, *extra):
         super().__init__(*extra)
         self.parser = parser
-
-        self.card_count: int = 0
-        self.relic_count: int = 1
-        self.potion_count: int = 0
-        self.fights_count: int = 0
-        self.turns_count: int = 0
-
         self.floor_time: float = 0.0
 
     @property
@@ -712,14 +705,6 @@ class NeowBonus(BaseNode):
     @property
     def potion_count(self) -> int:
         return self.potion_delta()
-
-    @property
-    def fights_count(self) -> int:
-        return self.fights_delta()
-
-    @property
-    def turns_count(self) -> int:
-        return self.turns_delta()
 
 _chars = {
     "SLIMEBOUND": "Slime Boss",
@@ -1603,6 +1588,12 @@ class NodeData(BaseNode):
     """
 
     map_icon = ""
+
+    card_count: int
+    relic_count: int
+    potion_count: int
+    fights_count: int
+    turns_count: int
 
     def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
         """Create a NodeData instance from a parser and floor number."""
