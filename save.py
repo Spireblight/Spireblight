@@ -58,6 +58,8 @@ class Savefile(FileParser):
         self._matches = False
         self._activemods = None
         
+    def __str__(self):
+        return "SAVEFILE"
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
