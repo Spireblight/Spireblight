@@ -92,7 +92,7 @@ class BaseNode(ABC):
     def __init__(self, parser: FileParser, *extra):
         super().__init__(*extra)
         self.parser = parser
-        self.floor_time: float = 0.0
+        self.floor_time: int = 0
 
     @property
     def potions(self) -> list[Potion]:
@@ -1224,7 +1224,7 @@ class FileParser(ABC):
         """Return the run's path. This is cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
-            floor_time: tuple[float, ...]
+            floor_time: tuple[int, ...]
             if "basemod:mod_saves" in self._data:
                 floor_time = self._data["basemod:mod_saves"].get("FloorExitPlaytimeLog", ())
             else:
@@ -1239,7 +1239,7 @@ class FileParser(ABC):
                 try:
                     t = floor_time[node.floor - 1]
                 except IndexError:
-                    t = 0.0
+                    t = 0
                 if cached: # don't recompute the deltas -- just grab their cached counts
                     card_count = node.card_count
                     relic_count = node.relic_count
@@ -2130,10 +2130,6 @@ class Victory(NodeData):
         if self.score:
             to_append[6].extend(self.score_breakdown)
             to_append[6].append(f"Score: {self.score}")
-
-    @property
-    def floor_time(self) -> int:
-        return 0
 
     @property
     def score(self) -> int:
