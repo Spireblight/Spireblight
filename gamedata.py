@@ -1080,6 +1080,8 @@ class FileParser(ABC):
                 contents["potions"].append(get(potion))
             results[data["floor"]] = contents
 
+        return results
+
     @property
     def _removals(self) -> list[tuple[str, int]]:
         event_removals = []
