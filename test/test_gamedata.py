@@ -22,6 +22,215 @@ with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
 
 assert wa is not None and streamer is not None, "could not load test run files"
 
+_rooms_mapping = {
+    "Enemy": "M",
+    "Unknown (Enemy)": "m",
+    "Treasure": "T",
+    "Unknown (Treasure)": "t",
+    "Elite": "E",
+    "Unknown (Elite)": "e",
+    "Unknown": "?",
+    "Unknown (Bugged)": "?",
+    "Unknown (Ambiguous)": "?",
+    "Merchant": "$",
+    "Unknown (Merchant)": "S",
+    "Rest Site": "R",
+    "Boss": "B",
+    "Boss Chest": "C",
+    "Transition into Act 4": "4",
+    "Victory!": "V",
+}
+
+class _save_contents:
+    rooms = [
+    "M",
+    "M",
+    "$",
+    "M",
+    "?",
+    "R",
+    "E",
+    "R",
+    "T",
+    "R",
+    "E",
+    "M",
+    "m",
+    "M",
+    "R",
+    "B",
+    "C",
+    "M",
+    "M",
+    "?",
+    "?",
+    "m",
+    "R",
+    "?",
+    "R",
+    "T",
+    "E",
+    "R",
+    "$",
+    "E",
+    "?",
+    "R",
+    "B",
+    "C",
+    "M",
+    "?",
+    "S",
+    "M",
+    "$",
+    "R",
+    "E",
+    "R",
+    "T",
+    "R",
+    "?"
+    ]
+    current_hp = [
+    58,
+    54,
+    54,
+    47,
+    47,
+    47,
+    35,
+    35,
+    35,
+    35,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    50,
+    40,
+    40,
+    40,
+    70,
+    61,
+    61,
+    56,
+    56,
+    56,
+    54,
+    54,
+    54,
+    51,
+    46,
+    46,
+    19,
+    57,
+    56,
+    56,
+    56,
+    56,
+    56,
+    56,
+    32,
+    32,
+    32,
+    32,
+    32
+    ]
+    max_hp = [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+    ]
+    gold = [
+    360,
+    379,
+    1,
+    14,
+    14,
+    14,
+    46,
+    46,
+    101,
+    101,
+    132,
+    151,
+    164,
+    183,
+    183,
+    262,
+    262,
+    240,
+    255,
+    255,
+    255,
+    271,
+    271,
+    304,
+    304,
+    327,
+    355,
+    355,
+    12,
+    37,
+    157,
+    157,
+    232,
+    232,
+    252,
+    252,
+    103,
+    117,
+    54,
+    54,
+    85,
+    85,
+    85,
+    85,
+    85
+    ]
+
 class TestFileParser(TestCase):
     def test_character(self):
         self.assertEqual(s.character, "Silent")
@@ -90,9 +299,6 @@ class TestRelicData(TestCase):
         relic = next(it)
         self.assertEqual(relic.name, "Ring of the Snake")
 
-class TestNeow(TestCase):
-    pass
-
 class TestPath(TestCase):
     def test_length(self):
         self.assertEqual(len(s.path), 45)
@@ -116,3 +322,32 @@ class TestPath(TestCase):
     def test_gold(self):
         self.assertEqual([x.gold for x in s.path], s.gold_counts[1:])
         self.assertEqual([x.gold for x in wa.path][:-1], wa.gold_counts[1:])
+
+class TestNodeSave(TestCase):
+    def test_room_type(self):
+        path = zip(s.path, _save_contents.rooms)
+        for node, short in path:
+            self.assertEqual(_rooms_mapping[node.room_type], short)
+
+    def test_current_hp(self):
+        path = zip(s.path, _save_contents.current_hp)
+        for node, hp in path:
+            self.assertEqual(node.current_hp, hp)
+
+    def test_max_hp(self):
+        path = zip(s.path, _save_contents.max_hp)
+        for node, hp in path:
+            self.assertEqual(node.max_hp, hp)
+
+    def test_gold(self):
+        path = zip(s.path, _save_contents.gold)
+        for node, gold in path:
+            self.assertEqual(node.gold, gold)
+
+    def test_floor(self):
+        self.assertEqual(s.neow_bonus.floor, 0)
+        floor = 1
+        for node in s.path:
+            self.assertEqual(node.floor, floor)
+            floor += 1
+        self.assertEqual(floor, 46)
