@@ -312,16 +312,16 @@ class TestPath(TestCase):
 
     def test_current_hp(self):
         self.assertEqual([x.current_hp for x in s.path], s.current_hp_counts[1:])
-        self.assertEqual([x.current_hp for x in wa.path][:-1], wa.current_hp_counts[1:-1])
+        self.assertEqual([x.current_hp for x in wa.path][:-1], wa.current_hp_counts[1:])
         # slay the streamer kinda breaks this
 
     def test_max_hp(self):
         self.assertEqual([x.max_hp for x in s.path], s.max_hp_counts[1:])
-        self.assertEqual([x.max_hp for x in wa.path][:-1], wa.max_hp_counts[1:-1])
+        self.assertEqual([x.max_hp for x in wa.path][:-1], wa.max_hp_counts[1:])
 
     def test_gold(self):
         self.assertEqual([x.gold for x in s.path], s.gold_counts[1:])
-        self.assertEqual([x.gold for x in wa.path][:-1], wa.gold_counts[1:-1])
+        self.assertEqual([x.gold for x in wa.path][:-1], wa.gold_counts[1:])
 
 class TestNodeSave(TestCase):
     def test_room_type(self):
