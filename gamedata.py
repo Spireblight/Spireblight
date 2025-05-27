@@ -1062,6 +1062,8 @@ class FileParser(ABC):
                     case "potion":
                         bought["potions"].append(item)
 
+        return bought
+
     def get_shop_contents(self):
         d = ()
         if "shop_contents" in self._data:
