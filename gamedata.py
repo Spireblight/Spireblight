@@ -372,17 +372,17 @@ class NeowBonus(BaseNode):
                 base = 80
             case "Silent":
                 base = 70
-            case "Defect":
+            case "Defect" | "Hermit":
                 base = 75
             case "Watcher":
                 base = 72
+            case "Hexaghost":
+                base = 66
             case a:
                 raise ValueError(f"I don't know how to handle {a}")
 
         if self.parser.ascension_level >= 14: # lower max HP
-            base -= 4
-            if self.parser.character == "Ironclad":
-                base -= 1 # 5 total
+            base -= math.floor(base/16)
 
         bonus = base // 10
 
@@ -971,13 +971,14 @@ class FileParser(ABC):
         if self.prefix == "metric_": # savefile
             mapping = mapping["basemod:mod_saves"]
             idx = 0
+        mapkey = self._potion_mapping[key][idx]
         # this needs RHP, so it might not be present
         # but we want a list anyway, which is why we iterate like this
         for i in range(self.floor):
             potions = []
             try:
-                for x in mapping[self._potion_mapping[key][idx]]:
-                    potions.append(get(x))
+                for x in mapping[mapkey]:
+                    potions.append(get(a) for a in x)
             except (KeyError, IndexError):
                 # Either we don't have RHP, or the floor isn't stored somehow
                 pass
