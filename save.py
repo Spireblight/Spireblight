@@ -47,7 +47,7 @@ class Savefile(FileParser):
     def __init__(self):
         if _savefile is not None:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
-        data = None
+        data = {}
         try:
             with open(os.path.join("data", "spire-save.json"), "r") as f:
                 data = json.load(f)
@@ -58,6 +58,8 @@ class Savefile(FileParser):
         self._matches = False
         self._activemods = None
         
+    def __str__(self):
+        return "SAVEFILE"
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
@@ -218,38 +220,7 @@ class Savefile(FileParser):
     def current_floor(self) -> int:
         return self._data["metric_floor_reached"]
 
-    def _potion_handling(self, key: str) -> list[list[Potion]]:
-        final = [[]] # empty list for Neow
-        # this needs RHP, so it might not be present
-        # but we want a list anyway, which is why we iterate like this
-        for i in range(self.current_floor):
-            potions = []
-            try:
-                for x in self._data["basemod:mod_saves"][key][i]:
-                    potions.append(get(x))
-            except (KeyError, IndexError):
-                # Either we don't have RHP, or the floor isn't stored somehow
-                pass
-
-            final.append(potions)
-
-        return final
-
-    @property
-    def potions_use(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionUseLog")
-
-    @property
-    def potions_alchemize(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedAlchemizeLog")
-
-    @property
-    def potions_entropic(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedEntropicBrewLog")
-
-    @property
-    def potions_discarded(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionDiscardLog")
+    floor = current_floor
 
     @property
     def potion_chance(self) -> int:
