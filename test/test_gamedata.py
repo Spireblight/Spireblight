@@ -9,6 +9,12 @@ from runs import RunParser
 
 # TODO: make profiles work for testing
 
+# BEGIN SETUP
+
+import asyncio, events
+
+asyncio.run(events.invoke("setup_init"))
+
 wa = streamer = None
 
 with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
@@ -21,6 +27,8 @@ with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
     streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
 
 assert wa is not None and streamer is not None, "could not load test run files"
+
+# END SETUP
 
 _rooms_mapping = {
     "Enemy": "M",
