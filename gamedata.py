@@ -714,6 +714,29 @@ _chars = {
     "THE_SILENT": "Silent",
 }
 
+class ShopContents:
+    """Contains one floor's shop contents.
+
+    This can be used either for contents or purchases."""
+
+    def __init__(self):
+        self.cards: list[str] = []
+        self.relics: list[Relic] = []
+        self.potions: list[Potion] = []
+
+    def add_card(self, card: str):
+        """Add a card to this floor's contents."""
+        self.cards.append(get_card(card))
+
+    def add_relic(self, relic: str):
+        """Add a relic to this floor's contents."""
+        self.relics.append(get(relic))
+
+    def add_potion(self, potion: str):
+        """Add a potion to this floor's contents."""
+        self.potions.append(get(potion))
+
+
 class FileParser(ABC):
     _variables_map = {
         "current_hp": "Current HP",
@@ -1046,25 +1069,26 @@ class FileParser(ABC):
         for card in self.get_cards():
             yield from card.as_cards()
 
-    def get_purchases(self, floor: int): # TODO: make this better (all floors, objects, etc.)
+    def get_purchases(self) -> dict[int, ShopContents]:
         """Return a mapping of purchases for a given floor."""
-        bought = {"cards": [], "relics": [], "potions": []}
+        bought: dict[int, ShopContents] = {}
         for i, purchased in enumerate(self._data[self.prefix + "item_purchase_floors"]):
-            if purchased == floor:
-                value = self._data[self.prefix + "items_purchased"][i]
-                name, _, upgrades = value.partition("+")
-                item = get(name)
-                match item.cls_name:
-                    case "card":
-                        bought["cards"].append(get_card(value))
-                    case "relic":
-                        bought["relics"].append(item)
-                    case "potion":
-                        bought["potions"].append(item)
+            if purchased not in bought:
+                bought[purchased] = ShopContents()
+            value = self._data[self.prefix + "items_purchased"][i]
+            name, _, upgrades = value.partition("+")
+            item = get(name)
+            match item.cls_name:
+                case "card":
+                    bought[purchased].add_card(value)
+                case "relic":
+                    bought[purchased].add_relic(value)
+                case "potion":
+                    bought[purchased].add_potion(value)
 
         return bought
 
-    def get_shop_contents(self):
+    def get_shop_contents(self) -> dict[int, ShopContents]:
         d = ()
         if "shop_contents" in self._data:
             d = self._data["shop_contents"]
@@ -1073,14 +1097,13 @@ class FileParser(ABC):
 
         results = {}
         for data in d:
-            contents = {"relics": [], "cards": [], "potions": []}
+            results[data["floor"]] = contents = ShopContents()
             for relic in data["relics"]:
-                contents["relics"].append(get(relic))
+                contents.add_relic(relic)
             for card in data["cards"]:
-                contents["cards"].append(get_card(card))
+                contents.add_card(card)
             for potion in data["potions"]:
-                contents["potions"].append(get(potion))
-            results[data["floor"]] = contents
+                contents.add_potion(potion)
 
         return results
 
@@ -1985,13 +2008,12 @@ class Merchant(NodeData):
 
     def __init__(self, parser: FileParser, floor: int, *extra):
         super().__init__(parser, floor, *extra)
-        self.bought = parser.get_purchases(floor)
+        self.contents = parser.get_shop_contents()[floor]
+        self.bought = parser.get_purchases()[floor]
         self.purged = []
         for card, floor in self.parser.removals:
             if floor == self.floor:
                 self.purged.append(card)
-
-        self.contents = self.parser.get_shop_contents()[self.floor]
 
     def get_description(self, to_append: dict[int, list[str]]):
         if self.purged:
@@ -2000,25 +2022,25 @@ class Merchant(NodeData):
             to_append[72].append("Skipped:")
             if self.contents["relics"]:
                 to_append[74].append("* Relics")
-                to_append[74].extend(f"  - {x.name}" for x in self.contents["relics"])
+                to_append[74].extend(f"  - {x.name}" for x in self.contents.relics)
             if self.contents["cards"]:
                 to_append[76].append("* Cards")
-                to_append[76].extend(f"  - {x}" for x in self.contents["cards"])
+                to_append[76].extend(f"  - {x}" for x in self.contents.cards)
             if self.contents["potions"]:
                 to_append[78].append("* Potions")
-                to_append[78].extend(f"  - {x.name}" for x in self.contents["potions"])
+                to_append[78].extend(f"  - {x.name}" for x in self.contents.potions)
 
     @property
     def picked(self) -> list[str]:
-        return super().picked + self.bought["cards"]
+        return super().picked + self.bought.cards
 
     @property
     def relics(self) -> list[Relic]:
-        return super().relics + self.bought["relics"]
+        return super().relics + self.bought.relics
 
     @property
     def potions(self) -> list[Potion]:
-        return super().potions + self.bought["potions"]
+        return super().potions + self.bought.potions
 
     def card_delta(self) -> int:
         return super().card_delta() - len(self.purged)
