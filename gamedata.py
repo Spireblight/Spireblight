@@ -710,8 +710,6 @@ _chars = {
     "SLIMEBOUND": "Slime Boss",
     "GREMLIN": "Gremlin Gang",
     "THE_SPIRIT": "Hexaghost",
-    "THE_SNECKO": "Snecko",
-    "THE_SILENT": "Silent",
 }
 
 class ShopContents:
@@ -959,6 +957,8 @@ class FileParser(ABC):
         c = _chars.get(self._character)
         if c is None:
             c = self._character.replace("_", " ").title()
+        if c.startswith("The "): # just fix it after the fact
+            c = c[4:]
         return c
 
     @property
