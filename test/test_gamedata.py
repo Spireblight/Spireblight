@@ -238,6 +238,54 @@ class _save_contents:
     85,
     85
     ]
+    potions = [
+    [],
+    ["Cunning Potion"],
+    [],
+    ["Colorless Potion"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ["Essence of Steel"],
+    ["Colorless Potion"],
+    ["Distilled Chaos"],
+    [],
+    [],
+    ["Attack Potion"],
+    [],
+    [],
+    ["Cultist Potion"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ["Power Potion"],
+    [],
+    [],
+    ["Attack Potion"],
+    [],
+    [],
+    [],
+    [],
+    ["Flex Potion"],
+    [],
+    ["Ghost in a Jar"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ]
 
 class TestFileParser(TestCase):
     def test_character(self):
@@ -359,3 +407,8 @@ class TestNodeSave(TestCase):
             self.assertEqual(node.floor, floor)
             floor += 1
         self.assertEqual(floor, 46)
+
+    def test_potions(self):
+        path = zip(s.path, _save_contents.potions)
+        for node, potions in path:
+            self.assertEqual([x.name for x in node.potions], potions)
