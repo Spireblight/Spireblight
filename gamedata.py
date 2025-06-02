@@ -1541,9 +1541,9 @@ class RelicData:
         return self.relic.name
 
 class CardData: # TODO: metadata + scaling cards (for savefile)
-    def __init__(self, card: str, cards_list: list[str], meta: int = 0):
+    def __init__(self, card: str, cards_list: Iterable[str], meta: int = 0):
         name, _, upgrades = card.partition("+")
-        self._cards_list = cards_list
+        self._cards_list = list(cards_list)
         self.internal = card
         self.card: Card = get(name)
         self.meta = meta
@@ -1579,7 +1579,9 @@ class CardData: # TODO: metadata + scaling cards (for savefile)
 
     @property
     def count(self) -> int:
-        return self._cards_list.count(self.internal)
+        if self._cards_list:
+            return self._cards_list.count(self.internal)
+        return 1 # support standalone card stuff
 
     @property
     def name(self) -> str:
