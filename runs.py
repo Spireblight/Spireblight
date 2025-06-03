@@ -80,11 +80,11 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        return datetime.datetime.utcfromtimestamp(self._data["timestamp"])
+        return datetime.datetime.fromtimestamp(self._data["timestamp"], datetime.UTC)
 
     @property
     def timedelta(self) -> datetime.timedelta:
-        return datetime.datetime.now() - self.timestamp
+        return datetime.datetime.now(datetime.UTC) - self.timestamp
 
     @property
     def keys(self) -> KeysObtained:

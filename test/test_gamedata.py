@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from datetime import datetime
+from datetime import datetime, UTC
 import json
 import os
 
@@ -321,9 +321,9 @@ class TestFileParser(TestCase):
         self.assertFalse(s.is_seeded)
 
     def test_timestamp(self):
-        self.assertEqual(s.timestamp, datetime(2022, 5, 3, 20, 14, 30, 317000))
-        self.assertEqual(wa.timestamp, datetime(2023, 6, 16, 20, 34, 58))
-        self.assertEqual(streamer.timestamp, datetime(2023, 7, 12, 20, 9, 44))
+        self.assertEqual(s.timestamp, datetime(2022, 5, 3, 20, 14, 30, 317000, tzinfo=UTC))
+        self.assertEqual(wa.timestamp, datetime(2023, 6, 16, 20, 34, 58, tzinfo=UTC))
+        self.assertEqual(streamer.timestamp, datetime(2023, 7, 12, 20, 9, 44, tzinfo=UTC))
 
 class TestSavefile(TestCase):
     def test_timedelta(self):

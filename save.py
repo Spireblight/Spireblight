@@ -100,9 +100,9 @@ class Savefile(FileParser):
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
             # off. A bit too much precision otherwise
-            date = datetime.datetime.utcfromtimestamp(date / 1000)
+            date = datetime.datetime.fromtimestamp(date / 1000, datetime.UTC)
         else:
-            date = datetime.datetime.utcnow()
+            date = datetime.datetime.now(datetime.UTC)
 
         return date
 
