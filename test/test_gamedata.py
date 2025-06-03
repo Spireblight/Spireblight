@@ -50,6 +50,26 @@ _rooms_mapping = {
 }
 
 class _save_contents:
+    relics = [
+    ("Ring of the Snake", 0, "\nCards drawn: 42\nPer turn: 0.48\nPer combat: 2.00"),
+    ("Happy Flower", 3, "\nEnergy gained: 26\nPer turn: 0.33\nPer combat: 1.37"),
+    ("Twisted Funnel", 3, ""),
+    ("Omamori", 7, "\nCharges used: 0"),
+    ("Orichalcum", 9, "\nBlock gained: 168\nPer turn: 2.37\nPer combat: 9.88"),
+    ("Oddly Smooth Stone", 11, ""),
+    ("Astrolabe", 17, "\nCards obtained: \n- Envenom\n- Concentrate\n- Quick Slash"),
+    ("Red Mask", 24, ""),
+    ("Vajra", 26, ""),
+    ("The Courier", 27, ""),
+    ("Toolbox", 29, ""),
+    ("Toy Ornithopter", 29, "\nHP healed: 10"),
+    ("Art of War", 30, "\nEnergy gained: 4\nPer turn: 0.15\nPer combat: 0.67"),
+    ("Girya", 31, "\nTimes lifted: 2"),
+    ("Molten Egg", 31, ""),
+    ("Empty Cage", 34, ""),
+    ("Torii", 36, "\nDamage prevented: 0"), # lol
+    ("Centennial Puzzle", 41, "\nCards drawn: 0\nPer turn: 0.00\nPer combat: 0.00"),
+    ]
     rooms = [
     "M",
     "M",
@@ -350,10 +370,10 @@ class TestRunParser(TestCase):
 
 class TestRelicData(TestCase):
     def test_save(self):
-        template = "Obtained on floor {}"
-        it = iter(s.relics)
-        relic = next(it)
-        self.assertEqual(relic.name, "Ring of the Snake")
+        relics = zip(s.relics, _save_contents.relics)
+        for relic, (name, floor, details) in relics:
+            self.assertEqual(relic.name, name)
+            self.assertEqual(relic.description(), f"Obtained on floor {floor}{details}")
 
 class TestPath(TestCase):
     def test_length(self):
