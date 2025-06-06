@@ -1009,13 +1009,13 @@ class FileParser(ABC):
             mapping = mapping["basemod:mod_saves"]
             idx = 0
         mapkey = self._potion_mapping[key][idx]
-        mapping: list[list[str]] = mapping[mapkey]
         # this needs RHP, so it might not be present
         # but we want a list anyway, which is why we iterate like this
         for i in range(self.floor):
             potions = []
             try:
-                for x in mapping[i]:
+                # it's possible the key doesn't exist, but we don't want it to error
+                for x in mapping[mapkey][i]:
                     potions.append(get(x))
             except (KeyError, IndexError):
                 # Either we don't have RHP, or the floor isn't stored somehow
