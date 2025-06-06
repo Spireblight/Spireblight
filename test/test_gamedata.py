@@ -304,6 +304,52 @@ class _save_contents:
     [],
     [],
     [],
+    ]
+    potions_use = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ["Colorless Potion"],
+    [],
+    [],
+    [],
+    ["Cunning Potion"],
+    [],
+    [],
+    [],
+    [],
+    ["Colorless Potion", "Distilled Chaos"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ["Attack Potion"],
+    [],
+    [],
+    ["Power Potion"],
+    [],
+    [],
+    ["Cultist Potion"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
     [],
     ]
 
@@ -432,3 +478,8 @@ class TestNodeSave(TestCase):
         path = zip(s.path, _save_contents.potions, strict=True)
         for node, potions in path:
             self.assertEqual([x.name for x in node.potions], potions)
+
+    def test_used_potions(self):
+        path = zip(s.path, _save_contents.potions_use, strict=True)
+        for node, used in path:
+            self.assertEqual([x.name for x in node.used_potions], used)
