@@ -401,22 +401,22 @@ class TestPath(TestCase):
 
 class TestNodeSave(TestCase):
     def test_room_type(self):
-        path = zip(s.path, _save_contents.rooms)
+        path = zip(s.path, _save_contents.rooms, strict=True)
         for node, short in path:
             self.assertEqual(_rooms_mapping[node.room_type], short)
 
     def test_current_hp(self):
-        path = zip(s.path, _save_contents.current_hp)
+        path = zip(s.path, _save_contents.current_hp, strict=True)
         for node, hp in path:
             self.assertEqual(node.current_hp, hp)
 
     def test_max_hp(self):
-        path = zip(s.path, _save_contents.max_hp)
+        path = zip(s.path, _save_contents.max_hp, strict=True)
         for node, hp in path:
             self.assertEqual(node.max_hp, hp)
 
     def test_gold(self):
-        path = zip(s.path, _save_contents.gold)
+        path = zip(s.path, _save_contents.gold, strict=True)
         for node, gold in path:
             self.assertEqual(node.gold, gold)
 
@@ -429,6 +429,6 @@ class TestNodeSave(TestCase):
         self.assertEqual(floor, 46)
 
     def test_potions(self):
-        path = zip(s.path, _save_contents.potions)
+        path = zip(s.path, _save_contents.potions, strict=True)
         for node, potions in path:
             self.assertEqual([x.name for x in node.potions], potions)
