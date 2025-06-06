@@ -1009,13 +1009,14 @@ class FileParser(ABC):
             mapping = mapping["basemod:mod_saves"]
             idx = 0
         mapkey = self._potion_mapping[key][idx]
+        mapping: list[list[str]] = mapping[mapkey]
         # this needs RHP, so it might not be present
         # but we want a list anyway, which is why we iterate like this
         for i in range(self.floor):
             potions = []
             try:
-                for x in mapping[mapkey]:
-                    potions.append(get(a) for a in x)
+                for x in mapping[i]:
+                    potions.append(get(x))
             except (KeyError, IndexError):
                 # Either we don't have RHP, or the floor isn't stored somehow
                 pass
@@ -2138,7 +2139,9 @@ class BossChest(NodeData):
 
     @property
     def relics(self) -> list[Relic]:
-        return [self._picked]
+        if self._picked:
+            return [self._picked]
+        return []
 
     @property
     def skipped_relics(self) -> list[Relic]:
