@@ -222,7 +222,7 @@ def _create_cmd(output: str, name: str):
         if "$<savefile" in msg:
             keywords["savefile"] = get_savefile()
             # No save file found:
-            if keywords["savefile"] is None:
+            if not keywords["savefile"].in_game:
                 await ctx.reply("Not in a run.")
                 return
         if "$<mt-save" in msg:

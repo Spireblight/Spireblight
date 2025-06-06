@@ -37,8 +37,7 @@ class Savefile(FileParser):
     is only ever one savefile in memory, and it can be accessed by get_savefile().
 
     The 'data' instance attribute may occasionally be None, which means that no
-    run is currently ongoing. However, if that were to be the case, then
-    get_savefile() will return None instead.
+    run is currently ongoing. To check if a run is ongoing, test for 'in_game'.
 
     """
 
