@@ -478,5 +478,5 @@ async def receive_save(req: Request):
 
     return Response()
 
-async def get_savefile() -> Savefile:
+def get_savefile() -> Savefile:
     return _savefile

@@ -220,7 +220,7 @@ def _create_cmd(output: str, name: str):
             else:
                 keywords["profile"] = profile
         if "$<savefile" in msg:
-            keywords["savefile"] = await get_savefile()
+            keywords["savefile"] = get_savefile()
             # No save file found:
             if keywords["savefile"] is None:
                 await ctx.reply("Not in a run.")
@@ -390,7 +390,7 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
 
     def inner(func):
         async def _savefile_get(ctx) -> list:
-            res = await get_savefile()
+            res = get_savefile()
             if res is None:
                 raise ValueError("No savefile")
             if res.character is None and not optional_save:
@@ -742,7 +742,7 @@ class Timer:
                 self.commands.append(maybe_cmd)  # in case it gets enabled again
                 continue
             if maybe_cmd == "current":
-                save = await get_savefile()
+                save = get_savefile()
                 if not save.in_game:
                     self.commands.append(maybe_cmd)
                     continue
@@ -1815,7 +1815,7 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 else:
                     return await ctx.reply(f"Error: key {key!r} is not recognized.")
 
-            save = await get_savefile()
+            save = get_savefile()
             if save.in_game and save.neow_bonus.choice_made:
                 return await ctx.reply(
                     "Cannot start a prediction after a Neow bonus was picked."
