@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import TYPE_CHECKING
 from logger import logger
 
@@ -10,7 +10,7 @@ from sts_profile import get_profile
 
 # TODO(olivia): Hard-coded to be the start of the Grandmastery challenge.  Move
 # to config file?
-_streak_collections = StreakCache(datetime(2023, 10, 24))
+_streak_collections = StreakCache(datetime(2023, 10, 24, tzinfo=UTC))
 
 def update_streak_collections():
     # First we grab all the runs from the BaalorA20 profile.
