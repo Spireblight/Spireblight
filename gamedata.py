@@ -299,6 +299,8 @@ class NeowBonus(BaseNode):
     def choice_made(self) -> bool:
         return bool(self.parser._data["neow_bonus"])
 
+    # DO NOT MERGE -- CONFLICTS WITH BASE CLASS
+
     @property #PRIV#
     def picked(self) -> str:
         cost = self.parser._data["neow_cost"]
