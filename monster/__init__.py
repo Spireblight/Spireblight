@@ -5,4 +5,5 @@ from monster.server import *
 
 @add_listener("setup_init")
 async def initial_load():
-    load()
+    load_mt1()
+    load_mt2()
