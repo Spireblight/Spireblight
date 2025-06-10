@@ -4,12 +4,15 @@ from datetime import datetime, UTC
 import json
 import os
 
-from save import _savefile as s
+from save import Savefile, get_savefile, _savefile as s
 from runs import RunParser
 
 # TODO: make profiles work for testing
 
 # BEGIN SETUP
+
+# this cannot be part of a class setup, as I only want it to be done once
+# technically, I *could* have it setup once each time, but there's no need to
 
 import asyncio, events
 
@@ -17,8 +20,16 @@ asyncio.run(events.invoke("setup_init"))
 
 wa = streamer = None
 
+# this is an older save, and doesn't have all the RHP features
+# this is actually good, as it lets us test for what happens when it's lacking
 with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
     s.update_data(json.load(f), "THE_SILENT", "false")
+
+# this is more recent, and should have all the fields we care about
+# (at least as of June 2025. we all know how these things go)
+with open(os.path.join("test", "static", "testing_save_2.json")) as f:
+    s2 = Savefile(_debug=True)
+    s2.update_data(json.load(f), "IRONCLAD", "false")
 
 with open(os.path.join("test", "static", "watcher.json")) as f:
     wa = RunParser("watcher.json", 0, json.load(f))
@@ -560,14 +571,25 @@ class TestFileParser(TestCase):
         self.assertEqual(streamer.timestamp, datetime(2023, 7, 12, 20, 9, 44, tzinfo=UTC))
 
 class TestSavefile(TestCase):
+    def test_debug_only(self):
+        with self.assertRaises(RuntimeError):
+            Savefile()
+
+    def test_getsave(self):
+        self.assertIs(get_savefile(), s)
+        self.assertIsNot(get_savefile(), s2)
+
     def test_timedelta(self):
         self.assertEqual(s.timedelta.seconds, 3379)
+        self.assertEqual(s2.timedelta.seconds, 4258)
 
     def test_display_name(self):
         self.assertEqual(s.display_name, "Current Silent run")
+        self.assertEqual(s2.display_name, "Current Ironclad run")
 
     def test_in_game(self):
         self.assertTrue(s.in_game)
+        self.assertTrue(s2.in_game)
 
     def test_keys(self):
         k = s.keys
@@ -578,14 +600,27 @@ class TestSavefile(TestCase):
         self.assertEqual(k.ruby_key_floor, 42)
         self.assertEqual(k.sapphire_key_floor, 43)
 
+    def test_keys2(self):
+        k = s2.keys
+        self.assertTrue(k.ruby_key_obtained)
+        self.assertTrue(k.emerald_key_obtained)
+        self.assertTrue(k.sapphire_key_obtained)
+
+        self.assertEqual(k.ruby_key_floor, 45)
+        self.assertEqual(k.emerald_key_floor, 6)
+        self.assertEqual(k.sapphire_key_floor, 43)
+
     def test_current_health(self):
         self.assertEqual(s.current_health, 32)
+        self.assertEqual(s2.current_health, 73)
 
     def test_max_health(self):
         self.assertEqual(s.max_health, 70)
+        self.assertEqual(s2.max_health, 81)
 
     def test_gold(self):
         self.assertEqual(s.current_gold, 85)
+        self.assertEqual(s2.current_gold, 77)
 
 class TestRunParser(TestCase):
     def test_won(self):
