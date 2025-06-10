@@ -27,9 +27,14 @@ with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
 
 # this is more recent, and should have all the fields we care about
 # (at least as of June 2025. we all know how these things go)
-with open(os.path.join("test", "static", "testing_save_2.json")) as f:
-    s2 = Savefile(_debug=True)
-    s2.update_data(json.load(f), "IRONCLAD", "false")
+
+# this save and the run file that follow are from the save run, and thus should match closely
+with open(os.path.join("test", "static", "save_matched.json")) as f:
+    sm = Savefile(_debug=True)
+    sm.update_data(json.load(f), "IRONCLAD", "false")
+
+with open(os.path.join("test", "static", "run_matched.json")) as f:
+    rm = RunParser("run_matched.json", 0, json.load(f))
 
 with open(os.path.join("test", "static", "watcher.json")) as f:
     wa = RunParser("watcher.json", 0, json.load(f))
@@ -577,19 +582,19 @@ class TestSavefile(TestCase):
 
     def test_getsave(self):
         self.assertIs(get_savefile(), s)
-        self.assertIsNot(get_savefile(), s2)
+        self.assertIsNot(get_savefile(), sm)
 
     def test_timedelta(self):
         self.assertEqual(s.timedelta.seconds, 3379)
-        self.assertEqual(s2.timedelta.seconds, 4258)
+        self.assertEqual(sm.timedelta.seconds, 4258)
 
     def test_display_name(self):
         self.assertEqual(s.display_name, "Current Silent run")
-        self.assertEqual(s2.display_name, "Current Ironclad run")
+        self.assertEqual(sm.display_name, "Current Ironclad run")
 
     def test_in_game(self):
         self.assertTrue(s.in_game)
-        self.assertTrue(s2.in_game)
+        self.assertTrue(sm.in_game)
 
     def test_keys(self):
         k = s.keys
@@ -601,7 +606,7 @@ class TestSavefile(TestCase):
         self.assertEqual(k.sapphire_key_floor, 43)
 
     def test_keys2(self):
-        k = s2.keys
+        k = sm.keys
         self.assertTrue(k.ruby_key_obtained)
         self.assertTrue(k.emerald_key_obtained)
         self.assertTrue(k.sapphire_key_obtained)
@@ -612,15 +617,15 @@ class TestSavefile(TestCase):
 
     def test_current_health(self):
         self.assertEqual(s.current_health, 32)
-        self.assertEqual(s2.current_health, 73)
+        self.assertEqual(sm.current_health, 73)
 
     def test_max_health(self):
         self.assertEqual(s.max_health, 70)
-        self.assertEqual(s2.max_health, 81)
+        self.assertEqual(sm.max_health, 81)
 
     def test_gold(self):
         self.assertEqual(s.current_gold, 85)
-        self.assertEqual(s2.current_gold, 77)
+        self.assertEqual(sm.current_gold, 77)
 
 class TestRunParser(TestCase):
     def test_won(self):
