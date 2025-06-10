@@ -43,8 +43,10 @@ class Savefile(FileParser):
 
     prefix = "metric_"
 
-    def __init__(self):
-        if _savefile is not None:
+    def __init__(self, _debug=False):
+        # _debug is NOT intended for normal use, only testing
+        # things can and WILL break if used in production
+        if _savefile is not None and not _debug:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
         data = {}
         try:
