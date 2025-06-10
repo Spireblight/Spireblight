@@ -124,7 +124,7 @@ _map = {
 def load():
     _internal_cache.clear()
     _query_cache.clear()
-    for file in os.listdir(os.path.join("monster", "_static")):
+    for file in os.listdir(os.path.join("monster", "_static", "mt1")):
         if not file.endswith(".json"):
             continue
         with open(os.path.join("monster", "_static", file)) as f:
