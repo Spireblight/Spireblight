@@ -1,0 +1,2596 @@
+{
+    "shuffle_seed_count": 0,
+    "metric_purchased_purges": 2,
+    "metric_path_per_floor": [
+        "M",
+        "?",
+        "T",
+        "M",
+        "$",
+        "E",
+        "M",
+        "E",
+        "T",
+        "R",
+        "E",
+        "?",
+        "R",
+        "M",
+        "R",
+        "B",
+        null,
+        "M",
+        "M",
+        "M",
+        "$",
+        "M",
+        "E",
+        "R",
+        "E",
+        "T",
+        "R",
+        "?",
+        "E",
+        "M",
+        "M",
+        "R",
+        "B",
+        null,
+        "M",
+        "$",
+        "$",
+        "?",
+        "M",
+        "E",
+        "M",
+        "R",
+        "T",
+        "E",
+        "R",
+        "E",
+        "$",
+        "M",
+        "R"
+    ],
+    "basemod:mod_saves": {
+        "stats_Pocketwatch": [
+            0
+        ],
+        "stats_Black Star": 0,
+        "stats_Letter Opener": [
+            17
+        ],
+        "stats_FossilizedHelix": [
+            0
+        ],
+        "stats_Ancient Tea Set": [
+            0
+        ],
+        "stats_OrangePellets": [
+            0
+        ],
+        "stats_Shovel": 0,
+        "relic_floor_stats": [
+            {
+                "NeowsBlessing": 0,
+                "Happy Flower": 25,
+                "Singing Bowl": 29,
+                "Blue Candle": 8,
+                "Vajra": 5,
+                "PreservedInsect": 12,
+                "Whetstone": 9,
+                "Letter Opener": 44,
+                "Bottled Tornado": 6,
+                "Orichalcum": 23,
+                "Empty Cage": 34,
+                "PrismaticShard": 37,
+                "Burning Blood": 0,
+                "ClockworkSouvenir": 47,
+                "Nunchaku": 46,
+                "Centennial Puzzle": 47,
+                "HornCleat": 11,
+                "Ornamental Fan": 3,
+                "Mummified Hand": 26,
+                "Mark of Pain": 17,
+                "Art of War": 40
+            },
+            {
+                "NeowsBlessing": 0,
+                "Happy Flower": 15,
+                "Singing Bowl": 16,
+                "Blue Candle": 5,
+                "Vajra": 2,
+                "PreservedInsect": 7,
+                "Whetstone": 5,
+                "Letter Opener": 24,
+                "Bottled Tornado": 3,
+                "Orichalcum": 14,
+                "Empty Cage": 19,
+                "PrismaticShard": 20,
+                "Burning Blood": 0,
+                "ClockworkSouvenir": 25,
+                "Nunchaku": 25,
+                "Centennial Puzzle": 25,
+                "HornCleat": 6,
+                "Ornamental Fan": 1,
+                "Mummified Hand": 15,
+                "Mark of Pain": 9,
+                "Art of War": 22
+            },
+            {
+                "NeowsBlessing": 0,
+                "Happy Flower": 63,
+                "Singing Bowl": 66,
+                "Blue Candle": 11,
+                "Vajra": 2,
+                "PreservedInsect": 27,
+                "Whetstone": 11,
+                "Letter Opener": 102,
+                "Bottled Tornado": 3,
+                "Orichalcum": 58,
+                "Empty Cage": 80,
+                "PrismaticShard": 84,
+                "Burning Blood": 0,
+                "ClockworkSouvenir": 107,
+                "Nunchaku": 107,
+                "Centennial Puzzle": 107,
+                "HornCleat": 23,
+                "Ornamental Fan": 1,
+                "Mummified Hand": 63,
+                "Mark of Pain": 38,
+                "Art of War": 95
+            }
+        ],
+        "stats_Centennial Puzzle": [
+            3
+        ],
+        "stats_Mark of the Bloom": 0,
+        "stats_Singing Bowl": 6,
+        "stats_Art of War": [
+            2
+        ],
+        "stats_Regal Pillow": 0,
+        "stats_Golden Idol": 0,
+        "stats_Sozu": 0,
+        "LessonLearnedLog": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "stats_Smiling Mask": 0,
+        "BlueKeyRelicSkippedLog": {
+            "floor": 43,
+            "relicID": "Bronze Scales"
+        },
+        "stats_Bronze Scales": [
+            0
+        ],
+        "stats_Nunchaku": [
+            0
+        ],
+        "stats_Lizard Tail": 0,
+        "stats_Cables": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats_HandDrill": [
+            0
+        ],
+        "stats_Whetstone": [
+            "Twin Strike",
+            "Bash"
+        ],
+        "PotionDiscardLog": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "stats_Ring of the Snake": [
+            0
+        ],
+        "stats_VioletLotus": [
+            0
+        ],
+        "stats_TungstenRod": 0,
+        "NeowCostsSkippedLog": [
+            "NONE",
+            "PERCENT_DAMAGE",
+            "NONE"
+        ],
+        "stats_Eternal Feather": 0,
+        "FloorExitPlaytimeLog": [
+            126,
+            144,
+            184,
+            233,
+            335,
+            471,
+            524,
+            732,
+            752,
+            796,
+            1076,
+            1194,
+            1202,
+            1254,
+            1297,
+            1608,
+            1709,
+            1768,
+            1887,
+            1944,
+            2047,
+            2153,
+            2271,
+            2278,
+            2559,
+            2567,
+            2576,
+            2599,
+            2668,
+            2783,
+            2838,
+            2845,
+            3068,
+            3135,
+            3223,
+            3283,
+            3342,
+            3378,
+            3483,
+            3626,
+            3765,
+            3804,
+            3808,
+            3954,
+            3963,
+            4092,
+            4154,
+            4242,
+            4258
+        ],
+        "stats_InkBottle": [
+            0
+        ],
+        "stats_WingedGreaves": 0,
+        "stats_Chemical X": [
+            0
+        ],
+        "stats_CloakClasp": [
+            0
+        ],
+        "stats_White Beast Statue": [
+            0.0,
+            0.02499840000000001,
+            0.0,
+            0.27258880000000013,
+            0.0,
+            0.4967808000000003,
+            0.0,
+            0.1935360000000001,
+            0.0,
+            0.012096000000000006,
+            0.0,
+            0.0
+        ],
+        "stats_Ginger": [
+            0
+        ],
+        "stats_Frozen Eye": 0.0,
+        "stats_Bottled Tornado": "Feel No Pain",
+        "stats_SsserpentHead": 0,
+        "stats_Bloody Idol": 0,
+        "stats_Dream Catcher": 0,
+        "stats_Self Forming Clay": [
+            0
+        ],
+        "stats_War Paint": [],
+        "stats_Shuriken": [
+            0
+        ],
+        "potionsObtainedAlchemizeLog": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "stats_HolyWater": [
+            0
+        ],
+        "stats_Unceasing Top": [
+            0
+        ],
+        "stats_Bag of Preparation": [
+            0
+        ],
+        "stats_The Specimen": [
+            0
+        ],
+        "stats_Burning Blood": 147,
+        "stats_Calipers": [
+            0
+        ],
+        "stats_Tough Bandages": [
+            0
+        ],
+        "stats_Strange Spoon": [
+            0
+        ],
+        "stats_Snake Skull": [
+            0
+        ],
+        "stats_Juzu Bracelet": 0,
+        "stats_FrozenCore": [
+            0
+        ],
+        "stats_PureWater": [
+            0
+        ],
+        "stats_Gambling Chip": [
+            0
+        ],
+        "stats_Snecko Eye": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats_Prayer Wheel": 0,
+        "stats_Pantograph": 0,
+        "stats_WarpedTongs": [
+            0
+        ],
+        "OJB_INFOMOD_BOSSES": {
+            "a20SecondBossName": "Donu and Deca",
+            "bossNames": [
+                "Hexaghost",
+                "Collector",
+                "Awakened One"
+            ]
+        },
+        "stats_Omamori": 0,
+        "stats_CeramicFish": 0,
+        "stats_Dead Branch": [
+            0
+        ],
+        "stats_Blue Candle": [
+            1
+        ],
+        "stats_MawBank": 0,
+        "stats_Kunai": [
+            0
+        ],
+        "stats_Lee's Waffle": 0,
+        "stats_Membership Card": 0,
+        "NeowBonusesSkippedLog": [
+            "TRANSFORM_CARD",
+            "TWENTY_PERCENT_HP_BONUS",
+            "BOSS_RELIC"
+        ],
+        "stats_Pandora's Box": [],
+        "stats_TheAbacus": [
+            0
+        ],
+        "stats_Girya": 0,
+        "stats_Busted Crown": 0,
+        "stats_Emotion Chip": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats_Happy Flower": [
+            16
+        ],
+        "stats_Orichalcum": [
+            24
+        ],
+        "stats_Boot": [
+            0
+        ],
+        "stats_Melange": [
+            0
+        ],
+        "stats_Magic Flower": [
+            0
+        ],
+        "stats_Astrolabe": [],
+        "stats_Ectoplasm": 0,
+        "stats_Peace Pipe": 0,
+        "stats_Inserter": [
+            0
+        ],
+        "stats_Torii": 0,
+        "stats_Pen Nib": [
+            0
+        ],
+        "stats_Bottled Lightning": "",
+        "stats_Meat on the Bone": 0,
+        "stats_Runic Cube": [
+            0
+        ],
+        "stats_FaceOfCleric": 0,
+        "stats_Nloth's Gift": 0,
+        "stats_Tingsha": [
+            0
+        ],
+        "stats_MealTicket": 0,
+        "stats_Ornamental Fan": [
+            68
+        ],
+        "stats_Matryoshka": 0,
+        "stats_The Courier": 0,
+        "stats_Blood Vial": 0,
+        "stats_Tiny Chest": 0,
+        "stats_Necronomicon": [
+            0
+        ],
+        "OJB_INFOMOD_MISC_STATS": {
+            "numCardsRun": 392,
+            "numTurnsRun": 111
+        },
+        "stats_Yang": [
+            0
+        ],
+        "stats_Black Blood": 147,
+        "stats_Darkstone Periapt": 0,
+        "RewardsSkippedLog": [
+            {
+                "floor": 30,
+                "relics": [],
+                "potions": [
+                    "SteroidPotion"
+                ]
+            },
+            {
+                "floor": 39,
+                "relics": [],
+                "potions": [
+                    "AttackPotion"
+                ]
+            }
+        ],
+        "greenKeyTakenLog": 6,
+        "stats_Mercury Hourglass": [
+            0
+        ],
+        "stats_Champion Belt": [
+            0
+        ],
+        "stats_Gremlin Horn": [
+            0,
+            0
+        ],
+        "potionsObtainedEntropicBrewLog": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "stats_Cursed Key": 0,
+        "stats_Ice Cream": [
+            0
+        ],
+        "stats_Medical Kit": [
+            0
+        ],
+        "stats_Sundial": [
+            0
+        ],
+        "ShopContentsLog": [
+            {
+                "floor": 5,
+                "relics": [
+                    "Matryoshka",
+                    "TheAbacus"
+                ],
+                "cards": [
+                    "Bludgeon",
+                    "Uppercut",
+                    "Warcry",
+                    "Flex",
+                    "Feel No Pain",
+                    "Mayhem"
+                ],
+                "potions": [
+                    "Dexterity Potion",
+                    "LiquidBronze",
+                    "Weak Potion"
+                ]
+            },
+            {
+                "floor": 21,
+                "relics": [
+                    "Boot",
+                    "Regal Pillow",
+                    "Lee's Waffle"
+                ],
+                "cards": [
+                    "Carnage",
+                    "Flex",
+                    "Havoc",
+                    "Demon Form",
+                    "Madness",
+                    "Chrysalis"
+                ],
+                "potions": [
+                    "Swift Potion",
+                    "BloodPotion",
+                    "Ancient Potion"
+                ]
+            },
+            {
+                "floor": 36,
+                "relics": [
+                    "War Paint",
+                    "StrikeDummy",
+                    "Strange Spoon"
+                ],
+                "cards": [
+                    "Twin Strike",
+                    "Perfected Strike",
+                    "Seeing Red",
+                    "Flex",
+                    "Combust",
+                    "Enlightenment",
+                    "Secret Technique"
+                ],
+                "potions": [
+                    "Block Potion",
+                    "GamblersBrew",
+                    "BlessingOfTheForge"
+                ]
+            },
+            {
+                "floor": 37,
+                "relics": [
+                    "Pocketwatch",
+                    "Torii"
+                ],
+                "cards": [
+                    "Heavy Blade",
+                    "Perfected Strike",
+                    "True Grit",
+                    "Shrug It Off",
+                    "Combust",
+                    "Dramatic Entrance",
+                    "Transmutation"
+                ],
+                "potions": [
+                    "Swift Potion",
+                    "EntropicBrew",
+                    "ElixirPotion"
+                ]
+            },
+            {
+                "floor": 47,
+                "relics": [
+                    "Dream Catcher"
+                ],
+                "cards": [
+                    "Headbutt",
+                    "Clothesline",
+                    "Power Through",
+                    "Shockwave",
+                    "Enlightenment",
+                    "Metamorphosis"
+                ],
+                "potions": [
+                    "Fire Potion",
+                    "EssenceOfSteel",
+                    "BloodPotion"
+                ]
+            }
+        ],
+        "stats_Mummified Hand": [
+            43
+        ],
+        "stats_StoneCalendar": [
+            0
+        ],
+        "stats_Charon's Ashes": [
+            0
+        ],
+        "stats_Cauldron": 0,
+        "stats_Bottled Flame": "",
+        "stats_Nilry's Codex": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats_PreservedInsect": 298,
+        "stats_master_turn_counts": [
+            26,
+            111
+        ],
+        "stats_HoveringKite": [
+            0
+        ],
+        "stats_Bird Faced Urn": [
+            0
+        ],
+        "stats_Question Card": 0,
+        "PotionUseLog": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "EssenceOfSteel",
+                "SkillPotion"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "SteroidPotion"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "Strength Potion"
+            ],
+            [],
+            [
+                "BloodPotion"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "Swift Potion"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "Swift Potion"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "stats_Toy Ornithopter": 0,
+        "NeowBonusLog": {
+            "cardsObtained": [],
+            "cardsUpgraded": [],
+            "cardsRemoved": [],
+            "cardsTransformed": [],
+            "relicsObtained": [
+                "NeowsBlessing"
+            ],
+            "maxHpGained": 0,
+            "goldGained": 0,
+            "damageTaken": 0,
+            "goldLost": 0,
+            "maxHpLost": 0
+        },
+        "stats_Turnip": [
+            0
+        ],
+        "stats_GoldenEye": [
+            0
+        ]
+    },
+    "monster_list": [
+        "4 Shapes",
+        "Writhing Mass",
+        "Maw",
+        "3 Darklings",
+        "Writhing Mass",
+        "Spire Growth",
+        "4 Shapes",
+        "Jaw Worm Horde",
+        "Spire Growth",
+        "Sphere and 2 Shapes",
+        "Jaw Worm Horde"
+    ],
+    "basemod:abstract_card_modifiers_save": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "metric_potions_floor_spawned": [
+        6,
+        7,
+        12,
+        14,
+        18,
+        23,
+        25,
+        30,
+        35,
+        39,
+        48
+    ],
+    "daily_mods": [],
+    "metric_campfire_choices": [
+        {
+            "data": "True Grit",
+            "floor": 10,
+            "key": "SMITH"
+        },
+        {
+            "data": "Fiend Fire",
+            "floor": 13,
+            "key": "SMITH"
+        },
+        {
+            "data": "Battle Trance",
+            "floor": 15,
+            "key": "SMITH"
+        },
+        {
+            "data": "Feel No Pain",
+            "floor": 24,
+            "key": "SMITH"
+        },
+        {
+            "data": "Juggernaut",
+            "floor": 27,
+            "key": "SMITH"
+        },
+        {
+            "data": "Dark Embrace",
+            "floor": 32,
+            "key": "SMITH"
+        },
+        {
+            "data": "Burning Pact",
+            "floor": 42,
+            "key": "SMITH"
+        },
+        {
+            "floor": 45,
+            "key": "RECALL"
+        },
+        {
+            "data": "ThirdEye",
+            "floor": 49,
+            "key": "SMITH"
+        }
+    ],
+    "is_ascension_mode": true,
+    "metric_items_purchased": [
+        "Vajra",
+        "Discovery",
+        "Reckless Charge",
+        "PrismaticShard",
+        "Centennial Puzzle",
+        "ClockworkSouvenir",
+        "Dark Embrace"
+    ],
+    "is_endless_mode": false,
+    "merchant_seed_count": 80,
+    "floor_num": 50,
+    "uncommon_relics": [
+        "Gremlin Horn",
+        "Meat on the Bone",
+        "Bottled Lightning",
+        "Shuriken",
+        "Pantograph",
+        "Paper Frog",
+        "Mercury Hourglass",
+        "Molten Egg 2",
+        "InkBottle",
+        "Pear",
+        "Self Forming Clay",
+        "The Courier",
+        "Toxic Egg 2",
+        "Kunai",
+        "Sundial",
+        "Bottled Flame",
+        "Frozen Egg 2",
+        "Question Card",
+        "White Beast Statue",
+        "Darkstone Periapt",
+        "Eternal Feather"
+    ],
+    "post_combat": false,
+    "combo": false,
+    "relics": [
+        "Burning Blood",
+        "NeowsBlessing",
+        "Ornamental Fan",
+        "Vajra",
+        "Bottled Tornado",
+        "Blue Candle",
+        "Whetstone",
+        "HornCleat",
+        "PreservedInsect",
+        "Mark of Pain",
+        "Orichalcum",
+        "Happy Flower",
+        "Mummified Hand",
+        "Singing Bowl",
+        "Empty Cage",
+        "PrismaticShard",
+        "Art of War",
+        "Letter Opener",
+        "Nunchaku",
+        "Centennial Puzzle",
+        "ClockworkSouvenir"
+    ],
+    "basemod:mod_potion_saves": [
+        null,
+        null
+    ],
+    "rare_relics": [
+        "Lizard Tail",
+        "Gambling Chip",
+        "Charon's Ashes",
+        "Peace Pipe",
+        "Prayer Wheel",
+        "Dead Branch",
+        "CaptainsWheel",
+        "Girya",
+        "Mango",
+        "Magic Flower",
+        "Old Coin",
+        "Thread and Needle",
+        "Bird Faced Urn",
+        "Incense Burner",
+        "Unceasing Top",
+        "Du-Vu Doll",
+        "Champion Belt",
+        "StoneCalendar",
+        "Ice Cream",
+        "Turnip",
+        "Calipers",
+        "Ginger",
+        "WingedGreaves",
+        "Shovel",
+        "FossilizedHelix",
+        "TungstenRod"
+    ],
+    "level_name": "TheBeyond",
+    "metric_campfire_rested": 0,
+    "basemod:mod_card_saves": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "max_orbs": 1,
+    "boss": "Awakened One",
+    "seed": -7511701212200775089,
+    "metric_current_hp_per_floor": [
+        74,
+        63,
+        63,
+        69,
+        69,
+        75,
+        75,
+        60,
+        60,
+        60,
+        64,
+        49,
+        49,
+        53,
+        53,
+        17,
+        61,
+        58,
+        64,
+        70,
+        70,
+        57,
+        49,
+        49,
+        70,
+        70,
+        70,
+        70,
+        75,
+        68,
+        65,
+        65,
+        54,
+        71,
+        79,
+        79,
+        79,
+        79,
+        79,
+        66,
+        71,
+        71,
+        71,
+        79,
+        79,
+        74,
+        74,
+        73,
+        73
+    ],
+    "current_health": 73,
+    "common_relics": [
+        "Potion Belt",
+        "Toy Ornithopter",
+        "Pen Nib",
+        "Anchor",
+        "Smiling Mask",
+        "Akabeko",
+        "MealTicket",
+        "Ancient Tea Set",
+        "MawBank",
+        "Blood Vial",
+        "Oddly Smooth Stone",
+        "Tiny Chest",
+        "Red Skull",
+        "Omamori",
+        "Bag of Preparation",
+        "Lantern",
+        "Juzu Bracelet",
+        "CeramicFish",
+        "Bag of Marbles",
+        "Strawberry"
+    ],
+    "monsters_killed": 14,
+    "gold": 77,
+    "neow_bonus": "THREE_ENEMY_KILL",
+    "card_random_seed_count": 0,
+    "card_seed_count": 616,
+    "is_daily": false,
+    "metric_campfire_rituals": 0,
+    "metric_card_choices": [
+        {
+            "not_picked": [
+                "Sword Boomerang",
+                "True Grit"
+            ],
+            "picked": "Feel No Pain",
+            "floor": 1
+        },
+        {
+            "not_picked": [
+                "Combust",
+                "Flex"
+            ],
+            "picked": "Twin Strike",
+            "floor": 4
+        },
+        {
+            "not_picked": [
+                "Perfected Strike",
+                "Carnage"
+            ],
+            "picked": "Metallicize",
+            "floor": 6
+        },
+        {
+            "not_picked": [
+                "Perfected Strike",
+                "Bloodletting"
+            ],
+            "picked": "Battle Trance",
+            "floor": 7
+        },
+        {
+            "not_picked": [
+                "Sentinel",
+                "Rage"
+            ],
+            "picked": "True Grit",
+            "floor": 8
+        },
+        {
+            "not_picked": [
+                "Entrench",
+                "Flex"
+            ],
+            "picked": "Sever Soul",
+            "floor": 11
+        },
+        {
+            "not_picked": [
+                "Pommel Strike",
+                "True Grit"
+            ],
+            "picked": "Fiend Fire",
+            "floor": 12
+        },
+        {
+            "not_picked": [
+                "Sever Soul",
+                "Dropkick"
+            ],
+            "picked": "Headbutt",
+            "floor": 14
+        },
+        {
+            "not_picked": [
+                "Fiend Fire",
+                "Exhume"
+            ],
+            "picked": "Juggernaut",
+            "floor": 16
+        },
+        {
+            "not_picked": [
+                "Havoc",
+                "Body Slam"
+            ],
+            "picked": "Shrug It Off",
+            "floor": 18
+        },
+        {
+            "not_picked": [
+                "Thunderclap",
+                "Headbutt"
+            ],
+            "picked": "Burning Pact",
+            "floor": 19
+        },
+        {
+            "not_picked": [
+                "Iron Wave",
+                "Combust"
+            ],
+            "picked": "Impervious",
+            "floor": 20
+        },
+        {
+            "not_picked": [
+                "Flex",
+                "Wild Strike"
+            ],
+            "picked": "Power Through",
+            "floor": 22
+        },
+        {
+            "not_picked": [
+                "Flex",
+                "Sever Soul",
+                "Thunderclap"
+            ],
+            "picked": "SKIP",
+            "floor": 23
+        },
+        {
+            "not_picked": [
+                "Heavy Blade",
+                "Clothesline"
+            ],
+            "picked": "Warcry",
+            "floor": 25
+        },
+        {
+            "not_picked": [
+                "Shrug It Off",
+                "Seeing Red"
+            ],
+            "picked": "Disarm",
+            "floor": 29
+        },
+        {
+            "not_picked": [
+                "Clothesline",
+                "Reckless Charge+1",
+                "Warcry"
+            ],
+            "picked": "Singing Bowl",
+            "floor": 30
+        },
+        {
+            "not_picked": [
+                "Pommel Strike",
+                "True Grit"
+            ],
+            "picked": "Dark Embrace",
+            "floor": 31
+        },
+        {
+            "not_picked": [
+                "Limit Break",
+                "Demon Form"
+            ],
+            "picked": "Immolate",
+            "floor": 33
+        },
+        {
+            "not_picked": [
+                "Havoc",
+                "Twin Strike+1",
+                "Rampage"
+            ],
+            "picked": "Singing Bowl",
+            "floor": 35
+        },
+        {
+            "not_picked": [
+                "Sever Soul",
+                "All Out Attack"
+            ],
+            "picked": "ThirdEye",
+            "floor": 39
+        },
+        {
+            "not_picked": [
+                "Iron Wave",
+                "BattleHymn"
+            ],
+            "picked": "Purity",
+            "floor": 40
+        },
+        {
+            "not_picked": [
+                "WreathOfFlame",
+                "Prostrate"
+            ],
+            "picked": "Backflip",
+            "floor": 41
+        },
+        {
+            "not_picked": [
+                "Redo+1",
+                "CrushJoints+1",
+                "CutThroughFate"
+            ],
+            "picked": "Singing Bowl",
+            "floor": 44
+        },
+        {
+            "not_picked": [
+                "Underhanded Strike",
+                "White Noise"
+            ],
+            "picked": "PanicButton+1",
+            "floor": 46
+        },
+        {
+            "not_picked": [
+                "Leap",
+                "Ragnarok"
+            ],
+            "picked": "Sentinel",
+            "floor": 48
+        }
+    ],
+    "metric_potions_obtained": [
+        {
+            "floor": 6,
+            "key": "EssenceOfSteel"
+        },
+        {
+            "floor": 7,
+            "key": "SkillPotion"
+        },
+        {
+            "floor": 12,
+            "key": "BloodPotion"
+        },
+        {
+            "floor": 14,
+            "key": "SteroidPotion"
+        },
+        {
+            "floor": 18,
+            "key": "Strength Potion"
+        },
+        {
+            "floor": 23,
+            "key": "Swift Potion"
+        },
+        {
+            "floor": 25,
+            "key": "Swift Potion"
+        },
+        {
+            "floor": 35,
+            "key": "GamblersBrew"
+        },
+        {
+            "floor": 48,
+            "key": "GamblersBrew"
+        }
+    ],
+    "is_final_act_on": true,
+    "treasure_seed_count": 33,
+    "metric_event_choices": [
+        {
+            "damage_healed": 0,
+            "gold_gain": 75,
+            "player_choice": "Gather Gold",
+            "damage_taken": 11,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "World of Goop",
+            "floor": 2,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 30,
+            "player_choice": "Searched '2' times",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Dead Adventurer",
+            "floor": 12,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 200,
+            "player_choice": "Gold",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Wheel of Change",
+            "floor": 28,
+            "gold_loss": 0
+        },
+        {
+            "damage_healed": 0,
+            "gold_gain": 0,
+            "player_choice": "Upgraded",
+            "damage_taken": 0,
+            "max_hp_gain": 0,
+            "max_hp_loss": 0,
+            "event_name": "Upgrade Shrine",
+            "floor": 38,
+            "gold_loss": 0,
+            "cards_upgraded": [
+                "Disarm"
+            ]
+        }
+    ],
+    "current_room": "com.megacrit.cardcrawl.rooms.MonsterRoomBoss",
+    "has_emerald_key": true,
+    "basemod:event_saves": [
+        "Dead Adventurer",
+        "World of Goop"
+    ],
+    "boss_relics": [
+        "SacredBark",
+        "Tiny House",
+        "SlaversCollar",
+        "Snecko Eye",
+        "Fusion Hammer",
+        "Philosopher's Stone",
+        "Calling Bell",
+        "Pandora's Box",
+        "Runic Pyramid",
+        "Velvet Choker",
+        "Cursed Key",
+        "Runic Dome",
+        "Black Blood",
+        "Sozu",
+        "Black Star",
+        "Busted Crown"
+    ],
+    "blue": 0,
+    "path_y": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+    ],
+    "path_x": [
+        3,
+        3,
+        3,
+        4,
+        3,
+        2,
+        2,
+        3,
+        3,
+        3,
+        2,
+        2,
+        3,
+        4,
+        4,
+        4
+    ],
+    "metric_item_purchase_floors": [
+        5,
+        5,
+        21,
+        37,
+        47,
+        47,
+        47
+    ],
+    "gold_gained": 1068,
+    "ascension_level": 20,
+    "one_time_event_list": [
+        "Accursed Blacksmith",
+        "Bonfire Elementals",
+        "Designer",
+        "Duplicator",
+        "FaceTrader",
+        "Fountain of Cleansing",
+        "Knowing Skull",
+        "Lab",
+        "N'loth",
+        "SecretPortal",
+        "The Joust",
+        "WeMeetAgain",
+        "The Woman in Blue"
+    ],
+    "card_random_seed_randomizer": 5,
+    "metric_campfire_meditates": 0,
+    "perfect": 0,
+    "mugged": false,
+    "metric_build_version": "2022-12-18",
+    "bottled_tornado": "Feel No Pain",
+    "event_list": [
+        "Falling",
+        "MindBloom",
+        "The Moai Head",
+        "Mysterious Sphere",
+        "SensoryStone",
+        "Tomb of Lord Red Mask",
+        "Winding Halls"
+    ],
+    "elite_monster_list": [
+        "Giant Head",
+        "Reptomancer",
+        "Giant Head",
+        "Nemesis",
+        "Reptomancer",
+        "Nemesis",
+        "Reptomancer"
+    ],
+    "metric_seed_played": "-7511701212200775089",
+    "red": 4,
+    "elites3_killed": 3,
+    "relic_counters": [
+        -1,
+        -2,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        0,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        6,
+        -1,
+        -1
+    ],
+    "seed_set": false,
+    "elites2_killed": 3,
+    "metric_items_purged_floors": [
+        21,
+        36
+    ],
+    "potion_seed_count": 120,
+    "blights": [],
+    "activemods:active_mods": [
+        {
+            "id": "basemod",
+            "name": "BaseMod",
+            "description": "Unofficial modding API for Slay the Spire. Also a Dev Console.",
+            "authors": [
+                "kiooeht",
+                "test447"
+            ],
+            "credits": "t-larson: Original creator of BaseMod.\nContributors: test447, Haashi, kiooeht, Blank The Evil, robojumper, FlipskiZ, DemoXin, Skrelpoid, kobting, twanvl, Moocowsgomoo, NellyDevo, MichaelMayhem, admiralbolt, Celicath, Reina, fiiiiilth, Rin Camelia, JohnnyBazooka89, Alchyr, Seeonee, bugsniper, alexdriedger, Raz, erasels, LordAddy, NotInTheFace, Vex, codewarrior0, EricB, Mistress Alison, herbix, modargo, akdream, Pandemonium, Somdy, Nyoxide, Mwalls, Mindbomber2, SandTag, Enbeon, Rucodeby, DandyLion, Indi, Arkalin, lastcel",
+            "mod_version": {
+                "version": "5.55.3",
+                "major": 5,
+                "minor": 55,
+                "patch": 3
+            },
+            "dependencies": [],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "ojb_Bestiary",
+            "name": "Bestiary",
+            "description": "Shift + Right Click a monster while in combat to open an overlay detailing their attack patterns. Right click again to close this overlay. You can disable requiring shift in the Main Menu -> Mods -> Bestiary -> Config menu.\n\nController users can (hopefully) now target a monster (they will be rendered with the little yellow triangles around them if it's done correctly). Once a monster is targeted, you can press whatever button you use to open the draw pile (left trigger by default) to open the overlay. Press your cancel button (B on an xbox controller by default) to close the overlay. This is an experimental feature.\n\nPlease report any bugs you find by leaving a comment on the Workshop page or creating an issue on the Github page. Thanks!",
+            "authors": [
+                "ojb"
+            ],
+            "credits": "Special thanks to ForgottenArbiter and the Spire Reference spreadsheet, which managed to cut down the information gathering to a mere 12 hours instead of being many more.",
+            "mod_version": {
+                "version": "0.1.1",
+                "major": 0,
+                "minor": 1,
+                "patch": 1
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2285965269",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "ojb_infomod2",
+            "name": "InfoMod",
+            "description": "An extended UI mod to track potion drop chances, card drop probabilities, and other tedious calculations using intuitive tool tips and overlays.",
+            "authors": [
+                "ojb"
+            ],
+            "mod_version": {
+                "version": "0.0.7",
+                "major": 0,
+                "minor": 0,
+                "patch": 7
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "is_steam_workshop_mod": false
+        },
+        {
+            "id": "ojb_easel",
+            "name": "easel",
+            "description": "Slay the Spire UI library (WIP)",
+            "authors": [
+                "ojb"
+            ],
+            "mod_version": {
+                "version": "0.0.3",
+                "major": 0,
+                "minor": 0,
+                "patch": 3
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "is_steam_workshop_mod": false
+        },
+        {
+            "id": "ojb_mapmarks",
+            "name": "Map Marks",
+            "description": "A Slay the Spire mod",
+            "authors": [
+                "ojb"
+            ],
+            "mod_version": {
+                "version": "0.0.1",
+                "major": 0,
+                "minor": 0,
+                "patch": 1
+            },
+            "dependencies": [
+                "basemod",
+                "ojb_easel"
+            ],
+            "optional_dependencies": [],
+            "is_steam_workshop_mod": false
+        },
+        {
+            "id": "RelicStats",
+            "name": "Relic Stats",
+            "description": "Track relic stats!",
+            "authors": [
+                "Forgotten Arbiter"
+            ],
+            "credits": "ZHS translation: Rita \n FRA translation: Lucky Lunge",
+            "mod_version": {
+                "version": "1.2.2",
+                "major": 1,
+                "minor": 2,
+                "patch": 2
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2118491069",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "RunHistoryPlus",
+            "name": "Run History Plus",
+            "description": "Adds additional information to run history.",
+            "authors": [
+                "modargo",
+                "beeyee",
+                "Nekaida"
+            ],
+            "mod_version": {
+                "version": "1.8.2",
+                "major": 1,
+                "minor": 8,
+                "patch": 2
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2802958032",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "stslib",
+            "name": "StSLib",
+            "description": "A collection of keywords and mechanics for other Slay the Spire mods to use.",
+            "authors": [
+                "kiooeht"
+            ],
+            "credits": "\n  Contributors: The_Evil_Pickle, Reina, Rin Camelia, erasels, EatYourBeetS, Jedi, Vex, Mistress Alison, Alchyr, Bryan, Pandemonium, NellyDevo, herbix, JamesTripleQ \n  Translation: Jedi (Russian), Rita-B (ZHS), rainfoxest (ZHS, ZHT), Mwalls (ZHS), Saki_1128 (Korean), Celicath (Korean), Diamsword (French), red5h4d0w (French)",
+            "mod_version": {
+                "version": "2.11.1",
+                "major": 2,
+                "minor": 11,
+                "patch": 1
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1609158507",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "UISlidersMod",
+            "name": "UI Sliders",
+            "description": "Adds a config menu where you can customize the position of certain combat UI elements.",
+            "authors": [
+                "JohnnyDevo"
+            ],
+            "mod_version": {
+                "version": "1.4.0",
+                "major": 1,
+                "minor": 4,
+                "patch": 0
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2467296396",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "SlayTheRelicsExporter",
+            "name": "Slay the Relics Exporter",
+            "description": "This mod exports data to Slay the Relics Twitch extension. \n\nThis mod in combination with the extension displays deck view and tooltips for viewers on stream for relics, potions, player/monster powers, orbs, even some custom tooltips from some mods. \nThe viewers just need to hover over the respective item just as if they were in the game themselves.\n\nSee the extension config on Twitch for setup instructions (search 'Slay the Relics').",
+            "authors": [
+                "LordAddy",
+                "vmService"
+            ],
+            "mod_version": {
+                "version": "2.0.0",
+                "major": 2,
+                "minor": 0,
+                "patch": 0
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3048891690",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "AchievementEnabler",
+            "name": "AchievementEnabler",
+            "description": "Enables Achievements with mods.",
+            "authors": [
+                "erasels"
+            ],
+            "mod_version": {
+                "version": "1.0.0",
+                "major": 1,
+                "minor": 0,
+                "patch": 0
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1692554109",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "rngFix",
+            "name": "RNG Fix",
+            "description": "Fixes inherent correlation issues from the Random Number Generator!",
+            "authors": [
+                "Nichilas"
+            ],
+            "mod_version": {
+                "version": "1.0",
+                "major": 1,
+                "minor": 0
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2181005326",
+            "is_steam_workshop_mod": true
+        },
+        {
+            "id": "activemods",
+            "name": "ActiveMods",
+            "description": "Adds an element to the save file and run file containing information about the loaded mods.",
+            "authors": [
+                "drummeur"
+            ],
+            "credits": "Badge artwork by Tax1k",
+            "mod_version": {
+                "version": "1.4.0",
+                "major": 1,
+                "minor": 4,
+                "patch": 0
+            },
+            "dependencies": [
+                "basemod"
+            ],
+            "optional_dependencies": [],
+            "mod_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3406446784",
+            "is_steam_workshop_mod": true
+        }
+    ],
+    "elites1_killed": 3,
+    "overkill": false,
+    "neow_cost": "NONE",
+    "metric_floor_reached": 50,
+    "champions": 4,
+    "smoked": false,
+    "spirit_count": 2,
+    "special_seed": 0,
+    "potion_chance": 10,
+    "shop_relics": [
+        "DollysMirror",
+        "Frozen Eye",
+        "Cauldron",
+        "Brimstone",
+        "Sling",
+        "Orrery",
+        "OrangePellets",
+        "Chemical X",
+        "Medical Kit",
+        "HandDrill",
+        "Toolbox",
+        "Membership Card"
+    ],
+    "custom_mods": [],
+    "metric_path_taken": [
+        "M",
+        "?",
+        "?",
+        "M",
+        "$",
+        "E",
+        "M",
+        "E",
+        "T",
+        "R",
+        "E",
+        "?",
+        "R",
+        "M",
+        "R",
+        "BOSS",
+        "M",
+        "M",
+        "M",
+        "$",
+        "M",
+        "E",
+        "R",
+        "E",
+        "T",
+        "R",
+        "?",
+        "E",
+        "M",
+        "M",
+        "R",
+        "BOSS",
+        "M",
+        "?",
+        "$",
+        "?",
+        "M",
+        "E",
+        "M",
+        "R",
+        "T",
+        "E",
+        "R",
+        "E",
+        "$",
+        "M",
+        "R"
+    ],
+    "name": "BaalorA20",
+    "has_ruby_key": true,
+    "metric_playtime": 4258,
+    "basemod:max_hand_size": 10,
+    "has_sapphire_key": true,
+    "is_trial": false,
+    "metric_max_hp_per_floor": [
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        77,
+        77,
+        77,
+        77,
+        77,
+        79,
+        79,
+        79,
+        79,
+        79,
+        79,
+        79,
+        79,
+        79,
+        81,
+        81,
+        81,
+        81,
+        81,
+        81
+    ],
+    "save_date": 1749577939221,
+    "cards": [
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "AscendersBane"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Strike_R"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Defend_R"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Defend_R"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Defend_R"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Defend_R"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Bash"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Feel No Pain"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Twin Strike"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Discovery"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Metallicize"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Battle Trance"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "True Grit"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Sever Soul"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Fiend Fire"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Headbutt"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Juggernaut"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Shrug It Off"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Burning Pact"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Impervious"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Reckless Charge"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Power Through"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Warcry"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Disarm"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "Dark Embrace"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Immolate"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "ThirdEye"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Purity"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Backflip"
+        },
+        {
+            "upgrades": 1,
+            "misc": 0,
+            "id": "PanicButton"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Dark Embrace"
+        },
+        {
+            "upgrades": 0,
+            "misc": 0,
+            "id": "Sentinel"
+        }
+    ],
+    "endless_increments": [],
+    "metric_items_purged": [
+        "Strike_R",
+        "Strike_R"
+    ],
+    "bottled_tornado_upgrade": 1,
+    "purgeCost": 125,
+    "room_x": -1,
+    "blight_counters": [],
+    "room_y": 15,
+    "metric_gold_per_floor": [
+        111,
+        186,
+        266,
+        284,
+        26,
+        58,
+        75,
+        109,
+        109,
+        109,
+        134,
+        189,
+        189,
+        200,
+        200,
+        276,
+        276,
+        288,
+        307,
+        320,
+        171,
+        189,
+        218,
+        218,
+        244,
+        244,
+        244,
+        444,
+        477,
+        490,
+        503,
+        503,
+        582,
+        582,
+        593,
+        493,
+        332,
+        332,
+        352,
+        377,
+        397,
+        397,
+        422,
+        456,
+        456,
+        483,
+        61,
+        77,
+        77
+    ],
+    "metric_potions_floor_usage": [
+        8,
+        8,
+        16,
+        23,
+        25,
+        33,
+        40
+    ],
+    "boss_list": [
+        "Awakened One",
+        "Donu and Deca",
+        "Time Eater"
+    ],
+    "ai_seed_count": 0,
+    "event_chances": [
+        0.2,
+        0.3,
+        0.06,
+        0.06
+    ],
+    "metric_boss_relics": [
+        {
+            "not_picked": [
+                "Astrolabe",
+                "Ectoplasm"
+            ],
+            "picked": "Mark of Pain"
+        },
+        {
+            "not_picked": [
+                "Coffee Dripper",
+                "Runic Cube"
+            ],
+            "picked": "Empty Cage"
+        }
+    ],
+    "relic_seed_count": 15,
+    "act_num": 3,
+    "metric_damage_taken": [
+        {
+            "damage": 0,
+            "enemies": "Cultist",
+            "floor": 1,
+            "turns": 1
+        },
+        {
+            "damage": 0,
+            "enemies": "Jaw Worm",
+            "floor": 4,
+            "turns": 1
+        },
+        {
+            "damage": 0,
+            "enemies": "3 Sentries",
+            "floor": 6,
+            "turns": 1
+        },
+        {
+            "damage": 4,
+            "enemies": "Small Slimes",
+            "floor": 7,
+            "turns": 4
+        },
+        {
+            "damage": 21,
+            "enemies": "Gremlin Nob",
+            "floor": 8,
+            "turns": 4
+        },
+        {
+            "damage": 2,
+            "enemies": "3 Sentries",
+            "floor": 11,
+            "turns": 12
+        },
+        {
+            "damage": 21,
+            "enemies": "Gremlin Nob",
+            "floor": 12,
+            "turns": 4
+        },
+        {
+            "damage": 2,
+            "enemies": "Exordium Thugs",
+            "floor": 14,
+            "turns": 3
+        },
+        {
+            "damage": 42,
+            "enemies": "Hexaghost",
+            "floor": 16,
+            "turns": 8
+        },
+        {
+            "damage": 9,
+            "enemies": "Shell Parasite",
+            "floor": 18,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "3 Byrds",
+            "floor": 19,
+            "turns": 6
+        },
+        {
+            "damage": 0,
+            "enemies": "Snecko",
+            "floor": 20,
+            "turns": 3
+        },
+        {
+            "damage": 19,
+            "enemies": "Centurion and Healer",
+            "floor": 22,
+            "turns": 5
+        },
+        {
+            "damage": 14,
+            "enemies": "Slavers",
+            "floor": 23,
+            "turns": 3
+        },
+        {
+            "damage": 0,
+            "enemies": "Gremlin Leader",
+            "floor": 25,
+            "turns": 5
+        },
+        {
+            "damage": 0,
+            "enemies": "Book of Stabbing",
+            "floor": 29,
+            "turns": 3
+        },
+        {
+            "damage": 15,
+            "enemies": "Snake Plant",
+            "floor": 30,
+            "turns": 3
+        },
+        {
+            "damage": 9,
+            "enemies": "Snecko",
+            "floor": 31,
+            "turns": 4
+        },
+        {
+            "damage": 17,
+            "enemies": "Collector",
+            "floor": 33,
+            "turns": 7
+        },
+        {
+            "damage": 0,
+            "enemies": "3 Darklings",
+            "floor": 35,
+            "turns": 4
+        },
+        {
+            "damage": 0,
+            "enemies": "Orb Walker",
+            "floor": 39,
+            "turns": 6
+        },
+        {
+            "damage": 19,
+            "enemies": "Nemesis",
+            "floor": 40,
+            "turns": 5
+        },
+        {
+            "damage": 1,
+            "enemies": "3 Darklings",
+            "floor": 41,
+            "turns": 4
+        },
+        {
+            "damage": 0,
+            "enemies": "Reptomancer",
+            "floor": 44,
+            "turns": 3
+        },
+        {
+            "damage": 11,
+            "enemies": "Nemesis",
+            "floor": 46,
+            "turns": 5
+        },
+        {
+            "damage": 7,
+            "enemies": "Sphere and 2 Shapes",
+            "floor": 48,
+            "turns": 4
+        }
+    ],
+    "green": 0,
+    "mystery_machine": 6,
+    "metric_campfire_upgraded": 8,
+    "potion_slots": 2,
+    "chose_neow_reward": false,
+    "event_seed_count": 6,
+    "metric_relics_obtained": [
+        {
+            "floor": 3,
+            "key": "Ornamental Fan"
+        },
+        {
+            "floor": 6,
+            "key": "Bottled Tornado"
+        },
+        {
+            "floor": 8,
+            "key": "Blue Candle"
+        },
+        {
+            "floor": 9,
+            "key": "Whetstone"
+        },
+        {
+            "floor": 11,
+            "key": "HornCleat"
+        },
+        {
+            "floor": 12,
+            "key": "PreservedInsect"
+        },
+        {
+            "floor": 23,
+            "key": "Orichalcum"
+        },
+        {
+            "floor": 25,
+            "key": "Happy Flower"
+        },
+        {
+            "floor": 26,
+            "key": "Mummified Hand"
+        },
+        {
+            "floor": 29,
+            "key": "Singing Bowl"
+        },
+        {
+            "floor": 40,
+            "key": "Art of War"
+        },
+        {
+            "floor": 44,
+            "key": "Letter Opener"
+        },
+        {
+            "floor": 46,
+            "key": "Nunchaku"
+        }
+    ],
+    "daily_date": 0,
+    "obtained_cards": {
+        "Sever Soul": 1,
+        "Immolate": 1,
+        "Warcry": 1,
+        "Sentinel": 1,
+        "Juggernaut": 1,
+        "ThirdEye": 1,
+        "Impervious": 1,
+        "Twin Strike": 1,
+        "Discovery": 1,
+        "Disarm": 1,
+        "Purity": 1,
+        "Shrug It Off": 1,
+        "Headbutt": 1,
+        "Burning Pact": 1,
+        "Fiend Fire": 1,
+        "Metallicize": 1,
+        "Reckless Charge": 1,
+        "Battle Trance": 1,
+        "Power Through": 1,
+        "Dark Embrace": 2,
+        "PanicButton": 1,
+        "True Grit": 1,
+        "Backflip": 1,
+        "Feel No Pain": 1
+    },
+    "play_time": 4258,
+    "hand_size": 5,
+    "max_health": 81,
+    "monster_seed_count": 109,
+    "basemod:mod_relic_saves": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "bottled_tornado_misc": 0,
+    "potions": [
+        "GamblersBrew",
+        "GamblersBrew"
+    ]
+}
