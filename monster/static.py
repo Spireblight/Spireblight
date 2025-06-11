@@ -185,6 +185,7 @@ def load_mt1():
                 _query_cache[sanitize(value.name)].append(value)
 
 def load_mt2():
+    return
     _internal_cache.clear()
     _query_cache.clear()
     for file in os.listdir(os.path.join("monster", "_static", "mt2")):
