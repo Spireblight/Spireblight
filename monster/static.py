@@ -161,8 +161,9 @@ class Character(Base2):
     def info(self) -> str:
         return f"{self.name} ({self.rarity} {self.type} {self.clan}) [{self.size} pips] ({self.cost}) {self.attack}/{self.health} - {self.description}"
 
-class Misc2(Base2):
-    pass
+class Misc2:
+    def __init__(self, data):
+        pass
 
 _map2 = {
     "cards": Card2,
