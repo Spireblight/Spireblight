@@ -161,6 +161,9 @@ class Character(Base2):
     def info(self) -> str:
         return f"{self.name} ({self.rarity} {self.type} {self.clan}) [{self.size} pips] ({self.cost}) {self.attack}/{self.health} - {self.description}"
 
+class Misc2(Base2):
+    pass
+
 _map2 = {
     "cards": Card2,
     "characters": Character,
@@ -189,6 +192,6 @@ def load_mt2():
         with open(os.path.join("monster", "_static", "mt2", file)) as f:
             data = json.load(f)
             for d in data:
-                value = _map2.get(file[:-5], Misc)(d)
+                value = _map2.get(file[:-5], Misc2)(d)
                 _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
