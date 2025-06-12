@@ -7,7 +7,7 @@ elsewhere, I will move the stuff out of the repo.
 
 ## Installation
 
-This needs Python 3.10 or higher. To set up the project, you should only need create a
+This needs Python 3.11 or higher. To set up the project, you should only need create a
 virtualenv and install the requirements:
 
 ```bash
@@ -69,7 +69,7 @@ Development discord: https://discord.gg/RHYrs3Nsve
 2. Create virtual environment and install dependancies:
     1. Create env:
         ```bash
-        python3.10 -m venv env
+        python3.11 -m venv env
         ```
     2.  Start virtual environment:
         ```bash
