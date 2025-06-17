@@ -1251,6 +1251,24 @@ class Quote:
         ]
 
 
+@router.get("/quotes/as-json")
+async def get_raw_quotes(req: Request):
+    l = []
+    def _d(i, x):
+        return {
+            "num": i,
+            "line": x[0],
+            "author": x[1],
+            "adder": x[2],
+            "is_quote": x[3],
+            "epoch": x[4],
+        }
+
+    for i, q in enumerate(_quotes):
+        l.append(_d(i, q.to_json()))
+
+    return Response(text=json.dumps(l, indent=4), content_type="application/json")
+
 @command("quote", "randomquote")
 async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
     """Edit the quote database or pull a specific or random quote."""
@@ -1406,6 +1424,13 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                         await ctx.reply(
                             f"The quotes with this text are {', '.join(str(x) for x in found)}."
                         )
+
+        case "list" | "json" | "db":
+            if not _quotes:
+                await ctx.reply("There are no quotes.")
+                return
+
+            await ctx.reply(f"You can see (barebones) quotes here: {config.server.url}/quotes/as-json")
 
         case "random":
             if not _quotes:
