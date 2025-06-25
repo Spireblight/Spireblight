@@ -35,16 +35,16 @@ _query_params = {
     "maxResults": "1",
 }
 
-_start_time = datetime.datetime.now(datetime.UTC)
+_start_time = datetime.datetime.now(datetime.timezone.utc)
 
 def uptime() -> str:
-    delta = (datetime.datetime.now(datetime.UTC) - _start_time)
+    delta = (datetime.datetime.now(datetime.timezone.utc) - _start_time)
     minutes, seconds = divmod(delta.seconds, 60)
     hours, minutes = divmod(minutes, 60)
     return f"{delta.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
 
 def now() -> str:
-    return datetime.datetime.now(datetime.UTC).isoformat(" ", "seconds")
+    return datetime.datetime.now(datetime.timezone.utc).isoformat(" ", "seconds")
 
 env = aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
 env.globals["author"] = __author__
