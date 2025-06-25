@@ -173,6 +173,15 @@ class Clan(Base2):
     def info(self):
         return self.name
 
+class Covenant(Base2):
+    def __init__(self, data):
+        super().__init__(data)
+        self.level: int = data["level"]
+
+    @property
+    def info(self):
+        return f"Covenant {self.level}: {self.description}"
+
 class Enhancer(Base2):
     def __init__(self, data: dict):
         super().__init__(data)
@@ -212,6 +221,7 @@ _map2 = {
     "cards": Card2,
     "characters": Character,
     "classes": Clan,
+    "covenants": Covenant,
     "enhancers": Enhancer,
     "relics": Relic,
     "upgrades": Upgrade,
