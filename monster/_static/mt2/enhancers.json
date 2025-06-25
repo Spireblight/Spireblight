@@ -6,7 +6,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-[effect0.upgrade.costreduction][ember]</nobr> and gain [inherent].",
+        "raw": "Upgrade a spell to cost -1 Ember and gain Intrinsic.",
         "lore": ""
     },
     {
@@ -36,7 +36,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to gain [juice].",
+        "raw": "Upgrade a spell to gain Doublestack.",
         "lore": ""
     },
     {
@@ -46,7 +46,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Gain <b>Wrath</b> Ability.",
+        "raw": "Gain Wrath Ability.",
         "lore": ""
     },
     {
@@ -76,7 +76,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-[effect0.upgrade.costreduction][ember].</nobr>",
+        "raw": "Upgrade a spell to cost -3 Ember.",
         "lore": ""
     },
     {
@@ -96,7 +96,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit with [endless].",
+        "raw": "Upgrade a unit with Endless.",
         "lore": ""
     },
     {
@@ -106,7 +106,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[rage] [effect0.upgrade.status0.power]. [revenge]: Permanently gain [rage] [effect0.upgrade.charactertrigger0.effect0.upgrade.status0.power].",
+        "raw": "Rage [effect0.upgrade.status0.power]. Revenge: Permanently gain Rage [effect0.upgrade.charactertrigger0.effect0.upgrade.status0.power].",
         "lore": ""
     },
     {
@@ -116,7 +116,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[ability]: Worthy Sacrifice.",
+        "raw": "Ability: Worthy Sacrifice.",
         "lore": ""
     },
     {
@@ -126,7 +126,7 @@
         "clan": "Luna Coven",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [conduit] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Conduit [effect0.upgrade.status0.power].",
         "lore": ""
     },
     {
@@ -486,7 +486,7 @@
         "clan": "",
         "rarity": "Uncommon",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-[effect0.upgrade.costreduction][ember]</nobr> and gain [consume].",
+        "raw": "Upgrade a spell to cost <nobr>-2[ember]</nobr> and gain [consume].",
         "lore": ""
     },
     {
@@ -546,7 +546,7 @@
         "clan": "",
         "rarity": "Uncommon",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-[effect0.upgrade.costreduction][ember].</nobr>",
+        "raw": "Upgrade a spell to cost <nobr>-1[ember].</nobr>",
         "lore": ""
     },
     {

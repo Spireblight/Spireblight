@@ -14,10 +14,10 @@ from typehints import ContextType
 from configuration import config
 
 class MonsterSave:
-    def __init__(self):
+    def __init__(self, file):
         data = None
         try:
-            with open(os.path.join("data", "monster-train-save.json"), "r") as f:
+            with open(os.path.join("data", file), "r") as f:
                 data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
@@ -57,15 +57,19 @@ class MonsterSave:
     def mutators(self) -> list[Mutator]:
         return [get(x) for x in self._data["startingConditions"]["mutators"]]
 
-_savefile = MonsterSave()
+_savefile = MonsterSave("monster-train-save.json")
+_save2 = MonsterSave("monster-train-2-save.json")
 
 async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
-    if _savefile._data is None or not (_savefile.main_class and _savefile.sub_class):
-        if ctx is not None:
-            await ctx.reply("Not in a run.")
-        return
+    if (_savefile._data is not None and (_savefile.main_class and _savefile.sub_class)):
+        return _savefile
 
-    return _savefile
+    if (_save2._data is not None and (_save2.main_class and _save2.sub_class)):
+        return _save2
+
+    if ctx is not None:
+        await ctx.reply("Not in a run.")
+
 
 @router.post("/sync/monster")
 async def get_data(req: Request):
@@ -83,6 +87,30 @@ async def get_data(req: Request):
         if isinstance(value, FileField):
             value = value.file.read()
         with open(os.path.join("data", f"mt-runs-{name}.sqlite3"), "wb") as f:
+            f.write(value)
+
+    for k in post:
+        if k == "main" or k.isdigit() or k.endswith(".db"):
+            write_db(k)
+
+    return Response()
+
+@router.post("/sync/monster-2")
+async def get_data(req: Request):
+    save = (await get_req_data(req, "save"))[0]
+    data = json.loads(save)
+    _save2.update_data(data)
+    with open(os.path.join("data", "monster-train-2-save.json"), "w") as f:
+        json.dump(data, f, indent=config.server.json_indent)
+
+    # handle database stuff
+    post = await req.post()
+
+    def write_db(name: str):
+        value = post[name]
+        if isinstance(value, FileField):
+            value = value.file.read()
+        with open(os.path.join("data", f"mt2-runs-{name}.sqlite3"), "wb") as f:
             f.write(value)
 
     for k in post:

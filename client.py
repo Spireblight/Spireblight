@@ -16,6 +16,7 @@ async def main():
     lasp = [0, 0, 0]
     last_sd = 0
     last_mt = 0
+    last_mt2 = 0
     runs_last = {}
     use_sd = False
     use_mt = False
@@ -44,7 +45,11 @@ async def main():
     if use_mt:
         mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
         mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
-        print(f"\nFolder: {mt_folder}\nSavefile: {mt_file}")
+        print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
+
+        mt2_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain2")
+        mt2_file = os.path.join(mt2_folder, "saves", "save-singlePlayer.json")
+        print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
 
     async with ClientSession(config.server.url) as session:
         # Check if the app is registered, prompt it if not
@@ -174,6 +179,7 @@ async def main():
                             has_save = False
 
                 if use_mt:
+                    ## MT1
                     try:
                         cur_mt = os.path.getmtime(mt_file)
                     except OSError:
@@ -205,6 +211,40 @@ async def main():
                                     runs_last.update(mt_runs_last)
                                 else:
                                     print(f"ERROR: Monster Train data not properly sent:\n{resp.reason}")
+
+                    ## MT2
+
+                    try:
+                        cur_mt2 = os.path.getmtime(mt2_file)
+                    except OSError:
+                        traceback.print_exc()
+                    else:
+                        if cur_mt2 != last_mt2:
+                            with open(mt2_file, "rb") as f:
+                                mt2_data = f.read()
+                            mt2_runs = {"save": mt2_data}
+                            mt2_runs_last = {}
+                            for file in os.listdir(os.path.join(mt2_folder, "run-history")):
+                                break # otherwise, it might exceed the data limit. let's not.
+                                if not file.endswith(".db"):
+                                    continue
+                                if file == "runHistory.db": # main one
+                                    key = "main"
+                                elif file.startswith("runHistoryData"): # something like runHistoryData00.db
+                                    key = file[14:16]
+                                else:
+                                    key = file # just in case
+                                last = os.path.getmtime(os.path.join(mt_folder, "run-history", file))
+                                if runs_last.get(key) != last:
+                                    with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
+                                        mt_runs[key] = f.read()
+                                        mt_runs_last[key] = last
+                            async with session.post("/sync/monster-2", data=mt2_runs, params={"key": config.server.secret}) as resp:
+                                if resp.ok:
+                                    last_mt2 = cur_mt2
+                                    runs_last.update(mt2_runs_last)
+                                else:
+                                    print(f"ERROR: Monster Train 2 data not properly sent:\n{resp.reason}")
 
                 # update all profiles
                 data = {
