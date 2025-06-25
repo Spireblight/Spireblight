@@ -109,11 +109,13 @@ class Challenge(Base):
 class Misc(Base):
     """For things like clan names."""
 
-class Unknown(Base):
+class Unknown:
     def __init__(self, name: str):
         self.internal = name
         self.name = name
         self.description = f"Could not find description for {name!r} (this is a bug)"
+        self.id = name
+        self.lore = "Once upon a time, there was something I could not find."
 
 _map1 = {
     "cards": Card,
@@ -122,11 +124,13 @@ _map1 = {
     "challenges": Challenge,
 }
 
+# TODO: Merge stuff that's in multiple places so we can combine the Unit and the Card part of them
+
 class Base2:
     def __init__(self, data: dict):
         self.name: str = data.get("name", data.get("title", ""))
         self.description: str = data.get("description", data.get("raw", ""))
-        self.internal: str = data["internal"]
+        self.internal: str = data.get("internal", "")
         self.id: str = data["id"]
         self.lore: str = data.get("lore", "")
 
@@ -143,6 +147,7 @@ class Card2(Base2):
         self.cost = int(data["cost"])
         self.unlock = int(data["unlock"])
         self.artist: str = data["artist"]
+        self.has_ability: bool = data["ability"]
         self.initial_cooldown = int(data["init_cooldown"])
         self.ability_cooldown = int(data["ability_cooldown"])
 

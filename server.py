@@ -2504,6 +2504,14 @@ async def mt_artifact(ctx: ContextType, save: MonsterSave, index: int = 0):
     await ctx.reply(f"The artifact at position {index} is {relicData.info}")
 
 
+@mt_command("pyre")
+async def mt_pyre(ctx: ContextType, save: MonsterSave):
+    ability = ""
+    if save.pyre.ability:
+        ability = f" (Ability: {save.pyre.ability})"
+    await ctx.reply(f"We are using {save.pyre.name}: {save.pyre.description}{ability}")
+
+
 @slice_command("curses")
 async def curses(ctx: ContextType, save: CurrentRun):
     """Display the current run's curses."""

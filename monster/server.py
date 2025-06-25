@@ -5,7 +5,7 @@ import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
 
-from monster.static import get, get_safe, Challenge, Mutator, Artifact
+from monster.static import get, get_safe, Challenge, Mutator, Artifact, Character
 from webpage import router
 from utils import get_req_data
 
@@ -58,6 +58,14 @@ class MonsterSave:
         ch = self._data["startingConditions"]["spChallengeId"]
         if ch:
             return get(ch)
+
+    @property
+    def covenant_level(self) -> int:
+        return self._data["startingConditions"]["ascensionLevel"]
+
+    @property
+    def pyre(self) -> Character:
+        return get(self._data["startingConditions"]["pyreCharacterId"])
 
     @property
     def mutators(self) -> list[Mutator]:
