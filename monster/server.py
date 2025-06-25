@@ -28,7 +28,10 @@ class MonsterSave:
 
     @property
     def main_class(self) -> str:
-        return _get_sanitized(self._data["startingConditions"]["mainClassInfo"]["className"])
+        main = self._data["startingConditions"]["mainClassInfo"]
+        if "className" in main:
+            return _get_sanitized(main["className"])
+        return _get_sanitized(main["classId"])
 
     @property
     def main_exiled(self) -> bool:
@@ -36,7 +39,10 @@ class MonsterSave:
 
     @property
     def sub_class(self) -> str:
-        return _get_sanitized(self._data["startingConditions"]["subclassInfo"]["className"])
+        sub = self._data["startingConditions"]["subclassInfo"]
+        if "className" in sub:
+            return _get_sanitized(sub["className"])
+        return _get_sanitized(sub["classId"])
 
     @property
     def sub_exiled(self) -> bool:
@@ -121,9 +127,10 @@ async def get_data(req: Request):
 
 @router.get("/mt/debug")
 async def mt_current(req: Request):
-    if _savefile._data is None:
+    save = await get_savefile()
+    if save is None:
         raise HTTPServiceUnavailable(reason="No savefile present on server")
-    data = _savefile._data
+    data = save._data
     if "raw" not in req.query:
         data = _get_sanitized(data)
     return Response(text=json.dumps(data, indent=4), content_type="application/json")
