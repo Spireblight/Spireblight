@@ -192,8 +192,9 @@ class Enhancer(Base2):
         self.unlock = int(data["unlock"])
 
 class Event(Base2):
-    """Handle events."""
-    # there's a lot to unpack there, and it'll be... done, eventually
+    def __init__(self, data):
+        super().__init__(data)
+        self.name = data["storyId"] # this is temporary, need to fix
 
 class Node(Base2):
     """Store map node information"""
