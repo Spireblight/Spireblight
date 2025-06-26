@@ -1,0 +1,87 @@
+[
+    {
+        "id": "481c8c15-8598-40fe-9c93-382f7fd479af",
+        "name": "Mark of Invasion",
+        "description": "At the start of battle, enemy units appear on each floor. A ATK/A HP"
+    },
+    {
+        "id": "59a2c19e-3a60-4e7e-9222-d03423212bd9",
+        "name": "Mark of Invasion",
+        "description": "At the start of battle, enemy units appear on each floor. B ATK/B HP"
+    },
+    {
+        "id": "52488856-83ea-47be-a531-d8db5cfeef69",
+        "name": "Mark of Invasion",
+        "description": "At the start of battle, enemy units appear on each floor. C ATK/C HP"
+    },
+    {
+        "id": "2e24d1d9-6f7b-49e7-b378-f7b0bd65cef9",
+        "name": "Pyre Dampener",
+        "description": "-A Ember per turn."
+    },
+    {
+        "id": "78f3f6f9-ac15-443e-a916-caaff68a74ad",
+        "name": "Pyre Dampener",
+        "description": "-B Ember per turn."
+    },
+    {
+        "id": "67bbc264-bfcc-4237-bc53-038088eca400",
+        "name": "Pyre Dampener",
+        "description": "-C Ember per turn."
+    },
+    {
+        "id": "070acb52-ae56-45de-a633-c7a1ee1016ff",
+        "name": "Mind Muddler",
+        "description": "Draw -A each turn. "
+    },
+    {
+        "id": "ed0ada8a-e5f8-4a78-b861-5fe589f7195f",
+        "name": "Mind Muddler",
+        "description": "Draw -B each turn. "
+    },
+    {
+        "id": "c52f7c5d-815d-454c-963f-20ce2523e1ba",
+        "name": "Heaven's Seal",
+        "description": "Non-boss enemy units restore A health when they move up a floor."
+    },
+    {
+        "id": "b1b76d68-2fdf-4012-b436-dbe6bb0b013a",
+        "name": "Heaven's Seal",
+        "description": "Non-boss enemy units restore B health when they move up a floor."
+    },
+    {
+        "id": "1e9e4c20-4389-4486-b912-c088fd877bdf",
+        "name": "Tough as Nails",
+        "description": "Enemy units enter with Titanskin A."
+    },
+    {
+        "id": "f3bf8290-9eb5-4d33-820c-5693c3bb18f6",
+        "name": "Tough as Nails",
+        "description": "Enemy units enter with Titanskin B."
+    },
+    {
+        "id": "6c1dfdaa-83e2-4a99-9eca-8356d100eb6a",
+        "name": "Thorn Guard",
+        "description": "A Penitent Prayerstone is spawned on each floor. A HP/A Spikes"
+    },
+    {
+        "id": "f85d2039-4ce0-4e9c-b262-f3b4b0bed27f",
+        "name": "Thorn Guard",
+        "description": "A Penitent Prayerstone is spawned on each floor. B HP/B Spikes"
+    },
+    {
+        "id": "a86104e9-a44b-4569-b02e-3da4f023913d",
+        "name": "Stone of the Undying",
+        "description": "The front non-boss enemy in each wave gets Reanimate A."
+    },
+    {
+        "id": "50cb83ef-d91b-4655-8b17-35a49aa1f001",
+        "name": "Stone of the Undying",
+        "description": "The front non-boss enemy in each wave gets Reanimate B."
+    },
+    {
+        "id": "536645ea-12cb-4a6e-b0e5-3ecf026f536c",
+        "name": "Seal of Aggression",
+        "description": "Non-boss enemy units get Multistrike A."
+    }
+]

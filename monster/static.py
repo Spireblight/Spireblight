@@ -2,6 +2,7 @@
 # - https://github.com/brendanjhoffman/TrainStewardBot/tree/main (names, descriptions)
 # - https://github.com/KittenAqua/TrainworksModdingTools/tree/master/TrainworksModdingTools/Constants (IDs)
 # MT2 data from the modding discord (might become desynced of updates)
+# huge thanks to PattyHoswell from the Shiny Shoe discord for sending me a bunch of JSONs
 
 from __future__ import annotations
 
@@ -136,7 +137,7 @@ class Base2:
 
     @property
     def info(self):
-        return f"{self.name}: {self.description}"
+        return f"{self.__class__.__name__} {self.name}: {self.description}"
 
 class Card2(Base2):
     def __init__(self, data: dict):
@@ -177,6 +178,7 @@ class Covenant(Base2):
     def __init__(self, data):
         super().__init__(data)
         self.level: int = data["level"]
+        self.name = f"Covenant {self.level}"
 
     @property
     def info(self):
@@ -198,6 +200,13 @@ class Relic(Base2):
         self.story_event: bool = data["story_event"]
         self.dragons_hoard: bool = data["dragons_hoard"]
         self.boss_artifact: bool = data["boss_artifact"]
+
+class Trial(Base2):
+    """Store trial information."""
+    # trials values are not 100% certain
+    # aka the "Enemies heal for X" where X is guessed but not entirely known
+    # this is why the descriptions are a bit... weird
+    # to be able to identify them during runs, and thus fix
 
 class Upgrade(Base2):
     def __init__(self, data):
