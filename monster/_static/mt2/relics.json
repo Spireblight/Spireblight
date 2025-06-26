@@ -9,7 +9,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "<b>Sting</b> spells get +[effect0.upgrade.bonusdamage] [magicpower].",
+        "description": "Sting spells get +[effect0.upgrade.bonusdamage] Magic Power.",
         "lore": "Before the Edge Priory became the reclusive group they are now, they would channel their energy into steel lockets that could be worn by their Awoken Hollow protectors, allowing the Hollows to gain more strength at the cost of their longevity."
     },
     {
@@ -22,7 +22,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, add a <b>Vine Grasp</b> spell with [ephemeral] to your hand.",
+        "description": "At start of turn, add a Vine Grasp spell with Ephemeral to your hand.",
         "lore": "Not all of the Edge Priory endeavors have been successes. Their attempts to return to the physical form of an Animus have been met with countless failures. The vines they\u2019ve used in these experiments wither with the unstable energy that\u2019s cursed them."
     },
     {
@@ -35,7 +35,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, the front friendly unit on each floor gains +[effect0.upgrade.bonushp][health].",
+        "description": "At start of turn, the front friendly unit on each floor gains +[effect0.upgrade.bonushp]HP.",
         "lore": "Wyldenten speaks in these visions of the Exiles\u2019 purpose to forestall the Divinities desertion and avoid Armageddon. This history has been lost to time, it seems, as we\u2019ve only created this new destruction ourselves."
     },
     {
@@ -48,7 +48,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect0.power][attack] per stack of [spikes].",
+        "description": "Friendly units get +[effect0.power]ATK per stack of [spikes].",
         "lore": "The roots of the Wildwood spread farther than just their own Ring, but the farther they travel from the center of the wood, the more likely they are to wither and die."
     },
     {
@@ -126,7 +126,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "<b>Sting</b> spells get +[effect0.upgrade.bonusdamage] [magicpower] and [piercing].",
+        "description": "Sting spells get +[effect0.upgrade.bonusdamage] Magic Power and [piercing].",
         "lore": "Using the smithing techniques I taught them, the Edge Priory developed casings for the thorns ejected from the Awoken, turning them into much deadlier weapons against the Winged. "
     },
     {
@@ -139,7 +139,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, add a <b>Sting</b> spell to your hand.",
+        "description": "At start of turn, add a Sting spell to your hand.",
         "lore": "After a thorn has lodged into the ground and released its spores, it will wilt and return to the Wildwood. On very rare occasions, the thorn will produce a fruit that is coveted among Channelers, though I find it personally much too sour."
     },
     {
@@ -165,7 +165,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage][attack] to a unit's Equipment on [slay].",
+        "description": "Permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage]ATK to a unit's Equipment on [slay].",
         "lore": "\u201cFeed me,\u201d hissed the sword. For the blade craved blood and would not be sated until its steel was fed."
     },
     {
@@ -243,7 +243,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the end of the entire battle, friendly units at the front of the floor permanently gain +[effect0.trigger0.effect0.upgrade.charactertrigger0.effect0.upgrade.bonushp][health].",
+        "description": "At the end of the entire battle, friendly units at the front of the floor permanently gain +[effect0.trigger0.effect0.upgrade.charactertrigger0.effect0.upgrade.bonushp]HP.",
         "lore": "A ring that belonged to Finna the Doomed. May it bring greater luck to whoever now wears it."
     },
     {
@@ -321,7 +321,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain +[effect0.power][attack] on [slay].",
+        "description": "Friendly units gain +[effect0.power]ATK on [slay].",
         "lore": "When a Hellhorned defeats another in battle, they will break off the loser\u2019s horns and add it to their collection, forming them into a crown. I\u2019ve learned the hard way that asking to wear another\u2019s crown is considered incredibly rude."
     },
     {
@@ -386,7 +386,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[rage] adds an additional <nobr>+[effect0.power][attack]</nobr> per stack.",
+        "description": "[rage] adds an additional <nobr>+[effect0.power]ATK</nobr> per stack.",
         "lore": "I modified the Pyre so that the sound it makes when it is threatened can no longer be heard by any creature, in Heaven or in Hell. However, an unintended consequence has been observed: distant Pyre shards will resonate with the same frequency and vibrate wildly, sometimes even shattering."
     },
     {
@@ -438,7 +438,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When an equipped unit dies, permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage][attack] to their Equipment.",
+        "description": "When an equipped unit dies, permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage]ATK to their Equipment.",
         "lore": "This bottle certainly gives off mixed messages. Between the skull and the note with the instructions \u2018Eat Me,\u2019 it\u2019s unclear what you\u2019re supposed to do."
     },
     {
@@ -633,7 +633,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Fae gain [conduit] [effect0.upgrade.status0.power] and +[effect0.upgrade.bonusdamage][attack] on [mooncycle].",
+        "description": "Fae gain [conduit] [effect0.upgrade.status0.power] and +[effect0.upgrade.bonusdamage]ATK on [mooncycle].",
         "lore": "\u201cPsst! Can you pass me some stardust treats? We\u2019re running low in here!\u201d"
     },
     {
@@ -659,7 +659,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "<b>Selene</b> units get +[effect1.upgrade.bonusdamage][attack] during [fullmoon]. <b>Silent</b> units get +[effect0.upgrade.bonusdamage][attack] during [newmoon].",
+        "description": "Selene units get +[effect1.upgrade.bonusdamage]ATK during [fullmoon]. Silent units get +[effect0.upgrade.bonusdamage]ATK during [newmoon].",
         "lore": "A lantern that illuminates depending on the phase of the moon."
     },
     {
@@ -672,7 +672,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At end of turn, if it is [full], spells in hand gain +[effect0.upgrade.bonusdamage] [magicpower].",
+        "description": "At end of turn, if it is [full], spells in hand gain +[effect0.upgrade.bonusdamage] Magic Power.",
         "lore": "\u201cTake this stone, marked by Ekka\u2019s blessing, and place it outside when the moon is full. You will always have a piece of the moon\u2019s protection with you wherever you go.\u201d\n\u2014The Ritual Tome"
     },
     {
@@ -685,7 +685,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[mageblade] adds an additional <nobr>+[effect0.power][attack]</nobr> per stack.",
+        "description": "[mageblade] adds an additional <nobr>+[effect0.power]ATK</nobr> per stack.",
         "lore": "A blade carved from the moon itself and so thin that it cannot be seen, apart from when it gleams in the moonlight."
     },
     {
@@ -802,7 +802,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[tomb] units get +[effect0.power][health] and [burnout] [effect1.upgrade.status0.power].",
+        "description": "[tomb] units get +[effect0.power]HP and [burnout] [effect1.upgrade.status0.power].",
         "lore": "Only the wealthiest of Waxers can afford the portable melting pot I created to allow on-demand wax guttering. Out of charity, unfortunate Tombs are given a spout by the Reformed so they can survive."
     },
     {
@@ -841,7 +841,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit dies, apply +[effect0.upgrade.bonusdamage][attack] to that unit.",
+        "description": "When a friendly unit dies, apply +[effect0.upgrade.bonusdamage]ATK to that unit.",
         "lore": "With each melt and reform comes the development of new resin, giving the Waxer a particular edge they didn\u2019t have in their previous life. I\u2019ve chipped some away to study further once aboard the Boneshaker."
     },
     {
@@ -1036,7 +1036,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Units gain +[effect0.power][health] and +[effect1.power][attack] for each upgrade on their card.",
+        "description": "Units gain +[effect0.power]HP and +[effect1.power]ATK for each upgrade on their card.",
         "lore": "A trinket made of fool\u2019s gold given to dragons who have proven supreme aptitude for business."
     },
     {
@@ -1101,7 +1101,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Dragons and Whelps gain +[effect0.power][attack].",
+        "description": "Dragons and Whelps gain +[effect0.power]ATK.",
         "lore": "When a dragon loses their teeth from eating too much sweetened gold, such sharp dentures must be worn. They have become such a fashion statement among the elite Pyreborne."
     },
     {
@@ -1140,7 +1140,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "After using an ability, friendly units gain +[effect0.power][attack].",
+        "description": "After using an ability, friendly units gain +[effect0.power]ATK.",
         "lore": "A motivational tool used on dragons whose quarterly returns are deemed unacceptable."
     },
     {
@@ -1179,7 +1179,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play your third spell of the turn, all cards gain +[effect0.power] [magicpower] for the rest of this battle.",
+        "description": "When you play your third spell of the turn, all cards gain +[effect0.power] Magic Power for the rest of this battle.",
         "lore": "When we imprisoned the Titan for the safety of Hell, the Stygian Guard stripped it of its name. When the Titan is released again, its name will return with it."
     },
     {
@@ -1348,7 +1348,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the start of battle, summon a <b>Morsel Miner</b> on each floor.",
+        "description": "At the start of battle, summon a Morsel Miner on each floor.",
         "lore": "Once the Rail was complete, I returned to the Crucible to enlist the Shroud\u2019s help to create the Boneshaker. When the last bolt was punched into the train, they drove one last spike into the Rail to memorialize the train\u2019s departure."
     },
     {
@@ -1543,7 +1543,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[funguy] gain +[effect0.power][attack] per [troop] stack.",
+        "description": "[funguy] gain +[effect0.power]ATK per [troop] stack.",
         "lore": "Although the Underlegion fled their forest hoping to escape the Great Decay, they brought with them a few unwanted spores. One day, they might find a place to grow and I hope to never see that day."
     },
     {
@@ -1660,7 +1660,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the start of battle, apply <b>Boiler Room</b> on the first floor.",
+        "description": "At the start of battle, apply Boiler Room on the first floor.",
         "lore": "Trains don\u2019t run on dreams and wishes. Behind every sheet of metal is an intricately engineered piece of work."
     },
     {
@@ -1725,7 +1725,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Non-champion friendly units gain [effect0.secondarypower]x base [attack]. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
+        "description": "Non-champion friendly units gain [effect0.secondarypower]x base ATK. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
         "lore": "\u201cThat other banana wasn\u2019t very a-peel-ing, was it?\u201d"
     },
     {
@@ -1816,7 +1816,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Your Pyre gets [effect0.power][health].",
+        "description": "Your Pyre gets [effect0.power]HP.",
         "lore": "Heaven and Hell thought that the Last Divinity would be the last of the Titans... hence the name they called it. They were, unfortunately, quite wrong."
     },
     {
@@ -1829,7 +1829,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Create an [ephemeral] copy of the first spell you play each turn.",
+        "description": "Create an Ephemeral copy of the first spell you play each turn.",
         "lore": "A historical account of the great battles between Heaven and Hell before the Covenant. Written in the back is a first hand account from a demon about the first days after the Covenant was broken."
     },
     {
@@ -1842,7 +1842,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the start of battle, apply <b>Fight Club</b> on the third floor.",
+        "description": "At the start of battle, apply Fight Club on the third floor.",
         "lore": "The first trains weren\u2019t built for warfare, they were meant to connect the people of Heaven and Hell together. But now, the trains have been fully outfitted as war machines."
     },
     {
@@ -1868,7 +1868,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Non-champion friendly units gain +[effect0.power][attack]. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
+        "description": "Non-champion friendly units gain +[effect0.power]ATK. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
         "lore": "\u201cPeel my wrath!\u201d"
     },
     {
@@ -1894,7 +1894,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "The coveted Light of Seraph. Those from above worship it as much as we value the Pyre. From what I\u2019ve seen it\u2019s powerful, sure, but it\u2019s not as special as they say. That doesn\u2019t mean I won\u2019t take some if given the chance."
     },
     {
@@ -1907,7 +1907,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "The coveted Light of Seraph. Those from above worship it as much as we value the Pyre. From what I\u2019ve seen it\u2019s powerful, sure, but it\u2019s not as special as they say. That doesn\u2019t mean I won\u2019t take some if given the chance."
     },
     {
@@ -1920,7 +1920,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "When Fel left to join her cause, she left me with remaining Embers of the Pyre. She could have been killed for this, but she gave them anyway. That\u2019s all I have to say about Fel."
     },
     {
@@ -1933,7 +1933,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "When Fel left to join her cause, she left me with remaining Embers of the Pyre. She could have been killed for this, but she gave them anyway. That\u2019s all I have to say about Fel."
     },
     {
@@ -1946,7 +1946,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect1.power][attack] but [effect0.power][attack] for every non-boss Artifact you own.",
+        "description": "Friendly units get +10 ATK but -1 ATK for every non-boss Artifact you own.",
         "lore": "The recording of history can be much more speculative than one might think, for even the most objective historians. When it is up to a historian\u2019s imagination, the simplest explanations are the most likely to have occurred."
     },
     {
@@ -2037,7 +2037,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "One of my crowning achievements. A metal-based compound that can be formed into any shape. I\u2019ve only been able to create a small batch of it, but a little goes a long way."
     },
     {
@@ -2050,7 +2050,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "One of my crowning achievements. A metal-based compound that can be formed into any shape. I\u2019ve only been able to create a small batch of it, but a little goes a long way."
     },
     {
@@ -2128,7 +2128,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the start of battle, gain a <b>Calcified Ember</b> that converts to <b>Excavated Ember</b> after not playing it once.",
+        "description": "At the start of battle, gain a Calcified Ember that converts to Excavated Ember after not playing it once.",
         "lore": "\u201cWhy so serious?\u201d"
     },
     {
@@ -2154,7 +2154,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2167,7 +2167,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2180,7 +2180,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower][attack] and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2206,7 +2206,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [stealth] [effect1.power] on [summon] and [slay]. +[effect0.power][attack] per stack of [stealth].",
+        "description": "Friendly units gain [stealth] [effect1.power] on [summon] and [slay]. +[effect0.power]ATK per stack of [stealth].",
         "lore": "They say Death himself walks beside the rail, and that is not a figure of speech. Though none have said it for long."
     },
     {
@@ -2258,7 +2258,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the start of battle, apply <b>Spell Sanctum</b> on the second floor.",
+        "description": "At the start of battle, apply Spell Sanctum on the second floor.",
         "lore": "With her father\u2019s Boneshaker, Heph didn\u2019t want to change any of the original designs. But with her own trains, she was willing to build wherever her imagination took her."
     },
     {
@@ -2310,7 +2310,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain +[effect0.power][health] for each rare card in your deck.",
+        "description": "Friendly units gain +[effect0.power]HP for each rare card in your deck.",
         "lore": "\u201cJesters do oft prove prophets.\u201d"
     },
     {
@@ -2323,7 +2323,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Train Steward units gain the <b>Boom</b> Ability.",
+        "description": "Train Steward units gain the Boom Ability.",
         "lore": "I did not just create the Stewards to aid me. They also contain a hidden defense mechanism that triggers if the Forge is attacked. I hope to never have to use them but, if I must, I am prepared."
     },
     {
@@ -2336,7 +2336,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect0.upgrade.bonusdamage][attack] and +[effect0.upgrade.bonushp][health].",
+        "description": "Friendly units get +[effect0.upgrade.bonusdamage]ATK and +[effect0.upgrade.bonushp]HP.",
         "lore": "When the Last Divinity died, the divine shards scattered across all of Heaven and Hell. Fragments of those shards still remain, cackling with latent divine energy."
     },
     {
@@ -2388,7 +2388,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, friendly units gain +[effect0.upgrade.bonusdamage][attack] and +[effect0.upgrade.bonushp][health] if they are the only friendly unit on the floor.",
+        "description": "At start of turn, friendly units gain +[effect0.upgrade.bonusdamage]ATK and +[effect0.upgrade.bonushp]HP if they are the only friendly unit on the floor.",
         "lore": "A token from better times, found in Limbo without its owner."
     },
     {
@@ -2427,7 +2427,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect1.power][attack]. Deal [effect0.power] damage to friendly units each turn.",
+        "description": "Friendly units get +[effect1.power]ATK. Deal [effect0.power] damage to friendly units each turn.",
         "lore": "Whoever once owned this must have had an incredible pain tolerance, as wearing it would feel like enduring countless papercuts at every moment."
     },
     {

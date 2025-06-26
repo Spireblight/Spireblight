@@ -51,8 +51,8 @@
     },
     {
         "id": "1e9e4c20-4389-4486-b912-c088fd877bdf",
-        "name": "Tough as Nails A",
-        "description": "Enemy units enter with Titanskin A."
+        "name": "Tough as Nails",
+        "description": "Enemy units enter with Titanskin 4."
     },
     {
         "id": "f3bf8290-9eb5-4d33-820c-5693c3bb18f6",
@@ -66,8 +66,8 @@
     },
     {
         "id": "f85d2039-4ce0-4e9c-b262-f3b4b0bed27f",
-        "name": "Thorn Guard B",
-        "description": "A Penitent Prayerstone is spawned on each floor. B HP/B Spikes"
+        "name": "Thorn Guard",
+        "description": "A Penitent Prayerstone is spawned on each floor. 200 HP/6 Spikes"
     },
     {
         "id": "a86104e9-a44b-4569-b02e-3da4f023913d",
