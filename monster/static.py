@@ -191,6 +191,10 @@ class Enhancer(Base2):
         self.rarity: str = data["rarity"]
         self.unlock = int(data["unlock"])
 
+class Event(Base2):
+    """Handle events."""
+    # there's a lot to unpack there, and it'll be... done, eventually
+
 class Node(Base2):
     """Store map node information"""
     # this JSON is... a bit of a mess
@@ -240,6 +244,7 @@ _map2 = {
     "classes": Clan,
     "covenants": Covenant,
     "enhancers": Enhancer,
+    "events": Event,
     "nodes": Node,
     "relics": Relic,
     "trials": Trial,
