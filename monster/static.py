@@ -191,6 +191,14 @@ class Enhancer(Base2):
         self.rarity: str = data["rarity"]
         self.unlock = int(data["unlock"])
 
+class Node(Base2):
+    """Store map node information"""
+    # this JSON is... a bit of a mess
+    # some things are not exactly clear as to what is what
+    # there's like 5 fields which are only used for 1-2 things each
+    # and 2 which are completely unnecessary for us
+    # but I don't wanna fuck around with regex to clear them atm
+
 class Relic(Base2):
     def __init__(self, data):
         super().__init__(data)
@@ -232,7 +240,9 @@ _map2 = {
     "classes": Clan,
     "covenants": Covenant,
     "enhancers": Enhancer,
+    "nodes": Node,
     "relics": Relic,
+    "trials": Trial,
     "upgrades": Upgrade,
 }
 
