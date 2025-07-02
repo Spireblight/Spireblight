@@ -952,6 +952,10 @@ async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 f"Timer {name} has been set to interval {interval}. If it was running, it will complete the existing interval."
             )
 
+@command("restart_server", twitch=False)
+async def restart(ctx: ContextType):
+    exec("pull")
+    await ctx.reply("Restarting server...")
 
 @command("command", flag="me")
 async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
