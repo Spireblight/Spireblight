@@ -16,8 +16,8 @@
     },
     {
         "id": "2e24d1d9-6f7b-49e7-b378-f7b0bd65cef9",
-        "name": "Pyre Dampener A",
-        "description": "-A Ember per turn."
+        "name": "Pyre Dampener",
+        "description": "-1 Ember per turn."
     },
     {
         "id": "78f3f6f9-ac15-443e-a916-caaff68a74ad",
@@ -71,8 +71,8 @@
     },
     {
         "id": "a86104e9-a44b-4569-b02e-3da4f023913d",
-        "name": "Stone of the Undying A",
-        "description": "The front non-boss enemy in each wave gets Reanimate A."
+        "name": "Stone of the Undying",
+        "description": "The front non-boss enemy in each wave gets Reanimate 2."
     },
     {
         "id": "50cb83ef-d91b-4655-8b17-35a49aa1f001",
