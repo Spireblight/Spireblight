@@ -1072,7 +1072,8 @@ class RelicData:
         elif self.relic.name == "Snecko Eye":
             # special handling for this
             per_turn = False
-            stats[-1] = stats[-1] / sum(stats[:-1])
+            if (c := sum(stats[:-1])) > 0:
+                stats[-1] = stats[-1] / c
 
         if isinstance(stats, int):
             desc.append(text[0] + str(stats))
