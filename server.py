@@ -72,7 +72,7 @@ from utils import (
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
-from gamedata import RelicData, Treasure
+from gamedata import RelicData, Treasure, Event
 
 from typehints import ContextType, CommandType
 import events
@@ -2257,20 +2257,18 @@ async def campfire_heal(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("nloth")
-async def nloth_traded(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
+async def nloth_traded(ctx: ContextType, save: Savefile):
     """Display which relic was traded for N'loth's Gift."""
-    if "Nloth's Gift" not in save._data["relics"]:
+    if get("Nloth's Gift") not in save.relics_bare:
         await ctx.reply("We do not have N'loth's Gift.")
         return
 
-    for evt in save._data["metric_event_choices"]:
-        if evt["event_name"] == "N'loth":
-            await ctx.reply(
-                f"We traded {get(evt['relics_lost'][0]).name} for N'loth's Gift."
-            )
-            return
-    else:
-        await ctx.reply("Something went terribly wrong.")
+    for node in save.path:
+        if isinstance(node, Event): # this check isn't strictly needed, but it makes the type checker happy
+            if node.name == "N'loth":
+                return await ctx.reply(f"We traded {node.relics_lost[0].name} for N'loth's Gift.")
+
+    await ctx.reply("Something went terribly wrong.")
 
 
 @with_savefile("eventchances", "event")
@@ -2285,7 +2283,7 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
         f"Normal fight: {hallway:.0%} - "
         f"Shop: {shop:.0%} - "
         f"Treasure: {chest:.0%} - "
-        f"Event: {hallway+shop+chest:.0%} - "
+        f"Event: {100-hallway-shop-chest:.0%} - "
         f"See {config.baalorbot.prefix}eventrng for more information."
     )
 
