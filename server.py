@@ -52,7 +52,7 @@ from cache.run_stats import (
     update_range,
 )
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, sanitize, Base, Card, RelicSet, _internal_cache
+from nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -72,7 +72,7 @@ from utils import (
 from disc import DiscordCommand
 from save import get_savefile, Savefile
 from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
-from gamedata import RelicData
+from gamedata import RelicData, Treasure, Event
 
 from typehints import ContextType, CommandType
 import events
@@ -220,9 +220,9 @@ def _create_cmd(output: str, name: str):
             else:
                 keywords["profile"] = profile
         if "$<savefile" in msg:
-            keywords["savefile"] = await get_savefile()
+            keywords["savefile"] = get_savefile()
             # No save file found:
-            if keywords["savefile"] is None:
+            if not keywords["savefile"].in_game:
                 await ctx.reply("Not in a run.")
                 return
         if "$<mt-save" in msg:
@@ -390,7 +390,7 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
 
     def inner(func):
         async def _savefile_get(ctx) -> list:
-            res = await get_savefile()
+            res = get_savefile()
             if res is None:
                 raise ValueError("No savefile")
             if res.character is None and not optional_save:
@@ -742,7 +742,7 @@ class Timer:
                 self.commands.append(maybe_cmd)  # in case it gets enabled again
                 continue
             if maybe_cmd == "current":
-                save = await get_savefile()
+                save = get_savefile()
                 if not save.in_game:
                     self.commands.append(maybe_cmd)
                     continue
@@ -1815,7 +1815,7 @@ async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
                 else:
                     return await ctx.reply(f"Error: key {key!r} is not recognized.")
 
-            save = await get_savefile()
+            save = get_savefile()
             if save.in_game and save.neow_bonus.choice_made:
                 return await ctx.reply(
                     "Cannot start a prediction after a Neow bonus was picked."
@@ -2115,14 +2115,12 @@ async def bluekey(ctx: ContextType, save: Savefile):
         return
 
     for node in save.path:
-        try:
+        if isinstance(node, Treasure):
             if node.blue_key:
                 await ctx.reply(
                     f"We skipped {node.key_relic} on floor {node.floor} for the Sapphire key."
                 )
                 return
-        except AttributeError:
-            continue
 
     await ctx.reply("RunHistoryPlus is not running; cannot get data.")
 
@@ -2146,7 +2144,7 @@ async def neowbonus(ctx: ContextType, save: Savefile):
         await ctx.reply("No Neow bonus taken yet.")
     else:
         await ctx.reply(
-            f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
+            f"Option taken: {save.neow_bonus.boon_picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
         )
 
 
@@ -2155,7 +2153,7 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
     if not save.neow_bonus.choice_made:
         await ctx.reply("No Neow bonus taken yet.")
     else:
-        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.skipped)}")
+        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.boons_skipped)}")
 
 
 @with_savefile("pandora", "pbox", "pandorasbox")
@@ -2259,28 +2257,25 @@ async def campfire_heal(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("nloth")
-async def nloth_traded(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
+async def nloth_traded(ctx: ContextType, save: Savefile):
     """Display which relic was traded for N'loth's Gift."""
-    if "Nloth's Gift" not in save._data["relics"]:
+    if get("Nloth's Gift") not in save.relics_bare:
         await ctx.reply("We do not have N'loth's Gift.")
         return
 
-    for evt in save._data["metric_event_choices"]:
-        if evt["event_name"] == "N'loth":
-            await ctx.reply(
-                f"We traded {get(evt['relics_lost'][0]).name} for N'loth's Gift."
-            )
-            return
-    else:
-        await ctx.reply("Something went terribly wrong.")
+    for node in save.path:
+        if isinstance(node, Event): # this check isn't strictly needed, but it makes the type checker happy
+            if node.name == "N'loth":
+                return await ctx.reply(f"We traded {node.relics_lost[0].name} for N'loth's Gift.")
+
+    await ctx.reply("Something went terribly wrong.")
 
 
-@with_savefile(
-    "eventchances", "event"
-)  # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+@with_savefile("eventchances", "event")
 async def event_likelihood(ctx: ContextType, save: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""
-    elite, hallway, shop, chest = save._data["event_chances"]  # JSON_FP_PROP
+    # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+    elite, hallway, shop, chest = save.event_chances
     # elite likelihood is only for the "Deadly Events" custom modifier
 
     await ctx.reply(
@@ -2288,14 +2283,12 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
         f"Normal fight: {hallway:.0%} - "
         f"Shop: {shop:.0%} - "
         f"Treasure: {chest:.0%} - "
-        f"Event: {hallway+shop+chest:.0%} - "
+        f"Event: {100-hallway-shop-chest:.0%} - "
         f"See {config.baalorbot.prefix}eventrng for more information."
     )
 
 
-@with_savefile(
-    "rare", "rarecard", "rarechance"
-)  # see comment in save.py -- this is not entirely accurate
+@with_savefile("rare", "rarecard", "rarechance")  # see comment in save.py -- this is not entirely accurate
 async def rare_card_chances(ctx: ContextType, save: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
     regular, elites, shops = save.rare_chance
@@ -2353,7 +2346,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
 
     replies = []
     for relic in relics:
-        data = query(relic)
+        data: Relic = query(relic)
         if not data:
             replies.append(f"Could not find relic {relic!r}.")
         elif data.cls_name != "relic":
@@ -2390,35 +2383,26 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
 
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
-async def skipped_boss_relics(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
+async def skipped_boss_relics(ctx: ContextType, save: Savefile):
     """Display the boss relics that were taken and skipped."""
-    l: list[dict] = save._data["metric_boss_relics"]
-
-    if not l:
+    choices = save.boss_relics
+    if not choices:
         await ctx.reply("We have not picked any boss relics yet.")
         return
 
-    skip_template = "We saw {1}, {2} and {3} at the end of Act {0} and skipped all that junk! baalorBoot"
-    template = "We picked {1} at the end of Act {0}, and skipped {2} and {3}."
+    skip_template = "We saw {1[0]}, {1[1]} and {1[2]} at the end of Act {0} and skipped all that junk! baalorBoot"
+    template = "We picked {1[0]} at the end of Act {0}, and skipped {1[1]} and {1[2]}."
     msg = []
     i = 1
-    for item in l:
-        if "picked" in item.keys():
-            msg.append(
-            template.format(
-                i,
-                get(item["picked"]).name,
-                get(item["not_picked"][0]).name,
-                get(item["not_picked"][1]).name,
-            )
-        )
-        else:
-            msg.append(skip_template.format(
-                i,
-                get(item["not_picked"][0]).name,
-                get(item["not_picked"][1]).name,
-                get(item["not_picked"][2]).name,
-            ))
+    for picked, skipped in choices:
+        use = skip_template
+        args = []
+        if picked is not None:
+            use = template
+            args.append(picked.name)
+        args.extend(x.name for x in skipped)
+
+        msg.append(use.format(i, args))
         i += 1
 
     await ctx.reply(" ".join(msg))
