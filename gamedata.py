@@ -299,10 +299,8 @@ class NeowBonus(BaseNode):
     def choice_made(self) -> bool:
         return bool(self.parser._data["neow_bonus"])
 
-    # DO NOT MERGE -- CONFLICTS WITH BASE CLASS
-
     @property #PRIV#
-    def picked(self) -> str:
+    def boon_picked(self) -> str:
         cost = self.parser._data["neow_cost"]
         bonus = self.parser._data["neow_bonus"]
         if cost == "NONE":
@@ -310,7 +308,7 @@ class NeowBonus(BaseNode):
         return f"{self.all_costs.get(cost, cost)} {self.all_bonuses.get(bonus, bonus)}"
 
     @property #PRIV#
-    def skipped(self) -> Generator[str, None, None]:
+    def boons_skipped(self) -> Generator[str, None, None]:
         if "basemod:mod_saves" in self.parser._data:
             bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
             costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")

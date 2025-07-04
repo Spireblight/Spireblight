@@ -2144,7 +2144,7 @@ async def neowbonus(ctx: ContextType, save: Savefile):
         await ctx.reply("No Neow bonus taken yet.")
     else:
         await ctx.reply(
-            f"Option taken: {save.neow_bonus.picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
+            f"Option taken: {save.neow_bonus.boon_picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
         )
 
 
@@ -2153,7 +2153,7 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
     if not save.neow_bonus.choice_made:
         await ctx.reply("No Neow bonus taken yet.")
     else:
-        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.skipped)}")
+        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.boons_skipped)}")
 
 
 @with_savefile("pandora", "pbox", "pandorasbox")
