@@ -52,7 +52,7 @@ from cache.run_stats import (
     update_range,
 )
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, sanitize, Base, Card, RelicSet, _internal_cache
+from nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from sts_profile import get_profile, get_current_profile
 from webpage import router, __botname__, __version__, __github__, __author__
 from wrapper import wrapper
@@ -2273,11 +2273,10 @@ async def nloth_traded(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
         await ctx.reply("Something went terribly wrong.")
 
 
-@with_savefile(
-    "eventchances", "event"
-)  # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
+@with_savefile("eventchances", "event")
 async def event_likelihood(ctx: ContextType, save: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""
+    # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
     elite, hallway, shop, chest = save._data["event_chances"]  # JSON_FP_PROP
     # elite likelihood is only for the "Deadly Events" custom modifier
 
@@ -2291,9 +2290,7 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
     )
 
 
-@with_savefile(
-    "rare", "rarecard", "rarechance"
-)  # see comment in save.py -- this is not entirely accurate
+@with_savefile("rare", "rarecard", "rarechance")  # see comment in save.py -- this is not entirely accurate
 async def rare_card_chances(ctx: ContextType, save: Savefile):
     """Display the current chance to see rare cards in rewards and shops."""
     regular, elites, shops = save.rare_chance
@@ -2351,7 +2348,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
 
     replies = []
     for relic in relics:
-        data = query(relic)
+        data: Relic = query(relic)
         if not data:
             replies.append(f"Could not find relic {relic!r}.")
         elif data.cls_name != "relic":

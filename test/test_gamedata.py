@@ -462,7 +462,7 @@ class _save_contents:
     [],
     [],
     ]
-    skipped_relics = [ # this is only boss relics; need to 
+    skipped_relics = [ # this is only boss relics; need to check another run for other skipped relics
     [],
     [],
     [],
@@ -582,15 +582,22 @@ class _streamer_contents:
 class TestFileParser(TestCase):
     def test_character(self):
         self.assertEqual(s.character, "Silent")
+        self.assertEqual(sm.character, "Ironclad")
+        self.assertEqual(rm.character, "Ironclad")
+        self.assertEqual(wa.character, "Watcher")
 
     def test_modded(self):
         self.assertFalse(s.modded)
 
     def test_seed(self):
         self.assertEqual(s.seed, "57Z3V6XL40NZS")
+        self.assertEqual(sm.seed, rm.seed)
 
     def test_seeded(self):
         self.assertFalse(s.is_seeded)
+        self.assertFalse(sm.is_seeded)
+        self.assertFalse(rm.is_seeded)
+        self.assertFalse(wa.is_seeded)
 
     def test_timestamp(self):
         self.assertEqual(s.timestamp, datetime(2022, 5, 3, 20, 14, 30, 317000, tzinfo=UTC))
