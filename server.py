@@ -2388,35 +2388,26 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
 
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
-async def skipped_boss_relics(ctx: ContextType, save: Savefile):  # JSON_FP_PROP
+async def skipped_boss_relics(ctx: ContextType, save: Savefile):
     """Display the boss relics that were taken and skipped."""
-    l: list[dict] = save._data["metric_boss_relics"]
-
-    if not l:
+    choices = save.boss_relics
+    if not choices:
         await ctx.reply("We have not picked any boss relics yet.")
         return
 
-    skip_template = "We saw {1}, {2} and {3} at the end of Act {0} and skipped all that junk! baalorBoot"
-    template = "We picked {1} at the end of Act {0}, and skipped {2} and {3}."
+    skip_template = "We saw {1[0]}, {1[1]} and {1[2]} at the end of Act {0} and skipped all that junk! baalorBoot"
+    template = "We picked {1[0]} at the end of Act {0}, and skipped {1[1]} and {1[2]}."
     msg = []
     i = 1
-    for item in l:
-        if "picked" in item.keys():
-            msg.append(
-            template.format(
-                i,
-                get(item["picked"]).name,
-                get(item["not_picked"][0]).name,
-                get(item["not_picked"][1]).name,
-            )
-        )
-        else:
-            msg.append(skip_template.format(
-                i,
-                get(item["not_picked"][0]).name,
-                get(item["not_picked"][1]).name,
-                get(item["not_picked"][2]).name,
-            ))
+    for picked, skipped in choices:
+        use = skip_template
+        args = []
+        if picked is not None:
+            use = template
+            args.append(picked.name)
+        args.extend(x.name for x in skipped)
+
+        msg.append(use.format(i, args))
         i += 1
 
     await ctx.reply(" ".join(msg))

@@ -1044,6 +1044,19 @@ class FileParser(ABC):
         return self._handle_potions("discarded")
 
     @property
+    def boss_relics(self) -> list[BossRelicChoice]:
+        rels: list[dict] = self._data[f"{self.prefix}boss_relics"]
+        ret = []
+        for choices in rels:
+            picked = None
+            if "picked" in choices:
+                picked = get(choices["picked"])
+            skipped = tuple(get(x) for x in choices["not_picked"])
+            ret.append( (picked, skipped) )
+
+        return ret
+
+    @property
     def ascension_level(self) -> int:
         return self._data["ascension_level"]
 

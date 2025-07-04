@@ -556,6 +556,28 @@ class _save_contents:
     [],
     [],
     ]
+    boss_relics = [
+        ("Astrolabe", ('Hovering Kite', "Slaver's Collar")),
+        ("Empty Cage", ('Runic Dome', 'Snecko Eye')),
+    ]
+
+class _matched_contents:
+    boss_relics = [
+        ("Mark of Pain", ("Astrolabe", "Ectoplasm")),
+        ("Empty Cage", ("Coffee Dripper", "Runic Cube")),
+    ]
+
+class _run_contents:
+    boss_relics = [
+        ("Astrolabe", ("Pandora's Box", "Philosopher's Stone")),
+        ("Slaver's Collar", ("Black Star", "Violet Lotus")),
+    ]
+
+class _streamer_contents:
+    boss_relics = [
+        ("Velvet Choker", ("Tiny House", "Runic Pyramid")),
+        ("Runic Dome", ("Calling Bell", "Cursed Key")),
+    ]
 
 class TestFileParser(TestCase):
     def test_character(self):
@@ -574,6 +596,15 @@ class TestFileParser(TestCase):
         self.assertEqual(s.timestamp, datetime(2022, 5, 3, 20, 14, 30, 317000, tzinfo=UTC))
         self.assertEqual(wa.timestamp, datetime(2023, 6, 16, 20, 34, 58, tzinfo=UTC))
         self.assertEqual(streamer.timestamp, datetime(2023, 7, 12, 20, 9, 44, tzinfo=UTC))
+
+    def test_boss_relics(self):
+        for fp, contents in ( (s, _save_contents), (sm, _matched_contents), (rm, _matched_contents), (wa, _run_contents), (streamer, _streamer_contents) ):
+            relics = fp.boss_relics
+            res = []
+            for picked, skipped in relics:
+                skip = tuple(x.name for x in skipped)
+                res.append( (picked.name, skip) )
+            self.assertEqual(res, contents.boss_relics)
 
 class TestSavefile(TestCase):
     def test_debug_only(self):

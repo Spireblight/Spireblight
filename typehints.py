@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Union, TypeAlias, TYPE_CHECKING
+from typing import Union, TypeAlias, Optional, TYPE_CHECKING
 
 from twitchio.ext.commands import Context as TContext
 from discord.ext.commands import Context as DContext
@@ -7,19 +7,13 @@ from discord.ext.commands import Context as DContext
 from twitch import TwitchCommand
 from disc import DiscordCommand
 
-
-if TYPE_CHECKING:
-    from gamedata import Relic, Potion
-else:
-    # type-checking will ignore this
-    # but actual code will hit this, and doesn't care about type
-    Relic = None
-    Potion = None
+from nameinternal import Relic, Potion
 
 __all__ = [
     "ContextType", "CommandType",
     "CardRewards", "RelicRewards", "PotionRewards",
     "PotionsListing", "ItemFloor",
+    "BossRelicChoice",
 ]
 
 # transport-related support
@@ -38,3 +32,5 @@ PotionRewards: TypeAlias = defaultdict[Floor, list[Potion]]
 PotionsListing: TypeAlias = list[list[Potion]]
 
 ItemFloor: TypeAlias = tuple[str, Floor]
+
+BossRelicChoice: TypeAlias = tuple[Optional[Relic], tuple[Relic, ...]]
