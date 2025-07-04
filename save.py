@@ -218,6 +218,10 @@ class Savefile(FileParser):
         )
 
     @property
+    def event_chances(self) -> tuple[int, int, int, int]:
+        return self._data["event_chances"]
+
+    @property
     def current_floor(self) -> int:
         return self._data["metric_floor_reached"]
 

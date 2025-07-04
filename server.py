@@ -2275,7 +2275,7 @@ async def nloth_traded(ctx: ContextType, save: Savefile):
 async def event_likelihood(ctx: ContextType, save: Savefile):
     """Display current event chances for the various possibilities in ? rooms."""
     # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
-    elite, hallway, shop, chest = save._data["event_chances"]  # JSON_FP_PROP
+    elite, hallway, shop, chest = save.event_chances
     # elite likelihood is only for the "Deadly Events" custom modifier
 
     await ctx.reply(

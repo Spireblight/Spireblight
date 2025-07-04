@@ -38,7 +38,6 @@ __all__ = ["FileParser"]
 
 # XXX Make sure to remove private member access from outside the class
 # search for #PRIV# in this file for places that need modified
-# also JSON_FP_PROP needs to be checked for FileParser
 
 class BaseNode(ABC):
     """This the common base class for all path nodes, including Neow.
