@@ -510,6 +510,8 @@ class NeowBonus(BaseNode):
 
     def bonus_THREE_SMALL_POTIONS(self):
         if self.skipped_potions:
+            if not self.potions:
+                return f"were offered {' and '.join(x.name for x in self.skipped_potions)} and skipped all of them... for some reason"
             return f"got {' and '.join(x.name for x in self.potions)}, and skipped {' and '.join(x.name for x in self.skipped_potions)}"
         return f"got {' and '.join(x.name for x in self.potions)}"
 
