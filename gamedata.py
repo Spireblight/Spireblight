@@ -476,11 +476,10 @@ class NeowBonus(BaseNode):
     # options 1 & 2
 
     def bonus_THREE_CARDS(self):
-        picked, skipped = self.parser.card_choices
-        if picked[0]:
-            return f"picked {get_card(picked[0][0])} over {' and '.join(get_card(x) for x in skipped[0])}"
-        if skipped[0]:
-            return f"were offered {', '.join(get_card(x) for x in skipped[0])} but skipped them all"
+        if self.picked:
+            return f"picked {get_card(self.picked[0])} over {' and '.join(get_card(x) for x in self.skipped)}"
+        if self.skipped:
+            return f"were offered {', '.join(get_card(x) for x in self.skipped)} but skipped them all"
 
         raise ValueError("That is not the right bonus??")
 
@@ -510,11 +509,9 @@ class NeowBonus(BaseNode):
         return "got Neow's Lament to get three fights with enemies having 1 HP"
 
     def bonus_THREE_SMALL_POTIONS(self):
-        potions = self.parser.potions[0]
-        skipped = self.parser.skipped_rewards[0][0]
-        if skipped:
-            return f"got {' and '.join(x.name for x in potions)}, and skipped {' and '.join(x.name for x in skipped)}"
-        return f"got {' and '.join(x.name for x in potions)}"
+        if self.skipped_potions:
+            return f"got {' and '.join(x.name for x in self.potions)}, and skipped {' and '.join(x.name for x in self.skipped_potions)}"
+        return f"got {' and '.join(x.name for x in self.potions)}"
 
     def bonus_TEN_PERCENT_HP_BONUS(self):
         if self.max_hp_gained:
@@ -622,14 +619,12 @@ class NeowBonus(BaseNode):
             return []
 
     def card_delta(self) -> int:
-        num = 10
+        num = super().card_delta() + 10
         if self.parser.character == "Silent":
             num += 2
 
         if self.parser.ascension_level >= 10:
             num += 1
-
-        num += len(self.parser.card_choices[0][0])
 
         bonus, cost = self.parser._neow_picked
 
@@ -651,9 +646,6 @@ class NeowBonus(BaseNode):
         if self.parser._neow_picked[0] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
             num += 1
         return num
-
-    def potion_delta(self) -> int:
-        return len(self.parser.potions[0])
 
     @property
     def card_count(self) -> int:
