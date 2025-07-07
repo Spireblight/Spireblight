@@ -139,6 +139,14 @@ class Savefile(FileParser):
         return keys
 
     @property
+    def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
+        data = dict(self._data["basemod:mod_saves"].get("NeowBonusLog", {}))
+        bonuses = list(self._data["basemod:mod_saves"].get("NeowBonusesSkippedLog", ()))
+        costs = list(self._data["basemod:mod_saves"].get("NeowCostsSkippedLog", ()))
+
+        return (data, bonuses, costs)
+
+    @property
     def _master_deck(self) -> list[str]:
         ret = []
         for x in self._data["cards"]:

@@ -103,6 +103,14 @@ class RunParser(FileParser):
         return keys
 
     @property
+    def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
+        data = dict(self._data.get("neow_bonus_log", {}))
+        bonuses = list(self._data.get("neow_bonuses_skipped_log", ()))
+        costs = list(self._data.get("neow_costs_skipped_log", ()))
+
+        return (data, bonuses, costs)
+
+    @property
     def _master_deck(self) -> list[str]:
         return list(self._data["master_deck"])
 

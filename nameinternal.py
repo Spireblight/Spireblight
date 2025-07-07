@@ -75,6 +75,9 @@ class Base:
     def info(self) -> str:
         return f"{self.name}: {self.description}"
 
+    def __str__(self):
+        return self.name
+
     def __hash__(self) -> int:
         return hash(self.internal)
 

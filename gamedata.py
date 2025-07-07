@@ -288,32 +288,20 @@ class NeowBonus(BaseNode):
     def name(self) -> str:
         return "Neow bonus"
 
-    @property #PRIV#
-    def mod_data(self) -> dict[str, Any] | None:
-        if "basemod:mod_saves" in self.parser._data:
-            return self.parser._data["basemod:mod_saves"].get("NeowBonusLog")
-        return self.parser._data.get("neow_bonus_log")
-
-    @property #PRIV#
+    @property
     def choice_made(self) -> bool:
-        return bool(self.parser._data["neow_bonus"])
+        return bool(self.parser._neow_picked[0])
 
-    @property #PRIV#
+    @property
     def boon_picked(self) -> str:
-        cost = self.parser._data["neow_cost"]
-        bonus = self.parser._data["neow_bonus"]
+        bonus, cost = self.parser._neow_picked
         if cost == "NONE":
             return self.all_bonuses.get(bonus, bonus)
         return f"{self.all_costs.get(cost, cost)} {self.all_bonuses.get(bonus, bonus)}"
 
-    @property #PRIV#
+    @property
     def boons_skipped(self) -> Generator[str, None, None]:
-        if "basemod:mod_saves" in self.parser._data:
-            bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
-            costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")
-        else:
-            bonuses = self.parser._data.get("neow_bonuses_skipped_log")
-            costs = self.parser._data.get("neow_costs_skipped_log")
+        data, bonuses, costs = self.parser._neow_data
 
         if not bonuses or not costs:
             yield "<Could not fetch data>"
@@ -325,47 +313,37 @@ class NeowBonus(BaseNode):
             else:
                 yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
-    # All of the Neow Bonus keys should exist together, if more are added, we shouldn't need to add checks for them
-    # dear past self: wtf is the above supposed to mean? 02/09/24
-    # I figured it out! I think!
-    # it means that the neow_*_skipped_log and similar are added by the same mod,
-    # and so if other keys are added, the checks here will be sufficient
-    # that's my best guess, anyway. 06/01/25
-    # oh btw that's dd/mm/yy because im not a backwater rube
-    @property #PRIV#
-    def has_data(self) -> bool:
-        if "basemod:mod_saves" in self.parser._data:
-            bonuses = self.parser._data["basemod:mod_saves"].get("NeowBonusesSkippedLog")
-            costs = self.parser._data["basemod:mod_saves"].get("NeowCostsSkippedLog")
-        else:
-            bonuses = self.parser._data.get("neow_bonuses_skipped_log")
-            costs = self.parser._data.get("neow_costs_skipped_log")
-
-        return bool(bonuses and costs)
-
     @property
     def cards_obtained(self) -> list[str]:
-        if self.has_data and self.mod_data:
-            return self.mod_data.get("cardsObtained", [])
-        return []
+        return self.parser._neow_data[0].get("cardsObtained", [])
 
     @property
     def cards_removed(self) -> list[str]:
-        if self.has_data and self.mod_data:
-            return self.mod_data.get("cardsRemoved", [])
-        return []
+        return self.parser._neow_data[0].get("cardsRemoved", [])
 
     @property
     def cards_transformed(self) -> list[str]:
-        if self.has_data and self.mod_data:
-            return self.mod_data.get("cardsTransformed", [])
-        return []
+        return self.parser._neow_data[0].get("cardsTransformed", [])
 
     @property
     def cards_upgraded(self) -> list[str]:
-        if self.has_data and self.mod_data:
-            return self.mod_data.get("cardsUpgraded", [])
-        return []
+        return self.parser._neow_data[0].get("cardsUpgraded", [])
+
+    @property
+    def relics(self) -> list[Relic]:
+        return super().relics + [get(x) for x in self.parser._neow_data[0].get('relicsObtained', ())]
+
+    @property
+    def damage_taken(self) -> int:
+        return self.parser._neow_data[0].get("damageTaken", 0)
+
+    @property
+    def max_hp_gained(self) -> int:
+        return self.parser._neow_data[0].get("maxHpGained", 0)
+
+    @property
+    def max_hp_lost(self) -> int:
+        return self.parser._neow_data[0].get("maxHpLost", 0)
 
     def _get_hp(self) -> tuple[int, int]:
         """Return how much HP the run had before entering floor 1 in a (current, max) tuple."""
@@ -396,22 +374,22 @@ class NeowBonus(BaseNode):
         if self.parser.ascension_level >= 6: # take damage
             cur -= math.ceil(cur / 10)
 
-        if self.mod_data is not None:
-            cur -= self.mod_data["damageTaken"]
-            cur += self.mod_data["maxHpGained"]
-            base -= self.mod_data["maxHpLost"]
-            base += self.mod_data["maxHpGained"]
+        if self.parser._neow_data[0]:
+            cur -= self.damage_taken
+            cur += self.max_hp_gained
+            base -= self.max_hp_lost
+            base += self.max_hp_gained
             return (cur, base)
 
-        match self.parser._data["neow_cost"]: #PRIV#
-            case "TEN_PERCENT_HP_LOSS": # actually hardcoded
+        match self.parser._neow_picked[1]:
+            case "TEN_PERCENT_HP_LOSS":
                 base -= bonus
                 if cur > base:
                     cur = base
             case "PERCENT_DAMAGE":
                 cur -= (cur // 10) * 3
 
-        match self.parser._data["neow_bonus"]: #PRIV#
+        match self.parser._neow_picked[0]:
             case "TEN_PERCENT_HP_BONUS":
                 base += bonus
                 cur += bonus
@@ -435,16 +413,16 @@ class NeowBonus(BaseNode):
     def gold(self) -> int:
         """Return how much gold we have after the Neow bonus."""
         base = 99
-        if self.mod_data is not None:
-            base += (self.mod_data["goldGained"] - self.mod_data["goldLost"])
-            if "Old Coin" in self.mod_data["relicsObtained"]:
+        if (d := self.parser._neow_data[0]):
+            base += (d["goldGained"] - d["goldLost"])
+            if "Old Coin" in d["relicsObtained"]:
                 base += 300
             return base
 
-        if self.parser._data["neow_cost"] == "NO_GOLD": #PRIV#
+        if self.parser._neow_picked[1] == "NO_GOLD":
             base = 0
 
-        match self.parser._data["neow_bonus"]: #PRIV#
+        match self.parser._neow_picked[0]:
             case "HUNDRED_GOLD":
                 base += 100
             case "TWO_FIFTY_GOLD":
@@ -483,85 +461,69 @@ class NeowBonus(BaseNode):
             case a:
                 raise ValueError(f"I don't know how to handle {a!r}")
 
-        if self.mod_data is not None:
-            for x in self.mod_data["cardsTransformed"] + self.mod_data["cardsRemoved"]:
-                cards.remove(x)
-            for x in self.mod_data["cardsObtained"]:
-                cards.append(x)
-            for x in self.mod_data["cardsUpgraded"]:
-                index = cards.index(x)
-                cards.insert(index, f"{x}+1")
-        for x in self.parser._data[self.parser.prefix + "card_choices"]: #PRIV#
-            if x["floor"] == 0:
-                if x["picked"] != "SKIP":
-                    cards.append(x["picked"])
+        for x in self.cards_transformed + self.cards_removed:
+            cards.remove(x)
+        for x in self.cards_obtained:
+            cards.append(x)
+        for x in self.cards_upgraded:
+            index = cards.index(x)
+            cards.insert(index, f"{x}+1")
+
+        cards.extend(self.parser.card_choices[0][0])
 
         return cards
 
     # options 1 & 2
 
     def bonus_THREE_CARDS(self):
-        prefix = self.parser.prefix
-        for cards in self.parser._data[prefix + "card_choices"]: #PRIV#
-            if cards["floor"] == 0:
-                if cards["picked"] != "SKIP":
-                    return f"picked {get(cards['picked']).name} over {' and '.join(get(x).name for x in cards['not_picked'])}"
-                return f"were offered {', '.join(get(x).name for x in cards['not_picked'])} but skipped them all"
+        picked, skipped = self.parser.card_choices
+        if picked[0]:
+            return f"picked {get_card(picked[0][0])} over {' and '.join(get_card(x) for x in skipped[0])}"
+        if skipped[0]:
+            return f"were offered {', '.join(get_card(x) for x in skipped[0])} but skipped them all"
 
         raise ValueError("That is not the right bonus??")
 
     bonus_RANDOM_COLORLESS = bonus_THREE_CARDS
 
     def bonus_RANDOM_COMMON_RELIC(self):
-        if self.mod_data is not None:
-            return f"got {get(self.mod_data['relicsObtained'][0]).name}"
+        if self.relics:
+            return f"got {self.relics[0]}"
         return "picked a random Common relic"
 
     def bonus_REMOVE_CARD(self):
-        if self.mod_data is not None:
-            return f"removed {get(self.mod_data['cardsRemoved'][0]).name}"
+        if self.cards_removed:
+            return f"removed {get_card(self.cards_removed[0])}"
         return "removed a card"
 
     def bonus_TRANSFORM_CARD(self):
-        if self.mod_data is not None:
-            return f"transformed {get(self.mod_data['cardsTransformed'][0]).name} into {get(self.mod_data['cardsObtained'][0]).name}"
+        if self.cards_transformed:
+            return f"transformed {get_card(self.cards_transformed[0])} into {get_card(self.cards_obtained[0])}"
         return "transformed a card"
 
     def bonus_UPGRADE_CARD(self):
-        if self.mod_data is not None:
-            return f"upgraded {get(self.mod_data['cardsUpgraded'][0]).name}"
+        if self.cards_upgraded:
+            return f"upgraded {get_card(self.cards_upgraded[0])}"
         return "upgraded a card"
 
     def bonus_THREE_ENEMY_KILL(self):
         return "got Neow's Lament to get three fights with enemies having 1 HP"
 
-    def bonus_THREE_SMALL_POTIONS(self): #PRIV#
-        potions = []
-        skipped = []
-        prefix = self.parser.prefix
-        for potion in self.parser._data[prefix + "potions_obtained"]:
-            if potion["floor"] == 0:
-                potions.append(get(potion["key"]).name)
-        if self.mod_data is not None:
-            if "basemod:mod_saves" in self.parser._data:
-                s = self.parser._data["basemod:mod_saves"]["RewardsSkippedLog"]
-            else:
-                s = self.parser._data["rewards_skipped"]
-            for skip in s:
-                if skip["floor"] == 0:
-                    skipped.extend(get(x).name for x in skip["potions"])
+    def bonus_THREE_SMALL_POTIONS(self):
+        potions = self.parser.potions[0]
+        skipped = self.parser.skipped_rewards[0][0]
         if skipped:
-            return f"got {' and '.join(potions)}, and skipped {' and '.join(skipped)}"
-        return f"got {' and '.join(potions)}"
+            return f"got {' and '.join(x.name for x in potions)}, and skipped {' and '.join(x.name for x in skipped)}"
+        return f"got {' and '.join(x.name for x in potions)}"
 
     def bonus_TEN_PERCENT_HP_BONUS(self):
-        if self.mod_data is not None:
-            return f"gained {self.mod_data['maxHpGained']} Max HP"
+        if self.max_hp_gained:
+            return f"gained {self.max_hp_gained} Max HP"
         return "gained 10% Max HP"
 
     def bonus_ONE_RANDOM_RARE_CARD(self):
-        if self.mod_data is not None:
-            return f"picked a random Rare card, and got {get(self.mod_data['cardsObtained'][0]).name}"
+        if self.cards_obtained:
+            return f"picked a random Rare card, and got {get_card(self.cards_obtained[0])}"
         return "picked a random Rare card"
 
     # option 3
@@ -570,35 +532,35 @@ class NeowBonus(BaseNode):
         return "got 250 gold"
 
     def bonus_TWENTY_PERCENT_HP_BONUS(self):
-        if self.mod_data is not None:
-            return f"gained {self.mod_data['maxHpGained']} Max HP"
+        if self.max_hp_gained:
+            return f"gained {self.max_hp_gained} Max HP"
         return "gained 20% Max HP"
 
     bonus_RANDOM_COLORLESS_2 = bonus_THREE_CARDS
     bonus_THREE_RARE_CARDS = bonus_THREE_CARDS
 
     def bonus_REMOVE_TWO(self):
-        if self.mod_data is not None:
-            return f"removed {' and '.join(get(x).name for x in self.mod_data['cardsRemoved'])}"
+        if self.cards_removed:
+            return f"removed {' and '.join(get_card(x) for x in self.cards_removed)}"
         return "removed two cards"
 
     def bonus_TRANSFORM_TWO_CARDS(self):
-        if self.mod_data is not None:
+        if self.cards_transformed:
             # in case the cost is "gain a curse", the curse will be the first item. this guarantees we only get the last two cards
-            return f"transformed {' and '.join(get(x).name for x in self.mod_data['cardsTransformed'])} into {' and '.join(get(x).name for x in self.mod_data['cardsObtained'][-2:])}"
+            return f"transformed {' and '.join(get_card(x) for x in self.cards_transformed)} into {' and '.join(get_card(x) for x in self.cards_obtained[-2:])}"
         return "transformed two cards"
 
     def bonus_ONE_RARE_RELIC(self):
-        if self.mod_data is not None:
-            return f"picked a random Rare relic and got {get(self.mod_data['relicsObtained'][0]).name}"
+        if self.relics:
+            return f"picked a random Rare relic and got {self.relics[0]}"
         return "obtained a random Rare relic"
 
     # option 4
 
-    def bonus_BOSS_RELIC(self):
-        if self.mod_data is not None:
-            return f"swapped our starter relic for {get(self.mod_data['relicsObtained'][0]).name}"
-        return f"swapped our starter relic for {get(self.parser._data['relics'][0]).name}" # N'loth can mess with this
+    def bonus_BOSS_RELIC(self): #PRIV#
+        if (d := self.parser._neow_data[0]):
+            return f"swapped our starter relic for {self.relics[0]}"
+        return f"swapped our starter relic for {self.parser.relics_bare[0]}" # N'loth can mess with this
 
     # more Neow mod
 
@@ -609,30 +571,31 @@ class NeowBonus(BaseNode):
     # costs for option 3
 
     def cost_CURSE(self):
-        if self.mod_data is not None:
-            return f"got cursed with {get(self.mod_data['cardsObtained'][0]).name}"
+        if self.cards_obtained:
+            return f"got cursed with {get_card(self.cards_obtained[0])}"
         return "got a random curse"
 
     def cost_NO_GOLD(self):
         return "lost all gold"
 
     def cost_TEN_PERCENT_HP_LOSS(self):
-        if self.mod_data is not None:
-            return f"lost {self.mod_data['maxHpLost']} Max HP"
+        if self.max_hp_lost:
+            return f"lost {self.max_hp_lost} Max HP"
         return "lost 10% Max HP"
 
     def cost_PERCENT_DAMAGE(self):
-        if self.mod_data is not None:
-            return f"took {self.mod_data['damageTaken']} damage"
+        if self.damage_taken:
+            return f"took {self.damage_taken} damage"
         return "took damage (current HP / 10, rounded down, * 3)"
 
     def get_description(self, to_append: dict[int, list[str]]):
         to_append[8].append(self.as_str())
 
     def as_str(self) -> str:
-        neg = getattr(self, f"cost_{self.parser._data['neow_cost']}", None)
+        bonus, cost = self.parser._neow_picked
+        neg = getattr(self, f"cost_{cost}", None)
         try:
-            pos = getattr(self, f"bonus_{self.parser._data['neow_bonus']}")
+            pos = getattr(self, f"bonus_{bonus}")
         except AttributeError:
             return "<No option picked/option unknown>"
 
@@ -646,9 +609,9 @@ class NeowBonus(BaseNode):
 
         return msg
 
-    @property #PRIV#
+    @property
     def has_info(self) -> bool:
-        return hasattr(self, f"bonus_{self.parser._data['neow_bonus']}")
+        return hasattr(self, f"bonus_{self.parser._neow_picked[0]}")
 
     @property
     def cards(self) -> list[CardData]:
@@ -666,16 +629,14 @@ class NeowBonus(BaseNode):
         if self.parser.ascension_level >= 10:
             num += 1
 
-        prefix = self.parser.prefix
-        for cards in self.parser._data[prefix + "card_choices"]: #PRIV#
-            if cards["floor"] == 0:
-                if cards["picked"] != "SKIP":
-                    num += 1
+        num += len(self.parser.card_choices[0][0])
 
-        if self.parser._data["neow_cost"] == "CURSE": #PRIV#
+        bonus, cost = self.parser._neow_picked
+
+        if cost == "CURSE":
             num += 1
 
-        match self.parser._data["neow_bonus"]: #PRIV#
+        match bonus:
             case "REMOVE_CARD":
                 num -= 1
             case "REMOVE_TWO":
@@ -686,18 +647,13 @@ class NeowBonus(BaseNode):
         return num
 
     def relic_delta(self) -> int: # does not handle calling bell
-        num = 1 #PRIV#
-        if self.parser._data["neow_bonus"] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
+        num = 1
+        if self.parser._neow_picked[0] in ("THREE_ENEMY_KILL", "ONE_RARE_RELIC", "RANDOM_COMMON_RELIC"):
             num += 1
         return num
 
     def potion_delta(self) -> int:
-        num = 0
-        prefix = self.parser.prefix
-        for potion in self.parser._data[prefix + "potions_obtained"]: #PRIV#
-            if potion["floor"] == 0:
-                num += 1
-        return num
+        return len(self.parser.potions[0])
 
     @property
     def card_count(self) -> int:
@@ -939,6 +895,17 @@ class FileParser(ABC):
     @abstractmethod
     def rotating_streak(self) -> StreakInfo:
         raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
+        """Return the Neow Bonus data. For internal use only."""
+        raise NotImplementedError
+
+    @property
+    def _neow_picked(self) -> tuple[str, str]:
+        """Return the Neow bonus and cost picked. For internal use only."""
+        return (self._data["neow_bonus"], self._data["neow_cost"])
 
     @property
     def display_name(self) -> str:
