@@ -38,6 +38,10 @@ __all__ = ["FileParser"]
 
 # XXX Make sure to remove private member access from outside the class
 # search for #PRIV# in this file for places that need modified
+# need a card type that is getting exposed instead of just str
+# and make get_card return it (so it has to support upgrades)
+# put all of cards_{removed,transformed,obtained,upgraded} on the base class
+# same for damage_taken, max_hp_{gained,lost}, relics_{gained,lost}
 
 class BaseNode(ABC):
     """This the common base class for all path nodes, including Neow.
@@ -331,7 +335,8 @@ class NeowBonus(BaseNode):
 
     @property
     def relics(self) -> list[Relic]:
-        return super().relics + [get(x) for x in self.parser._neow_data[0].get('relicsObtained', ())]
+        rel = [get(x) for x in self.parser._neow_data[0].get('relicsObtained', ())]
+        return super().relics + rel
 
     @property
     def damage_taken(self) -> int:
@@ -439,7 +444,7 @@ class NeowBonus(BaseNode):
 
         return base
 
-    def get_cards(self) -> list[str]:
+    def get_cards(self) -> list[str]: # TODO: new card type that supports upgrades
         cards = []
         if self.parser.ascension_level >= 10:
             cards.append("AscendersBane")
@@ -473,9 +478,9 @@ class NeowBonus(BaseNode):
             cards.append(x)
         for x in self.cards_upgraded:
             index = cards.index(x)
-            cards.insert(index, f"{x}+1")
+            cards[index] = f"{x}+1"
 
-        cards.extend(self.parser.card_choices[0][0])
+        cards.extend(self.picked)
 
         return cards
 
@@ -562,8 +567,8 @@ class NeowBonus(BaseNode):
 
     # option 4
 
-    def bonus_BOSS_RELIC(self): #PRIV#
-        if (d := self.parser._neow_data[0]):
+    def bonus_BOSS_RELIC(self):
+        if self.relics:
             return f"swapped our starter relic for {self.relics[0]}"
         return f"swapped our starter relic for {self.parser.relics_bare[0]}" # N'loth can mess with this
 
@@ -2011,13 +2016,13 @@ class Merchant(NodeData):
             to_append[70].append(f"* Removed {', '.join(self.purged)}")
         if self.contents:
             to_append[72].append("Skipped:")
-            if self.contents["relics"]:
+            if self.contents.relics:
                 to_append[74].append("* Relics")
                 to_append[74].extend(f"  - {x.name}" for x in self.contents.relics)
-            if self.contents["cards"]:
+            if self.contents.cards:
                 to_append[76].append("* Cards")
                 to_append[76].extend(f"  - {x}" for x in self.contents.cards)
-            if self.contents["potions"]:
+            if self.contents.potions:
                 to_append[78].append("* Potions")
                 to_append[78].extend(f"  - {x.name}" for x in self.contents.potions)
 
