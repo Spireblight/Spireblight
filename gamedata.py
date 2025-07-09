@@ -351,16 +351,22 @@ class NeowBonus(BaseNode):
             return 0, 0
 
         match self.parser.character:
-            case "Ironclad":
+            case "Snecko":
+                base = 85
+            case "Ironclad" | "Guardian" | "Champ":
                 base = 80
-            case "Silent":
-                base = 70
-            case "Defect" | "Hermit":
+            case "Defect" | "Hermit" | "Blade Gunner" | "Packmaster":
                 base = 75
             case "Watcher":
                 base = 72
+            case "Silent" | "Bronze Automaton":
+                base = 70
             case "Hexaghost":
                 base = 66
+            case "Slime Boss" | "Collector":
+                base = 65
+            case "Gremlin Gang":
+                base = 16
             case a:
                 raise ValueError(f"I don't know how to handle {a}")
 
@@ -673,6 +679,7 @@ _chars = {
     "SLIMEBOUND": "Slime Boss",
     "GREMLIN": "Gremlin Gang",
     "THE_SPIRIT": "Hexaghost",
+    "THE_AUTOMATON": "Bronze Automaton",
 }
 
 class ShopContents:
