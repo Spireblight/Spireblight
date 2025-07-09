@@ -1092,12 +1092,10 @@ class FileParser(ABC):
         for card in self.get_cards():
             yield from card.as_cards()
 
-    def get_purchases(self) -> dict[int, ShopContents]:
+    def get_purchases(self) -> collections.defaultdict[int, ShopContents]:
         """Return a mapping of purchases for a given floor."""
-        bought: dict[int, ShopContents] = {}
+        bought: collections.defaultdict[int, ShopContents] = collections.defaultdict(ShopContents)
         for i, purchased in enumerate(self._data[self.prefix + "item_purchase_floors"]):
-            if purchased not in bought:
-                bought[purchased] = ShopContents()
             value = self._data[self.prefix + "items_purchased"][i]
             name, _, upgrades = value.partition("+")
             item = get(name)
@@ -1111,14 +1109,14 @@ class FileParser(ABC):
 
         return bought
 
-    def get_shop_contents(self) -> dict[int, ShopContents]:
+    def get_shop_contents(self) -> collections.defaultdict[int, ShopContents]:
         d = ()
         if "shop_contents" in self._data:
             d = self._data["shop_contents"]
         elif "basemod:mod_saves" in self._data:
             d = self._data["basemod:mod_saves"].get("ShopContentsLog", ())
 
-        results = {}
+        results = collections.defaultdict(ShopContents)
         for data in d:
             results[data["floor"]] = contents = ShopContents()
             for relic in data["relics"]:
