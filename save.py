@@ -12,9 +12,9 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
-from nameinternal import get, get_card, Relic, Potion
+from nameinternal import get, get_card, Relic
 from sts_profile import get_current_profile
-from gamedata import FileParser, BottleRelic, KeysObtained
+from gamedata import FileParser, BottleRelic, KeysObtained, _enemies
 from webpage import router
 from logger import logger
 from events import invoke
@@ -305,7 +305,8 @@ class Savefile(FileParser):
 
     @property
     def upcoming_boss(self) -> str:
-        return self._data["boss"]
+        boss = self._data["boss"]
+        return _enemies.get(boss, boss)
 
     @property
     def bottles(self) -> list[BottleRelic]:

@@ -17,9 +17,8 @@ from cache.run_stats import update_all_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
 from cache.streaks import update_streak_collections
-from nameinternal import get, Potion
 from sts_profile import get_profile
-from gamedata import FileParser, KeysObtained
+from gamedata import FileParser, KeysObtained, _enemies
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -124,7 +123,8 @@ class RunParser(FileParser):
 
     @property
     def killed_by(self) -> str | None:
-        return self._data.get("killed_by")
+        killer = self._data.get("killed_by")
+        return _enemies.get(killer, killer)
 
     @property
     def floor_reached(self) -> int:

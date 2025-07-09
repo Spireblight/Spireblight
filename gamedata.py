@@ -687,6 +687,29 @@ _chars = {
     "THE_AUTOMATON": "Bronze Automaton",
 }
 
+_enemies = { # Downfall bosses
+    "IC_STATUS_ARCHETYPE": "Status Ironclad",
+    "SI_POISON_ARCHETYPE": "Poison Silent",
+    "DF_ARCHETYPE_STREAMLINE": "0-cost Defect",
+    "WA_ARCHETYPE_RETAIN": "Retain Watcher",
+    "HERMIT_SHARPSHOOTER_ARCHETYPE": "Deadeye Hermit",
+
+    "IC_MUSHROOM_ARCHETYPE": "Reaper Ironclad",
+    "SI_MIRROR_ARCHETYPE": "After Image Silent",
+    "DF_ARCHETYPE_CLAW": "Claw Defect",
+    "WA_ARCHETYPE_CALM": "Blasphemy Watcher",
+    "HERMIT_WHEEL_ARCHETYPE": "Rotating Cards Hermit",
+
+    "IC_BLOCK_ARCHETYPE": "Barricade Ironclad",
+    "SI_SHIV_ARCHETYPE": "Shiv Silent",
+    "DF_ARCHETYPE_ORBS": "Orb Defect",
+    "WA_ARCHETYPE_DIVINITY": "Mantra Watcher",
+    "HERMIT_DOOMSDAY_ARCHETYPE": "Doomsday Hermit",
+
+    "downfall:NeowBoss": "The heroes, Returned",
+    "downfall:NeowBossFinal": "Neow, Goddess of Life",
+}
+
 class ShopContents:
     """Contains one floor's shop contents.
 
@@ -1725,11 +1748,13 @@ class EncounterBase(NodeData):
 
     @property
     def name(self) -> str:
-        return self._damage["enemies"]
+        enemies = self._damage["enemies"]
+        return _enemies.get(enemies, enemies)
 
     @property
     def fought(self) -> str:
-        return self._damage["enemies"]
+        fought = self._damage["enemies"]
+        return _enemies.get(fought, fought)
 
     @property
     def damage(self) -> int:
