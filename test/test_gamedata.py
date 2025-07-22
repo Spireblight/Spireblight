@@ -753,12 +753,12 @@ class TestNodeSave(TestCase):
     def test_picked(self):
         path = zip(s.path, _save_contents.picked, strict=True)
         for node, picked in path:
-            self.assertEqual(node.picked, picked)
+            self.assertEqual([x.name for x in node.picked], picked)
 
     def test_skipped(self):
         path = zip(s.path, _save_contents.skipped, strict=True)
         for node, skipped in path:
-            self.assertEqual(node.skipped, skipped)
+            self.assertEqual([x.name for x in node.skipped], skipped)
 
     def test_skipped_relics(self):
         path = zip(s.path, _save_contents.skipped_relics, strict=True)

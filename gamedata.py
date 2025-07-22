@@ -25,7 +25,7 @@ try:
 except ModuleNotFoundError:
     fig_to_html = None
 
-from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, Relic, Potion
+from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, SingleCard, Relic, Potion
 from sts_profile import Profile
 from logger import logger
 
@@ -38,10 +38,7 @@ __all__ = ["FileParser"]
 
 # XXX Make sure to remove private member access from outside the class
 # search for #PRIV# in this file for places that need modified
-# need a card type that is getting exposed instead of just str
-# and make get_card return it (so it has to support upgrades)
-# put all of cards_{removed,transformed,obtained,upgraded} on the base class
-# same for damage_taken, max_hp_{gained,lost}, relics_{gained,lost}
+# put all of damage_taken, max_hp_{gained,lost} on the base class
 
 class BaseNode(ABC):
     """This the common base class for all path nodes, including Neow.
@@ -109,19 +106,50 @@ class BaseNode(ABC):
         return self.parser.potions[self.floor]
 
     @property
-    def picked(self) -> list[str]:
+    def picked(self) -> list[SingleCard]:
         """Return the cards picked this floor."""
-        return self.parser.card_choices[0][self.floor]
+        ret = []
+        for card in self.parser.card_choices[0][self.floor]:
+            ret.append(card)
+        return ret
 
     @property
-    def skipped(self) -> list[str]:
+    def skipped(self) -> list[SingleCard]:
         """Return the cards skipped this floor."""
-        return self.parser.card_choices[1][self.floor]
+        ret = []
+        for card in self.parser.card_choices[1][self.floor]:
+            ret.append(card)
+        return ret
+
+    @property
+    def cards_obtained(self) -> list[SingleCard]:
+        """Return the cards obtained outside of a card reward this floor."""
+        return []
+
+    @property
+    def cards_removed(self) -> list[SingleCard]:
+        """Return the cards that were removed this floor."""
+        return []
+
+    @property
+    def cards_transformed(self) -> list[SingleCard]:
+        """Return the cards that were transformed away this floor."""
+        return []
+
+    @property
+    def cards_upgraded(self) -> list[SingleCard]:
+        """Return the cards that were upgraded this floor, before the upgrade."""
+        return []
 
     @property
     def relics(self) -> list[Relic]:
         """Return the relics obtained this floor."""
         return self.parser.relics_obtained[self.floor]
+
+    @property
+    def relics_lost(self) -> list[Relic]:
+        """Return the relics lost this floor."""
+        return []
 
     @property
     def used_potions(self) -> list[Potion]:
@@ -170,11 +198,11 @@ class BaseNode(ABC):
 
     def card_delta(self) -> int:
         """How many cards were added or removed on this floor."""
-        return len(self.picked)
+        return len(self.picked) + len(self.cards_obtained) - len(self.cards_removed) - len(self.cards_transformed)
 
     def relic_delta(self) -> int:
         """How many relics were gained or lost on this floor."""
-        return len(self.relics)
+        return len(self.relics) - len(self.relics_lost)
 
     def potion_delta(self) -> int:
         """How many potions were obtained, used, or discarded on this floor."""
@@ -318,25 +346,39 @@ class NeowBonus(BaseNode):
                 yield f"{self.all_costs.get(c, c)} {self.all_bonuses.get(b, b)}"
 
     @property
-    def cards_obtained(self) -> list[str]:
-        return self.parser._neow_data[0].get("cardsObtained", [])
+    def cards_obtained(self) -> list[SingleCard]:
+        ret = super().cards_obtained
+        for card in self.parser._neow_data[0].get("cardsObtained", []):
+            ret.append(get_card(card))
+        return ret
 
     @property
-    def cards_removed(self) -> list[str]:
-        return self.parser._neow_data[0].get("cardsRemoved", [])
+    def cards_removed(self) -> list[SingleCard]:
+        ret = super().cards_removed
+        for card in self.parser._neow_data[0].get("cardsRemoved", []):
+            ret.append(get_card(card))
+        return ret
 
     @property
-    def cards_transformed(self) -> list[str]:
-        return self.parser._neow_data[0].get("cardsTransformed", [])
+    def cards_transformed(self) -> list[SingleCard]:
+        ret = super().cards_transformed
+        for card in self.parser._neow_data[0].get("cardsTransformed", []):
+            ret.append(get_card(card))
+        return ret
 
     @property
-    def cards_upgraded(self) -> list[str]:
-        return self.parser._neow_data[0].get("cardsUpgraded", [])
+    def cards_upgraded(self) -> list[SingleCard]:
+        ret = super().cards_upgraded
+        for card in self.parser._neow_data[0].get("cardsUpgraded", []):
+            ret.append(get_card(card))
+        return ret
 
     @property
     def relics(self) -> list[Relic]:
-        rel = [get(x) for x in self.parser._neow_data[0].get('relicsObtained', ())]
-        return super().relics + rel
+        ret = super().relics
+        for x in self.parser._neow_data[0].get('relicsObtained', ()):
+            ret.append(get(x))
+        return ret
 
     @property
     def damage_taken(self) -> int:
@@ -438,13 +480,13 @@ class NeowBonus(BaseNode):
                 base += 100
             case "TWO_FIFTY_GOLD":
                 base += 250
-            case "ONE_RARE_RELIC": #PRIV#
-                if self.parser._data["relics"][1] == "Old Coin": # this can break if N'loth is involved
+            case "ONE_RARE_RELIC":
+                if self.parser.relics_bare[0].name == "Old Coin": # this can break if N'loth is involved
                     base += 300
 
         return base
 
-    def get_cards(self) -> list[str]: # TODO: new card type that supports upgrades
+    def get_cards(self) -> list[SingleCard]:
         cards = []
         if self.parser.ascension_level >= 10:
             cards.append("AscendersBane")
@@ -472,13 +514,15 @@ class NeowBonus(BaseNode):
             case a:
                 raise ValueError(f"I don't know how to handle {a!r}")
 
+        cards = [get_card(x) for x in cards]
+
         for x in self.cards_transformed + self.cards_removed:
             cards.remove(x)
         for x in self.cards_obtained:
             cards.append(x)
         for x in self.cards_upgraded:
             index = cards.index(x)
-            cards[index] = f"{x}+1"
+            cards[index].upgrades += 1
 
         cards.extend(self.picked)
 
@@ -488,9 +532,9 @@ class NeowBonus(BaseNode):
 
     def bonus_THREE_CARDS(self):
         if self.picked:
-            return f"picked {get_card(self.picked[0])} over {' and '.join(get_card(x) for x in self.skipped)}"
+            return f"picked {self.picked[0]} over {' and '.join(x.name for x in self.skipped)}"
         if self.skipped:
-            return f"were offered {', '.join(get_card(x) for x in self.skipped)} but skipped them all"
+            return f"were offered {', '.join(x.name for x in self.skipped)} but skipped them all"
 
         raise ValueError("That is not the right bonus??")
 
@@ -503,17 +547,17 @@ class NeowBonus(BaseNode):
 
     def bonus_REMOVE_CARD(self):
         if self.cards_removed:
-            return f"removed {get_card(self.cards_removed[0])}"
+            return f"removed {self.cards_removed[0]}"
         return "removed a card"
 
     def bonus_TRANSFORM_CARD(self):
         if self.cards_transformed:
-            return f"transformed {get_card(self.cards_transformed[0])} into {get_card(self.cards_obtained[0])}"
+            return f"transformed {self.cards_transformed[0]} into {self.cards_obtained[0]}"
         return "transformed a card"
 
     def bonus_UPGRADE_CARD(self):
         if self.cards_upgraded:
-            return f"upgraded {get_card(self.cards_upgraded[0])}"
+            return f"upgraded {self.cards_upgraded[0]}"
         return "upgraded a card"
 
     def bonus_THREE_ENEMY_KILL(self):
@@ -533,7 +577,7 @@ class NeowBonus(BaseNode):
 
     def bonus_ONE_RANDOM_RARE_CARD(self):
         if self.cards_obtained:
-            return f"picked a random Rare card, and got {get_card(self.cards_obtained[0])}"
+            return f"picked a random Rare card, and got {self.cards_obtained[0]}"
         return "picked a random Rare card"
 
     # option 3
@@ -551,13 +595,13 @@ class NeowBonus(BaseNode):
 
     def bonus_REMOVE_TWO(self):
         if self.cards_removed:
-            return f"removed {' and '.join(get_card(x) for x in self.cards_removed)}"
+            return f"removed {' and '.join(x.name for x in self.cards_removed)}"
         return "removed two cards"
 
     def bonus_TRANSFORM_TWO_CARDS(self):
         if self.cards_transformed:
             # in case the cost is "gain a curse", the curse will be the first item. this guarantees we only get the last two cards
-            return f"transformed {' and '.join(get_card(x) for x in self.cards_transformed)} into {' and '.join(get_card(x) for x in self.cards_obtained[-2:])}"
+            return f"transformed {' and '.join(x.name for x in self.cards_transformed)} into {' and '.join(x.name for x in self.cards_obtained[-2:])}"
         return "transformed two cards"
 
     def bonus_ONE_RARE_RELIC(self):
@@ -582,7 +626,7 @@ class NeowBonus(BaseNode):
 
     def cost_CURSE(self):
         if self.cards_obtained:
-            return f"got cursed with {get_card(self.cards_obtained[0])}"
+            return f"got cursed with {self.cards_obtained[0]}"
         return "got a random curse"
 
     def cost_NO_GOLD(self):
@@ -716,7 +760,7 @@ class ShopContents:
     This can be used either for contents or purchases."""
 
     def __init__(self):
-        self.cards: list[str] = []
+        self.cards: list[SingleCard] = []
         self.relics: list[Relic] = []
         self.potions: list[Potion] = []
 
@@ -1562,13 +1606,15 @@ class RelicData:
         return self.relic.name
 
 class CardData: # TODO: metadata + scaling cards (for savefile)
-    def __init__(self, card: str, cards_list: Iterable[str], meta: int = 0):
-        name, _, upgrades = card.partition("+")
+    def __init__(self, card: str | SingleCard, cards_list: Iterable[str], meta: int = 0):
+        self.orig = card
+        if isinstance(card, str):
+            card = get_card(card)
         self._cards_list = list(cards_list)
-        self.internal = card
-        self.card: Card = get(name)
+        self.single = card
+        self.card: Card = card.card
         self.meta = meta
-        self.upgrades = int(upgrades) if upgrades else 0
+        self.upgrades = card.upgrades
 
     def as_cards(self):
         for i in range(self.count):
@@ -1601,7 +1647,7 @@ class CardData: # TODO: metadata + scaling cards (for savefile)
     @property
     def count(self) -> int:
         if self._cards_list:
-            return self._cards_list.count(self.internal)
+            return self._cards_list.count(self.orig)
         return 1 # support standalone card stuff
 
     @property
@@ -1934,47 +1980,46 @@ class Event(NodeData):
         return self._event["gold_loss"]
 
     @property
-    def cards_transformed(self) -> list[str]:
-        if "cards_transformed" not in self._event:
-            return []
-        return [get(x).name for x in self._event["cards_transformed"]]
+    def cards_transformed(self) -> list[SingleCard]:
+        l = super().cards_transformed
+        for x in self._event.get("cards_transformed", ()):
+            l.append(get_card(x))
+        return l
 
     @property
-    def cards_obtained(self) -> list[str]:
-        if "cards_obtained" not in self._event:
-            return []
-        return [get_card(x) for x in self._event["cards_obtained"]]
+    def cards_obtained(self) -> list[SingleCard]:
+        l = super().cards_obtained
+        for x in self._event.get("cards_obtained", ()):
+            l.append(get_card(x))
+        return l
 
     @property
-    def cards_removed(self) -> list[str]:
-        if "cards_removed" not in self._event:
-            return []
-        return [get_card(x) for x in self._event["cards_removed"]]
+    def cards_removed(self) -> list[SingleCard]:
+        l = super().cards_removed
+        for x in self._event.get("cards_removed", ()):
+            l.append(get_card(x))
+        return l
 
     @property
-    def cards_upgraded(self) -> list[str]:
-        if "cards_upgraded" not in self._event:
-            return []
-        return [get_card(x) for x in self._event["cards_upgraded"]]
-
-    @property
-    def relics_obtained(self) -> list[Relic]:
-        if "relics_obtained" not in self._event:
-            return []
-        return [get(x) for x in self._event["relics_obtained"]]
-
-    @property
-    def relics_lost(self) -> list[Relic]:
-        if "relics_lost" not in self._event:
-            return []
-        return [get(x) for x in self._event["relics_lost"]]
+    def cards_upgraded(self) -> list[SingleCard]:
+        l = super().cards_upgraded
+        for x in self._event.get("cards_upgraded", ()):
+            l.append(get_card(x))
+        return l
 
     @property
     def relics(self) -> list[Relic]:
-        return super().relics + self.relics_obtained
+        l = super().relics
+        for x in self._event.get("relics_obtained", ()):
+            l.append(get(x))
+        return l
 
-    def relic_delta(self) -> int:
-        return super().relic_delta() - len(self.relics_lost)
+    @property
+    def relics_lost(self) -> list[Relic]:
+        l = super().relics_lost
+        for x in self._event.get("relics_lost", ()):
+            l.append(get(x))
+        return l
 
 class EventFight(Event, EncounterBase):
     """This is a subclass for fights that happen in events.

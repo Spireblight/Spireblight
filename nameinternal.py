@@ -47,16 +47,11 @@ def get(name: str) -> Base:
 
     return Unknown(name)
 
-def get_card(card: str) -> str:
+def get_card(card: str) -> SingleCard:
     name, _, upgrades = card.partition("+")
     inst = get(name)
-    match upgrades:
-        case "" | "0":
-            return inst.name
-        case "1":
-            return f"{inst.name}+"
-        case a:
-            return f"{inst.name}+{a}"
+    return SingleCard(inst, int(upgrades or 0))
+
 
 @total_ordering
 class Base:
@@ -112,6 +107,25 @@ class Card(Base):
         elif self.mod:
             mod = f"(Mod: {self.mod})"
         return f"{self.name} - [{self.cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
+
+class SingleCard:
+    def __init__(self, card: Card, upgrades: int = 0):
+        self.card = card
+        self.upgrades = upgrades
+
+    @property
+    def name(self):
+        match self.upgrades:
+            case 0:
+                up = ""
+            case 1:
+                up = "+"
+            case n:
+                up = f"+{n}"
+        return f"{self.card.name}{up}"
+
+    def __str__(self):
+        return self.name
 
 class Relic(Base):
     cls_name = "relic"

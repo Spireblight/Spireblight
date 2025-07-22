@@ -7,7 +7,7 @@ from discord.ext.commands import Context as DContext
 from twitch import TwitchCommand
 from disc import DiscordCommand
 
-from nameinternal import Relic, Potion
+from nameinternal import Relic, Potion, SingleCard
 
 __all__ = [
     "ContextType", "CommandType",
@@ -25,7 +25,7 @@ CommandType: TypeAlias = Union[TwitchCommand, DiscordCommand]
 Floor: TypeAlias = int
 
 # these are mappings of things obtained on a floor
-CardRewards: TypeAlias = defaultdict[Floor, list[str]]
+CardRewards: TypeAlias = defaultdict[Floor, list[SingleCard]]
 RelicRewards: TypeAlias = defaultdict[Floor, list[Relic]]
 PotionRewards: TypeAlias = defaultdict[Floor, list[Potion]]
 
