@@ -12,9 +12,9 @@ from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
 import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
-from nameinternal import get, get_card, Relic, Potion
+from nameinternal import get, get_card, Relic
 from sts_profile import get_current_profile
-from gamedata import FileParser, BottleRelic, KeysObtained
+from gamedata import FileParser, BottleRelic, KeysObtained, _enemies
 from webpage import router
 from logger import logger
 from events import invoke
@@ -37,17 +37,18 @@ class Savefile(FileParser):
     is only ever one savefile in memory, and it can be accessed by get_savefile().
 
     The 'data' instance attribute may occasionally be None, which means that no
-    run is currently ongoing. However, if that were to be the case, then
-    get_savefile() will return None instead.
+    run is currently ongoing. To check if a run is ongoing, test for 'in_game'.
 
     """
 
     prefix = "metric_"
 
-    def __init__(self):
-        if _savefile is not None:
+    def __init__(self, _debug=False):
+        # _debug is NOT intended for normal use, only testing
+        # things can and WILL break if used in production
+        if _savefile is not None and not _debug:
             raise RuntimeError("cannot have multiple concurrent Savefile instances running -- use get_savefile() instead")
-        data = None
+        data = {}
         try:
             with open(os.path.join("data", "spire-save.json"), "r") as f:
                 data = json.load(f)
@@ -58,6 +59,8 @@ class Savefile(FileParser):
         self._matches = False
         self._activemods = None
         
+    def __str__(self):
+        return "SAVEFILE"
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
         if character.startswith(("1_", "2_")):
@@ -98,9 +101,9 @@ class Savefile(FileParser):
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
             # off. A bit too much precision otherwise
-            date = datetime.datetime.utcfromtimestamp(date / 1000)
+            date = datetime.datetime.fromtimestamp(date / 1000, datetime.UTC)
         else:
-            date = datetime.datetime.utcnow()
+            date = datetime.datetime.now(datetime.UTC)
 
         return date
 
@@ -134,6 +137,14 @@ class Savefile(FileParser):
                 keys.sapphire_key_floor = int(floor["floor"])
 
         return keys
+
+    @property
+    def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
+        data = dict(self._data["basemod:mod_saves"].get("NeowBonusLog", {}))
+        bonuses = list(self._data["basemod:mod_saves"].get("NeowBonusesSkippedLog", ()))
+        costs = list(self._data["basemod:mod_saves"].get("NeowCostsSkippedLog", ()))
+
+        return (data, bonuses, costs)
 
     @property
     def _master_deck(self) -> list[str]:
@@ -215,41 +226,14 @@ class Savefile(FileParser):
         )
 
     @property
+    def event_chances(self) -> tuple[int, int, int, int]:
+        return self._data["event_chances"]
+
+    @property
     def current_floor(self) -> int:
         return self._data["metric_floor_reached"]
 
-    def _potion_handling(self, key: str) -> list[list[Potion]]:
-        final = [[]] # empty list for Neow
-        # this needs RHP, so it might not be present
-        # but we want a list anyway, which is why we iterate like this
-        for i in range(self.current_floor):
-            potions = []
-            try:
-                for x in self._data["basemod:mod_saves"][key][i]:
-                    potions.append(get(x))
-            except (KeyError, IndexError):
-                # Either we don't have RHP, or the floor isn't stored somehow
-                pass
-
-            final.append(potions)
-
-        return final
-
-    @property
-    def potions_use(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionUseLog")
-
-    @property
-    def potions_alchemize(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedAlchemizeLog")
-
-    @property
-    def potions_entropic(self) -> list[list[Potion]]:
-        return self._potion_handling("potionsObtainedEntropicBrewLog")
-
-    @property
-    def potions_discarded(self) -> list[list[Potion]]:
-        return self._potion_handling("PotionDiscardLog")
+    floor = current_floor
 
     @property
     def potion_chance(self) -> int:
@@ -321,7 +305,8 @@ class Savefile(FileParser):
 
     @property
     def upcoming_boss(self) -> str:
-        return self._data["boss"]
+        boss = self._data["boss"]
+        return _enemies.get(boss, boss)
 
     @property
     def bottles(self) -> list[BottleRelic]:
@@ -507,5 +492,5 @@ async def receive_save(req: Request):
 
     return Response()
 
-async def get_savefile() -> Savefile:
+def get_savefile() -> Savefile:
     return _savefile

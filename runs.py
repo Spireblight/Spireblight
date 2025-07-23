@@ -17,9 +17,8 @@ from cache.run_stats import update_all_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
 from cache.streaks import update_streak_collections
-from nameinternal import get, Potion
 from sts_profile import get_profile
-from gamedata import FileParser, KeysObtained
+from gamedata import FileParser, KeysObtained, _enemies
 from webpage import router
 from logger import logger
 from events import add_listener
@@ -80,11 +79,11 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        return datetime.datetime.utcfromtimestamp(self._data["timestamp"])
+        return datetime.datetime.fromtimestamp(self._data["timestamp"], datetime.UTC)
 
     @property
     def timedelta(self) -> datetime.timedelta:
-        return datetime.datetime.now() - self.timestamp
+        return datetime.datetime.now(datetime.UTC) - self.timestamp
 
     @property
     def keys(self) -> KeysObtained:
@@ -103,6 +102,14 @@ class RunParser(FileParser):
         return keys
 
     @property
+    def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
+        data = dict(self._data.get("neow_bonus_log", {}))
+        bonuses = list(self._data.get("neow_bonuses_skipped_log", ()))
+        costs = list(self._data.get("neow_costs_skipped_log", ()))
+
+        return (data, bonuses, costs)
+
+    @property
     def _master_deck(self) -> list[str]:
         return list(self._data["master_deck"])
 
@@ -116,11 +123,14 @@ class RunParser(FileParser):
 
     @property
     def killed_by(self) -> str | None:
-        return self._data.get("killed_by")
+        killer = self._data.get("killed_by")
+        return _enemies.get(killer, killer)
 
     @property
     def floor_reached(self) -> int:
         return int(self._data["floor_reached"])
+
+    floor = floor_reached
 
     @property
     def acts_beaten(self) -> int:
@@ -130,39 +140,6 @@ class RunParser(FileParser):
     @property
     def final_health(self) -> tuple[int, int]:
         return self._data["current_hp_per_floor"][-1], self._data["max_hp_per_floor"][-1]
-
-    def _potion_handling(self, key: str) -> list[list[Potion]]:
-        final = [[]] # empty list for Neow
-        # this needs RHP, so it might not be present
-        # but we want a list anyway, which is why we iterate like this
-        for i in range(self.floor_reached):
-            potions = []
-            try:
-                for x in self._data[key][i]:
-                    potions.append(get(x))
-            except (KeyError, IndexError):
-                # Either we don't have RHP, or the floor isn't stored somehow
-                pass
-
-            final.append(potions)
-
-        return final
-
-    @property
-    def potions_use(self) -> list[list[Potion]]:
-        return self._potion_handling("potion_use_per_floor")
-
-    @property
-    def potions_alchemize(self) -> list[list[Potion]]:
-        return self._potion_handling("potions_obtained_alchemize")
-
-    @property
-    def potions_entropic(self) -> list[list[Potion]]:
-        return self._potion_handling("potions_obtained_entropic_brew")
-
-    @property
-    def potions_discarded(self) -> list[list[Potion]]:
-        return self._potion_handling("potion_discard_per_floor")
 
     @property
     def score(self) -> int:

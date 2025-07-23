@@ -151,14 +151,14 @@
               {% if run.neow_bonus.has_info %}
                 {{ run.neow_bonus.as_str() }}
               {% else %}
-                {{ run.neow_bonus.picked }}
+                {{ run.neow_bonus.boon_picked }}
               {% endif %}
             </p>
             {% if run.neow_bonus.has_data %}
               <div class="skipped">
                 <p>And we skipped</p>
                 <ul>
-                  {% for skipped in run.neow_bonus.skipped %}
+                  {% for skipped in run.neow_bonus.boons_skipped %}
                     <li> {{ skipped }} </li>
                   {% endfor %}
                 </ul>
