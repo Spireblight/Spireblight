@@ -127,6 +127,9 @@ class SingleCard:
     def __str__(self):
         return self.name
 
+    def __eq__(self, value):
+        return isinstance(value, SingleCard) and self.name == value.name
+
 class Relic(Base):
     cls_name = "relic"
     def __init__(self, data: dict[str, str]):
