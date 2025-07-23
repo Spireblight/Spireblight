@@ -1499,6 +1499,7 @@ async def setup_clips():
         except HTTPException:
             return # idk
 
+        result.sort(key=lambda x: clips.index(x.id))
         for clip in result:
             _clips.append(Clip(clip, *maps[clip.id]))
 

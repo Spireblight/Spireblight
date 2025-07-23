@@ -1184,7 +1184,7 @@ class FileParser(ABC):
         # missing Empty Cage
         all_removals = []
         for card in self.neow_bonus.cards_removed:
-            all_removals.append((card, 0))
+            all_removals.append((card.name, 0))
         all_removals.extend(event_removals)
         all_removals.extend(store_removals)
         return all_removals
