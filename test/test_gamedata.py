@@ -797,6 +797,29 @@ class _save_contents:
     ]
 
 class _matched_contents:
+    relics = [
+        ("Burning Blood", 0, "\nHP healed: 147"),
+        ("Neow's Lament", 0, ""),
+        ("Ornamental Fan", 3, "\nBlock gained: 68\nPer turn: 0.62\nPer combat: 2.72"),
+        ("Vajra", 5, ""),
+        ("Bottled Tornado", 6, "\nCard bottled: Feel No Pain"),
+        ("Blue Candle", 8, "\nCurses exhausted: 1\nPer turn: 0.01\nPer combat: 0.05"),
+        ("Whetstone", 9, "\nCards upgraded: \n- Twin Strike\n- Bash"),
+        ("Horn Cleat", 11, ""),
+        ("Preserved Insect", 12, "\nHP removed: 298"),
+        ("Mark of Pain", 17, ""),
+        ("Orichalcum", 23, "\nBlock gained: 24\nPer turn: 0.45\nPer combat: 2.00"),
+        ("Happy Flower", 25, "\nEnergy gained: 16\nPer turn: 0.33\nPer combat: 1.45"),
+        ("Mummified Hand", 26, "\nEnergy discounted: 43\nPer turn: 0.90\nPer combat: 3.91"),
+        ("Singing Bowl", 29, "\nMax HP gained: 6"),
+        ("Empty Cage", 34, ""),
+        ("Prismatic Shard", 37, ""),
+        ("Art of War", 40, "\nEnergy gained: 2\nPer turn: 0.12\nPer combat: 0.50"),
+        ("Letter Opener", 44, "\nDamage dealt: 17\nPer turn: 1.89\nPer combat: 8.50"),
+        ("Nunchaku", 46, "\nEnergy gained: 0\nPer turn: 0.00\nPer combat: 0.00"),
+        ("Centennial Puzzle", 47, "\nCards drawn: 3\nPer turn: 0.75\nPer combat: 3.00"),
+        ("Clockwork Souvenir", 47, ""),
+    ]
     rooms = [
         "M",
         "?",
@@ -1682,10 +1705,17 @@ class TestRunParser(TestCase):
 
 class TestRelicData(TestCase):
     def test_save(self):
-        relics = zip(s.relics, _save_contents.relics)
+        relics = zip(s.relics, _save_contents.relics, strict=True)
         for relic, (name, floor, details) in relics:
             self.assertEqual(relic.name, name)
             self.assertEqual(relic.description(), f"Obtained on floor {floor}{details}")
+
+    def test_matched(self):
+        relics = zip(sm.relics, rm.relics[:21], _matched_contents.relics, strict=True)
+        for s_relic, r_relic, (name, floor, details) in relics:
+            self.assertEqual(s_relic.name, name)
+            self.assertEqual(s_relic.description(), f"Obtained on floor {floor}{details}")
+            self.assertEqual(s_relic.relic, r_relic.relic)
 
 class TestPath(TestCase):
     def test_length(self):
