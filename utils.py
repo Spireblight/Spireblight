@@ -1,5 +1,5 @@
 import calendar
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import Any, Iterable
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 from twitchio import models, client, http as _http
@@ -83,8 +83,8 @@ def complete_match(string: str, matches: Iterable[str]) -> list:
 
 def parse_date_range(date_string: str) -> tuple[datetime]:
     """valid date strings: YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"""
-    start_date: datetime.datetime | None = None
-    end_date: datetime.datetime | None = None
+    start_date: datetime | None = None
+    end_date: datetime | None = None
     if date_string[-1] == "+":
         start_date = _parse_dates_with_optional_month_day(date_string[:-1])
     elif date_string[-1] == "-":
@@ -93,7 +93,7 @@ def parse_date_range(date_string: str) -> tuple[datetime]:
         date_parts = date_string.split("-")
         if len(date_string) == 4 and len(date_parts) == 1:
             # only a year was passed, default to Jan 1 - Dec 31 of the specified year
-            return (datetime(int(date_parts[0]), 1, 1), datetime(int(date_parts[0]), 12, 31, 23, 59, 59))
+            return (datetime(int(date_parts[0]), 1, 1, tzinfo=UTC), datetime(int(date_parts[0]), 12, 31, 23, 59, 59, tzinfo=UTC))
 
         if len(date_parts) > 2:
             raise ValueError("Range format is invalid")
@@ -117,9 +117,9 @@ def _parse_dates_with_optional_month_day(val: str, isEndDate: bool = False) -> d
     if (len(date_parts) > 2):
         day = int(date_parts[2])
     if isEndDate:
-        return datetime(year, month, day, hour=23, minute=59, second=59)
+        return datetime(year, month, day, hour=23, minute=59, second=59, tzinfo=UTC)
     else:
-        return datetime(year, month, day)
+        return datetime(year, month, day, tzinfo=UTC)
 
 
 def edit_distance(left, right):
