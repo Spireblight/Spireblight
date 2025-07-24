@@ -13,10 +13,10 @@ import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
 from response_objects.profiles import ProfilesResponse
-from cache.run_stats import update_all_run_stats
-from cache.cache_helpers import RunLinkedListNode
-from cache.mastered import update_mastery_stats
-from cache.streaks import update_streak_collections
+from src.cache.run_stats import update_all_run_stats
+from src.cache.cache_helpers import RunLinkedListNode
+from src.cache.mastered import update_mastery_stats
+from src.cache.streaks import update_streak_collections
 from src.sts_profile import get_profile
 from src.gamedata import FileParser, KeysObtained, _enemies
 from src.webpage import router

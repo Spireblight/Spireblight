@@ -1,5 +1,5 @@
 from __future__ import annotations
-from cache.cache_helpers import RunLinkedListNode
+from src.cache.cache_helpers import RunLinkedListNode
 
 from src.gamedata import FileParser
 from typing import TYPE_CHECKING

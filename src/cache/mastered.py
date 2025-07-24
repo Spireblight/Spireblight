@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from collections import Counter
 
-from cache.cache_helpers import MasteryStats
+from src.cache.cache_helpers import MasteryStats
 from src.nameinternal import get
 from src.sts_profile import get_profile
 

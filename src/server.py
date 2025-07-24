@@ -45,13 +45,13 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession, ContentTypeError
 
-from cache.run_stats import (
+from src.cache.run_stats import (
     get_all_run_stats,
     get_run_stats_by_date,
     get_run_stats_by_date_string,
     update_range,
 )
-from cache.mastered import get_current_masteries, get_mastered
+from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
 from src.webpage import router, __botname__, __version__, __github__, __author__
