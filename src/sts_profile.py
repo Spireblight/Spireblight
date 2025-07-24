@@ -15,14 +15,14 @@ from datetime import datetime
 
 import aiohttp_jinja2
 
-from nameinternal import get
-from webpage import router
-from logger import logger
-from events import add_listener
-from utils import get_req_data
+from src.nameinternal import get
+from src.webpage import router
+from src.logger import logger
+from src.events import add_listener
+from src.utils import get_req_data
 
 if TYPE_CHECKING: # circular imports otherwise
-    from runs import RunParser
+    from src.runs import RunParser
 
 __all__ = ["get_profile", "get_current_profile"]
 
@@ -87,7 +87,7 @@ class Profile:
     @property
     def runs(self) -> Generator[RunParser, None, None]:
         """Return all runs from the matching profile, newest first."""
-        from runs import _ts_cache
+        from src.runs import _ts_cache
         l = list(_ts_cache)
         l.sort()
         l.reverse()
@@ -112,7 +112,7 @@ class Profile:
 async def runs_page(req: Request):
     profile = profile_from_request(req)
 
-    from runs import _update_cache
+    from src.runs import _update_cache
     _update_cache()
 
     try:
@@ -132,7 +132,7 @@ async def runs_page(req: Request):
 @aiohttp_jinja2.template("runs_timestamp.jinja2")
 async def runs_by_timestamp(req: Request):
     profile = profile_from_request(req)
-    from runs import _update_cache
+    from src.runs import _update_cache
     _update_cache()
     try:
         timestamp = req.match_info.get("timestamp", "")
@@ -163,7 +163,7 @@ async def runs_by_timestamp(req: Request):
 @router.get("/archive/{profile}/{timestamp}.zip")
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
-    from runs import _update_cache
+    from src.runs import _update_cache
     _update_cache()
     try:
         timestamp = req.match_info.get("timestamp", "")

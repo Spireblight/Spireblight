@@ -5,12 +5,12 @@ from typing import TYPE_CHECKING
 from collections import Counter
 
 from cache.cache_helpers import MasteryStats
-from nameinternal import get
-from sts_profile import get_profile
+from src.nameinternal import get
+from src.sts_profile import get_profile
 
 if TYPE_CHECKING:
-    from runs import RunParser
-    from save import Savefile
+    from src.runs import RunParser
+    from src.save import Savefile
 
 _mastery_stats = MasteryStats()
 

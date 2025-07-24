@@ -6,7 +6,7 @@ import math
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from runs import RunParser
+    from src.runs import RunParser
 
 class Statistic:
     def __init__(self, *, set_default: bool = False):
@@ -219,7 +219,7 @@ class StreakContainer:
 
         """
         if self.ongoing:
-            from save import _savefile
+            from src.save import _savefile
 
             if _savefile.character is not None and _savefile.character == self.character:
                 return self.runs + [_savefile]

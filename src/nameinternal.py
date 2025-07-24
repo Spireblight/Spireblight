@@ -7,9 +7,9 @@ from aiohttp import ClientSession
 import json
 import os
 
-from configuration import config
-from events import add_listener
-from utils import complete_match
+from src.configuration import config
+from src.events import add_listener
+from src.utils import complete_match
 
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."

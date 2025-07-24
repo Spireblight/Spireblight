@@ -6,12 +6,12 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
 
 from monster.static import get, get_safe, Challenge, Mutator, Artifact, Character
-from webpage import router
-from utils import get_req_data
+from src.webpage import router
+from src.utils import get_req_data
 
-from typehints import ContextType
+from src.typehints import ContextType
 
-from configuration import config
+from src.configuration import config
 
 class MonsterSave:
     def __init__(self, file):

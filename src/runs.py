@@ -17,13 +17,13 @@ from cache.run_stats import update_all_run_stats
 from cache.cache_helpers import RunLinkedListNode
 from cache.mastered import update_mastery_stats
 from cache.streaks import update_streak_collections
-from sts_profile import get_profile
-from gamedata import FileParser, KeysObtained, _enemies
-from webpage import router
-from logger import logger
-from events import add_listener
-from utils import convert_class_to_obj, get_req_data
-from activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
+from src.sts_profile import get_profile
+from src.gamedata import FileParser, KeysObtained, _enemies
+from src.webpage import router
+from src.logger import logger
+from src.events import add_listener
+from src.utils import convert_class_to_obj, get_req_data
+from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 __all__ = ["get_latest_run"]
 

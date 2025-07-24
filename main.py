@@ -4,12 +4,12 @@ import sys
 
 from aiohttp import web
 
-from webpage import webpage
-from logger import logger
+from src.webpage import webpage
+from src.logger import logger
 
-import server, events
+from src import server, events
 
-from configuration import config
+from src.configuration import config
 
 if config.server.debug:
     logging.basicConfig(

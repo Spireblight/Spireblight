@@ -4,7 +4,7 @@ import inspect
 
 from twitchio.ext.commands import Context
 
-from logger import logger
+from src.logger import logger
 
 __all__ = ["wrapper"]
 

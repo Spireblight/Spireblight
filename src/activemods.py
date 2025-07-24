@@ -1,5 +1,5 @@
-from trie import Trie
-from utils import edit_distance
+from src.trie import Trie
+from src.utils import edit_distance
 
 ACTIVEMODS_KEY = "activemods:active_mods"
 
@@ -139,7 +139,7 @@ class ActiveMod():
         result = 0
         
         try:
-            result = int(self.mod_version[version])
+            result = int(self.mod_version["version"])
         except (ValueError, KeyError):
             pass
         

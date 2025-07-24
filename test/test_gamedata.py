@@ -4,8 +4,8 @@ from datetime import datetime, UTC
 import json
 import os
 
-from save import Savefile, get_savefile, _savefile as s
-from runs import RunParser
+from src.save import Savefile, get_savefile, _savefile as s
+from src.runs import RunParser
 
 # TODO: make profiles work for testing
 
@@ -14,7 +14,7 @@ from runs import RunParser
 # this cannot be part of a class setup, as I only want it to be done once
 # technically, I *could* have it setup once each time, but there's no need to
 
-import asyncio, events
+import asyncio, src.events as events
 
 asyncio.run(events.invoke("setup_init"))
 

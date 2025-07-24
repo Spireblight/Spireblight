@@ -52,16 +52,16 @@ from cache.run_stats import (
     update_range,
 )
 from cache.mastered import get_current_masteries, get_mastered
-from nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
-from sts_profile import get_profile, get_current_profile
-from webpage import router, __botname__, __version__, __github__, __author__
-from wrapper import wrapper
+from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
+from src.sts_profile import get_profile, get_current_profile
+from src.webpage import router, __botname__, __version__, __github__, __author__
+from src.wrapper import wrapper
 from monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
-from twitch import TwitchCommand
-from logger import logger
-from events import add_listener
-from slice import get_runs, CurrentRun
-from utils import (
+from src.twitch import TwitchCommand
+from src.logger import logger
+from src.events import add_listener
+from src.slice import get_runs, CurrentRun
+from src.utils import (
     format_for_slaytabase,
     getfile,
     parse_date_range,
@@ -69,15 +69,15 @@ from utils import (
     get_req_data,
     post_prediction,
 )
-from disc import DiscordCommand
-from save import get_savefile, Savefile
-from runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
-from gamedata import RelicData, Treasure, Event
+from src.disc import DiscordCommand
+from src.save import get_savefile, Savefile
+from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
+from src.gamedata import RelicData, Treasure, Event
 
-from typehints import ContextType, CommandType
-import events
+from src.typehints import ContextType, CommandType
+from src import events
 
-from configuration import config
+from src.configuration import config
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None

@@ -12,8 +12,8 @@ from abc import ABC, abstractmethod
 
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPNotImplemented, HTTPNotFound
 
-from typehints import *
-from utils import format_for_slaytabase
+from src.typehints import *
+from src.utils import format_for_slaytabase
 
 try:
     from matplotlib import pyplot as plt
@@ -25,14 +25,14 @@ try:
 except ModuleNotFoundError:
     fig_to_html = None
 
-from nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, SingleCard, Relic, Potion
-from sts_profile import Profile
-from logger import logger
+from src.nameinternal import get_event, get_relic_stats, get_run_mod, get, get_card, Card, SingleCard, Relic, Potion
+from src.sts_profile import Profile
+from src.logger import logger
 
-from configuration import config
+from src.configuration import config
 
 if TYPE_CHECKING:
-    from runs import StreakInfo
+    from src.runs import StreakInfo
 
 __all__ = ["FileParser"]
 

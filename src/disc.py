@@ -1,8 +1,8 @@
 from discord.ext.commands import Command, Context
 
-from logger import logger
+from src.logger import logger
 
-from configuration import config
+from src.configuration import config
 
 __all__ = ["DiscordCommand"]
 

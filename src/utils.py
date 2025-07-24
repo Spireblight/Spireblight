@@ -7,7 +7,7 @@ from twitchio import models, client, http as _http
 import os
 import json
 
-from configuration import config
+from src.configuration import config
 
 __all__ = [
     "get_req_data",
@@ -62,7 +62,7 @@ def getfile(x: str, mode: str):
     return open(os.path.join("data", x), mode)
 
 def update_db():
-    from server import _cmds
+    from src.server import _cmds
     with getfile("data.json", "w") as f:
         json.dump(_cmds, f, indent=config.server.json_indent)
 

@@ -4,8 +4,8 @@ from typing import Dict, List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch, AsyncMock, MagicMock
 
-import server
-from twitch import TwitchCommand
+from src import server
+from src.twitch import TwitchCommand
 
 
 class Command:
@@ -49,8 +49,8 @@ class TConnMock(MagicMock):
 
 
 class TestCommandCommand(IsolatedAsyncioTestCase):
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_add_success(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -71,8 +71,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         server.TConn.add_command.assert_called_once()
         update_db.assert_called_once()
 
-    @patch("server.update_db")
-    @patch("server.TConn", autospec=True)
+    @patch("src.server.update_db")
+    @patch("src.server.TConn", autospec=True)
     async def test_command_command_add_success_with_valid_flag(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -93,8 +93,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         server.TConn.add_command.assert_called_once()
         update_db.assert_called_once()
 
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_add_failure_already_added(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -117,8 +117,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_add_failure_already_alias(self, TConn, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -147,8 +147,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_add_failure_unknown_flag(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -167,8 +167,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_add_failure_no_output(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -185,8 +185,8 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         server.TConn.add_command.assert_not_called()
         update_db.assert_not_called()
 
-    @patch("server.update_db")
-    @patch("server.TConn", autospec=True)
+    @patch("src.server.update_db")
+    @patch("src.server.TConn", autospec=True)
     async def test_command_command_edit_success(self, _, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -215,52 +215,52 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
         context.reply.assert_awaited_with("We're testing in production!")
         update_db.assert_called_once()
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_success_with_valid_flag(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_failure_no_output(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_failure_does_not_exist(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_failure_built-in_command(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_failure_alias(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_edit_failure_unknown_flag(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_remove(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_enable(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_disable(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_alias(self, TConn, update_db):
 
-    # @patch("server.update_db")
-    # @patch("server.TConn", autospec=True)
+    # @patch("src.server.update_db")
+    # @patch("src.server.TConn", autospec=True)
     # # TODO: test_command_command_unalias(self, TConn, update_db):
 
-    @patch("server.update_db")
-    @patch("server.TConn")
+    @patch("src.server.update_db")
+    @patch("src.server.TConn")
     async def test_command_command_unknown_action(self, TConn, update_db):
         # Set up required mocks
         context = MagicMock()
@@ -278,7 +278,7 @@ class TestCommandCommand(IsolatedAsyncioTestCase):
 
 # Test non-game specific commands
 class TestDiscordCommands(IsolatedAsyncioTestCase):
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_card_with_art_error(self, mock_query):
         # Set up required mocks
         context = MagicMock()
@@ -292,7 +292,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         mock_query.assert_called_once_with("Error")
         context.reply.assert_awaited_once_with("Could not find card 'Error'")
 
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_card_with_art_not_a_card(self, mock_query):
         # Set up required mocks
         context = MagicMock()
@@ -309,7 +309,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             "Can only find art for cards. Use !info instead."
         )
 
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_card_with_art_success_sts_clumsy(self, mock_query):
         # Set up required mocks
         context = MagicMock()
@@ -326,7 +326,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/slay%20the%20spire/cards/clumsy.png"
         )
 
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_card_with_art_success_mod_snapshot(self, mock_query):
         # Set up required mocks
         context = MagicMock()
@@ -343,7 +343,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/downfall/cards/hermit-snapshot.png"
         )
 
-    @patch("server._update_quotes")
+    @patch("src.server._update_quotes")
     async def test_quote_add(self, mock_update):
         context = MagicMock()
         context.reply = AsyncMock()
@@ -386,7 +386,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             "Calipers would be good here baalorCalipers baalorSmug"
         )
 
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_cwbgh_with_save_no_calipers(self, mock_query):
         # Set up required mocks
         context = MagicMock()
@@ -403,7 +403,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
             "Calipers would be good here baalorCalipers baalorSmug"
         )
 
-    @patch("server.query")
+    @patch("src.server.query")
     async def test_command_cwbgh_with_save_has_calipers(self, mock_query):
         # Set up required mocks
         context = MagicMock()
