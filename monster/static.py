@@ -256,10 +256,10 @@ def load_mt1():
     return
     _internal_cache.clear()
     _query_cache.clear()
-    for file in os.listdir(os.path.join("monster", "_static", "mt1")):
+    for file in os.listdir(os.path.join("argo", "mt1")):
         if not file.endswith(".json"):
             continue
-        with open(os.path.join("monster", "_static", "mt1", file)) as f:
+        with open(os.path.join("argo", "mt1", file)) as f:
             data = json.load(f)
             for d in data:
                 value = _map1.get(file[:-5], Misc)(d)
@@ -270,10 +270,10 @@ def load_mt2():
     # TODO: make clans and units as proper objects that others can use
     _internal_cache.clear()
     _query_cache.clear()
-    for file in os.listdir(os.path.join("monster", "_static", "mt2")):
+    for file in os.listdir(os.path.join("argo", "mt2")):
         if not file.endswith(".json"):
             continue
-        with open(os.path.join("monster", "_static", "mt2", file)) as f:
+        with open(os.path.join("argo", "mt2", file)) as f:
             data = json.load(f)
             for d in data:
                 value = _map2.get(file[:-5], Misc2)(d)
