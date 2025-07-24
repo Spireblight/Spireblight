@@ -250,10 +250,10 @@ async def load():
             _internal_cache[inst.internal] = inst
             _query_cache[sanitize(inst.name)].append(inst)
 
-    for file in os.listdir("eng"):
+    for file in os.listdir(os.path.join("argo", "sts1")):
         name = file[:-5]
         if not name.startswith("_"):
-            with open(os.path.join("eng", file)) as f:
+            with open(os.path.join("argo", "sts1", file)) as f:
                 _cache[name] = json.load(f)
 
     # Load relic sets
