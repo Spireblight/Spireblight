@@ -46,7 +46,7 @@ def uptime() -> str:
 def now() -> str:
     return datetime.datetime.now(datetime.timezone.utc).isoformat(" ", "seconds")
 
-env = aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("Templates/"))
+env = aiohttp_jinja2.setup(webpage, loader=jinja2.FileSystemLoader("templates/"))
 env.globals["author"] = __author__
 env.globals["github"] = __github__
 env.globals["version"] = __version__
