@@ -137,7 +137,7 @@ def load():
     populate(os.path.join("data", "slice-data"))
     return # Temporary (ha! ha!) fix until we have proper info again
     for file, var in (("curses", curses), ("items", items)):
-        with open(f"{file}.txt") as f:
+        with open(os.path.join("argo", "slicedice", f"{file}.txt")) as f:
             cont = False
             for line in f.readlines():
                 line = line.replace("\t\t", "\t")[:-1] # remove trailing newline
