@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path('..', '..').resolve()))
 
-print("RUN PATH:", sys.path[0])
+import src
 
 add_module_names = False
 python_use_unqualified_type_names = True
