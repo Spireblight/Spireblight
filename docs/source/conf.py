@@ -11,7 +11,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path('..', '..').resolve()))
 
-import src
+import src, os
+
+print(*os.listdir(sys.path[0]))
+print(*os.listdir(sys.path[0] + "/src"))
 
 add_module_names = False
 python_use_unqualified_type_names = True
