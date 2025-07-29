@@ -6,14 +6,12 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import sys, os
+import sys
 from pathlib import Path
 
-print("RUNNING FROM:", os.getcwd())
-
-# Local builds are two deep, but GitHub Actions is only one deep
-sys.path.insert(0, str(Path('..').resolve()))
 sys.path.insert(0, str(Path('..', '..').resolve()))
+
+print("RUN PATH:", sys.path[0])
 
 add_module_names = False
 python_use_unqualified_type_names = True
