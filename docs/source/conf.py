@@ -6,12 +6,10 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import sys, importlib
+import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path('..', '..').resolve()))
-
-importlib.invalidate_caches()
 
 add_module_names = False
 python_use_unqualified_type_names = True
