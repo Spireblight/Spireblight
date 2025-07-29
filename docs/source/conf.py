@@ -9,6 +9,8 @@
 import sys
 from pathlib import Path
 
+# Local builds are two deep, but GitHub Actions is only one deep
+sys.path.insert(0, str(Path('..').resolve()))
 sys.path.insert(0, str(Path('..', '..').resolve()))
 
 add_module_names = False
