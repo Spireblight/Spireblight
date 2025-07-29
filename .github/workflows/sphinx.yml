@@ -22,7 +22,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Build HTML
-        run: ./make html
+        run: |
+          cd docs
+          ./make html
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
