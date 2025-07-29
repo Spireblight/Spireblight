@@ -32,11 +32,14 @@ def load_file(filename: str) -> DotMap:
         return conf
 
 # Load the default configuration file
-config = load_file("./default-config.yml")
+try:
+    config = load_file("./default-config.yml")
+except FileNotFoundError: # Sphinx runs from a different folder
+    config = load_file("../default-config.yml")
 
 
 # Determine which extra file to load values from.
-if len(sys.argv) >= 2 and "unittest" not in sys.argv[0]: # there will be extra args when running tests
+if len(sys.argv) >= 2 and "unittest" not in sys.argv[0] and not sys.argv[1].startswith("-"): # there will be extra args when running tests
     # If we have specified a configuration file on the command line, use that.
     extra_file = sys.argv[1]
 else:

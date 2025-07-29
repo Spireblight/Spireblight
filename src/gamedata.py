@@ -34,7 +34,41 @@ from src.configuration import config
 if TYPE_CHECKING:
     from src.runs import StreakInfo
 
-__all__ = ["FileParser"]
+__all__ = [
+    "ShopContents",
+    "KeysObtained",
+    "RelicData",
+    "CardData",
+    "BottleRelic",
+
+    "FileParser",
+
+    "BaseNode",
+    "NeowBonus",
+    "NodeData",
+    "EncounterBase",
+    "NormalEncounter",
+    "EventEncounter",
+    "Treasure",
+    "EventTreasure",
+    "EliteEncounter",
+    "EventElite",
+    "EmptyEvent",
+    "AmbiguousEvent",
+    "Event",
+    "EventFight",
+    "Colosseum",
+    "Merchant",
+    "EventMerchant",
+    "Courier",
+    "Empty",
+    "SWF",
+    "Campfire",
+    "Boss",
+    "BossChest",
+    "Act4Transition",
+    "Victory",
+]
 
 # XXX Make sure to remove private member access from outside the class
 # search for #PRIV# in this file for places that need modified
