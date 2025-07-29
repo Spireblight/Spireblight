@@ -6,8 +6,10 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import sys
+import sys, os
 from pathlib import Path
+
+print("RUNNING FROM:", os.getcwd())
 
 # Local builds are two deep, but GitHub Actions is only one deep
 sys.path.insert(0, str(Path('..').resolve()))
