@@ -8,7 +8,9 @@ Handling Slay the Spire game data
    :undoc-members:
    :inherited-members:
 
-.. automodule: src.gamedata
+.. autoclass:: NeowBonus
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
+   :exclude-members: all_bonuses,all_costs
+   :inherited-members:
