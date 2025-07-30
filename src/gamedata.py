@@ -81,13 +81,13 @@ class BaseNode(ABC):
 
     This also has abstract methods and properties that need to be overridden.
 
-    Subclasses can - and should - implement their own 'get_description' method.
-    This takes one argument, type 'collections.defaultdict[int, list[str]]',
+    Subclasses can - and should - implement their own `get_description` method.
+    This takes one argument, type `collections.defaultdict[int, list[str]]`,
     and should modify that mapping in-place. Returning any non-None value will
     raise an error. The method should **NOT** attempt to call the superclass
-    version of it with super(). BaseNode's 'description' method walks through
+    version of it with `super()`. BaseNode's `description` method walks through
     the entire superclass tree, including third-party classes, in Method
-    Resolution Order, and calls each existing 'get_description' method in each
+    Resolution Order, and calls each existing `get_description` method in each
     class. Failure to implement this method in a direct subclass will raise an
     error, though additional classes in the MRO without one will pass silently.
 
@@ -97,39 +97,56 @@ class BaseNode(ABC):
     subclass for details. Calling order between various methods is not
     guaranteed - appending to a key already used may have unexpected results.
 
-    0     - Basic stuff; only for things that all nodes share
-    2     - Event-specific combat setup
-    4     - Combat results (damage taken, turns elapsed, etc.)
-    6     - Unique values (key obtained, campfire option, etc.)
-    8     - Neow bonus
-    10-20 - Potion usage data
-    30-36 - Relic obtention data
-    40-62 - Event results
-    70-78 - Shop contents
-    100+  - Special stuff; reserved for bugged or modded content
+    | 0     - Basic stuff; only for things that all nodes share
+    | 2     - Event-specific combat setup
+    | 4     - Combat results (damage taken, turns elapsed, etc.)
+    | 6     - Unique values (key obtained, campfire option, etc.)
+    | 8     - Neow bonus
+    | 10-20 - Potion usage data
+    | 30-36 - Relic obtention data
+    | 40-62 - Event results
+    | 70-78 - Shop contents
+    | 100+  - Special stuff; reserved for bugged or modded content
 
     """
 
+    #: The display name of map nodes
     room_type = ""
-    end_of_act = False
+    #: Whether to add a newline after this map node
+    end_of_act: bool = False
 
     # the following are handled differently in each branch
     # as such, we only tell the type checkers what they are
     # if a subclass does not implement these, it is a bug
 
+    #: The current HP when exiting the node
     current_hp: int
+    #: The max HP when exiting the node
     max_hp: int
+    #: The gold when exiting the node
     gold: int
 
+    #: The floor associated with this node
     floor: int
 
+    #: How many cards we currently have
     card_count: int
+    #: How many relics we currently have
     relic_count: int
+    #: How many potions we currently have
     potion_count: int
+    #: How many fights were fought so far this run
     fights_count: int
+    #: How many turns passed so far this run
     turns_count: int
 
     def __init__(self, parser: FileParser, *extra):
+        """Generate a new BaseNode instance.
+
+        :param parser: The run or save this node is in
+        :type parser: FileParser
+        """
+
         super().__init__(*extra)
         self.parser = parser
         self.floor_time: int = 0
@@ -286,6 +303,7 @@ class BaseNode(ABC):
         return "\n".join(final)
 
     def escaped_description(self) -> str:
+        """Return a description suitable for HTML pages."""
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     # Every subclass must implement this method, and NOT call this one

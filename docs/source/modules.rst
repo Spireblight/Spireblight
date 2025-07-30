@@ -1,16 +1,16 @@
-Modules
-=======
+Full Spireblight API
+====================
 
 .. toctree::
    :maxdepth: 4
 
+   gamedata
    activemods
    cache
    client
    configuration
    disc
    events
-   gamedata
    logger
    monster
    nameinternal

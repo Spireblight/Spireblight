@@ -35,7 +35,10 @@ def load_file(filename: str) -> DotMap:
 try:
     config = load_file("./default-config.yml")
 except FileNotFoundError: # Sphinx runs from a different folder
-    config = load_file("../default-config.yml")
+    try:
+        config = load_file("../default-config.yml")
+    except FileNotFoundError:
+        config = load_file("../../default-config.yml")
 
 
 # Determine which extra file to load values from.
