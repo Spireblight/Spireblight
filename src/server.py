@@ -360,9 +360,10 @@ def command(
 ):
     """This decorator builds TwitchCommand and DiscordCommand versions of commands while leaving the original functions untouched."""
 
-    def inner(func, wrapper_func=None):
+    def inner(func: Callable, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
+        wrapped.__doc__ = func.__doc__
         # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
             tcmd = TwitchCommand(
