@@ -1639,14 +1639,29 @@ async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
                         return await ctx.reply(f"The clips that match are {', '.join(str(x[0]) for x in possible)}.")
                     return await ctx.reply("Too many clips match. Try adding more keywords to narrow it down?")
 
+@command("bot")
+async def bot_cmd(ctx: ContextType):
+    """Give general information on the bot itself."""
+    p = config.baalorbot.prefix
+    await ctx.reply(
+        f"I am {__botname__} v{__version__}, made by {__author__}. Thanks to Baalor running a "
+        f"script on his computer, I can access the game's data for commands like {p}neow and "
+        f"{p}boss, as well as the {config.server.url}/current page. I am running on Python "
+        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
+        f"my source code is at {p}github, and you can financially support "
+        f"my continued development with {p}donate"
+    )
+
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
     if not name:
+        p = config.baalorbot.prefix
         await ctx.reply(
-            f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
-            f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
-            f"my source code is available at {__github__}, and the website is {config.server.url}"
+            f"Welcome to the stream! Website: {config.server.url} | Current run: {p}current | "
+            f"Stream overlay: {p}str | Useful commands: {p}discord {p}mods {p}neow {p}boss "
+            f"{p}games {p}youtube {p}winrate | Silly commands: {p}the {p}dig {p}lift {p}quote | "
+            f"All commands: {p}commands | Specific help: {p}help <command> | About this bot: {p}bot"
         )
         return
 
