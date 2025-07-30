@@ -415,7 +415,7 @@ class NeowBonus(BaseNode):
             case "Gremlin Gang":
                 base = 16
             case a:
-                raise ValueError(f"I don't know how to handle {a}")
+                base = 76 # idk man, seems fine?
 
         if self.parser.ascension_level >= 14: # lower max HP
             base -= math.floor(base/16)
