@@ -11,13 +11,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path('..', '..').resolve()))
 
+from src import webpage
+
 add_module_names = False
 python_use_unqualified_type_names = True
 
 project = 'Spireblight'
-copyright = '2022-2025, Anilyka Barry'
-author = 'Anilyka Barry'
-release = '0.6'
+author = 'Anilyka Barry, Olivia Thiderman, Spireblight Development Team'
+copyright = '2022-2025, ' + author
+release = webpage.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -32,3 +34,4 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+html_favicon = "favicon.ico"
