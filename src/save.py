@@ -68,8 +68,6 @@ class Savefile(FileParser):
         if data is None and has_run == "true" and self._data is not None:
             maybe_run = get_latest_run(None, None)
             if maybe_run is not None and "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
-                # optimize save -> run node generation
-                maybe_run._cache["old_path"] = self._cache["path"]
                 self._matches = True
 
         self._data = data
