@@ -4,7 +4,8 @@ Full Spireblight API
 .. toctree::
    :maxdepth: 4
 
-   gamedata
+   fileparser
+   nodes
    activemods
    cache
    client

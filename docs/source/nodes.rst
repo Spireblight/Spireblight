@@ -1,5 +1,5 @@
-Handling Slay the Spire game data
-=================================
+Slay the Spire path node data
+=============================
 
 .. module:: src.gamedata
 
