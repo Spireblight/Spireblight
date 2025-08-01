@@ -16,7 +16,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[undying] [effect0.upgrade.status0.power].",
+        "raw": "Reanimate 1.",
         "lore": ""
     },
     {
@@ -56,7 +56,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Gain [effect0.upgrade.roommodifier0.power][attack] for every missing [effect0.upgrade.roommodifier0.secondarypower][health].",
+        "raw": "Gain 1 Attack for every missing Health.",
         "lore": ""
     },
     {
@@ -106,7 +106,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Rage [effect0.upgrade.status0.power]. Revenge: Permanently gain Rage [effect0.upgrade.charactertrigger0.effect0.upgrade.status0.power].",
+        "raw": "Rage 5. Revenge: Permanently gain Rage 1.",
         "lore": ""
     },
     {
@@ -126,7 +126,7 @@
         "clan": "Luna Coven",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with Conduit [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Conduit 5.",
         "lore": ""
     },
     {
@@ -136,7 +136,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "<b>Endless</b>. <b>Summon</b>: Equip a random equipment.",
+        "raw": "Endless. Summon: Equip a random equipment.",
         "lore": ""
     },
     {
@@ -146,7 +146,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit with [multistrike] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Multistrike 1.",
         "lore": ""
     },
     {
@@ -156,7 +156,7 @@
         "clan": "Underlegion",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [regen] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Regen 10.",
         "lore": ""
     },
     {
@@ -176,7 +176,7 @@
         "clan": "",
         "rarity": "Uncommon",
         "unlock": "0",
-        "raw": "Add [meleeweakness] [effect0.upgrade.charactertrigger0.effect0.status0.power] and [spellweakness] [effect0.upgrade.charactertrigger0.effect1.status0.power] on [strike].",
+        "raw": "Add Melee Weakness 1 and Spell Weakness 1 on Strike.",
         "lore": ""
     },
     {
@@ -186,7 +186,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Gain <b>Courage</b> Ability.",
+        "raw": "Gain Courage Ability.",
         "lore": ""
     },
     {
@@ -196,7 +196,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower] and [consume].",
+        "raw": "Upgrade a spell with +20 Magic Power and Consume.",
         "lore": ""
     },
     {
@@ -206,7 +206,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "<b>Summon</b>: Gain [effect0.upgrade.charactertrigger0.effect0.power][ember].",
+        "raw": "Summon: Gain 3 Ember.",
         "lore": ""
     },
     {
@@ -216,7 +216,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[fragile]. <b>Celebrate</b>: Permanently gain [effect0.upgrade.charactertrigger0.effect0.upgrade.bonusdamage][attack].",
+        "raw": "Fragile. Celebrate: Permanently gain +10 Attack.",
         "lore": ""
     },
     {
@@ -226,7 +226,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[emberdrain] [effect0.upgrade.status0.power]. <b>Summon</b>: Gain [effect0.upgrade.charactertrigger0.effect0.power][ember].",
+        "raw": "Emberdrain 3. Summon: Gain 3 Ember.",
         "lore": ""
     },
     {
@@ -236,7 +236,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[permafrost]. [reserve]: Permanently gain +[effect0.upgrade.trigger0.effect0.upgrade.bonusdamage] [magicpower].",
+        "raw": "Permafrost. Reserve: Permanently gain +5 Magic Power.",
         "lore": ""
     },
     {
@@ -246,7 +246,7 @@
         "clan": "Stygian Guard",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [incant]: Gain [armor] [effect0.upgrade.charactertrigger0.effect0.status0.power].",
+        "raw": "Upgrade a unit with Incant: Gain Armor 2.",
         "lore": ""
     },
     {
@@ -266,7 +266,7 @@
         "clan": "Pyreborne",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [avarice] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Avarice 3.",
         "lore": ""
     },
     {
@@ -276,7 +276,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Gain <b>Benevolence</b> Ability.",
+        "raw": "Gain Benevolence Ability.",
         "lore": ""
     },
     {
@@ -286,7 +286,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with +[effect0.upgrade.bonushp][health].",
+        "raw": "Upgrade a unit with +20 Health.",
         "lore": ""
     },
     {
@@ -296,7 +296,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "+[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flight.",
+        "raw": "+8 Attack. +15 Health. Ability: Flight.",
         "lore": ""
     },
     {
@@ -306,7 +306,7 @@
         "clan": "Lazarus League",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [undying] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Reanimate 1.",
         "lore": ""
     },
     {
@@ -316,7 +316,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Reduce [capacity] to 1.",
+        "raw": "Reduce Capacity to 1.",
         "lore": ""
     },
     {
@@ -326,7 +326,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "<b>Celebrate</b>: Permanently gain [effect0.upgrade.charactertrigger0.effect0.upgrade.bonusdamage][attack].",
+        "raw": "Celebrate: Permanently gain 10 Attack.",
         "lore": ""
     },
     {
@@ -336,7 +336,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "<b>Summon</b>: Spawn a random friendly unit from your deck.",
+        "raw": "Summon: Spawn a random friendly unit from your deck.",
         "lore": ""
     },
     {
@@ -346,7 +346,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[titanite]. +[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flying Strike.",
+        "raw": "Titanite. +10 Attack. +20 Health. Ability: Flying Strike.",
         "lore": ""
     },
     {
@@ -356,7 +356,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Heal your Pyre equal to the spell's [ember] cost.",
+        "raw": "Heal your Pyre equal to the spell's Ember cost.",
         "lore": ""
     },
     {
@@ -366,7 +366,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "<b>Summon</b>: Add a copy of this unit to your hand that costs +[effect0.upgrade.trigger0.effect0.upgrade.costreductionabs][ember].",
+        "raw": "Summon: Add a copy of this unit to your hand that costs +1 Ember.",
         "lore": ""
     },
     {
@@ -376,7 +376,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to permanently remove [consume].",
+        "raw": "Upgrade a spell to permanently remove Consume.",
         "lore": ""
     },
     {
@@ -386,7 +386,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to gain <b>Spellchain</b>.",
+        "raw": "Upgrade a spell to gain Spellchain.",
         "lore": ""
     },
     {
@@ -396,7 +396,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "+[effect0.upgrade.bonusdamage][attack]. <b>Strike</b>: Apply [corruption] [effect0.upgrade.charactertrigger0.effect0.status0.power].",
+        "raw": "+10 Attack. Strike: Apply Corruption 20.",
         "lore": ""
     },
     {
@@ -406,7 +406,7 @@
         "clan": "Banished",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [valor] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Valor 8.",
         "lore": ""
     },
     {
@@ -426,7 +426,7 @@
         "clan": "Umbra",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [damageshield] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Damage Shield 3.",
         "lore": ""
     },
     {
@@ -436,7 +436,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to gain [permafrost].",
+        "raw": "Upgrade a spell to gain Permafrost.",
         "lore": ""
     },
     {
@@ -446,7 +446,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit to gain [duality].",
+        "raw": "Upgrade a unit to gain Dualism.",
         "lore": ""
     },
     {
@@ -456,7 +456,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack].",
+        "raw": "Upgrade a unit with +20 Attack.",
         "lore": ""
     },
     {
@@ -466,7 +466,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit with [quick] and +[effect0.upgrade.bonusdamage][attack].",
+        "raw": "Upgrade a unit with Quick and +10 Attack.",
         "lore": ""
     },
     {
@@ -476,7 +476,7 @@
         "clan": "Awoken",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with +[effect0.upgrade.bonushp][health] and [spikes] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with +10 Health and Spikes 3.",
         "lore": ""
     },
     {
@@ -486,7 +486,7 @@
         "clan": "",
         "rarity": "Uncommon",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-2[ember]</nobr> and gain [consume].",
+        "raw": "Upgrade a spell to cost -2 Ember and gain Consume.",
         "lore": ""
     },
     {
@@ -496,7 +496,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "[titanskin] [effect0.upgrade.status0.power].",
+        "raw": "Titanskin 5.",
         "lore": ""
     },
     {
@@ -506,7 +506,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit with <nobr>+[effect0.upgrade.bonussize][capacity]</nobr>, +[effect0.upgrade.bonusdamage][attack], and +[effect0.upgrade.bonushp][health].",
+        "raw": "Upgrade a unit with +1 Capacity, +15 Attack, and +50 Health.",
         "lore": ""
     },
     {
@@ -516,7 +516,7 @@
         "clan": "Hellhorned",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with [rage] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with Rage 10.",
         "lore": ""
     },
     {
@@ -526,7 +526,7 @@
         "clan": "Melting Remnant",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack], +[effect0.upgrade.bonushp][health], and [burnout] [effect0.upgrade.status0.power].",
+        "raw": "Upgrade a unit with +15 Attack, +15 Health, and Burnout 1.",
         "lore": ""
     },
     {
@@ -536,7 +536,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a unit with [titanite].",
+        "raw": "Upgrade a unit with Titanite.",
         "lore": ""
     },
     {
@@ -546,7 +546,7 @@
         "clan": "",
         "rarity": "Uncommon",
         "unlock": "0",
-        "raw": "Upgrade a spell to cost <nobr>-1[ember].</nobr>",
+        "raw": "Upgrade a spell to cost -1 Ember.",
         "lore": ""
     },
     {
@@ -556,7 +556,7 @@
         "clan": "",
         "rarity": "Rare",
         "unlock": "0",
-        "raw": "Upgrade a spell to gain [retain].",
+        "raw": "Upgrade a spell to gain Permafrost.",
         "lore": ""
     },
     {
@@ -566,7 +566,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower].",
+        "raw": "Upgrade a spell with +10 Magic Power.",
         "lore": ""
     },
     {
@@ -576,7 +576,7 @@
         "clan": "",
         "rarity": "Common",
         "unlock": "0",
-        "raw": "+[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flight.",
+        "raw": "+5 Attack. +10 Health. Ability: Flight.",
         "lore": ""
     }
 ]
