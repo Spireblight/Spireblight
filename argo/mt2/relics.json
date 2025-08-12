@@ -9,7 +9,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Sting spells get +[effect0.upgrade.bonusdamage] Magic Power.",
+        "description": "Sting spells get +20 Magic Power.",
         "lore": "Before the Edge Priory became the reclusive group they are now, they would channel their energy into steel lockets that could be worn by their Awoken Hollow protectors, allowing the Hollows to gain more strength at the cost of their longevity."
     },
     {
@@ -35,7 +35,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, the front friendly unit on each floor gains +[effect0.upgrade.bonushp]HP.",
+        "description": "At start of turn, the front friendly unit on each floor gains +15 Health.",
         "lore": "Wyldenten speaks in these visions of the Exiles\u2019 purpose to forestall the Divinities desertion and avoid Armageddon. This history has been lost to time, it seems, as we\u2019ve only created this new destruction ourselves."
     },
     {
@@ -48,7 +48,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect0.power]ATK per stack of [spikes].",
+        "description": "Friendly units get +1 Attack per stack of Spikes.",
         "lore": "The roots of the Wildwood spread farther than just their own Ring, but the farther they travel from the center of the wood, the more likely they are to wither and die."
     },
     {
@@ -61,7 +61,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[spikes] deal +[effect0.power] damage per stack.",
+        "description": "Spikes deal +1 damage per stack.",
         "lore": "A tool made of petrified Wildwood bark, used to heat ores into something stronger. Used by the Edge Priory to create armor for their Hollows, a process that astounds me still."
     },
     {
@@ -87,7 +87,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [rooted] to enemy units when they enter the floor below the Pyre Room.",
+        "description": "Apply Rooted to enemy units when they enter the floor below the Pyre Room.",
         "lore": "Breaking through their armor is considered a rite of passage for the Awoken, marking their shift from Hollow to Animus. This old armor breaks under the weight of new vines making up the Animus."
     },
     {
@@ -100,7 +100,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time each turn a friendly unit is healed, draw [effect0.power].",
+        "description": "The first time each turn a friendly unit is healed, draw 1.",
         "lore": "Intruders often try to tap the Wildwood to harvest its sap, though the Wildwood usually ends up harvesting the intruders instead. The Edge Priory has allowed me to collect these taps for my own personal research."
     },
     {
@@ -113,7 +113,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[regen] restores +[effect0.power] health per stack.",
+        "description": "Regen restores +1 health per stack.",
         "lore": "This fungal infection affects the bark of trees throughout the Wildwood. While it feeds on much of the sap the tree produces, the fungus also accelerates the tree\u2019s sap production entirely, creating a fascinating symbiotic relationship between the two species."
     },
     {
@@ -126,7 +126,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Sting spells get +[effect0.upgrade.bonusdamage] Magic Power and [piercing].",
+        "description": "Sting spells get +10 Magic Power and Piercing.",
         "lore": "Using the smithing techniques I taught them, the Edge Priory developed casings for the thorns ejected from the Awoken, turning them into much deadlier weapons against the Winged. "
     },
     {
@@ -152,7 +152,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When an Angel moves it gains [valor] [effect0.trigger0.effect0.status0.power].",
+        "description": "When an Angel moves it gains Valor 2.",
         "lore": "The fossil of a great winged beast from which it is said all angels descend from. Question is, what was it doing in the last circle of Hell?"
     },
     {
@@ -165,7 +165,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage]ATK to a unit's Equipment on [slay].",
+        "description": "Permanently add +2 Attack to a unit's Equipment on Slay.",
         "lore": "\u201cFeed me,\u201d hissed the sword. For the blade craved blood and would not be sated until its steel was fed."
     },
     {
@@ -178,7 +178,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit dies, Angels on the floor gain [rage] [effect0.power].",
+        "description": "When a friendly unit dies, Angels on the floor gain Rage 7.",
         "lore": "\u201cI once wore this with pride. Now, I cannot bear to look at it.\u201d\n\u2014Finna the Doomed"
     },
     {
@@ -191,7 +191,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, friendly units gain [valor] [effect0.trigger0.effect0.upgrade.charactertrigger0.effect0.status0.power] if they are at the front of the room.",
+        "description": "At start of turn, friendly units gain Valor 2 if they are at the front of the room.",
         "lore": "While the aristocrats of the Empyrial Palace inherit their crowns, within the ranks of the Banished they are earned."
     },
     {
@@ -204,7 +204,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit gains [valor], it gains +[effect0.status0.power] stacks.",
+        "description": "When a friendly unit gains Valor, it gains +1 stacks.",
         "lore": "\u201cWhen I fled Heaven, I did not leave empty handed,\u201d said Talos. She overturned the jar. Fel gasped. Celestial gems, each containing enough power to smite an army, tumbled onto the table."
     },
     {
@@ -217,7 +217,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you equip an Angel, apply [valor] [effect0.trigger0.effect0.status0.power], [rage] [effect0.trigger0.effect1.status0.power], and [regen] [effect0.trigger0.effect2.status0.power].",
+        "description": "When you equip an Angel, apply Valor 3, Rage 3, and Regen 3.",
         "lore": "The iron chain of an Empyrial Palace guard, taken in battle and now used by the Banished."
     },
     {
@@ -230,7 +230,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[shift] triggers an additional time.",
+        "description": "Shift triggers an additional time.",
         "lore": "\u201cWhy does this smell like chocolate?\u201d asked Fel. \u201cWhat\u2019s chocolate?\u201d asked Talos."
     },
     {
@@ -243,7 +243,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the end of the entire battle, friendly units at the front of the floor permanently gain +[effect0.trigger0.effect0.upgrade.charactertrigger0.effect0.upgrade.bonushp]HP.",
+        "description": "At the end of the entire battle, friendly units at the front of the floor permanently gain +6 Health.",
         "lore": "A ring that belonged to Finna the Doomed. May it bring greater luck to whoever now wears it."
     },
     {
@@ -256,7 +256,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you equip a unit, apply [damageshield] [effect0.trigger0.effect0.status0.power].",
+        "description": "When you equip a unit, apply Damage Shield 1.",
         "lore": "\u201cCan you make it match my wings? I have to think about my brand.\u201d\n\u2014Talos"
     },
     {
@@ -269,7 +269,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Summoning a Hymnist applies [valor] [effect0.status0.power] to friendly units.",
+        "description": "Summoning a Hymnist applies Valor 5 to friendly units.",
         "lore": "Taken from a fallen guard of Heaven\u2019s Maw, the Deathmetal Hymnist is now learning to play this rockin\u2019 horn."
     },
     {
@@ -282,7 +282,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[valor] grants an additional +[effect0.power] [armor] per stack.",
+        "description": "Valor grants an additional +1 Armor per stack.",
         "lore": "A slab of stone bearing a language long forgotten. The claw marks, however, seem much newer than the age of the stone would grant."
     },
     {
@@ -295,7 +295,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[summon] triggers an additional time.",
+        "description": "Summon triggers an additional time.",
         "lore": "According to the Hellhorned, the dead are never really gone. Their remains are cremated and used as warpaint to imbue warriors with great strength and remind them of their eventual return to the ground."
     },
     {
@@ -308,7 +308,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[rage] does not decay on friendly units.",
+        "description": "Rage does not decay on friendly units.",
         "lore": "An imp officially matures into a demon when their tail falls off and they learn to stand on their own feet, but this evolution only seems to enrage the demon further. I don\u2019t like the sight of the disembodied tails, but keeping them is necessary."
     },
     {
@@ -321,7 +321,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain +[effect0.power]ATK on [slay].",
+        "description": "Friendly units gain +3 Attack on Slay.",
         "lore": "When a Hellhorned defeats another in battle, they will break off the loser\u2019s horns and add it to their collection, forming them into a crown. I\u2019ve learned the hard way that asking to wear another\u2019s crown is considered incredibly rude."
     },
     {
@@ -334,7 +334,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[demon] units get [multistrike] [effect0.upgrade.status0.power].",
+        "description": "Demon units get Multistrike 1.",
         "lore": "Though credited with building the Hellhorned\u2019s section of the Rail, Grrrg wasn\u2019t able to complete it without help from other demons. Some needed more motivation than others."
     },
     {
@@ -347,7 +347,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, add a random [imp] unit to hand.",
+        "description": "At start of turn, add a random Imp unit to hand.",
         "lore": "When Seraph shattered our Hell Pyre and Hell froze over, many unsuspecting imps were caught in the ice. Taken aboard the Boneshaker, the Pyre shard slowly melts them free."
     },
     {
@@ -360,7 +360,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you summon your first [imp] unit each turn, gain [effect0.power][ember] and draw [effect0.power].",
+        "description": "When you summon your first Imp unit each turn, gain 1 Ember and draw 1.",
         "lore": "From what I can gather, the Queen had the only full-grown Demon tail in existence. Yet, in the visions I\u2019ve spent with her, this tail has been replaced by her Shardsoul tail. Did this replacement grant the Hellhorned the ability to cycle, making them immortal? It\u2019s as if a large shadow looms over any memory I should have of these Exiles..."
     },
     {
@@ -373,7 +373,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit gains [armor], it gains +[effect0.status0.power] stacks.",
+        "description": "When a friendly unit gains Armor, it gains +4 stacks.",
         "lore": "Railhammers have been forged in the deep pits of the Scorched Plains since the founding of our Covenant, making them durable tools in the construction of Hellhorned armor."
     },
     {
@@ -386,7 +386,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[rage] adds an additional <nobr>+[effect0.power]ATK</nobr> per stack.",
+        "description": "Rage adds an additional +1 Attack per stack.",
         "lore": "I modified the Pyre so that the sound it makes when it is threatened can no longer be heard by any creature, in Heaven or in Hell. However, an unintended consequence has been observed: distant Pyre shards will resonate with the same frequency and vibrate wildly, sometimes even shattering."
     },
     {
@@ -399,7 +399,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units enter with [armor] [effect0.status0.power].",
+        "description": "Friendly units enter with Armor 5.",
         "lore": "Steel hammered in the heat of the Scorched Plains is easily recognized by its banding. After the freeze, the steel became in short supply, but I\u2019ve still been able to stockpile a small amount for defensive enhancements."
     },
     {
@@ -412,7 +412,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units enter with [rage] [effect0.status0.power].",
+        "description": "Friendly units enter with Rage 3.",
         "lore": "For the Hellhorned that are considered too violent by their own clan\u2019s standards, imprisonment is a cruel affair. Subjected to rot in chains sunk directly into the bubbling lava below, the prisoners are burned by the molten steel that binds them... and the scorching heat only enrages them further."
     },
     {
@@ -425,7 +425,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Conserve [ember] between turns.",
+        "description": "Conserve Ember between turns.",
         "lore": "I\u2019ve never found the final whereabouts of Grrrg, but before his mysterious disappearance, he left his unbroken horn with the Hellhorned, leading me to believe he has succumbed to death."
     },
     {
@@ -438,7 +438,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When an equipped unit dies, permanently add +[effect0.trigger0.effect0.upgrade.bonusdamage]ATK to their Equipment.",
+        "description": "When an equipped unit dies, permanently add +4 Attack to their Equipment.",
         "lore": "This bottle certainly gives off mixed messages. Between the skull and the note with the instructions \u2018Eat Me,\u2019 it\u2019s unclear what you\u2019re supposed to do."
     },
     {
@@ -451,7 +451,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At end of turn, [unstable] increases by [effect1.power].",
+        "description": "At end of turn, Unstable increases by 5.",
         "lore": "\u201cI\u2019m not sure what it does except that it does have a wonderful and fresh minty flavor.\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -464,7 +464,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Monstrosities enter with [spikes] [effect0.status0.power].",
+        "description": "Monstrosities enter with Spikes 7.",
         "lore": "\u201cThe effects of grafting body parts to creatures of opposite demonic species often results in surprising abilities.\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -477,7 +477,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time each turn a friendly unit is equipped, gain [effect0.power][ember].",
+        "description": "The first time each turn a friendly unit is equipped, gain 1 Ember.",
         "lore": "\u201cThe doctor\u2019s latest experiment has made all the subjects frenzy. And made me have a migraine.\u201d\n\u2014Hugo, assistant to Dr. Orechi"
     },
     {
@@ -490,7 +490,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Equipping a friendly unit under half health applies [armor] [effect0.trigger0.effect0.status0.power], otherwise it applies [rage] [effect0.trigger0.effect0.status1.power].",
+        "description": "Equipping a friendly unit under half health applies Armor 10, otherwise it applies Rage 5.",
         "lore": "\u201cWhen hair strands are powdered, mixed, and then ingested, the resulting mixture has shown promise in energizing my subjects.\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -503,7 +503,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Increase the number of choices when using [mix] by [effect0.power].",
+        "description": "Increase the number of choices when using Mix by 1.",
         "lore": "A forgotten piece of equipment collecting dust in the corner of Dr. Orechi\u2019s lab. Once used by a renowned researcher not soon forgotten, the unknown liquid inside still bubbles from time to time. "
     },
     {
@@ -516,7 +516,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [armor] [effect0.power] on reviving with [undying].",
+        "description": "Friendly units gain Armor 14 on reviving with Reanimate.",
         "lore": "\u201cMy experiments are not only of the scientific sort. I also enjoy dabbling in more fashionable pursuits. This piece from my fall line is functional and stylish!\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -529,7 +529,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[unstable] explosions deal twice as much damage.",
+        "description": "Unstable explosions deal twice as much damage.",
         "lore": "\u201cI spilled this mixture and let me say, the result was not pleasant.\u201d\n\u2014Hugo, assistant to Dr. Orechi"
     },
     {
@@ -542,7 +542,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On [deployphase], add a random [graft] unit to your hand.",
+        "description": "On Deployment Phase, add a random Graft unit to your hand.",
         "lore": "\u201cThe craftsman approach is no more! Time to use an assembly line to create my monsters.\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -555,7 +555,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time you [mix] each turn, [mix] again.",
+        "description": "The first time you Mix each turn, Mix again.",
         "lore": "\u201cAll my experiments do take a toll on the cardiovascular system of my assistants. This will fix that.\u201d\n\u2014from Dr. Orechi\u2019s notebook"
     },
     {
@@ -581,7 +581,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time each turn it becomes [full] gain [effect0.power][ember].",
+        "description": "The first time each turn it becomes Full Moon gain 1 Ember.",
         "lore": "\u201cHmm... I see a malicious moon is coming in your star chart. A few gold coins and I might see how you can avoid this calamity.\u201d\n\u2014Astrologer for the Luna Coven"
     },
     {
@@ -594,7 +594,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On [deployphase], draw a non-damage spell from your deck. It costs -[effect0.upgrade.costreduction][ember]. ",
+        "description": "On Deployment Phase, draw a non-damage spell from your deck. It costs -1 Ember. ",
         "lore": "\u201cAfter the Fall, I searched the wreckage of our moon and found this sail. I remembered how the flightless fae used to play with these in the wind.\u201d\n\u2014Ardania the Forbidden"
     },
     {
@@ -607,7 +607,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Restore [effect0.power] health to the lowest health friendly unit on [mooncycle].",
+        "description": "Restore 10 health to the lowest health friendly unit on Mooncycle.",
         "lore": "\u201cOh, Empress Moon, you had one eye but so many faces!\u201d\n\u2014Lady Ekka"
     },
     {
@@ -620,7 +620,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play a spell that would [ascend] or [descend] a unit, also apply [spellweakness] [effect0.status0.power].",
+        "description": "When you play a spell that would Ascend or Descend a unit, also apply Spell Weakness 1.",
         "lore": "Nestled in the sand where it had fallen from the skies, lay the wing of Arduhn\u2019s youngest sister. And encasing his dear sister\u2019s wing, a crystal made from the magic of her killer."
     },
     {
@@ -633,7 +633,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Fae gain [conduit] [effect0.upgrade.status0.power] and +[effect0.upgrade.bonusdamage]ATK on [mooncycle].",
+        "description": "Fae gain Conduit 1 and +5 Attack on Mooncycle.",
         "lore": "\u201cPsst! Can you pass me some stardust treats? We\u2019re running low in here!\u201d"
     },
     {
@@ -646,7 +646,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Increases healing from spells by [effect0.power].",
+        "description": "Increases healing from spells by 10.",
         "lore": "\u201cWhen the Titans destroyed our home, they shattered our moon into tiny fragments. This vial contains the last of our home.\u201d\n\u2014Arduhn, twin brother of Lady Ekka"
     },
     {
@@ -659,7 +659,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Selene units get +[effect1.upgrade.bonusdamage]ATK during [fullmoon]. Silent units get +[effect0.upgrade.bonusdamage]ATK during [newmoon].",
+        "description": "Selene units get +20 Attack during Full Moon. Silent units get +20 Attack during New Moon.",
         "lore": "A lantern that illuminates depending on the phase of the moon."
     },
     {
@@ -672,7 +672,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At end of turn, if it is [full], spells in hand gain +[effect0.upgrade.bonusdamage] Magic Power.",
+        "description": "At end of turn, if it is Full Moon, spells in hand gain +10 Magic Power.",
         "lore": "\u201cTake this stone, marked by Ekka\u2019s blessing, and place it outside when the moon is full. You will always have a piece of the moon\u2019s protection with you wherever you go.\u201d\n\u2014The Ritual Tome"
     },
     {
@@ -685,7 +685,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[mageblade] adds an additional <nobr>+[effect0.power]ATK</nobr> per stack.",
+        "description": "Mageblade adds an additional +1 Attack per stack.",
         "lore": "A blade carved from the moon itself and so thin that it cannot be seen, apart from when it gleams in the moonlight."
     },
     {
@@ -698,7 +698,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When applying [spellweakness], apply [effect0.status0.power] more.",
+        "description": "When applying Spell Weakness, apply 1 more.",
         "lore": "\u201cI\u2019ll keep my moon here until the time is right. Until then, you\u2019ll whisper to me, won\u2019t you?\u201d\n\u2014Lady Ekka"
     },
     {
@@ -711,7 +711,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When it becomes [new], apply [armor] [effect0.status0.power] to friendly Silent units.",
+        "description": "When it becomes New Moon, apply Armor 10 to friendly Silent units.",
         "lore": "A banner torn from the ancient temple of the Luna Coven. The fae hope that one day they can hang this cloth once more."
     },
     {
@@ -724,7 +724,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first unit you summon each turn gains [conduit] [effect0.status0.power].",
+        "description": "The first unit you summon each turn gains Conduit 4.",
         "lore": "A tasty treat made of stardust, the coven love to take a pause when the moon is half full and eat these with tea."
     },
     {
@@ -737,7 +737,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit gains [burnout], it gains +[effect0.status0.power] stacks.",
+        "description": "When a friendly unit gains Burnout, it gains +3 stacks.",
         "lore": "Created for more urgent circumstances, the Wickless granted me this bomb for an emergency supply of wax on detonation. Having no need for it, I ended up giving it to the Waxers to increase their chances of survival."
     },
     {
@@ -750,7 +750,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Gain [effect0.power][ember] when a [tomb] unit dies.",
+        "description": "Gain 5 Ember when a Tomb unit dies.",
         "lore": "It seems that throughout the existence of the Waxen Arches, everything has fallen victim to wax encasement. Not even the Ember of the Pyre has been spared, though I\u2019ve collected any I\u2019ve seen trapped to free them again later."
     },
     {
@@ -763,7 +763,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Deal [effect0.power] damage to enemy units when a [burnout] unit dies.",
+        "description": "Deal 5 damage to enemy units when a Burnout unit dies.",
         "lore": "When Flicker decided to help me unite the Ring and build the Rail, he lit a ceremonial candle to commemorate the event. Appropriately, the current state of the candle reflects the state of the Covenant it was created to represent. "
     },
     {
@@ -776,7 +776,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [rage] [effect0.status0.power] whenever they lose a stack of [burnout].",
+        "description": "Friendly units gain Rage 3 whenever they lose a stack of Burnout.",
         "lore": "I should no longer be surprised by Fade\u2019s unusual nature. Her lack of wax dates her long before the creation of the Waxers and the Wickless, and the wicks atop her head seem to be purely ornamental. Yet the knife she carries and the \u201ccode\u201d that she lives by, or lack thereof, has many similarities to the Remnant of today."
     },
     {
@@ -789,7 +789,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play a unit after [deploy], a random card in hand is reduced to 0[ember] until played or discarded.",
+        "description": "When you play a unit after Deployment, a random card in hand is reduced to 0 Ember until played or discarded.",
         "lore": "Flicker has been known to imbibe on occasion, and when he can\u2019t find me to drink with him, he\u2019ll corner unlucky Waxers who quickly succumb to its effects."
     },
     {
@@ -802,7 +802,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[tomb] units get +[effect0.power]HP and [burnout] [effect1.upgrade.status0.power].",
+        "description": "Tomb units get +30 Health and Burnout 1.",
         "lore": "Only the wealthiest of Waxers can afford the portable melting pot I created to allow on-demand wax guttering. Out of charity, unfortunate Tombs are given a spout by the Reformed so they can survive."
     },
     {
@@ -815,7 +815,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Gain [effect0.power][coin] when a friendly unit dies.",
+        "description": "Gain 5 Gold when a friendly unit dies.",
         "lore": "In a scheme I refused to take part in, Flicker devised a plan to collect funds from Waxers to benefit those who have passed, only to keep them for himself."
     },
     {
@@ -828,7 +828,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units apply [armor] [effect0.trigger0.effect0.status0.power] to the front friendly unit on [extinguish].",
+        "description": "Friendly units apply Armor 5 to the front friendly unit on Extinguish.",
         "lore": "Not all who enter the mold do so willingly. The need for restraints, while I consider it cruel, has been effective in solidifying these \u2018participants\u2019 will to reform or, sometimes, to melt for the sake of others."
     },
     {
@@ -841,7 +841,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a friendly unit dies, apply +[effect0.upgrade.bonusdamage]ATK to that unit.",
+        "description": "When a friendly unit dies, apply +10 Attack to that unit.",
         "lore": "With each melt and reform comes the development of new resin, giving the Waxer a particular edge they didn\u2019t have in their previous life. I\u2019ve chipped some away to study further once aboard the Boneshaker."
     },
     {
@@ -854,7 +854,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [endless] to the first friendly unit played each turn.",
+        "description": "Apply Endless to the first friendly unit played each turn.",
         "lore": "Keys to Votive Houses have secretly circulated in Waxer communities for eons, with new copies being made all the time to evade detection of the original thief. Having come across a couple in my travels, I\u2019ve kept them for myself in case the need for one arises."
     },
     {
@@ -867,7 +867,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[extinguish] triggers an additional time.",
+        "description": "Extinguish triggers an additional time.",
         "lore": "For the less committed Wickless enthusiasts who are unwilling to remove their wick entirely, the snuffer provides a glimpse into a possible wick-free life. I\u2019ve helped some Waxers dim their flames, though most prefer to do it themselves."
     },
     {
@@ -880,7 +880,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Summoning a Whelp reduces [cooldown] of friendly units by [effect0.power].",
+        "description": "Summoning a Whelp reduces Cooldown of friendly units by 1.",
         "lore": "For the Pyreborne who desire to lead lives governed by love and joy instead of gold, their fate lies in imprisonment. They are left to tend to Fhyra\u2019s temple and never seen again."
     },
     {
@@ -893,7 +893,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "On your first turn, +[effect0.power][ember].",
+        "description": "On your first turn, +2 Ember.",
         "lore": "Although an ember won\u2019t be able to offer much energy, it\u2019s enough to spark a keg of Pyregel or two."
     },
     {
@@ -906,7 +906,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Increase max [dragonshoardicon] by [effect0.power].",
+        "description": "Increase max Dragon's Hoard by 3.",
         "lore": "You can learn a lot about a dragon by how much gold is in their coffers.\n\u2014old Pyreborne adage"
     },
     {
@@ -919,7 +919,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Whelps apply [pyregel] [effect0.power] on [strike].",
+        "description": "Whelps apply Pyregel 3 on Strike.",
         "lore": "Visitors of Fhyra\u2019s temple can buy cute charms at the gift shop. This one costs three gold coins."
     },
     {
@@ -932,7 +932,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Dragons apply [pyregel] [effect0.power] on [strike].",
+        "description": "Dragons apply Pyregel 5 on Strike.",
         "lore": "A small effigy representing the mighty Fhyra, mother of the Pyreborne and whose rules all dragons must follow."
     },
     {
@@ -945,7 +945,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "When an enemy unit ascends, they gain [pyregel] [effect0.status0.power].",
+        "description": "When an enemy unit ascends, they gain Pyregel 2.",
         "lore": "Said to be the talons of Fhyra herself, cut from her body during the first battle between Titans that ended with the first Pyre\u2019s destruction."
     },
     {
@@ -958,7 +958,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When any unit dies, their [pyregel] is spread among enemy units.",
+        "description": "When any unit dies, their Pyregel is spread among enemy units.",
         "lore": "There are rumors amongst the whelps that if they don\u2019t get their numbers up, Lady Gilda will shoot Pyregel in their veins to \u2018put a little fire\u2019 in them."
     },
     {
@@ -971,7 +971,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [avarice] [effect0.status0.power].",
+        "description": "Friendly units gain Avarice 2.",
         "lore": "\u201cA gift for my shining dumpling after she kicked me out of our cave. I hope she likes the gloves. Or else she will not let me come home.\u201d\n\u2014Lord Fenix"
     },
     {
@@ -984,7 +984,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "When a unit gains [pyregel], it gains +[effect0.status0.power] stacks.",
+        "description": "When a unit gains Pyregel, it gains +1 stacks.",
         "lore": "A mainstay tool used by the Pyreborne smelters. These bellows can withstand the hottest fires."
     },
     {
@@ -997,7 +997,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [pyregel] [effect0.status0.power] to Non-Flying Boss enemy units that enter the floor below the Pyre Room.",
+        "description": "Apply Pyregel 10 to Non-Flying Boss enemy units that enter the floor below the Pyre Room.",
         "lore": "Before the Pyreborne became the greedy dragons they are now, they would channel their passions into rubies they wore around their necks."
     },
     {
@@ -1010,7 +1010,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Increase max [dragonshoardicon] by [effect0.power].",
+        "description": "Increase max Dragon's Hoard by 2.",
         "lore": "\u201cYou can tell a lot from a dragon\u2019s treasure chest. An empty trove reveals an empty mind.\u201d\n\u2014The Rules of Fhyra, Rule #14"
     },
     {
@@ -1023,7 +1023,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Your Pyre applies [pyregel] [effect0.power] to enemy units on all floors on [revenge].",
+        "description": "Your Pyre applies Pyregel 2 to enemy units on all floors on Revenge.",
         "lore": "It is a rare occurrence but sometimes the lava that flows between the Pyreborne caves will solidify into a mass humming with power."
     },
     {
@@ -1036,7 +1036,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Units gain +[effect0.power]HP and +[effect1.power]ATK for each upgrade on their card.",
+        "description": "Units gain +3 Health and +3 Attack for each upgrade on their card.",
         "lore": "A trinket made of fool\u2019s gold given to dragons who have proven supreme aptitude for business."
     },
     {
@@ -1049,7 +1049,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the end of battle, gain [effect0.power][dragonshoardicon] if your Pyre took no damage.",
+        "description": "At the end of battle, gain 3 Dragon's Hoard if your Pyre took no damage.",
         "lore": "\u201cNever trust hard-earned riches, it\u2019s the easy coin that will get you by.\u201d\n\u2014The Rules of Fhyra, Rule #37"
     },
     {
@@ -1062,7 +1062,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "When you equip a friendly unit, apply [conduit] [effect0.power].",
+        "description": "When you equip a friendly unit, apply Conduit 4.",
         "lore": "\u201cClients will always remember a great logo.\u201d\n\u2014The Rules of Fhyra, Rule #98"
     },
     {
@@ -1075,7 +1075,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [pyregel] [effect0.trigger0.effect0.status0.power] to enemy units when a Whelp dies.",
+        "description": "Apply Pyregel 5 to enemy units when a Whelp dies.",
         "lore": "The temple priests carry a dagger they only use for one specific ritual: the sacrifice of unprofitable dragons to the great Fhyra."
     },
     {
@@ -1088,7 +1088,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "After using an ability, friendly units gain [armor] [effect0.power].",
+        "description": "After using an ability, friendly units gain Armor 3.",
         "lore": "Fhyra wore such a shield during the battle of the First Pyre. Although she was consumed by her own flames, this part of her armor was somehow spared."
     },
     {
@@ -1101,7 +1101,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Dragons and Whelps gain +[effect0.power]ATK.",
+        "description": "Dragons and Whelps gain +8 Attack.",
         "lore": "When a dragon loses their teeth from eating too much sweetened gold, such sharp dentures must be worn. They have become such a fashion statement among the elite Pyreborne."
     },
     {
@@ -1114,7 +1114,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "Spells gain +[effect0.power] damage for each upgrade on their card.",
+        "description": "Spells gain +3 damage for each upgrade on their card.",
         "lore": "Although this product sounds cute, it\u2019s enough to break into any vault along the Rail without destroying the gold inside."
     },
     {
@@ -1127,7 +1127,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a unit without [pyregel] gains [pyregel], it gains +[effect0.status0.power] stacks.",
+        "description": "When a unit without Pyregel gains Pyregel, it gains +6 stacks.",
         "lore": "A small but mighty weapon that might just give a dragon enough time to escape."
     },
     {
@@ -1140,7 +1140,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "After using an ability, friendly units gain +[effect0.power]ATK.",
+        "description": "After using an ability, friendly units gain +5 Attack.",
         "lore": "A motivational tool used on dragons whose quarterly returns are deemed unacceptable."
     },
     {
@@ -1153,7 +1153,7 @@
         "story_event": false,
         "dragons_hoard": true,
         "boss_artifact": false,
-        "description": "When you damage your own unit, reduce [cooldown] by [effect0.powerabs].",
+        "description": "When you damage your own unit, reduce Cooldown by 1.",
         "lore": "\u201cI love my adorable golden crumpet but when she snaps her whip she is terrifying!\u201d\n\u2014Lord Fenix"
     },
     {
@@ -1166,7 +1166,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Gain [effect0.power][dragonshoardicon] on the first turn of battle.",
+        "description": "Gain 1 Dragon's Hoard on the first turn of battle.",
         "lore": "Said to have been made from a scale from Fhyra herself, the Dragonstone brings prosperity to whichever dragon possesses it. If said dragon loses the stone, however, they face destitution."
     },
     {
@@ -1179,7 +1179,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play your third spell of the turn, all cards gain +[effect0.power] Magic Power for the rest of this battle.",
+        "description": "When you play your third spell of the turn, all cards gain +1 Magic Power for the rest of this battle.",
         "lore": "When we imprisoned the Titan for the safety of Hell, the Stygian Guard stripped it of its name. When the Titan is released again, its name will return with it."
     },
     {
@@ -1192,7 +1192,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a unit gains [frostbite], it gains +[effect0.status0.power] stacks. [frostbite] does not decay.",
+        "description": "When a unit gains Frostbite, it gains +2 stacks. Frostbite does not decay.",
         "lore": "It seems that the energy of the Cuttlehex and the Molluscmages does not die with them, but continues to surge through their beards so long as they are kept intact. I\u2019ve kept some of the beards with me. They\u2019ve been quite useful, but the tentacles make me a tad squeamish."
     },
     {
@@ -1205,7 +1205,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[incant] triggers an additional time.",
+        "description": "Incant triggers an additional time.",
         "lore": "Tethys and I created this Seal to commemorate the founding of the Stygian Guard and the protection they are sworn to give to their Unnamed Titan."
     },
     {
@@ -1218,7 +1218,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At end of turn, apply [freeze] to a random card in your hand.",
+        "description": "At end of turn, apply Frozen to a random card in your hand.",
         "lore": "Ice created from the water of the Styx Sea melts at much higher temperatures than other ice I\u2019ve found throughout Hell. Any icicles that form on the Boneshaker while in this Ring will not thaw entirely from the train\u2019s residual heat, and will become potential hazards for negligent bystanders."
     },
     {
@@ -1231,7 +1231,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a card is discarded before the end of your turn, gain [effect0.power][ember].",
+        "description": "When a card is discarded before the end of your turn, gain 1 Ember.",
         "lore": "For as long as I\u2019ve lived in Hell, I\u2019ve known the Ring filled with Bogwurm remains to be a desolate place with no sentient inhabitants. When Solgard mentioned a Kinstone gifted to him by a clan that resides there, the Wurmkin, I realized there\u2019s so much I still don\u2019t know about this place. Or, perhaps, I can no longer remember."
     },
     {
@@ -1244,7 +1244,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Enemy units enter with [frostbite] [effect0.status0.power].",
+        "description": "Enemy units enter with Frostbite 2.",
         "lore": "These ancient scrolls detail the laws of the Guard, from ceremonial offerings to mundane dress codes. They are a historical treasure trove that I look forward to studying more when this whole affair is finished."
     },
     {
@@ -1257,7 +1257,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [mute] [effect0.effect0.status0.power] when an enemy unit enters your train.",
+        "description": "Apply Mute 1 when an enemy unit enters your train.",
         "lore": "The seaweed of the Sea is known to be very resistant to breaking. The addition of Stygian sigils make breaking it impossible, despite all my efforts."
     },
     {
@@ -1270,7 +1270,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[effect0.power]% chance to apply [spellweakness] [effect0.effect0.status0.power] when an enemy unit enters your train.",
+        "description": "50% chance to apply Spell Weakness 1 when an enemy unit enters your train.",
         "lore": "As a symbolic sacrifice to convince her fellow sea dwellers of her commitment to the Covenant and the confinement of the Titan, Tethys removed her own scales. I don\u2019t understand their ways, but the gesture worked as she intended."
     },
     {
@@ -1283,7 +1283,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At end of turn, [freeze] cards are reduced to [effect0.power][ember] until played or discarded.",
+        "description": "At end of turn, Frozen cards are reduced to 0 Ember until played or discarded.",
         "lore": "The sharp claws of the Titan. They were lodged into the stone as the Titan tried to escape prison we\u2019d built for it. Now, they serve as a reminder of the strength we locked away."
     },
     {
@@ -1296,7 +1296,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Playing a spell deals [effect0.power] damage to a random enemy unit on that floor.",
+        "description": "Playing a spell deals 2 damage to a random enemy unit on that floor.",
         "lore": "When the Covenant was formed, Seraph made a diplomatic offering to the Titan at my suggestion. It should have been telling that the pearl immediately turned black when the Traitor touched it."
     },
     {
@@ -1309,7 +1309,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [spellweakness] [effect0.status0.power] to enemy units when they enter the floor below the Pyre Room.",
+        "description": "Apply Spell Weakness 2 to enemy units when they enter the floor below the Pyre Room.",
         "lore": "From my studies of the Stygian totems, I\u2019ve found that the sidestones that circle around them help to focus their energy. When removed from their totem host, these sidestones can produce a similar, though much weaker, effect on their target."
     },
     {
@@ -1322,7 +1322,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, add a common or uncommon [snack] unit to hand.",
+        "description": "At start of turn, add a common or uncommon Morsel unit to hand.",
         "lore": "I found this Morsel abandoned in the mines of the Crucible with all of its appendages missing. It seems to have taken a liking to me."
     },
     {
@@ -1335,7 +1335,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Apply [damageshield] [effect0.status0.power] to the first friendly unit summoned each turn.",
+        "description": "Apply Damage Shield 2 to the first friendly unit summoned each turn.",
         "lore": "I constructed this as a gift to Penumbra for his help with the Covenant. The necklace is made out of the finest gems found in the Crucible. For whatever reason, Penumbra tossed it aside, perhaps considering it too gaudy."
     },
     {
@@ -1361,7 +1361,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[feed] triggers an additional time.",
+        "description": "Gorge triggers an additional time.",
         "lore": "There are more victims in mine collapses than I would\u2019ve first thought. Many Umbra have fallen victim to these accidents and while they fade back into the shadow, their teeth remain."
     },
     {
@@ -1374,7 +1374,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play your first [snack] unit each turn, draw [effect0.power].",
+        "description": "When you play your first Morsel unit each turn, draw 1.",
         "lore": "A discarded mask of the shadow known as Penumbra. I\u2019ve encountered several of these throughout the mines. The shadow seems to outgrow them quickly."
     },
     {
@@ -1387,7 +1387,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "+[effect0.power][capacity] on the middle floor.",
+        "description": "+2 Capacity on the middle floor.",
         "lore": "These immense jacks are used to prevent the Crucible from collapsing. At the speed the Umbra seems to be mining it, I\u2019m not sure these jacks will help it."
     },
     {
@@ -1400,7 +1400,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units enter with [lifesteal] [effect0.status0.power].",
+        "description": "Friendly units enter with Lifesteal 2.",
         "lore": "While the Umbra doesn\u2019t appear to become inebriated like other denizens of Hell, they\u2019ve still taken to processing Void Shards into a liquid that mildly dulls the senses. When the Shroud consumes it, the drink makes them somewhat less unpleasant in my dealings with them."
     },
     {
@@ -1413,7 +1413,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time each turn an enemy unit dies, add [effect0.power] [snack] units to hand.",
+        "description": "The first time each turn an enemy unit dies, add 2 Morsel units to hand.",
         "lore": "When the Rail was built, the Crucible became accessible to Hellborne other than the Umbra Shroud. The Shroud was not too welcoming, however, and crafted lights of shadow that only they could use to see, making it impossible for tourists to linger."
     },
     {
@@ -1426,7 +1426,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play your 20th [snack] unit of the battle, deal [effect0.power] damage to enemy units on all floors.",
+        "description": "When you play your 20th Morsel unit of the battle, deal 200 damage to enemy units on all floors.",
         "lore": "Supposedly, these crystal \u201cShardsouls\u201d once contained sacrificed souls and were created by the Exiles in a gambit to save Heaven, Hell, and Human. Now empty, the crystal\u2019s remains house many Morsels. This may confirm my theory that the Umbra Shroud is made of pure soul."
     },
     {
@@ -1439,7 +1439,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Deal [effect0.power] damage to the back enemy unit when a unit is [eaten].",
+        "description": "Deal 5 damage to the back enemy unit when a unit is Eaten.",
         "lore": "On the rare occasion that a member of the Shroud has lost their teeth, sharp dentures are created from Crucible gems. Due to their high value, this has led to many Umbra intentionally removing their teeth."
     },
     {
@@ -1452,7 +1452,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[snack] units enter with [damageshield] [effect0.upgrade.status0.power].",
+        "description": "Morsel units enter with Damage Shield 1.",
         "lore": "For all their faults and treacherous tendencies, the Winged excel at developing new technology. Lucky for us, Antumbra Morsels were able to steal some of it for our collective benefit."
     },
     {
@@ -1465,7 +1465,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first spell played each turn has -1[ember] for every [effect0.power] cards in your Deck.",
+        "description": "The first spell played each turn has -1 Ember for every 15 cards in your Deck.",
         "lore": "The roots of the Fatal Elm carve through the sand of Limbo, through the earth of Hell, past each circle until they reach the Ninth Forbidden Realm, and continue past into a world unknown to any being."
     },
     {
@@ -1478,7 +1478,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[shroom] units gain [regen] [effect0.power] on [harvest].",
+        "description": "Shroom units gain Regen 1 on Harvest.",
         "lore": "The fungus that grows along the roots of the Fatal Elm is in fact one single neural network that consumes bodies and uses them for its own mysterious purpose."
     },
     {
@@ -1491,7 +1491,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Draw +1 each turn per [effect0.power] cards in your Deck.",
+        "description": "Draw +1 each turn per 25 cards in your Deck.",
         "lore": "On the eve of the Creation Elm\u2019s destruction, the shroomfolk drink a mixture of soil taken from around the Fatal Elm mixed with water to remind themselves of what they have lost."
     },
     {
@@ -1504,7 +1504,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a unit has a third unique status effect applied to it, [propagate] [effect0.effect0.power].",
+        "description": "When a unit has a third unique status effect applied to it, Propagate 2.",
         "lore": "The Fatal Elm is the source of life and from its branches new plants are born."
     },
     {
@@ -1517,7 +1517,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[shroom] units apply [decay] [effect0.trigger0.effect0.status0.power] to enemy units on [summon].",
+        "description": "Shroom units apply Decay 1 to enemy units on Summon.",
         "lore": "When the moons reach the rotten quadrant in the sky, the shroomfolk celebrate by drinking distilled sap from the trees."
     },
     {
@@ -1530,7 +1530,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, friendly units [propagate] [effect0.power].",
+        "description": "At start of turn, friendly units Propagate 1.",
         "lore": "When their forest was threatened by the Great Decay, the shroomfolk made this device to carry their young and keep them safe."
     },
     {
@@ -1543,7 +1543,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[funguy] gain +[effect0.power]ATK per [troop] stack.",
+        "description": "Funguy gain +2 Attack per Troop stack.",
         "lore": "Although the Underlegion fled their forest hoping to escape the Great Decay, they brought with them a few unwanted spores. One day, they might find a place to grow and I hope to never see that day."
     },
     {
@@ -1556,7 +1556,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Create a permanent copy of the first [consume] card played each battle.",
+        "description": "Create a permanent copy of the first Consume card played each battle.",
         "lore": "\u201cThe two moved in unison, as if pulled by the invisible hands of a puppet master. Problem was, the two soldiers had long died on the battlefield.\u201d\n\u2014The Archives of the Great Decay"
     },
     {
@@ -1569,7 +1569,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On turn start [spawn] [effect0.effect0.status0.power] on each floor per [effect0.power] cards in your Deck.",
+        "description": "On turn start Spawn 1 on each floor per 20 cards in your Deck.",
         "lore": "\u201cIn moments, the clearing was overrun with the Decay and the bones that housed our children were lifted from the earth to feed the evil.\u201d\n\u2014The Archives of the Great Decay"
     },
     {
@@ -1582,7 +1582,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time each turn a spell card with [consume] is played, draw [effect0.power].",
+        "description": "The first time each turn a spell card with Consume is played, draw 1.",
         "lore": "Where the branches of the Fatal Elm reach beyond Heaven, a spore grows anew. Maybe this is a sign that this tree will become the Creation Elm once again."
     },
     {
@@ -1595,7 +1595,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a unit dies to [decay], their [decay] is spread among enemy units.",
+        "description": "When a unit dies to Decay, their Decay is spread among enemy units.",
         "lore": "\u201cWe locked the Great Decay away and buried it beneath the roots of what was once the Creation Elm. May it never open or we are all doomed.\u201d\n\u2014The Archives of the Great Decay"
     },
     {
@@ -1608,7 +1608,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you are out of [ember], cards can be played for their cost in Pyre Health.",
+        "description": "When you are out of Ember, cards can be played for their cost in Pyre Health.",
         "lore": "The Pyreborne, always looking to exact more than what can be given, found a gruesome method to collect Pyre magic: plunging a stake in the outer shell and installing a tap."
     },
     {
@@ -1621,7 +1621,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "+[effect0.power][deploymentember].",
+        "description": "+3 Deployment Ember.",
         "lore": "A trinket created to give a burst of Ember, unfortunately too unstable and expensive to be manufactured in bulk."
     },
     {
@@ -1634,7 +1634,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On [deployphase], draw an Equipment card from your deck. Reduce its cost to 0[ember].",
+        "description": "On Deployment Phase, draw an Equipment card from your deck. Reduce its cost to 0 Ember.",
         "lore": "As I sharpened the blades of clan soldiers, I wondered if I would ever see them again. Quartz absorbs the emotions around it and soon my whetstone absorbed my wishes for the safety of my friends."
     },
     {
@@ -1673,7 +1673,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The first time the Pyre reaches [effect0.secondarypower] health, restore the Pyre to [effect0.power]% health. This can only trigger once.",
+        "description": "The first time the Pyre reaches 0 health, restore the Pyre to 25% health. This can only trigger once.",
         "lore": "Although I was not able to give much to this pup, I tried to give him love. I hope whenever he hears the clink of his collar\u2019s tag, he\u2019ll be reminded of all the fun we had."
     },
     {
@@ -1686,7 +1686,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[advance] the back enemy unit when it enters your train.",
+        "description": "Advance the back enemy unit when it enters your train.",
         "lore": "When Angels and Demons were created, they were given the Breath of Life. Over time, Seraph manipulated this innate ability in all beings so that it became a powerful force that knocks an enemy back."
     },
     {
@@ -1699,7 +1699,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you [annihilate] a card outside of combat, gain [effect0.power][coin].",
+        "description": "When you Purge a card outside of combat, gain 75 Gold.",
         "lore": "\u201cLaugh, Clown at your broken love! Laugh at the grief that poisons your heart!\u201d"
     },
     {
@@ -1725,7 +1725,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Non-champion friendly units gain [effect0.secondarypower]x base ATK. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
+        "description": "Non-champion friendly units gain 3x base Attack. After each round of combat, 1% chance for this artifact to be destroyed.",
         "lore": "\u201cThat other banana wasn\u2019t very a-peel-ing, was it?\u201d"
     },
     {
@@ -1738,7 +1738,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Bosses start with [mute] [effect0.status0.power].",
+        "description": "Bosses start with Mute 3.",
         "lore": "\u201cI am craven, and thou art my master.\u201d"
     },
     {
@@ -1751,7 +1751,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[effect0.power]% chance to remove all [buff] effects on an enemy unit when it enters your train.",
+        "description": "50% chance to remove all Buff effects on an enemy unit when it enters your train.",
         "lore": "During my time in Heaven, I was gifted some of their purifying water, but the liquid was so strong that it would burn anything it touched. So, I put it aside. It has now found a new use as a repellant in the Boneshaker."
     },
     {
@@ -1777,7 +1777,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "The Pyre gains [titanskin] [effect0.status0.power].",
+        "description": "The Pyre gains Titanskin 2.",
         "lore": "Dante\u2019s candles burn as hot as the Pyre itself, yet his candelabra makes the heat somehow bearable. Always been a man of many mysteries."
     },
     {
@@ -1790,7 +1790,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On [deployphase], draw a Room card from your deck. Reduce its cost to 0[ember].",
+        "description": "On Deployment Phase, draw a Room card from your deck. Reduce its cost to 0 Ember.",
         "lore": "A strange object that somehow always seems to appear in a room before Dante himself."
     },
     {
@@ -1803,7 +1803,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Equipped units gain [armor] [effect0.trigger0.effect0.status0.power].",
+        "description": "Equipped units gain Armor 10.",
         "lore": "Long ago, young demons ventured into the Wild Woods and dipped their blades in the forest rivers. Their reward for their bravery was a blade that would never break."
     },
     {
@@ -1816,7 +1816,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Your Pyre gets [effect0.power]HP.",
+        "description": "Your Pyre gets 25 Health.",
         "lore": "Heaven and Hell thought that the Last Divinity would be the last of the Titans... hence the name they called it. They were, unfortunately, quite wrong."
     },
     {
@@ -1855,7 +1855,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Trial [coin] rewards are increased by [effect0.power]%.",
+        "description": "Trial Gold rewards are increased by 50%.",
         "lore": "A shining visage of the Titan of Savagery. Some wish to see it melted for scrap while others advocate turning it against its progenitor."
     },
     {
@@ -1868,7 +1868,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Non-champion friendly units gain +[effect0.power]ATK. After each round of combat, [effect1.power]% chance for this artifact to be destroyed.",
+        "description": "Non-champion friendly units gain +10 Attack. After each round of combat, 10% chance for this artifact to be destroyed.",
         "lore": "\u201cPeel my wrath!\u201d"
     },
     {
@@ -1881,7 +1881,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Merchant costs are reduced by [effect0.power]%.",
+        "description": "Merchant costs are reduced by 25%.",
         "lore": "Despite my several attempts to win the support of the furry traders, the merchants of Hell have decided to stay neutral. Finally, after much pestering, they allowed me into their guild. That hasn\u2019t stopped them from wringing me of any spare coin."
     },
     {
@@ -1894,7 +1894,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+2 Capacity on each floor. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "The coveted Light of Seraph. Those from above worship it as much as we value the Pyre. From what I\u2019ve seen it\u2019s powerful, sure, but it\u2019s not as special as they say. That doesn\u2019t mean I won\u2019t take some if given the chance."
     },
     {
@@ -1907,7 +1907,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+2 Capacity on each floor. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "The coveted Light of Seraph. Those from above worship it as much as we value the Pyre. From what I\u2019ve seen it\u2019s powerful, sure, but it\u2019s not as special as they say. That doesn\u2019t mean I won\u2019t take some if given the chance."
     },
     {
@@ -1920,7 +1920,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+1 Ember per turn. +1 Deployment Ember. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "When Fel left to join her cause, she left me with remaining Embers of the Pyre. She could have been killed for this, but she gave them anyway. That\u2019s all I have to say about Fel."
     },
     {
@@ -1933,7 +1933,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+1 Ember per turn. +1 Deployment Ember. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "When Fel left to join her cause, she left me with remaining Embers of the Pyre. She could have been killed for this, but she gave them anyway. That\u2019s all I have to say about Fel."
     },
     {
@@ -1946,7 +1946,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +10 ATK but -1 ATK for every non-boss Artifact you own.",
+        "description": "Friendly units get +10 Attack but -1 Attack for every non-boss Artifact you own.",
         "lore": "The recording of history can be much more speculative than one might think, for even the most objective historians. When it is up to a historian\u2019s imagination, the simplest explanations are the most likely to have occurred."
     },
     {
@@ -1959,7 +1959,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Spells and Equipment with [annihilate] have [consume] instead.",
+        "description": "Spells and Equipment with Purge have Consume instead.",
         "lore": "As elusive as their name, these bright flowers bloom briefly in the cracked soil of the Scorched Plains, quickly smothered by the harsh environment."
     },
     {
@@ -1972,7 +1972,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Deal [effect0.power] [piercing] damage whenever an enemy unit moves between floors.",
+        "description": "Deal 3 Piercing damage whenever an enemy unit moves between floors.",
         "lore": "The stairwells of the Boneshaker are never what they seem. Among other surprises, the hidden spike traps I\u2019ve engineered can be set to stop any combatant."
     },
     {
@@ -1985,7 +1985,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At the end of the entire battle, gain [effect0.trigger0.effect0.power][coin].",
+        "description": "At the end of the entire battle, gain 100 Gold.",
         "lore": "A nifty net with traces of gold-lit orbs gathered inside. They\u2019d probably fetch a pretty penny."
     },
     {
@@ -2011,7 +2011,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "[effect0.power][ember] per turn. Draw [effect1.power] additional cards per turn.",
+        "description": "-1 Ember per turn. Draw 2 additional cards per turn.",
         "lore": "An antique pen whose owner must have held the pen too tight, for it now leaks ink everywhere."
     },
     {
@@ -2037,7 +2037,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +1 each turn. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "One of my crowning achievements. A metal-based compound that can be formed into any shape. I\u2019ve only been able to create a small batch of it, but a little goes a long way."
     },
     {
@@ -2050,7 +2050,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +1 each turn. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": "One of my crowning achievements. A metal-based compound that can be formed into any shape. I\u2019ve only been able to create a small batch of it, but a little goes a long way."
     },
     {
@@ -2063,7 +2063,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you draw a Blight or Scourge, gain 1[ember] and draw a non-Blight or non-Scourge card.",
+        "description": "When you draw a Blight or Scourge, gain 1 Ember and draw a non-Blight or non-Scourge card.",
         "lore": "Sometimes a curse can be a blessing in disguise. While Hell is filled with so many opportunities for pain, they often make a demon stronger."
     },
     {
@@ -2076,7 +2076,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "On the turn after [deployphase], draw until you have [effect0.power] cards.",
+        "description": "On the turn after Deployment Phase, draw until you have 10 cards.",
         "lore": "Contrary to common belief, demons do not travel light. Supposedly, the souls of Heaven and Hell require less worldly attachments than the Humans they consider to be so lowly, but I can tell you that is absolutely untrue. I once saw a Hellhorned Demon bring aboard six bursting suitcases. When I asked if all of it was needed, the Demon only glared and growled. Only then, have I truly known fear."
     },
     {
@@ -2102,7 +2102,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, apply [dazed] [effect0.effect0.status0.power] to the front enemy unit on a random floor.",
+        "description": "At start of turn, apply Dazed 1 to the front enemy unit on a random floor.",
         "lore": "These shattered orbs were called \u2018Bindings\u2019 and still contains a trace of its power. One thing is for certain, this item is not of this world."
     },
     {
@@ -2115,7 +2115,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "+[effect1.power][ember] per turn. [effect0.power][deploymentember].",
+        "description": "+1 Ember per turn. -3 Deployment Ember.",
         "lore": "This statuette has the uncanny ability of following its owner with its eyes wherever they go."
     },
     {
@@ -2141,7 +2141,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Unit cards without upgrades cost [effect0.power][ember].",
+        "description": "Unit cards without upgrades cost -1 Ember.",
         "lore": "What happens to the souls trapped within soul shards? No one is sure. There are cases of shards becoming \u2018purified\u2019, a transformation denoted by a change in color."
     },
     {
@@ -2154,7 +2154,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][ember] per turn. +[effect3.power][deploymentember]. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+1 Ember per turn. +1 Deployment Ember. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2167,7 +2167,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "+[effect0.power][capacity] on each floor. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "+2 Capacity on each floor. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2180,7 +2180,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": true,
-        "description": "Draw +[effect0.power] each turn. [halfbreak]Your Pyre gets +[effect2.pyreattackpower]ATK and +[effect1.pyrehealthpower][pyrehealth].",
+        "description": "Draw +1 each turn. Your Pyre gets +[effect2.pyreattackpower]Attack and +[effect1.pyrehealthpower][pyrehealth].",
         "lore": ""
     },
     {
@@ -2206,7 +2206,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [stealth] [effect1.power] on [summon] and [slay]. +[effect0.power]ATK per stack of [stealth].",
+        "description": "Friendly units gain Stealth 1 on Summon and Slay. +3 Attack per stack of Stealth.",
         "lore": "They say Death himself walks beside the rail, and that is not a figure of speech. Though none have said it for long."
     },
     {
@@ -2232,7 +2232,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Blights and Scourges cost 0[ember].",
+        "description": "Blights and Scourges cost 0 Ember.",
         "lore": "Collaboration between the Rings of Hell was rare, but the few that did occur produced wondrous results. Water from the Stygian Sea blessed by the Channelers of the Wildwood created a solution capable of soothing the pains of Heaven\u2019s wretched sinner contraptions. However, this was used only a handful of times. Those contraptions rarely had survivors..."
     },
     {
@@ -2245,7 +2245,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "After the [deployphase], summon a random unit from your deck on each floor.",
+        "description": "After the Deployment Phase, summon a random unit from your deck on each floor.",
         "lore": "There was little time to act after Seraph\u2019s invasion, but there was just enough for me to design a way to protect what would remain of the Pyre after its inevitable destruction."
     },
     {
@@ -2271,7 +2271,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play a spell, spells in hand that cost less are reduced to 0[ember] for the turn.",
+        "description": "When you play a spell, spells in hand that cost less are reduced to 0 Ember for the turn.",
         "lore": "After completing the Rail, I destroyed the anvil I used to create all the Railspikes as a symbolic ending to this endeavor."
     },
     {
@@ -2284,7 +2284,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain [conduit] [effect0.trigger0.effect0.status0.power] on [slay].",
+        "description": "Friendly units gain Conduit 1 on Slay.",
         "lore": "A \u2018water clock\u2019 filled with ink instead of water. The ink inside sloshes as if it had a mind of its own."
     },
     {
@@ -2297,7 +2297,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a card with [consume] is played, deal [effect0.power] damage to the front enemy unit.",
+        "description": "When a card with Consume is played, deal 30 damage to the front enemy unit.",
         "lore": "Seraph was not always the Traitor he is today, hellbent on the unification of Heaven and Hell for our mutual survival. He was the main reason the Covenant was pursued to begin with. I suppose his need for control finally got the better of him..."
     },
     {
@@ -2310,7 +2310,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units gain +[effect0.power]HP for each rare card in your deck.",
+        "description": "Friendly units gain +3 Health for each rare card in your deck.",
         "lore": "\u201cJesters do oft prove prophets.\u201d"
     },
     {
@@ -2336,7 +2336,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect0.upgrade.bonusdamage]ATK and +[effect0.upgrade.bonushp]HP.",
+        "description": "Friendly units get +5 Attack and +12 Health.",
         "lore": "When the Last Divinity died, the divine shards scattered across all of Heaven and Hell. Fragments of those shards still remain, cackling with latent divine energy."
     },
     {
@@ -2349,7 +2349,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you play three different kinds of cards in a turn, draw [effect0.power] and gain [effect0.secondarypower][ember].",
+        "description": "When you play three different kinds of cards in a turn, draw 1 and gain 1 Ember.",
         "lore": "To guide Dante in his descent through Hell, Beatrice gifted him a staff infused by her angelic hands to guide him."
     },
     {
@@ -2362,7 +2362,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Starter cards cost -[effect0.upgrade.costreduction][ember].",
+        "description": "Starter cards cost -1 Ember.",
         "lore": "Her celestial song was said to be sweet enough to bring peace to a battlefield. Some still hold out hope that she will one day return."
     },
     {
@@ -2375,7 +2375,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When you draw any non-Champion card, its cost is randomized between 0[ember] and 3[ember]. Draw +[effect1.power] each turn.",
+        "description": "When you draw any non-Champion card, its cost is randomized between 0 Ember and 3 Ember. Draw +2 each turn.",
         "lore": "One of the first instruments I developed for the Boneshaker. Regrettably, it\u2019s not very accurate and delivers entirely random heat output from the furnace."
     },
     {
@@ -2388,7 +2388,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "At start of turn, friendly units gain +[effect0.upgrade.bonusdamage]ATK and +[effect0.upgrade.bonushp]HP if they are the only friendly unit on the floor.",
+        "description": "At start of turn, friendly units gain +5 Attack and +5 Health if they are the only friendly unit on the floor.",
         "lore": "A token from better times, found in Limbo without its owner."
     },
     {
@@ -2401,7 +2401,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Spell cards with [consume] have a [effect0.power]% chance to be discarded instead.",
+        "description": "Spell cards with Consume have a 50% chance to be discarded instead.",
         "lore": "Clipped Wings are discarded after removal to suppress any hope of the victim\u2019s redemption. However, I was able to smuggle some out of Heaven disguised as Waxer rags."
     },
     {
@@ -2414,7 +2414,7 @@
         "story_event": false,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "After [deployphase], when you play your third card of the turn, draw [effect0.power].",
+        "description": "After Deployment Phase, when you play your third card of the turn, draw 1.",
         "lore": "The Winged crafted a solid piece of steel to show me the creation process. The runes they placed on it made sure I could not melt it down again for my own use."
     },
     {
@@ -2427,7 +2427,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "Friendly units get +[effect1.power]ATK. Deal [effect0.power] damage to friendly units each turn.",
+        "description": "Friendly units get +12 Attack. Deal 1 damage to friendly units each turn.",
         "lore": "Whoever once owned this must have had an incredible pain tolerance, as wearing it would feel like enduring countless papercuts at every moment."
     },
     {
@@ -2440,7 +2440,7 @@
         "story_event": true,
         "dragons_hoard": false,
         "boss_artifact": false,
-        "description": "When a card with [consume] is played, gain [effect0.power][coin].",
+        "description": "When a card with Consume is played, gain 25 Gold.",
         "lore": "\u201cAlas, poor Yorick! I knew him, Horatio; a fellow of infinite jest.\u201d"
     },
     {
