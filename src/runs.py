@@ -25,7 +25,7 @@ from src.events import add_listener
 from src.utils import convert_class_to_obj, get_req_data
 from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
-__all__ = ["get_latest_run"]
+__all__ = ["get_latest_run", "RunParser", "StreakInfo"]
 
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
@@ -79,10 +79,12 @@ class RunParser(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
+        """Time when the run finished, as UTC."""
         return datetime.datetime.fromtimestamp(self._data["timestamp"], datetime.UTC)
 
     @property
     def timedelta(self) -> datetime.timedelta:
+        """Difference between now and the run."""
         return datetime.datetime.now(datetime.UTC) - self.timestamp
 
     @property
@@ -160,7 +162,6 @@ class RunParser(FileParser):
 
     @property
     def character_streak(self) -> StreakInfo:
-        """Get the run position in the character streak."""
         streak = self._character_streak
         if streak is None:
             streak = self._get_streak(is_character_streak=True)
@@ -170,7 +171,6 @@ class RunParser(FileParser):
 
     @property
     def rotating_streak(self) -> StreakInfo:
-        """Get the run position in the rotating streak."""
         streak = self._rotating_streak
         if streak is None:
             streak = self._get_streak(is_character_streak=False)

@@ -1,4 +1,9 @@
 Slay the Spire run information
 ==============================
 
-.. module:: src.gamedata
+.. autoclass:: src.gamedata.FileParser
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :exclude-members: bar,graph
+

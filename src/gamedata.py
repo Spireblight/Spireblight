@@ -110,38 +110,27 @@ class BaseNode(ABC):
 
     """
 
-    #: The display name of map nodes
-    room_type: str = ""
-    #: Whether to add a newline after this map node
-    end_of_act: bool = False
+    room_type: str = ""         #: The display name of map nodes.
+    end_of_act: bool = False    #: Whether to add a newline after this map node.
 
     # the following are handled differently in each branch
     # as such, we only tell the type checkers what they are
     # if a subclass does not implement these, it is a bug
 
-    #: The current HP when exiting the node.
-    current_hp: int
-    #: The max HP when exiting the node.
-    max_hp: int
-    #: The gold when exiting the node.
-    gold: int
+    
+    current_hp: int             #: The current HP when exiting the node.
+    max_hp: int                 #: The max HP when exiting the node.
+    gold: int                   #: The gold when exiting the node.
 
-    #: The floor associated with this node.
-    floor: int
+    floor: int                  #: The floor associated with this node.
 
-    #: How many cards we currently have.
-    card_count: int
-    #: How many relics we currently have.
-    relic_count: int
-    #: How many potions we currently have.
-    potion_count: int
-    #: How many fights were fought so far this run.
-    fights_count: int
-    #: How many turns passed so far this run.
-    turns_count: int
+    card_count: int             #: How many cards we currently have.
+    relic_count: int            #: How many relics we currently have.
+    potion_count: int           #: How many potions we currently have.
+    fights_count: int           #: How many fights were fought so far this run.
+    turns_count: int            #: How many turns passed so far this run.
 
-    #: How much time, in seconds, we spent on this floor.
-    floor_time: int
+    floor_time: int             #: How much time, in seconds, we spent on this floor.
 
     def __init__(self, parser: FileParser, *extra):
         """Generate a new BaseNode instance.
@@ -967,8 +956,8 @@ class FileParser(ABC):
         "discarded": ("PotionDiscardLog", "potion_discard_per_floor"),
     }
 
-    prefix = ""
-    done = False
+    prefix: str = ""            #: String to prepend to most data access.
+    done: bool = False          #: Whether the run is over.
 
     def __init__(self, data: dict[str, Any]):
         self._data = data
@@ -980,7 +969,7 @@ class FileParser(ABC):
     def __str__(self):
         return f"{self.__class__.__name__}<{self.timestamp}>"
 
-    def get_boss_chest(self) -> dict[str, str | list[str]]:
+    def _get_boss_chest(self) -> dict[str, str | list[str]]:
         if "boss_chest_iter" not in self._cache:
             self._cache["boss_chest_iter"] = iter(self._data[self.prefix + "boss_relics"])
 
@@ -1109,42 +1098,48 @@ class FileParser(ABC):
     @property
     @abstractmethod
     def floor(self) -> int:
+        """The last or latest floor."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def timestamp(self) -> datetime.datetime:
+        """Save time, as UTC."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def timedelta(self) -> datetime.timedelta:
+        """Time delta, semantics depending on the subclass."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def profile(self) -> Profile:
+        """The profile this run is played on."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def character_streak(self) -> StreakInfo:
+        """The run position in the character streak."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def rotating_streak(self) -> StreakInfo:
+        """The run position in the rotating streak."""
         raise NotImplementedError
 
     @property
     @abstractmethod
     def _neow_data(self) -> tuple[dict[str, list[str] | int], list[str], list[str]]:
-        """Return the Neow Bonus data. For internal use only."""
+        """Neow Bonus data. For internal use only."""
         raise NotImplementedError
 
     @property
     def _neow_picked(self) -> tuple[str, str]:
-        """Return the Neow bonus and cost picked. For internal use only."""
+        """Neow bonus and cost picked. For internal use only."""
         return (self._data["neow_bonus"], self._data["neow_cost"])
 
     @property
@@ -2346,7 +2341,7 @@ class BossChest(NodeData):
 
     def __init__(self, parser: FileParser, floor: int, *extra):
         super().__init__(parser, floor, *extra)
-        boss_relics = parser.get_boss_chest()
+        boss_relics = parser._get_boss_chest()
         picked = None
         skipped = []
         if boss_relics.get("picked", "SKIP") != "SKIP":

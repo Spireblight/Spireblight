@@ -96,7 +96,7 @@ class Savefile(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        """Return the save time for the run, as UTC."""
+        """Save time for the run, as UTC."""
         date = self._data.get("save_date")
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
@@ -109,6 +109,7 @@ class Savefile(FileParser):
 
     @property
     def timedelta(self) -> datetime.timedelta:
+        """Time spent between the beginning and the latest save."""
         return datetime.timedelta(seconds=self.playtime)
 
     @property

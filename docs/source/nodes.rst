@@ -24,4 +24,3 @@ Slay the Spire path node data
    :members:
    :undoc-members:
    :inherited-members:
-   :exclude-members: bar,graph
