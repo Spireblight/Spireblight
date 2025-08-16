@@ -1,11 +1,8 @@
 from __future__ import annotations
-from cache.cache_helpers import RunLinkedListNode
+from src.cache.cache_helpers import RunLinkedListNode
 
-from gamedata import FileParser
+from src.gamedata import FileParser
 from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from runs import RunParser
 
 class RunResponse:
     def __init__(self, parser: FileParser, run_linked_node: RunLinkedListNode = None, *, autorefresh: bool, redirect: bool):

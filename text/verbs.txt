@@ -26,5 +26,17 @@ channel
 exhaust
 tell
 corrupt
+embrace
+slice
+dice
+backflip
+break
+streak
+end
+die
+equip
+choose
+blame
+caption
 grow
 discard

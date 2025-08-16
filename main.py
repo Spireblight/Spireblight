@@ -4,12 +4,12 @@ import sys
 
 from aiohttp import web
 
-from webpage import webpage
-from logger import logger
+from src.webpage import webpage
+from src.logger import logger
 
-import server, events
+from src import server, events
 
-from configuration import config
+from src.configuration import config
 
 if config.server.debug:
     logging.basicConfig(
@@ -21,6 +21,11 @@ if config.server.debug:
     )
 
 logger.info("Starting the bot")
+
+if sys.platform == "win32": # postgres compat
+    asyncio.set_event_loop_policy(
+        asyncio.WindowsSelectorEventLoopPolicy()
+    )
 
 async def main():
     await events.invoke("setup_init")
@@ -35,6 +40,8 @@ async def main():
         tasks.add(loop.create_task(server.Twitch_startup()))
     if config.discord.enabled:
         tasks.add(loop.create_task(server.Discord_startup()))
+    if config.youtube.get("playlist_sheet"):
+        tasks.add(loop.create_task(server.Youtube_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 

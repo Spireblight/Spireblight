@@ -1,0 +1,59 @@
+{
+    "classic": {
+        "title": [
+            "Will the run make it?",
+            "Will we win?",
+            "Is Baalor gonna win this?",
+            "Will the Spire be Slain?",
+            "Is this the run?"
+        ],
+        "char_title": [
+            "Will the {} make it?",
+            "Does the {} get to win?",
+            "Can we pilot the {} to victory?"
+        ],
+        "victory": [
+            "This IS the run!",
+            "We will win, no doubt!",
+            "Baalor'll Slay that Spire!",
+            "Oh yeah, we win, no doubt!"
+        ],
+        "defeat": [
+            "Oh, we're toast.",
+            "We don't survive this.",
+            "The Spire will Slay US!",
+            "Baalor won't make it."
+        ]
+    },
+    "extended": {
+        "title": [
+            "How far will we make it?",
+            "Where will we get to?"
+        ],
+        "char_title": [
+            "Will the {} make it?",
+            "Can the {} win?",
+            "How far does {} get?"
+        ],
+        "act1_death": [
+            "Not even past Act 1",
+            "Can't beat Act 1"
+        ],
+        "act2_death": [
+            "We will die in Act 2",
+            "Baalor will fall to Act 2"
+        ],
+        "act3_death": [
+            "Act 3 will do us in",
+            "Can't quite make it past Act 3"
+        ],
+        "act4_death": [
+            "Almost, but not quite past Act 4",
+            "Can't beat Act 4"
+        ],
+        "victory": [
+            "VICTORY!",
+            "The Spire will be Slain!"
+        ]
+    }
+}

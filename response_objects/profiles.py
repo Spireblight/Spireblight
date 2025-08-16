@@ -1,4 +1,4 @@
-from sts_profile import Profile
+from src.sts_profile import Profile
 
 
 class ProfilesResponse:

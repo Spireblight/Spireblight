@@ -1,0 +1,92 @@
+<section class="section">
+  <div class="box run-header is-paddingless">
+    <div class="avatar">
+      <img class="{{ run.character | lower }} {{ run.verb }}"
+        src="/static/characters/{{ run.character | lower }}-{% if run.done and not run.won %}loss{% else %}face{% endif %}.png"/>
+    </div>
+    <div class="run-header-content">
+      <div class="run-title pt-4 pr-4 pb-4">
+        <div class="title">
+          {{ run.character }}
+          {% if run.done %}
+            {% if run.won %}
+              victory! 🎉
+            {% else %}
+              loss 😔
+            {% endif %}
+          {% else %}
+            ongoing, on floor {{ run.current_floor }}
+          {% endif %}
+        </div>
+
+        <div class="mods">
+          {% if run.modded %}
+            <i title="This is a modded character. Not all data will be accurate."
+              class="fa-solid fa-circle-radiation"></i>
+          {% endif %}
+          {% if run.modifiers %}
+            <i title="This was a Custom run. Check the Neow Bonus panel for Modifiers"
+              class="fa-solid fa-flask"></i>
+          {% endif %}
+        </div>
+
+        <div class="score">
+          <div class="points">
+            {{ run.score }} points
+          </div>
+          <div class="kills-bosses">
+            {% if run.done %}
+              {% if not run.won %}
+                <span class="red">Killed by {{ run.killed_by }} on floor {{ run.floor_reached }}</span>
+              {% endif %}
+            {% else %}
+              Towards <span>{{ run.upcoming_boss }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="extra">
+          {% if run.done %}
+            <div>Took {{ run.run_length }}</div>
+            <div title="{{ run.timestamp }}">
+              {% if run.timedelta.days > 0 %}
+                {{ run.timedelta.days }} days ago
+              {% else %}
+                Today!
+              {% endif %}
+            </div>
+          {% else %}
+            <div>
+              {{ run.potion_chance }}% potion chance
+            </div>
+            <div>
+              {{ run.current_purge }}g removal cost
+            </div>
+          {% endif %}
+          <div class="seed">
+            Ascension {{ run.ascension_level }}
+          </div>
+        </div>
+
+        {% if run.won %}
+          <div class="streak">
+            <div>
+              {{ run.character_streak.position }} / {{ run.character_streak.streak }}
+              {{ run.character }} streak
+            </div>
+          </div>
+        {% elif not run.done %}
+          <div class="streak current">
+            <div>
+              {{ run.character_streak.position }} {{ run.character }} streak
+            </div>
+          </div>
+        {% else %}
+          <div class="streak lost">
+            no streak <br/> because ded :(
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+[
+    {
+        "id": "d3b53481-f26b-4344-ae8e-ec80b28d6004",
+        "description": "Enemies are stronger. Add additional random cards to your starting deck.",
+        "level": 1
+    },
+    {
+        "id": "3cc0272d-c0d7-46dc-9c7a-be9633572f70",
+        "description": "If you see this, it is a bug. Yell at Faely.",
+        "level": 1
+    },
+    {
+        "id": "92c18b99-e4c0-4953-ba2c-4815f570a66e",
+        "description": "Battles have additional enemies.",
+        "level": 2
+    },
+    {
+        "id": "dcb31cd7-4293-4b07-b396-5456a0ce0b6e",
+        "description": "Merchant reroll costs are 50% higher and purge costs scale 50% faster.",
+        "level": 3
+    },
+    {
+        "id": "80cfbaca-da9a-4aa8-ac0d-a6563f26fcb8",
+        "description": "Bosses have increased Attack and Health. Non-Flying Bosses have an additional mechanic.",
+        "level": 4
+    },
+    {
+        "id": "0310c0f2-f970-4656-9cc6-6d3c457303dd",
+        "description": "Add 2 Vengeful Shards to the starting deck.",
+        "level": 5
+    },
+    {
+        "id": "2cd816ea-fc0d-4129-ae64-24aa99ef0594",
+        "description": "One card per draft also adds a Calcified Ember.",
+        "level": 6
+    },
+    {
+        "id": "06101ac8-9afb-401c-aaa7-7ef2745ce6a9",
+        "description": "There is no longer an empty wave before bosses.",
+        "level": 7
+    },
+    {
+        "id": "ad5c826a-e716-43cc-9c13-df0dd138de71",
+        "description": "Enemies are stronger.",
+        "level": 8
+    },
+    {
+        "id": "222e1727-2480-475c-85e8-d833a1db6e2d",
+        "description": "Your Pyre takes 30% damage at the start of the run.",
+        "level": 9
+    },
+    {
+        "id": "871bec39-7863-4fdd-9919-929d05c92697",
+        "description": "Elite Chosen enemies appear during Flying Boss battles.",
+        "level": 10
+    }
+]

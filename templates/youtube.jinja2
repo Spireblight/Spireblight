@@ -1,0 +1,161 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  Youtube
+{% endblock %}
+
+{% block head %}
+  <script src=" https://cdn.jsdelivr.net/npm/gridjs@6.1.1/dist/gridjs.production.min.js"></script>
+  <link href=" https://cdn.jsdelivr.net/npm/gridjs@6.1.1/dist/theme/mermaid.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-half mt-4">
+        <h1 class="title has-text-centered">
+          Youtube content
+        </h1>
+      </div>
+    </div>
+    <div class="columns is-variable is-centered has-text-centered mt-4">
+      <a href="https://youtube.com/@Baalorlord" target="_blank" class="container column box is-one-fifth channel">
+        <div class="p-4 is-size-4 has-text-link">
+          Baalorlord
+        </div>
+        <p class="is-size-7 mr-3 ml-3 mb-3">
+          The main channel. <br/>
+          New uploads of Spire content four times per week.
+        </p>
+      </a>
+      <a href="https://youtube.com/@BaalorlordPlays" target="_blank" class="container column box is-one-fifth channel">
+        <div class="p-4 is-size-4 has-text-link">
+          Baalorlord Plays
+        </div>
+        <p class="is-size-7 mr-3 ml-3 mb-3">
+          The variety channel. <br/>
+          Games that aren't Slay the Spire go here.
+        </p>
+      </a>
+      <a href="https://youtube.com/channel/UCOBCFrVoBoHBH7wojml0i0w" target="_blank"  class="container column box is-one-fifth channel">
+        <div class="p-4 is-size-4 has-text-link">
+          Baalorlord Unedited
+        </div>
+        <p class="is-size-7 mr-3 ml-3 mb-3">
+          The archives. <br/>
+          All streams go here, unedited and without refunds.
+        </p>
+      </a>
+      <a href="https://youtube.com/@baalorlordshorts" target="_blank"  class="container column box is-one-fifth channel shorts">
+        <div class="p-4 is-size-4 has-text-link">
+          Baalorlord Shorts
+        </div>
+        <p class="is-size-7 mr-3 ml-3 mb-3">
+          The shorts. <br/>
+          Shorts and clips, vertical style!
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <section class="columns is-centered">
+    <div class="column is-half mt-4 is-size-7">
+      <p>
+        The table below contains links to videos and playlists of all the games that Baalor has
+        played on the stream.  You can sort by clicking on the headers, and you can filter in the
+        search field by typing in keywords like "sponsored" or "baba".
+      </p>
+
+      <p class="chart-disclaimer has-text-centered m-4 is-size-7">
+        The table is not excellent on mobile due to using a library without responsive
+        support.  Please view it on desktop or in desktop mode for a better and more interactive
+        experience.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div id="nom-nom-playlists" class="container"></div>
+    <script type="text/javascript">
+     function formatGame(row) {
+       var game = row.cells[0].data
+       var url = row.cells[3].data;
+       var icon = '<i title="On Steam" class="fa-brands fa-steam"></i>&nbsp;';
+       if (!url.startsWith("https://store.steampowered.com")) {
+         var icon = '<i title="On the interwebs" class="fa-solid fa-external-link"></i>&nbsp;';
+       }
+       return `${icon}<a href="${url}" target="_blank">${game}</a>`
+       /* return `<b>${cell}</b>` */
+     }
+
+     function formatYoutube(cell) {
+       console.log(cell);
+       var url = cell;
+       if (url === "") {
+         // If the URL is empty, it means that there's no VOD available.
+         return 'No vod :('
+       }
+       var text = 'Youtube link';
+       if (url.startsWith("https://youtu.be/")) {
+         text = 'Video';
+       } else if (url.startsWith("https://www.youtube.com/playlist")) {
+         text = 'Playlist';
+       } else if (url === 'https://www.youtube.com/@Baalorlord') {
+         // This is for the singular case of Slay the Spire
+         text = 'Channel';
+       }
+
+       var icon = '<i title="Youtube" class="fa-brands fa-youtube"></i>&nbsp;';
+       return `${icon}<a href="${url}" target="_blank">${text}</a>`
+     }
+
+
+     // https://gridjs.io/docs/examples/html-cells for the formatter parts.
+     new gridjs.Grid({
+       columns: [
+         {
+           id: "Game",
+           name: "Game",
+           formatter: (_, row) => gridjs.html(formatGame(row)),
+         },
+         {
+           id: "Youtube Link",
+           name: "Youtube",
+           formatter: (cell) => gridjs.html(formatYoutube(cell)),
+         },
+         {
+           id: "Origin",
+           name: "Origin",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Steam Link",
+           name: "Steam Link",
+           hidden: true,
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+       ],
+       search: true,
+       sort: true,
+       data: {{ playlists | safe }},
+       style: {
+         table: {
+           border: '0',
+         },
+         th: {
+           'background-color': '#222229',
+           color: '#dbdbdb',
+           border: 0,
+           'border-radius': '0',
+           'font-size': '1.125rem',
+         },
+         td: {
+           'background-color': '#111117',
+           border: 0,
+           color: '#dbdbdb',
+         }
+       }
+     }).render(document.getElementById("nom-nom-playlists"));
+    </script>
+  </section>
+{% endblock %}

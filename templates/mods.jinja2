@@ -1,0 +1,369 @@
+{% extends "base.jinja2" %}
+
+
+{% block title %}
+  Mods
+{% endblock %}
+
+{% block content %}
+  <section class="section columns is-centered">
+    <div class="column is-half mt-4">
+      <h1 class="title has-text-centered">
+        Slay the Spire mods
+      </h1>
+      <p>
+        On the stream we use mods to the game to enhance the experience for the viewer.  With the
+        mods, we add interactivity so that you as a viewer can access information about the run
+        directly in the stream.
+      </p>
+      <p class="mt-4">
+        Out of the mods we use, only the RNGfix alters the gameplay.  Other than that, we play as
+        closely to unmodded Slay the Spire as possible.  More on RNGfix below.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Gameplay mods
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2181005326" target="_blank">
+                RNGfix
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                The <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2181005326"
+                      target="_blank">RNGfix</a> mod changes how randomness works in Slay the Spire to combat
+                <a href="https://forgottenarbiter.github.io/Correlated-Randomness/" target="_blank">correlated
+                  randomness</a>.
+              </p>
+
+              <p class="mt-4">
+                To quote the mod summary page: <br/>
+                <i>
+                  What [correlated randomness] means is that the player can know a lot of
+                  information they shouldn't if the game were truly random. One such example is the
+                  player can know if their next event will be a monster room or not based on the
+                  first enemy they encounter. Another example is that by analyzing monster order (or
+                  the potion order, or the event order, etc), the player can predetermine the rarity
+                  of the chest they receive and its contents by calculating the correct number of
+                  fights before entering the chest room.
+                </i>
+              </p>
+
+              <p class="mt-4">
+                While it alters the gameplay, it only does so to make it <i>harder</i> if anything.
+                For more information, see
+                <a href="https://www.youtube.com/watch?v=4Mn3RSsmgnU"
+                  target="_blank">Jorbs' in-depth video</a> on the subject.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Visual mods
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://github.com/casey-c/mapmarks" target="_blank">
+                Mapmarks
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://github.com/casey-c/mapmarks" target="_blank">Mapmarks</a>
+                lets us draw a path on the map to outline where we are planning to go.  We
+                usually color our intended path in green, a harder and more reckless path in red,
+                and alternate paths in white.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2467296396" target="_blank">
+                UI Sliders
+              </a>
+            </div>
+            <div class="message-body">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2467296396"
+                target="_blank">UI Sliders</a> lets us move certain elements of the UI.  We use it to
+              move the discard pile and the exhaust pile to be above the stream webcam.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Interactivity mods
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://github.com/Spireblight/STR-Spire-Mod" target="_blank">
+                Slay the Relics
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://github.com/Spireblight/STR-Spire-Mod"
+                  target="_blank">Slay the Relics</a> adds interactivity to the Twitch stream,
+                letting the viewer hover over elements of the game and get information in real time.
+                This works in conjunction with Relic Stats (see below).
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Information mods
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://casey-c.github.io/slaythespire/infomod.html" target="_blank">
+                Infomod
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://casey-c.github.io/slaythespire/infomod.html"
+                  target="_blank">Infomod</a> provides access to information that's always available
+                to the player, but tedious to remember or calculate.  It shows things like potion
+                drop chance, the various question floor variants, drop chances for card rarities,
+                and so on.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2802958032" target="_blank">
+                Run History Plus
+              </a>
+            </div>
+            <div class="message-body">
+              The <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2802958032"
+                    target="_blank">Run History Plus</a> mod adds more information to the Run
+              History screen.  It also powers a lot of the run information this website has.
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://casey-c.github.io/slaythespire/bestiary.html" target="_blank">
+                Bestiary
+              </a>
+            </div>
+            <div class="message-body">
+              The <a href="https://casey-c.github.io/slaythespire/bestiary.html"
+                    target="_blank">Bestiary</a> mod lets us access information about the foes of the
+              Spire, showing us their stats and movesets.
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2118491069" target="_blank">
+                Relic Stats
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2118491069" target="_blank">Relic
+                  Stats</a> gives us extended information on how relics have performed.  We can
+                hover over relics in the relic bar to get numerical information over what they have
+                done.  This works in conjunction with Slay the Relics, so viewers on Twitch can
+                access this information as well.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Custom mods
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2947838832" target="_blank">
+                The Mastery Challenge
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2947838832"
+                  target="_blank">The Mastery Challenge</a> mod was specifically made for the
+                channel to help keep track of the
+                <a
+                  href="https://docs.google.com/spreadsheets/d/1Qbbl0mbN8uvgEPlCCk1ZuGT7P9tZ97RMUujvQ07h_kc/edit#gid=0"
+                  target="_blank">2023 Mastery Challenge</a>.  It is available for others
+                to tinker with.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Variety mods
+    </h1>
+    <p class="has-text-centered mb-4 is-size-7">
+      These are mods we use during our Slay The Spire variety days about once per month. <br/>
+      They are not part of our regular gameplay.
+    </p>
+    <div class="columns mt-2">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://store.steampowered.com/app/1865780/Downfall__A_Slay_the_Spire_Fan_Expansion/" target="_blank">
+                Downfall
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://store.steampowered.com/app/1865780/Downfall__A_Slay_the_Spire_Fan_Expansion/" target="_blank">Downfall</a>
+                is a collection of new playable characters, most of them based on the bosses of the Spire.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3142318909" target="_blank">
+                Spire Biomes
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3142318909" target="_blank">Spire Biomes</a>
+                adds special zones to the Spire map which change the rules in all kinds of neat
+                ways: fight new enemies, visit the Ironclads homeland, have fun with a temporary
+                dead branch, or get struck by lightning!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2970981743" target="_blank">
+                Chimera Cards
+              </a>
+            </div>
+            <div class="message-body">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2970981743"
+                target="_blank">Chimera Cards</a>
+              adds a chance for all cards to show up with unique and interesting modifiers! You
+              might get a <b>Glass Strike</b> that has high damage but loses damage every
+              time you play it, or a <b>Shameful Discovery</b> that costs less but makes you weak. I wonder
+              what this <b>Blasphemous Vault</b> does...
+            </div>
+          </div>
+        </div>
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2176103737" target="_blank">
+                Spicy Shops
+              </a>
+            </div>
+            <div class="message-body">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2176103737"
+                target="_blank">Spicy Shops</a>
+              adds random modifiers to shops! Be it cheap but cursed relics, extra-powerful potions, or
+              even mystery boxes! Everything that can be bought can receive modifiers, and you'll
+              always see at least one modified potion and relic, and at least one card. The rug is still
+              not for sale, though...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="subtitle has-text-centered">
+      Honorable mention
+    </h1>
+    <div class="columns">
+      <div class="column">
+        <div class="box p-0">
+          <div class="message">
+            <div class="message-header">
+              <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1812723899" target="_blank">
+                Minty Spire
+              </a>
+            </div>
+            <div class="message-body">
+              <p>
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1812723899"
+                  target="_blank">Minty Spire</a> is a collection of quality-of-life additions to
+                the game, such as showing the sum of damage you are about to receive when multiple
+                enemies attack you, if you have Pen Nib active, or highlighting when a card will be
+                doubled by Echo Form.
+              </p>
+
+              <p class="mt-4">
+                However, we <i>do not</i> use it on the stream.  It adds too many visual things in a
+                way that would lead to too many questions in chat.  We strive to make the game look
+                as close to default as possible.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
