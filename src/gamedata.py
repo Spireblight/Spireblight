@@ -1200,8 +1200,8 @@ class FileParser(ABC):
 
         return res
 
-    def _handle_potions(self, key: str) -> PotionsListing:
-        final = [[]] # empty list for Neow
+    def _handle_potions(self, key: str) -> PotionRewards:
+        final = collections.defaultdict(list)
         if key not in self._potion_mapping:
             raise ValueError(f"Key {key} is not a valid potion action.")
         mapping = self._data
@@ -1222,24 +1222,27 @@ class FileParser(ABC):
                 # Either we don't have RHP, or the floor isn't stored somehow
                 pass
 
-            final.append(potions)
+            if potions:
+                # we add one here because the internal list starts at floor 1
+                # so index 0 is floor 1, which we need to correct for here
+                final[i+1] = potions
 
         return final
 
     @property
-    def potions_use(self) -> PotionsListing:
+    def potions_use(self) -> PotionRewards:
         return self._handle_potions("use")
 
     @property
-    def potions_alchemize(self) -> PotionsListing:
+    def potions_alchemize(self) -> PotionRewards:
         return self._handle_potions("alchemize")
 
     @property
-    def potions_entropic(self) -> PotionsListing:
+    def potions_entropic(self) -> PotionRewards:
         return self._handle_potions("entropic")
 
     @property
-    def potions_discarded(self) -> PotionsListing:
+    def potions_discarded(self) -> PotionRewards:
         return self._handle_potions("discarded")
 
     @property

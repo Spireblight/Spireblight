@@ -12,8 +12,7 @@ from src.nameinternal import Relic, Potion, SingleCard
 __all__ = [
     "ContextType", "CommandType",
     "CardRewards", "RelicRewards", "PotionRewards",
-    "PotionsListing", "ItemFloor",
-    "BossRelicChoice",
+    "ItemFloor", "BossRelicChoice",
 ]
 
 # transport-related support
@@ -28,8 +27,6 @@ Floor: TypeAlias = int
 CardRewards: TypeAlias = defaultdict[Floor, list[SingleCard]]
 RelicRewards: TypeAlias = defaultdict[Floor, list[Relic]]
 PotionRewards: TypeAlias = defaultdict[Floor, list[Potion]]
-
-PotionsListing: TypeAlias = list[list[Potion]]
 
 ItemFloor: TypeAlias = tuple[str, Floor]
 
