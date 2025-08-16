@@ -15,8 +15,6 @@ Full Spireblight API
    logger
    monster
    nameinternal
-   runs
-   save
    score
    server
    slice

@@ -18,7 +18,7 @@ Slay the Spire path node data
    This class handles everything to do with the Neow bonus.
    Some of the run-specific data will only be available if
    RunHistoryPlus is installed when the run is first started.
-   In the absence of the mod, a sane default will be returned.
+   In the absence of the mod, sane defaults will be used.
 
 .. autoclass:: ShopContents
    :members:

@@ -229,6 +229,7 @@ class RunParser(FileParser):
         return self.activemods.all_mods
 
 class StreakInfo(NamedTuple):
+    """Contain run streak information."""
     streak: int
     position: int
     is_ongoing: bool
