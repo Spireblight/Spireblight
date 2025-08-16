@@ -38,3 +38,5 @@ equip
 choose
 blame
 caption
+grow
+discard

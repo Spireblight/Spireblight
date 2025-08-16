@@ -38,3 +38,5 @@ Calipers
 Pyramid
 Snecko Eye
 caption
+orb
+dome
