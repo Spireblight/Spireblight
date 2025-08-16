@@ -18,7 +18,7 @@ import asyncio, src.events as events
 
 asyncio.run(events.invoke("setup_init"))
 
-wa = streamer = None
+rm = wa = streamer = None
 
 # this is an older save, and doesn't have all the RHP features
 # this is actually good, as it lets us test for what happens when it's lacking
@@ -42,9 +42,12 @@ with open(os.path.join("test", "static", "watcher.json")) as f:
 with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
     streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
 
-assert wa is not None and streamer is not None, "could not load test run files"
+assert rm is not None and wa is not None and streamer is not None, "could not load test run files"
+assert s._data is not None and sm._data is not None, "could not load test save files"
 
 # END SETUP
+
+# BEGIN CONSTANTS
 
 _rooms_mapping = {
     "Enemy": "M",
@@ -1602,6 +1605,8 @@ class _streamer_contents:
         ("Runic Dome", ("Calling Bell", "Cursed Key")),
     ]
 
+# END CONSTANTS
+
 class TestFileParser(TestCase):
     def test_character(self):
         self.assertEqual(s.character, "Silent")
@@ -1611,6 +1616,9 @@ class TestFileParser(TestCase):
 
     def test_modded(self):
         self.assertFalse(s.modded)
+        self.assertFalse(sm.modded)
+        self.assertFalse(rm.modded)
+        self.assertFalse(wa.modded)
 
     def test_seed(self):
         self.assertEqual(s.seed, "57Z3V6XL40NZS")
