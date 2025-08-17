@@ -323,7 +323,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("clumsy")
         context.reply.assert_awaited_once_with(
-            "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/slay%20the%20spire/cards/clumsy.png"
+            "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/slay%20the%20spire/cards/clumsy.png"
         )
 
     @patch("src.server.query")
