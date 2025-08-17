@@ -1666,8 +1666,8 @@ async def help_cmd(ctx: ContextType, name: str = ""):
         await ctx.reply(
             f"Welcome to the stream! Website: {config.server.url} | Current run: {p}current | "
             f"Stream overlay: {p}str | Useful commands: {p}discord {p}mods {p}neow {p}boss "
-            f"{p}games {p}youtube {p}winrate | Silly commands: {p}the {p}dig {p}lift {p}quote | "
-            f"All commands: {p}commands | Specific help: {p}help <command> | About this bot: {p}bot"
+            f"{p}stats {p}games {p}youtube {p}winrate | Silly commands: {p}the {p}dig {p}lift "
+            f"{p}quote | All commands: {p}commands | Specific help: {p}help <command> | About this bot: {p}bot"
         )
         return
 
@@ -2094,7 +2094,7 @@ async def card_with_art(ctx: ContextType, *line: str):
     link = f"{mod}/cards/{id}.png"
 
     await ctx.reply(
-        f"You can view this card and the upgrade with the art here: {base}{link}"
+        f"{base}{link}"
     )
 
 
