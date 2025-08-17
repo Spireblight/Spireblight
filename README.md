@@ -27,8 +27,9 @@ most of the commands
 
 ## Documentation
 
-The documentation [lives here](https://spireblight.github.io), with the Sphinx
-source [in the Docs repo](https://github.com/Spireblight/Docs).
+The documentation [lives here](https://spireblight.github.io/Spireblight/), with the Sphinx
+source [in the docs folder](https://github.com/Spireblight/Spireblight/tree/main/docs/source)
+and generated directly from the code.
 
 ## Running and configuring the server
 
