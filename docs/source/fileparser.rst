@@ -1,26 +1,38 @@
 Slay the Spire run information
 ==============================
 
-.. autoclass:: src.gamedata.FileParser
+.. module:: src.gamedata
+   :noindex:
+
+.. autoclass:: FileParser
    :members:
    :undoc-members:
    :inherited-members:
    :exclude-members: bar,graph
 
-.. autoclass:: src.save.Savefile
+.. autoclass:: BottleRelic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. module:: src.save
+
+.. autoclass:: Savefile
    :members:
    :undoc-members:
    :show-inheritance:
    :inherited-members:
 
-.. autofunction:: src.save.get_savefile
+.. autofunction:: get_savefile
 
-.. autoclass:: src.runs.RunParser
+.. module:: src.runs
+
+.. autoclass:: RunParser
    :members:
    :undoc-members:
    :show-inheritance:
    :inherited-members:
 
-.. autoclass:: src.runs.StreakInfo
+.. autoclass:: StreakInfo
    :members:
    :show-inheritance:

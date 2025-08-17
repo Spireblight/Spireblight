@@ -1144,10 +1144,12 @@ class FileParser(ABC):
 
     @property
     def display_name(self) -> str:
+        """The display name to be used on the website."""
         return ""
 
     @property
     def skipped_rewards(self) -> tuple[RelicRewards, PotionRewards]:
+        """All of the skipped relics and potions this run."""
         rels = collections.defaultdict(list)
         pots = collections.defaultdict(list)
         if self.prefix == "metric_": # savefile
@@ -1166,6 +1168,7 @@ class FileParser(ABC):
 
     @property
     def character(self) -> str | None:
+        """Human-readable character name."""
         if self._character is None:
             return None
 
@@ -1178,22 +1181,27 @@ class FileParser(ABC):
 
     @property
     def modded(self) -> bool:
+        """Whether the run uses a modded character."""
         return self.character not in ("Ironclad", "Silent", "Defect", "Watcher")
 
     @property
     def current_hp_counts(self) -> list[int]:
+        """The current HP in all the floors, including Neow."""
         return [self.neow_bonus.current_hp] + self._data[self.prefix + "current_hp_per_floor"]
 
     @property
     def max_hp_counts(self) -> list[int]:
+        """The max HP in all the floors, including Neow."""
         return [self.neow_bonus.max_hp] + self._data[self.prefix + "max_hp_per_floor"]
 
     @property
     def gold_counts(self) -> list[int]:
+        """The gold in all the floors, including Neow."""
         return [self.neow_bonus.gold] + self._data[self.prefix + "gold_per_floor"]
 
     @property
     def potions(self) -> PotionRewards:
+        """The potions obtained through normal rewards or purchases."""
         res = collections.defaultdict(list)
         for d in self._data[self.prefix + "potions_obtained"]:
             res[d["floor"]].append(get(d["key"]))
@@ -1231,22 +1239,27 @@ class FileParser(ABC):
 
     @property
     def potions_use(self) -> PotionRewards:
+        """The potions that were used during the run."""
         return self._handle_potions("use")
 
     @property
     def potions_alchemize(self) -> PotionRewards:
+        """The potions that were obtained from Alchemize during the run."""
         return self._handle_potions("alchemize")
 
     @property
     def potions_entropic(self) -> PotionRewards:
+        """The potions that were obtained from Entropic Brew during the run."""
         return self._handle_potions("entropic")
 
     @property
     def potions_discarded(self) -> PotionRewards:
+        """The potions that were discarded during the run."""
         return self._handle_potions("discarded")
 
     @property
     def boss_relics(self) -> list[BossRelicChoice]:
+        """Picked and skipped boss relics this run."""
         rels: list[dict] = self._data[f"{self.prefix}boss_relics"]
         ret = []
         for choices in rels:
@@ -1260,19 +1273,23 @@ class FileParser(ABC):
 
     @property
     def ascension_level(self) -> int:
+        """The Ascension level of the run."""
         return self._data["ascension_level"]
 
     @property
     def playtime(self) -> int:
+        """Time between the start of the run and the latest save."""
         return self._data[self.prefix + "playtime"]
 
     @property
     @abstractmethod
     def keys(self) -> KeysObtained:
+        """The Heart keys obtained this run."""
         raise NotImplementedError
 
     @property
     def card_choices(self) -> tuple[CardRewards, CardRewards]:
+        """A tuple of (picked, skipped) cards this run."""
         picked = collections.defaultdict(list)
         skipped = collections.defaultdict(list)
         for d in self._data[self.prefix + "card_choices"]:
@@ -1289,15 +1306,18 @@ class FileParser(ABC):
         raise NotImplementedError
 
     def get_cards(self) -> Generator[CardData, None, None]:
+        """Yield each card with no repetition, with count."""
         master_deck = self._master_deck
         for card in set(master_deck):
             yield CardData(card, master_deck)
 
     def get_meta_scaling_cards(self) -> list[tuple[str, int]]:
+        """Return info about the meta-scaling cards."""
         return []
 
     @property
     def cards(self) -> Generator[str, None, None]:
+        """All the cards in the deck, with upgrade."""
         for card in self.get_cards():
             yield from card.as_cards()
 
@@ -1319,6 +1339,7 @@ class FileParser(ABC):
         return bought
 
     def get_shop_contents(self) -> collections.defaultdict[int, ShopContents]:
+        """Return a mapping of unpurchased shop contents for a given floor."""
         d = ()
         if "shop_contents" in self._data:
             d = self._data["shop_contents"]
@@ -1355,24 +1376,29 @@ class FileParser(ABC):
         return all_removals
 
     def get_removals(self) -> Generator[CardData, None, None]:
+        """Yield each removed card with no repetition, with count."""
         removals = [x[0] for x in self._removals]
         for card in set(removals): # remove duplicates
             yield CardData(card, removals)
 
     @property
     def has_removals(self) -> bool:
+        """Whether we removed any card at all."""
         return bool(self._removals)
 
     @property
     def removals(self) -> Generator[ItemFloor, None, None]:
+        """Every (name, floor) tuple of removed card and their floor."""
         for card, floor in self._removals:
             cdata = CardData(card, [])
             yield (cdata.name, floor)
 
     def master_deck_as_html(self):
+        """Return the cards from the deck suitable for the website."""
         return self._cards_as_html(self.get_cards())
 
     def removals_as_html(self):
+        """Return the removed cards suitable for the website."""
         return self._cards_as_html(self.get_removals())
 
     def _cards_as_html(self, cards: Iterable[CardData]) -> Generator[str, None, None]:
@@ -1447,6 +1473,7 @@ class FileParser(ABC):
 
     @property
     def seed(self) -> str:
+        """The seed being used for the pRNG in this run."""
         c = "0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ"
 
         try:
@@ -1468,13 +1495,14 @@ class FileParser(ABC):
 
     @property
     def is_seeded(self) -> bool:
+        """Whether a seed was manually chosen."""
         if "seed_set" in self._data:
             return self._data["seed_set"]
         return self._data["chose_seed"]
 
     @property
-    def path(self) -> list[NodeData]:
-        """Return the run's path. This is cached."""
+    def path(self) -> list[NodeData]: # note: caching may not be needed
+        """The run's path, cached."""
         if "path" not in self._cache:
             self._cache["path"] = []
             floor_time: tuple[int, ...]
@@ -1834,22 +1862,18 @@ class CardData: # TODO: metadata + scaling cards (for savefile)
 class NodeData(BaseNode):
     """Contain relevant information for Spire nodes.
 
-    Subclasses should define the following class variables:
-    - room_type :: a human-readable name for the node
-    - map_icon  :: the filename for the icon in the icons/ folder
-
-    To instantiate a subclass, call the class with a FileParser instance
-    (either RunParser or Savefile) and the floor number.
+    To instantiate a subclass, call the class with a :class:`FileParser` instance
+    (either :class:`src.runs.RunParser` or :class:`src.save.Savefile`) and the floor number.
 
     To change behaviour, you need to subclass the relevant subclass and alter
     the behaviour there. Some features rely on objects being instances of
-    specific NodeData subclasses (e.g. Treasure) and will fail otherwise.
+    specific NodeData subclasses (e.g. :class:`Treasure`) and will fail otherwise.
     There is no mechanism currently for overriding which subclasses are
     returned by the node path parser.
 
     """
 
-    map_icon = ""
+    map_icon = "" #: The map icon as present under the static/icons/ folder
 
     def __init__(self, parser: FileParser, floor: int, *extra): # TODO: Keep track of the deck per node
         """Create a NodeData instance from a parser and floor number."""
@@ -1947,13 +1971,13 @@ class EncounterBase(NodeData):
         if self.name != self.fought:
             to_append[4].append(f"Fought {self.fought}")
         to_append[4].append(f"{self.damage} damage")
-        to_append[4].append(f"{self.turns} turns")
+        to_append[4].append(f"{self.turns_delta()} turns")
 
     def fights_delta(self) -> int:
         return 1
 
     def turns_delta(self) -> int:
-        return self.turns
+        return int(self._damage["turns"])
 
     @property
     def name(self) -> str:
@@ -1962,16 +1986,14 @@ class EncounterBase(NodeData):
 
     @property
     def fought(self) -> str:
+        """A human-readable name of the battle fought this floor."""
         fought = self._damage["enemies"]
         return _enemies.get(fought, fought)
 
     @property
     def damage(self) -> int:
+        """How much damage was taken this fight."""
         return int(self._damage["damage"])
-
-    @property
-    def turns(self) -> int:
-        return int(self._damage["turns"])
 
 class NormalEncounter(EncounterBase):
     room_type = "Enemy"
@@ -1984,6 +2006,9 @@ class EventEncounter(EncounterBase):
 class Treasure(NodeData):
     room_type = "Treasure"
     map_icon = "treasure_chest.png"
+
+    key_relic: Optional[Relic] #: The relic that was skipped for the Sapphire Key on this floor, if any.
+    blue_key: bool #: Whether we acquired the Sapphire Key on this floor.
 
     def __init__(self,  parser: FileParser, floor: int, *extra):
         super().__init__(parser, floor, *extra)
@@ -2116,32 +2141,41 @@ class Event(NodeData):
     def name(self) -> str:
         return get_event(self._event["event_name"])
 
+    # TODO: Move all/most of these to the base class?
+
     @property
     def choice(self) -> str:
+        """Which option was picked for this event."""
         return self._event["player_choice"]
 
     @property
     def damage_healed(self) -> int:
+        """How much health was gained during this event."""
         return self._event["damage_healed"]
 
     @property
     def damage_taken(self) -> int:
+        """How much health was lost during this event."""
         return self._event["damage_taken"]
 
     @property
     def max_hp_gained(self) -> int:
+        """How much max HP was gained during this event."""
         return self._event["max_hp_gain"]
 
     @property
     def max_hp_lost(self) -> int:
+        """How much max HP was lost during this event."""
         return self._event["max_hp_loss"]
 
     @property
     def gold_gained(self) -> int:
+        """How much gold was gained during this event."""
         return self._event["gold_gain"]
 
     @property
     def gold_lost(self) -> int:
+        """How much gold was lost during this event."""
         return self._event["gold_loss"]
 
     @property
@@ -2190,7 +2224,7 @@ class EventFight(Event, EncounterBase):
     """This is a subclass for fights that happen in events.
 
     This works for Dead Adventurer, Masked Bandits, etc.
-    This does *not* work for the Colosseum fight (use Colosseum instead)
+    This does *not* work for the Colosseum fight (use :class:`Colosseum` instead)
 
     """
 
@@ -2223,6 +2257,7 @@ class Colosseum(Event):
 
     @property
     def damage(self) -> int:
+        """How much damage was taken over both fights, if relevant."""
         return sum(d["damage"] for d in self._damages)
 
     def fights_delta(self) -> int:
@@ -2234,6 +2269,12 @@ class Colosseum(Event):
 class Merchant(NodeData):
     room_type = "Merchant"
     map_icon = "shop.png"
+
+    contents: ShopContents #: The non-purchased contents of the shop.
+    bought: ShopContents #: All purchased goods from this shop.
+    purged: list[str] #: All cards removed this floor.
+
+    # XXX: should purged be a SingleCard?
 
     def __init__(self, parser: FileParser, floor: int, *extra):
         super().__init__(parser, floor, *extra)
@@ -2317,6 +2358,7 @@ class Campfire(NodeData):
 
     @property
     def action(self) -> str:
+        """Human-readable string of the action taken on this floor."""
         match self._key:
             case "REST":
                 return "Rested"
@@ -2386,12 +2428,14 @@ class Victory(NodeData):
 
     @property
     def score(self) -> int:
+        """How many points we got this run."""
         return self._score
 
     @property
     def score_breakdown(self) -> list[str]:
+        """Human-readable breakdown of the score."""
         return self._data
 
 class BottleRelic(NamedTuple):
-    bottle_id: str
-    card: str
+    bottle_id: str #: The name of the bottle.
+    card: SingleCard #: The card which is bottled.
