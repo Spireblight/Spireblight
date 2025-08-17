@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.runs &#8212; Spireblight 0.6 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/runs';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.6 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.runs</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.runs</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">NamedTuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPNotFound</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">HTTPNotImplemented</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp_jinja2</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">response_objects.run_single</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">response_objects.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfilesResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.run_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_all_run_stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.cache_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunLinkedListNode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_mastery_stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.streaks</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_streak_collections</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.sts_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.gamedata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileParser</span><span class="p">,</span> <span class="n">KeysObtained</span><span class="p">,</span> <span class="n">_enemies</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_listener</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_class_to_obj</span><span class="p">,</span> <span class="n">get_req_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.activemods</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActiveMods</span><span class="p">,</span> <span class="n">ActiveMod</span><span class="p">,</span> <span class="n">ACTIVEMODS_KEY</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;get_latest_run&quot;</span><span class="p">,</span> <span class="s2">&quot;RunParser&quot;</span><span class="p">,</span> <span class="s2">&quot;StreakInfo&quot;</span><span class="p">]</span>
+
+<span class="n">_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">RunParser</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_ts_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">RunParser</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_latest_run</span><span class="p">(</span><span class="n">character</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">victory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunParser</span><span class="p">:</span>
+    <span class="n">_update_cache</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_ts_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">latest</span> <span class="o">=</span> <span class="n">_ts_cache</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">_ts_cache</span><span class="p">)]</span>
+    <span class="n">is_character_specific</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">character</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">is_character_specific</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">latest</span><span class="o">.</span><span class="n">character</span> <span class="o">!=</span> <span class="n">character</span><span class="p">:</span>
+            <span class="n">latest</span> <span class="o">=</span> <span class="n">latest</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev</span>
+
+    <span class="k">if</span> <span class="n">victory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">victory</span><span class="p">:</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">latest</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
+                <span class="n">latest</span> <span class="o">=</span> <span class="n">latest</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_character_specific</span><span class="o">=</span><span class="n">is_character_specific</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">latest</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
+                <span class="n">latest</span> <span class="o">=</span> <span class="n">latest</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_character_specific</span><span class="o">=</span><span class="n">is_character_specific</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">latest</span>
+
+<div class="viewcode-block" id="RunParser">
+<a class="viewcode-back" href="../../fileparser.html#src.runs.RunParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RunParser</span><span class="p">(</span><span class="n">FileParser</span><span class="p">):</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">profile</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">_cache</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created duplicate run parser with name </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matched</span> <span class="o">=</span> <span class="n">RunLinkedListNode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_character</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;character_chosen&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profile</span> <span class="o">=</span> <span class="n">profile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_character_streak</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotating_streak</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_activemods</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Run&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">verb</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profile</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Time when the run finished, as UTC.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span> <span class="n">datetime</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timedelta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Difference between now and the run.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeysObtained</span><span class="p">:</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">KeysObtained</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;campfire_choices&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">choice</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;RECALL&quot;</span><span class="p">:</span>
+                <span class="n">keys</span><span class="o">.</span><span class="n">ruby_key_obtained</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">keys</span><span class="o">.</span><span class="n">ruby_key_floor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">choice</span><span class="p">[</span><span class="s2">&quot;floor&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;green_key_taken_log&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">emerald_key_obtained</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">emerald_key_floor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;green_key_taken_log&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;blue_key_relic_skipped_log&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">sapphire_key_obtained</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">sapphire_key_floor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;blue_key_relic_skipped_log&quot;</span><span class="p">][</span><span class="s2">&quot;floor&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">keys</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_neow_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;neow_bonus_log&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+        <span class="n">bonuses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;neow_bonuses_skipped_log&quot;</span><span class="p">,</span> <span class="p">()))</span>
+        <span class="n">costs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;neow_costs_skipped_log&quot;</span><span class="p">,</span> <span class="p">()))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bonuses</span><span class="p">,</span> <span class="n">costs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_master_deck</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;master_deck&quot;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">won</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;victory&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;victory&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">won</span> <span class="k">else</span> <span class="s2">&quot;loss&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">killed_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">killer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;killed_by&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_enemies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">killer</span><span class="p">,</span> <span class="n">killer</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">floor_reached</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;floor_reached&quot;</span><span class="p">])</span>
+
+    <span class="n">floor</span> <span class="o">=</span> <span class="n">floor_reached</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">acts_beaten</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return how many acts were beaten.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;path_per_floor&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># None is a boss chest, act 4 transition, AND final screen</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">final_health</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;current_hp_per_floor&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;max_hp_per_floor&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">score_breakdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score_breakdown&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_length</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">minutes</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hours</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hours</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">minutes</span><span class="si">:</span><span class="s2">&gt;02</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">seconds</span><span class="si">:</span><span class="s2">&gt;02</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minutes</span><span class="si">:</span><span class="s2">&gt;02</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">seconds</span><span class="si">:</span><span class="s2">&gt;02</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">character_streak</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StreakInfo</span><span class="p">:</span>
+        <span class="n">streak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_character_streak</span>
+        <span class="k">if</span> <span class="n">streak</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">streak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_streak</span><span class="p">(</span><span class="n">is_character_streak</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">streak</span><span class="o">.</span><span class="n">is_ongoing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_character_streak</span> <span class="o">=</span> <span class="n">streak</span>
+        <span class="k">return</span> <span class="n">streak</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rotating_streak</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StreakInfo</span><span class="p">:</span>
+        <span class="n">streak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotating_streak</span>
+        <span class="k">if</span> <span class="n">streak</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">streak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_streak</span><span class="p">(</span><span class="n">is_character_streak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">streak</span><span class="o">.</span><span class="n">is_ongoing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rotating_streak</span> <span class="o">=</span> <span class="n">streak</span>
+        <span class="k">return</span> <span class="n">streak</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_streak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_character_streak</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StreakInfo</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
+            <span class="n">streak_total</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">position_in_streak</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">is_ongoing</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">loop_cached_runs</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">is_prev</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="k">nonlocal</span> <span class="n">streak_total</span><span class="p">,</span> <span class="n">position_in_streak</span><span class="p">,</span> <span class="n">is_ongoing</span>
+                <span class="n">current_run</span><span class="p">:</span> <span class="n">RunParser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="n">is_prev</span><span class="p">,</span> <span class="n">is_character_specific</span><span class="o">=</span><span class="n">is_character_streak</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">current_run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">last_char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">character</span>
+                    <span class="k">while</span> <span class="n">current_run</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
+                        <span class="c1"># If rotating, only iterate if not same char</span>
+                        <span class="k">if</span> <span class="n">is_character_streak</span> <span class="ow">or</span> <span class="n">current_run</span><span class="o">.</span><span class="n">character</span> <span class="o">!=</span> <span class="n">last_char</span><span class="p">:</span>
+                            <span class="n">streak_total</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="c1"># only iterate the position if the Win came before the current run</span>
+                            <span class="k">if</span> <span class="n">is_prev</span><span class="p">:</span>
+                                <span class="n">position_in_streak</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                        <span class="k">if</span> <span class="p">(</span><span class="n">run</span> <span class="o">:=</span> <span class="n">current_run</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="n">is_prev</span><span class="p">,</span> <span class="n">is_character_specific</span><span class="o">=</span><span class="n">is_character_streak</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">last_char</span> <span class="o">=</span> <span class="n">current_run</span><span class="o">.</span><span class="n">character</span>
+                            <span class="n">current_run</span> <span class="o">=</span> <span class="n">run</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">break</span>
+                    <span class="n">does_upcoming_loss_exist</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">is_prev</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_run</span><span class="o">.</span><span class="n">won</span>
+                    <span class="k">if</span> <span class="n">does_upcoming_loss_exist</span><span class="p">:</span>
+                        <span class="n">is_ongoing</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">loop_cached_runs</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">loop_cached_runs</span><span class="p">(</span><span class="n">is_prev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">StreakInfo</span><span class="p">(</span><span class="n">streak_total</span><span class="p">,</span> <span class="n">position_in_streak</span><span class="p">,</span> <span class="n">is_ongoing</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">StreakInfo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_activemods</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ACTIVEMODS_KEY</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">activemods</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ActiveMods</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activemods</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_activemods</span> <span class="o">=</span> <span class="n">ActiveMods</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activemods</span>
+
+<div class="viewcode-block" id="RunParser.find_mod">
+<a class="viewcode-back" href="../../fileparser.html#src.runs.RunParser.find_mod">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_mod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ActiveMod</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">activemods</span><span class="o">.</span><span class="n">find_mod</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span></div>
+
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mods</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ActiveMod</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">activemods</span><span class="o">.</span><span class="n">all_mods</span></div>
+
+
+<div class="viewcode-block" id="StreakInfo">
+<a class="viewcode-back" href="../../fileparser.html#src.runs.StreakInfo">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StreakInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contain run streak information.&quot;&quot;&quot;</span>
+    <span class="n">streak</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">is_ongoing</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<span class="nd">@add_listener</span><span class="p">(</span><span class="s2">&quot;setup_init&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_setup_cache</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;runs&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_update_cache</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_update_cache</span><span class="p">():</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">folders</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;runs&quot;</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+            <span class="n">_cur_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">RunParser</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">f1</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">folder</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">f1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">_cache</span><span class="p">:</span>
+                        <span class="n">parser</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">[</span><span class="n">file</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">_cache</span><span class="p">[</span><span class="n">file</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">RunParser</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+                            <span class="n">_ts_cache</span><span class="p">[</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">parser</span>
+                    <span class="n">_cur_cache</span><span class="p">[</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">parser</span>
+
+            <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">prev_char</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">RunParser</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">prev_win</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">prev_loss</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_cur_cache</span><span class="p">):</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">_cur_cache</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">prev</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">cur</span>
+                        <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span>
+                    <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">character</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prev_char</span><span class="p">:</span>
+                        <span class="n">prev_char</span><span class="p">[</span><span class="n">cur</span><span class="o">.</span><span class="n">character</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_char</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">c</span> <span class="o">:=</span> <span class="n">prev_char</span><span class="p">[</span><span class="n">cur</span><span class="o">.</span><span class="n">character</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">c</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">next_char</span> <span class="o">=</span> <span class="n">cur</span>
+                        <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_char</span> <span class="o">=</span> <span class="n">c</span>
+                    <span class="n">prev_char</span><span class="p">[</span><span class="n">cur</span><span class="o">.</span><span class="n">character</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur</span>
+                    <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_win</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prev_win</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">prev_win</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">next_win</span> <span class="o">=</span> <span class="n">cur</span>
+                            <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_win</span> <span class="o">=</span> <span class="n">prev_win</span>
+                        <span class="n">prev_win</span> <span class="o">=</span> <span class="n">cur</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_loss</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">prev_loss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">prev_loss</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">next_loss</span> <span class="o">=</span> <span class="n">cur</span>
+                            <span class="n">cur</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev_loss</span> <span class="o">=</span> <span class="n">prev_loss</span>
+                        <span class="n">prev_loss</span> <span class="o">=</span> <span class="n">cur</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
+
+    <span class="n">update_all_run_stats</span><span class="p">()</span>
+    <span class="n">update_mastery_stats</span><span class="p">()</span>
+    <span class="n">update_streak_collections</span><span class="p">()</span>
+
+    <span class="c1"># I don&#39;t actually know how long this cache updating is going to take...</span>
+    <span class="c1"># I think it&#39;s as optimized as I could make it while still being safe,</span>
+    <span class="c1"># but it&#39;s possible it still takes some time. I&#39;m not going to focus on</span>
+    <span class="c1"># that for now, but logging the update time everytime, in case it turns</span>
+    <span class="c1"># out to be a bottleneck. We only want to actually update new runs.</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updated run parser cache in </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/runs&quot;</span><span class="p">)</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;runs_profile.jinja2&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">pick_profile</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">profiles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">get_profile</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">profiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">profiles</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPNotImplemented</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;No run files were found&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">convert_class_to_obj</span><span class="p">(</span><span class="n">ProfilesResponse</span><span class="p">(</span><span class="n">profiles</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_parser</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunParser</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.run&quot;</span><span class="p">)</span> <span class="c1"># most common case</span>
+    <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_update_cache</span><span class="p">()</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.run&quot;</span><span class="p">)</span> <span class="c1"># try again, just in case</span>
+        <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># okay, iterate through everything</span>
+            <span class="k">for</span> <span class="n">run_parser</span> <span class="ow">in</span> <span class="n">_cache</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">run_parser</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="n">parser</span> <span class="o">=</span> <span class="n">run_parser</span>
+                    <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">parser</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_truthy</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_falsey</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/runs/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;run_single.jinja2&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_single</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPNotFound</span><span class="p">()</span>
+    <span class="n">redirect</span> <span class="o">=</span> <span class="n">_truthy</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;redirect&quot;</span><span class="p">))</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">RunResponse</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">matched</span><span class="p">,</span> <span class="n">autorefresh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">redirect</span><span class="o">=</span><span class="n">redirect</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">convert_class_to_obj</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/runs/</span><span class="si">{name}</span><span class="s2">/raw&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_raw_json</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPNotFound</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">)</span>
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/runs/</span><span class="si">{name}</span><span class="s2">/</span><span class="si">{type}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_chart</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPNotFound</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">graph</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+<span class="c1">#@router.get(&quot;/compare/view&quot;)</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;compare_single.jinja2&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">compare_runs</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPForbidden</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;&#39;start&#39;, &#39;end&#39;, &#39;score&#39; params must be integers if present&quot;</span><span class="p">)</span>
+
+    <span class="n">chars</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">getall</span><span class="p">(</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">victory</span> <span class="o">=</span> <span class="n">_truthy</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;victory&quot;</span><span class="p">))</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">_falsey</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">))</span>
+    <span class="n">relics</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">getall</span><span class="p">(</span><span class="s2">&quot;relic&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">cards</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">getall</span><span class="p">(</span><span class="s2">&quot;card&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="k">return</span> <span class="n">context</span>
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/run&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_run</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+    <span class="n">content</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">profile</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;profile&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;runs&quot;</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_cache</span><span class="p">:</span>
+        <span class="n">_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">RunParser</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">profile</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">_ts_cache</span><span class="p">[</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="n">_update_cache</span><span class="p">()</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received run history file. Updated data. Transaction time: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">float</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

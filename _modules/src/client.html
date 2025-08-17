@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.client &#8212; Spireblight 0.6 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/client';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.6 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.client</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.client</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClientSession</span><span class="p">,</span> <span class="n">ClientError</span><span class="p">,</span> <span class="n">ServerDisconnectedError</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">src.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../client.html#src.client.main">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Client running. Will periodically check for the savefile and send it over!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">has_save</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># whether the server has a save file - we lie at first in case we just restarted and it has an old one</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last_slots</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lasp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">last_sd</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last_mt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last_mt2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">runs_last</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">use_sd</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">use_mt</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;last_run&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">last_run</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">last_run</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">possible</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">playing</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Config is not complete&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;USERPROFILE&quot;</span><span class="p">]</span>
+        <span class="n">use_sd</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">slice</span><span class="o">.</span><span class="n">enabled</span>
+        <span class="n">use_mt</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">mt</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+        <span class="n">use_sd</span> <span class="o">=</span> <span class="n">use_mt</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User profile folder: </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="se">\n</span><span class="s2">Fetch Slice &amp; Dice Data: </span><span class="si">{</span><span class="s1">&#39;YES&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">use_sd</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;NO&#39;</span><span class="si">}</span><span class="se">\n</span><span class="s2">Fetch Monster Train Data: </span><span class="si">{</span><span class="s1">&#39;YES&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">use_mt</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;NO&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">use_mt</span><span class="p">:</span>
+        <span class="n">mt_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;AppData&quot;</span><span class="p">,</span> <span class="s2">&quot;LocalLow&quot;</span><span class="p">,</span> <span class="s2">&quot;Shiny Shoe&quot;</span><span class="p">,</span> <span class="s2">&quot;MonsterTrain&quot;</span><span class="p">)</span>
+        <span class="n">mt_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;save-singlePlayer.json&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Folder-1: </span><span class="si">{</span><span class="n">mt_folder</span><span class="si">}</span><span class="se">\n</span><span class="s2">Savefile-1: </span><span class="si">{</span><span class="n">mt_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">mt2_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;AppData&quot;</span><span class="p">,</span> <span class="s2">&quot;LocalLow&quot;</span><span class="p">,</span> <span class="s2">&quot;Shiny Shoe&quot;</span><span class="p">,</span> <span class="s2">&quot;MonsterTrain2&quot;</span><span class="p">)</span>
+        <span class="n">mt2_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt2_folder</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;save-singlePlayer.json&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Folder-2: </span><span class="si">{</span><span class="n">mt2_folder</span><span class="si">}</span><span class="se">\n</span><span class="s2">Savefile-2: </span><span class="si">{</span><span class="n">mt2_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="c1"># Check if the app is registered, prompt it if not</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/twitch/check-token&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+                    <span class="k">match</span> <span class="n">text</span><span class="p">:</span>
+                        <span class="k">case</span> <span class="s2">&quot;DISABLED&quot;</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Twitch connectivity is disabled.&quot;</span><span class="p">)</span>
+                        <span class="k">case</span> <span class="s2">&quot;NOT_EXTENDED&quot;</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extended OAuth functionality is not enabled. Some features will be unavailable.&quot;</span><span class="p">)</span>
+                        <span class="k">case</span> <span class="s2">&quot;NO_CREDENTIALS&quot;</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extended OAuth is not properly set-up. Contact the server owner.&quot;</span><span class="p">)</span>
+                        <span class="k">case</span> <span class="s2">&quot;WORKING&quot;</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extended OAuth validated.&quot;</span><span class="p">)</span>
+                        <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;NEEDS_CONNECTION&quot;</span><span class="p">):</span>
+                                <span class="n">nc</span><span class="p">,</span> <span class="n">cl</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+                                <span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+                                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ERROR: Unrecognized return value:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="p">(</span><span class="n">ClientError</span><span class="p">,</span> <span class="n">ServerDisconnectedError</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Server is offline, cannot confirm OAuth mode.</span><span class="se">\n</span><span class="s2">You may safely ignore this if you previously authorized the app.&quot;</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.autosave&quot;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">possible</span> <span class="o">=</span> <span class="n">file</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Multiple savefiles detected.&quot;</span><span class="p">)</span>
+                            <span class="n">possible</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cur</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="n">possible</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                    <span class="n">possible</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="n">use_sd</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cur_sd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;.prefs&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-and-dice-3&quot;</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cur_sd</span> <span class="o">!=</span> <span class="n">last_sd</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;.prefs&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-and-dice-3&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">sd_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">sd_data</span> <span class="o">=</span> <span class="n">sd_data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/slice&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">sd_data</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                                <span class="n">last_sd</span> <span class="o">=</span> <span class="n">cur_sd</span>
+                                <span class="n">curses</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                                <span class="k">if</span> <span class="n">curses</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">slice</span><span class="o">.</span><span class="n">curses</span><span class="p">:</span>
+                                    <span class="n">decoded</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">curses</span><span class="p">)</span>
+                                    <span class="k">try</span><span class="p">:</span>
+                                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">slice</span><span class="o">.</span><span class="n">curses</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decoded</span><span class="p">))</span>
+                                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                                        <span class="k">pass</span>
+
+            <span class="n">to_send</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">sync_runs</span><span class="p">:</span> <span class="c1"># don&#39;t check run files during a run</span>
+                <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">folders</span><span class="p">,</span> <span class="n">_f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;runs&quot;</span><span class="p">)):</span>
+                    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>
+                        <span class="n">profile</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+                        <span class="k">if</span> <span class="n">folder</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                            <span class="n">profile</span> <span class="o">=</span> <span class="n">folder</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">p1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">f1</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">folder</span><span class="p">)):</span>
+                            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">f1</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">file</span> <span class="o">&gt;</span> <span class="n">last_run</span><span class="p">:</span>
+                                    <span class="n">to_send</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p1</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">profile</span><span class="p">))</span>
+                                    <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/playing&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                            <span class="n">j</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                            <span class="k">if</span> <span class="n">j</span> <span class="ow">and</span> <span class="n">j</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">):</span>
+                                <span class="n">track</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                                <span class="n">artists</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">][</span><span class="s1">&#39;artists&#39;</span><span class="p">])</span>
+                                <span class="n">album</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">][</span><span class="s1">&#39;album&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                                <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">track</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">artists</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="s2">&quot;</span>
+                                <span class="k">if</span> <span class="n">playing</span> <span class="o">!=</span> <span class="n">text</span><span class="p">:</span>
+                                    <span class="k">try</span><span class="p">:</span>
+                                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">playing</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                                        <span class="n">playing</span> <span class="o">=</span> <span class="n">text</span>
+                                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                                        <span class="k">pass</span>
+
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">playing</span> <span class="o">=</span> <span class="kc">None</span>
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">playing</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                        <span class="k">pass</span> <span class="c1"># make it an empty file</span>
+                                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                                    <span class="k">pass</span>
+
+                <span class="n">all_sent</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">to_send</span><span class="p">:</span> <span class="c1"># send runs first so savefile can seamlessly transfer its cache</span>
+                    <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">to_send</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/run&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;run&quot;</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;profile&quot;</span><span class="p">:</span> <span class="n">profile</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                                <span class="n">all_sent</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">if</span> <span class="n">all_sent</span><span class="p">:</span>
+                        <span class="n">last_run</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;last_run&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">last_run</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">has_save</span><span class="p">:</span> <span class="c1"># server has a save, but we don&#39;t (anymore)</span>
+                    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/save&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;savefile&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;character&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span> <span class="s2">&quot;has_run&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">all_sent</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                            <span class="n">has_save</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">use_mt</span><span class="p">:</span>
+                    <span class="c1">## MT1</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">cur_mt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">mt_file</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">cur_mt</span> <span class="o">!=</span> <span class="n">last_mt</span><span class="p">:</span>
+                            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mt_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                <span class="n">mt_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                            <span class="n">mt_runs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;save&quot;</span><span class="p">:</span> <span class="n">mt_data</span><span class="p">}</span>
+                            <span class="n">mt_runs_last</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">)):</span>
+                                <span class="k">break</span> <span class="c1"># otherwise, it might exceed the data limit. let&#39;s not.</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.db&quot;</span><span class="p">):</span>
+                                    <span class="k">continue</span>
+                                <span class="k">if</span> <span class="n">file</span> <span class="o">==</span> <span class="s2">&quot;runHistory.db&quot;</span><span class="p">:</span> <span class="c1"># main one</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span>
+                                <span class="k">elif</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;runHistoryData&quot;</span><span class="p">):</span> <span class="c1"># something like runHistoryData00.db</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="n">file</span> <span class="c1"># just in case</span>
+                                <span class="n">last</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+                                <span class="k">if</span> <span class="n">runs_last</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">last</span><span class="p">:</span>
+                                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                        <span class="n">mt_runs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                                        <span class="n">mt_runs_last</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span>
+                            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/monster&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mt_runs</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                                    <span class="n">last_mt</span> <span class="o">=</span> <span class="n">cur_mt</span>
+                                    <span class="n">runs_last</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mt_runs_last</span><span class="p">)</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: Monster Train data not properly sent:</span><span class="se">\n</span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="c1">## MT2</span>
+
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">cur_mt2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">mt2_file</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">cur_mt2</span> <span class="o">!=</span> <span class="n">last_mt2</span><span class="p">:</span>
+                            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mt2_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                <span class="n">mt2_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                            <span class="n">mt2_runs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;save&quot;</span><span class="p">:</span> <span class="n">mt2_data</span><span class="p">}</span>
+                            <span class="n">mt2_runs_last</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt2_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">)):</span>
+                                <span class="k">break</span> <span class="c1"># otherwise, it might exceed the data limit. let&#39;s not.</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.db&quot;</span><span class="p">):</span>
+                                    <span class="k">continue</span>
+                                <span class="k">if</span> <span class="n">file</span> <span class="o">==</span> <span class="s2">&quot;runHistory.db&quot;</span><span class="p">:</span> <span class="c1"># main one</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span>
+                                <span class="k">elif</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;runHistoryData&quot;</span><span class="p">):</span> <span class="c1"># something like runHistoryData00.db</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">key</span> <span class="o">=</span> <span class="n">file</span> <span class="c1"># just in case</span>
+                                <span class="n">last</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+                                <span class="k">if</span> <span class="n">runs_last</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">last</span><span class="p">:</span>
+                                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mt_folder</span><span class="p">,</span> <span class="s2">&quot;run-history&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                        <span class="n">mt_runs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                                        <span class="n">mt_runs_last</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span>
+                            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/monster-2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mt2_runs</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                                    <span class="n">last_mt2</span> <span class="o">=</span> <span class="n">cur_mt2</span>
+                                    <span class="n">runs_last</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mt2_runs_last</span><span class="p">)</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: Monster Train 2 data not properly sent:</span><span class="se">\n</span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># update all profiles</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;slots&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+
+                <span class="c1"># always send the save slots; it&#39;s possible it changed, even during a run (e.g. wall card)</span>
+                <span class="n">cur_slots</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;preferences&quot;</span><span class="p">,</span> <span class="s2">&quot;STSSaveSlots&quot;</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">cur_slots</span> <span class="o">!=</span> <span class="n">last_slots</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;preferences&quot;</span><span class="p">,</span> <span class="s2">&quot;STSSaveSlots&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;slots&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                <span class="n">tobe_lasp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;STSPlayer&quot;</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;preferences&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                        <span class="n">tobe_lasp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">lasp</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                            <span class="k">continue</span> <span class="c1"># unchanged, don&#39;t bother</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/profile&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                            <span class="n">lasp</span> <span class="o">=</span> <span class="n">tobe_lasp</span>
+                            <span class="n">last_slots</span> <span class="o">=</span> <span class="n">cur_slots</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Profiles were not successfully updated. Desyncs may occur.&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">possible</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cur</span> <span class="o">!=</span> <span class="n">last</span><span class="p">:</span>
+                    <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">steamdir</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="n">possible</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="n">possible</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="k">continue</span>
+                    <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                    <span class="n">char</span> <span class="o">=</span> <span class="n">possible</span><span class="p">[:</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+                    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/save&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;savefile&quot;</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span> <span class="s2">&quot;character&quot;</span><span class="p">:</span> <span class="n">char</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span> <span class="s2">&quot;has_run&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">})</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+                            <span class="n">last</span> <span class="o">=</span> <span class="n">cur</span>
+                            <span class="n">has_save</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">except</span> <span class="p">(</span><span class="n">ClientError</span><span class="p">,</span> <span class="n">ServerDisconnectedError</span><span class="p">):</span>
+                <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># give it a bit of time</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Server is offline! Retrying in 10s&quot;</span><span class="p">)</span>
+                <span class="k">continue</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

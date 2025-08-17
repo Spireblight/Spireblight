@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Spireblight documentation &#8212; Spireblight 0.6 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.6 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="spireblight-documentation">
+<h1>Spireblight documentation<a class="headerlink" href="#spireblight-documentation" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Full Spireblight API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.gamedata.FileParser"><code class="docutils literal notranslate"><span class="pre">FileParser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.gamedata.BottleRelic"><code class="docutils literal notranslate"><span class="pre">BottleRelic</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.save.Savefile"><code class="docutils literal notranslate"><span class="pre">Savefile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.save.get_savefile"><code class="docutils literal notranslate"><span class="pre">get_savefile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.runs.RunParser"><code class="docutils literal notranslate"><span class="pre">RunParser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.runs.StreakInfo"><code class="docutils literal notranslate"><span class="pre">StreakInfo</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes.html">Slay the Spire path node data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.BaseNode"><code class="docutils literal notranslate"><span class="pre">BaseNode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.NeowBonus"><code class="docutils literal notranslate"><span class="pre">NeowBonus</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.NodeData"><code class="docutils literal notranslate"><span class="pre">NodeData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EncounterBase"><code class="docutils literal notranslate"><span class="pre">EncounterBase</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.NormalEncounter"><code class="docutils literal notranslate"><span class="pre">NormalEncounter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EventEncounter"><code class="docutils literal notranslate"><span class="pre">EventEncounter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EliteEncounter"><code class="docutils literal notranslate"><span class="pre">EliteEncounter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EventElite"><code class="docutils literal notranslate"><span class="pre">EventElite</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Treasure"><code class="docutils literal notranslate"><span class="pre">Treasure</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EventTreasure"><code class="docutils literal notranslate"><span class="pre">EventTreasure</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EventFight"><code class="docutils literal notranslate"><span class="pre">EventFight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Colosseum"><code class="docutils literal notranslate"><span class="pre">Colosseum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Merchant"><code class="docutils literal notranslate"><span class="pre">Merchant</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.EventMerchant"><code class="docutils literal notranslate"><span class="pre">EventMerchant</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.ShopContents"><code class="docutils literal notranslate"><span class="pre">ShopContents</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Campfire"><code class="docutils literal notranslate"><span class="pre">Campfire</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Boss"><code class="docutils literal notranslate"><span class="pre">Boss</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.BossChest"><code class="docutils literal notranslate"><span class="pre">BossChest</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Act4Transition"><code class="docutils literal notranslate"><span class="pre">Act4Transition</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.Victory"><code class="docutils literal notranslate"><span class="pre">Victory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="activemods.html">activemods module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="activemods.html#src.activemods.ActiveMods"><code class="docutils literal notranslate"><span class="pre">ActiveMods</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="activemods.html#src.activemods.ActiveMod"><code class="docutils literal notranslate"><span class="pre">ActiveMod</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">cache package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.cache_helpers">cache.cache_helpers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.mastered">cache.mastered module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.run_stats">cache.run_stats module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.streaks">cache.streaks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="client.html">client module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="client.html#src.client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">configuration module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#src.configuration.load_file"><code class="docutils literal notranslate"><span class="pre">load_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="disc.html">disc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="disc.html#src.disc.DiscordCommand"><code class="docutils literal notranslate"><span class="pre">DiscordCommand</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">events module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="events.html#src.events.EventListener"><code class="docutils literal notranslate"><span class="pre">EventListener</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#src.events.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#src.events.add_listener"><code class="docutils literal notranslate"><span class="pre">add_listener()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#src.events.invoke"><code class="docutils literal notranslate"><span class="pre">invoke()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logger.html">logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monster.html">monster package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster.server">monster.server module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster.static">monster.static module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nameinternal.html">nameinternal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.get_card"><code class="docutils literal notranslate"><span class="pre">get_card()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.get_relic_stats"><code class="docutils literal notranslate"><span class="pre">get_relic_stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.get_event"><code class="docutils literal notranslate"><span class="pre">get_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.query"><code class="docutils literal notranslate"><span class="pre">query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nameinternal.html#src.nameinternal.get_run_mod"><code class="docutils literal notranslate"><span class="pre">get_run_mod()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="score.html">score module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.Score"><code class="docutils literal notranslate"><span class="pre">Score</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_ascension_score_bonus"><code class="docutils literal notranslate"><span class="pre">get_ascension_score_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_floors_climbed_bonus"><code class="docutils literal notranslate"><span class="pre">get_floors_climbed_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_enemies_killed_bonus"><code class="docutils literal notranslate"><span class="pre">get_enemies_killed_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_act1_elites_killed_bonus"><code class="docutils literal notranslate"><span class="pre">get_act1_elites_killed_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_act2_elites_killed_bonus"><code class="docutils literal notranslate"><span class="pre">get_act2_elites_killed_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_act3_elites_killed_bonus"><code class="docutils literal notranslate"><span class="pre">get_act3_elites_killed_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_champions_bonus"><code class="docutils literal notranslate"><span class="pre">get_champions_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_bosses_slain_bonus"><code class="docutils literal notranslate"><span class="pre">get_bosses_slain_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_perfect_bosses_bonus"><code class="docutils literal notranslate"><span class="pre">get_perfect_bosses_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_collector_bonus"><code class="docutils literal notranslate"><span class="pre">get_collector_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_deck_bonus"><code class="docutils literal notranslate"><span class="pre">get_deck_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_overkill_bonus"><code class="docutils literal notranslate"><span class="pre">get_overkill_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_mystery_machine_bonus"><code class="docutils literal notranslate"><span class="pre">get_mystery_machine_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_shiny_bonus"><code class="docutils literal notranslate"><span class="pre">get_shiny_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_max_hp_bonus"><code class="docutils literal notranslate"><span class="pre">get_max_hp_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_gold_bonus"><code class="docutils literal notranslate"><span class="pre">get_gold_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_combo_bonus"><code class="docutils literal notranslate"><span class="pre">get_combo_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_curses_bonus"><code class="docutils literal notranslate"><span class="pre">get_curses_bonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_poopy_bonus"><code class="docutils literal notranslate"><span class="pre">get_poopy_bonus()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="server.html">server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Formatter"><code class="docutils literal notranslate"><span class="pre">Formatter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.readline"><code class="docutils literal notranslate"><span class="pre">readline()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.add_cmd"><code class="docutils literal notranslate"><span class="pre">add_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.command"><code class="docutils literal notranslate"><span class="pre">command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.with_savefile"><code class="docutils literal notranslate"><span class="pre">with_savefile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.slice_command"><code class="docutils literal notranslate"><span class="pre">slice_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.AppClient"><code class="docutils literal notranslate"><span class="pre">AppClient</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.EventSubBot"><code class="docutils literal notranslate"><span class="pre">EventSubBot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.DiscordConn"><code class="docutils literal notranslate"><span class="pre">DiscordConn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.timers_list"><code class="docutils literal notranslate"><span class="pre">timers_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.timer_cmd"><code class="docutils literal notranslate"><span class="pre">timer_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.command_cmd"><code class="docutils literal notranslate"><span class="pre">command_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_raw_quotes"><code class="docutils literal notranslate"><span class="pre">get_raw_quotes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.quote_stuff"><code class="docutils literal notranslate"><span class="pre">quote_stuff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.setup_clips"><code class="docutils literal notranslate"><span class="pre">setup_clips()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Clip"><code class="docutils literal notranslate"><span class="pre">Clip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_clip_info"><code class="docutils literal notranslate"><span class="pre">get_clip_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.clip_cmd"><code class="docutils literal notranslate"><span class="pre">clip_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bot_cmd"><code class="docutils literal notranslate"><span class="pre">bot_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.help_cmd"><code class="docutils literal notranslate"><span class="pre">help_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shoutout"><code class="docutils literal notranslate"><span class="pre">shoutout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.stream_title"><code class="docutils literal notranslate"><span class="pre">stream_title()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.stream_uptime"><code class="docutils literal notranslate"><span class="pre">stream_uptime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.start_prediction"><code class="docutils literal notranslate"><span class="pre">start_prediction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.resolve_prediction"><code class="docutils literal notranslate"><span class="pre">resolve_prediction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.auto_resolve_pred"><code class="docutils literal notranslate"><span class="pre">auto_resolve_pred()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.handle_prediction"><code class="docutils literal notranslate"><span class="pre">handle_prediction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing"><code class="docutils literal notranslate"><span class="pre">now_playing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing_client"><code class="docutils literal notranslate"><span class="pre">now_playing_client()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_handle"><code class="docutils literal notranslate"><span class="pre">giveaway_handle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_enter"><code class="docutils literal notranslate"><span class="pre">giveaway_enter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.card_info"><code class="docutils literal notranslate"><span class="pre">card_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_info"><code class="docutils literal notranslate"><span class="pre">mt_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.card_with_art"><code class="docutils literal notranslate"><span class="pre">card_with_art()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.save_cache"><code class="docutils literal notranslate"><span class="pre">save_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bluekey"><code class="docutils literal notranslate"><span class="pre">bluekey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.cards_removed"><code class="docutils literal notranslate"><span class="pre">cards_removed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.neowbonus"><code class="docutils literal notranslate"><span class="pre">neowbonus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.neow_skipped"><code class="docutils literal notranslate"><span class="pre">neow_skipped()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.what_if_box"><code class="docutils literal notranslate"><span class="pre">what_if_box()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.seed_cmd"><code class="docutils literal notranslate"><span class="pre">seed_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.is_seeded"><code class="docutils literal notranslate"><span class="pre">is_seeded()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.run_playtime"><code class="docutils literal notranslate"><span class="pre">run_playtime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shop_removal_cost"><code class="docutils literal notranslate"><span class="pre">shop_removal_cost()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shop_prices"><code class="docutils literal notranslate"><span class="pre">shop_prices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.campfire_heal"><code class="docutils literal notranslate"><span class="pre">campfire_heal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.nloth_traded"><code class="docutils literal notranslate"><span class="pre">nloth_traded()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.event_likelihood"><code class="docutils literal notranslate"><span class="pre">event_likelihood()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.rare_card_chances"><code class="docutils literal notranslate"><span class="pre">rare_card_chances()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.relic_info"><code class="docutils literal notranslate"><span class="pre">relic_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.relics_page2"><code class="docutils literal notranslate"><span class="pre">relics_page2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.seen_relic"><code class="docutils literal notranslate"><span class="pre">seen_relic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.skipped_boss_relics"><code class="docutils literal notranslate"><span class="pre">skipped_boss_relics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bottled_cards"><code class="docutils literal notranslate"><span class="pre">bottled_cards()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.modifiers"><code class="docutils literal notranslate"><span class="pre">modifiers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_clans"><code class="docutils literal notranslate"><span class="pre">mt_clans()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_mutators"><code class="docutils literal notranslate"><span class="pre">mt_mutators()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_challenge"><code class="docutils literal notranslate"><span class="pre">mt_challenge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_artifact"><code class="docutils literal notranslate"><span class="pre">mt_artifact()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_pyre"><code class="docutils literal notranslate"><span class="pre">mt_pyre()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.curses"><code class="docutils literal notranslate"><span class="pre">curses()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.items"><code class="docutils literal notranslate"><span class="pre">items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.fairy_released"><code class="docutils literal notranslate"><span class="pre">fairy_released()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last"><code class="docutils literal notranslate"><span class="pre">get_last()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_run"><code class="docutils literal notranslate"><span class="pre">get_last_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_win"><code class="docutils literal notranslate"><span class="pre">get_last_win()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_loss"><code class="docutils literal notranslate"><span class="pre">get_last_loss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.next_run"><code class="docutils literal notranslate"><span class="pre">next_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.wall_card"><code class="docutils literal notranslate"><span class="pre">wall_card()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.set_run_stats_by_date"><code class="docutils literal notranslate"><span class="pre">set_run_stats_by_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_wins_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_wins_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_losses_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_losses_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.streak_display"><code class="docutils literal notranslate"><span class="pre">streak_display()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_streak_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_streak_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_pb_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_pb_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_winrate_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_winrate_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.unmastered"><code class="docutils literal notranslate"><span class="pre">unmastered()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mastered_stuff"><code class="docutils literal notranslate"><span class="pre">mastered_stuff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.current_mastery_check"><code class="docutils literal notranslate"><span class="pre">current_mastery_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calipers"><code class="docutils literal notranslate"><span class="pre">calipers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.active_mods"><code class="docutils literal notranslate"><span class="pre">active_mods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.active_mod_info"><code class="docutils literal notranslate"><span class="pre">active_mod_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.commands_page"><code class="docutils literal notranslate"><span class="pre">commands_page()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.individual_cmd"><code class="docutils literal notranslate"><span class="pre">individual_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Twitch_startup"><code class="docutils literal notranslate"><span class="pre">Twitch_startup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Twitch_cleanup"><code class="docutils literal notranslate"><span class="pre">Twitch_cleanup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Discord_startup"><code class="docutils literal notranslate"><span class="pre">Discord_startup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Discord_cleanup"><code class="docutils literal notranslate"><span class="pre">Discord_cleanup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Youtube_startup"><code class="docutils literal notranslate"><span class="pre">Youtube_startup()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slice.html">slice module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.Hero"><code class="docutils literal notranslate"><span class="pre">Hero</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.CurrentRun"><code class="docutils literal notranslate"><span class="pre">CurrentRun</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.get_runs"><code class="docutils literal notranslate"><span class="pre">get_runs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.receive_slice"><code class="docutils literal notranslate"><span class="pre">receive_slice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.decode"><code class="docutils literal notranslate"><span class="pre">decode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.deserialize"><code class="docutils literal notranslate"><span class="pre">deserialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.populate"><code class="docutils literal notranslate"><span class="pre">populate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sts_profile.html">sts_profile module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sts_profile.html#src.sts_profile.get_profile"><code class="docutils literal notranslate"><span class="pre">get_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sts_profile.html#src.sts_profile.get_current_profile"><code class="docutils literal notranslate"><span class="pre">get_current_profile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trie.html">trie module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trie.html#src.trie.Trie"><code class="docutils literal notranslate"><span class="pre">Trie</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="twitch.html">twitch module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="twitch.html#src.twitch.TwitchCommand"><code class="docutils literal notranslate"><span class="pre">TwitchCommand</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="typehints.html">typehints module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.get_req_data"><code class="docutils literal notranslate"><span class="pre">get_req_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.post_prediction"><code class="docutils literal notranslate"><span class="pre">post_prediction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.getfile"><code class="docutils literal notranslate"><span class="pre">getfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.update_db"><code class="docutils literal notranslate"><span class="pre">update_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.convert_class_to_obj"><code class="docutils literal notranslate"><span class="pre">convert_class_to_obj()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.format_for_slaytabase"><code class="docutils literal notranslate"><span class="pre">format_for_slaytabase()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.complete_match"><code class="docutils literal notranslate"><span class="pre">complete_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#src.utils.parse_date_range"><code class="docutils literal notranslate"><span class="pre">parse_date_range()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webpage.html">webpage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wrapper.html">wrapper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wrapper.html#src.wrapper.wrapper"><code class="docutils literal notranslate"><span class="pre">wrapper()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Spireblight documentation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

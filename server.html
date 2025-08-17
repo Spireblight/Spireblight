@@ -1,0 +1,1394 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>server module &#8212; Spireblight 0.6 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'server';</script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slice module" href="slice.html" />
+    <link rel="prev" title="score module" href="score.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.6 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes.html">Slay the Spire path node data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activemods.html">activemods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">cache package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">client module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">configuration module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">server module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitch.html">twitch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typehints.html">typehints module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webpage.html">webpage module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">wrapper module</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">Full Spireblight API</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">server module</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-src.server">
+<span id="server-module"></span><h1>server module<a class="headerlink" href="#module-src.server" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.Formatter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Formatter</span></span><a class="reference internal" href="_modules/src/server.html#Formatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Formatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Formatter.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/server.html#Formatter.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Formatter.parse" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Formatter.format_field">
+<span class="sig-name descname"><span class="pre">format_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/server.html#Formatter.format_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Formatter.format_field" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.readline">
+<span class="sig-name descname"><span class="pre">readline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/server.html#readline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.readline" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractEventLoop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.load" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.add_cmd">
+<span class="sig-name descname"><span class="pre">add_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#add_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.add_cmd" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_argcount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">twitch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.command" title="Link to this definition">#</a></dt>
+<dd><p>This decorator builds TwitchCommand and DiscordCommand versions of commands while leaving the original functions untouched.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.with_savefile">
+<span class="sig-name descname"><span class="pre">with_savefile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional_save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#with_savefile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.with_savefile" title="Link to this definition">#</a></dt>
+<dd><p>Decorator for commands that require a save.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.slice_command">
+<span class="sig-name descname"><span class="pre">slice_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#slice_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.slice_command" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_command">
+<span class="sig-name descname"><span class="pre">mt_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_command" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.TwitchConn">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwitchConn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.refresh_spotify_token">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh_spotify_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.refresh_spotify_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.refresh_spotify_token" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.spotify_call">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">spotify_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.spotify_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.spotify_call" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.eventsub_setup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eventsub_setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.eventsub_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.eventsub_setup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_ready">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_ready" title="Link to this definition">#</a></dt>
+<dd><p><a href="#id1"><span class="problematic" id="id2">|coro|</span></a></p>
+<p>Event called when the Bot has logged in and is ready.</p>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_ready</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Logged into Twitch | </span><span class="si">{</span><span class="n">bot</span><span class="o">.</span><span class="n">nick</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_raw_usernotice">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_raw_usernotice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_raw_usernotice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_raw_usernotice" title="Link to this definition">#</a></dt>
+<dd><p><a href="#id3"><span class="problematic" id="id4">|coro|</span></a></p>
+<p>Event called when a USERNOTICE is received from Twitch.
+Since USERNOTICE’s can be fairly complex and vary, the following sub-events are available:</p>
+<blockquote>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_usernotice_subscription()</span></code> :
+Called when a USERNOTICE Subscription or Re-subscription event is received.</p>
+</div></blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For more information on how to handle USERNOTICE’s visit:
+<a class="reference external" href="https://dev.twitch.tv/docs/irc/tags/#usernotice-twitch-tags">https://dev.twitch.tv/docs/irc/tags/#usernotice-twitch-tags</a></p>
+</div>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
+<dl class="simple">
+<dt>channel: <code class="xref py py-class docutils literal notranslate"><span class="pre">Channel</span></code></dt><dd><p>Channel object relevant to the USERNOTICE event.</p>
+</dd>
+<dt>tags<span class="classifier">dict</span></dt><dd><p>A dictionary with the relevant information associated with the USERNOTICE.
+This could vary depending on the event.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_subscription">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_subscription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consecutive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_subscription"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_subscription" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_ritual">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_ritual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_ritual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_ritual" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_new_chatter">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_new_chatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_new_chatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_new_chatter" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_raid">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_raid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewer_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_raid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_raid" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.AppClient">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AppClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">set</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Coroutine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heartbeat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#AppClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.AppClient" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.AppClient.event_token_expired">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_token_expired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#AppClient.event_token_expired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.AppClient.event_token_expired" title="Link to this definition">#</a></dt>
+<dd><p><a href="#id5"><span class="problematic" id="id6">|coro|</span></a></p>
+<p>A special event called when the oauth token expires. This is a hook into the http system, it will call this
+when a call to the api fails due to a token expiry. This function should return either a new token, or <cite>None</cite>.
+Returning <cite>None</cite> will cause the client to attempt an automatic token generation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This event is a callback hook. It is not a dispatched event. Any errors raised will be passed to the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">event_error()</span></code> event.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.EventSubBot">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EventSubBot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">set</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Coroutine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heartbeat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.EventSubBot.event_eventsub_notification_stream_start">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_eventsub_notification_stream_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamOnlineData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot.event_eventsub_notification_stream_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot.event_eventsub_notification_stream_start" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.EventSubBot.event_eventsub_notification_stream_end">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_eventsub_notification_stream_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamOfflineData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot.event_eventsub_notification_stream_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot.event_eventsub_notification_stream_end" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.DiscordConn">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DiscordConn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">command_prefix:</span> <span class="pre">PrefixType[BotT],</span> <span class="pre">*,</span> <span class="pre">help_command:</span> <span class="pre">Optional[HelpCommand]</span> <span class="pre">=</span> <span class="pre">&lt;default-help-command&gt;,</span> <span class="pre">tree_cls:</span> <span class="pre">Type[app_commands.CommandTree[Any]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'discord.app_commands.tree.CommandTree'&gt;,</span> <span class="pre">description:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">intents:</span> <span class="pre">discord.Intents,</span> <span class="pre">**options:</span> <span class="pre">Any</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#DiscordConn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.DiscordConn" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.DiscordConn.on_message">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#DiscordConn.on_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.DiscordConn.on_message" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.DiscordConn.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#DiscordConn.dispatch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.DiscordConn.dispatch" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.Timer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Timer.set_routine">
+<span class="sig-name descname"><span class="pre">set_routine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer.set_routine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer.set_routine" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Timer.before_ready">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">before_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer.before_ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer.before_ready" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Timer.on_error">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">on_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer.on_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer.on_error" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Timer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer.start" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Timer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Timer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Timer.stop" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.timers_list">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timers_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#timers_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.timers_list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.timer_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timer_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#timer_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.timer_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Manipulate the timers. Syntax:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><cite>create &lt;name&gt; [interval]</cite></dt><dd><p>will create a new timer with the name and the given interval,
+if specified. It has no other effect.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>add &lt;name&gt; &lt;commands&gt;</cite></dt><dd><p>will add all of the commands (space-separated) to the timer <cite>name</cite> -
+it does not start the timer. If it is running, it will seamlessly
+integrate the new command at the current point in the rotation.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>remove &lt;name&gt; &lt;commands&gt;</cite></dt><dd><p>will remove all of the commands (space-separated) to the timer <cite>name</cite> -
+it does not stop or delete the timer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>delete &lt;name&gt;</cite> completely removes a timer and associated commands.</dt><dd><p>This cannot be undone.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>auto &lt;name&gt; [interval]</cite></dt><dd><p>creates a new timer with the given interval, if specified, and exactly
+one command <cite>name</cite>. It immediately starts it. This is basically used for
+single-command sponsored timers and the like. The internal timer name will
+start with <cite>auto_</cite>, followed by the command name, and can be edited normally
+afterwards. It will automatically delete itself when the stream ends.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>status &lt;name&gt;</cite></dt><dd><p>outputs the commands and interval tied to this timer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>start &lt;name&gt;</cite></dt><dd><p>starts the given timer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>stop &lt;name&gt;</cite></dt><dd><p>stops the given timer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>interval &lt;name&gt; &lt;interval&gt;</cite></dt><dd><p>changes the interval of an existing timer. This will have some weird
+double-send glitch if editing the interval of a running timer, but is
+mostly fine otherwise.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.command_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">command_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#command_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.command_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Syntax: command &lt;action&gt; &lt;name&gt; [+flag] &lt;output&gt;</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.Quote">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">added_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Quote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Quote" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Quote.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Quote.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Quote.to_json" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_raw_quotes">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_raw_quotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_raw_quotes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_raw_quotes" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.quote_stuff">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">quote_stuff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">rest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#quote_stuff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.quote_stuff" title="Link to this definition">#</a></dt>
+<dd><p>Edit the quote database or pull a specific or random quote.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.setup_clips">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_clips</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#setup_clips"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.setup_clips" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.server.Clip">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Clip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Clip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">added_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Clip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Clip" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.server.Clip.cf_tags">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cf_tags</span></span><a class="headerlink" href="#src.server.Clip.cf_tags" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.Clip.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Clip.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Clip.to_json" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_clip_info">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_clip_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Clip</span></span></span><a class="reference internal" href="_modules/src/server.html#get_clip_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_clip_info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.clip_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clip_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">rest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#clip_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.clip_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Add a new clip or find a clip.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.bot_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bot_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#bot_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.bot_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Give general information on the bot itself.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.help_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">help_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#help_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.help_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Find help on the various commands in the bot.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.shoutout">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shoutout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#shoutout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.shoutout" title="Link to this definition">#</a></dt>
+<dd><p>Give a shoutout to a fellow streamer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.stream_title">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stream_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#stream_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.stream_title" title="Link to this definition">#</a></dt>
+<dd><p>Display the current stream title.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.stream_uptime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stream_uptime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#stream_uptime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.stream_uptime" title="Link to this definition">#</a></dt>
+<dd><p>Display the stream uptime.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.start_prediction">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcomes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#start_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.start_prediction" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.resolve_prediction">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolve_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#resolve_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.resolve_prediction" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.auto_resolve_pred">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auto_resolve_pred</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.runs.RunParser" title="src.runs.RunParser"><span class="pre">RunParser</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#auto_resolve_pred"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.auto_resolve_pred" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.handle_prediction">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">handle_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'info'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#handle_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.handle_prediction" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.now_playing">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">now_playing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#now_playing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.now_playing" title="Link to this definition">#</a></dt>
+<dd><p>Return the currently-playing song on Spotify (if any).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.now_playing_client">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">now_playing_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#now_playing_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.now_playing_client" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.giveaway_handle">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">giveaway_handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#giveaway_handle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.giveaway_handle" title="Link to this definition">#</a></dt>
+<dd><p>Manage a giveaway.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.giveaway_enter">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">giveaway_enter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#giveaway_enter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.giveaway_enter" title="Link to this definition">#</a></dt>
+<dd><p>Enter into the current giveaway.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.card_info">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">card_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#card_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.card_info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_info">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.card_with_art">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">card_with_art</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#card_with_art"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.card_with_art" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.save_cache">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#save_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.save_cache" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.bluekey">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bluekey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#bluekey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.bluekey" title="Link to this definition">#</a></dt>
+<dd><p>Display what was skipped for the Sapphire key.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.cards_removed">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cards_removed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#cards_removed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.cards_removed" title="Link to this definition">#</a></dt>
+<dd><p>Display which cards were removed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.neowbonus">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">neowbonus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#neowbonus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.neowbonus" title="Link to this definition">#</a></dt>
+<dd><p>Display what the Neow bonus was.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.neow_skipped">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">neow_skipped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#neow_skipped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.neow_skipped" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.what_if_box">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">what_if_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#what_if_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.what_if_box" title="Link to this definition">#</a></dt>
+<dd><p>Tell us what the Pandora’s Box gave us.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.seed_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">seed_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#seed_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.seed_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display the run’s current seed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.is_seeded">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_seeded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#is_seeded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.is_seeded" title="Link to this definition">#</a></dt>
+<dd><p>Display whether the current run is seeded.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.run_playtime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_playtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#run_playtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.run_playtime" title="Link to this definition">#</a></dt>
+<dd><p>Display the current playtime for the run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.shop_removal_cost">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shop_removal_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#shop_removal_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.shop_removal_cost" title="Link to this definition">#</a></dt>
+<dd><p>Display the current shop removal cost.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.shop_prices">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shop_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#shop_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.shop_prices" title="Link to this definition">#</a></dt>
+<dd><p>Display the current shop price ranges.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.campfire_heal">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">campfire_heal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#campfire_heal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.campfire_heal" title="Link to this definition">#</a></dt>
+<dd><p>Display the current heal at campfires.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.nloth_traded">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nloth_traded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#nloth_traded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.nloth_traded" title="Link to this definition">#</a></dt>
+<dd><p>Display which relic was traded for N’loth’s Gift.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.event_likelihood">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#event_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.event_likelihood" title="Link to this definition">#</a></dt>
+<dd><p>Display current event chances for the various possibilities in ? rooms.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.rare_card_chances">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rare_card_chances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#rare_card_chances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.rare_card_chances" title="Link to this definition">#</a></dt>
+<dd><p>Display the current chance to see rare cards in rewards and shops.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.relic_info">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relic_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#relic_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.relic_info" title="Link to this definition">#</a></dt>
+<dd><p>Display information about the current relics.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.relics_page2">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relics_page2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#relics_page2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.relics_page2" title="Link to this definition">#</a></dt>
+<dd><p>Display the relics on page 2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.seen_relic">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">seen_relic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">relic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#seen_relic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.seen_relic" title="Link to this definition">#</a></dt>
+<dd><p>Output whether a given relic has been seen.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.skipped_boss_relics">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skipped_boss_relics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#skipped_boss_relics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.skipped_boss_relics" title="Link to this definition">#</a></dt>
+<dd><p>Display the boss relics that were taken and skipped.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.bottled_cards">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bottled_cards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#bottled_cards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.bottled_cards" title="Link to this definition">#</a></dt>
+<dd><p>List all bottled cards.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.modifiers">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modifiers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#modifiers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.modifiers" title="Link to this definition">#</a></dt>
+<dd><p>List all custom modifiers for the run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.score">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.score" title="Link to this definition">#</a></dt>
+<dd><p>Display the current score of the run</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_clans">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_clans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="monster.html#src.monster.server.MonsterSave" title="src.monster.server.MonsterSave"><span class="pre">MonsterSave</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_clans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_clans" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_mutators">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_mutators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="monster.html#src.monster.server.MonsterSave" title="src.monster.server.MonsterSave"><span class="pre">MonsterSave</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_mutators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_mutators" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_challenge">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_challenge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="monster.html#src.monster.server.MonsterSave" title="src.monster.server.MonsterSave"><span class="pre">MonsterSave</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_challenge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_challenge" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_artifact">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="monster.html#src.monster.server.MonsterSave" title="src.monster.server.MonsterSave"><span class="pre">MonsterSave</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_artifact" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mt_pyre">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mt_pyre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="monster.html#src.monster.server.MonsterSave" title="src.monster.server.MonsterSave"><span class="pre">MonsterSave</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mt_pyre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mt_pyre" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.curses">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">curses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="slice.html#src.slice.CurrentRun" title="src.slice.CurrentRun"><span class="pre">CurrentRun</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#curses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.curses" title="Link to this definition">#</a></dt>
+<dd><p>Display the current run’s curses.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.items">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="slice.html#src.slice.CurrentRun" title="src.slice.CurrentRun"><span class="pre">CurrentRun</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.items" title="Link to this definition">#</a></dt>
+<dd><p>Display the current run’s unequipped items.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.fairy_released">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fairy_released</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#fairy_released"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.fairy_released" title="Link to this definition">#</a></dt>
+<dd><p>Get the count of fairy that have been released after the Heart.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_last">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_last" title="Link to this definition">#</a></dt>
+<dd><p>Get the last run/win/loss.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_last_run">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_last_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_last_run" title="Link to this definition">#</a></dt>
+<dd><p>Get the last run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_last_win">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_win</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_last_win"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_last_win" title="Link to this definition">#</a></dt>
+<dd><p>Get the last win.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_last_loss">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_last_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_last_loss" title="Link to this definition">#</a></dt>
+<dd><p>Get the last loss.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.next_run">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">next_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#next_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.next_run" title="Link to this definition">#</a></dt>
+<dd><p>Return which character is next in the rotation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.wall_card">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wall_card</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#wall_card"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.wall_card" title="Link to this definition">#</a></dt>
+<dd><p>Fetch the card in the wall for the ladder savefile.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.set_run_stats_by_date">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_run_stats_by_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#set_run_stats_by_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.set_run_stats_by_date" title="Link to this definition">#</a></dt>
+<dd><p>Update the default range for the run stats by date, this is separate from the all-time stats run cache.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calculate_wins_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_wins_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calculate_wins_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calculate_wins_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display the cumulative number of wins for an optional date range.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calculate_losses_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_losses_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calculate_losses_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calculate_losses_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display the cumulative number of losses for an optional date range.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.streak_display">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">streak_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#streak_display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.streak_display" title="Link to this definition">#</a></dt>
+<dd><p>Change the !streak command display.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calculate_streak_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_streak_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calculate_streak_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calculate_streak_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display Baalor’s current streak for Ascension 20 Heart kills.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calculate_pb_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_pb_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calculate_pb_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calculate_pb_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display Baalor’s Personal Best streaks for Ascension 20 Heart kills for an optional date range.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calculate_winrate_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_winrate_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calculate_winrate_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calculate_winrate_cmd" title="Link to this definition">#</a></dt>
+<dd><p>Display the winrate for Baalor’s A20 Heart kills for an optional date range.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.unmastered">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unmastered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#unmastered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.unmastered" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.mastered_stuff">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mastered_stuff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">card</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#mastered_stuff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.mastered_stuff" title="Link to this definition">#</a></dt>
+<dd><p>Tell us whether a certain card or relic is mastered.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.current_mastery_check">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_mastery_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#current_mastery_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.current_mastery_check" title="Link to this definition">#</a></dt>
+<dd><p>Output what cards in the current run can be mastered if won.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.calipers">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calipers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#calipers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.calipers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.active_mods">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_mods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#active_mods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.active_mods" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.active_mod_info">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_mod_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.save.Savefile" title="src.save.Savefile"><span class="pre">Savefile</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">modname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#active_mod_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.active_mod_info" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.commands_page">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">commands_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#commands_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.commands_page" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.individual_cmd">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">individual_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#individual_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.individual_cmd" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.check_token_validity">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_token_validity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#check_token_validity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.check_token_validity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_new_token">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_new_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_new_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_new_token" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.get_oauth_token">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_oauth_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_oauth_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_oauth_token" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Twitch_startup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Twitch_startup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Twitch_startup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Twitch_startup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Twitch_cleanup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Twitch_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Twitch_cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Twitch_cleanup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Discord_startup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Discord_startup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Discord_startup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Discord_startup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Discord_cleanup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Discord_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Discord_cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Discord_cleanup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Youtube_startup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Youtube_startup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Youtube_startup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Youtube_startup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="score.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">score module</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="slice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">slice module</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Formatter"><code class="docutils literal notranslate"><span class="pre">Formatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Formatter.parse"><code class="docutils literal notranslate"><span class="pre">Formatter.parse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Formatter.format_field"><code class="docutils literal notranslate"><span class="pre">Formatter.format_field()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.readline"><code class="docutils literal notranslate"><span class="pre">readline()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.add_cmd"><code class="docutils literal notranslate"><span class="pre">add_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.command"><code class="docutils literal notranslate"><span class="pre">command()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.with_savefile"><code class="docutils literal notranslate"><span class="pre">with_savefile()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.slice_command"><code class="docutils literal notranslate"><span class="pre">slice_command()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.refresh_spotify_token"><code class="docutils literal notranslate"><span class="pre">TwitchConn.refresh_spotify_token()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.spotify_call"><code class="docutils literal notranslate"><span class="pre">TwitchConn.spotify_call()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.eventsub_setup"><code class="docutils literal notranslate"><span class="pre">TwitchConn.eventsub_setup()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_ready"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ready()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_raw_usernotice"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raw_usernotice()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_subscription"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_subscription()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_ritual"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ritual()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_new_chatter"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_new_chatter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_raid"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raid()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.AppClient"><code class="docutils literal notranslate"><span class="pre">AppClient</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.AppClient.event_token_expired"><code class="docutils literal notranslate"><span class="pre">AppClient.event_token_expired()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot"><code class="docutils literal notranslate"><span class="pre">EventSubBot</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot.event_eventsub_notification_stream_start"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_start()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot.event_eventsub_notification_stream_end"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.DiscordConn"><code class="docutils literal notranslate"><span class="pre">DiscordConn</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.DiscordConn.on_message"><code class="docutils literal notranslate"><span class="pre">DiscordConn.on_message()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.DiscordConn.dispatch"><code class="docutils literal notranslate"><span class="pre">DiscordConn.dispatch()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer.set_routine"><code class="docutils literal notranslate"><span class="pre">Timer.set_routine()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer.before_ready"><code class="docutils literal notranslate"><span class="pre">Timer.before_ready()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer.on_error"><code class="docutils literal notranslate"><span class="pre">Timer.on_error()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer.start"><code class="docutils literal notranslate"><span class="pre">Timer.start()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Timer.stop"><code class="docutils literal notranslate"><span class="pre">Timer.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.timers_list"><code class="docutils literal notranslate"><span class="pre">timers_list()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.timer_cmd"><code class="docutils literal notranslate"><span class="pre">timer_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.command_cmd"><code class="docutils literal notranslate"><span class="pre">command_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Quote.to_json"><code class="docutils literal notranslate"><span class="pre">Quote.to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_raw_quotes"><code class="docutils literal notranslate"><span class="pre">get_raw_quotes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.quote_stuff"><code class="docutils literal notranslate"><span class="pre">quote_stuff()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.setup_clips"><code class="docutils literal notranslate"><span class="pre">setup_clips()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Clip"><code class="docutils literal notranslate"><span class="pre">Clip</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Clip.cf_tags"><code class="docutils literal notranslate"><span class="pre">Clip.cf_tags</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Clip.to_json"><code class="docutils literal notranslate"><span class="pre">Clip.to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_clip_info"><code class="docutils literal notranslate"><span class="pre">get_clip_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.clip_cmd"><code class="docutils literal notranslate"><span class="pre">clip_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.bot_cmd"><code class="docutils literal notranslate"><span class="pre">bot_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.help_cmd"><code class="docutils literal notranslate"><span class="pre">help_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.shoutout"><code class="docutils literal notranslate"><span class="pre">shoutout()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.stream_title"><code class="docutils literal notranslate"><span class="pre">stream_title()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.stream_uptime"><code class="docutils literal notranslate"><span class="pre">stream_uptime()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.start_prediction"><code class="docutils literal notranslate"><span class="pre">start_prediction()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.resolve_prediction"><code class="docutils literal notranslate"><span class="pre">resolve_prediction()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.auto_resolve_pred"><code class="docutils literal notranslate"><span class="pre">auto_resolve_pred()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.handle_prediction"><code class="docutils literal notranslate"><span class="pre">handle_prediction()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.now_playing"><code class="docutils literal notranslate"><span class="pre">now_playing()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.now_playing_client"><code class="docutils literal notranslate"><span class="pre">now_playing_client()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.giveaway_handle"><code class="docutils literal notranslate"><span class="pre">giveaway_handle()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.giveaway_enter"><code class="docutils literal notranslate"><span class="pre">giveaway_enter()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.card_info"><code class="docutils literal notranslate"><span class="pre">card_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_info"><code class="docutils literal notranslate"><span class="pre">mt_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.card_with_art"><code class="docutils literal notranslate"><span class="pre">card_with_art()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.save_cache"><code class="docutils literal notranslate"><span class="pre">save_cache()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.bluekey"><code class="docutils literal notranslate"><span class="pre">bluekey()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.cards_removed"><code class="docutils literal notranslate"><span class="pre">cards_removed()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.neowbonus"><code class="docutils literal notranslate"><span class="pre">neowbonus()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.neow_skipped"><code class="docutils literal notranslate"><span class="pre">neow_skipped()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.what_if_box"><code class="docutils literal notranslate"><span class="pre">what_if_box()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.seed_cmd"><code class="docutils literal notranslate"><span class="pre">seed_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.is_seeded"><code class="docutils literal notranslate"><span class="pre">is_seeded()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.run_playtime"><code class="docutils literal notranslate"><span class="pre">run_playtime()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.shop_removal_cost"><code class="docutils literal notranslate"><span class="pre">shop_removal_cost()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.shop_prices"><code class="docutils literal notranslate"><span class="pre">shop_prices()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.campfire_heal"><code class="docutils literal notranslate"><span class="pre">campfire_heal()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.nloth_traded"><code class="docutils literal notranslate"><span class="pre">nloth_traded()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.event_likelihood"><code class="docutils literal notranslate"><span class="pre">event_likelihood()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.rare_card_chances"><code class="docutils literal notranslate"><span class="pre">rare_card_chances()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.relic_info"><code class="docutils literal notranslate"><span class="pre">relic_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.relics_page2"><code class="docutils literal notranslate"><span class="pre">relics_page2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.seen_relic"><code class="docutils literal notranslate"><span class="pre">seen_relic()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.skipped_boss_relics"><code class="docutils literal notranslate"><span class="pre">skipped_boss_relics()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.bottled_cards"><code class="docutils literal notranslate"><span class="pre">bottled_cards()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.modifiers"><code class="docutils literal notranslate"><span class="pre">modifiers()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_clans"><code class="docutils literal notranslate"><span class="pre">mt_clans()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_mutators"><code class="docutils literal notranslate"><span class="pre">mt_mutators()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_challenge"><code class="docutils literal notranslate"><span class="pre">mt_challenge()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_artifact"><code class="docutils literal notranslate"><span class="pre">mt_artifact()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_pyre"><code class="docutils literal notranslate"><span class="pre">mt_pyre()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.curses"><code class="docutils literal notranslate"><span class="pre">curses()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.items"><code class="docutils literal notranslate"><span class="pre">items()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.fairy_released"><code class="docutils literal notranslate"><span class="pre">fairy_released()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_last"><code class="docutils literal notranslate"><span class="pre">get_last()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_last_run"><code class="docutils literal notranslate"><span class="pre">get_last_run()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_last_win"><code class="docutils literal notranslate"><span class="pre">get_last_win()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_last_loss"><code class="docutils literal notranslate"><span class="pre">get_last_loss()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.next_run"><code class="docutils literal notranslate"><span class="pre">next_run()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.wall_card"><code class="docutils literal notranslate"><span class="pre">wall_card()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.set_run_stats_by_date"><code class="docutils literal notranslate"><span class="pre">set_run_stats_by_date()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calculate_wins_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_wins_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calculate_losses_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_losses_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.streak_display"><code class="docutils literal notranslate"><span class="pre">streak_display()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calculate_streak_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_streak_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calculate_pb_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_pb_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calculate_winrate_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_winrate_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.unmastered"><code class="docutils literal notranslate"><span class="pre">unmastered()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mastered_stuff"><code class="docutils literal notranslate"><span class="pre">mastered_stuff()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.current_mastery_check"><code class="docutils literal notranslate"><span class="pre">current_mastery_check()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.calipers"><code class="docutils literal notranslate"><span class="pre">calipers()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.active_mods"><code class="docutils literal notranslate"><span class="pre">active_mods()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.active_mod_info"><code class="docutils literal notranslate"><span class="pre">active_mod_info()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.commands_page"><code class="docutils literal notranslate"><span class="pre">commands_page()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.individual_cmd"><code class="docutils literal notranslate"><span class="pre">individual_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Twitch_startup"><code class="docutils literal notranslate"><span class="pre">Twitch_startup()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Twitch_cleanup"><code class="docutils literal notranslate"><span class="pre">Twitch_cleanup()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Discord_startup"><code class="docutils literal notranslate"><span class="pre">Discord_startup()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Discord_cleanup"><code class="docutils literal notranslate"><span class="pre">Discord_cleanup()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Youtube_startup"><code class="docutils literal notranslate"><span class="pre">Youtube_startup()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/server.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
