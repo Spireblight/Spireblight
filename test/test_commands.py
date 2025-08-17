@@ -340,7 +340,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         # Validate that expected calls and awaits were made
         mock_query.assert_called_once_with("snapshot")
         context.reply.assert_awaited_once_with(
-            "You can view this card and the upgrade with the art here: https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/downfall/cards/hermit-snapshot.png"
+            "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/downfall/cards/hermit-snapshot.png"
         )
 
     @patch("src.server._update_quotes")
