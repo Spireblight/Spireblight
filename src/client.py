@@ -6,7 +6,10 @@ import pickle
 import time
 import os
 
-from configuration import config
+try:
+    from configuration import config
+except ModuleNotFoundError:
+    from src.configuration import config
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!\n")

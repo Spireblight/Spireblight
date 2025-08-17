@@ -36,8 +36,8 @@ class Savefile(FileParser):
     API information: This should never be instantiated by custom code. There
     is only ever one savefile in memory, and it can be accessed by get_savefile().
 
-    The 'data' instance attribute may occasionally be None, which means that no
-    run is currently ongoing. To check if a run is ongoing, test for 'in_game'.
+    The :attr:`data` instance attribute may occasionally be None, which means that no
+    run is currently ongoing. To check if a run is ongoing, test for :attr:`in_game`.
 
     """
 
@@ -94,7 +94,7 @@ class Savefile(FileParser):
 
     @property
     def timestamp(self) -> datetime.datetime:
-        """Return the save time for the run, as UTC."""
+        """Save time for the run, as UTC."""
         date = self._data.get("save_date")
         if date is not None:
             # Since the save date has milliseconds, we need to shave those
@@ -107,6 +107,7 @@ class Savefile(FileParser):
 
     @property
     def timedelta(self) -> datetime.timedelta:
+        """Time spent between the beginning and the latest save."""
         return datetime.timedelta(seconds=self.playtime)
 
     @property
@@ -491,4 +492,5 @@ async def receive_save(req: Request):
     return Response()
 
 def get_savefile() -> Savefile:
+    """Get the current savefile. Check for :meth:`Savefile.in_game` before using."""
     return _savefile

@@ -10,6 +10,7 @@ last_run
 /static/bulma/
 /.vscode/
 .python-version
+docs/build/
 
 # emacs files
 *~

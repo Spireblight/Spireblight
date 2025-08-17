@@ -360,9 +360,10 @@ def command(
 ):
     """This decorator builds TwitchCommand and DiscordCommand versions of commands while leaving the original functions untouched."""
 
-    def inner(func, wrapper_func=None):
+    def inner(func: Callable, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
         wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
+        wrapped.__doc__ = func.__doc__
         # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
             tcmd = TwitchCommand(
@@ -789,28 +790,34 @@ async def timers_list(ctx: ContextType):
 async def timer_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Manipulate the timers. Syntax:
 
-    - `create <name> [interval]` will create a new timer with the name
-       and the given interval, if specified. It has no other effect.
-    - `add <name> <commands>` will add all of the commands (space-separated)
-       to the timer `name` - it does not start the timer. If it is running,
-       it will seamlessly integrate the new command at the current point in
-       the rotation.
-    - `remove <name> <commands> will remove all of the commands (space-separated)
-       to the timer `name` - it does not stop or delete the timer.
+    - `create <name> [interval]`
+       will create a new timer with the name and the given interval,
+       if specified. It has no other effect.
+    - `add <name> <commands>`
+       will add all of the commands (space-separated) to the timer `name` -
+       it does not start the timer. If it is running, it will seamlessly
+       integrate the new command at the current point in the rotation.
+    - `remove <name> <commands>`
+       will remove all of the commands (space-separated) to the timer `name` -
+       it does not stop or delete the timer.
     - `delete <name>` completely removes a timer and associated commands.
        This cannot be undone.
-    - `auto <name> [interval]` creates a new timer with the given interval,
-       if specified, and exactly one command `name`. It immediately starts it.
-       This is basically used for single-command sponsored timers and the like.
-       The internal timer name will be `auto_` followed by the command name,
-       and can be edited normally afterwards. It will automatically delete
-       itself when the stream ends.
-    - `status <name>` outputs the commands and interval tied to this timer.
-    - `start <name>` starts the given timer.
-    - `stop <name>` stops the given timer.
-    - `interval <name> <interval>` changes the interval of an existing timer.
-       This will have some weird double-send glitch if editing the interval
-       of a running timer, but is mostly fine otherwise.
+    - `auto <name> [interval]`
+       creates a new timer with the given interval, if specified, and exactly
+       one command `name`. It immediately starts it. This is basically used for
+       single-command sponsored timers and the like. The internal timer name will
+       start with `auto_`, followed by the command name, and can be edited normally
+       afterwards. It will automatically delete itself when the stream ends.
+    - `status <name>`
+       outputs the commands and interval tied to this timer.
+    - `start <name>`
+       starts the given timer.
+    - `stop <name>`
+       stops the given timer.
+    - `interval <name> <interval>`
+       changes the interval of an existing timer. This will have some weird
+       double-send glitch if editing the interval of a running timer, but is
+       mostly fine otherwise.
     """
 
     match action:
@@ -1638,14 +1645,29 @@ async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
                         return await ctx.reply(f"The clips that match are {', '.join(str(x[0]) for x in possible)}.")
                     return await ctx.reply("Too many clips match. Try adding more keywords to narrow it down?")
 
+@command("bot")
+async def bot_cmd(ctx: ContextType):
+    """Give general information on the bot itself."""
+    p = config.baalorbot.prefix
+    await ctx.reply(
+        f"I am {__botname__} v{__version__}, made by {__author__}. Thanks to Baalor running a "
+        f"script on his computer, I can access the game's data for commands like {p}neow and "
+        f"{p}boss, as well as the {config.server.url}/current page. I am running on Python "
+        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
+        f"my source code is at {p}github, and you can financially support "
+        f"my continued development with {p}donate"
+    )
+
 @command("help")
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
     if not name:
+        p = config.baalorbot.prefix
         await ctx.reply(
-            f"I am {__botname__} v{__version__}, made by {__author__}. I am running on Python "
-            f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}, "
-            f"my source code is available at {__github__}, and the website is {config.server.url}"
+            f"Welcome to the stream! Website: {config.server.url} | Current run: {p}current | "
+            f"Stream overlay: {p}str | Useful commands: {p}discord {p}mods {p}neow {p}boss "
+            f"{p}stats {p}games {p}youtube {p}winrate | Silly commands: {p}the {p}dig {p}lift "
+            f"{p}quote | All commands: {p}commands | Specific help: {p}help <command> | About this bot: {p}bot"
         )
         return
 
@@ -2072,7 +2094,7 @@ async def card_with_art(ctx: ContextType, *line: str):
     link = f"{mod}/cards/{id}.png"
 
     await ctx.reply(
-        f"You can view this card and the upgrade with the art here: {base}{link}"
+        f"{base}{link}"
     )
 
 
