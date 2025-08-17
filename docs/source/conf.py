@@ -21,6 +21,17 @@ author = 'Anilyka Barry, Olivia Thiderman, Spireblight Development Team'
 copyright = '2022-2025, ' + author
 release = webpage.__version__
 
+html_theme_options = {
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": webpage.__github__,
+            "icon": "fab fa-github-square",
+            "type": "fontawesome",
+        }
+    ]
+}
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
