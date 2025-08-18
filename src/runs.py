@@ -25,7 +25,7 @@ from src.events import add_listener
 from src.utils import convert_class_to_obj, get_req_data
 from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
-__all__ = ["get_latest_run", "RunParser", "StreakInfo"]
+__all__ = ["get_latest_run", "get_parser", "RunParser", "StreakInfo"]
 
 _cache: dict[str, RunParser] = {}
 _ts_cache: dict[int, RunParser] = {}
