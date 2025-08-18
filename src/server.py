@@ -17,6 +17,7 @@ import base64
 import json
 import time
 import sys
+import csv
 import re
 import os
 
@@ -54,7 +55,7 @@ from src.cache.run_stats import (
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
-from src.webpage import router, __botname__, __version__, __github__, __author__
+from src.webpage import router, playlists, __botname__, __version__, __github__, __author__
 from src.wrapper import wrapper
 from src.monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from src.twitch import TwitchCommand
@@ -3183,9 +3184,27 @@ async def Discord_cleanup():
 
 
 async def Youtube_startup():
+    ref = 60
+    prev = ""
     async with aiohttp.ClientSession() as session:
-        async with session.get(config.youtube.playlist_sheet) as response:
-            csv = await response.text()
-            with open("data/playlists.csv", "w") as playlists:
-                playlists.write(csv)
-        logger.info("Youtube playlist sheet downloaded")
+        logger.info(f"Starting Youtube playlist sheet download. Will refresh every {ref}s.")
+        while True:
+            text = ""
+            async with session.get(config.youtube.playlist_sheet) as response:
+                text = await response.text()
+            if text == prev or not text: # no need to update anything (or nothing to update)
+                await asyncio.sleep(ref)
+                continue
+            data = text.splitlines()
+            # We're using DictReader with a defined set of fields so that if any keys are added to
+            # the sheet the display code here won't break.
+            reader = csv.DictReader(data, fieldnames=(
+                "Game", "Youtube Link", "Origin", "Steam Link",
+            ))
+            # Skip the header line (needed when setting fieldnames)
+            next(reader)
+            # Serialize from a special object down to a pure list so we can json dump later
+            playlists.clear()
+            playlists.extend(reader)
+            prev = text
+            await asyncio.sleep(ref)
