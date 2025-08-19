@@ -20,19 +20,42 @@ _vods = []
 
 @dataclass
 class VideoMetadata:
+    """Hold YouTube video metadata."""
     id: str
     title: str
     duration: int
     description: str
 
+class Run:
+    """Contain run offset information from a vod."""
+    def __init__(self, id: str, start: int, offset: int):
+        self.id = id
+        self.start = start
+        self.offset = offset
+
+    @property
+    def run(self):
+        return get_parser(self.id)
+
 class VOD:
-    def __init__(self, data: VideoMetadata):
-        self._data = data
-        self.runs = []
+    """Information from a stream vod with optional run information."""
+    def __init__(self, id: str, runs: list[Run]):
+        self.id = id
+        self.runs = runs
+        self._data = None
+
+    def __eq__(self, value):
+        return isinstance(value, VOD) and value.id == self.id
+
+    @property
+    def data(self) -> VideoMetadata:
+        if self._data is None:
+            pass # do some magic
+        return self._data
 
     @property
     def datetime(self):
-        matched = _date_re.search(self._data.title)
+        matched = _date_re.search(self.data.title)
         if matched is None:
             return None
         return datetime.datetime.fromisoformat(matched.group())
