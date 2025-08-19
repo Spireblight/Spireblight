@@ -1,16 +1,17 @@
 from __future__ import annotations
 
+from typing import Optional
+
+from dataclasses import dataclass, asdict
+from aiohttp import ClientSession
+
 import datetime
 import asyncio
 import json
 import os
 import re
 
-from typing import Optional
-
 from configuration import config
-from dataclasses import dataclass, asdict
-from aiohttp import ClientSession
 from events import add_listener
 from utils import getfile
 from runs import get_parser
@@ -43,22 +44,22 @@ class Run:
 
 class VOD:
     """Information from a stream vod with optional run information."""
-    def __init__(self, id: str, runs: list[Run]):
+    def __init__(self, id: str, runs: Optional[list[Run]] = None):
         self.id = id
-        self.runs = runs
-        self._data = None
+        self.runs = runs or []
+        self.data: VideoMetadata = None
+
+    def __hash__(self):
+        return hash(self.id)
 
     def __eq__(self, value):
         return isinstance(value, VOD) and value.id == self.id
 
     def to_json(self):
-        return {"id": self.id, "runs": self.runs}
+        return {**self.data.__dict__, "runs": self.runs}
 
-    @property
-    def data(self) -> VideoMetadata:
-        if self._data is None:
-            pass # do some magic
-        return self._data
+    def add_run(self, run: Run):
+        self.runs.append(run)
 
     @property
     def datetime(self):
@@ -72,6 +73,9 @@ class VOD:
 _internal = [
     {
         "id": "11-character ID for the VOD",
+        "title": "video title",
+        "duration": 3600, # duration of the vod, in seconds
+        "description": "video description",
         "runs": [ # can be empty
             {
                 "id": "name of the run as in url/runs/RUN, usually a UNIX timestamp",
@@ -85,9 +89,8 @@ _internal = [
 class ArchiveHandler:
     """Handle archive maintenance."""
     def __init__(self, filename: str, channel_id: str, api_key: str):
-        if archive is not None:
-            raise RuntimeError("Cannot instantiate more than one Archive Handler.")
-        self.vods = []
+        self.vods = set()
+        self.unparsed = set()
         self._session: Optional[ClientSession] = None
 
         self._filename = filename
@@ -99,6 +102,7 @@ class ArchiveHandler:
         return os.path.isfile(os.path.join("data", self._filename))
 
     def load_from_disk(self):
+        """Load video information from disk."""
         self.vods.clear()
         with getfile(self._filename, "r") as f:
             j = json.load(f)
@@ -106,13 +110,15 @@ class ArchiveHandler:
             runs = []
             for run in vod["runs"]:
                 runs.append(Run(**run))
-            self.vods.append(VOD(vod["id"], runs))
+            self.vods.add(VOD(vod["id"], runs))
 
     def write_to_disk(self):
+        """Write all the vod information to disk."""
         with getfile(self._filename, "w") as f:
-            json.dump(self.vods, f, default=lambda x: x.to_json())
+            json.dump(list(self.vods - self.unparsed), f, default=lambda x: x.to_json())
 
-    async def load_from_api(self):
+    async def load_from_api(self) -> bool:
+        """Fetch VOD information from YouTube. Return True if it succeeded."""
         search_params = {
             "part": "id", 
             "order": "date",
@@ -124,12 +130,47 @@ class ArchiveHandler:
         if self._session is None:
             self._session = ClientSession("https://youtube.googleapis.com/youtube/v3")
 
-        has_new = True
-        while has_new:
+        while True:
             search_resp = None
             async with self._session.get("/search", params=search_params) as resp:
                 search_resp = await resp.json()
-            # TODO
+
+            if not search_resp:
+                return False
+
+            # get metadata and save it in a VideoMetadata file
+            for item in search_resp["items"]:
+                info = item.get("id")
+                if info is None or not (c := info.get("videoId")):
+                    continue
+
+                vod = VOD(c)
+                if vod in self.vods:
+                    return True # we already have this one, so anything after this is older and we have it
+
+                video_resp = None
+                async with self._session.get("/videos", params={"part": "snippet,contentDetails", "id": c, "key": self._key}) as resp:
+                    video_resp = await resp.json()
+
+                if not video_resp:
+                    return False
+                
+                video_info = video_resp["items"][0]
+                snippet = video_info["snippet"]
+                if not _date_re.search(snippet["title"]): # doesn't have a date in the title, not a vod
+                    continue
+                duration: str = video_info["contentDetails"]["duration"][2:-1] # string in the format PT#H#M#S; remove PT and S
+                hours, H, rest = duration.partition("H")
+                if not H: # if it's <1 hour
+                    hours, rest = "", hours
+                minutes, M, seconds = rest.partition("M")
+                total_minutes = int(hours or 0) * 60 + int(minutes or 0)
+                total_seconds = total_minutes * 60 + int(seconds or 0)
+                vod.data = VideoMetadata(c, snippet["title"], total_seconds, snippet["description"])
+
+                self.vods.add(vod)
+                self.unparsed.add(vod)
+
 
 archive = ArchiveHandler("archive.json", config.youtube.archive_id, config.youtube.api_key)
 
