@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 import asyncio
 import json
@@ -13,10 +15,9 @@ from events import add_listener
 from utils import getfile
 from runs import get_parser
 
-_api_base = "https://youtube.googleapis.com/youtube/v3"
 _date_re = re.compile(r"(\d\d\d\d\-\d\d\-\d\d)")
 
-_vods = []
+archive: ArchiveHandler = None
 
 @dataclass
 class VideoMetadata:
@@ -33,6 +34,9 @@ class Run:
         self.start = start
         self.offset = offset
 
+    def to_json(self):
+        return {"id": self.id, "start": self.start, "offset": self.offset}
+
     @property
     def run(self):
         return get_parser(self.id)
@@ -46,6 +50,9 @@ class VOD:
 
     def __eq__(self, value):
         return isinstance(value, VOD) and value.id == self.id
+
+    def to_json(self):
+        return {"id": self.id, "runs": self.runs}
 
     @property
     def data(self) -> VideoMetadata:
@@ -67,7 +74,7 @@ _internal = [
         "id": "11-character ID for the VOD",
         "runs": [ # can be empty
             {
-                "run": "name of the run as in /runs/RUN, usually a UNIX timestamp",
+                "id": "name of the run as in url/runs/RUN, usually a UNIX timestamp",
                 "start": 1800, # the calculated start offset for the run
                 "offset": 0, # user-submitted offset from 'start'
             }
@@ -75,15 +82,56 @@ _internal = [
     }
 ]
 
-async def archive_setup():
-    try:
-        with getfile("archive.json", "r") as f:
-            pass
-    except FileNotFoundError:
-        pass
+class ArchiveHandler:
+    """Handle archive maintenance."""
+    def __init__(self, filename: str, channel_id: str, api_key: str):
+        if archive is not None:
+            raise RuntimeError("Cannot instantiate more than one Archive Handler.")
+        self.vods = []
+        self._session: Optional[ClientSession] = None
 
+        self._filename = filename
+        self._channel_id = channel_id
+        self._key = api_key
 
+    @property
+    def cached(self):
+        return os.path.isfile(os.path.join("data", self._filename))
 
+    def load_from_disk(self):
+        self.vods.clear()
+        with getfile(self._filename, "r") as f:
+            j = json.load(f)
+        for vod in j:
+            runs = []
+            for run in vod["runs"]:
+                runs.append(Run(**run))
+            self.vods.append(VOD(vod["id"], runs))
+
+    def write_to_disk(self):
+        with getfile(self._filename, "w") as f:
+            json.dump(self.vods, f, default=lambda x: x.to_json())
+
+    async def load_from_api(self):
+        search_params = {
+            "part": "id", 
+            "order": "date",
+            "maxResults": 50,
+            "channelId": self._channel_id,
+            "key": self._key,
+        }
+
+        if self._session is None:
+            self._session = ClientSession("https://youtube.googleapis.com/youtube/v3")
+
+        has_new = True
+        while has_new:
+            search_resp = None
+            async with self._session.get("/search", params=search_params) as resp:
+                search_resp = await resp.json()
+            # TODO
+
+archive = ArchiveHandler("archive.json", config.youtube.archive_id, config.youtube.api_key)
 
 
 
