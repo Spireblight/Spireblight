@@ -2235,6 +2235,35 @@
 
 
 
+<div class="viewcode-block" id="fetch_run_offset">
+<a class="viewcode-back" href="../../server.html#src.server.fetch_run_offset">[docs]</a>
+<span class="nd">@add_listener</span><span class="p">(</span><span class="s2">&quot;run_end&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fetch_run_offset</span><span class="p">(</span><span class="n">run</span><span class="p">:</span> <span class="n">RunParser</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch and store the run start offset.&quot;&quot;&quot;</span>
+    <span class="n">live</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stream</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_streams</span><span class="p">(</span><span class="n">user_logins</span><span class="o">=</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">live</span><span class="p">:</span> <span class="c1"># just in case</span>
+        <span class="n">started</span> <span class="o">=</span> <span class="n">live</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">started_at</span>
+        <span class="n">runtime</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">timestamp</span> <span class="c1"># should be very close to now</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">run</span><span class="o">.</span><span class="n">playtime</span><span class="p">)</span>
+
+        <span class="n">run_start</span> <span class="o">=</span> <span class="n">runtime</span> <span class="o">-</span> <span class="n">duration</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">run_start</span> <span class="o">-</span> <span class="n">started</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;offsets.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">j</span><span class="p">[</span><span class="n">run</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span>
+
+        <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;offsets.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+
+
+
 <span class="c1"># DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE</span>
 <span class="c1"># im merging it and you cant stop me. suck it, past faely!!!</span>
 <span class="c1"># TODO:</span>
