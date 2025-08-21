@@ -1751,6 +1751,32 @@ async def stream_uptime(ctx: ContextType):
         await ctx.reply("Stream is offline (if this is wrong, the Twitch API broke).")
 
 
+@add_listener("run_end")
+async def fetch_run_offset(run: RunParser):
+    """Fetch and store the run start offset."""
+    live: list[Stream] = await TConn.fetch_streams(user_logins=[config.twitch.channel])
+
+    if live: # just in case
+        started = live[0].started_at
+        runtime = run.timestamp # should be very close to now
+        duration = datetime.timedelta(0, run.playtime)
+
+        run_start = runtime - duration
+
+        offset = run_start - started
+
+        try:
+            with getfile("offsets.json", "r") as f:
+                j = json.load(f)
+        except FileNotFoundError:
+            j = {}
+
+        j[run.name] = offset
+
+        with getfile("offsets.json", "w") as f:
+            json.dump(j, f)
+
+
 # DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
 # im merging it and you cant stop me. suck it, past faely!!!
 # TODO:
