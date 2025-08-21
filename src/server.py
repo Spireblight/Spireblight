@@ -1771,7 +1771,7 @@ async def fetch_run_offset(run: RunParser):
         except FileNotFoundError:
             j = {}
 
-        j[run.name] = offset
+        j[run.name] = offset.total_seconds()
 
         with getfile("offsets.json", "w") as f:
             json.dump(j, f)
