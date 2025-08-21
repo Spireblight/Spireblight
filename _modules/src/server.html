@@ -2257,7 +2257,7 @@
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="n">j</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="n">j</span><span class="p">[</span><span class="n">run</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="n">j</span><span class="p">[</span><span class="n">run</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
 
         <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;offsets.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
