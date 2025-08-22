@@ -114,9 +114,10 @@ class _ArchiveHandler:
             self.vods.clear()
         for vod in j:
             v = VOD(vod["id"])
-            runs = []
             for run in vod["runs"]:
-                runs.append(Run(get_parser(run["id"]), run["start"], vod))
+                r = get_parser(run["id"])
+                r.vod = v
+                v.runs.append(Run(r, run["start"], v))
             v.data = VideoMetadata(vod["id"], vod["title"], vod["duration"], vod["description"])
             self.vods.add(v)
 
@@ -192,14 +193,14 @@ class _ArchiveHandler:
         search_params = {
             "part": "snippet",
             "maxResults": 50,
-            "playlistID": "UU" + self._channel_id[2:], # easy
+            "playlistId": "UU" + self._channel_id[2:], # easy
             "key": self._key,
         }
         video_params = {
             "part": "contentDetails",
             "maxResults": 50,
             "key": self._key,
-            "id": [],
+            "id": "",
         }
 
         if self._session is None:
@@ -208,6 +209,7 @@ class _ArchiveHandler:
 
         all_videos: dict[str, tuple[str, str]] = {}
         while True:
+            next_token = None
             search_resp = None
             async with self._session.get("playlistItems", params=search_params) as resp:
                 if resp.ok:
@@ -221,16 +223,25 @@ class _ArchiveHandler:
                 if snippet is None:
                     continue # ??
 
-                all_videos[snippet["resourceId"]["videoId"]] = (snippet["title"], snippet["description"])
+                vid = snippet["resourceId"]["videoId"]
+                if vid in self.vods: # we already have it, no need to query further
+                    break
 
-            next_token = search_resp.get("nextPageToken")
+                all_videos[vid] = (snippet["title"], snippet["description"])
+            else: # did not break out of it, so we continue
+                next_token = search_resp.get("nextPageToken")
+
             if not next_token:
                 break
             search_params["pageToken"] = next_token
 
-        video_params["id"].extend(all_videos.keys() - self.vods)
-
+        start = 0
+        end = 50
+        av = list(all_videos)
         while True:
+            lst = video_params["id"] = av[start:end]
+            if not lst:
+                break
             video_resp = None
             async with self._session.get("videos", params=video_params) as resp:
                 if resp.ok:
@@ -263,10 +274,8 @@ class _ArchiveHandler:
                     self.unparsed[date] = []
                 self.unparsed[date].append(vod)
 
-            next_token = video_resp.get("nextPageToken")
-            if not next_token:
-                break
-            video_resp["pageToken"] = next_token
+            start = end
+            end += 50
 
         return True
 
