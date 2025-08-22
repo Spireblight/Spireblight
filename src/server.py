@@ -76,7 +76,7 @@ from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunPa
 from src.gamedata import RelicData, Treasure, Event
 
 from src.typehints import ContextType, CommandType
-from src import events
+from src import events, archive
 
 from src.configuration import config
 
@@ -3208,3 +3208,13 @@ async def Youtube_startup():
             playlists.extend(reader)
             prev = text
             await asyncio.sleep(ref)
+
+async def Archive_startup():
+    logger.info("Fetching YouTube Archive run information.")
+    archive.archive.load_from_disk()
+    while True:
+        if not await archive.archive.load_from_api():
+            logger.info("Failed to fetch archive data.")
+        archive.archive.determine_offset()
+        archive.archive.write_to_disk()
+        await asyncio.sleep(config.youtube.cache_timeout)

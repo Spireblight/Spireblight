@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, TYPE_CHECKING
 
 import datetime
 import json
@@ -13,6 +13,7 @@ import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
 from response_objects.profiles import ProfilesResponse
+
 from src.cache.run_stats import update_all_run_stats
 from src.cache.cache_helpers import RunLinkedListNode
 from src.cache.mastered import update_mastery_stats
@@ -24,6 +25,9 @@ from src.logger import logger
 from src.events import add_listener
 from src.utils import convert_class_to_obj, get_req_data
 from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
+
+if TYPE_CHECKING:
+    from src.archive import VOD
 
 __all__ = ["get_latest_run", "get_parser", "RunParser", "StreakInfo"]
 
@@ -60,6 +64,7 @@ class RunParser(FileParser):
         self.filename = filename
         self.name, _, ext = filename.partition(".")
         self.matched = RunLinkedListNode()
+        self.vod: VOD = None
         self._character = data["character_chosen"]
         self._profile = profile
         self._character_streak = None
@@ -68,6 +73,22 @@ class RunParser(FileParser):
 
     def __repr__(self):
         return f"Run<{self.display_name}>"
+
+    @property
+    def has_archive_link(self) -> bool:
+        """Whether we have a (timestamped or not) link to an archive video."""
+        if self.vod is not None:
+            for run in self.vod.runs:
+                if run.run is self:
+                    return True
+        return False
+
+    @property
+    def archive_link(self) -> str:
+        """The full link to the archive video with the run."""
+        for run in self.vod.runs:
+            if run.run is self:
+                return run.get_url()
 
     @property
     def display_name(self) -> str:

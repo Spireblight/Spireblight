@@ -2,23 +2,23 @@ from __future__ import annotations
 
 from typing import Optional
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from aiohttp import ClientSession
 
 import datetime
-import asyncio
 import json
 import os
 import re
 
-from configuration import config
-from events import add_listener
-from utils import getfile
-from runs import get_parser
+from src.configuration import config
+from src.events import add_listener
+from src.utils import getfile
+from src.runs import get_parser, RunParser, _cache
 
-_date_re = re.compile(r"(\d\d\d\d\-\d\d\-\d\d)")
+_date_re = re.compile(r"\(\d\d\d\d\-\d\d\-\d\d\)")
+_chapter_re = re.compile(r"^(\d\d?):(\d\d):(\d\d) Slay the Spire \- (\w+)$")
 
-archive: ArchiveHandler = None
+archive: _ArchiveHandler = None
 
 @dataclass
 class VideoMetadata:
@@ -30,23 +30,25 @@ class VideoMetadata:
 
 class Run:
     """Contain run offset information from a vod."""
-    def __init__(self, id: str, start: int, offset: int):
-        self.id = id
+    def __init__(self, run: RunParser, start: int, vod: VOD):
+        self.run = run
         self.start = start
-        self.offset = offset
+        self.vod = vod
 
     def to_json(self):
-        return {"id": self.id, "start": self.start, "offset": self.offset}
+        return {"id": self.run.name, "start": self.start}
 
-    @property
-    def run(self):
-        return get_parser(self.id)
+    def get_url(self):
+        ts = ""
+        if self.start > 5: # don't timestamp if it's at the start
+            ts = f"?t={self.start}"
+        return f"https://youtu.be/{self.vod.id}{ts}"
 
 class VOD:
     """Information from a stream vod with optional run information."""
-    def __init__(self, id: str, runs: Optional[list[Run]] = None):
+    def __init__(self, id: str):
         self.id = id
-        self.runs = runs or []
+        self.runs: list[Run] = []
         self.data: VideoMetadata = None
 
     def __hash__(self):
@@ -58,8 +60,18 @@ class VOD:
     def to_json(self):
         return {**self.data.__dict__, "runs": self.runs}
 
-    def add_run(self, run: Run):
-        self.runs.append(run)
+    def get_offsets(self):
+        """Return a mapping of offset to character played."""
+        final: list[tuple[int, str]] = []
+        for line in self.data.description.splitlines():
+            if (c := _chapter_re.match(line)):
+                h, m, s, char = c.groups()
+                minutes = int(m)
+                minutes += int(h) * 60
+                seconds = int(s) + minutes
+                final.append( (seconds, char) )
+
+        return final
 
     @property
     def datetime(self):
@@ -68,29 +80,12 @@ class VOD:
             return None
         return datetime.datetime.fromisoformat(matched.group())
 
-# JSON architecture
-
-_internal = [
-    {
-        "id": "11-character ID for the VOD",
-        "title": "video title",
-        "duration": 3600, # duration of the vod, in seconds
-        "description": "video description",
-        "runs": [ # can be empty
-            {
-                "id": "name of the run as in url/runs/RUN, usually a UNIX timestamp",
-                "start": 1800, # the calculated start offset for the run
-                "offset": 0, # user-submitted offset from 'start'
-            }
-        ],
-    }
-]
-
-class ArchiveHandler:
+class _ArchiveHandler:
     """Handle archive maintenance."""
     def __init__(self, filename: str, channel_id: str, api_key: str):
-        self.vods = set()
-        self.unparsed = set()
+        self.vods: set[VOD] = set()
+        self.unparsed: dict[datetime.date, list[VOD]] = {}
+        self.errored: list[VOD] = [] #: For the VODs with Spire that no run matches, somehow
         self._session: Optional[ClientSession] = None
 
         self._filename = filename
@@ -99,23 +94,91 @@ class ArchiveHandler:
 
     @property
     def cached(self):
+        """Whether we have cached data on the run VOD information."""
         return os.path.isfile(os.path.join("data", self._filename))
 
     def load_from_disk(self):
         """Load video information from disk."""
-        self.vods.clear()
-        with getfile(self._filename, "r") as f:
-            j = json.load(f)
+        try:
+            with getfile(self._filename, "r") as f:
+                j = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            j = []
+        else: # only clear if we can parse the on-disk data
+            self.vods.clear()
         for vod in j:
+            v = VOD(vod["id"])
             runs = []
             for run in vod["runs"]:
-                runs.append(Run(**run))
-            self.vods.add(VOD(vod["id"], runs))
+                runs.append(Run(get_parser(run["id"]), run["start"], vod))
+            v.data = VideoMetadata(vod["id"], vod["title"], vod["duration"], vod["description"])
+            self.vods.add(v)
+
+        try:
+            with getfile("unmatched_" + self._filename, "r") as f:
+                j = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            j = []
+        else:
+            self.errored.clear()
+        for vod in j:
+            v = VOD(vod["id"])
+            v.data = VideoMetadata(vod["id"], vod["title"], vod["duration"], vod["description"])
+            self.errored.append(v)
 
     def write_to_disk(self):
         """Write all the vod information to disk."""
         with getfile(self._filename, "w") as f:
-            json.dump(list(self.vods - self.unparsed), f, default=lambda x: x.to_json())
+            json.dump(list(self.vods - self.unparsed.keys()), f, default=lambda x: x.to_json())
+        with getfile("unmatched_" + self._filename, "w") as f:
+            json.dump(self.errored, f, default=lambda x: x.to_json())
+
+    def determine_offset(self):
+        """Determine the run offset from the start of the vod."""
+        if not self.unparsed: # no need to determine anything
+            return
+        res: dict[VOD, list[RunParser]] = {}
+        # map all the vods to the runs that match
+        for run in _cache.values():
+            if (d := run.timestamp.date()) in self.unparsed:
+                for vod in self.unparsed[d]:
+                    if vod not in res:
+                        res[vod] = []
+                    res[vod].append(run)
+
+        # check to make sure all the vods with Spire were mapped to run(s)
+        # some will not have runs, check to make sure there was no Spire
+        spireless: list[VOD] = []
+        for vods in self.unparsed.values():
+            for vod in vods:
+                if vod not in res:
+                    spireless.append(vod)
+
+        self.unparsed.clear()
+        while spireless:
+            vod = spireless.pop(0)
+            if vod.get_offsets(): # has Spire info
+                self.errored.append(vod)
+            else:
+                self.vods.remove(vod)
+
+        for vod, runs in res.items():
+            runs.sort(key=lambda x: x.timestamp)
+            final_runs: list[Run] = []
+            offsets = vod.get_offsets()
+            if len(offsets) != len(runs): # ach no!
+                # it could be because the vod is split in multiple parts
+                # we could (probably) figure it out, but I'll just save it to disk
+                # I can figure it out later or something, idk
+                # - Faely, 2025-08-22
+                self.errored.append(vod)
+                continue # :(
+
+            for run, (offset, char) in zip(runs, offsets):
+                if run.character == char:
+                    final_runs.append(Run(run, offset, vod))
+
+            vod.runs.extend(final_runs)
 
     async def load_from_api(self) -> bool:
         """Fetch VOD information from YouTube. Return True if it succeeded."""
@@ -128,11 +191,11 @@ class ArchiveHandler:
         }
 
         if self._session is None:
-            self._session = ClientSession("https://youtube.googleapis.com/youtube/v3")
+            self._session = ClientSession("https://youtube.googleapis.com/youtube/v3/")
 
         while True:
             search_resp = None
-            async with self._session.get("/search", params=search_params) as resp:
+            async with self._session.get("search", params=search_params) as resp:
                 search_resp: dict = await resp.json()
 
             if not search_resp:
@@ -149,12 +212,12 @@ class ArchiveHandler:
                     return True # we already have this one, so anything after this is older and we have it
 
                 video_resp = None
-                async with self._session.get("/videos", params={"part": "snippet,contentDetails", "id": c, "key": self._key}) as resp:
+                async with self._session.get("videos", params={"part": "snippet,contentDetails", "id": c, "key": self._key}) as resp:
                     video_resp = await resp.json()
 
                 if not video_resp:
                     return False
-                
+
                 video_info = video_resp["items"][0]
                 snippet = video_info["snippet"]
                 if not _date_re.search(snippet["title"]): # doesn't have a date in the title, not a vod
@@ -174,11 +237,12 @@ class ArchiveHandler:
                     self.unparsed[date] = []
                 self.unparsed[date].append(vod)
 
-            if not (next_token := search_resp.get("nextPageToken")):
+            next_token = search_resp.get("nextPageToken")
+            if not next_token:
                 break
             search_params["pageToken"] = next_token
 
         return True
 
 
-archive = ArchiveHandler("archive.json", config.youtube.archive_id, config.youtube.api_key)
+archive = _ArchiveHandler("archive.json", config.youtube.archive_id, config.youtube.api_key)

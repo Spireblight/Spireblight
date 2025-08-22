@@ -42,6 +42,8 @@ async def main():
         tasks.add(loop.create_task(server.Discord_startup()))
     if config.youtube.playlist_sheet:
         tasks.add(loop.create_task(server.Youtube_startup()))
+    if config.youtube.archive_id not in ("<not set>", ""):
+        tasks.add(loop.create_task(server.Archive_startup()))
 
     tasks.add(loop.create_task(web._run_app(webpage)))
 
