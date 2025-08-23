@@ -348,6 +348,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
@@ -385,7 +386,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_masteries</span><span class="p">,</span> <span class="n">get_mastered</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sanitize</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">,</span> <span class="n">_internal_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.sts_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_profile</span><span class="p">,</span> <span class="n">get_current_profile</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span><span class="p">,</span> <span class="n">__botname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__github__</span><span class="p">,</span> <span class="n">__author__</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span><span class="p">,</span> <span class="n">playlists</span><span class="p">,</span> <span class="n">__botname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__github__</span><span class="p">,</span> <span class="n">__author__</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster</span><span class="w"> </span><span class="kn">import</span> <span class="n">query</span> <span class="k">as</span> <span class="n">mt_query</span><span class="p">,</span> <span class="n">get_savefile</span> <span class="k">as</span> <span class="n">get_mt_save</span><span class="p">,</span> <span class="n">MonsterSave</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.twitch</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitchCommand</span>
@@ -406,7 +407,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.gamedata</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelicData</span><span class="p">,</span> <span class="n">Treasure</span><span class="p">,</span> <span class="n">Event</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">CommandType</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">events</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">events</span><span class="p">,</span> <span class="n">archive</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
@@ -3905,12 +3906,43 @@
 <div class="viewcode-block" id="Youtube_startup">
 <a class="viewcode-back" href="../../server.html#src.server.Youtube_startup">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Youtube_startup</span><span class="p">():</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">youtube</span><span class="o">.</span><span class="n">playlist_sheet</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-            <span class="n">csv</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/playlists.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">playlists</span><span class="p">:</span>
-                <span class="n">playlists</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">csv</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Youtube playlist sheet downloaded&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting Youtube playlist sheet download. Will refresh every </span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">s.&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">youtube</span><span class="o">.</span><span class="n">playlist_sheet</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">prev</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span> <span class="c1"># no need to update anything (or nothing to update)</span>
+                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="c1"># We&#39;re using DictReader with a defined set of fields so that if any keys are added to</span>
+            <span class="c1"># the sheet the display code here won&#39;t break.</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="p">(</span>
+                <span class="s2">&quot;Game&quot;</span><span class="p">,</span> <span class="s2">&quot;Youtube Link&quot;</span><span class="p">,</span> <span class="s2">&quot;Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;Steam Link&quot;</span><span class="p">,</span>
+            <span class="p">))</span>
+            <span class="c1"># Skip the header line (needed when setting fieldnames)</span>
+            <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+            <span class="c1"># Serialize from a special object down to a pure list so we can json dump later</span>
+            <span class="n">playlists</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">playlists</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Archive_startup">
+<a class="viewcode-back" href="../../server.html#src.server.Archive_startup">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Archive_startup</span><span class="p">():</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching YouTube Archive run information.&quot;</span><span class="p">)</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">load_from_disk</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">load_from_api</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Failed to fetch archive data.&quot;</span><span class="p">)</span>
+        <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">determine_offset</span><span class="p">()</span>
+        <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">write_to_disk</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">youtube</span><span class="o">.</span><span class="n">cache_timeout</span><span class="p">)</span></div>
 
 </pre></div>
 

@@ -369,10 +369,10 @@
 </li>
       <li><a href="server.html#src.server.add_cmd">add_cmd() (in module src.server)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="events.html#src.events.add_listener">add_listener() (in module src.events)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cache.html#src.cache.cache_helpers.RunStats.add_loss">add_loss() (RunStats method)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.ShopContents.add_potion">add_potion() (ShopContents method)</a>
@@ -390,6 +390,10 @@
       <li><a href="server.html#src.server.AppClient">AppClient (class in src.server)</a>
 </li>
       <li><a href="cache.html#src.cache.cache_helpers.StreakContainer.append">append() (StreakContainer method)</a>
+</li>
+      <li><a href="fileparser.html#src.runs.RunParser.archive_link">archive_link (RunParser property)</a>
+</li>
+      <li><a href="server.html#src.server.Archive_startup">Archive_startup() (in module src.server)</a>
 </li>
       <li><a href="monster.html#src.monster.server.MonsterSave.artifacts">artifacts (MonsterSave property)</a>
 </li>
@@ -715,9 +719,13 @@
         <li><a href="cache.html#src.cache.cache_helpers.RunStatsByDate.date_range_string">(RunStatsByDate property)</a>
 </li>
       </ul></li>
+      <li><a href="archive.html#src.archive.VOD.datetime">datetime (VOD property)</a>
+</li>
       <li><a href="fileparser.html#src.save.Savefile.deck_card_ids">deck_card_ids (Savefile property)</a>
 </li>
       <li><a href="slice.html#src.slice.decode">decode() (in module src.slice)</a>
+</li>
+      <li><a href="archive.html#src.archive.VideoMetadata.description">description (VideoMetadata attribute)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.BaseNode.description">description() (BaseNode method)</a>
 
@@ -763,6 +771,8 @@
         <li><a href="fileparser.html#src.save.Savefile.done">(Savefile attribute)</a>
 </li>
       </ul></li>
+      <li><a href="archive.html#src.archive.VideoMetadata.duration">duration (VideoMetadata attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -997,10 +1007,10 @@
 </li>
       <li><a href="server.html#src.server.get_last_win">get_last_win() (in module src.server)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cache.html#src.cache.mastered.get_mastered">get_mastered() (in module src.cache.mastered)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="score.html#src.score.get_max_hp_bonus">get_max_hp_bonus() (in module src.score)</a>
 </li>
       <li><a href="fileparser.html#src.gamedata.FileParser.get_meta_scaling_cards">get_meta_scaling_cards() (FileParser method)</a>
@@ -1016,6 +1026,8 @@
       <li><a href="server.html#src.server.get_new_token">get_new_token() (in module src.server)</a>
 </li>
       <li><a href="server.html#src.server.get_oauth_token">get_oauth_token() (in module src.server)</a>
+</li>
+      <li><a href="archive.html#src.archive.VOD.get_offsets">get_offsets() (VOD method)</a>
 </li>
       <li><a href="score.html#src.score.get_overkill_bonus">get_overkill_bonus() (in module src.score)</a>
 </li>
@@ -1077,6 +1089,8 @@
         <li><a href="fileparser.html#src.save.Savefile.get_shop_contents">(Savefile method)</a>
 </li>
       </ul></li>
+      <li><a href="archive.html#src.archive.Run.get_url">get_url() (Run method)</a>
+</li>
       <li><a href="utils.html#src.utils.getfile">getfile() (in module src.utils)</a>
 </li>
       <li><a href="server.html#src.server.giveaway_enter">giveaway_enter() (in module src.server)</a>
@@ -1121,14 +1135,16 @@
         <li><a href="fileparser.html#src.save.Savefile.has_activemods">(Savefile property)</a>
 </li>
       </ul></li>
+      <li><a href="fileparser.html#src.runs.RunParser.has_archive_link">has_archive_link (RunParser property)</a>
+</li>
       <li><a href="fileparser.html#src.save.Savefile.has_combo">has_combo (Savefile property)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.NeowBonus.has_info">has_info (NeowBonus property)</a>
 </li>
-      <li><a href="fileparser.html#src.save.Savefile.has_overkill">has_overkill (Savefile property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="fileparser.html#src.save.Savefile.has_overkill">has_overkill (Savefile property)</a>
+</li>
       <li><a href="fileparser.html#src.gamedata.FileParser.has_removals">has_removals (FileParser property)</a>
 
       <ul>
@@ -1149,6 +1165,8 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="archive.html#src.archive.VideoMetadata.id">id (VideoMetadata attribute)</a>
+</li>
       <li><a href="fileparser.html#src.save.Savefile.in_game">in_game (Savefile property)</a>
 </li>
       <li><a href="server.html#src.server.individual_cmd">individual_cmd() (in module src.server)</a>
@@ -1345,8 +1363,6 @@
       </ul></li>
       <li><a href="server.html#src.server.modifiers">modifiers() (in module src.server)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="fileparser.html#src.gamedata.FileParser.modifiers_with_desc">modifiers_with_desc (FileParser property)</a>
 
       <ul>
@@ -1355,6 +1371,8 @@
         <li><a href="fileparser.html#src.save.Savefile.modifiers_with_desc">(Savefile property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="fileparser.html#src.runs.RunParser.mods">mods (RunParser property)</a>
 
       <ul>
@@ -1366,6 +1384,8 @@
 
       <ul>
         <li><a href="activemods.html#module-src.activemods">src.activemods</a>
+</li>
+        <li><a href="archive.html#module-src.archive">src.archive</a>
 </li>
         <li><a href="cache.html#module-src.cache">src.cache</a>
 </li>
@@ -1784,6 +1804,8 @@
         <li><a href="fileparser.html#src.save.Savefile.rotating_streak">(Savefile property)</a>
 </li>
       </ul></li>
+      <li><a href="archive.html#src.archive.Run">Run (class in src.archive)</a>
+</li>
       <li><a href="fileparser.html#src.runs.RunParser.run_length">run_length (RunParser property)</a>
 </li>
       <li><a href="server.html#src.server.run_playtime">run_playtime() (in module src.server)</a>
@@ -1898,6 +1920,13 @@
 </li>
       </ul></li>
       <li>
+    src.archive
+
+      <ul>
+        <li><a href="archive.html#module-src.archive">module</a>
+</li>
+      </ul></li>
+      <li>
     src.cache
 
       <ul>
@@ -1946,6 +1975,8 @@
         <li><a href="configuration.html#module-src.configuration">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     src.disc
 
@@ -1953,8 +1984,6 @@
         <li><a href="disc.html#module-src.disc">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     src.events
 
@@ -2150,10 +2179,16 @@
         <li><a href="fileparser.html#src.save.Savefile.timestamp">(Savefile property)</a>
 </li>
       </ul></li>
+      <li><a href="archive.html#src.archive.VideoMetadata.title">title (VideoMetadata attribute)</a>
+</li>
       <li><a href="server.html#src.server.Clip.to_json">to_json() (Clip method)</a>
 
       <ul>
         <li><a href="server.html#src.server.Quote.to_json">(Quote method)</a>
+</li>
+        <li><a href="archive.html#src.archive.Run.to_json">(Run method)</a>
+</li>
+        <li><a href="archive.html#src.archive.VOD.to_json">(VOD method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2228,11 +2263,15 @@
         <li><a href="cache.html#src.cache.cache_helpers.StreakContainer.verb">(StreakContainer property)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="activemods.html#src.activemods.ActiveMod.version">version (ActiveMod property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nodes.html#src.gamedata.Victory">Victory (class in src.gamedata)</a>
+</li>
+      <li><a href="archive.html#src.archive.VideoMetadata">VideoMetadata (class in src.archive)</a>
+</li>
+      <li><a href="archive.html#src.archive.VOD">VOD (class in src.archive)</a>
 </li>
   </ul></td>
 </tr></table>

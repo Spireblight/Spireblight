@@ -331,7 +331,7 @@
   <h1>Source code for src.runs</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
@@ -344,6 +344,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">response_objects.run_single</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunResponse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">response_objects.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfilesResponse</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.run_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_all_run_stats</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.cache_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunLinkedListNode</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_mastery_stats</span>
@@ -356,7 +357,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_class_to_obj</span><span class="p">,</span> <span class="n">get_req_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.activemods</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActiveMods</span><span class="p">,</span> <span class="n">ActiveMod</span><span class="p">,</span> <span class="n">ACTIVEMODS_KEY</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;get_latest_run&quot;</span><span class="p">,</span> <span class="s2">&quot;RunParser&quot;</span><span class="p">,</span> <span class="s2">&quot;StreakInfo&quot;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">src.archive</span><span class="w"> </span><span class="kn">import</span> <span class="n">VOD</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;get_latest_run&quot;</span><span class="p">,</span> <span class="s2">&quot;get_parser&quot;</span><span class="p">,</span> <span class="s2">&quot;RunParser&quot;</span><span class="p">,</span> <span class="s2">&quot;StreakInfo&quot;</span><span class="p">]</span>
 
 <span class="n">_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">RunParser</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_ts_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">RunParser</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -393,6 +397,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matched</span> <span class="o">=</span> <span class="n">RunLinkedListNode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vod</span><span class="p">:</span> <span class="n">VOD</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_character</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;character_chosen&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_profile</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_character_streak</span> <span class="o">=</span> <span class="kc">None</span>
@@ -401,6 +406,22 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Run&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_archive_link</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether we have a (timestamped or not) link to an archive video.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vod</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vod</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">run</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">archive_link</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The full link to the archive video with the run.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vod</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">run</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">run</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
