@@ -73,8 +73,12 @@ youtube:
   # you're in a development context)
   default_video: "fei2frQWPxs"
 
+  # The Archive channel, where runs may be located as part of longer videos (VODs)
+  # If this is not set or empty, looking up the archive for runs will be disabled
+  archive_id: <not set>
+
   # Amount of seconds we wait between making API calls to Youtube. Should
-  # probably never be lower than 3600.
+  # probably never be lower than 3600. This is individual per channel.
   cache_timeout: 3600
 
   # The export URL to the sheet with links to all Youtube playlists.
