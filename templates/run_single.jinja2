@@ -133,6 +133,13 @@
                 </a>
               {% endif %}
             </div>
+            <div class="px-2">
+              {% if run.has_archive_link %}
+                <a href="{{ run.archive_link }}">
+                  Watch this run on YouTube
+                </a>
+              {% endif %}
+            </div>
           </div>
         {% endif %}
       </div>
