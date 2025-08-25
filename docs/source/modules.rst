@@ -7,6 +7,7 @@ Full Spireblight API
    fileparser
    nodes
    activemods
+   archive
    cache
    client
    configuration

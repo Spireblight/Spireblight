@@ -87,7 +87,9 @@ class VOD:
         return datetime.datetime.fromisoformat(matched.group())
 
 class _ArchiveHandler:
-    """Handle archive maintenance."""
+    """Handle archive maintenance.
+
+    :meta public:"""
     def __init__(self, filename: str, channel_id: str, api_key: str):
         self.vods: set[VOD] = set()
         self.unparsed: dict[datetime.date, list[VOD]] = {}
