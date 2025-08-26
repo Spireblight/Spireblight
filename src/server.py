@@ -2363,8 +2363,11 @@ async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
         return
 
     relicData = l[index - 1]
+    stats = ""
+    if (s := relicData.get_details()):
+        stats = " (" + " | ".join(s) + ")"
     await ctx.reply(
-        f"The relic at position {index} is {relicData.name}: {relicData.relic.description}"
+        f"The relic at position {index} is {relicData.name}: {relicData.relic.description}{stats}"
     )
 
 

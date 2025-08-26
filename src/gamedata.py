@@ -1721,22 +1721,38 @@ class RelicData:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     def get_stats(self) -> int | float | str | list[str] | None: #PRIV#
+        """Get the relic's raw stats for this run.
+
+        :return: The matching stats, or None if not present.
+        :rtype: int | float | str | list[str] | None
+        """
         if "basemod:mod_saves" in self.parser._data:
             return self.parser._data["basemod:mod_saves"].get(f"stats_{self.relic.internal}")
         if "relic_stats" in self.parser._data:
             return self.parser._data["relic_stats"].get(self.relic.internal)
 
-    def get_details(self, obtained: NodeData, last: NodeData) -> list[str]:
+    def get_details(self, obtained: Optional[BaseNode] = None, last: Optional[BaseNode] = None) -> list[str]:
+        """Get stats information for this relic.
+
+        :param obtained: The node this relic was obtained, defaults to None.
+        :type obtained: BaseNode, optional
+        :param last: The current or last node, defaults to None.
+        :type last: BaseNode, optional
+        :return: A list of this relic's stats.
+        :rtype: list[str]
+        """
         desc = []
         try:
-            text = get_relic_stats(self.relic.internal) # FIXME
+            text = get_relic_stats(self.relic.internal)
         except KeyError: # no stats for these
             return []
         stats = self.get_stats()
         if stats is None:
             return []
 
-        per_turn = True
+        # we want to support calling this method without any argument
+        # in which case we just won't have per-turn data
+        per_turn = (obtained is not None and last is not None)
 
         if self.relic.name == "White Beast Statue":
             # if this is a savefile, only the last number matters. run files should be unaffected
