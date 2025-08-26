@@ -45,6 +45,8 @@
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cache package" href="cache.html" />
+    <link rel="prev" title="activemods module" href="activemods.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -130,7 +132,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
   </a>
@@ -209,10 +211,8 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -234,7 +234,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
   </a>
@@ -278,6 +278,39 @@
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes.html">Slay the Spire path node data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activemods.html">activemods module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">archive module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">cache package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">client module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">configuration module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">server module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitch.html">twitch module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typehints.html">typehints module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webpage.html">webpage module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">wrapper module</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item">
@@ -313,6 +346,9 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">Full Spireblight API</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">archive module</span></li>
   </ul>
 </nav>
@@ -335,8 +371,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="src.archive.VideoMetadata">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VideoMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#VideoMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive.VideoMetadata" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Hold YouTube video metadata.</p>
+<dd><p>Hold YouTube video metadata.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.archive.VideoMetadata.id">
 <span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.archive.VideoMetadata.id" title="Link to this definition">#</a></dt>
@@ -362,8 +397,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="src.archive.Run">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fileparser.html#src.runs.RunParser" title="src.runs.RunParser"><span class="pre">RunParser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.archive.VOD" title="src.archive.VOD"><span class="pre">VOD</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive.Run" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Contain run offset information from a vod.</p>
+<dd><p>Contain run offset information from a vod.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.archive.Run.to_json">
 <span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#Run.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive.Run.to_json" title="Link to this definition">#</a></dt>
@@ -379,8 +413,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="src.archive.VOD">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VOD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#VOD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive.VOD" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Information from a stream vod with optional run information.</p>
+<dd><p>Information from a stream vod with optional run information.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.archive.VOD.to_json">
 <span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#VOD.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive.VOD.to_json" title="Link to this definition">#</a></dt>
@@ -399,6 +432,50 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_ArchiveHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#_ArchiveHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive._ArchiveHandler" title="Link to this definition">#</a></dt>
+<dd><p>Handle archive maintenance.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.errored">
+<span class="sig-name descname"><span class="pre">errored</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.archive.VOD" title="src.archive.VOD"><span class="pre">VOD</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.archive._ArchiveHandler.errored" title="Link to this definition">#</a></dt>
+<dd><p>For the VODs with Spire that no run matches, somehow</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.cached">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cached</span></span><a class="headerlink" href="#src.archive._ArchiveHandler.cached" title="Link to this definition">#</a></dt>
+<dd><p>Whether we have cached data on the run VOD information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.load_from_disk">
+<span class="sig-name descname"><span class="pre">load_from_disk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#_ArchiveHandler.load_from_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive._ArchiveHandler.load_from_disk" title="Link to this definition">#</a></dt>
+<dd><p>Load video information from disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.write_to_disk">
+<span class="sig-name descname"><span class="pre">write_to_disk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#_ArchiveHandler.write_to_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive._ArchiveHandler.write_to_disk" title="Link to this definition">#</a></dt>
+<dd><p>Write all the vod information to disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.determine_offset">
+<span class="sig-name descname"><span class="pre">determine_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/archive.html#_ArchiveHandler.determine_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive._ArchiveHandler.determine_offset" title="Link to this definition">#</a></dt>
+<dd><p>Determine the run offset from the start of the vod.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.archive._ArchiveHandler.load_from_api">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_api</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/archive.html#_ArchiveHandler.load_from_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.archive._ArchiveHandler.load_from_api" title="Link to this definition">#</a></dt>
+<dd><p>Fetch VOD information from YouTube. Return True if it succeeded.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -411,6 +488,24 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="activemods.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">activemods module</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cache.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cache package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -446,6 +541,15 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive.VOD.to_json"><code class="docutils literal notranslate"><span class="pre">VOD.to_json()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive.VOD.get_offsets"><code class="docutils literal notranslate"><span class="pre">VOD.get_offsets()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive.VOD.datetime"><code class="docutils literal notranslate"><span class="pre">VOD.datetime</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.errored"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.errored</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.cached"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.cached</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.load_from_disk"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.load_from_disk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.write_to_disk"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.write_to_disk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.determine_offset"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.determine_offset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.archive._ArchiveHandler.load_from_api"><code class="docutils literal notranslate"><span class="pre">_ArchiveHandler.load_from_api()</span></code></a></li>
 </ul>
 </li>
 </ul>
