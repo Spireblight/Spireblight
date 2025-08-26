@@ -2333,7 +2333,7 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
         f"Normal fight: {hallway:.0%} - "
         f"Shop: {shop:.0%} - "
         f"Treasure: {chest:.0%} - "
-        f"Event: {100-hallway-shop-chest:.0%} - "
+        f"Event: {1-hallway-shop-chest:.0%} - "
         f"See {config.baalorbot.prefix}eventrng for more information."
     )
 

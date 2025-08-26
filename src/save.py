@@ -225,7 +225,8 @@ class Savefile(FileParser):
         )
 
     @property
-    def event_chances(self) -> tuple[int, int, int, int]:
+    def event_chances(self) -> tuple[float, float, float, float]:
+        """A tuple of (elite, hallway, shop, chest) likelihoods, between 0 and 1."""
         return self._data["event_chances"]
 
     @property
