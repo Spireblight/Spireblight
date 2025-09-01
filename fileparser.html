@@ -677,7 +677,18 @@ run is currently ongoing. To check if a run is ongoing, test for <a class="refer
 <dl class="py method">
 <dt class="sig sig-object py" id="src.save.Savefile.update_data">
 <span class="sig-name descname"><span class="pre">update_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/save.html#Savefile.update_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.save.Savefile.update_data" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Update all the data for the current run.</p>
+<p>This updates the instance in-place, and handles automatic page redirect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em>) – Raw JSON-decoded savefile data from the client</p></li>
+<li><p><strong>character</strong> (<em>str</em>) – The on-disk name of the savefile</p></li>
+<li><p><strong>has_run</strong> (<em>str</em>) – Whether we have a finished run matching previous data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="src.save.Savefile.in_game">
