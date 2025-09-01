@@ -2,7 +2,7 @@ import argparse
 import pathlib
 import yaml
 
-import _cfgmap
+from src import _cfgmap
 
 __version__ = "0.7"
 __author__ = "Anilyka Barry"
