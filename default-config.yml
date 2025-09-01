@@ -1,6 +1,8 @@
 # This is the defaults for all the configuration vaules.
 #
 # For a local setup you should not make changes here, but in dev-config.yml.
+#
+# IMPORTANT: If you plan to modify this file, you NEED to modify src/_cfgmap.py to match exactly
 
 twitch:
   # If the Twitch part of the bot is enabled or not.
