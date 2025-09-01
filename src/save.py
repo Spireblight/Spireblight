@@ -44,6 +44,12 @@ class Savefile(FileParser):
     prefix = "metric_"
 
     def __init__(self, _debug=False):
+        """Instantiate run data, and load existing run information if present.
+
+        :param _debug: For testing and debugging purposes only, do not use.
+        :type _debug: bool
+        :raises RuntimeError: Attempting to create another :class:`Savefile` instance.
+        """
         # _debug is NOT intended for normal use, only testing
         # things can and WILL break if used in production
         if _savefile is not None and not _debug:
@@ -63,6 +69,17 @@ class Savefile(FileParser):
         return "SAVEFILE"
 
     def update_data(self, data: dict[str, Any] | None, character: str, has_run: str):
+        """Update all the data for the current run.
+
+        This updates the instance in-place, and handles automatic page redirect.
+
+        :param data: Raw JSON-decoded savefile data from the client
+        :type data: dict[str, Any] | None
+        :param character: The on-disk name of the savefile
+        :type character: str
+        :param has_run: Whether we have a finished run matching previous data
+        :type has_run: str
+        """
         if character.startswith(("1_", "2_")):
             character = character[2:]
         if data is None and has_run == "true" and self._data is not None:
