@@ -1,11 +1,14 @@
+import importlib
 import logging
 import asyncio
 import sys
+import os
 
 from aiohttp import web
 
 from src.webpage import webpage
 from src.logger import logger
+from src.config import __version__
 
 from src import server, events
 
@@ -28,6 +31,39 @@ if sys.platform == "win32": # postgres compat
     )
 
 async def main():
+    last = "0.6" # last version without automatic migration
+    if os.path.isfile("last_version"):
+        with open("last_version") as f:
+            last = f.read().strip()
+    if last != __version__: # need to migrate
+        values = {}
+        for dirpath, folders, files in os.walk("migrate"):
+            for file in files:
+                if file.startswith("_") or not file.endswith(".py"):
+                    continue
+                name = file[:-3]
+                mod = importlib.import_module(f"migrate.{name}")
+                values[module.FROM] = mod
+
+        while last != __version__:
+            try:
+                module = values[last]
+            except KeyError:
+                raise RuntimeError(f"Could not migrate from {last}, this is a bug.")
+
+            try:
+                module.migrate()
+                # if there is nothing to migrate, then this should exist but be a no-op
+            except Exception as e:
+                raise RuntimeError(f"Migrating from {last} encountered an error") from e
+
+            last = module.TO
+
+        with open("last_version", "w") as f:
+            f.write(last)
+
+        return # prefer a clean slate
+
     await events.invoke("setup_init")
     loop = asyncio.get_event_loop()
 
