@@ -79,7 +79,7 @@ youtube:
   # If this is not set or empty, looking up the archive for runs will be disabled
   archive_id: <not set>
 
-  # Amount of seconds we wait between making API calls to Youtube. Should
+  # Number of seconds we wait between making API calls to Youtube. Should
   # probably never be lower than 3600. This is individual per channel.
   cache_timeout: 3600
 

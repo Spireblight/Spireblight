@@ -30,6 +30,7 @@ class Config(_ConfigMapping):
 
         self.twitch = Twitch(**twitch)
         self.discord = Discord(**discord)
+        self.youtube = YouTube(**youtube)
 
 class Twitch(_ConfigMapping):
     def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, extended: dict, timers: dict):
@@ -125,3 +126,28 @@ class _InviteLinks(_ConfigMapping):
         """
         self.main = main
         self.dev = dev
+
+class YouTube(_ConfigMapping):
+    def __init__(self, channel_id: str, default_video: str, archive_id: str, api_key: str, cache_timeout: int, playlist_sheet: str):
+        """Store the YouTube configuration.
+
+        :param channel_id: The main channel ID used when searching.
+        :type channel_id: str
+        :param default_video: The fallback video ID to use if none is found (likely due to a dev environment).
+        :type default_video: str
+        :param archive_id: The channel ID where the archives/VODs are located.
+        :type archive_id: str
+        :param api_key: The API key needed to query YouTube.
+        :type api_key: str
+        :param cache_timeout: The maximum time, in seconds, where we cache call results.
+        :type cache_timeout: int
+        :param playlist_sheet: The sheet with links for the YouTube playlists, in CSV format.
+        :type playlist_sheet: str
+        """
+
+        self.channel_id = channel_id
+        self.default_video = default_video
+        self.archive_id = archive_id
+        self.api_key = api_key
+        self.cache_timeout = cache_timeout
+        self.playlist_sheet = playlist_sheet
