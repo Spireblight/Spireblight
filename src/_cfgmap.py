@@ -12,7 +12,24 @@ class _ConfigMapping:
 
 class Config(_ConfigMapping):
     def __init__(self, twitch: dict, discord: dict, youtube: dict, bot: dict, server: dict, spotify: dict):
+        """Hold all of the configuration data
+
+        :param twitch: A mapping to be passed to :class:`Twitch`.
+        :type twitch: dict
+        :param discord: A mapping to be passed to :class:`Discord`.
+        :type discord: dict
+        :param youtube: A mapping to be passed to :class:`YouTube`.
+        :type youtube: dict
+        :param bot: A mapping to be passed to :class:`Bot`.
+        :type bot: dict
+        :param server: A mapping to be passed to :class:`Server`.
+        :type server: dict
+        :param spotify: A mapping to be passed to :class:`Spotify`.
+        :type spotify: dict
+        """
+
         self.twitch = Twitch(**twitch)
+        self.discord = Discord(**discord)
 
 class Twitch(_ConfigMapping):
     def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, extended: dict, timers: dict):
@@ -73,3 +90,38 @@ class _TimerIntervals(_ConfigMapping):
 
         self.default_interval = default_interval
         self.stagger_interval = stagger_interval
+
+class Discord(_ConfigMapping):
+    def __init__(self, server_id: int, moderator_role: int, oauth_token: str, invite_links: dict, *, enabled: bool = True):
+        """Handle the Discord side of the configuration.
+
+        :param server_id: The server ("Guild") ID where we will operate.
+        :type server_id: int
+        :param moderator_role: The user role which is considered to be a moderator.
+        :type moderator_role: int
+        :param oauth_token: The OAuth token needed to connect to Discord.
+        :type oauth_token: str
+        :param invite_links: A mapping of the various Discord invite links we have.
+        :type invite_links: dict
+        :param enabled: Whether the Discord part is enabled, defaults to True.
+        :type enabled: bool, optional
+        """
+
+        self.server_id = server_id
+        self.moderator_role = moderator_role
+        self.oauth_token = oauth_token
+        self.enabled = enabled
+
+        self.invite_links = _InviteLinks(**invite_links)
+
+class _InviteLinks(_ConfigMapping):
+    def __init__(self, main: str, dev: str):
+        """The various Discord invite links we have.
+
+        :param main: The invite link to the main streamer server.
+        :type main: str
+        :param dev: The invite link to the development (i.e. Spireblight) server.
+        :type dev: str
+        """
+        self.main = main
+        self.dev = dev

@@ -1,4 +1,4 @@
-# This is the defaults for all the configuration vaules.
+# This is the defaults for all the configuration values.
 #
 # For a local setup you should not make changes here, but in dev-config.yml.
 #
@@ -58,7 +58,7 @@ discord:
 
   # The server ID the bot is working on. This acts as a guard so it doesn't send
   # messages to other servers.
-  server_id: <channel id not set>
+  server_id: 0
 
   # Which user role is considered a moderator. This should be the numberical ID
   # of the role, and the default of 0 will make it error out.
