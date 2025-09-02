@@ -11,7 +11,7 @@ class _ConfigMapping:
             setattr(self, k, v)
 
 class Config(_ConfigMapping):
-    def __init__(self, twitch: dict, discord: dict, youtube: dict, bot: dict, server: dict, spotify: dict):
+    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict):
         """Hold all of the configuration data
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
@@ -20,8 +20,8 @@ class Config(_ConfigMapping):
         :type discord: dict
         :param youtube: A mapping to be passed to :class:`YouTube`.
         :type youtube: dict
-        :param bot: A mapping to be passed to :class:`Bot`.
-        :type bot: dict
+        :param baalorbot: A mapping to be passed to :class:`Bot`.
+        :type baalorbot: dict
         :param server: A mapping to be passed to :class:`Server`.
         :type server: dict
         :param spotify: A mapping to be passed to :class:`Spotify`.
@@ -31,6 +31,7 @@ class Config(_ConfigMapping):
         self.twitch = Twitch(**twitch)
         self.discord = Discord(**discord)
         self.youtube = YouTube(**youtube)
+        self.baalorbot = Bot(**baalorbot) # XXX: Rename this
 
 class Twitch(_ConfigMapping):
     def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, extended: dict, timers: dict):
@@ -151,3 +152,21 @@ class YouTube(_ConfigMapping):
         self.api_key = api_key
         self.cache_timeout = cache_timeout
         self.playlist_sheet = playlist_sheet
+
+class Bot(_ConfigMapping):
+    def __init__(self, prefix: str, owners: list[int], editors: list[int]):
+        """Hold the bot config information
+
+        :param prefix: The prefix to identify that something is a command.
+        :type prefix: str
+        :param owners: A list of Discord user IDs who are owner(s) of the bot.
+        :type owners: list[int]
+        :param editors: A list of Discord user IDs who are editors for the channel.
+        :type editors: list[int]
+        """
+
+        self.prefix = prefix
+
+        # both of these will eventually be split into discord/twitch
+        self.owners = owners
+        self.editors = editors
