@@ -55,12 +55,13 @@ from src.cache.run_stats import (
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
-from src.webpage import router, playlists, __botname__, __version__, __github__, __author__
+from src.webpage import router, playlists
 from src.wrapper import wrapper
 from src.monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from src.twitch import TwitchCommand
 from src.logger import logger
 from src.events import add_listener
+from src.config import __botname__, __version__, __github__, __author__
 from src.slice import get_runs, CurrentRun
 from src.utils import (
     format_for_slaytabase,
