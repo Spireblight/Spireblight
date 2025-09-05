@@ -2,17 +2,42 @@
 
 This allows proper type hinting and autocomplete."""
 
+from __future__ import annotations
+
+from src.exceptions import InvalidConfigType
+
 class _ConfigMapping:
     def update(self, mapping: dict):
         for k, v in mapping.items():
-            if isinstance(v, dict): # another level down
-                getattr(self, k).update(v)
-                continue
-            setattr(self, k, v)
+            exp = getattr(self, k)
+            match exp:
+                case _ConfigMapping(): # another level down
+                    if not isinstance(v, dict): # dicts should always result in another class
+                        raise InvalidConfigType(self, k, dict)
+                    exp.update(v)
+                case list():
+                    if not isinstance(v, list):
+                        raise InvalidConfigType(self, k, list)
+                    for item in v:
+                        if item not in exp:
+                            exp.append(item)
+                case int():
+                    if not isinstance(v, int):
+                        try:
+                            v = int(v) # if it's e.g. a str of an int, allow it
+                        except ValueError:
+                            raise InvalidConfigType(self, k, int)
+                    setattr(self, k, v)
+                case str():
+                    if not isinstance(v, str):
+                        raise InvalidConfigType(self, k, str)
+                    setattr(self, k, v)
+                case a:
+                    raise RuntimeError(f"Config has unsupported type {a.__class__.__name__!r} (this is a bug).")
 
 class Config(_ConfigMapping):
     def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict):
-        """Hold all of the configuration data
+        """Hold all of the configuration data.
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
         :type twitch: dict
@@ -170,3 +195,7 @@ class Bot(_ConfigMapping):
         # both of these will eventually be split into discord/twitch
         self.owners = owners
         self.editors = editors
+
+class Server(_ConfigMapping):
+    def __init__(self, secret: str):
+        pass
