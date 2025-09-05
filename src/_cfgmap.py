@@ -8,6 +8,12 @@ from src.exceptions import InvalidConfigType
 
 class _ConfigMapping:
     def update(self, mapping: dict):
+        """Update the configuration with user config.
+
+        :param mapping: The decoded YAML mapping of configuration.
+        :type mapping: dict
+        :raises InvalidConfigType: If the user config gives a wrong value type.
+        """
         for k, v in mapping.items():
             exp = getattr(self, k)
             match exp:
