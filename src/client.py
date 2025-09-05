@@ -6,6 +6,7 @@ import pickle
 import time
 import os
 
+# TODO: stop relying on other stuff
 try:
     from configuration import config
 except ModuleNotFoundError:

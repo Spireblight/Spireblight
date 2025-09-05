@@ -10,9 +10,11 @@ Full Spireblight API
    archive
    cache
    client
+   config
    configuration
    disc
    events
+   exceptions
    logger
    monster
    nameinternal

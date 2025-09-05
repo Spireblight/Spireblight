@@ -2,6 +2,9 @@
 #
 # For a local setup you should not make changes here, but in dev-config.yml.
 #
+# Keys that are not included in your local config will use the default present here
+# Lists will *always* include the values in here, even if other values are specified
+#
 # IMPORTANT: If you plan to modify this file, you NEED to modify src/_cfgmap.py to match exactly
 
 twitch:
