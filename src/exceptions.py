@@ -18,7 +18,7 @@ class InvalidConfigType(TypeError):
         """
         if (n := inst.__class__.__name__) != "Config":
             if n.startswith("_"):
-                n = f"<{n.lstrip("_")}>"
+                n = f"<{n.lstrip('_')}>"
             else:
                 n = n.lower()
             key = f"{n}.{key}"
