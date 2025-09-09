@@ -46,7 +46,7 @@ class _ConfigMapping:
                     raise RuntimeError(f"Config has unsupported type {a.__class__.__name__!r} (this is a bug).")
 
 class Config(_ConfigMapping):
-    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict, **kwargs):
+    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict, spire: dict, **kwargs):
         """Hold all of the configuration data.
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
@@ -61,14 +61,19 @@ class Config(_ConfigMapping):
         :type server: dict
         :param spotify: A mapping to be passed to :class:`Spotify`.
         :type spotify: dict
+        :param spire: A mapping to be passed to :class:`Spire`.
+        :type spire: dict
         """
 
         self.twitch = Twitch(**twitch)
         self.discord = Discord(**discord)
         self.youtube = YouTube(**youtube)
         self.baalorbot = Bot(**baalorbot) # XXX: Rename this
+        self.server = Server(**server)
+        self.spotify = Spotify(**spotify)
+        self.spire = Spire(**spire)
 
-        for unused in ("spire", "slice", "mt", "client"):
+        for unused in ("slice", "mt", "client"):
             kwargs.pop(unused)
 
         if kwargs:
@@ -254,3 +259,16 @@ class Spotify(_ConfigMapping):
         self.id = id
         self.secret = secret
         self.code = code # XXX: when we receive the code, immediately use it, don't store it
+
+class Spire(_ConfigMapping):
+    def __init__(self, steamdir: str, enabled_mods: list[str]):
+        """Hold Spire config information.
+
+        :param steamdir: The on-disk location for Spire.
+        :type steamdir: str
+        :param enabled_mods: Which mods we use.
+        :type enabled_mods: list[str]
+        """
+
+        self.steamdir = steamdir # XXX: this will be unique to the client eventually
+        self.enabled_mods = enabled_mods
