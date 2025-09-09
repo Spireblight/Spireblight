@@ -235,3 +235,22 @@ class Server(_ConfigMapping):
         self.business_email = business_email
 
         # TODO: figure out a way to fix up websocket stuff
+
+class Spotify(_ConfigMapping):
+    def __init__(self, enabled: bool, id: str, secret: str, code: str):
+        """Hold information for the Spotify "Now Playing" feature.
+
+        :param enabled: Whether we use the "Now Playing" feature.
+        :type enabled: bool
+        :param id: The client ID of our app.
+        :type id: str
+        :param secret: The client secret of our app.
+        :type secret: str
+        :param code: The one-time code needed to kickstart it.
+        :type code: str
+        """
+
+        self.enabled = enabled
+        self.id = id
+        self.secret = secret
+        self.code = code # XXX: when we receive the code, immediately use it, don't store it
