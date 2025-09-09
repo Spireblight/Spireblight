@@ -218,7 +218,7 @@ class Bot(_ConfigMapping):
         self.editors = editors
 
 class Server(_ConfigMapping):
-    def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, **kwargs):
+    def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):
         """Hold server-related configuration.
 
         :param debug: Whether we are in debug mode.
@@ -231,6 +231,10 @@ class Server(_ConfigMapping):
         :type json_indent: int
         :param business_email: The streamer's business email.
         :type business_email: str
+        :param websocket_client: The websocket client ID and secret.
+        :type websocket_client: dict
+        :param webhook: The webhook secret.
+        :type webhook: dict
         """
 
         self.debug = debug
@@ -239,7 +243,31 @@ class Server(_ConfigMapping):
         self.json_indent = json_indent
         self.business_email = business_email
 
-        # TODO: figure out a way to fix up websocket stuff
+        self.websocket_client = _WebsocketClient(**websocket_client)
+        self.webhook = _Webhook(**webhook)
+
+class _WebsocketClient(_ConfigMapping):
+    def __init__(self, id: str, secret: str):
+        """Hold Websocket Client information.
+
+        :param id: The client ID.
+        :type id: str
+        :param secret: The client secret.
+        :type secret: str
+        """
+
+        self.id = id
+        self.secret = secret
+
+class _Webhook(_ConfigMapping):
+    def __init__(self, secret: str):
+        """Hold webhook secret.
+
+        :param secret: The webhook secret.
+        :type secret: str
+        """
+
+        self.secret = secret
 
 class Spotify(_ConfigMapping):
     def __init__(self, enabled: bool, id: str, secret: str, code: str):
