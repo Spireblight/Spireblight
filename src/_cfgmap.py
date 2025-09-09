@@ -38,11 +38,15 @@ class _ConfigMapping:
                     if not isinstance(v, str):
                         raise InvalidConfigType(self, k, str)
                     setattr(self, k, v)
+                case bool():
+                    if not isinstance(v, bool):
+                        raise InvalidConfigType(self, k, bool)
+                    setattr(self, k, v)
                 case a:
                     raise RuntimeError(f"Config has unsupported type {a.__class__.__name__!r} (this is a bug).")
 
 class Config(_ConfigMapping):
-    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict):
+    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict, **kwargs):
         """Hold all of the configuration data.
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
@@ -63,6 +67,12 @@ class Config(_ConfigMapping):
         self.discord = Discord(**discord)
         self.youtube = YouTube(**youtube)
         self.baalorbot = Bot(**baalorbot) # XXX: Rename this
+
+        for unused in ("spire", "slice", "mt", "client"):
+            kwargs.pop(unused)
+
+        if kwargs:
+            raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
 
 class Twitch(_ConfigMapping):
     def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, extended: dict, timers: dict):
@@ -203,5 +213,25 @@ class Bot(_ConfigMapping):
         self.editors = editors
 
 class Server(_ConfigMapping):
-    def __init__(self, secret: str):
-        pass
+    def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, **kwargs):
+        """Hold server-related configuration.
+
+        :param debug: Whether we are in debug mode.
+        :type debug: bool
+        :param secret: The secret key for client-server communication. Generated with :func:`secrets.token_urlsafe`.
+        :type secret: str
+        :param url: The URL of the server we are running on.
+        :type url: str
+        :param json_indent: How many spaces to put in the JSON dumps.
+        :type json_indent: int
+        :param business_email: The streamer's business email.
+        :type business_email: str
+        """
+
+        self.debug = debug
+        self.secret = secret
+        self.url = url # XXX: split this into host and port
+        self.json_indent = json_indent
+        self.business_email = business_email
+
+        # TODO: figure out a way to fix up websocket stuff
