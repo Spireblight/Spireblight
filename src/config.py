@@ -31,7 +31,11 @@ parser.add_argument("--no-twitch", action="store_true")
 parser.add_argument("--no-discord", action="store_true")
 parser.add_argument("--channel", "-c")
 
+# safeguard against Sphinx, so we don't error during docgen
+parser.add_argument("-M", nargs=3)
+
 def load_config(args: argparse.Namespace):
+    assert args.M is None or len(args.M) == 3 # None if normal, 3 if Sphinx. ignore it
     curpath = pathlib.Path(".")
     conf = None
     for i in range(3):
