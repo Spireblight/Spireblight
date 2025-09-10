@@ -25,14 +25,14 @@ DEFAULT_DEV_CONFIG = {
 
 parser = argparse.ArgumentParser(__botname__)
 
-parser.add_argument("--config-file", "-f", action="append")
+parser.add_argument("--config-file", "-f", action="append", help="Add a config file to use")
 parser.add_argument("--version", "-v", action="version", version=f"{__botname__} {__version__}")
-parser.add_argument("--no-twitch", action="store_true")
-parser.add_argument("--no-discord", action="store_true")
-parser.add_argument("--channel", "-c")
+parser.add_argument("--no-twitch", action="store_true", help="Disable the Twitch bot")
+parser.add_argument("--no-discord", action="store_true", help="Disable the Discord bot")
+parser.add_argument("--channel", "-c", help="Which Twitch channel to join")
 
 # safeguard against Sphinx, so we don't error during docgen
-parser.add_argument("-M", nargs=3)
+parser.add_argument("-M", nargs=3, help="For internal use only, do not use")
 
 def load_config(args: argparse.Namespace):
     assert args.M is None or len(args.M) == 3 # None if normal, 3 if Sphinx. ignore it
@@ -79,6 +79,15 @@ def load_config(args: argparse.Namespace):
         with devfile.open() as f:
             cf = yaml.safe_load(f)
         conf.update(cf)
+
+    if args.channel:
+        conf.twitch.channel = args.channel
+
+    if args.no_twitch:
+        conf.twitch.enabled = False
+
+    if args.no_discord:
+        conf.discord.enabled = False
 
     return conf
 
