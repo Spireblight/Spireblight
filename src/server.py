@@ -79,7 +79,7 @@ from src.gamedata import RelicData, Treasure, Event
 from src.typehints import ContextType, CommandType
 from src import events, archive
 
-from src.configuration import config
+from src.config import config
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None

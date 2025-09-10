@@ -2,7 +2,7 @@ from discord.ext.commands import Command, Context
 
 from src.logger import logger
 
-from src.configuration import config
+from src.config import config
 
 __all__ = ["DiscordCommand"]
 

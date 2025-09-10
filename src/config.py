@@ -75,3 +75,7 @@ def load_config(args: argparse.Namespace):
         with devfile.open() as f:
             cf = yaml.safe_load(f)
         conf.update(cf)
+
+    return conf
+
+config = load_config(parser.parse_args())

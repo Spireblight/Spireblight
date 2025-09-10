@@ -15,6 +15,8 @@ class _ConfigMapping:
         :raises InvalidConfigType: If the user config gives a wrong value type.
         """
         for k, v in mapping.items():
+            if k in ("slice", "mt", "client"):
+                continue # don't break shit
             exp = getattr(self, k)
             match exp:
                 case _ConfigMapping(): # another level down

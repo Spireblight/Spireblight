@@ -24,7 +24,7 @@ from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 import src.score as _s
 
-from src.configuration import config
+from src.config import config
 
 __all__ = ["get_savefile", "Savefile"]
 

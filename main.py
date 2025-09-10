@@ -12,7 +12,7 @@ from src.config import __version__
 
 from src import server, events
 
-from src.configuration import config
+from src.config import config
 
 if config.server.debug:
     logging.basicConfig(
@@ -43,7 +43,7 @@ async def main():
                     continue
                 name = file[:-3]
                 mod = importlib.import_module(f"migrate.{name}")
-                values[module.FROM] = mod
+                values[mod.FROM] = mod
 
         while last != __version__:
             try:
@@ -62,6 +62,7 @@ async def main():
         with open("last_version", "w") as f:
             f.write(last)
 
+        logger.info("Migration complete. Please restart the process.")
         return # prefer a clean slate
 
     await events.invoke("setup_init")

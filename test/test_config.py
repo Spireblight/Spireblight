@@ -3,7 +3,7 @@ from unittest import TestCase
 from platform import system
 from os.path import expanduser
 
-from src.configuration import config
+from src.config import config
 
 class TestConfigFile(TestCase):
 

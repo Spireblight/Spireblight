@@ -7,7 +7,7 @@ from aiohttp import ClientSession
 import json
 import os
 
-from src.configuration import config
+from src.config import config
 from src.events import add_listener
 from src.utils import complete_match
 

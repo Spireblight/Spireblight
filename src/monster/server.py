@@ -11,7 +11,7 @@ from src.utils import get_req_data
 
 from src.typehints import ContextType
 
-from src.configuration import config
+from src.config import config
 
 class MonsterSave:
     def __init__(self, file):

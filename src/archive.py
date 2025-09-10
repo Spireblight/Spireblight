@@ -10,7 +10,7 @@ import json
 import os
 import re
 
-from src.configuration import config
+from src.config import config
 from src.events import add_listener
 from src.utils import getfile
 from src.runs import get_parser, RunParser, _cache

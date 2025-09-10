@@ -14,7 +14,7 @@ from src.config import __author__, __github__, __version__
 
 from src import events
 
-from src.configuration import config
+from src.config import config
 
 __all__ = ["webpage", "router"]
 
