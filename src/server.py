@@ -3069,6 +3069,23 @@ async def individual_cmd(req: Request):
     return d
 
 
+@router.post("/report")
+async def automatic_client_report(req: Request):
+    data = (await get_req_data(req, "traceback"))[0]
+    ar = config.discord.auto_report
+    if not ar.enabled or not ar.server or not ar.channel:
+        return # nothing to do here
+
+    guild = DConn.get_guild(ar.server)
+    if guild is None:
+        return
+    channel = guild.get_channel(ar.channel)
+    if channel is None:
+        return
+
+    await channel.send("[Automatic Client Reporting]\n\n" + data)
+
+
 _oauth_state = None
 
 

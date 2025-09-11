@@ -59,6 +59,14 @@ discord:
     # This is a real invite by Olivia5k.
     dev: https://discord.gg/7hNreCb6rs
 
+  auto_report:
+    # Whether we support automatic bug report (server, client, etc.)
+    enabled: false
+    # The server ID where automatic reports will go
+    server: 0
+    # The channel ID to send the messages to (NOT a thread!)
+    channel: 0
+
   # The server ID the bot is working on. This acts as a guard so it doesn't send
   # messages to other servers.
   server_id: 0

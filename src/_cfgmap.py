@@ -142,7 +142,7 @@ class _TimerIntervals(_ConfigMapping):
         self.stagger_interval = stagger_interval
 
 class Discord(_ConfigMapping):
-    def __init__(self, server_id: int, moderator_role: int, oauth_token: str, invite_links: dict, *, enabled: bool = True):
+    def __init__(self, server_id: int, moderator_role: int, oauth_token: str, invite_links: dict, auto_report: dict, *, enabled: bool = True):
         """Handle the Discord side of the configuration.
 
         :param server_id: The server ("Guild") ID where we will operate.
@@ -153,6 +153,8 @@ class Discord(_ConfigMapping):
         :type oauth_token: str
         :param invite_links: A mapping of the various Discord invite links we have.
         :type invite_links: dict
+        :param auto_report: A mapping of the automatic report feature.
+        :type auto_report: dict
         :param enabled: Whether the Discord part is enabled, defaults to True.
         :type enabled: bool, optional
         """
@@ -163,6 +165,7 @@ class Discord(_ConfigMapping):
         self.enabled = enabled
 
         self.invite_links = _InviteLinks(**invite_links)
+        self.auto_report = _AutoReport(**auto_report)
 
 class _InviteLinks(_ConfigMapping):
     def __init__(self, main: str, dev: str):
@@ -175,6 +178,22 @@ class _InviteLinks(_ConfigMapping):
         """
         self.main = main
         self.dev = dev
+
+class _AutoReport(_ConfigMapping):
+    def __init__(self, server: int, channel: int, *, enabled: bool = False):
+        """Hold automatic bug report information
+
+        :param server: The server ID where the bot will report.
+        :type server: int
+        :param channel: The channel ID where the messages will go.
+        :type channel: int
+        :param enabled: If we use automatic reports, defaults to False.
+        :type enabled: bool, optional
+        """
+
+        self.server = server
+        self.channel = channel
+        self.enabled = enabled
 
 class YouTube(_ConfigMapping):
     def __init__(self, channel_id: str, default_video: str, archive_id: str, api_key: str, cache_timeout: int, playlist_sheet: str):
