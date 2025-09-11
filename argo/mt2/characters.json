@@ -106,7 +106,7 @@
         "ability": "",
         "artist": "",
         "attack": "15",
-        "health": "15",
+        "health": "25",
         "grafted": "",
         "size": "3"
     },
@@ -216,7 +216,7 @@
         "ability": "",
         "artist": "",
         "attack": "0",
-        "health": "25",
+        "health": "35",
         "grafted": "",
         "size": "3"
     },
@@ -261,7 +261,7 @@
         "ability": "",
         "artist": "",
         "attack": "15",
-        "health": "15",
+        "health": "25",
         "grafted": "",
         "size": "3"
     },
@@ -494,7 +494,7 @@
         "ability": "",
         "artist": "",
         "attack": "0",
-        "health": "40",
+        "health": "1",
         "grafted": "",
         "size": "1"
     },
@@ -692,8 +692,8 @@
         "id": "b7078a80-f789-44d8-a81d-d29342d3c6c7",
         "ability": "",
         "artist": "",
-        "attack": "5",
-        "health": "30",
+        "attack": "3",
+        "health": "35",
         "grafted": "",
         "size": "2"
     },
@@ -1155,7 +1155,7 @@
         "id": "e7213f58-a8ee-4429-85cc-ae50004e45ee",
         "ability": "",
         "artist": "",
-        "attack": "10",
+        "attack": "15",
         "health": "5",
         "grafted": "",
         "size": "1"
@@ -1298,8 +1298,8 @@
         "id": "e9b0e2cc-08aa-4ea7-8f41-805028efe5c4",
         "ability": "",
         "artist": "",
-        "attack": "8",
-        "health": "8",
+        "attack": "16",
+        "health": "16",
         "grafted": "",
         "size": "4"
     },
@@ -2326,7 +2326,7 @@
         "ability": "",
         "artist": "",
         "attack": "20",
-        "health": "20",
+        "health": "35",
         "grafted": "",
         "size": "2"
     },
@@ -2613,7 +2613,7 @@
         "id": "155984a9-326f-44de-a69d-a5c87e4c2ed9",
         "ability": "",
         "artist": "",
-        "attack": "45",
+        "attack": "25",
         "health": "45",
         "grafted": "",
         "size": "2"
