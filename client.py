@@ -1,16 +1,39 @@
 from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
 import traceback
+import platform
 import asyncio
 import pickle
 import time
+import yaml
 import os
 
-# TODO: stop relying on other stuff
-try:
-    from configuration import config
-except ModuleNotFoundError:
-    from src.configuration import config
+class Config:
+    playing_file = ""
+    sync_runs = False
+    spiredir = ""
+    server_url = ""
+    secret = ""
+    use_mt = False
+    use_slice = False
+    slice_curses = ""
+
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+        if self.server_url and not self.server_url.endswith("/"):
+            self.server_url += "/"
+
+        # If spiredir is not being set via configs, detect the OS and
+        # use the OS appropriate default spire steamdir:
+        if not self.spiredir:
+            system_os = platform.system().lower()
+            if system_os == "windows":
+                self.spiredir = r'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
+            elif system_os == "linux":
+                self.spiredir = "~/.steam/steam/steamapps/common/SlayTheSpire"
+            else: # Other Operating systems do not have defaults set
+                raise NotImplementedError(f"No default spiredir set for os: '{system_os}'\nSet spiredir manually in config file.")
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!\n")
@@ -22,8 +45,8 @@ async def main():
     last_mt = 0
     last_mt2 = 0
     runs_last = {}
-    use_sd = False
-    use_mt = False
+    use_sd = cfg.use_slice
+    use_mt = cfg.use_mt
     user = None
     try:
         with open("last_run") as f:
@@ -33,16 +56,14 @@ async def main():
     possible = None
     playing = None
     timeout = 1
-    if not config.server.url or not config.server.secret:
+    if not cfg.server_url or not cfg.secret:
         print("Config is not complete")
         time.sleep(3)
         return
     try:
         user = os.environ["USERPROFILE"]
-        use_sd = config.slice.enabled
-        use_mt = config.mt.enabled
-    except (AttributeError, KeyError):
-        use_sd = use_mt = False
+    except KeyError:
+        pass
 
     print(f"User profile folder: {user}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
 
@@ -55,10 +76,10 @@ async def main():
         mt2_file = os.path.join(mt2_folder, "saves", "save-singlePlayer.json")
         print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
 
-    async with ClientSession(config.server.url) as session:
+    async with ClientSession(cfg.server_url) as session:
         # Check if the app is registered, prompt it if not
         try:
-            async with session.post("/twitch/check-token", params={"key": config.server.secret}) as resp:
+            async with session.post("twitch/check-token", params={"key": cfg.secret}) as resp:
                 if resp.ok:
                     text = await resp.text()
                     match text:
@@ -87,7 +108,7 @@ async def main():
                 start = time.time()
                 timeout = 1
                 if possible is None:
-                    for file in os.listdir(os.path.join(config.spire.steamdir, "saves")):
+                    for file in os.listdir(os.path.join(cfg.spiredir, "saves")):
                         if file.endswith(".autosave"):
                             if possible is None:
                                 possible = file
@@ -98,7 +119,7 @@ async def main():
 
                 if possible is not None:
                     try:
-                        cur = os.path.getmtime(os.path.join(config.spire.steamdir, "saves", possible))
+                        cur = os.path.getmtime(os.path.join(cfg.spiredir, "saves", possible))
                     except OSError:
                         possible = None
 
@@ -112,22 +133,22 @@ async def main():
                             with open(os.path.join(user, ".prefs", "slice-and-dice-3")) as f:
                                 sd_data = f.read()
                             sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/slice", data={"data": sd_data}, params={"key": config.server.secret}) as resp:
+                            async with session.post("sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
                                 if resp.ok:
                                     last_sd = cur_sd
                                     curses = await resp.read()
-                                    if curses and config.slice.curses:
+                                    if curses and cfg.slice_curses:
                                         decoded: list[str] = pickle.loads(curses)
                                         try:
-                                            with open(config.slice.curses, "w") as f:
+                                            with open(cfg.slice_curses, "w") as f:
                                                 f.write("\n".join(decoded))
                                         except OSError:
                                             pass
 
                 to_send = []
                 files = []
-                if possible is None and config.client.sync_runs: # don't check run files during a run
-                    for path, folders, _f in os.walk(os.path.join(config.spire.steamdir, "runs")):
+                if possible is None and cfg.sync_runs: # don't check run files during a run
+                    for path, folders, _f in os.walk(os.path.join(cfg.spiredir, "runs")):
                         for folder in folders:
                             profile = "0"
                             if folder[0].isdigit():
@@ -140,7 +161,7 @@ async def main():
 
                 try:
                     if possible is None:
-                        async with session.get("/playing", params={"key": config.server.secret}) as resp:
+                        async with session.get("playing", params={"key": cfg.secret}) as resp:
                             if resp.ok:
                                 j = await resp.json()
                                 if j and j.get("item"):
@@ -150,7 +171,7 @@ async def main():
                                     text = f"{track}\n{artists}\n{album}"
                                     if playing != text:
                                         try:
-                                            with open(config.client.playing, "w") as f:
+                                            with open(cfg.playing_file, "w") as f:
                                                 f.write(text)
                                             playing = text
                                         except OSError:
@@ -159,7 +180,7 @@ async def main():
                                 else:
                                     playing = None
                                     try:
-                                        with open(config.client.playing, "w") as f:
+                                        with open(cfg.playing_file, "w") as f:
                                             pass # make it an empty file
                                     except OSError:
                                         pass
@@ -170,7 +191,7 @@ async def main():
                             with open(os.path.join(path, file)) as f:
                                 content = f.read()
                             content = content.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": config.server.secret, "start": start}) as resp:
+                            async with session.post("sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": cfg.secret, "start": start}) as resp:
                                 if not resp.ok:
                                     all_sent = False
                         if all_sent:
@@ -179,7 +200,7 @@ async def main():
                                 f.write(last_run)
 
                     if possible is None and has_save: # server has a save, but we don't (anymore)
-                        async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": config.server.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
+                        async with session.post("sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                             if resp.ok:
                                 has_save = False
 
@@ -210,7 +231,7 @@ async def main():
                                         with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
                                             mt_runs[key] = f.read()
                                             mt_runs_last[key] = last
-                                async with session.post("/sync/monster", data=mt_runs, params={"key": config.server.secret}) as resp:
+                                async with session.post("sync/monster", data=mt_runs, params={"key": cfg.secret}) as resp:
                                     if resp.ok:
                                         last_mt = cur_mt
                                         runs_last.update(mt_runs_last)
@@ -244,7 +265,7 @@ async def main():
                                         with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
                                             mt_runs[key] = f.read()
                                             mt_runs_last[key] = last
-                                async with session.post("/sync/monster-2", data=mt2_runs, params={"key": config.server.secret}) as resp:
+                                async with session.post("sync/monster-2", data=mt2_runs, params={"key": cfg.secret}) as resp:
                                     if resp.ok:
                                         last_mt2 = cur_mt2
                                         runs_last.update(mt2_runs_last)
@@ -260,9 +281,9 @@ async def main():
                     }
 
                     # always send the save slots; it's possible it changed, even during a run (e.g. wall card)
-                    cur_slots = os.path.getmtime(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots"))
+                    cur_slots = os.path.getmtime(os.path.join(cfg.spiredir, "preferences", "STSSaveSlots"))
                     if cur_slots != last_slots:
-                        with open(os.path.join(config.spire.steamdir, "preferences", "STSSaveSlots")) as f:
+                        with open(os.path.join(cfg.spiredir, "preferences", "STSSaveSlots")) as f:
                             data["slots"] = f.read().encode("utf-8", "xmlcharrefreplace")
                     tobe_lasp = [0, 0, 0]
                     for i in range(3):
@@ -270,7 +291,7 @@ async def main():
                         if i:
                             name = f"{i}_{name}"
                         try:
-                            fname = os.path.join(config.spire.steamdir, "preferences", name)
+                            fname = os.path.join(cfg.spiredir, "preferences", name)
                             tobe_lasp[i] = m = os.path.getmtime(fname)
                             if m == lasp[i]:
                                 continue # unchanged, don't bother
@@ -280,7 +301,7 @@ async def main():
                             continue
 
                     if any(data.values()):
-                        async with session.post("/sync/profile", data=data, params={"key": config.server.secret, "start": start}) as resp:
+                        async with session.post("sync/profile", data=data, params={"key": cfg.secret, "start": start}) as resp:
                             if resp.ok:
                                 lasp = tobe_lasp
                                 last_slots = cur_slots
@@ -290,14 +311,14 @@ async def main():
                     if possible is not None and cur != last:
                         content = ""
                         try:
-                            with open(os.path.join(config.spire.steamdir, "saves", possible)) as f:
+                            with open(os.path.join(cfg.spiredir, "saves", possible)) as f:
                                 content = f.read()
                         except OSError:
                             possible = None
                             continue
                         content = content.encode("utf-8", "xmlcharrefreplace")
                         char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                        async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": config.server.secret, "has_run": "false", "start": start}) as resp:
+                        async with session.post("sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
                             if resp.ok:
                                 last = cur
                                 has_save = True
@@ -317,4 +338,6 @@ async def main():
 
 
 if __name__ == "__main__":
+    with open("client-config.yml") as f:
+        cfg = Config(**yaml.safe_load(f))
     asyncio.run(main())
