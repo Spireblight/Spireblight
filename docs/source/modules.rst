@@ -9,7 +9,6 @@ Full Spireblight API
    activemods
    archive
    cache
-   client
    config
    configuration
    disc
