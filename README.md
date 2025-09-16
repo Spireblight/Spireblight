@@ -45,11 +45,13 @@ configuration defaults and documentation for all the variables can be found in
 ## Running the client
 
 The client side should run `client.py`. Client only needs the `aiohttp` library.
-The client configuration needs the following to be set:
+The client configuration needs to be in `client-config.yml`, and it will be
+automatically created with empty values on first startup. It needs at minimum
+the following to be set:
 
-- `spire.steamdir`
-- `server.url`
-- `server.secret`
+- `spiredir`
+- `server_url`
+- `secret`
 
 ## Syncing Run Data
 
@@ -82,9 +84,9 @@ Development discord: https://discord.gg/RHYrs3Nsve
         ```
 3. Run `python ./main.py` to start the server
     * At this step the website should be accessible at `localhost:8080`
-4. Run `python ./client.py` once to create a skeleton `dev-config.yml` file
-5. Check `default-config.yml` and `dev-config.yml` settings and validate:
-    1. that there is a secret set for the server and,
+4. Run `python ./client.py` once to create a skeleton `client-config.yml` file
+5. Check `default-config.yml`, `dev-config.yml` and `client-config.yml` settings and validate:
+    1. that there is a secret set for the server and client,
     2. that the Spire path matches your OS
 6. Stop and restart the server (`ctrl-c` to stop, then `python ./main.py`)
 7. Stop and restart the client (`ctrl-c` to stop, then `python ./client.py`)

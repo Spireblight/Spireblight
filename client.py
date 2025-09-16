@@ -32,8 +32,20 @@ class Config:
                 self.spiredir = r'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
             elif system_os == "linux":
                 self.spiredir = "~/.steam/steam/steamapps/common/SlayTheSpire"
-            else: # Other Operating systems do not have defaults set
+            elif kwargs: # Other Operating systems do not have defaults set; only error if any data was set
                 raise NotImplementedError(f"No default spiredir set for os: '{system_os}'\nSet spiredir manually in config file.")
+
+    def export(self):
+        return {
+            "playing_file": self.playing_file,
+            "sync_runs": self.sync_runs,
+            "spiredir": self.spiredir,
+            "server_url": self.server_url,
+            "secret": self.secret,
+            "use_mt": self.use_mt,
+            "use_slice": self.use_slice,
+            "slice_curses": self.slice_curses,
+        }
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!\n")
@@ -338,6 +350,11 @@ async def main():
 
 
 if __name__ == "__main__":
-    with open("client-config.yml") as f:
-        cfg = Config(**yaml.safe_load(f))
+    try:
+        with open("client-config.yml") as f:
+            cfg = Config(**yaml.safe_load(f))
+    except FileNotFoundError:
+        cfg = Config()
+        with open("client-config.yml", "w") as f:
+            yaml.safe_dump(cfg.export(), f)
     asyncio.run(main())
