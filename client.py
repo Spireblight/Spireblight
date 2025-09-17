@@ -59,6 +59,7 @@ async def main():
     runs_last = {}
     use_sd = cfg.use_slice
     use_mt = cfg.use_mt
+    last_exc = None
     user = None
     try:
         with open("last_run") as f:
@@ -127,7 +128,7 @@ async def main():
                             else:
                                 print("Error: Multiple savefiles detected.")
                                 possible = None
-                                break
+                                raise ValueError("Multiple savefiles detected")
 
                 if possible is not None:
                     try:
@@ -339,7 +340,11 @@ async def main():
                     timeout = 10 # give it a bit of time
                     print("Error: Server is offline! Retrying in 10s")
                     continue
-            except Exception:
+            except Exception as e:
+                # since the loop is every second, don't spam the report feature
+                if type(e) is type(last_exc) and e.args == last_exc.args: # exceptions are never equal, so check args
+                    continue
+                last_exc = e
                 text = traceback.format_exc()
                 try:
                     async with session.post("report", data={"traceback": text}, params={"key": cfg.secret}) as resp:

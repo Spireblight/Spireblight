@@ -3074,16 +3074,17 @@ async def automatic_client_report(req: Request):
     data = (await get_req_data(req, "traceback"))[0]
     ar = config.discord.auto_report
     if not ar.enabled or not ar.server or not ar.channel:
-        return # nothing to do here
+        raise HTTPServiceUnavailable
 
     guild = DConn.get_guild(ar.server)
     if guild is None:
-        return
+        raise HTTPServiceUnavailable
     channel = guild.get_channel(ar.channel)
     if channel is None:
-        return
+        raise HTTPServiceUnavailable
 
     await channel.send("[Automatic Client Reporting]\n\n" + data)
+    return Response()
 
 
 _oauth_state = None
