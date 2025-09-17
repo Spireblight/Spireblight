@@ -8,11 +8,9 @@ from aiohttp import web
 
 from src.webpage import webpage
 from src.logger import logger
-from src.config import __version__
+from src.config import config, __version__
 
 from src import server, events
-
-from src.config import config
 
 if config.server.debug:
     logging.basicConfig(
@@ -36,6 +34,12 @@ async def main():
         with open("last_version") as f:
             last = f.read().strip()
     if last != __version__: # need to migrate
+        nomig = {}
+        with open("migrate/.no-migrate", "r") as f:
+            for line in f.readlines():
+                bef, col, aft = line.partition(":")
+                if col:
+                    nomig[bef] = aft
         values = {}
         for dirpath, folders, files in os.walk("migrate"):
             for file in files:
@@ -49,11 +53,13 @@ async def main():
             try:
                 module = values[last]
             except KeyError:
+                if last in nomig:
+                    last = nomig[last]
+                    continue
                 raise RuntimeError(f"Could not migrate from {last}, this is a bug.")
 
             try:
                 module.migrate()
-                # if there is nothing to migrate, then this should exist but be a no-op
             except Exception as e:
                 raise RuntimeError(f"Migrating from {last} encountered an error") from e
 
