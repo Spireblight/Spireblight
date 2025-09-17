@@ -61,7 +61,7 @@ from src.monster import query as mt_query, get_savefile as get_mt_save, MonsterS
 from src.twitch import TwitchCommand
 from src.logger import logger
 from src.events import add_listener
-from src.config import __botname__, __version__, __github__, __author__
+from src.config import config, __botname__, __version__, __github__, __author__
 from src.slice import get_runs, CurrentRun
 from src.utils import (
     format_for_slaytabase,
@@ -78,8 +78,6 @@ from src.gamedata import RelicData, Treasure, Event
 
 from src.typehints import ContextType, CommandType
 from src import events, archive
-
-from src.config import config
 
 TConn: TwitchConn = None
 DConn: DiscordConn = None
