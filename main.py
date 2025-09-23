@@ -6,6 +6,12 @@ import os
 
 from aiohttp import web
 
+import src.config
+
+# this will load the config into the src.config namespace
+# we do this here so that we can import the module without side-effects
+src.config.load()
+
 from src.webpage import webpage
 from src.logger import logger
 from src.config import config, __version__
@@ -46,6 +52,7 @@ async def main():
                 if file.startswith("_") or not file.endswith(".py"):
                     continue
                 name = file[:-3]
+                # IMPORTANT: importing migration modules MUST NOT have side effects (such as importing other modules)
                 mod = importlib.import_module(f"migrate.{name}")
                 values[mod.FROM] = mod
 
@@ -59,7 +66,8 @@ async def main():
                 raise RuntimeError(f"Could not migrate from {last}, this is a bug.")
 
             try:
-                module.migrate()
+                if not module.migrate(automatic=True):
+                    raise RuntimeError(f"Migration {module.__name__!r} did not return a True value.")
             except Exception as e:
                 raise RuntimeError(f"Migrating from {last} encountered an error") from e
 

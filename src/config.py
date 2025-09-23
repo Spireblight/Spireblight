@@ -23,6 +23,9 @@ DEFAULT_DEV_CONFIG = {
     "server": {"debug": False, "secret": "<i-haven't-set-a-secret>"},
 }
 
+curpath: pathlib.Path = None
+config: _cfgmap.Config
+
 parser = argparse.ArgumentParser(__botname__)
 
 parser.add_argument("--config-file", "-f", action="append", help="Add a config file to use")
@@ -34,9 +37,10 @@ parser.add_argument("--channel", "-c", help="Which Twitch channel to join")
 # safeguard against Sphinx, so we don't error during docgen
 parser.add_argument("-M", nargs=3, help="For internal use only, do not use")
 
-def load_config(args: argparse.Namespace):
-    assert args.M is None or len(args.M) == 3 # None if normal, 3 if Sphinx. ignore it
-    curpath = pathlib.Path(".")
+def load_default_config():
+    global curpath
+    if curpath is None:
+        curpath = pathlib.Path(".")
     conf = None
     for i in range(3):
         f = None
@@ -54,8 +58,9 @@ def load_config(args: argparse.Namespace):
     if conf is None:
         raise RuntimeError("No default config could be found.")
 
-    conf = _cfgmap.Config(**conf)
+    return _cfgmap.Config(**conf)
 
+def load_user_config(conf: _cfgmap.Config, args: argparse.Namespace):
     if args.config_file:
         for file in args.config_file:
             file: str
@@ -89,6 +94,9 @@ def load_config(args: argparse.Namespace):
     if args.no_discord:
         conf.discord.enabled = False
 
-    return conf
+def load():
+    global config
+    args = parser.parse_args()
+    assert args.M is None or len(args.M) == 3 # None if normal, 3 if Sphinx. ignore it
 
-config = load_config(parser.parse_args())
+    config = load_default_config()

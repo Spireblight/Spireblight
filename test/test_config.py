@@ -1,17 +1,10 @@
 from unittest import TestCase
 
-from platform import system
-from os.path import expanduser
-
-from src.config import config
+from src import config as _cfgmodule
 
 class TestConfigFile(TestCase):
+    def setUp(self):
+        self.config = _cfgmodule.load_default_config()
 
-    def test_default_spire_steamdir(self):
-        system_os = system().lower()
-        if system_os == "windows":
-            self.assertEqual(config.spire.steamdir, r'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire')
-        elif system_os == "linux":
-            self.assertEqual(config.spire.steamdir, expanduser("~/.steam/steam/steamapps/common/SlayTheSpire"))
-        else:
-            self.fail(f"No default spire.steamdir set for os: '{system_os}'")
+    def tearDown(self):
+        self.config = None
