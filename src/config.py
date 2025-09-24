@@ -100,3 +100,4 @@ def load():
     assert args.M is None or len(args.M) == 3 # None if normal, 3 if Sphinx. ignore it
 
     config = load_default_config()
+    load_user_config(config, args)

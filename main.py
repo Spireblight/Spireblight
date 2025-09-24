@@ -10,6 +10,7 @@ import src.config
 
 # this will load the config into the src.config namespace
 # we do this here so that we can import the module without side-effects
+# this is important for testing and docgen
 src.config.load()
 
 from src.webpage import webpage
@@ -85,7 +86,7 @@ async def main():
     tasks = set()
 
     if not any((config.twitch.enabled, config.discord.enabled)):
-        logging.warning("None of the bots are enabled. There will be no commands on the baalorbot page.")
+        logging.warning(f"None of the bots are enabled. There will be no commands on the {config.bot.name} page.")
 
     if config.twitch.enabled:
         tasks.add(loop.create_task(server.Twitch_startup()))
