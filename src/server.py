@@ -3216,7 +3216,7 @@ async def Discord_startup():
     DConn = DiscordConn(
         config.bot.prefix,
         case_insensitive=True,
-        owner_ids=config.bot.owners,
+        owner_ids=config.discord.owners,
         help_command=None,
         intents=discord.Intents.all(),
     )

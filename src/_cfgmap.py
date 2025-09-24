@@ -85,7 +85,7 @@ class Config(_ConfigMapping):
             raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
 
 class Twitch(_ConfigMapping):
-    def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, extended: dict, timers: dict):
+    def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, editors: list[str], extended: dict, timers: dict):
         """Handle the Twitch aspect of the configuration.
 
         :param channel: The channel name to connect to.
@@ -94,6 +94,8 @@ class Twitch(_ConfigMapping):
         :type oauth_token: str
         :param enabled: Whether to use the Twitch connection, defaults to True.
         :type enabled: bool, optional
+        :param editors: A list of Twitch usernames who are editors for the channel.
+        :type editors: list[int]
         :param extended: A mapping that will be used for Extended OAuth.
         :type extended: dict
         :param timers: A mapping that will be used for timer interval.
@@ -103,6 +105,7 @@ class Twitch(_ConfigMapping):
         self.channel = channel
         self.enabled = enabled
         self.oauth_token = oauth_token
+        self.editors = editors
 
         self.extended = _TwitchExtendedOAuth(**extended)
 
@@ -145,7 +148,7 @@ class _TimerIntervals(_ConfigMapping):
         self.stagger_interval = stagger_interval
 
 class Discord(_ConfigMapping):
-    def __init__(self, server_id: int, moderator_role: int, oauth_token: str, invite_links: dict, auto_report: dict, *, enabled: bool = True):
+    def __init__(self, server_id: int, moderator_role: int, oauth_token: str, invite_links: dict, auto_report: dict, *, enabled: bool = True, owners: list[int]):
         """Handle the Discord side of the configuration.
 
         :param server_id: The server ("Guild") ID where we will operate.
@@ -160,6 +163,8 @@ class Discord(_ConfigMapping):
         :type auto_report: dict
         :param enabled: Whether the Discord part is enabled, defaults to True.
         :type enabled: bool, optional
+        :param owners: A list of Discord user IDs who are owner(s) of the bot.
+        :type owners: list[int]
         """
 
         self.server_id = server_id
@@ -169,6 +174,8 @@ class Discord(_ConfigMapping):
 
         self.invite_links = _InviteLinks(**invite_links)
         self.auto_report = _AutoReport(**auto_report)
+
+        self.owners = owners
 
 class _InviteLinks(_ConfigMapping):
     def __init__(self, main: str, dev: str):
@@ -231,18 +238,10 @@ class Bot(_ConfigMapping):
         :type prefix: str
         :param name: The name that the bot will be referred by.
         :type name: str
-        :param owners: A list of Discord user IDs who are owner(s) of the bot.
-        :type owners: list[int]
-        :param editors: A list of Discord user IDs who are editors for the channel.
-        :type editors: list[int]
         """
 
         self.prefix = prefix
         self.name = name
-
-        # both of these will eventually be split into discord/twitch
-        self.owners = owners
-        self.editors = editors
 
 class Server(_ConfigMapping):
     def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):

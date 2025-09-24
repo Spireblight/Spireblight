@@ -24,6 +24,9 @@ twitch:
   # you're testing things out.
   channel: <channel not set>
 
+  # The Twitch usernames of the channel editors
+  editors: []
+
   # This indicates whether we should use extended or classic access.
   # Classic access needs a simple OAuth token, and no additional fluff.
   # Extended uses the full Authorization Grant Flow mechanism
@@ -67,6 +70,9 @@ discord:
     # The channel ID to send the messages to (NOT a thread!)
     channel: 0
 
+  # User IDs of the owners of this bot
+  owners: []
+
   # The server ID the bot is working on. This acts as a guard so it doesn't send
   # messages to other servers.
   server_id: 0
@@ -104,10 +110,6 @@ bot:
 
   # What the displayed name of the bot will be
   name: ""
-
-  # These correspond to the permission groups for the bot.
-  owners: []
-  editors: []
 
 server:
   # If this is true, we enable debug logging.

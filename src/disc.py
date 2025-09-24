@@ -27,7 +27,7 @@ class DiscordCommand(Command):
                 return
             mod_role = guild.get_role(config.discord.moderator_role)
             if self.flag and (
-                (context.author().id not in config.bot.owners) and
+                (context.author().id not in config.discord.owners) and
                 ("m" in self.flag and mod_role not in context.author().roles)
             ):
                 return
