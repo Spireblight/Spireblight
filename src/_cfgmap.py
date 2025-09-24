@@ -231,7 +231,7 @@ class YouTube(_ConfigMapping):
         self.playlist_sheet = playlist_sheet
 
 class Bot(_ConfigMapping):
-    def __init__(self, prefix: str, name: str, owners: list[int], editors: list[int]):
+    def __init__(self, prefix: str, name: str):
         """Hold the bot config information
 
         :param prefix: The prefix to identify that something is a command.
