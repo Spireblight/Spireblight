@@ -5,6 +5,7 @@ This allows proper type hinting and autocomplete."""
 from __future__ import annotations
 
 from src.exceptions import InvalidConfigType
+from src.logger import logger
 
 class _ConfigMapping:
     def update(self, mapping: dict):
@@ -15,9 +16,11 @@ class _ConfigMapping:
         :raises InvalidConfigType: If the user config gives a wrong value type.
         """
         for k, v in mapping.items():
-            if k in ("slice", "mt", "client"):
-                continue # don't break shit
-            exp = getattr(self, k)
+            try:
+                exp = getattr(self, k)
+            except AttributeError:
+                logger.warning(f"No attribute {k!r} in the config.")
+                continue
             match exp:
                 case _ConfigMapping(): # another level down
                     if not isinstance(v, dict): # dicts should always result in another class
@@ -48,7 +51,7 @@ class _ConfigMapping:
                     raise RuntimeError(f"Config has unsupported type {a.__class__.__name__!r} (this is a bug).")
 
 class Config(_ConfigMapping):
-    def __init__(self, twitch: dict, discord: dict, youtube: dict, baalorbot: dict, server: dict, spotify: dict, spire: dict, **kwargs):
+    def __init__(self, twitch: dict, discord: dict, youtube: dict, bot: dict, server: dict, spotify: dict, spire: dict, **kwargs):
         """Hold all of the configuration data.
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
@@ -57,8 +60,8 @@ class Config(_ConfigMapping):
         :type discord: dict
         :param youtube: A mapping to be passed to :class:`YouTube`.
         :type youtube: dict
-        :param baalorbot: A mapping to be passed to :class:`Bot`.
-        :type baalorbot: dict
+        :param bot: A mapping to be passed to :class:`Bot`.
+        :type bot: dict
         :param server: A mapping to be passed to :class:`Server`.
         :type server: dict
         :param spotify: A mapping to be passed to :class:`Spotify`.
@@ -70,7 +73,7 @@ class Config(_ConfigMapping):
         self.twitch = Twitch(**twitch)
         self.discord = Discord(**discord)
         self.youtube = YouTube(**youtube)
-        self.baalorbot = Bot(**baalorbot) # XXX: Rename this
+        self.bot = Bot(**bot)
         self.server = Server(**server)
         self.spotify = Spotify(**spotify)
         self.spire = Spire(**spire)
@@ -221,11 +224,13 @@ class YouTube(_ConfigMapping):
         self.playlist_sheet = playlist_sheet
 
 class Bot(_ConfigMapping):
-    def __init__(self, prefix: str, owners: list[int], editors: list[int]):
+    def __init__(self, prefix: str, name: str, owners: list[int], editors: list[int]):
         """Hold the bot config information
 
         :param prefix: The prefix to identify that something is a command.
         :type prefix: str
+        :param name: The name that the bot will be referred by.
+        :type name: str
         :param owners: A list of Discord user IDs who are owner(s) of the bot.
         :type owners: list[int]
         :param editors: A list of Discord user IDs who are editors for the channel.
@@ -233,6 +238,7 @@ class Bot(_ConfigMapping):
         """
 
         self.prefix = prefix
+        self.name = name
 
         # both of these will eventually be split into discord/twitch
         self.owners = owners

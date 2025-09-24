@@ -98,9 +98,12 @@ youtube:
   # Can be queried without an API key.
   playlist_sheet: "https://docs.google.com/spreadsheets/d/1aM27I_YIQZXDEM7MJBU0Mu5-G8vwWMwWKOojRYJySY4/export?format=csv&gid=0"
 
-baalorbot:
+bot:
   # What prefix the bot listens to
   prefix: "!"
+
+  # What the displayed name of the bot will be
+  name: ""
 
   # These correspond to the permission groups for the bot.
   owners: []
