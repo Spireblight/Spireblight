@@ -111,6 +111,9 @@ bot:
   # What the displayed name of the bot will be
   name: ""
 
+  # Which Spire mods we should support for !info and run history pages
+  spire_mods: ["Slay the Spire"]
+
 server:
   # If this is true, we enable debug logging.
   debug: false
@@ -136,29 +139,6 @@ server:
   webhook:
     secret: <secret not set>
 
-spire:
-  # Where the gamedata is located on your computer. This is used by the client to
-  # figure out where to look for run files and autosaves.
-  # This needs single quotes because Windows uses backslashes. 
-  # steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
-  # For Linux:
-  # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
-  # Leave blank if StS is installed in the default steam dir on win or linux 
-  steamdir: ""
-
-  # These are all the enabled mods (used for !info and run history pages)
-  enabled_mods: ["Slay the Spire", "Downfall", "The Packmaster"]
-
-slice:
-  # Whether we deal with Slice & Dice data
-  enabled: false
-  # The file to write curse data to
-  curses: ''
-
-mt:
-  # Monster Train data
-  enabled: false
-
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/
@@ -169,11 +149,3 @@ spotify:
   # this code is a one-time use only. we then save the refresh token to disk and use that
   # this should be obtained by doing a GET request to /authorize
   code: <not set>
-
-# This is functionality unique to the client
-client:
-  # The file that the "now playing" info will be saved to
-  playing: ''
-
-  # If this is true, we sync local runs to data.
-  sync_runs: true

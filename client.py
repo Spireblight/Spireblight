@@ -70,7 +70,7 @@ async def main():
     playing = None
     timeout = 1
     if not cfg.server_url or not cfg.secret:
-        print("Config is not complete")
+        print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
         time.sleep(3)
         return
     try:

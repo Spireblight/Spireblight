@@ -226,7 +226,7 @@ def get_run_mod(name: str) -> str:
 async def load():
     _cache.clear()
     async with ClientSession() as session:
-        for mod in config.spire.enabled_mods:
+        for mod in config.bot.spire_mods:
             data = None
             async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
                 if resp.ok:

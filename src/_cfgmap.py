@@ -51,7 +51,7 @@ class _ConfigMapping:
                     raise RuntimeError(f"Config has unsupported type {a.__class__.__name__!r} (this is a bug).")
 
 class Config(_ConfigMapping):
-    def __init__(self, twitch: dict, discord: dict, youtube: dict, bot: dict, server: dict, spotify: dict, spire: dict, **kwargs):
+    def __init__(self, twitch: dict, discord: dict, youtube: dict, bot: dict, server: dict, spotify: dict, **kwargs):
         """Hold all of the configuration data.
 
         :param twitch: A mapping to be passed to :class:`Twitch`.
@@ -76,10 +76,6 @@ class Config(_ConfigMapping):
         self.bot = Bot(**bot)
         self.server = Server(**server)
         self.spotify = Spotify(**spotify)
-        self.spire = Spire(**spire)
-
-        for unused in ("slice", "mt", "client"):
-            kwargs.pop(unused)
 
         if kwargs:
             raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
@@ -231,17 +227,20 @@ class YouTube(_ConfigMapping):
         self.playlist_sheet = playlist_sheet
 
 class Bot(_ConfigMapping):
-    def __init__(self, prefix: str, name: str):
+    def __init__(self, prefix: str, name: str, spire_mods: list[str]):
         """Hold the bot config information
 
         :param prefix: The prefix to identify that something is a command.
         :type prefix: str
         :param name: The name that the bot will be referred by.
         :type name: str
+        :param spire_mods: The Spire mods that the bot will know.
+        :type spire_mods: list[str]
         """
 
         self.prefix = prefix
         self.name = name
+        self.spire_mods = spire_mods
 
 class Server(_ConfigMapping):
     def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):
@@ -313,16 +312,3 @@ class Spotify(_ConfigMapping):
         self.id = id
         self.secret = secret
         self.code = code # XXX: when we receive the code, immediately use it, don't store it
-
-class Spire(_ConfigMapping):
-    def __init__(self, steamdir: str, enabled_mods: list[str]):
-        """Hold Spire config information.
-
-        :param steamdir: The on-disk location for Spire.
-        :type steamdir: str
-        :param enabled_mods: Which mods we use.
-        :type enabled_mods: list[str]
-        """
-
-        self.steamdir = steamdir # XXX: this will be unique to the client eventually
-        self.enabled_mods = enabled_mods
