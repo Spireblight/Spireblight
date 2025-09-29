@@ -66,8 +66,6 @@ class Config(_ConfigMapping):
         :type server: dict
         :param spotify: A mapping to be passed to :class:`Spotify`.
         :type spotify: dict
-        :param spire: A mapping to be passed to :class:`Spire`.
-        :type spire: dict
         """
 
         self.twitch = Twitch(**twitch)

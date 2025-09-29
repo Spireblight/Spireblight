@@ -225,8 +225,11 @@ def get_run_mod(name: str) -> str:
 @add_listener("setup_init")
 async def load():
     _cache.clear()
+    done = set()
     async with ClientSession() as session:
         for mod in config.bot.spire_mods:
+            if mod.lower() in done:
+                continue
             data = None
             async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
                 if resp.ok:
@@ -242,6 +245,8 @@ async def load():
                         if inst.store_internal:
                             _internal_cache[inst.internal] = inst
                         _query_cache[sanitize(inst.name)].append(inst)
+
+            done.add(mod.lower())
 
     with open("score_bonuses.json") as f:
         j = json.load(f)
