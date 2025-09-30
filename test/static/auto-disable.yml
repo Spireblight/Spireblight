@@ -1,0 +1,7 @@
+twitch:
+  enabled: true
+  oauth_token: ""
+
+discord:
+  enabled: true
+  oauth_token: ""

@@ -14,7 +14,7 @@ twitch:
   # Token to connect to the Twitch IRC. You can get one at
   # https://twitchapps.com/tmi/. You probably don't want to use your own
   # personal account, but rather a testing or dev account.
-  oauth_token: <token not set>
+  oauth_token: ""
 
   # Channel that the bot connects to. Unless you are deploying, this should
   # _never_ be the live channel (e.g. "baalorlord"). Doing so will make the
@@ -22,7 +22,7 @@ twitch:
   # (amongst other things).
   # You probably want it to be your own private channel (i.e. your username) if
   # you're testing things out.
-  channel: <channel not set>
+  channel: ""
 
   # The Twitch usernames of the channel editors
   editors: []
@@ -54,7 +54,7 @@ discord:
 
   # TODO: Find a good tutorial on how to set up your own testing bot and get the
   # token from it.
-  oauth_token: <token not set>
+  oauth_token: ""
 
   invite_links:
     # This is the real invite as present on baalorlord.tv
@@ -83,7 +83,7 @@ discord:
 
 youtube:
   # The API key to make Youtube calls.
-  api_key: <api key not set>
+  api_key: ""
 
   # The channel ID used when searching
   channel_id: <channel id not set>
