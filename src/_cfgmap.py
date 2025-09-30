@@ -96,8 +96,9 @@ class Twitch(_ConfigMapping):
         :type timers: dict
         """
 
+        self._enabled = enabled
+
         self.channel = channel
-        self.enabled = enabled
         self.oauth_token = oauth_token
         self.editors = editors
 
@@ -105,11 +106,15 @@ class Twitch(_ConfigMapping):
 
         self.timers = _TimerIntervals(**timers)
 
-    def update(self, mapping):
-        token = mapping.get("oauth_token") or self.oauth_token
-        if not token: # if there's no token, we cannot have Twitch active
-            mapping["enabled"] = False
-        return super().update(mapping)
+    @property
+    def enabled(self):
+        if not (self.oauth_token and self.channel):
+            return False
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, value: bool):
+        self._enabled = value
 
 class _TwitchExtendedOAuth(_ConfigMapping):
     def __init__(self, client_id: str, client_secret: str, scopes: list[str] | None = None, *, enabled: bool = False):
@@ -167,21 +172,26 @@ class Discord(_ConfigMapping):
         :type owners: list[int]
         """
 
+        self._enabled = enabled
+
         self.server_id = server_id
         self.moderator_role = moderator_role
         self.oauth_token = oauth_token
-        self.enabled = enabled
 
         self.invite_links = _InviteLinks(**invite_links)
         self.auto_report = _AutoReport(**auto_report)
 
         self.owners = owners
 
-    def update(self, mapping):
-        token = mapping.get("oauth_token") or self.oauth_token
-        if not token: # if there's no token, we cannot have Discord active
-            mapping["enabled"] = False
-        return super().update(mapping)
+    @property
+    def enabled(self):
+        if not self.oauth_token:
+            return False
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, value: bool):
+        self._enabled = value
 
 class _InviteLinks(_ConfigMapping):
     def __init__(self, main: str, dev: str):
