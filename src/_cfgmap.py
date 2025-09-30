@@ -27,9 +27,13 @@ class _ConfigMapping:
                         raise InvalidConfigType(self, k, dict)
                     exp.update(v)
                 case list():
-                    if not isinstance(v, list):
+                    if isinstance(v, str):
+                        v = [v]
+                    try:
+                        lst = list(v)
+                    except TypeError:
                         raise InvalidConfigType(self, k, list)
-                    for item in v:
+                    for item in lst:
                         if item not in exp:
                             exp.append(item)
                 case int():
