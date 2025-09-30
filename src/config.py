@@ -1,3 +1,4 @@
+import collections
 import argparse
 import pathlib
 import yaml
@@ -57,16 +58,17 @@ def load_default_config():
 
     return _cfgmap.Config(**conf)
 
-def load_user_config(conf: _cfgmap.Config, args: argparse.Namespace):
+def parse_launch_args(args: argparse.Namespace):
+    files: list[pathlib.Path] = []
+    override = collections.defaultdict(dict)
+
     if args.config_file:
         for file in args.config_file:
             file: str
             curfile = curpath / file
             if not curfile.is_file():
                 raise RuntimeError(f"Config file {file!r} could not be found.")
-            with curfile.open() as f:
-                cf = yaml.safe_load(f)
-            conf.update(cf)
+            files.append(curfile)
 
     else: # none specified, use the dev one
         devfile = curpath / "dev-config.yml"
@@ -78,24 +80,35 @@ def load_user_config(conf: _cfgmap.Config, args: argparse.Namespace):
             print("No dev-config.yml file found.")
             print("A skeleton has been written for you.")
 
-        with devfile.open() as f:
-            cf = yaml.safe_load(f)
-        conf.update(cf)
+        files.append(devfile)
 
     if args.channel:
-        conf.twitch.channel = args.channel
+        override["twitch"]["channel"] = args.channel
 
     if args.no_twitch:
-        conf.twitch.enabled = False
+        override["twitch"]["enabled"] = False
 
     if args.no_discord:
-        conf.discord.enabled = False
+        override["discord"]["enabled"] = False
+
+    return files, override
+
+def load_user_config(conf: _cfgmap.Config, file: pathlib.Path):
+    with file.open() as f:
+        cf = yaml.safe_load(f)
+    conf.update(cf)
 
 def load():
+    """Load the full configuration for the program."""
     global config
+    config = load_default_config()
+
     # this is important; both testing and docgen use their own args
     # we should only care about what we actually use
     args, _ = parser.parse_known_args()
+    files, override = parse_launch_args(args)
 
-    config = load_default_config()
-    load_user_config(config, args)
+    for file in files:
+        load_user_config(config, file)
+
+    config.update(override)
