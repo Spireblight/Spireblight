@@ -105,6 +105,12 @@ class Twitch(_ConfigMapping):
 
         self.timers = _TimerIntervals(**timers)
 
+    def update(self, mapping):
+        token = mapping.get("oauth_token") or self.oauth_token
+        if not token: # if there's no token, we cannot have Twitch active
+            mapping["enabled"] = False
+        return super().update(mapping)
+
 class _TwitchExtendedOAuth(_ConfigMapping):
     def __init__(self, client_id: str, client_secret: str, scopes: list[str] | None = None, *, enabled: bool = False):
         """Create an Extended OAuth mapping.
@@ -171,6 +177,12 @@ class Discord(_ConfigMapping):
 
         self.owners = owners
 
+    def update(self, mapping):
+        token = mapping.get("oauth_token") or self.oauth_token
+        if not token: # if there's no token, we cannot have Discord active
+            mapping["enabled"] = False
+        return super().update(mapping)
+
 class _InviteLinks(_ConfigMapping):
     def __init__(self, main: str, dev: str):
         """The various Discord invite links we have.
@@ -198,6 +210,13 @@ class _AutoReport(_ConfigMapping):
         self.server = server
         self.channel = channel
         self.enabled = enabled
+
+    def update(self, mapping):
+        server = mapping.get("server") or self.server
+        channel = mapping.get("channel") or self.channel
+        if not (server and channel): # needs both to function
+            mapping["enabled"] = False
+        return super().update(mapping)
 
 class YouTube(_ConfigMapping):
     def __init__(self, channel_id: str, default_video: str, archive_id: str, api_key: str, cache_timeout: int, playlist_sheet: str):
