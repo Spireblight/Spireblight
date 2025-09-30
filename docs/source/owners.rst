@@ -10,7 +10,6 @@ To set it up, you must first `download Python`_.
 Python 3.11 is the minimum required, with more recent versions recommended. To
 set up the project, create a virtual environment and install the requirements:
 
-.. sourcecode:: bash
     python3 -m venv env
     source env/bin/activate
     pip install -r requirements.txt

@@ -10,7 +10,6 @@ Full Spireblight API
    archive
    cache
    config
-   configuration
    disc
    events
    exceptions

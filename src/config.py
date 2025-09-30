@@ -36,6 +36,13 @@ parser.add_argument("--no-discord", action="store_true", help="Disable the Disco
 parser.add_argument("--channel", help="Which Twitch channel to join")
 
 def load_default_config():
+    """Load the default configuration into memory.
+
+    :raises RuntimeError: If the default config file cannot be found
+    :return: The configuration object, ready for use
+    :rtype: _cfgmap.Config
+    """
+
     global curpath
     if curpath is None:
         curpath = pathlib.Path(".")
@@ -58,7 +65,18 @@ def load_default_config():
 
     return _cfgmap.Config(**conf)
 
-def parse_launch_args(args: argparse.Namespace):
+def parse_launch_args():
+    """Parse the launch arguments, and find the files to load.
+
+    :raises RuntimeError: If a specified config file could not be found
+    :return: A tuple of the files to load, and the override values
+    :rtype: tuple[list[pathlib.Path], dict]
+    """
+
+    # this is important; both testing and docgen use their own args
+    # we should only care about what we actually use
+    args, _ = parser.parse_known_args()
+
     files: list[pathlib.Path] = []
     override = collections.defaultdict(dict)
 
@@ -94,6 +112,13 @@ def parse_launch_args(args: argparse.Namespace):
     return files, override
 
 def load_user_config(conf: _cfgmap.Config, file: pathlib.Path):
+    """Modify in-place the config with the user config.
+
+    :param conf: The configuration object.
+    :type conf: _cfgmap.Config
+    :param file: A Path object pointing to the file.
+    :type file: pathlib.Path
+    """
     with file.open() as f:
         cf = yaml.safe_load(f)
     conf.update(cf)
@@ -103,10 +128,7 @@ def load():
     global config
     config = load_default_config()
 
-    # this is important; both testing and docgen use their own args
-    # we should only care about what we actually use
-    args, _ = parser.parse_known_args()
-    files, override = parse_launch_args(args)
+    files, override = parse_launch_args()
 
     for file in files:
         load_user_config(config, file)
