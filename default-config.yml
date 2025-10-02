@@ -38,8 +38,8 @@ twitch:
   extended:
     enabled: false
     # This is the publicly-available Client ID
-    client_id: <value not set>
-    client_secret: <value not set>
+    client_id: ""
+    client_secret: ""
     scopes: []
 
   timers:
