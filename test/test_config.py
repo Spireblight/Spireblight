@@ -81,5 +81,32 @@ class TestConfigFile(TestCase):
         with self.assertRaises(InvalidConfigType):
             self.config.update({"bot": {"spire_mods": 34}})
 
+    def test_int_type(self):
+        self.assertEqual(self.config.server.port, 80)
+        self.config.update({"server": {"port": 6667}})
+        self.assertEqual(self.config.server.port, 6667)
+
+        self.config.update({"server": {"port": "6697"}}) # using SSL is better
+        self.assertEqual(self.config.server.port, 6697)
+
+        with self.assertRaises(InvalidConfigType):
+            self.config.update({"server": {"port": "not a number"}})
+
+    def test_str_type(self):
+        self.assertEqual(self.config.bot.name, "")
+        self.config.update({"bot": {"name": "some test bot"}})
+        self.assertEqual(self.config.bot.name, "some test bot")
+
+        with self.assertRaises(InvalidConfigType):
+            self.config.update({"bot": {"name": ["Not a real name!"]}})
+
+    def test_bool_type(self):
+        self.assertFalse(self.config.server.debug)
+        self.config.update({"server": {"debug": True}})
+        self.assertTrue(self.config.server.debug)
+
+        with self.assertRaises(InvalidConfigType):
+            self.config.update({"server": {"debug": "false"}})
+
     def tearDown(self):
         self.config = None
