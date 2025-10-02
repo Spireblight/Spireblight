@@ -274,7 +274,7 @@ class Bot(_ConfigMapping):
         self.spire_mods = spire_mods
 
 class Server(_ConfigMapping):
-    def __init__(self, debug: bool, secret: str, url: str, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):
+    def __init__(self, debug: bool, secret: str, url: str, host: str, port: int, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):
         """Hold server-related configuration.
 
         :param debug: Whether we are in debug mode.
@@ -283,6 +283,10 @@ class Server(_ConfigMapping):
         :type secret: str
         :param url: The URL of the server we are running on.
         :type url: str
+        :param host: The hostname of the server we are running on.
+        :type host: str
+        :param port: The port we are listening on.
+        :type port: int
         :param json_indent: How many spaces to put in the JSON dumps.
         :type json_indent: int
         :param business_email: The streamer's business email.
@@ -295,7 +299,13 @@ class Server(_ConfigMapping):
 
         self.debug = debug
         self.secret = secret
-        self.url = url # XXX: split this into host and port
+        # TODO: Change url to only be user-facing, and use host+port for connection
+        # Currently, the options are there for future use, but unused
+        # The goal is to let us use the host and port for server setup
+        # And url will be for user-facing stuff (like the !website url)
+        self.url = url
+        self.host = host
+        self.port = port
         self.json_indent = json_indent
         self.business_email = business_email
 

@@ -122,8 +122,17 @@ server:
   # both the client side and the server side. The default is not set for security reasons.
   secret: ""
 
-  # The URL used when rendering links and redirects.
+  # The URL used when rendering links and redirects. This doesn't need to be the same as the host.
+  # It must, however, resolve to the same thing. This is to allow subdomains that use the same host
+  # but operate on a different port (e.g. `not-baalor.baalorlord.tv`) to function accordingly.
+  # On such a use, the operator is expected to use nginx or similar to handle port redirection
   url: http://localhost:8080
+
+  # The host we are. This is not currently used, but will eventually be.
+  host: https://baalorlord.tv
+
+  # Which port we listen on. This is not currently used.
+  port: 80
 
   # Amount of spaces when dumping JSON files.
   json_indent: 2
