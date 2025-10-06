@@ -9,10 +9,10 @@ Full Spireblight API
    activemods
    archive
    cache
-   client
-   configuration
+   config
    disc
    events
+   exceptions
    logger
    monster
    nameinternal

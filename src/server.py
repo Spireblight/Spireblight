@@ -55,12 +55,13 @@ from src.cache.run_stats import (
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
-from src.webpage import router, playlists, __botname__, __version__, __github__, __author__
+from src.webpage import router, playlists
 from src.wrapper import wrapper
 from src.monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from src.twitch import TwitchCommand
 from src.logger import logger
 from src.events import add_listener
+from src.config import config, __botname__, __version__, __github__, __author__
 from src.slice import get_runs, CurrentRun
 from src.utils import (
     format_for_slaytabase,
@@ -78,8 +79,6 @@ from src.gamedata import RelicData, Treasure, Event
 from src.typehints import ContextType, CommandType
 from src import events, archive
 
-from src.configuration import config
-
 TConn: TwitchConn = None
 DConn: DiscordConn = None
 
@@ -92,7 +91,7 @@ _DEFAULT_RATE = 3.0
 
 _consts = {
     "discord": config.discord.invite_links.main,
-    "prefix": config.baalorbot.prefix,
+    "prefix": config.bot.prefix,
     "website": config.server.url,
 }
 
@@ -673,10 +672,10 @@ class DiscordConn(DBot):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        if message.content.startswith(config.baalorbot.prefix) or isinstance(
+        if message.content.startswith(config.bot.prefix) or isinstance(
             message.channel, discord.DMChannel
         ):
-            content = message.content.lstrip(config.baalorbot.prefix).split()
+            content = message.content.lstrip(config.bot.prefix).split()
             if not content:
                 return
             ctx = await self.get_context(message)
@@ -966,7 +965,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+flag] <output>"""
     args = list(args)
     msg = " ".join(args)
-    name = name.lstrip(config.baalorbot.prefix)
+    name = name.lstrip(config.bot.prefix)
     cmds: dict[str, list[CommandType]] = {}
     if TConn is not None:
         for cname, cmd in TConn.commands.items():
@@ -1649,7 +1648,7 @@ async def clip_cmd(ctx: ContextType, arg: str = "random", *rest: str):
 @command("bot")
 async def bot_cmd(ctx: ContextType):
     """Give general information on the bot itself."""
-    p = config.baalorbot.prefix
+    p = config.bot.prefix
     await ctx.reply(
         f"I am {__botname__} v{__version__}, made by {__author__}. Thanks to Baalor running a "
         f"script on his computer, I can access the game's data for commands like {p}neow and "
@@ -1663,7 +1662,7 @@ async def bot_cmd(ctx: ContextType):
 async def help_cmd(ctx: ContextType, name: str = ""):
     """Find help on the various commands in the bot."""
     if not name:
-        p = config.baalorbot.prefix
+        p = config.bot.prefix
         await ctx.reply(
             f"Welcome to the stream! Website: {config.server.url} | Current run: {p}current | "
             f"Stream overlay: {p}str | Useful commands: {p}discord {p}mods {p}neow {p}boss "
@@ -2008,7 +2007,7 @@ async def giveaway_handle(ctx: ContextType, count: int = 1):
         else:
             _ongoing_giveaway["count"] = 1
         await ctx.send(
-            f"A giveaway has started! Type {config.baalorbot.prefix}enter to enter!"
+            f"A giveaway has started! Type {config.bot.prefix}enter to enter!"
         )
 
     elif _ongoing_giveaway["starter"] != ctx.author.name:
@@ -2109,7 +2108,7 @@ async def card_with_art(ctx: ContextType, *line: str):
         return
     if info.cls_name != "card":
         await ctx.reply(
-            f"Can only find art for cards. Use {config.baalorbot.prefix}info instead."
+            f"Can only find art for cards. Use {config.bot.prefix}info instead."
         )
         return
 
@@ -2244,7 +2243,7 @@ async def is_seeded(ctx: ContextType, save: Savefile):
     """Display whether the current run is seeded."""
     if save.is_seeded:
         await ctx.reply(
-            f"This run is seeded! See '{config.baalorbot.prefix}seed' for the seed."
+            f"This run is seeded! See '{config.bot.prefix}seed' for the seed."
         )
     else:
         await ctx.reply(
@@ -2334,7 +2333,7 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
         f"Shop: {shop:.0%} - "
         f"Treasure: {chest:.0%} - "
         f"Event: {1-hallway-shop-chest:.0%} - "
-        f"See {config.baalorbot.prefix}eventrng for more information."
+        f"See {config.bot.prefix}eventrng for more information."
     )
 
 
@@ -2411,7 +2410,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
         elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
             match data.tier:
                 case "Boss":
-                    s = f"For boss relics, see {config.baalorbot.prefix}picked instead."
+                    s = f"For boss relics, see {config.bot.prefix}picked instead."
                 case "Starter":
                     s = "Starter relics can't exactly be seen during a run. What?"
                 case "Special":
@@ -2701,7 +2700,7 @@ async def wall_card(ctx: ContextType):
         return
 
     await ctx.reply(
-        f"Current card in the {config.baalorbot.prefix}hole in the wall for the ladder savefile: {p.hole_card}"
+        f"Current card in the {config.bot.prefix}hole in the wall for the ladder savefile: {p.hole_card}"
     )
 
 
@@ -3006,7 +3005,7 @@ async def active_mod_info(ctx: ContextType, save: Savefile, *modname):
 @router.get("/commands")
 @template("commands.jinja2")
 async def commands_page(req: Request):
-    d = {"prefix": config.baalorbot.prefix, "commands": []}
+    d = {"prefix": config.bot.prefix, "botname": config.bot.name, "commands": []}
     cmds = set()
     if TConn is not None:
         cmds.update(TConn.commands)
@@ -3063,9 +3062,27 @@ async def individual_cmd(req: Request):
     d["discord"] = dcmd
 
     d["permissions"] = ", ".join(_perms[x] for x in cmd.flag) or _perms[""]
-    d["prefix"] = config.baalorbot.prefix
+    d["prefix"] = config.bot.prefix
 
     return d
+
+
+@router.post("/report")
+async def automatic_client_report(req: Request):
+    data = (await get_req_data(req, "traceback"))[0]
+    ar = config.discord.auto_report
+    if not ar.enabled or not ar.server or not ar.channel:
+        raise HTTPServiceUnavailable
+
+    guild = DConn.get_guild(ar.server)
+    if guild is None:
+        raise HTTPServiceUnavailable
+    channel = guild.get_channel(ar.channel)
+    if channel is None:
+        raise HTTPServiceUnavailable
+
+    await channel.send("[Automatic Client Reporting]\n\n" + data)
+    return Response()
 
 
 _oauth_state = None
@@ -3157,7 +3174,7 @@ async def Twitch_startup():
 
     TConn = TwitchConn(
         token=config.twitch.oauth_token,
-        prefix=config.baalorbot.prefix,
+        prefix=config.bot.prefix,
         initial_channels=[config.twitch.channel],
         case_insensitive=True,
     )
@@ -3180,7 +3197,7 @@ async def Twitch_startup():
     esbot = EventSubBot.from_client_credentials(
         config.server.websocket_client.id,
         config.server.websocket_client.secret,
-        prefix=config.baalorbot.prefix,
+        prefix=config.bot.prefix,
     )
     TConn.esclient = EventSubClient(
         esbot, config.server.webhook.secret, f"{config.server.url}/eventsub"
@@ -3197,9 +3214,9 @@ async def Twitch_cleanup():
 async def Discord_startup():
     global DConn
     DConn = DiscordConn(
-        config.baalorbot.prefix,
+        config.bot.prefix,
         case_insensitive=True,
-        owner_ids=config.baalorbot.owners,
+        owner_ids=config.discord.owners,
         help_command=None,
         intents=discord.Intents.all(),
     )

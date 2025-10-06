@@ -1,6 +1,7 @@
 *.pyc
 data/
 last_run
+last_version
 /bin/
 /lib/
 /lib64

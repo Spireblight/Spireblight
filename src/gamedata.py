@@ -29,7 +29,7 @@ from src.nameinternal import get_event, get_relic_stats, get_run_mod, get, get_c
 from src.sts_profile import Profile
 from src.logger import logger
 
-from src.configuration import config
+from src.config import config
 
 if TYPE_CHECKING:
     from src.runs import StreakInfo

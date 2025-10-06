@@ -1,6 +1,11 @@
-# This is the defaults for all the configuration vaules.
+# This is the defaults for all the configuration values.
 #
 # For a local setup you should not make changes here, but in dev-config.yml.
+#
+# Keys that are not included in your local config will use the default present here
+# Lists will *always* include the values in here, even if other values are specified
+#
+# IMPORTANT: If you plan to modify this file, you NEED to modify src/_cfgmap.py to match exactly
 
 twitch:
   # If the Twitch part of the bot is enabled or not.
@@ -9,7 +14,7 @@ twitch:
   # Token to connect to the Twitch IRC. You can get one at
   # https://twitchapps.com/tmi/. You probably don't want to use your own
   # personal account, but rather a testing or dev account.
-  oauth_token: <token not set>
+  oauth_token: ""
 
   # Channel that the bot connects to. Unless you are deploying, this should
   # _never_ be the live channel (e.g. "baalorlord"). Doing so will make the
@@ -17,7 +22,10 @@ twitch:
   # (amongst other things).
   # You probably want it to be your own private channel (i.e. your username) if
   # you're testing things out.
-  channel: <channel not set>
+  channel: ""
+
+  # The Twitch usernames of the channel editors
+  editors: []
 
   # This indicates whether we should use extended or classic access.
   # Classic access needs a simple OAuth token, and no additional fluff.
@@ -30,8 +38,8 @@ twitch:
   extended:
     enabled: false
     # This is the publicly-available Client ID
-    client_id: <value not set>
-    client_secret: <value not set>
+    client_id: ""
+    client_secret: ""
     scopes: []
 
   timers:
@@ -46,7 +54,7 @@ discord:
 
   # TODO: Find a good tutorial on how to set up your own testing bot and get the
   # token from it.
-  oauth_token: <token not set>
+  oauth_token: ""
 
   invite_links:
     # This is the real invite as present on baalorlord.tv
@@ -54,9 +62,20 @@ discord:
     # This is a real invite by Olivia5k.
     dev: https://discord.gg/7hNreCb6rs
 
+  auto_report:
+    # Whether we support automatic bug report (server, client, etc.)
+    enabled: false
+    # The server ID where automatic reports will go
+    server: 0
+    # The channel ID to send the messages to (NOT a thread!)
+    channel: 0
+
+  # User IDs of the owners of this bot
+  owners: []
+
   # The server ID the bot is working on. This acts as a guard so it doesn't send
   # messages to other servers.
-  server_id: <channel id not set>
+  server_id: 0
 
   # Which user role is considered a moderator. This should be the numberical ID
   # of the role, and the default of 0 will make it error out.
@@ -64,7 +83,7 @@ discord:
 
 youtube:
   # The API key to make Youtube calls.
-  api_key: <api key not set>
+  api_key: ""
 
   # The channel ID used when searching
   channel_id: <channel id not set>
@@ -77,7 +96,7 @@ youtube:
   # If this is not set or empty, looking up the archive for runs will be disabled
   archive_id: <not set>
 
-  # Amount of seconds we wait between making API calls to Youtube. Should
+  # Number of seconds we wait between making API calls to Youtube. Should
   # probably never be lower than 3600. This is individual per channel.
   cache_timeout: 3600
 
@@ -85,13 +104,15 @@ youtube:
   # Can be queried without an API key.
   playlist_sheet: "https://docs.google.com/spreadsheets/d/1aM27I_YIQZXDEM7MJBU0Mu5-G8vwWMwWKOojRYJySY4/export?format=csv&gid=0"
 
-baalorbot:
+bot:
   # What prefix the bot listens to
   prefix: "!"
 
-  # These correspond to the permission groups for the bot.
-  owners: []
-  editors: []
+  # What the displayed name of the bot will be
+  name: ""
+
+  # Which Spire mods we should support for !info and run history pages
+  spire_mods: ["Slay the Spire"]
 
 server:
   # If this is true, we enable debug logging.
@@ -101,8 +122,17 @@ server:
   # both the client side and the server side. The default is not set for security reasons.
   secret: ""
 
-  # The URL used when rendering links and redirects.
+  # The URL used when rendering links and redirects. This doesn't need to be the same as the host.
+  # It must, however, resolve to the same thing. This is to allow subdomains that use the same host
+  # but operate on a different port (e.g. `not-baalor.baalorlord.tv`) to function accordingly.
+  # On such a use, the operator is expected to use nginx or similar to handle port redirection
   url: http://localhost:8080
+
+  # The host we are. This is not currently used, but will eventually be.
+  host: https://baalorlord.tv
+
+  # Which port we listen on. This is not currently used.
+  port: 80
 
   # Amount of spaces when dumping JSON files.
   json_indent: 2
@@ -118,29 +148,6 @@ server:
   webhook:
     secret: <secret not set>
 
-spire:
-  # Where the gamedata is located on your computer. This is used by the client to
-  # figure out where to look for run files and autosaves.
-  # This needs single quotes because Windows uses backslashes. 
-  # steamdir: 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
-  # For Linux:
-  # steamdir: "~/.steam/steam/steamapps/common/SlayTheSpire"
-  # Leave blank if StS is installed in the default steam dir on win or linux 
-  steamdir: ""
-
-  # These are all the enabled mods (used for !info and run history pages)
-  enabled_mods: ["Slay the Spire", "Downfall", "The Packmaster"]
-
-slice:
-  # Whether we deal with Slice & Dice data
-  enabled: false
-  # The file to write curse data to
-  curses: ''
-
-mt:
-  # Monster Train data
-  enabled: false
-
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/
@@ -151,11 +158,3 @@ spotify:
   # this code is a one-time use only. we then save the refresh token to disk and use that
   # this should be obtained by doing a GET request to /authorize
   code: <not set>
-
-# This is functionality unique to the client
-client:
-  # The file that the "now playing" info will be saved to
-  playing: ''
-
-  # If this is true, we sync local runs to data.
-  sync_runs: true

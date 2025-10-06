@@ -10,17 +10,13 @@ import aiohttp_jinja2
 import jinja2
 
 from src.logger import logger
+from src.config import __author__, __github__, __version__
 
 from src import events
 
-from src.configuration import config
+from src.config import config
 
 __all__ = ["webpage", "router"]
-
-__version__ = "0.6"
-__author__ = "Anilyka Barry"
-__github__ = "https://github.com/Spireblight/Spireblight"
-__botname__ = "Spireblight"
 
 webpage = web.Application(logger=logger)
 

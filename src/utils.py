@@ -7,7 +7,7 @@ from twitchio import models, client, http as _http
 import os
 import json
 
-from src.configuration import config
+from src.config import config
 
 __all__ = [
     "get_req_data",
