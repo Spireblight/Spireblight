@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Spireblight documentation &#8212; Spireblight 0.6 documentation</title>
+    <title>Spireblight documentation &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/documentation_options.js?v=48f8e935"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -127,6 +127,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -236,6 +243,13 @@
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
   </a>
@@ -313,6 +327,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="owners.html">For bot owners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Full Spireblight API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="fileparser.html#src.gamedata.FileParser"><code class="docutils literal notranslate"><span class="pre">FileParser</span></code></a></li>
@@ -368,12 +383,25 @@
 <li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="client.html">client module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="client.html#src.client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html">configuration module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#src.configuration.load_file"><code class="docutils literal notranslate"><span class="pre">load_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Handle configuration parsing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src.config.load_default_config"><code class="docutils literal notranslate"><span class="pre">load_default_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src.config.parse_launch_args"><code class="docutils literal notranslate"><span class="pre">parse_launch_args()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src.config.load_user_config"><code class="docutils literal notranslate"><span class="pre">load_user_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src.config.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._ConfigMapping"><code class="docutils literal notranslate"><span class="pre">_ConfigMapping</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Twitch"><code class="docutils literal notranslate"><span class="pre">Twitch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._TwitchExtendedOAuth"><code class="docutils literal notranslate"><span class="pre">_TwitchExtendedOAuth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._TimerIntervals"><code class="docutils literal notranslate"><span class="pre">_TimerIntervals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Discord"><code class="docutils literal notranslate"><span class="pre">Discord</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._InviteLinks"><code class="docutils literal notranslate"><span class="pre">_InviteLinks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._AutoReport"><code class="docutils literal notranslate"><span class="pre">_AutoReport</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.YouTube"><code class="docutils literal notranslate"><span class="pre">YouTube</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Bot"><code class="docutils literal notranslate"><span class="pre">Bot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Server"><code class="docutils literal notranslate"><span class="pre">Server</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._WebsocketClient"><code class="docutils literal notranslate"><span class="pre">_WebsocketClient</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap._Webhook"><code class="docutils literal notranslate"><span class="pre">_Webhook</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Spotify"><code class="docutils literal notranslate"><span class="pre">Spotify</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="disc.html">disc module</a><ul>
@@ -385,6 +413,10 @@
 <li class="toctree-l3"><a class="reference internal" href="events.html#src.events.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="events.html#src.events.add_listener"><code class="docutils literal notranslate"><span class="pre">add_listener()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="events.html#src.events.invoke"><code class="docutils literal notranslate"><span class="pre">invoke()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Custom Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#src.exceptions.InvalidConfigType"><code class="docutils literal notranslate"><span class="pre">InvalidConfigType</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="logger.html">logger module</a></li>
@@ -519,6 +551,7 @@
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.active_mod_info"><code class="docutils literal notranslate"><span class="pre">active_mod_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.commands_page"><code class="docutils literal notranslate"><span class="pre">commands_page()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.individual_cmd"><code class="docutils literal notranslate"><span class="pre">individual_cmd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.automatic_client_report"><code class="docutils literal notranslate"><span class="pre">automatic_client_report()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>

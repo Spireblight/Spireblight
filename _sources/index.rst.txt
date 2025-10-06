@@ -6,6 +6,7 @@ Spireblight documentation
    :caption: Contents:
 
    intro
+   owners
    modules
 
 Indices and tables

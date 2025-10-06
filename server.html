@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>server module &#8212; Spireblight 0.6 documentation</title>
+    <title>server module &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/documentation_options.js?v=48f8e935"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'server';</script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -128,6 +128,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -234,6 +241,13 @@
 </li>
 
 
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
@@ -289,10 +303,10 @@
 <li class="toctree-l1"><a class="reference internal" href="activemods.html">activemods module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">archive module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cache.html">cache package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="client.html">client module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">configuration module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Handle configuration parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Custom Exceptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
@@ -1103,6 +1117,11 @@ mostly fine otherwise.</p>
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="src.server.automatic_client_report">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">automatic_client_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#automatic_client_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.automatic_client_report" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="src.server.check_token_validity">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_token_validity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#check_token_validity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.check_token_validity" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1327,6 +1346,7 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.active_mod_info"><code class="docutils literal notranslate"><span class="pre">active_mod_info()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.commands_page"><code class="docutils literal notranslate"><span class="pre">commands_page()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.individual_cmd"><code class="docutils literal notranslate"><span class="pre">individual_cmd()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.automatic_client_report"><code class="docutils literal notranslate"><span class="pre">automatic_client_report()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>client module &#8212; Spireblight 0.6 documentation</title>
+    <title>For bot owners &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -38,15 +38,15 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/documentation_options.js?v=48f8e935"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'client';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'owners';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="configuration module" href="configuration.html" />
-    <link rel="prev" title="cache package" href="cache.html" />
+    <link rel="next" title="Full Spireblight API" href="modules.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -133,6 +133,13 @@
 
 
 <li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
   </a>
@@ -235,6 +242,13 @@
 
 
 <li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
   </a>
@@ -283,31 +297,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nodes.html">Slay the Spire path node data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="activemods.html">activemods module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="archive.html">archive module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cache.html">cache package</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">client module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">configuration module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="server.html">server module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="twitch.html">twitch module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="typehints.html">typehints module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="webpage.html">webpage module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wrapper.html">wrapper module</a></li>
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -346,10 +336,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">Full Spireblight API</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">client module</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">For bot owners</span></li>
   </ul>
 </nav>
 </div>
@@ -366,13 +353,19 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-src.client">
-<span id="client-module"></span><h1>client module<a class="headerlink" href="#module-src.client" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="src.client.main">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/client.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.client.main" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+  <section id="for-bot-owners">
+<h1>For bot owners<a class="headerlink" href="#for-bot-owners" title="Link to this heading">#</a></h1>
+<p>This contains all the information necessary to install and run this software
+for people who wish to use it. It was not originally designed for use by more
+than one streamer, but work is ongoing to support others.</p>
+<p>To set it up, you must first <a class="reference external" href="https://www.python.org/downloads/">download Python</a>.</p>
+<p>Python 3.11 is the minimum required, with more recent versions recommended. To
+set up the project, create a virtual environment and install the requirements:</p>
+<blockquote>
+<div><p>python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt</p>
+</div></blockquote>
 </section>
 
 
@@ -386,20 +379,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="cache.html"
+       href="intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">cache package</p>
+        <p class="prev-next-title">Introduction</p>
       </div>
     </a>
     <a class="right-next"
-       href="configuration.html"
+       href="modules.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">configuration module</p>
+        <p class="prev-next-title">Full Spireblight API</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -415,22 +408,10 @@
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-  </nav></div>
-
-  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/client.rst.txt"
+      <li><a href="_sources/owners.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

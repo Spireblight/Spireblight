@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>src.nameinternal &#8212; Spireblight 0.6 documentation</title>
+    <title>src.nameinternal &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="../../_static/documentation_options.js?v=48f8e935"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/nameinternal';</script>
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -125,6 +125,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -225,6 +232,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -338,7 +352,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_listener</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">complete_match</span>
 
@@ -574,8 +588,11 @@
 <span class="nd">@add_listener</span><span class="p">(</span><span class="s2">&quot;setup_init&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">():</span>
     <span class="n">_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">mod</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">spire</span><span class="o">.</span><span class="n">enabled_mods</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">mod</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">spire_mods</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">done</span><span class="p">:</span>
+                <span class="k">continue</span>
             <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/</span><span class="si">{</span><span class="n">mod</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">/data.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
@@ -591,6 +608,8 @@
                         <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">store_internal</span><span class="p">:</span>
                             <span class="n">_internal_cache</span><span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst</span>
                         <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
+
+            <span class="n">done</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;score_bonuses.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>

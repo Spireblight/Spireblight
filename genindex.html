@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; Spireblight 0.6 documentation</title>
+    <title>Index &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="_static/documentation_options.js?v=48f8e935"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -125,6 +125,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -225,6 +232,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -336,6 +350,22 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archive.html#src.archive._ArchiveHandler">_ArchiveHandler (class in src.archive)</a>
 </li>
+      <li><a href="config.html#src._cfgmap._AutoReport">_AutoReport (class in src._cfgmap)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._ConfigMapping">_ConfigMapping (class in src._cfgmap)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._InviteLinks">_InviteLinks (class in src._cfgmap)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#src._cfgmap._TimerIntervals">_TimerIntervals (class in src._cfgmap)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._TwitchExtendedOAuth">_TwitchExtendedOAuth (class in src._cfgmap)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._Webhook">_Webhook (class in src._cfgmap)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._WebsocketClient">_WebsocketClient (class in src._cfgmap)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -380,10 +410,10 @@
 </li>
       <li><a href="events.html#src.events.add_listener">add_listener() (in module src.events)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cache.html#src.cache.cache_helpers.RunStats.add_loss">add_loss() (RunStats method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nodes.html#src.gamedata.ShopContents.add_potion">add_potion() (ShopContents method)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.ShopContents.add_relic">add_relic() (ShopContents method)</a>
@@ -419,6 +449,8 @@
       <li><a href="activemods.html#src.activemods.ActiveMod.authors_formatted">authors_formatted (ActiveMod property)</a>
 </li>
       <li><a href="server.html#src.server.auto_resolve_pred">auto_resolve_pred() (in module src.server)</a>
+</li>
+      <li><a href="server.html#src.server.automatic_client_report">automatic_client_report() (in module src.server)</a>
 </li>
       <li><a href="fileparser.html#src.save.Savefile.available_relic">available_relic() (Savefile method)</a>
 </li>
@@ -501,6 +533,8 @@
 </li>
       </ul></li>
       <li><a href="nodes.html#src.gamedata.BossChest">BossChest (class in src.gamedata)</a>
+</li>
+      <li><a href="config.html#src._cfgmap.Bot">Bot (class in src._cfgmap)</a>
 </li>
       <li><a href="server.html#src.server.bot_cmd">bot_cmd() (in module src.server)</a>
 </li>
@@ -662,6 +696,8 @@
 </li>
       <li><a href="utils.html#src.utils.complete_match">complete_match() (in module src.utils)</a>
 </li>
+      <li><a href="config.html#src._cfgmap.Config">Config (class in src._cfgmap)</a>
+</li>
       <li><a href="nodes.html#src.gamedata.Merchant.contents">contents (Merchant attribute)</a>
 </li>
       <li><a href="utils.html#src.utils.convert_class_to_obj">convert_class_to_obj() (in module src.utils)</a>
@@ -748,13 +784,15 @@
 </li>
       <li><a href="slice.html#src.slice.deserialize">deserialize() (in module src.slice)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archive.html#src.archive._ArchiveHandler.determine_offset">determine_offset() (_ArchiveHandler method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="slice.html#src.slice.CurrentRun.difficulty">difficulty (CurrentRun property)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.BaseNode.discarded_potions">discarded_potions (BaseNode property)</a>
+</li>
+      <li><a href="config.html#src._cfgmap.Discord">Discord (class in src._cfgmap)</a>
 </li>
       <li><a href="server.html#src.server.Discord_cleanup">Discord_cleanup() (in module src.server)</a>
 </li>
@@ -796,6 +834,14 @@
 </li>
       <li><a href="nodes.html#src.gamedata.EliteEncounter">EliteEncounter (class in src.gamedata)</a>
 </li>
+      <li><a href="config.html#src._cfgmap._AutoReport.enabled">enabled (_AutoReport property)</a>
+
+      <ul>
+        <li><a href="config.html#src._cfgmap.Discord.enabled">(Discord property)</a>
+</li>
+        <li><a href="config.html#src._cfgmap.Twitch.enabled">(Twitch property)</a>
+</li>
+      </ul></li>
       <li><a href="nodes.html#src.gamedata.EncounterBase">EncounterBase (class in src.gamedata)</a>
 </li>
       <li><a href="cache.html#src.cache.cache_helpers.StreakContainer.end">end (StreakContainer property)</a>
@@ -820,10 +866,10 @@
 </li>
       <li><a href="server.html#src.server.EventSubBot.event_eventsub_notification_stream_start">event_eventsub_notification_stream_start() (EventSubBot method)</a>
 </li>
-      <li><a href="server.html#src.server.event_likelihood">event_likelihood() (in module src.server)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="server.html#src.server.event_likelihood">event_likelihood() (in module src.server)</a>
+</li>
       <li><a href="server.html#src.server.TwitchConn.event_new_chatter">event_new_chatter() (TwitchConn method)</a>
 </li>
       <li><a href="server.html#src.server.TwitchConn.event_raid">event_raid() (TwitchConn method)</a>
@@ -1190,6 +1236,8 @@
 </li>
       <li><a href="trie.html#src.trie.Trie.insert">insert() (Trie method)</a>
 </li>
+      <li><a href="exceptions.html#src.exceptions.InvalidConfigType">InvalidConfigType</a>
+</li>
       <li><a href="disc.html#src.disc.DiscordCommand.invoke">invoke() (DiscordCommand method)</a>
 
       <ul>
@@ -1252,15 +1300,17 @@
 </li>
       <li><a href="cache.html#src.cache.cache_helpers.StreakContainer.length">length (StreakContainer property)</a>
 </li>
-      <li><a href="server.html#src.server.load">load() (in module src.server)</a>
+      <li><a href="config.html#src.config.load">load() (in module src.config)</a>
 
       <ul>
+        <li><a href="server.html#src.server.load">(in module src.server)</a>
+</li>
         <li><a href="slice.html#src.slice.load">(in module src.slice)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="configuration.html#src.configuration.load_file">load_file() (in module src.configuration)</a>
+      <li><a href="config.html#src.config.load_default_config">load_default_config() (in module src.config)</a>
 </li>
       <li><a href="archive.html#src.archive._ArchiveHandler.load_from_api">load_from_api() (_ArchiveHandler method)</a>
 </li>
@@ -1270,14 +1320,14 @@
 </li>
       <li><a href="monster.html#src.monster.static.load_mt2">load_mt2() (in module src.monster.static)</a>
 </li>
+      <li><a href="config.html#src.config.load_user_config">load_user_config() (in module src.config)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#src.client.main">main() (in module src.client)</a>
-</li>
       <li><a href="monster.html#src.monster.server.MonsterSave.main_class">main_class (MonsterSave property)</a>
 </li>
       <li><a href="monster.html#src.monster.server.MonsterSave.main_exiled">main_exiled (MonsterSave property)</a>
@@ -1402,6 +1452,8 @@
     module
 
       <ul>
+        <li><a href="config.html#module-src._cfgmap">src._cfgmap</a>
+</li>
         <li><a href="activemods.html#module-src.activemods">src.activemods</a>
 </li>
         <li><a href="archive.html#module-src.archive">src.archive</a>
@@ -1416,13 +1468,13 @@
 </li>
         <li><a href="cache.html#module-src.cache.streaks">src.cache.streaks</a>
 </li>
-        <li><a href="client.html#module-src.client">src.client</a>
-</li>
-        <li><a href="configuration.html#module-src.configuration">src.configuration</a>
+        <li><a href="config.html#module-src.config">src.config</a>
 </li>
         <li><a href="disc.html#module-src.disc">src.disc</a>
 </li>
         <li><a href="events.html#module-src.events">src.events</a>
+</li>
+        <li><a href="exceptions.html#module-src.exceptions">src.exceptions</a>
 </li>
         <li><a href="nodes.html#module-src.gamedata">src.gamedata</a>
 </li>
@@ -1546,6 +1598,8 @@
       <li><a href="server.html#src.server.Formatter.parse">parse() (Formatter method)</a>
 </li>
       <li><a href="utils.html#src.utils.parse_date_range">parse_date_range() (in module src.utils)</a>
+</li>
+      <li><a href="config.html#src.config.parse_launch_args">parse_launch_args() (in module src.config)</a>
 </li>
       <li><a href="activemods.html#src.activemods.ActiveMod.patch_version">patch_version (ActiveMod property)</a>
 </li>
@@ -1891,6 +1945,8 @@
 </li>
       <li><a href="server.html#src.server.seen_relic">seen_relic() (in module src.server)</a>
 </li>
+      <li><a href="config.html#src._cfgmap.Server">Server (class in src._cfgmap)</a>
+</li>
       <li><a href="server.html#src.server.Timer.set_routine">set_routine() (Timer method)</a>
 </li>
       <li><a href="server.html#src.server.set_run_stats_by_date">set_run_stats_by_date() (in module src.server)</a>
@@ -1929,8 +1985,17 @@
       </ul></li>
       <li><a href="server.html#src.server.slice_command">slice_command() (in module src.server)</a>
 </li>
+      <li><a href="config.html#src._cfgmap.Spotify">Spotify (class in src._cfgmap)</a>
+</li>
       <li><a href="server.html#src.server.TwitchConn.spotify_call">spotify_call() (TwitchConn method)</a>
 </li>
+      <li>
+    src._cfgmap
+
+      <ul>
+        <li><a href="config.html#module-src._cfgmap">module</a>
+</li>
+      </ul></li>
       <li>
     src.activemods
 
@@ -1981,17 +2046,10 @@
 </li>
       </ul></li>
       <li>
-    src.client
+    src.config
 
       <ul>
-        <li><a href="client.html#module-src.client">module</a>
-</li>
-      </ul></li>
-      <li>
-    src.configuration
-
-      <ul>
-        <li><a href="configuration.html#module-src.configuration">module</a>
+        <li><a href="config.html#module-src.config">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2008,6 +2066,13 @@
 
       <ul>
         <li><a href="events.html#module-src.events">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.exceptions
+
+      <ul>
+        <li><a href="exceptions.html#module-src.exceptions">module</a>
 </li>
       </ul></li>
       <li>
@@ -2234,6 +2299,8 @@
         <li><a href="nodes.html#src.gamedata.EncounterBase.turns_delta">(EncounterBase method)</a>
 </li>
       </ul></li>
+      <li><a href="config.html#src._cfgmap.Twitch">Twitch (class in src._cfgmap)</a>
+</li>
       <li><a href="server.html#src.server.Twitch_cleanup">Twitch_cleanup() (in module src.server)</a>
 </li>
       <li><a href="server.html#src.server.Twitch_startup">Twitch_startup() (in module src.server)</a>
@@ -2251,6 +2318,8 @@
       <li><a href="server.html#src.server.unmastered">unmastered() (in module src.server)</a>
 </li>
       <li><a href="fileparser.html#src.save.Savefile.upcoming_boss">upcoming_boss (Savefile property)</a>
+</li>
+      <li><a href="config.html#src._cfgmap._ConfigMapping.update">update() (_ConfigMapping method)</a>
 </li>
       <li><a href="cache.html#src.cache.run_stats.update_all_run_stats">update_all_run_stats() (in module src.cache.run_stats)</a>
 </li>
@@ -2317,6 +2386,10 @@
 
 <h2 id="Y">Y</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#src._cfgmap.YouTube">YouTube (class in src._cfgmap)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="server.html#src.server.Youtube_startup">Youtube_startup() (in module src.server)</a>
 </li>

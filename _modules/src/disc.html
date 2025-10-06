@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>src.disc &#8212; Spireblight 0.6 documentation</title>
+    <title>src.disc &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=ec806d2c"></script>
+    <script src="../../_static/documentation_options.js?v=48f8e935"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/disc';</script>
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.6 documentation</p>
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
   
 </a></div>
     
@@ -125,6 +125,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -225,6 +232,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../intro.html">
     Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
   </a>
 </li>
 
@@ -333,7 +347,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DiscordCommand&quot;</span><span class="p">]</span>
 
@@ -362,7 +376,7 @@
                 <span class="k">return</span>
             <span class="n">mod_role</span> <span class="o">=</span> <span class="n">guild</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">moderator_role</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="p">(</span>
-                <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">baalorbot</span><span class="o">.</span><span class="n">owners</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">owners</span><span class="p">)</span> <span class="ow">and</span>
                 <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="n">mod_role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">roles</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="k">return</span>

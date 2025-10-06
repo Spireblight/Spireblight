@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src._cfgmap &#8212; Spireblight 0.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=48f8e935"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/_cfgmap';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.7 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src._cfgmap</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src._cfgmap</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Contain all the configuration as classes.</span>
+
+<span class="sd">This allows proper type hinting and autocomplete.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidConfigType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<div class="viewcode-block" id="_ConfigMapping">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._ConfigMapping">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_ConfigMapping</span><span class="p">:</span>
+<div class="viewcode-block" id="_ConfigMapping.update">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._ConfigMapping.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the configuration with user config.</span>
+
+<span class="sd">        :param mapping: The decoded YAML mapping of configuration.</span>
+<span class="sd">        :type mapping: dict</span>
+<span class="sd">        :raises InvalidConfigType: If the user config gives a wrong value type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">exp</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No attribute </span><span class="si">{</span><span class="n">k</span><span class="si">!r}</span><span class="s2"> in the config.&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">match</span> <span class="n">exp</span><span class="p">:</span>
+                <span class="k">case</span> <span class="n">_ConfigMapping</span><span class="p">():</span> <span class="c1"># another level down</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span> <span class="c1"># dicts should always result in another class</span>
+                        <span class="k">raise</span> <span class="n">InvalidConfigType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+                    <span class="n">exp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="k">case</span> <span class="nb">list</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">InvalidConfigType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exp</span><span class="p">:</span>
+                            <span class="n">exp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">case</span> <span class="nb">int</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="c1"># if it&#39;s e.g. a str of an int, allow it</span>
+                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">InvalidConfigType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="k">case</span> <span class="nb">str</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="n">InvalidConfigType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="k">case</span> <span class="nb">bool</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="n">InvalidConfigType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Config has unsupported type </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2"> (this is a bug).&quot;</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Config">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">discord</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">youtube</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">bot</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">spotify</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold all of the configuration data.</span>
+
+<span class="sd">        :param twitch: A mapping to be passed to :class:`Twitch`.</span>
+<span class="sd">        :type twitch: dict</span>
+<span class="sd">        :param discord: A mapping to be passed to :class:`Discord`.</span>
+<span class="sd">        :type discord: dict</span>
+<span class="sd">        :param youtube: A mapping to be passed to :class:`YouTube`.</span>
+<span class="sd">        :type youtube: dict</span>
+<span class="sd">        :param bot: A mapping to be passed to :class:`Bot`.</span>
+<span class="sd">        :type bot: dict</span>
+<span class="sd">        :param server: A mapping to be passed to :class:`Server`.</span>
+<span class="sd">        :type server: dict</span>
+<span class="sd">        :param spotify: A mapping to be passed to :class:`Spotify`.</span>
+<span class="sd">        :type spotify: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">twitch</span> <span class="o">=</span> <span class="n">Twitch</span><span class="p">(</span><span class="o">**</span><span class="n">twitch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discord</span> <span class="o">=</span> <span class="n">Discord</span><span class="p">(</span><span class="o">**</span><span class="n">discord</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">youtube</span> <span class="o">=</span> <span class="n">YouTube</span><span class="p">(</span><span class="o">**</span><span class="n">youtube</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">Bot</span><span class="p">(</span><span class="o">**</span><span class="n">bot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="o">**</span><span class="n">server</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spotify</span> <span class="o">=</span> <span class="n">Spotify</span><span class="p">(</span><span class="o">**</span><span class="n">spotify</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized config values: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Twitch">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Twitch">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Twitch</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">editors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">extended</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">timers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the Twitch aspect of the configuration.</span>
+
+<span class="sd">        :param channel: The channel name to connect to.</span>
+<span class="sd">        :type channel: str</span>
+<span class="sd">        :param oauth_token: The OAuth token of the account to use.</span>
+<span class="sd">        :type oauth_token: str</span>
+<span class="sd">        :param enabled: Whether to use the Twitch connection, defaults to True.</span>
+<span class="sd">        :type enabled: bool, optional</span>
+<span class="sd">        :param editors: A list of Twitch usernames who are editors for the channel.</span>
+<span class="sd">        :type editors: list[int]</span>
+<span class="sd">        :param extended: A mapping that will be used for Extended OAuth.</span>
+<span class="sd">        :type extended: dict</span>
+<span class="sd">        :param timers: A mapping that will be used for timer interval.</span>
+<span class="sd">        :type timers: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span> <span class="o">=</span> <span class="n">oauth_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="n">editors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">extended</span> <span class="o">=</span> <span class="n">_TwitchExtendedOAuth</span><span class="p">(</span><span class="o">**</span><span class="n">extended</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">timers</span> <span class="o">=</span> <span class="n">_TimerIntervals</span><span class="p">(</span><span class="o">**</span><span class="n">timers</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span>
+
+    <span class="nd">@enabled</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="_TwitchExtendedOAuth">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._TwitchExtendedOAuth">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_TwitchExtendedOAuth</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an Extended OAuth mapping.</span>
+
+<span class="sd">        If this is used, we will be using the full Authorization Grant Flow.</span>
+<span class="sd">        This needs the streamer to accept the connection, and then the</span>
+<span class="sd">        client ID and secret stored here will no longer be needed.</span>
+
+<span class="sd">        :param client_id: The publicly-available Client ID.</span>
+<span class="sd">        :type client_id: str</span>
+<span class="sd">        :param client_secret: The Twitch app Client Secret.</span>
+<span class="sd">        :type client_secret: str</span>
+<span class="sd">        :param scopes: a list of the scopes requested, defaults to None.</span>
+<span class="sd">        :type scopes: list[str] | None, optional</span>
+<span class="sd">        :param enabled: Whether we use Extended OAuth, defaults to False.</span>
+<span class="sd">        :type enabled: bool, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span> <span class="o">=</span> <span class="n">scopes</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span></div>
+
+
+<div class="viewcode-block" id="_TimerIntervals">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._TimerIntervals">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_TimerIntervals</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stagger_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold timer interval information.</span>
+
+<span class="sd">        :param default_interval: The default interval for newly-created timers.</span>
+<span class="sd">        :type default_interval: int</span>
+<span class="sd">        :param stagger_interval: The start time between different timers at startup.</span>
+<span class="sd">        :type stagger_interval: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_interval</span> <span class="o">=</span> <span class="n">default_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stagger_interval</span> <span class="o">=</span> <span class="n">stagger_interval</span></div>
+
+
+<div class="viewcode-block" id="Discord">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Discord">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Discord</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">moderator_role</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">invite_links</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">auto_report</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">owners</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the Discord side of the configuration.</span>
+
+<span class="sd">        :param server_id: The server (&quot;Guild&quot;) ID where we will operate.</span>
+<span class="sd">        :type server_id: int</span>
+<span class="sd">        :param moderator_role: The user role which is considered to be a moderator.</span>
+<span class="sd">        :type moderator_role: int</span>
+<span class="sd">        :param oauth_token: The OAuth token needed to connect to Discord.</span>
+<span class="sd">        :type oauth_token: str</span>
+<span class="sd">        :param invite_links: A mapping of the various Discord invite links we have.</span>
+<span class="sd">        :type invite_links: dict</span>
+<span class="sd">        :param auto_report: A mapping of the automatic report feature.</span>
+<span class="sd">        :type auto_report: dict</span>
+<span class="sd">        :param enabled: Whether the Discord part is enabled, defaults to True.</span>
+<span class="sd">        :type enabled: bool, optional</span>
+<span class="sd">        :param owners: A list of Discord user IDs who are owner(s) of the bot.</span>
+<span class="sd">        :type owners: list[int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_id</span> <span class="o">=</span> <span class="n">server_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moderator_role</span> <span class="o">=</span> <span class="n">moderator_role</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span> <span class="o">=</span> <span class="n">oauth_token</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">invite_links</span> <span class="o">=</span> <span class="n">_InviteLinks</span><span class="p">(</span><span class="o">**</span><span class="n">invite_links</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_report</span> <span class="o">=</span> <span class="n">_AutoReport</span><span class="p">(</span><span class="o">**</span><span class="n">auto_report</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">owners</span> <span class="o">=</span> <span class="n">owners</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span>
+
+    <span class="nd">@enabled</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="_InviteLinks">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._InviteLinks">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_InviteLinks</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dev</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The various Discord invite links we have.</span>
+
+<span class="sd">        :param main: The invite link to the main streamer server.</span>
+<span class="sd">        :type main: str</span>
+<span class="sd">        :param dev: The invite link to the development (i.e. Spireblight) server.</span>
+<span class="sd">        :type dev: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main</span> <span class="o">=</span> <span class="n">main</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dev</span> <span class="o">=</span> <span class="n">dev</span></div>
+
+
+<div class="viewcode-block" id="_AutoReport">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._AutoReport">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_AutoReport</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold automatic bug report information</span>
+
+<span class="sd">        :param server: The server ID where the bot will report.</span>
+<span class="sd">        :type server: int</span>
+<span class="sd">        :param channel: The channel ID where the messages will go.</span>
+<span class="sd">        :type channel: int</span>
+<span class="sd">        :param enabled: If we use automatic reports, defaults to False.</span>
+<span class="sd">        :type enabled: bool, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span>
+
+    <span class="nd">@enabled</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="YouTube">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.YouTube">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">YouTube</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default_video</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">archive_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cache_timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">playlist_sheet</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the YouTube configuration.</span>
+
+<span class="sd">        :param channel_id: The main channel ID used when searching.</span>
+<span class="sd">        :type channel_id: str</span>
+<span class="sd">        :param default_video: The fallback video ID to use if none is found (likely due to a dev environment).</span>
+<span class="sd">        :type default_video: str</span>
+<span class="sd">        :param archive_id: The channel ID where the archives/VODs are located.</span>
+<span class="sd">        :type archive_id: str</span>
+<span class="sd">        :param api_key: The API key needed to query YouTube.</span>
+<span class="sd">        :type api_key: str</span>
+<span class="sd">        :param cache_timeout: The maximum time, in seconds, where we cache call results.</span>
+<span class="sd">        :type cache_timeout: int</span>
+<span class="sd">        :param playlist_sheet: The sheet with links for the YouTube playlists, in CSV format.</span>
+<span class="sd">        :type playlist_sheet: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel_id</span> <span class="o">=</span> <span class="n">channel_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_video</span> <span class="o">=</span> <span class="n">default_video</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">archive_id</span> <span class="o">=</span> <span class="n">archive_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_timeout</span> <span class="o">=</span> <span class="n">cache_timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">playlist_sheet</span> <span class="o">=</span> <span class="n">playlist_sheet</span></div>
+
+
+<div class="viewcode-block" id="Bot">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Bot">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Bot</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">spire_mods</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold the bot config information</span>
+
+<span class="sd">        :param prefix: The prefix to identify that something is a command.</span>
+<span class="sd">        :type prefix: str</span>
+<span class="sd">        :param name: The name that the bot will be referred by.</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param spire_mods: The Spire mods that the bot will know.</span>
+<span class="sd">        :type spire_mods: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spire_mods</span> <span class="o">=</span> <span class="n">spire_mods</span></div>
+
+
+<div class="viewcode-block" id="Server">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Server">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Server</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">json_indent</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">business_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">websocket_client</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">webhook</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold server-related configuration.</span>
+
+<span class="sd">        :param debug: Whether we are in debug mode.</span>
+<span class="sd">        :type debug: bool</span>
+<span class="sd">        :param secret: The secret key for client-server communication. Generated with :func:`secrets.token_urlsafe`.</span>
+<span class="sd">        :type secret: str</span>
+<span class="sd">        :param url: The URL of the server we are running on.</span>
+<span class="sd">        :type url: str</span>
+<span class="sd">        :param host: The hostname of the server we are running on.</span>
+<span class="sd">        :type host: str</span>
+<span class="sd">        :param port: The port we are listening on.</span>
+<span class="sd">        :type port: int</span>
+<span class="sd">        :param json_indent: How many spaces to put in the JSON dumps.</span>
+<span class="sd">        :type json_indent: int</span>
+<span class="sd">        :param business_email: The streamer&#39;s business email.</span>
+<span class="sd">        :type business_email: str</span>
+<span class="sd">        :param websocket_client: The websocket client ID and secret.</span>
+<span class="sd">        :type websocket_client: dict</span>
+<span class="sd">        :param webhook: The webhook secret.</span>
+<span class="sd">        :type webhook: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span>
+        <span class="c1"># TODO: Change url to only be user-facing, and use host+port for connection</span>
+        <span class="c1"># Currently, the options are there for future use, but unused</span>
+        <span class="c1"># The goal is to let us use the host and port for server setup</span>
+        <span class="c1"># And url will be for user-facing stuff (like the !website url)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_indent</span> <span class="o">=</span> <span class="n">json_indent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">business_email</span> <span class="o">=</span> <span class="n">business_email</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">websocket_client</span> <span class="o">=</span> <span class="n">_WebsocketClient</span><span class="p">(</span><span class="o">**</span><span class="n">websocket_client</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">webhook</span> <span class="o">=</span> <span class="n">_Webhook</span><span class="p">(</span><span class="o">**</span><span class="n">webhook</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_WebsocketClient">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._WebsocketClient">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_WebsocketClient</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold Websocket Client information.</span>
+
+<span class="sd">        :param id: The client ID.</span>
+<span class="sd">        :type id: str</span>
+<span class="sd">        :param secret: The client secret.</span>
+<span class="sd">        :type secret: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span></div>
+
+
+<div class="viewcode-block" id="_Webhook">
+<a class="viewcode-back" href="../../config.html#src._cfgmap._Webhook">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_Webhook</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold webhook secret.</span>
+
+<span class="sd">        :param secret: The webhook secret.</span>
+<span class="sd">        :type secret: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span></div>
+
+
+<div class="viewcode-block" id="Spotify">
+<a class="viewcode-back" href="../../config.html#src._cfgmap.Spotify">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Spotify</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold information for the Spotify &quot;Now Playing&quot; feature.</span>
+
+<span class="sd">        :param enabled: Whether we use the &quot;Now Playing&quot; feature.</span>
+<span class="sd">        :type enabled: bool</span>
+<span class="sd">        :param id: The client ID of our app.</span>
+<span class="sd">        :type id: str</span>
+<span class="sd">        :param secret: The client secret of our app.</span>
+<span class="sd">        :type secret: str</span>
+<span class="sd">        :param code: The one-time code needed to kickstart it.</span>
+<span class="sd">        :type code: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span> <span class="c1"># XXX: when we receive the code, immediately use it, don&#39;t store it</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

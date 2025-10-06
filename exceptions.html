@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>logger module &#8212; Spireblight 0.7 documentation</title>
+    <title>Custom Exceptions &#8212; Spireblight 0.7 documentation</title>
   
   
   
@@ -41,12 +41,12 @@
     <script src="_static/documentation_options.js?v=48f8e935"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'logger';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'exceptions';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="monster package" href="monster.html" />
-    <link rel="prev" title="Custom Exceptions" href="exceptions.html" />
+    <link rel="next" title="logger module" href="logger.html" />
+    <link rel="prev" title="events module" href="events.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -306,8 +306,8 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html">Handle configuration parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Custom Exceptions</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">logger module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Custom Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
@@ -363,7 +363,7 @@
     
     <li class="breadcrumb-item"><a href="modules.html" class="nav-link">Full Spireblight API</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">logger module</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Custom Exceptions</span></li>
   </ul>
 </nav>
 </div>
@@ -380,8 +380,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-src.logger">
-<span id="logger-module"></span><h1>logger module<a class="headerlink" href="#module-src.logger" title="Link to this heading">#</a></h1>
+  <section id="module-src.exceptions">
+<span id="custom-exceptions"></span><h1>Custom Exceptions<a class="headerlink" href="#module-src.exceptions" title="Link to this heading">#</a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="src.exceptions.InvalidConfigType">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidConfigType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="config.html#src._cfgmap._ConfigMapping" title="src._cfgmap._ConfigMapping"><span class="pre">_ConfigMapping</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/exceptions.html#InvalidConfigType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.exceptions.InvalidConfigType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeError</span></code></p>
+</dd></dl>
+
 </section>
 
 
@@ -395,20 +401,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="exceptions.html"
+       href="events.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Custom Exceptions</p>
+        <p class="prev-next-title">events module</p>
       </div>
     </a>
     <a class="right-next"
-       href="monster.html"
+       href="logger.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">monster package</p>
+        <p class="prev-next-title">logger module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -424,10 +430,22 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.exceptions.InvalidConfigType"><code class="docutils literal notranslate"><span class="pre">InvalidConfigType</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/logger.rst.txt"
+      <li><a href="_sources/exceptions.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>
