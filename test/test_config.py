@@ -30,6 +30,35 @@ class TestConfigFile(TestCase):
         self.assertFalse(self.config.twitch.enabled)
         self.assertFalse(self.config.discord.enabled)
 
+    def test_multiple_files(self):
+        f1 = orig / "with-tokens.yml"
+        f2 = orig / "unrelated.yml"
+
+        _cfgmodule.load_user_config(self.config, f1)
+
+        toauth = self.config.twitch.oauth_token
+        doauth = self.config.discord.oauth_token
+
+        # second file doesn't touch tokens, so they should still be there
+        _cfgmodule.load_user_config(self.config, f2)
+
+        self.assertEqual(self.config.twitch.oauth_token, toauth)
+        self.assertEqual(self.config.discord.oauth_token, doauth)
+
+    def test_argv(self):
+        file = orig / "with-tokens.yml"
+
+        _cfgmodule.load_user_config(self.config, file)
+
+        self.assertEqual(self.config.twitch.channel, "twitch")
+        self.assertTrue(self.config.discord.enabled)
+
+        _, override = _cfgmodule.parse_launch_args(["--no-discord", "--channel", "testing"])
+        self.config.update(override)
+
+        self.assertEqual(self.config.twitch.channel, "testing")
+        self.assertFalse(self.config.discord.enabled)
+
     def test_exists(self):
         # works fine
         self.config.update({"bot": {"prefix": "%"}})

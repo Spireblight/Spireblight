@@ -2,6 +2,7 @@ import collections
 import argparse
 import pathlib
 import yaml
+import sys
 
 from src import _cfgmap
 
@@ -65,17 +66,22 @@ def load_default_config():
 
     return _cfgmap.Config(**conf)
 
-def parse_launch_args():
+def parse_launch_args(argv: list[str] = None):
     """Parse the launch arguments, and find the files to load.
 
-    :raises RuntimeError: If a specified config file could not be found
-    :return: A tuple of the files to load, and the override values
+    :param argv: The command-line arguments to use, sys.argv if not specified.
+    :type argv: list[str]
+    :raises RuntimeError: If a specified config file could not be found.
+    :return: A tuple of the files to load, and the override values.
     :rtype: tuple[list[pathlib.Path], dict]
     """
 
+    if argv is None:
+        argv = sys.argv[1:] # first arg is just the program name
+
     # this is important; both testing and docgen use their own args
     # we should only care about what we actually use
-    args, _ = parser.parse_known_args()
+    args, _ = parser.parse_known_args(argv)
 
     files: list[pathlib.Path] = []
     override = collections.defaultdict(dict)

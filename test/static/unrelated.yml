@@ -1,0 +1,6 @@
+server:
+  debug: true
+  port: 8080
+
+bot:
+  name: "oh wow a name"

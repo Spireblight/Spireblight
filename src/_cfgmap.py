@@ -221,16 +221,20 @@ class _AutoReport(_ConfigMapping):
         :type enabled: bool, optional
         """
 
+        self._enabled = enabled
+
         self.server = server
         self.channel = channel
-        self.enabled = enabled
 
-    def update(self, mapping):
-        server = mapping.get("server") or self.server
-        channel = mapping.get("channel") or self.channel
-        if not (server and channel): # needs both to function
-            mapping["enabled"] = False
-        return super().update(mapping)
+    @property
+    def enabled(self):
+        if not (self.server and self.channel):
+            return False
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, value: bool):
+        self._enabled = value
 
 class YouTube(_ConfigMapping):
     def __init__(self, channel_id: str, default_video: str, archive_id: str, api_key: str, cache_timeout: int, playlist_sheet: str):
