@@ -628,10 +628,14 @@
     <span class="c1"># Load relic sets</span>
     <span class="k">with</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">&quot;argo&quot;</span> <span class="o">/</span> <span class="s2">&quot;misc&quot;</span> <span class="o">/</span> <span class="s2">&quot;relic_sets.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">relic_set</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;relic_sets&#39;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">relic_set</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s2">&quot;relic_sets&quot;</span><span class="p">]:</span>
         <span class="n">relset</span> <span class="o">=</span> <span class="n">RelicSet</span><span class="p">(</span><span class="n">relic_set</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">relic_set</span><span class="p">[</span><span class="s1">&#39;set_aliases&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">relic_set</span><span class="p">[</span><span class="s2">&quot;set_aliases&quot;</span><span class="p">]:</span>
             <span class="n">_query_cache</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">relset</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">aliases</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s2">&quot;aliases&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">aliases</span><span class="p">:</span>
+            <span class="n">_query_cache</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
 </pre></div>
 
                 </article>
