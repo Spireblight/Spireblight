@@ -3,9 +3,9 @@ from __future__ import annotations
 from collections import defaultdict
 from functools import total_ordering
 from aiohttp import ClientSession
+from pathlib import Path
 
 import json
-import os
 
 from src.config import config
 from src.events import add_listener
@@ -248,26 +248,24 @@ async def load():
 
             done.add(mod.lower())
 
-    with open("score_bonuses.json") as f:
+    base = Path(".")
+
+    with (base / "score_bonuses.json").open() as f:
         j = json.load(f)
         for x in j["score_bonuses"]:
             inst = ScoreBonus(x)
             _internal_cache[inst.internal] = inst
             _query_cache[sanitize(inst.name)].append(inst)
 
-    for file in os.listdir(os.path.join("argo", "sts1")):
-        name = file[:-5]
-        if not name.startswith("_"):
-            with open(os.path.join("argo", "sts1", file)) as f:
-                _cache[name] = json.load(f)
+    for file in (base / "argo" / "sts1").iterdir():
+        if not file.stem.startswith("_"):
+            with file.open() as f:
+                _cache[file.stem] = json.load(f)
 
     # Load relic sets
-    try:
-        with open("relic_sets.json", "r") as f:
-            j = json.load(f)
-        for relic_set in j['relic_sets']:
-            relset = RelicSet(relic_set)
-            for alias in relic_set['set_aliases']:
-                _query_cache[alias].append(relset)
-    except FileNotFoundError:
-        pass
+    with (base / "relic_sets.json").open() as f:
+        j = json.load(f)
+    for relic_set in j['relic_sets']:
+        relset = RelicSet(relic_set)
+        for alias in relic_set['set_aliases']:
+            _query_cache[alias].append(relset)
