@@ -265,7 +265,11 @@ async def load():
     # Load relic sets
     with (base / "argo" / "misc" / "relic_sets.json").open() as f:
         j = json.load(f)
-    for relic_set in j['relic_sets']:
+    for relic_set in j["relic_sets"]:
         relset = RelicSet(relic_set)
-        for alias in relic_set['set_aliases']:
+        for alias in relic_set["set_aliases"]:
             _query_cache[alias].append(relset)
+    for name, aliases in j["aliases"].items():
+        inst = _internal_cache[name]
+        for alias in aliases:
+            _query_cache[alias].append(inst)
