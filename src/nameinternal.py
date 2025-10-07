@@ -250,7 +250,7 @@ async def load():
 
     base = Path(".")
 
-    with (base / "score_bonuses.json").open() as f:
+    with (base / "argo" / "misc" / "score_bonuses.json").open() as f:
         j = json.load(f)
         for x in j["score_bonuses"]:
             inst = ScoreBonus(x)
@@ -263,7 +263,7 @@ async def load():
                 _cache[file.stem] = json.load(f)
 
     # Load relic sets
-    with (base / "relic_sets.json").open() as f:
+    with (base / "argo" / "misc" / "relic_sets.json").open() as f:
         j = json.load(f)
     for relic_set in j['relic_sets']:
         relset = RelicSet(relic_set)
