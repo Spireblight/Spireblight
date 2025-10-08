@@ -21,8 +21,7 @@ class Config:
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
-        if self.server_url and not self.server_url.endswith("/"):
-            self.server_url += "/"
+        self.server_url = self.server_url.rstrip("/")
 
         # If spiredir is not being set via configs, detect the OS and
         # use the OS appropriate default spire steamdir:
@@ -92,7 +91,7 @@ async def main():
     async with ClientSession(cfg.server_url) as session:
         # Check if the app is registered, prompt it if not
         try:
-            async with session.post("twitch/check-token", params={"key": cfg.secret}) as resp:
+            async with session.post("/twitch/check-token", params={"key": cfg.secret}) as resp:
                 if resp.ok:
                     text = await resp.text()
                     match text:
@@ -146,7 +145,7 @@ async def main():
                             with open(os.path.join(user, ".prefs", "slice-and-dice-3")) as f:
                                 sd_data = f.read()
                             sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
+                            async with session.post("/sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
                                 if resp.ok:
                                     last_sd = cur_sd
                                     curses = await resp.read()
@@ -174,7 +173,7 @@ async def main():
 
                 try:
                     if possible is None:
-                        async with session.get("playing", params={"key": cfg.secret}) as resp:
+                        async with session.get("/playing", params={"key": cfg.secret}) as resp:
                             if resp.ok:
                                 j = await resp.json()
                                 if j and j.get("item"):
@@ -204,7 +203,7 @@ async def main():
                             with open(os.path.join(path, file)) as f:
                                 content = f.read()
                             content = content.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": cfg.secret, "start": start}) as resp:
+                            async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": cfg.secret, "start": start}) as resp:
                                 if not resp.ok:
                                     all_sent = False
                         if all_sent:
@@ -213,7 +212,7 @@ async def main():
                                 f.write(last_run)
 
                     if possible is None and has_save: # server has a save, but we don't (anymore)
-                        async with session.post("sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
+                        async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                             if resp.ok:
                                 has_save = False
 
@@ -244,7 +243,7 @@ async def main():
                                         with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
                                             mt_runs[key] = f.read()
                                             mt_runs_last[key] = last
-                                async with session.post("sync/monster", data=mt_runs, params={"key": cfg.secret}) as resp:
+                                async with session.post("/sync/monster", data=mt_runs, params={"key": cfg.secret}) as resp:
                                     if resp.ok:
                                         last_mt = cur_mt
                                         runs_last.update(mt_runs_last)
@@ -278,7 +277,7 @@ async def main():
                                         with open(os.path.join(mt_folder, "run-history", file), "rb") as f:
                                             mt_runs[key] = f.read()
                                             mt_runs_last[key] = last
-                                async with session.post("sync/monster-2", data=mt2_runs, params={"key": cfg.secret}) as resp:
+                                async with session.post("/sync/monster-2", data=mt2_runs, params={"key": cfg.secret}) as resp:
                                     if resp.ok:
                                         last_mt2 = cur_mt2
                                         runs_last.update(mt2_runs_last)
@@ -314,7 +313,7 @@ async def main():
                             continue
 
                     if any(data.values()):
-                        async with session.post("sync/profile", data=data, params={"key": cfg.secret, "start": start}) as resp:
+                        async with session.post("/sync/profile", data=data, params={"key": cfg.secret, "start": start}) as resp:
                             if resp.ok:
                                 lasp = tobe_lasp
                                 last_slots = cur_slots
@@ -331,7 +330,7 @@ async def main():
                             continue
                         content = content.encode("utf-8", "xmlcharrefreplace")
                         char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                        async with session.post("sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
+                        async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
                             if resp.ok:
                                 last = cur
                                 has_save = True
@@ -347,7 +346,7 @@ async def main():
                 last_exc = e
                 text = traceback.format_exc()
                 try:
-                    async with session.post("report", data={"traceback": text}, params={"key": cfg.secret}) as resp:
+                    async with session.post("/report", data={"traceback": text}, params={"key": cfg.secret}) as resp:
                         if not resp.ok:
                             print(text)
                 except Exception:
