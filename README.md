@@ -16,12 +16,6 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-If you want to change dependencies, be it upgrading or changing for a
-different library, make sure to do a search-all for `DEPCHECK`. Those pieces of
-code are likely to need attention during dependency upgrades, as they may rely
-on private or unstable APIs. Conversely, they may implement a feature that is
-present in later versions, and would benefit from changing it.
-
 The data folder has a bunch of stuff to make the bot run. `data.json` contains
 most of the commands
 

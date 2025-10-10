@@ -27,6 +27,15 @@ twitch:
   # The Twitch usernames of the channel editors
   editors: []
 
+  # The user IDs (as integers) of the bot and its owner (latter optional)
+  bot_id: 0
+  owner_id: 0
+
+  # As of version 0.8, extended Twitch OAuth is mandatory.
+  # This is the publicly-available Client ID
+  client_id: ""
+  client_secret: ""
+
   # This indicates whether we should use extended or classic access.
   # Classic access needs a simple OAuth token, and no additional fluff.
   # Extended uses the full Authorization Grant Flow mechanism
@@ -37,9 +46,6 @@ twitch:
   # To update scopes, you need to force a re-auth by deleting the token
   extended:
     enabled: false
-    # This is the publicly-available Client ID
-    client_id: ""
-    client_secret: ""
     scopes: []
 
   timers:
