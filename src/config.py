@@ -6,7 +6,7 @@ import sys
 
 from src import _cfgmap
 
-__version__ = "0.7"
+__version__ = "0.8"
 __author__ = "Anilyka Barry"
 __github__ = "https://github.com/Spireblight/Spireblight"
 __botname__ = "Spireblight"
