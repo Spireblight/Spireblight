@@ -1751,16 +1751,10 @@
     <span class="k">match</span> <span class="n">arg</span><span class="p">:</span>
         <span class="k">case</span> <span class="s2">&quot;add&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">author</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">rest</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>  <span class="c1"># attributing the quote to someone</span>
-                        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rest</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-                        <span class="n">author</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                    <span class="k">pass</span>
+                <span class="n">line</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">author</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot; -- &quot;</span><span class="p">)</span>
                 <span class="n">_quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">Quote</span><span class="p">(</span>
-                        <span class="n">line</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                        <span class="n">line</span><span class="p">,</span> <span class="n">author</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
                 <span class="n">update</span> <span class="o">=</span> <span class="kc">True</span>
