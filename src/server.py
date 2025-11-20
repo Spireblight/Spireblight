@@ -1284,16 +1284,10 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
     match arg:
         case "add":
             if line is not None:
-                author = None
-                try:
-                    if rest[-2] == "-":  # attributing the quote to someone
-                        line = " ".join(rest[:-2])
-                        author = rest[-1]
-                except IndexError:
-                    pass
+                line, _, author = line.partition(" -- ")
                 _quotes.append(
                     Quote(
-                        line, author, ctx.author.display_name, datetime.datetime.now()
+                        line, author or None, ctx.author.display_name, datetime.datetime.now()
                     )
                 )
                 update = True
