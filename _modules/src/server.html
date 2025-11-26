@@ -3484,6 +3484,36 @@
 
 
 
+<div class="viewcode-block" id="get_wrs">
+<a class="viewcode-back" href="../../server.html#src.server.get_wrs">[docs]</a>
+<span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;wr&quot;</span><span class="p">,</span> <span class="s2">&quot;worldrecords&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_wrs</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://script.google.com/macros/s/AKfycbwwVnFP2FhAuTi1a4xh67uv_GYI63ggnX7e6wezlQmWlpr8z4B0IXVKuT_ta-seYnrt/exec?format=json&quot;</span>
+    <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Sorry, couldn&#39;t access the data. Try again later.&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">_words</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;streak&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ongoing&#39;</span><span class="p">]:</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; (ongoing)&quot;</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;As far as we know, these are the current A20H world records: </span><span class="si">{</span><span class="s1">&#39; | &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="si">}</span><span class="s2"> -- For Baalor&#39;s own records, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">pb&quot;</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="calculate_winrate_cmd">
 <a class="viewcode-back" href="../../server.html#src.server.calculate_winrate_cmd">[docs]</a>
 <span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;winrate&quot;</span><span class="p">)</span>
@@ -3906,6 +3936,8 @@
 <div class="viewcode-block" id="Twitch_cleanup">
 <a class="viewcode-back" href="../../server.html#src.server.Twitch_cleanup">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Twitch_cleanup</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
@@ -3939,7 +3971,13 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Youtube_startup</span><span class="p">():</span>
     <span class="n">ref</span> <span class="o">=</span> <span class="mi">60</span>
     <span class="n">prev</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting Youtube playlist sheet download. Will refresh every </span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">s.&quot;</span><span class="p">)</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
