@@ -2824,6 +2824,33 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     await ctx.reply(msg.format(run_stats, run_stats.pb))
 
 
+@command("wr", "worldrecords")
+async def get_wrs(ctx: ContextType):
+    url = "https://script.google.com/macros/s/AKfycbwwVnFP2FhAuTi1a4xh67uv_GYI63ggnX7e6wezlQmWlpr8z4B0IXVKuT_ta-seYnrt/exec?format=json"
+    if TConn is not None:
+        if TConn._session is None:
+            TConn._session = ClientSession()
+        client = TConn._session
+    else:
+        client = ClientSession()
+
+    async with client.get(url) as resp:
+        if not resp.ok:
+            return await ctx.reply("Sorry, couldn't access the data. Try again later.")
+        data = await resp.json()
+
+    msg = []
+
+    for char in _words:
+        c = data[char.lower()]
+        line = f"{char}: {c['streak']} by {c['username']}"
+        if c['ongoing']:
+            line += " (ongoing)"
+        msg.append(line)
+
+    await ctx.reply(f"As far as we know, these are the current A20H world records: {' | '.join(msg)} -- For Baalor's own records, see {config.bot.prefix}pb")
+
+
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the winrate for Baalor's A20 Heart kills for an optional date range."""
@@ -3202,6 +3229,8 @@ async def Twitch_startup():
 
 
 async def Twitch_cleanup():
+    if TConn._session is not None:
+        await TConn._session.close()
     await TConn.close()
 
 
@@ -3226,7 +3255,13 @@ async def Discord_cleanup():
 async def Youtube_startup():
     ref = 60
     prev = ""
-    async with aiohttp.ClientSession() as session:
+    if TConn is not None:
+        if TConn._session is None:
+            TConn._session = ClientSession()
+        client = TConn._session
+    else:
+        client = ClientSession()
+    async with client as session:
         logger.info(f"Starting Youtube playlist sheet download. Will refresh every {ref}s.")
         while True:
             text = ""

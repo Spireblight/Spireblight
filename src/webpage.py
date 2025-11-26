@@ -57,9 +57,12 @@ env.globals["now"] = now
 async def main_page(req: web.Request, _cache={"video_id": config.youtube.default_video, "last": 0}):
     if _cache["video_id"] is None or _cache["last"] + config.youtube.cache_timeout < time.time():
         data = None
-        async with ClientSession() as session:
+        client = ClientSession() # TODO: make it last for longer
+        async with client as session:
             async with session.get("https://www.googleapis.com/youtube/v3/search", params=_query_params) as resp:
                 data = await resp.json()
+
+        await client.close()
 
         if data is not None: # fallback on last/default video ID
             # If we don't have a proper setup, there will be an error from the
