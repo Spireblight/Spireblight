@@ -351,7 +351,7 @@ class TestDiscordCommands(IsolatedAsyncioTestCase):
         now = datetime.datetime.now()
 
         await server.quote_stuff(
-            context, "add", "Meow!", "-", "Faely, not wanting to write these tests"
+            context, "add", "Meow!", "--", "Faely,", "not", "wanting", "to", "write", "these", "tests"
         )
 
         context.reply.assert_awaited_once_with("Quote #0 successfully added!")
