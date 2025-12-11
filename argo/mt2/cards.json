@@ -48,7 +48,7 @@
         "artist": "Taylor Bray"
     },
     {
-        "internal": "",
+        "internal": "AwakeningThicket",
         "name": "Awakening Thicket",
         "id": "57921ae8-ca98-4a3b-a659-5e741d2e904a",
         "clan": "Awoken",
@@ -256,7 +256,7 @@
         "artist": "Zihao Luo"
     },
   {
-        "internal": "",
+        "internal": "Oldgrowth",
         "name": "Oldgrowth",
         "id": "",
         "clan": "Awoken",
@@ -512,7 +512,7 @@
         "artist": "Zihao Luo"
     },
     {
-        "internal": "",
+        "internal": "Swiftshot",
         "name": "Swiftshot",
         "id": "",
         "clan": "Awoken",
@@ -608,7 +608,7 @@
         "artist": "Tammy Chang"
     },
     {
-        "internal": "",
+        "internal": "Vinewrath",
         "name": "Vinewrath",
         "id": "",
         "clan": "",
@@ -1040,7 +1040,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "Heavensward",
         "name": "Heavensward",
         "id": "",
         "clan": "Banished",
@@ -1584,7 +1584,7 @@
         "artist": "Daniel Sarmiento Chuquisengo"
     },
     {
-        "internal": "",
+        "internal": "CullingI",
         "name": "Culling I",
         "id": "",
         "clan": "Hellhorned",
@@ -1600,7 +1600,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "CullingII",
         "name": "Culling II",
         "id": "",
         "clan": "Hellhorned",
@@ -1616,7 +1616,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "CullingIII",
         "name": "Culling III",
         "id": "",
         "clan": "Hellhorned",
@@ -1712,7 +1712,7 @@
         "artist": "Loy Bouttamy"
     },
     {
-        "internal": "",
+        "internal": "FortifiedPauldrons",
         "name": "Fortified Pauldrons",
         "id": "1dd23b59-fa5e-44bc-83ca-de119ede4f21",
         "clan": "Hellhorned",
@@ -1984,7 +1984,7 @@
         "artist": "Loy Bouttamy"
     },
   {
-        "internal": "",
+        "internal": "RageRoom",
         "name": "Rage Room",
         "id": "",
         "clan": "Hellhorned",
@@ -2176,7 +2176,7 @@
         "artist": "Loy Bouttamy"
     },
     {
-        "internal": "",
+        "internal": "WarlordsTithe",
         "name": "Warlord's Tithe",
         "id": "",
         "clan": "Hellhorned",
@@ -2688,7 +2688,7 @@
         "artist": "Merilliza Chan"
     },
     {
-        "internal": "",
+        "internal": "MixaLot",
         "name": "Mix-a-Lot",
         "id": "",
         "clan": "Lazarus League",
@@ -3296,7 +3296,7 @@
         "artist": "Loy Bouttamy"
     },
     {
-        "internal": "",
+        "internal": "DuskMantle",
         "name": "Dusk Mantle",
         "id": "",
         "clan": "Luna Coven",
@@ -4000,7 +4000,7 @@
         "artist": "Cameron Archer"
     },
     {
-        "internal": "",
+        "internal": "CryptcallI",
         "name": "Cryptcall I",
         "id": "",
         "clan": "Melting Remnant",
@@ -4016,7 +4016,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "CryptcallII",
         "name": "Cryptcall II",
         "id": "",
         "clan": "Melting Remnant",
@@ -4032,7 +4032,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "CryptcallIII",
         "name": "Cryptcall III",
         "id": "",
         "clan": "Melting Remnant",
@@ -4464,7 +4464,7 @@
         "artist": "Tammy Chang"
     },
   {
-        "internal": "",
+        "internal": "ResinBlades",
         "name": "Resin Blades",
         "id": "",
         "clan": "Melting Remnant",
@@ -5296,7 +5296,7 @@
         "artist": "Samuel Lim"
     },
     {
-        "internal": "",
+        "internal": "SmeltedTreasure",
         "name": "Smelted Treasure",
         "id": "",
         "clan": "Pyreborne",
@@ -5616,7 +5616,7 @@
         "artist": "Andrew Vera"
     },
     {
-        "internal": "",
+        "internal": "FreezeRay",
         "name": "Freeze Ray",
         "id": "",
         "clan": "Stygian Guard",
@@ -5648,7 +5648,7 @@
         "artist": ""
     },
   {
-        "internal": "",
+        "internal": "Frostpiercer",
         "name": "Frostpiercer",
         "id": "",
         "clan": "Stygian Guard",
@@ -5968,7 +5968,7 @@
         "artist": "Lisa Heidhoff"
     },
     {
-        "internal": "",
+        "internal": "ResurgenceI",
         "name": "Resurgence I",
         "id": "",
         "clan": "Stygian Guard",
@@ -5984,7 +5984,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "ResurgenceII",
         "name": "Resurgence II",
         "id": "",
         "clan": "Stygian Guard",
@@ -6000,7 +6000,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "ResurgenceIII",
         "name": "Resurgence III",
         "id": "",
         "clan": "Stygian Guard",
@@ -6016,7 +6016,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "RunespeakI",
         "name": "Runespeak I",
         "id": "",
         "clan": "Stygian Guard",
@@ -6032,7 +6032,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "RunespeakII",
         "name": "Runespeak I",
         "id": "",
         "clan": "Stygian Guard",
@@ -6048,7 +6048,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "RunespeakIII",
         "name": "Runespeak III",
         "id": "",
         "clan": "Stygian Guard",
@@ -6352,7 +6352,7 @@
         "artist": "Cameron Archer"
     },
   {
-        "internal": "",
+        "internal": "Chomp",
         "name": "Chomp",
         "id": "",
         "clan": "Umbra",
@@ -6544,7 +6544,7 @@
         "artist": "Tammy Chang"
     },
   {
-        "internal": "",
+        "internal": "GluttonsMaw",
         "name": "Glutton's Maw",
         "id": "",
         "clan": "Umbra",
@@ -7696,7 +7696,7 @@
         "artist": "Daniel Sarmiento Chuquisengo"
     },
     {
-        "internal": "",
+        "internal": "GreatDecay",
         "name": "The Great Decay",
         "id": "",
         "clan": "Underlegion",
@@ -8048,7 +8048,7 @@
         "artist": "Lauren Russo"
     },
         {
-        "internal": "",
+        "internal": "EchoVault",
         "name": "Echo Vault",
         "id": "",
         "clan": "",
@@ -8064,7 +8064,7 @@
         "artist": ""
     },
     {
-        "internal": "",
+        "internal": "Emerge",
         "name": "Emerge",
         "id": "",
         "clan": "",
@@ -8144,7 +8144,7 @@
         "artist": "Zihao Luo"
     },
     {
-        "internal": "",
+        "internal": "ExilesDiadem",
         "name": "Exile's Diadem",
         "id": "",
         "clan": "",
@@ -8320,7 +8320,7 @@
         "artist": "Leonardo Dionisi"
     },
     {
-        "internal": "",
+        "internal": "IronTongue",
         "name": "Iron-tongue",
         "id": "",
         "clan": "",
@@ -8528,7 +8528,7 @@
         "artist": "Samuel Lim"
     },
         {
-        "internal": "",
+        "internal": "StasisCrystal",
         "name": "Stasis Crystal",
         "id": "",
         "clan": "",
@@ -8640,7 +8640,7 @@
         "artist": "William Smith"
     },
         {
-        "internal": "",
+        "internal": "WeaponsCache",
         "name": "Weapons Cache",
         "id": "",
         "clan": "",
