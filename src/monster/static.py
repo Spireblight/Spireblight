@@ -277,5 +277,6 @@ def load_mt2():
             data = json.load(f)
             for d in data:
                 value = _map2.get(file[:-5], Misc2)(d)
-                _internal_cache[value.id] = value
+                if value.id: # temporary fix while some units have a blank ID
+                    _internal_cache[value.id] = value
                 _query_cache[sanitize(value.name)].append(value)
