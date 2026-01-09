@@ -1,3 +1,4 @@
+import traceback
 import importlib
 import logging
 import asyncio
@@ -101,15 +102,15 @@ async def main():
 
     try:
         await asyncio.gather(*tasks)
-    except (web.GracefulExit, KeyboardInterrupt):
-        pass
+    except (web.GracefulExit, KeyboardInterrupt, asyncio.exceptions.CancelledError):
+        print("Shutting down. Please stand by . . .")
     finally:
-        loop.run_until_complete(loop.shutdown_asyncgens())
+        print("Closing sockets . . .")
         if config.twitch.enabled:
             await server.Twitch_cleanup()
         if config.discord.enabled:
             await server.Discord_cleanup()
-        loop.close()
+        print("Shutdown successfully completed.")
 
 if __name__ == "__main__":
     asyncio.run(main()) # TODO: Signal handlers and stuff

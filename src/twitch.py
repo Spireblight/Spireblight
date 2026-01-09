@@ -10,7 +10,7 @@ __all__ = ["TwitchCommand"]
 
 class TwitchCommand(Command):
     def __init__(self, name: str, func: Callable, flag="", **attrs):
-        super().__init__(name, func, **attrs)
+        super().__init__(name=name, callback=func, **attrs)
         self.__doc__ = func.__doc__
         self.flag = flag
         self.required = func.__required__

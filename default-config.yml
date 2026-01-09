@@ -32,21 +32,17 @@ twitch:
   owner_id: 0
 
   # As of version 0.8, extended Twitch OAuth is mandatory.
-  # This is the publicly-available Client ID
-  client_id: ""
-  client_secret: ""
-
-  # This indicates whether we should use extended or classic access.
-  # Classic access needs a simple OAuth token, and no additional fluff.
   # Extended uses the full Authorization Grant Flow mechanism
   # This mode requires connecting the client to the streamer's Twitch account
   # To set it up, set this to true, start the server, and then start the client
   # Once it has been authorized, the bot will start with proper credentials
   # Using Extended mode allows for more features, defined in scopes
   # To update scopes, you need to force a re-auth by deleting the token
-  extended:
-    enabled: false
-    scopes: []
+  # This is the publicly-available Client ID
+  client_id: ""
+  client_secret: ""
+
+  scopes: []
 
   timers:
     # The default interval for new timers

@@ -24,15 +24,17 @@ import os
 from twitchio.ext.commands import (
     Cooldown as TCooldown,
     Bucket as TBucket,
-    Bot as TBot,
+    AutoBot as TBot,
     Context as TContext,
 )
 from twitchio.ext.routines import routine, Routine
-from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflineData
-from twitchio.channel import Channel
-from twitchio.chatter import Chatter
-from twitchio.errors import HTTPException
+# from twitchio.ext.eventsub import EventSubClient
+#from twitchio.channel import Channel
+from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser
+from twitchio.exceptions import HTTPException
 from twitchio.models import Stream, Prediction, Clip as TClip
+
+from twitchio import eventsub as WSSub
 
 import discord
 from discord.ext.commands import (
@@ -52,6 +54,7 @@ from src.cache.run_stats import (
     get_run_stats_by_date_string,
     update_range,
 )
+
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
@@ -71,6 +74,7 @@ from src.utils import (
     get_req_data,
     post_prediction,
 )
+
 from src.disc import DiscordCommand
 from src.save import get_savefile, Savefile
 from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
@@ -362,7 +366,7 @@ def command(
 
     def inner(func: Callable, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
-        wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
+        wrapped.__cooldowns__ = [TCooldown(rate=burst, per=rate)]
         wrapped.__doc__ = func.__doc__
         # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
@@ -438,7 +442,7 @@ def mt_command(name: str, *aliases: str, **kwargs):
 class TwitchConn(TBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.esclient: EventSubClient = None
+        # self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
         self.app: AppClient = None
         self._session: ClientSession | None = None
@@ -450,6 +454,14 @@ class TwitchConn(TBot):
                 self._spotify_refresh_token = f.read().strip()
         except OSError:
             pass
+
+    async def setup_hook(self):
+        """Set-up the bot's hooks."""
+        await self.subscribe_websocket(WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
+
+        for cmd in _to_add_twitch:
+            self.add_command(cmd)
+        load(asyncio.get_event_loop())
 
     async def refresh_spotify_token(self):
         if not config.spotify.enabled:
@@ -544,7 +556,7 @@ class TwitchConn(TBot):
         self.live_channels[config.twitch.channel] = live = bool(
             await self.fetch_streams(user_logins=[config.twitch.channel])
         )
-
+    _i='''
     async def event_raw_usernotice(self, channel: Channel, tags: dict):
         user = Chatter(
             tags=tags,
@@ -589,30 +601,30 @@ class TwitchConn(TBot):
                 self.run_event("ritual", user, channel, tags)
             case "bitsbadgetier":
                 self.run_event("bits_badge", user, channel, tags)
-
+'''
     async def event_subscription(
         self,
         user: Chatter,
-        channel: Channel,
+        channel: PartialUser,
         total: int,
         consecutive: int | None,
         subtype: str,
     ):
         pass
 
-    async def event_ritual(self, user: Chatter, channel: Channel, tags: dict):
-        if tags["msg-param-ritual-name"] == "new_chatter":
-            self.run_event("new_chatter", user, channel, tags["message"])
+    #async def event_ritual(self, user: Chatter, channel: PartialUser, tags: dict):
+    #    if tags["msg-param-ritual-name"] == "new_chatter":
+    #        self.run_event("new_chatter", user, channel, tags["message"])
 
-    async def event_new_chatter(self, user: Chatter, channel: Channel, message: str):
+    async def event_new_chatter(self, user: Chatter, channel: PartialUser, message: str):
         if "youtube" in message.lower() or "yt" in message.lower():
             pass  # await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
 
-    async def event_raid(self, user: Chatter, channel: Channel, viewer_count: int):
+    async def event_raid(self, user: Chatter, channel: PartialUser, viewer_count: int):
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)
-        await channel.send(
+        await channel.send_announcement(
             f"Welcome along {user.display_name} with your {viewer_count} friends! "
             f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
             f"last I checked, they were playing some {chan.game_name}!"
@@ -661,10 +673,10 @@ class AppClient(TBot):
 
 
 class EventSubBot(TBot):
-    async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
+    async def event_eventsub_notification_stream_start(self, evt: StreamOnline):
         TConn.live_channels[evt.broadcaster.name] = True
 
-    async def event_eventsub_notification_stream_end(self, evt: StreamOfflineData):
+    async def event_eventsub_notification_stream_end(self, evt: StreamOffline):
         TConn.live_channels[evt.broadcaster.name] = False
 
 
@@ -3114,12 +3126,10 @@ async def check_token_validity(req: Request):
     await get_req_data(req)  # check if the key is OK
     if not config.twitch.enabled:
         return Response(text="DISABLED")
-    if not config.twitch.extended.enabled:
-        return Response(text="NOT_EXTENDED")
-    if not (config.twitch.extended.client_id and config.twitch.extended.client_secret):
+    if not (config.twitch.client_id and config.twitch.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if TConn.app._http.token is not None:
+    if TConn.app._http._app_token is not None:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -3130,10 +3140,10 @@ async def check_token_validity(req: Request):
     _oauth_state = secrets.token_urlsafe(16)
 
     params = {
-        "client_id": config.twitch.extended.client_id,
+        "client_id": config.twitch.client_id,
         "redirect_uri": f"{config.server.url}/twitch/receive-token",
         "response_type": "code",
-        "scope": " ".join(config.twitch.extended.scopes),
+        "scope": " ".join(config.twitch.scopes),
         "state": _oauth_state,
     }
 
@@ -3157,8 +3167,8 @@ async def get_new_token(req: Request):
     client = ClientSession()
 
     form = {
-        "client_id": config.twitch.extended.client_id,
-        "client_secret": config.twitch.extended.client_secret,
+        "client_id": config.twitch.client_id,
+        "client_secret": config.twitch.client_secret,
         "code": values["code"],
         "grant_type": "authorization_code",
         "redirect_uri": f"{config.server.url}/twitch/receive-token",
@@ -3194,16 +3204,18 @@ async def Twitch_startup():
     global TConn
 
     TConn = TwitchConn(
-        token=config.twitch.oauth_token,
+        #token=config.twitch.oauth_token,
         prefix=config.bot.prefix,
-        initial_channels=[config.twitch.channel],
+        #initial_channels=[config.twitch.channel],
         case_insensitive=True,
+        client_id=config.twitch.client_id,
+        client_secret=config.twitch.client_secret,
+        bot_id=config.twitch.bot_id,
+        owner_id=config.twitch.owner_id,
     )
-    TConn._http.client_id = config.twitch.extended.client_id
-    TConn._http.client_secret = config.twitch.extended.client_secret
-    for cmd in _to_add_twitch:
-        TConn.add_command(cmd)
-    load(asyncio.get_event_loop())
+
+    await TConn.start()
+    return
 
     if config.twitch.extended.enabled:
         app = AppClient.from_client_credentials(
@@ -3231,6 +3243,7 @@ async def Twitch_startup():
 async def Twitch_cleanup():
     if TConn._session is not None:
         await TConn._session.close()
+    await TConn.save_tokens()
     await TConn.close()
 
 
