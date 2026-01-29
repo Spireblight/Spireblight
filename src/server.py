@@ -2489,7 +2489,7 @@ async def dagger_scaling(ctx: ContextType, save: Savefile):
             name = "Ritual Dagger"
             if card.endswith("+"):
                 name += "+"
-            await ctx.reply(f"{card} is currently at {num} damage.")
+            await ctx.reply(f"{name} is currently at {num} damage.")
         case n:
             last = ret[-1][1]
             rest = [str(x[1]) for x in ret[:-1]]
