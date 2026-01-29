@@ -2472,6 +2472,48 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
         await ctx.reply("We do not have any bottled cards.")
 
 
+@with_savefile("dagger", "ritualdagger") # TODO: add tests for these
+async def dagger_scaling(ctx: ContextType, save: Savefile):
+    """Get the damage value of Ritual Dagger."""
+    ret = []
+    scaling = save.get_meta_scaling_cards()
+    for card, num in scaling:
+        if "Ritual Dagger" in card: # account for upgrade
+            ret.append((card, num))
+
+    match len(ret):
+        case 0:
+            await ctx.reply("We do not have a Ritual Dagger.")
+        case 1:
+            card, num = ret[0]
+            await ctx.reply(f"{card} is currently at {num} damage.")
+        case n:
+            last = ret[-1][1]
+            rest = [str(x[1]) for x in ret[:-1]]
+            await ctx.reply(f"Our Ritual Daggers are at {', '.join(rest)} and {last} damage.")
+
+
+@with_savefile("algo", "genetic", "algorithm")
+async def algo_scaling(ctx: ContextType, save: Savefile):
+    """Get the block value of Genetic Algorithm."""
+    ret = []
+    scaling = save.get_meta_scaling_cards()
+    for card, num in scaling:
+        if "Genetic Algorithm" in card: # account for upgrade
+            ret.append((card, num))
+
+    match len(ret):
+        case 0:
+            await ctx.reply("We do not have a Genetic Algorithm.")
+        case 1:
+            card, num = ret[0]
+            await ctx.reply(f"{card} is currently at {num} block.")
+        case n:
+            last = ret[-1][1]
+            rest = [str(x[1]) for x in ret[:-1]]
+            await ctx.reply(f"Our Genetic Algorithms are at {', '.join(rest)} and {last} block.")
+
+
 @with_savefile("custom", "modifiers")
 async def modifiers(ctx: ContextType, save: Savefile):
     """List all custom modifiers for the run."""
