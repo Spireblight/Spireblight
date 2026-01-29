@@ -2478,7 +2478,7 @@ async def dagger_scaling(ctx: ContextType, save: Savefile):
     ret = []
     scaling = save.get_meta_scaling_cards()
     for card, num in scaling:
-        if "Ritual Dagger" in card: # account for upgrade
+        if "RitualDagger" in card: # account for upgrade
             ret.append((card, num))
 
     match len(ret):
@@ -2486,6 +2486,9 @@ async def dagger_scaling(ctx: ContextType, save: Savefile):
             await ctx.reply("We do not have a Ritual Dagger.")
         case 1:
             card, num = ret[0]
+            name = "Ritual Dagger"
+            if card.endswith("+"):
+                name += "+"
             await ctx.reply(f"{card} is currently at {num} damage.")
         case n:
             last = ret[-1][1]
