@@ -30,8 +30,9 @@ from twitchio.ext.commands import (
 from twitchio.ext.routines import routine, Routine
 # from twitchio.ext.eventsub import EventSubClient
 #from twitchio.channel import Channel
-from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser
+from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, MultiSubscribePayload
 from twitchio.exceptions import HTTPException
+from twitchio.authentication import UserTokenPayload
 from twitchio.models import Stream, Prediction, Clip as TClip
 
 from twitchio import eventsub as WSSub
@@ -444,7 +445,6 @@ class TwitchConn(TBot):
         super().__init__(*args, **kwargs)
         # self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
-        self.app: AppClient = None
         self._session: ClientSession | None = None
         self._spotify_token: str = None
         self._expires_at: int | float = 0
@@ -457,11 +457,31 @@ class TwitchConn(TBot):
 
     async def setup_hook(self):
         """Set-up the bot's hooks."""
-        await self.subscribe_websocket(WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
+        #await self.subscribe_websocket(WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
 
         for cmd in _to_add_twitch:
             self.add_command(cmd)
         load(asyncio.get_event_loop())
+
+    async def event_oauth_authorized(self, payload: UserTokenPayload) -> None:
+        print(payload.user_id)
+        await self.add_token(payload.access_token, payload.refresh_token)
+
+        if not payload.user_id:
+            return
+
+        if payload.user_id == self.bot_id:
+            # We usually don't want subscribe to events on the bots channel...
+            return
+
+        # A list of subscriptions we would like to make to the newly authorized channel...
+        subs: list[WSSub.SubscriptionPayload] = [
+            WSSub.ChatMessageSubscription(broadcaster_user_id=payload.user_id, user_id=self.bot_id),
+        ]
+
+        resp: MultiSubscribePayload = await self.multi_subscribe(subs)
+        if resp.errors:
+            logger.warning("Failed to subscribe to: %r, for user: %s", resp.errors, payload.user_id)
 
     async def refresh_spotify_token(self):
         if not config.spotify.enabled:
@@ -644,33 +664,6 @@ class TwitchConn(TBot):
 
                 return invoke
         raise AttributeError(name)
-
-
-class AppClient(TBot):
-    async def event_token_expired(self):
-        # shamelessly stolen from TwitchIO with one change
-        reft = getfile("twitch-refresh", "r").read()
-        url = (
-            "https://id.twitch.tv/oauth2/token?grant_type=refresh_token&"
-            f"refresh_token={reft}&client_id={self._http.client_id}&client_secret={self._http.client_secret}"
-        )
-        if self._session is None:
-            self._session = ClientSession()
-        async with self._session.post(url) as resp:
-            if resp.status > 300 or resp.status < 200:
-                raise RuntimeError("Unable to generate a token: " + await resp.text())
-            data = await resp.json()
-            token = data["access_token"]
-            refresh_token = data.get("refresh_token", None)
-            logger.info(
-                "Invalid or no token found, generated new token: %s", self.token
-            )
-        with getfile("twitch-oauth", "w") as f:
-            f.write(token)
-        with getfile("twitch-refresh", "w") as f:
-            f.write(refresh_token)
-        return token
-
 
 class EventSubBot(TBot):
     async def event_eventsub_notification_stream_start(self, evt: StreamOnline):
@@ -1816,7 +1809,7 @@ async def start_prediction(
     ctx: TContext, title: str, outcomes: list[str], duration: int
 ):
     user = await ctx.channel.user()
-    value = await post_prediction(TConn.app, user.id, title, outcomes, duration)
+    value = await post_prediction(TConn, user.id, title, outcomes, duration)
     _prediction["pred"] = value
     _prediction["running"] = True
 
@@ -1829,7 +1822,7 @@ async def resolve_prediction(index: int):
     _prediction["pred"] = None
     # todo: there's some bug here, idk what, but it's fine. probably. it resolves, anyway
     await pred.user.end_prediction(
-        TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id
+        TConn._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id
     )
 
 
@@ -1848,6 +1841,7 @@ async def auto_resolve_pred(run: RunParser):
 @command("prediction", "pred", discord=False, flag="m")
 async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
     # TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction
+    return await ctx.reply("Predictions are currently disabled.")
     match type:
         case "start" | "create":
             if _prediction["running"]:
@@ -3129,7 +3123,7 @@ async def check_token_validity(req: Request):
     if not (config.twitch.client_id and config.twitch.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if TConn.app._http._app_token is not None:
+    if TConn._http._app_token is not None:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -3188,7 +3182,7 @@ async def get_new_token(req: Request):
 
     await client.close()
 
-    TConn.app._http.token = data["access_token"]
+    TConn._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
 
 
