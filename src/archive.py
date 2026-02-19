@@ -138,9 +138,9 @@ class _ArchiveHandler:
     def write_to_disk(self):
         """Write all the vod information to disk."""
         with getfile(self._filename, "w") as f:
-            json.dump(list(self.vods - self.unparsed.keys()), f, default=lambda x: x.to_json())
+            json.dump(list(self.vods - self.unparsed.keys()), f, default=lambda x: x.to_json(), indent=config.server.json_indent)
         with getfile("unmatched_" + self._filename, "w") as f:
-            json.dump(self.errored, f, default=lambda x: x.to_json())
+            json.dump(self.errored, f, default=lambda x: x.to_json(), indent=config.server.json_indent)
 
     def determine_offset(self):
         """Determine the run offset from the start of the vod."""
