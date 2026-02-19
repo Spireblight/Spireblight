@@ -1768,7 +1768,7 @@ async def fetch_run_offset(run: RunParser):
         j[run.name] = offset.total_seconds()
 
         with getfile("offsets.json", "w") as f:
-            json.dump(j, f)
+            json.dump(j, f, indent=config.server.json_indent)
 
 
 # DO NOT MERGE INTO MAIN UNTIL THE FOLLOWING IS COMPLETELY DONE
