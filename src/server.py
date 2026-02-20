@@ -3123,7 +3123,7 @@ async def check_token_validity(req: Request):
     if not (config.twitch.client_id and config.twitch.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if TConn._http._app_token is not None:
+    if str(config.twitch.owner_id) in TConn.tokens:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -3175,14 +3175,10 @@ async def get_new_token(req: Request):
     async with client.post(f"https://id.twitch.tv/oauth2/token?{enc}") as resp:
         if resp.ok:
             data = await resp.json()
-            with getfile("twitch-oauth", "w") as f:
-                f.write(data["access_token"])
-            with getfile("twitch-refresh", "w") as f:
-                f.write(data["refresh_token"])
+            await TConn.add_token(data["access_token"], data["refresh_token"])
 
     await client.close()
 
-    TConn._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
 
 
