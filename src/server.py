@@ -162,6 +162,9 @@ _timers: dict[str, Timer] = {}
 
 _prediction_terms = {}
 
+_eventsub_subs: list[type[WSSub.SubscriptionPayload]] = [
+    WSSub.ChatMessageSubscription,
+]
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -462,26 +465,6 @@ class TwitchConn(TBot):
         for cmd in _to_add_twitch:
             self.add_command(cmd)
         load(asyncio.get_event_loop())
-
-    async def event_oauth_authorized(self, payload: UserTokenPayload) -> None:
-        print(payload.user_id)
-        await self.add_token(payload.access_token, payload.refresh_token)
-
-        if not payload.user_id:
-            return
-
-        if payload.user_id == self.bot_id:
-            # We usually don't want subscribe to events on the bots channel...
-            return
-
-        # A list of subscriptions we would like to make to the newly authorized channel...
-        subs: list[WSSub.SubscriptionPayload] = [
-            WSSub.ChatMessageSubscription(broadcaster_user_id=payload.user_id, user_id=self.bot_id),
-        ]
-
-        resp: MultiSubscribePayload = await self.multi_subscribe(subs)
-        if resp.errors:
-            logger.warning("Failed to subscribe to: %r, for user: %s", resp.errors, payload.user_id)
 
     async def refresh_spotify_token(self):
         if not config.spotify.enabled:
@@ -3181,17 +3164,13 @@ async def get_new_token(req: Request):
 
     return Response(text="Handshake successful! You may now close this tab.")
 
-
-async def get_oauth_token():
-    try:
-        return getfile("twitch-oauth", "r").read().strip()
-    except FileNotFoundError:
-        getfile("twitch-oauth", "w")
-        getfile("twitch-refresh", "w")
-
-
 async def Twitch_startup():
     global TConn
+
+    subs = []
+
+    for payload in _eventsub_subs:
+        subs.append(payload(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
 
     TConn = TwitchConn(
         #token=config.twitch.oauth_token,
@@ -3202,6 +3181,8 @@ async def Twitch_startup():
         client_secret=config.twitch.client_secret,
         bot_id=config.twitch.bot_id,
         owner_id=config.twitch.owner_id,
+        subscriptions=subs,
+        force_subscribe=True,
     )
 
     await TConn.start()
