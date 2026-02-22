@@ -10,7 +10,7 @@ class DiscordCommand(Command):
     def __init__(self, func, flag="", **kwargs):
         self.__doc__ = func.__doc__
         self.flag = flag
-        logger.debug(f"Creating Discord command {func.__name__}")
+        #logger.debug(f"Creating Discord command {func.__name__}")
         super().__init__(func, **kwargs)
 
     def __bool__(self):
