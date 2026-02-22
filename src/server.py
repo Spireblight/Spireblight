@@ -460,6 +460,7 @@ class TwitchConn(TBot):
 
     async def setup_hook(self):
         """Set-up the bot's hooks."""
+        return # for connect purposes
         #await self.subscribe_websocket(WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
 
         for cmd in _to_add_twitch:
@@ -605,15 +606,6 @@ class TwitchConn(TBot):
             case "bitsbadgetier":
                 self.run_event("bits_badge", user, channel, tags)
 '''
-    async def event_subscription(
-        self,
-        user: Chatter,
-        channel: PartialUser,
-        total: int,
-        consecutive: int | None,
-        subtype: str,
-    ):
-        pass
 
     #async def event_ritual(self, user: Chatter, channel: PartialUser, tags: dict):
     #    if tags["msg-param-ritual-name"] == "new_chatter":
