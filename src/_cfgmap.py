@@ -83,13 +83,11 @@ class Config(_ConfigMapping):
             raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
 
 class Twitch(_ConfigMapping):
-    def __init__(self, channel: str, oauth_token: str, enabled: bool, editors: list[str], bot_id: int, owner_id: int, client_id: str, client_secret: str, scopes: list[str], timers: dict):
+    def __init__(self, channel: str, enabled: bool, editors: list[str], bot_id: int, owner_id: int, client_id: str, client_secret: str, scopes: list[str], timers: dict):
         """Handle the Twitch aspect of the configuration.
 
         :param channel: The channel name to connect to.
         :type channel: str
-        :param oauth_token: The OAuth token of the account to use.
-        :type oauth_token: str
         :param enabled: Whether to use the Twitch connection.
         :type enabled: bool
         :param editors: A list of Twitch usernames who are editors for the channel.
@@ -111,7 +109,6 @@ class Twitch(_ConfigMapping):
         self._enabled = enabled
 
         self.channel = channel
-        self.oauth_token = oauth_token
         self.editors = editors
 
         self.bot_id = bot_id
