@@ -2,5 +2,5 @@ aiohttp==3.13
 aiohttp_jinja2==1.5
 discord.py==2.6.4
 Jinja2==3.1.2
-twitchio==3.1.0
+twitchio==3.2.1
 PyYAML==6.0.3
