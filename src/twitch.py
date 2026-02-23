@@ -19,7 +19,7 @@ class TwitchCommand(Command):
     def __bool__(self):
         return self.enabled
 
-    async def invoke(self, context: Context, *, index=0):
+    async def invoke(self, context: Context):
         if not self.enabled:
             return
         if self.flag:
@@ -35,4 +35,4 @@ class TwitchCommand(Command):
                 if not is_editor:
                     return
         logger.debug(f"Invoking Twitch command {self.name} by {getattr(context.author, 'display_name', context.author.name)}")
-        await super().invoke(context, index=index)
+        await super().invoke(context)

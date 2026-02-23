@@ -1,4 +1,4 @@
-# (c) Anilyka Barry, 2022-2024
+# (c) Anilyka Barry, 2022-Present
 
 from __future__ import annotations
 
@@ -30,9 +30,8 @@ from twitchio.ext.commands import (
 from twitchio.ext.routines import routine, Routine
 # from twitchio.ext.eventsub import EventSubClient
 #from twitchio.channel import Channel
-from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, MultiSubscribePayload
+from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, ChatNotification, ChatRaid
 from twitchio.exceptions import HTTPException
-from twitchio.authentication import UserTokenPayload
 from twitchio.models import Stream, Prediction, Clip as TClip
 
 from twitchio import eventsub as WSSub
@@ -162,8 +161,10 @@ _timers: dict[str, Timer] = {}
 
 _prediction_terms = {}
 
-_eventsub_subs: list[type[WSSub.SubscriptionPayload]] = [
-    WSSub.ChatMessageSubscription,
+_eventsub_subs: list[WSSub.SubscriptionPayload] = [
+    WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)),
+    WSSub.ChannelRaidSubscription(to_broadcaster_user_id=str(config.twitch.owner_id)),
+    WSSub.ChatNotificationSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id))
 ]
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
@@ -460,9 +461,6 @@ class TwitchConn(TBot):
 
     async def setup_hook(self):
         """Set-up the bot's hooks."""
-        return # for connect purposes
-        #await self.subscribe_websocket(WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
-
         for cmd in _to_add_twitch:
             self.add_command(cmd)
         load(asyncio.get_event_loop())
@@ -546,76 +544,19 @@ class TwitchConn(TBot):
             except ContentTypeError:
                 return {}
 
-    async def eventsub_setup(self):
-        self.loop.create_task(self.esclient.listen(port=4000))
-        channel = await self.fetch_users([config.twitch.channel])
-
-        try:
-            await self.esclient.subscribe_channel_stream_start(broadcaster=channel[0])
-            await self.esclient.subscribe_channel_stream_end(broadcaster=channel[0])
-        except HTTPException:
-            pass
-
     async def event_ready(self):
         self.live_channels[config.twitch.channel] = live = bool(
             await self.fetch_streams(user_logins=[config.twitch.channel])
         )
-    _i='''
-    async def event_raw_usernotice(self, channel: Channel, tags: dict):
-        user = Chatter(
-            tags=tags,
-            name=tags["login"],
-            channel=channel,
-            bot=self,
-            websocket=self._connection,
-        )
-        match tags["msg-id"]:
-            case "sub" | "resub":
-                total = 0
-                consecutive = None
-                subtype = ""
-                try:
-                    total = int(tags["msg-param-cumulative-months"])
-                    if int(tags["msg-param-should-share-streak"]):
-                        consecutive = int(tags["msg-param-streak-months"])
-                    subtype: str = tags["msg-param-sub-plan"]
-                    if subtype.isdigit():
-                        subtype = f"Tier {subtype[0]}"
-                except (KeyError, ValueError):
-                    pass
-                self.run_event(
-                    "subscription", user, channel, total, consecutive, subtype
-                )
-            case (
-                "subgift"
-                | "anonsubgift"
-                | "submysterygift"
-                | "giftpaidupgrade"
-                | "rewardgift"
-                | "anongiftpaidupgrade"
-            ):
-                self.run_event("gift_sub", user, channel, tags)
+
+    async def event_chat_notification(self, payload: ChatNotification):
+        match payload.notice_type:
             case "raid":
-                self.run_event(
-                    "raid", user, channel, int(tags["msg-param-viewerCount"])
-                )
-            case "unraid":
-                self.run_event("unraid", user, channel, tags)
-            case "ritual":
-                self.run_event("ritual", user, channel, tags)
-            case "bitsbadgetier":
-                self.run_event("bits_badge", user, channel, tags)
-'''
+                await self.event_raid(payload.broadcaster, payload.raid)
 
-    #async def event_ritual(self, user: Chatter, channel: PartialUser, tags: dict):
-    #    if tags["msg-param-ritual-name"] == "new_chatter":
-    #        self.run_event("new_chatter", user, channel, tags["message"])
-
-    async def event_new_chatter(self, user: Chatter, channel: PartialUser, message: str):
-        if "youtube" in message.lower() or "yt" in message.lower():
-            pass  # await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
-
-    async def event_raid(self, user: Chatter, channel: PartialUser, viewer_count: int):
+    async def event_raid(self, channel: PartialUser, payload: ChatRaid):
+        viewer_count = payload.viewer_count
+        user = payload.user
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)
@@ -639,13 +580,6 @@ class TwitchConn(TBot):
 
                 return invoke
         raise AttributeError(name)
-
-class EventSubBot(TBot):
-    async def event_eventsub_notification_stream_start(self, evt: StreamOnline):
-        TConn.live_channels[evt.broadcaster.name] = True
-
-    async def event_eventsub_notification_stream_end(self, evt: StreamOffline):
-        TConn.live_channels[evt.broadcaster.name] = False
 
 
 class DiscordConn(DBot):
@@ -3159,11 +3093,6 @@ async def get_new_token(req: Request):
 async def Twitch_startup():
     global TConn
 
-    subs = []
-
-    for payload in _eventsub_subs:
-        subs.append(payload(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)))
-
     TConn = TwitchConn(
         #token=config.twitch.oauth_token,
         prefix=config.bot.prefix,
@@ -3173,35 +3102,11 @@ async def Twitch_startup():
         client_secret=config.twitch.client_secret,
         bot_id=config.twitch.bot_id,
         owner_id=config.twitch.owner_id,
-        subscriptions=subs,
+        subscriptions=_eventsub_subs,
         force_subscribe=True,
     )
 
     await TConn.start()
-    return
-
-    if config.twitch.extended.enabled:
-        app = AppClient.from_client_credentials(
-            config.twitch.extended.client_id,
-            config.twitch.extended.client_secret,
-        )
-        token = await get_oauth_token()
-        if token:
-            app._http.token = token
-        TConn.app = app
-
-    esbot = EventSubBot.from_client_credentials(
-        config.server.websocket_client.id,
-        config.server.websocket_client.secret,
-        prefix=config.bot.prefix,
-    )
-    TConn.esclient = EventSubClient(
-        esbot, config.server.webhook.secret, f"{config.server.url}/eventsub"
-    )
-    # await TConn.eventsub_setup()
-
-    await TConn.connect()
-
 
 async def Twitch_cleanup():
     if TConn._session is not None:
