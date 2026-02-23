@@ -1,6 +1,5 @@
 twitch:
   enabled: true
-  oauth_token: "some-sort-of-oauth-token"
   channel: "twitch"
 
 discord:

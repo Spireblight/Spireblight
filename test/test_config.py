@@ -36,13 +36,11 @@ class TestConfigFile(TestCase):
 
         _cfgmodule.load_user_config(self.config, f1)
 
-        toauth = self.config.twitch.oauth_token
         doauth = self.config.discord.oauth_token
 
         # second file doesn't touch tokens, so they should still be there
         _cfgmodule.load_user_config(self.config, f2)
 
-        self.assertEqual(self.config.twitch.oauth_token, toauth)
         self.assertEqual(self.config.discord.oauth_token, doauth)
 
     def test_argv(self):
