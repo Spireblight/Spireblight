@@ -618,7 +618,7 @@ class DiscordConn(DBot):
 class Timer:
     def __init__(self, name: str, interval: int, *, loop=None):
         self.name = name
-        self.interval = interval
+        self.interval = int(interval)
         self.commands = []
         self.running = False
         self.loop = loop
