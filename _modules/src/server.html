@@ -1054,7 +1054,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">live</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_streams</span><span class="p">(</span><span class="n">user_logins</span><span class="o">=</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">])</span>
-        <span class="n">chan</span> <span class="o">=</span> <span class="n">TConn</span><span class="o">.</span><span class="n">get_channel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">)</span>
+        <span class="n">chan</span> <span class="o">=</span> <span class="n">chan</span><span class="o">.</span><span class="n">user</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">live</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">chan</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;auto_&quot;</span><span class="p">):</span> <span class="c1"># stream ended, kill this timer</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
@@ -1090,7 +1091,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Command </span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s2"> of timer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> needs non-constant formatting. Sending raw line.&quot;</span>
             <span class="p">)</span>
-        <span class="k">await</span> <span class="n">chan</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">chan</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
         <span class="n">_update_timers</span><span class="p">()</span>  <span class="c1"># keep track of command ordering</span>
 
@@ -1866,7 +1867,7 @@
 
     <span class="k">if</span> <span class="n">clips</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_clips</span><span class="p">(</span><span class="n">clips</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_clips</span><span class="p">(</span><span class="n">clip_ids</span><span class="o">=</span><span class="n">clips</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">HTTPException</span><span class="p">:</span>
             <span class="k">return</span> <span class="c1"># idk</span>
 
@@ -1917,7 +1918,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="n">url</span> <span class="c1"># idk man</span>
 
-    <span class="k">return</span> <span class="p">(</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_clips</span><span class="p">([</span><span class="nb">id</span><span class="p">])</span> <span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">(</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_clips</span><span class="p">(</span><span class="n">clip_ids</span><span class="o">=</span><span class="p">[</span><span class="nb">id</span><span class="p">])</span> <span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 
