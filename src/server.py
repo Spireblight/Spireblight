@@ -680,7 +680,7 @@ class Timer:
         _update_timers()  # keep track of command ordering
 
     async def before_ready(self):
-        await TConn.wait_for_ready()
+        await TConn.wait_until_ready()
 
     async def on_error(self, error: Exception):
         logger.error(f"Error in timer {self.name}:")
