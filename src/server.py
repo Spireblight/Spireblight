@@ -462,6 +462,9 @@ class TwitchConn(TBot):
     def load_tokens(self, path = None):
         return super().load_tokens("data/tokens.json")
 
+    def save_tokens(self, path = None):
+        return super().save_tokens("data/tokens.json")
+
     async def setup_hook(self):
         """Set-up the bot's hooks."""
         for cmd in _to_add_twitch:
