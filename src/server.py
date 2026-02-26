@@ -628,7 +628,7 @@ class Timer:
     def set_routine(self):
         if self.running:
             self._routine.stop()
-        self._routine = routine(delta=float(self.interval))(self._coro_internal)
+        self._routine = routine(delta=datetime.timedelta(seconds=self.interval))(self._coro_internal)
         self._routine.before_routine(self.before_ready)
         self._routine.error(self.on_error)
         if self.running:
