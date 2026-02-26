@@ -638,7 +638,8 @@ class Timer:
         if not self.running:
             return
         live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
-        chan = TConn.get_channel(config.twitch.channel)
+        chan = await TConn.fetch_channel(config.twitch.owner_id)
+        chan = chan.user
         if not live or not chan:
             if self.name.startswith("auto_"): # stream ended, kill this timer
                 self.stop()
@@ -674,7 +675,7 @@ class Timer:
             logger.error(
                 f"Command {cmd} of timer {self.name} needs non-constant formatting. Sending raw line."
             )
-        await chan.send(msg)
+        await chan.send_message(msg)
         self.commands.append(cmd)
         _update_timers()  # keep track of command ordering
 
@@ -1414,7 +1415,7 @@ async def setup_clips():
 
     if clips:
         try:
-            result = await TConn.fetch_clips(clips)
+            result = await TConn.fetch_clips(clip_ids=clips)
         except HTTPException:
             return # idk
 
@@ -1456,7 +1457,7 @@ async def get_clip_info(url: str) -> TClip:
     else:
         id = url # idk man
 
-    return ( await TConn.fetch_clips([id]) )[0]
+    return ( await TConn.fetch_clips(clip_ids=[id]) )[0]
 
 
 @command("clip")
