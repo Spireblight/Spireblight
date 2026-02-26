@@ -629,7 +629,7 @@ class Timer:
         if self.running:
             self._routine.stop()
         self._routine = Routine(
-            coro=self._coro_internal, delta=float(self.interval), loop=self.loop
+            coro=self._coro_internal, delta=float(self.interval)
         )
         self._routine.before_routine(self.before_ready)
         self._routine.error(self.on_error)
