@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Full Spireblight API &#8212; Spireblight 0.7 documentation</title>
+    <title>Full Spireblight API &#8212; Spireblight 0.8 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=48f8e935"></script>
+    <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'modules';</script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.7 documentation</p>
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
   
 </a></div>
     
@@ -958,7 +958,6 @@
 <li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Twitch.enabled"><code class="docutils literal notranslate"><span class="pre">Twitch.enabled</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#src._cfgmap._TwitchExtendedOAuth"><code class="docutils literal notranslate"><span class="pre">_TwitchExtendedOAuth</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#src._cfgmap._TimerIntervals"><code class="docutils literal notranslate"><span class="pre">_TimerIntervals</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#src._cfgmap.Discord"><code class="docutils literal notranslate"><span class="pre">Discord</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="config.html#src._cfgmap.Discord.enabled"><code class="docutils literal notranslate"><span class="pre">Discord.enabled</span></code></a></li>
@@ -1082,24 +1081,12 @@
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.slice_command"><code class="docutils literal notranslate"><span class="pre">slice_command()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.setup_hook"><code class="docutils literal notranslate"><span class="pre">TwitchConn.setup_hook()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.refresh_spotify_token"><code class="docutils literal notranslate"><span class="pre">TwitchConn.refresh_spotify_token()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.spotify_call"><code class="docutils literal notranslate"><span class="pre">TwitchConn.spotify_call()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.eventsub_setup"><code class="docutils literal notranslate"><span class="pre">TwitchConn.eventsub_setup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_ready"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ready()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_raw_usernotice"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raw_usernotice()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_subscription"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_subscription()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_ritual"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ritual()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_new_chatter"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_new_chatter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_chat_notification"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_chat_notification()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn.event_raid"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raid()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="server.html#src.server.AppClient"><code class="docutils literal notranslate"><span class="pre">AppClient</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.AppClient.event_token_expired"><code class="docutils literal notranslate"><span class="pre">AppClient.event_token_expired()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="server.html#src.server.EventSubBot"><code class="docutils literal notranslate"><span class="pre">EventSubBot</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.EventSubBot.event_eventsub_notification_stream_start"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_start()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.EventSubBot.event_eventsub_notification_stream_end"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_end()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.DiscordConn"><code class="docutils literal notranslate"><span class="pre">DiscordConn</span></code></a><ul>
@@ -1206,7 +1193,6 @@
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.automatic_client_report"><code class="docutils literal notranslate"><span class="pre">automatic_client_report()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="server.html#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.Twitch_startup"><code class="docutils literal notranslate"><span class="pre">Twitch_startup()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.Twitch_cleanup"><code class="docutils literal notranslate"><span class="pre">Twitch_cleanup()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="server.html#src.server.Discord_startup"><code class="docutils literal notranslate"><span class="pre">Discord_startup()</span></code></a></li>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>src.server &#8212; Spireblight 0.7 documentation</title>
+    <title>src.server &#8212; Spireblight 0.8 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=48f8e935"></script>
+    <script src="../../_static/documentation_options.js?v=a0e24af7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/server';</script>
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.7 documentation</p>
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
   
 </a></div>
     
@@ -343,7 +343,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for src.server</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (c) Anilyka Barry, 2022-2024</span>
+<span></span><span class="c1"># (c) Anilyka Barry, 2022-Present</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -369,15 +369,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.ext.commands</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Cooldown</span> <span class="k">as</span> <span class="n">TCooldown</span><span class="p">,</span>
     <span class="n">Bucket</span> <span class="k">as</span> <span class="n">TBucket</span><span class="p">,</span>
-    <span class="n">Bot</span> <span class="k">as</span> <span class="n">TBot</span><span class="p">,</span>
+    <span class="n">AutoBot</span> <span class="k">as</span> <span class="n">TBot</span><span class="p">,</span>
     <span class="n">Context</span> <span class="k">as</span> <span class="n">TContext</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.ext.routines</span><span class="w"> </span><span class="kn">import</span> <span class="n">routine</span><span class="p">,</span> <span class="n">Routine</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.ext.eventsub</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventSubClient</span><span class="p">,</span> <span class="n">StreamOnlineData</span><span class="p">,</span> <span class="n">StreamOfflineData</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.channel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Channel</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.chatter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chatter</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
+<span class="c1"># from twitchio.ext.eventsub import EventSubClient</span>
+<span class="c1">#from twitchio.channel import Channel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">StreamOffline</span><span class="p">,</span> <span class="n">StreamOnline</span><span class="p">,</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">ChatNotification</span><span class="p">,</span> <span class="n">ChatRaid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stream</span><span class="p">,</span> <span class="n">Prediction</span><span class="p">,</span> <span class="n">Clip</span> <span class="k">as</span> <span class="n">TClip</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">eventsub</span> <span class="k">as</span> <span class="n">WSSub</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">discord</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">discord.ext.commands</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -397,6 +399,7 @@
     <span class="n">get_run_stats_by_date_string</span><span class="p">,</span>
     <span class="n">update_range</span><span class="p">,</span>
 <span class="p">)</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_masteries</span><span class="p">,</span> <span class="n">get_mastered</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sanitize</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">,</span> <span class="n">_internal_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.sts_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_profile</span><span class="p">,</span> <span class="n">get_current_profile</span>
@@ -416,6 +419,7 @@
     <span class="n">get_req_data</span><span class="p">,</span>
     <span class="n">post_prediction</span><span class="p">,</span>
 <span class="p">)</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.disc</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscordCommand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_savefile</span><span class="p">,</span> <span class="n">Savefile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_latest_run</span><span class="p">,</span> <span class="n">get_parser</span><span class="p">,</span> <span class="n">_ts_cache</span> <span class="k">as</span> <span class="n">_runs_cache</span><span class="p">,</span> <span class="n">RunParser</span>
@@ -511,6 +515,11 @@
 
 <span class="n">_prediction_terms</span> <span class="o">=</span> <span class="p">{}</span>
 
+<span class="n">_eventsub_subs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">WSSub</span><span class="o">.</span><span class="n">SubscriptionPayload</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">WSSub</span><span class="o">.</span><span class="n">ChatMessageSubscription</span><span class="p">(</span><span class="n">broadcaster_user_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">),</span> <span class="n">user_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">bot_id</span><span class="p">)),</span>
+    <span class="n">WSSub</span><span class="o">.</span><span class="n">ChannelRaidSubscription</span><span class="p">(</span><span class="n">to_broadcaster_user_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">)),</span>
+    <span class="n">WSSub</span><span class="o">.</span><span class="n">ChatNotificationSubscription</span><span class="p">(</span><span class="n">broadcaster_user_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">),</span> <span class="n">user_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">bot_id</span><span class="p">))</span>
+<span class="p">]</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_sanitizer</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize</span><span class="p">(</span><span class="n">require_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">in_mapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -727,7 +736,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">wrapper_func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">wrapped</span> <span class="o">=</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">force_argcount</span><span class="p">,</span> <span class="n">wrapper_func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">wrapped</span><span class="o">.</span><span class="n">__cooldowns__</span> <span class="o">=</span> <span class="p">[</span><span class="n">TCooldown</span><span class="p">(</span><span class="n">burst</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">TBucket</span><span class="o">.</span><span class="n">default</span><span class="p">)]</span>
+        <span class="n">wrapped</span><span class="o">.</span><span class="n">__cooldowns__</span> <span class="o">=</span> <span class="p">[</span><span class="n">TCooldown</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="n">burst</span><span class="p">,</span> <span class="n">per</span><span class="o">=</span><span class="n">rate</span><span class="p">)]</span>
         <span class="n">wrapped</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
         <span class="c1"># wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)</span>
         <span class="k">if</span> <span class="n">twitch</span><span class="p">:</span>
@@ -815,9 +824,8 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">TwitchConn</span><span class="p">(</span><span class="n">TBot</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">esclient</span><span class="p">:</span> <span class="n">EventSubClient</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># self.esclient: EventSubClient = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">live_channels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">:</span> <span class="n">AppClient</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="p">:</span> <span class="n">ClientSession</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
@@ -827,6 +835,15 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="k">pass</span>
+
+<div class="viewcode-block" id="TwitchConn.setup_hook">
+<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.setup_hook">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">setup_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set-up the bot&#39;s hooks.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">_to_add_twitch</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">load</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">())</span></div>
+
 
 <div class="viewcode-block" id="TwitchConn.refresh_spotify_token">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.refresh_spotify_token">[docs]</a>
@@ -913,19 +930,6 @@
                 <span class="k">return</span> <span class="p">{}</span></div>
 
 
-<div class="viewcode-block" id="TwitchConn.eventsub_setup">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.eventsub_setup">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">eventsub_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">esclient</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">4000</span><span class="p">))</span>
-        <span class="n">channel</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_users</span><span class="p">([</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">])</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">esclient</span><span class="o">.</span><span class="n">subscribe_channel_stream_start</span><span class="p">(</span><span class="n">broadcaster</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">esclient</span><span class="o">.</span><span class="n">subscribe_channel_stream_end</span><span class="p">(</span><span class="n">broadcaster</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">except</span> <span class="n">HTTPException</span><span class="p">:</span>
-            <span class="k">pass</span></div>
-
-
 <div class="viewcode-block" id="TwitchConn.event_ready">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_ready">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -934,88 +938,23 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TwitchConn.event_raw_usernotice">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_raw_usernotice">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raw_usernotice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">Chatter</span><span class="p">(</span>
-            <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">tags</span><span class="p">[</span><span class="s2">&quot;login&quot;</span><span class="p">],</span>
-            <span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span>
-            <span class="n">bot</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
-            <span class="n">websocket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">match</span> <span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-id&quot;</span><span class="p">]:</span>
-            <span class="k">case</span> <span class="s2">&quot;sub&quot;</span> <span class="o">|</span> <span class="s2">&quot;resub&quot;</span><span class="p">:</span>
-                <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">consecutive</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">subtype</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">total</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-cumulative-months&quot;</span><span class="p">])</span>
-                    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-should-share-streak&quot;</span><span class="p">]):</span>
-                        <span class="n">consecutive</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-streak-months&quot;</span><span class="p">])</span>
-                    <span class="n">subtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-sub-plan&quot;</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">subtype</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-                        <span class="n">subtype</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Tier </span><span class="si">{</span><span class="n">subtype</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
-                    <span class="k">pass</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span>
-                    <span class="s2">&quot;subscription&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">consecutive</span><span class="p">,</span> <span class="n">subtype</span>
-                <span class="p">)</span>
-            <span class="k">case</span> <span class="p">(</span>
-                <span class="s2">&quot;subgift&quot;</span>
-                <span class="o">|</span> <span class="s2">&quot;anonsubgift&quot;</span>
-                <span class="o">|</span> <span class="s2">&quot;submysterygift&quot;</span>
-                <span class="o">|</span> <span class="s2">&quot;giftpaidupgrade&quot;</span>
-                <span class="o">|</span> <span class="s2">&quot;rewardgift&quot;</span>
-                <span class="o">|</span> <span class="s2">&quot;anongiftpaidupgrade&quot;</span>
-            <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span><span class="s2">&quot;gift_sub&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+<div class="viewcode-block" id="TwitchConn.event_chat_notification">
+<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_chat_notification">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_chat_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatNotification</span><span class="p">):</span>
+        <span class="k">match</span> <span class="n">payload</span><span class="o">.</span><span class="n">notice_type</span><span class="p">:</span>
             <span class="k">case</span> <span class="s2">&quot;raid&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span>
-                    <span class="s2">&quot;raid&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-viewerCount&quot;</span><span class="p">])</span>
-                <span class="p">)</span>
-            <span class="k">case</span> <span class="s2">&quot;unraid&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span><span class="s2">&quot;unraid&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
-            <span class="k">case</span> <span class="s2">&quot;ritual&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span><span class="s2">&quot;ritual&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
-            <span class="k">case</span> <span class="s2">&quot;bitsbadgetier&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span><span class="s2">&quot;bits_badge&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="TwitchConn.event_subscription">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_subscription">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_subscription</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">user</span><span class="p">:</span> <span class="n">Chatter</span><span class="p">,</span>
-        <span class="n">channel</span><span class="p">:</span> <span class="n">Channel</span><span class="p">,</span>
-        <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">consecutive</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">subtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="TwitchConn.event_ritual">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_ritual">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_ritual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">tags</span><span class="p">[</span><span class="s2">&quot;msg-param-ritual-name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;new_chatter&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">run_event</span><span class="p">(</span><span class="s2">&quot;new_chatter&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">tags</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">])</span></div>
-
-
-<div class="viewcode-block" id="TwitchConn.event_new_chatter">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_new_chatter">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_new_chatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s2">&quot;youtube&quot;</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;yt&quot;</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-            <span class="k">pass</span>  <span class="c1"># await channel.send(f&quot;Hello {user.display_name}! Glad to hear that you&#39;re enjoying the YouTube content, and welcome along baalorLove&quot;)</span></div>
+                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_raid</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">broadcaster</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">raid</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TwitchConn.event_raid">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_raid">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">viewer_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatRaid</span><span class="p">):</span>
+        <span class="n">viewer_count</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">viewer_count</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">user</span>
         <span class="k">if</span> <span class="n">viewer_count</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+        <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send_announcement</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Welcome along </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2"> with your </span><span class="si">{</span><span class="n">viewer_count</span><span class="si">}</span><span class="s2"> friends! &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;Everyone, go give them a follow over at https://twitch.tv/</span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;last I checked, they were playing some </span><span class="si">{</span><span class="n">chan</span><span class="o">.</span><span class="n">game_name</span><span class="si">}</span><span class="s2">!&quot;</span>
@@ -1036,55 +975,6 @@
 
                 <span class="k">return</span> <span class="n">invoke</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="AppClient">
-<a class="viewcode-back" href="../../server.html#src.server.AppClient">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">AppClient</span><span class="p">(</span><span class="n">TBot</span><span class="p">):</span>
-<div class="viewcode-block" id="AppClient.event_token_expired">
-<a class="viewcode-back" href="../../server.html#src.server.AppClient.event_token_expired">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_token_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># shamelessly stolen from TwitchIO with one change</span>
-        <span class="n">reft</span> <span class="o">=</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-refresh&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s2">&quot;https://id.twitch.tv/oauth2/token?grant_type=refresh_token&amp;&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;refresh_token=</span><span class="si">{</span><span class="n">reft</span><span class="si">}</span><span class="s2">&amp;client_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">client_id</span><span class="si">}</span><span class="s2">&amp;client_secret=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">client_secret</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;</span> <span class="mi">300</span> <span class="ow">or</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to generate a token: &quot;</span> <span class="o">+</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-            <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;Invalid or no token found, generated new token: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
-            <span class="p">)</span>
-        <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-oauth&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-refresh&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">refresh_token</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">token</span></div>
-</div>
-
-
-
-<div class="viewcode-block" id="EventSubBot">
-<a class="viewcode-back" href="../../server.html#src.server.EventSubBot">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">EventSubBot</span><span class="p">(</span><span class="n">TBot</span><span class="p">):</span>
-<div class="viewcode-block" id="EventSubBot.event_eventsub_notification_stream_start">
-<a class="viewcode-back" href="../../server.html#src.server.EventSubBot.event_eventsub_notification_stream_start">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_eventsub_notification_stream_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">:</span> <span class="n">StreamOnlineData</span><span class="p">):</span>
-        <span class="n">TConn</span><span class="o">.</span><span class="n">live_channels</span><span class="p">[</span><span class="n">evt</span><span class="o">.</span><span class="n">broadcaster</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></div>
-
-
-<div class="viewcode-block" id="EventSubBot.event_eventsub_notification_stream_end">
-<a class="viewcode-back" href="../../server.html#src.server.EventSubBot.event_eventsub_notification_stream_end">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_eventsub_notification_stream_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">:</span> <span class="n">StreamOfflineData</span><span class="p">):</span>
-        <span class="n">TConn</span><span class="o">.</span><span class="n">live_channels</span><span class="p">[</span><span class="n">evt</span><span class="o">.</span><span class="n">broadcaster</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
-</div>
 
 
 
@@ -2307,7 +2197,7 @@
     <span class="n">ctx</span><span class="p">:</span> <span class="n">TContext</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">):</span>
     <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">user</span><span class="p">()</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="n">post_prediction</span><span class="p">(</span><span class="n">TConn</span><span class="o">.</span><span class="n">app</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="n">post_prediction</span><span class="p">(</span><span class="n">TConn</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
     <span class="n">_prediction</span><span class="p">[</span><span class="s2">&quot;pred&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="n">_prediction</span><span class="p">[</span><span class="s2">&quot;running&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></div>
 
@@ -2323,7 +2213,7 @@
     <span class="n">_prediction</span><span class="p">[</span><span class="s2">&quot;pred&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># todo: there&#39;s some bug here, idk what, but it&#39;s fine. probably. it resolves, anyway</span>
     <span class="k">await</span> <span class="n">pred</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">end_prediction</span><span class="p">(</span>
-        <span class="n">TConn</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">pred</span><span class="o">.</span><span class="n">prediction_id</span><span class="p">,</span> <span class="s2">&quot;RESOLVED&quot;</span><span class="p">,</span> <span class="n">outcome</span><span class="o">.</span><span class="n">outcome_id</span>
+        <span class="n">TConn</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">pred</span><span class="o">.</span><span class="n">prediction_id</span><span class="p">,</span> <span class="s2">&quot;RESOLVED&quot;</span><span class="p">,</span> <span class="n">outcome</span><span class="o">.</span><span class="n">outcome_id</span>
     <span class="p">)</span></div>
 
 
@@ -2348,6 +2238,7 @@
 <span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;pred&quot;</span><span class="p">,</span> <span class="n">discord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_prediction</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">TContext</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="c1"># TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Predictions are currently disabled.&quot;</span><span class="p">)</span>
     <span class="k">match</span> <span class="nb">type</span><span class="p">:</span>
         <span class="k">case</span> <span class="s2">&quot;start&quot;</span> <span class="o">|</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_prediction</span><span class="p">[</span><span class="s2">&quot;running&quot;</span><span class="p">]:</span>
@@ -3860,12 +3751,10 @@
     <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>  <span class="c1"># check if the key is OK</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;DISABLED&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;NOT_EXTENDED&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_id</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_secret</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_secret</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;NO_CREDENTIALS&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TConn</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;WORKING&quot;</span><span class="p">)</span>
 
     <span class="c1"># Need to authenticate for the first time (presumably)</span>
@@ -3876,10 +3765,10 @@
     <span class="n">_oauth_state</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+        <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
         <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/twitch/receive-token&quot;</span><span class="p">,</span>
         <span class="s2">&quot;response_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">scopes</span><span class="p">),</span>
+        <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">scopes</span><span class="p">),</span>
         <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">_oauth_state</span><span class="p">,</span>
     <span class="p">}</span>
 
@@ -3906,8 +3795,8 @@
     <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
 
     <span class="n">form</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
-        <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+        <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+        <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
         <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span>
         <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
         <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/twitch/receive-token&quot;</span><span class="p">,</span>
@@ -3920,27 +3809,11 @@
     <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://id.twitch.tv/oauth2/token?</span><span class="si">{</span><span class="n">enc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-oauth&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">])</span>
-            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-refresh&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">])</span>
+            <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">])</span>
 
     <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="n">TConn</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Handshake successful! You may now close this tab.&quot;</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="get_oauth_token">
-<a class="viewcode-back" href="../../server.html#src.server.get_oauth_token">[docs]</a>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_oauth_token</span><span class="p">():</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-oauth&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-oauth&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;twitch-refresh&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span></div>
-
 
 
 <div class="viewcode-block" id="Twitch_startup">
@@ -3949,39 +3822,19 @@
     <span class="k">global</span> <span class="n">TConn</span>
 
     <span class="n">TConn</span> <span class="o">=</span> <span class="n">TwitchConn</span><span class="p">(</span>
-        <span class="n">token</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">oauth_token</span><span class="p">,</span>
+        <span class="c1">#token=config.twitch.oauth_token,</span>
         <span class="n">prefix</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span>
-        <span class="n">initial_channels</span><span class="o">=</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">],</span>
+        <span class="c1">#initial_channels=[config.twitch.channel],</span>
         <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+        <span class="n">bot_id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">bot_id</span><span class="p">,</span>
+        <span class="n">owner_id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">,</span>
+        <span class="n">subscriptions</span><span class="o">=</span><span class="n">_eventsub_subs</span><span class="p">,</span>
+        <span class="n">force_subscribe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">TConn</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_id</span>
-    <span class="n">TConn</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_secret</span>
-    <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">_to_add_twitch</span><span class="p">:</span>
-        <span class="n">TConn</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
-    <span class="n">load</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">())</span>
 
-    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-        <span class="n">app</span> <span class="o">=</span> <span class="n">AppClient</span><span class="o">.</span><span class="n">from_client_credentials</span><span class="p">(</span>
-            <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
-            <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">extended</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_oauth_token</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
-        <span class="n">TConn</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
-
-    <span class="n">esbot</span> <span class="o">=</span> <span class="n">EventSubBot</span><span class="o">.</span><span class="n">from_client_credentials</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">websocket_client</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">websocket_client</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span>
-        <span class="n">prefix</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">TConn</span><span class="o">.</span><span class="n">esclient</span> <span class="o">=</span> <span class="n">EventSubClient</span><span class="p">(</span>
-        <span class="n">esbot</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">webhook</span><span class="o">.</span><span class="n">secret</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/eventsub&quot;</span>
-    <span class="p">)</span>
-    <span class="c1"># await TConn.eventsub_setup()</span>
-
-    <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></div>
-
+    <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Twitch_cleanup">
@@ -3989,6 +3842,7 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Twitch_cleanup</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">save_tokens</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 

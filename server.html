@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>server module &#8212; Spireblight 0.7 documentation</title>
+    <title>server module &#8212; Spireblight 0.8 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=48f8e935"></script>
+    <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'server';</script>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.7 documentation</p>
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
   
 </a></div>
     
@@ -438,7 +438,13 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="src.server.TwitchConn">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwitchConn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AutoBot</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.setup_hook">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.setup_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.setup_hook" title="Link to this definition">#</a></dt>
+<dd><p>Set-up the bot’s hooks.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.server.TwitchConn.refresh_spotify_token">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh_spotify_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.refresh_spotify_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.refresh_spotify_token" title="Link to this definition">#</a></dt>
@@ -450,113 +456,25 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.eventsub_setup">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eventsub_setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.eventsub_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.eventsub_setup" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="src.server.TwitchConn.event_ready">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_ready" title="Link to this definition">#</a></dt>
-<dd><p><a href="#id1"><span class="problematic" id="id2">|coro|</span></a></p>
-<p>Event called when the Bot has logged in and is ready.</p>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="nd">@bot</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_ready</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Logged into Twitch | </span><span class="si">{</span><span class="n">bot</span><span class="o">.</span><span class="n">nick</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.event_raw_usernotice">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_raw_usernotice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_raw_usernotice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_raw_usernotice" title="Link to this definition">#</a></dt>
-<dd><p><a href="#id3"><span class="problematic" id="id4">|coro|</span></a></p>
-<p>Event called when a USERNOTICE is received from Twitch.
-Since USERNOTICE’s can be fairly complex and vary, the following sub-events are available:</p>
-<blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_usernotice_subscription()</span></code> :
-Called when a USERNOTICE Subscription or Re-subscription event is received.</p>
-</div></blockquote>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>For more information on how to handle USERNOTICE’s visit:
-<a class="reference external" href="https://dev.twitch.tv/docs/irc/tags/#usernotice-twitch-tags">https://dev.twitch.tv/docs/irc/tags/#usernotice-twitch-tags</a></p>
-</div>
-<section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h2>
-<dl class="simple">
-<dt>channel: <code class="xref py py-class docutils literal notranslate"><span class="pre">Channel</span></code></dt><dd><p>Channel object relevant to the USERNOTICE event.</p>
-</dd>
-<dt>tags<span class="classifier">dict</span></dt><dd><p>A dictionary with the relevant information associated with the USERNOTICE.
-This could vary depending on the event.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.event_subscription">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_subscription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consecutive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_subscription"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_subscription" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.event_ritual">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_ritual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_ritual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_ritual" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.event_new_chatter">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_new_chatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_new_chatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_new_chatter" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="src.server.TwitchConn.event_chat_notification">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_chat_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ChatNotification</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_chat_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_chat_notification" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.server.TwitchConn.event_raid">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_raid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Chatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewer_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_raid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_raid" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.server.AppClient">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AppClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">set</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Coroutine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heartbeat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#AppClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.AppClient" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.AppClient.event_token_expired">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_token_expired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#AppClient.event_token_expired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.AppClient.event_token_expired" title="Link to this definition">#</a></dt>
-<dd><p><a href="#id5"><span class="problematic" id="id6">|coro|</span></a></p>
-<p>A special event called when the oauth token expires. This is a hook into the http system, it will call this
-when a call to the api fails due to a token expiry. This function should return either a new token, or <cite>None</cite>.
-Returning <cite>None</cite> will cause the client to attempt an automatic token generation.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This event is a callback hook. It is not a dispatched event. Any errors raised will be passed to the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">event_error()</span></code> event.</p>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.server.EventSubBot">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EventSubBot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">set</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Coroutine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heartbeat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.EventSubBot.event_eventsub_notification_stream_start">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_eventsub_notification_stream_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamOnlineData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot.event_eventsub_notification_stream_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot.event_eventsub_notification_stream_start" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.EventSubBot.event_eventsub_notification_stream_end">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_eventsub_notification_stream_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamOfflineData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#EventSubBot.event_eventsub_notification_stream_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.EventSubBot.event_eventsub_notification_stream_end" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">event_raid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PartialUser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ChatRaid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.event_raid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.event_raid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.server.DiscordConn">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DiscordConn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">command_prefix:</span> <span class="pre">PrefixType[BotT],</span> <span class="pre">*,</span> <span class="pre">help_command:</span> <span class="pre">Optional[HelpCommand]</span> <span class="pre">=</span> <span class="pre">&lt;default-help-command&gt;,</span> <span class="pre">tree_cls:</span> <span class="pre">Type[app_commands.CommandTree[Any]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'discord.app_commands.tree.CommandTree'&gt;,</span> <span class="pre">description:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">intents:</span> <span class="pre">discord.Intents,</span> <span class="pre">**options:</span> <span class="pre">Any</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#DiscordConn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.DiscordConn" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DiscordConn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">command_prefix:</span> <span class="pre">PrefixType[BotT],</span> <span class="pre">*,</span> <span class="pre">help_command:</span> <span class="pre">Optional[HelpCommand]</span> <span class="pre">=</span> <span class="pre">&lt;default-help-command&gt;,</span> <span class="pre">tree_cls:</span> <span class="pre">Type[app_commands.CommandTree[Any]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'discord.app_commands.tree.CommandTree'&gt;,</span> <span class="pre">description:</span> <span class="pre">Optional[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">allowed_contexts:</span> <span class="pre">app_commands.AppCommandContext</span> <span class="pre">=</span> <span class="pre">...,</span> <span class="pre">allowed_installs:</span> <span class="pre">app_commands.AppInstallationType</span> <span class="pre">=</span> <span class="pre">...,</span> <span class="pre">intents:</span> <span class="pre">discord.Intents,</span> <span class="pre">**options:</span> <span class="pre">Unpack[_BotOptions]</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#DiscordConn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.DiscordConn" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.server.DiscordConn.on_message">
@@ -1149,11 +1067,6 @@ mostly fine otherwise.</p>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="src.server.get_oauth_token">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_oauth_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#get_oauth_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.get_oauth_token" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="src.server.Twitch_startup">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Twitch_startup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Twitch_startup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Twitch_startup" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1245,24 +1158,12 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.slice_command"><code class="docutils literal notranslate"><span class="pre">slice_command()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.setup_hook"><code class="docutils literal notranslate"><span class="pre">TwitchConn.setup_hook()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.refresh_spotify_token"><code class="docutils literal notranslate"><span class="pre">TwitchConn.refresh_spotify_token()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.spotify_call"><code class="docutils literal notranslate"><span class="pre">TwitchConn.spotify_call()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.eventsub_setup"><code class="docutils literal notranslate"><span class="pre">TwitchConn.eventsub_setup()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_ready"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ready()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_raw_usernotice"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raw_usernotice()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_subscription"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_subscription()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_ritual"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ritual()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_new_chatter"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_new_chatter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_chat_notification"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_chat_notification()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_raid"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raid()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.AppClient"><code class="docutils literal notranslate"><span class="pre">AppClient</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.AppClient.event_token_expired"><code class="docutils literal notranslate"><span class="pre">AppClient.event_token_expired()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot"><code class="docutils literal notranslate"><span class="pre">EventSubBot</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot.event_eventsub_notification_stream_start"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_start()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.EventSubBot.event_eventsub_notification_stream_end"><code class="docutils literal notranslate"><span class="pre">EventSubBot.event_eventsub_notification_stream_end()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.DiscordConn"><code class="docutils literal notranslate"><span class="pre">DiscordConn</span></code></a><ul class="nav section-nav flex-column">
@@ -1369,7 +1270,6 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.automatic_client_report"><code class="docutils literal notranslate"><span class="pre">automatic_client_report()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.get_oauth_token"><code class="docutils literal notranslate"><span class="pre">get_oauth_token()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Twitch_startup"><code class="docutils literal notranslate"><span class="pre">Twitch_startup()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Twitch_cleanup"><code class="docutils literal notranslate"><span class="pre">Twitch_cleanup()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Discord_startup"><code class="docutils literal notranslate"><span class="pre">Discord_startup()</span></code></a></li>

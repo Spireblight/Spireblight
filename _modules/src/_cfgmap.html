@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>src._cfgmap &#8212; Spireblight 0.7 documentation</title>
+    <title>src._cfgmap &#8212; Spireblight 0.8 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=48f8e935"></script>
+    <script src="../../_static/documentation_options.js?v=a0e24af7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/_cfgmap';</script>
@@ -108,7 +108,7 @@
   
   
   
-    <p class="title logo__title">Spireblight 0.7 documentation</p>
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
   
 </a></div>
     
@@ -439,19 +439,25 @@
 <div class="viewcode-block" id="Twitch">
 <a class="viewcode-back" href="../../config.html#src._cfgmap.Twitch">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Twitch</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">editors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">extended</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">timers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">editors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">bot_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">timers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the Twitch aspect of the configuration.</span>
 
 <span class="sd">        :param channel: The channel name to connect to.</span>
 <span class="sd">        :type channel: str</span>
-<span class="sd">        :param oauth_token: The OAuth token of the account to use.</span>
-<span class="sd">        :type oauth_token: str</span>
-<span class="sd">        :param enabled: Whether to use the Twitch connection, defaults to True.</span>
-<span class="sd">        :type enabled: bool, optional</span>
+<span class="sd">        :param enabled: Whether to use the Twitch connection.</span>
+<span class="sd">        :type enabled: bool</span>
 <span class="sd">        :param editors: A list of Twitch usernames who are editors for the channel.</span>
-<span class="sd">        :type editors: list[int]</span>
-<span class="sd">        :param extended: A mapping that will be used for Extended OAuth.</span>
-<span class="sd">        :type extended: dict</span>
+<span class="sd">        :type editors: list[str]</span>
+<span class="sd">        :param bot_id: The user ID of the bot.</span>
+<span class="sd">        :type bot_id: int</span>
+<span class="sd">        :param owner_id: The user ID of the owner of the bot.</span>
+<span class="sd">        :type owner_id: int</span>
+<span class="sd">        :param client_id: The publicly-available Client ID.</span>
+<span class="sd">        :type client_id: str</span>
+<span class="sd">        :param client_secret: The Twitch app Client Secret.</span>
+<span class="sd">        :type client_secret: str</span>
+<span class="sd">        :param scopes: a list of the scopes requested, defaults to None.</span>
+<span class="sd">        :type scopes: list[str] | None, optional</span>
 <span class="sd">        :param timers: A mapping that will be used for timer interval.</span>
 <span class="sd">        :type timers: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -459,48 +465,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enabled</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span> <span class="o">=</span> <span class="n">oauth_token</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="n">editors</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">extended</span> <span class="o">=</span> <span class="n">_TwitchExtendedOAuth</span><span class="p">(</span><span class="o">**</span><span class="n">extended</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot_id</span> <span class="o">=</span> <span class="n">bot_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">owner_id</span> <span class="o">=</span> <span class="n">owner_id</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span> <span class="o">=</span> <span class="n">scopes</span> <span class="ow">or</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">timers</span> <span class="o">=</span> <span class="n">_TimerIntervals</span><span class="p">(</span><span class="o">**</span><span class="n">timers</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oauth_token</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span>
 
     <span class="nd">@enabled</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">value</span></div>
-
-
-<div class="viewcode-block" id="_TwitchExtendedOAuth">
-<a class="viewcode-back" href="../../config.html#src._cfgmap._TwitchExtendedOAuth">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">_TwitchExtendedOAuth</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an Extended OAuth mapping.</span>
-
-<span class="sd">        If this is used, we will be using the full Authorization Grant Flow.</span>
-<span class="sd">        This needs the streamer to accept the connection, and then the</span>
-<span class="sd">        client ID and secret stored here will no longer be needed.</span>
-
-<span class="sd">        :param client_id: The publicly-available Client ID.</span>
-<span class="sd">        :type client_id: str</span>
-<span class="sd">        :param client_secret: The Twitch app Client Secret.</span>
-<span class="sd">        :type client_secret: str</span>
-<span class="sd">        :param scopes: a list of the scopes requested, defaults to None.</span>
-<span class="sd">        :type scopes: list[str] | None, optional</span>
-<span class="sd">        :param enabled: Whether we use Extended OAuth, defaults to False.</span>
-<span class="sd">        :type enabled: bool, optional</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span> <span class="o">=</span> <span class="n">scopes</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enabled</span></div>
 
 
 <div class="viewcode-block" id="_TimerIntervals">
