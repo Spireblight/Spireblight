@@ -442,7 +442,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.server.TwitchConn.load_tokens">
 <span class="sig-name descname"><span class="pre">load_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.load_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.load_tokens" title="Link to this definition">#</a></dt>
-<dd><p><a href="#id1"><span class="problematic" id="id2">|coro|</span></a></p>
+<dd><p><a href="#id2"><span class="problematic" id="id3">|coro|</span></a></p>
 <p>Method used to load tokens when the <code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code> starts.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -475,6 +475,31 @@ as this has far less chance of being corrupted, damaged or lost.</p>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_token</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;refresh&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.server.TwitchConn.save_tokens">
+<span class="sig-name descname"><span class="pre">save_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.save_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.save_tokens" title="Link to this definition">#</a></dt>
+<dd><p><a href="#id4"><span class="problematic" id="id5">|coro|</span></a></p>
+<p>Method which saves all the added OAuth tokens currently managed by this Client.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is called by the client when it is gracefully closed and the <code class="docutils literal notranslate"><span class="pre">save_tokens</span></code> keyword-argument
+is <code class="docutils literal notranslate"><span class="pre">True</span></code> in either, <code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code>, <a class="reference internal" href="#src.server.Timer.start" title="src.server.Timer.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> (Default).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default this method saves to a JSON file named <cite>“.tio.tokens.json”</cite>.</p>
+</div>
+<p>You can override this method to implement your own custom logic, such as saving tokens to a database, however
+it is preferred to use <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_token()</span></code> to ensure the tokens are handled as they are added.</p>
+<section id="id1">
+<h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<dl class="simple">
+<dt>path: str | None</dt><dd><p>The path of the file to save to. Defaults to <cite>.tio.tokens.json</cite>.</p>
+</dd>
+</dl>
 </section>
 </dd></dl>
 
@@ -1198,6 +1223,7 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.load_tokens"><code class="docutils literal notranslate"><span class="pre">TwitchConn.load_tokens()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.save_tokens"><code class="docutils literal notranslate"><span class="pre">TwitchConn.save_tokens()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.setup_hook"><code class="docutils literal notranslate"><span class="pre">TwitchConn.setup_hook()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.refresh_spotify_token"><code class="docutils literal notranslate"><span class="pre">TwitchConn.refresh_spotify_token()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.spotify_call"><code class="docutils literal notranslate"><span class="pre">TwitchConn.spotify_call()</span></code></a></li>
