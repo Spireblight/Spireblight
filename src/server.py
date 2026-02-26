@@ -675,7 +675,7 @@ class Timer:
             logger.error(
                 f"Command {cmd} of timer {self.name} needs non-constant formatting. Sending raw line."
             )
-        await chan.send_message(msg)
+        await chan.send_message(msg, sender=config.twitch.bot_id)
         self.commands.append(cmd)
         _update_timers()  # keep track of command ordering
 
