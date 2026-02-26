@@ -97,8 +97,6 @@ async def main():
                     match text:
                         case "DISABLED":
                             print("\nTwitch connectivity is disabled.")
-                        case "NOT_EXTENDED":
-                            print("\nExtended OAuth functionality is not enabled. Some features will be unavailable.")
                         case "NO_CREDENTIALS":
                             print("\nExtended OAuth is not properly set-up. Contact the server owner.")
                         case "WORKING":

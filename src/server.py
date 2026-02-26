@@ -1,4 +1,4 @@
-# (c) Anilyka Barry, 2022-2024
+# (c) Anilyka Barry, 2022-Present
 
 from __future__ import annotations
 
@@ -24,15 +24,17 @@ import os
 from twitchio.ext.commands import (
     Cooldown as TCooldown,
     Bucket as TBucket,
-    Bot as TBot,
+    AutoBot as TBot,
     Context as TContext,
 )
 from twitchio.ext.routines import routine, Routine
-from twitchio.ext.eventsub import EventSubClient, StreamOnlineData, StreamOfflineData
-from twitchio.channel import Channel
-from twitchio.chatter import Chatter
-from twitchio.errors import HTTPException
+# from twitchio.ext.eventsub import EventSubClient
+#from twitchio.channel import Channel
+from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, ChatNotification, ChatRaid
+from twitchio.exceptions import HTTPException
 from twitchio.models import Stream, Prediction, Clip as TClip
+
+from twitchio import eventsub as WSSub
 
 import discord
 from discord.ext.commands import (
@@ -52,6 +54,7 @@ from src.cache.run_stats import (
     get_run_stats_by_date_string,
     update_range,
 )
+
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
@@ -71,6 +74,7 @@ from src.utils import (
     get_req_data,
     post_prediction,
 )
+
 from src.disc import DiscordCommand
 from src.save import get_savefile, Savefile
 from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
@@ -157,6 +161,11 @@ _timers: dict[str, Timer] = {}
 
 _prediction_terms = {}
 
+_eventsub_subs: list[WSSub.SubscriptionPayload] = [
+    WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)),
+    WSSub.ChannelRaidSubscription(to_broadcaster_user_id=str(config.twitch.owner_id)),
+    WSSub.ChatNotificationSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id))
+]
 
 def _get_sanitizer(ctx: ContextType, name: str, args: list[str], mapping: dict):
     async def _sanitize(require_args: bool = True, in_mapping: bool = True) -> bool:
@@ -362,7 +371,7 @@ def command(
 
     def inner(func: Callable, wrapper_func=None):
         wrapped = wrapper(func, force_argcount, wrapper_func, name)
-        wrapped.__cooldowns__ = [TCooldown(burst, rate, TBucket.default)]
+        wrapped.__cooldowns__ = [TCooldown(rate=burst, per=rate)]
         wrapped.__doc__ = func.__doc__
         # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
         if twitch:
@@ -438,9 +447,8 @@ def mt_command(name: str, *aliases: str, **kwargs):
 class TwitchConn(TBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.esclient: EventSubClient = None
+        # self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
-        self.app: AppClient = None
         self._session: ClientSession | None = None
         self._spotify_token: str = None
         self._expires_at: int | float = 0
@@ -450,6 +458,12 @@ class TwitchConn(TBot):
                 self._spotify_refresh_token = f.read().strip()
         except OSError:
             pass
+
+    async def setup_hook(self):
+        """Set-up the bot's hooks."""
+        for cmd in _to_add_twitch:
+            self.add_command(cmd)
+        load(asyncio.get_event_loop())
 
     async def refresh_spotify_token(self):
         if not config.spotify.enabled:
@@ -530,89 +544,23 @@ class TwitchConn(TBot):
             except ContentTypeError:
                 return {}
 
-    async def eventsub_setup(self):
-        self.loop.create_task(self.esclient.listen(port=4000))
-        channel = await self.fetch_users([config.twitch.channel])
-
-        try:
-            await self.esclient.subscribe_channel_stream_start(broadcaster=channel[0])
-            await self.esclient.subscribe_channel_stream_end(broadcaster=channel[0])
-        except HTTPException:
-            pass
-
     async def event_ready(self):
         self.live_channels[config.twitch.channel] = live = bool(
             await self.fetch_streams(user_logins=[config.twitch.channel])
         )
 
-    async def event_raw_usernotice(self, channel: Channel, tags: dict):
-        user = Chatter(
-            tags=tags,
-            name=tags["login"],
-            channel=channel,
-            bot=self,
-            websocket=self._connection,
-        )
-        match tags["msg-id"]:
-            case "sub" | "resub":
-                total = 0
-                consecutive = None
-                subtype = ""
-                try:
-                    total = int(tags["msg-param-cumulative-months"])
-                    if int(tags["msg-param-should-share-streak"]):
-                        consecutive = int(tags["msg-param-streak-months"])
-                    subtype: str = tags["msg-param-sub-plan"]
-                    if subtype.isdigit():
-                        subtype = f"Tier {subtype[0]}"
-                except (KeyError, ValueError):
-                    pass
-                self.run_event(
-                    "subscription", user, channel, total, consecutive, subtype
-                )
-            case (
-                "subgift"
-                | "anonsubgift"
-                | "submysterygift"
-                | "giftpaidupgrade"
-                | "rewardgift"
-                | "anongiftpaidupgrade"
-            ):
-                self.run_event("gift_sub", user, channel, tags)
+    async def event_chat_notification(self, payload: ChatNotification):
+        match payload.notice_type:
             case "raid":
-                self.run_event(
-                    "raid", user, channel, int(tags["msg-param-viewerCount"])
-                )
-            case "unraid":
-                self.run_event("unraid", user, channel, tags)
-            case "ritual":
-                self.run_event("ritual", user, channel, tags)
-            case "bitsbadgetier":
-                self.run_event("bits_badge", user, channel, tags)
+                await self.event_raid(payload.broadcaster, payload.raid)
 
-    async def event_subscription(
-        self,
-        user: Chatter,
-        channel: Channel,
-        total: int,
-        consecutive: int | None,
-        subtype: str,
-    ):
-        pass
-
-    async def event_ritual(self, user: Chatter, channel: Channel, tags: dict):
-        if tags["msg-param-ritual-name"] == "new_chatter":
-            self.run_event("new_chatter", user, channel, tags["message"])
-
-    async def event_new_chatter(self, user: Chatter, channel: Channel, message: str):
-        if "youtube" in message.lower() or "yt" in message.lower():
-            pass  # await channel.send(f"Hello {user.display_name}! Glad to hear that you're enjoying the YouTube content, and welcome along baalorLove")
-
-    async def event_raid(self, user: Chatter, channel: Channel, viewer_count: int):
+    async def event_raid(self, channel: PartialUser, payload: ChatRaid):
+        viewer_count = payload.viewer_count
+        user = payload.user
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)
-        await channel.send(
+        await channel.send_announcement(
             f"Welcome along {user.display_name} with your {viewer_count} friends! "
             f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
             f"last I checked, they were playing some {chan.game_name}!"
@@ -632,40 +580,6 @@ class TwitchConn(TBot):
 
                 return invoke
         raise AttributeError(name)
-
-
-class AppClient(TBot):
-    async def event_token_expired(self):
-        # shamelessly stolen from TwitchIO with one change
-        reft = getfile("twitch-refresh", "r").read()
-        url = (
-            "https://id.twitch.tv/oauth2/token?grant_type=refresh_token&"
-            f"refresh_token={reft}&client_id={self._http.client_id}&client_secret={self._http.client_secret}"
-        )
-        if self._session is None:
-            self._session = ClientSession()
-        async with self._session.post(url) as resp:
-            if resp.status > 300 or resp.status < 200:
-                raise RuntimeError("Unable to generate a token: " + await resp.text())
-            data = await resp.json()
-            token = data["access_token"]
-            refresh_token = data.get("refresh_token", None)
-            logger.info(
-                "Invalid or no token found, generated new token: %s", self.token
-            )
-        with getfile("twitch-oauth", "w") as f:
-            f.write(token)
-        with getfile("twitch-refresh", "w") as f:
-            f.write(refresh_token)
-        return token
-
-
-class EventSubBot(TBot):
-    async def event_eventsub_notification_stream_start(self, evt: StreamOnlineData):
-        TConn.live_channels[evt.broadcaster.name] = True
-
-    async def event_eventsub_notification_stream_end(self, evt: StreamOfflineData):
-        TConn.live_channels[evt.broadcaster.name] = False
 
 
 class DiscordConn(DBot):
@@ -1804,7 +1718,7 @@ async def start_prediction(
     ctx: TContext, title: str, outcomes: list[str], duration: int
 ):
     user = await ctx.channel.user()
-    value = await post_prediction(TConn.app, user.id, title, outcomes, duration)
+    value = await post_prediction(TConn, user.id, title, outcomes, duration)
     _prediction["pred"] = value
     _prediction["running"] = True
 
@@ -1817,7 +1731,7 @@ async def resolve_prediction(index: int):
     _prediction["pred"] = None
     # todo: there's some bug here, idk what, but it's fine. probably. it resolves, anyway
     await pred.user.end_prediction(
-        TConn.app._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id
+        TConn._http.token, pred.prediction_id, "RESOLVED", outcome.outcome_id
     )
 
 
@@ -1836,6 +1750,7 @@ async def auto_resolve_pred(run: RunParser):
 @command("prediction", "pred", discord=False, flag="m")
 async def handle_prediction(ctx: TContext, type: str = "info", *args: str):
     # TODO: After poll feature is added, if it was to pick a character to play, immediately start a prediction
+    return await ctx.reply("Predictions are currently disabled.")
     match type:
         case "start" | "create":
             if _prediction["running"]:
@@ -3159,12 +3074,10 @@ async def check_token_validity(req: Request):
     await get_req_data(req)  # check if the key is OK
     if not config.twitch.enabled:
         return Response(text="DISABLED")
-    if not config.twitch.extended.enabled:
-        return Response(text="NOT_EXTENDED")
-    if not (config.twitch.extended.client_id and config.twitch.extended.client_secret):
+    if not (config.twitch.client_id and config.twitch.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if TConn.app._http.token is not None:
+    if str(config.twitch.owner_id) in TConn.tokens:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -3175,10 +3088,10 @@ async def check_token_validity(req: Request):
     _oauth_state = secrets.token_urlsafe(16)
 
     params = {
-        "client_id": config.twitch.extended.client_id,
+        "client_id": config.twitch.client_id,
         "redirect_uri": f"{config.server.url}/twitch/receive-token",
         "response_type": "code",
-        "scope": " ".join(config.twitch.extended.scopes),
+        "scope": " ".join(config.twitch.scopes),
         "state": _oauth_state,
     }
 
@@ -3202,8 +3115,8 @@ async def get_new_token(req: Request):
     client = ClientSession()
 
     form = {
-        "client_id": config.twitch.extended.client_id,
-        "client_secret": config.twitch.extended.client_secret,
+        "client_id": config.twitch.client_id,
+        "client_secret": config.twitch.client_secret,
         "code": values["code"],
         "grant_type": "authorization_code",
         "redirect_uri": f"{config.server.url}/twitch/receive-token",
@@ -3216,66 +3129,34 @@ async def get_new_token(req: Request):
     async with client.post(f"https://id.twitch.tv/oauth2/token?{enc}") as resp:
         if resp.ok:
             data = await resp.json()
-            with getfile("twitch-oauth", "w") as f:
-                f.write(data["access_token"])
-            with getfile("twitch-refresh", "w") as f:
-                f.write(data["refresh_token"])
+            await TConn.add_token(data["access_token"], data["refresh_token"])
 
     await client.close()
 
-    TConn.app._http.token = data["access_token"]
     return Response(text="Handshake successful! You may now close this tab.")
-
-
-async def get_oauth_token():
-    try:
-        return getfile("twitch-oauth", "r").read().strip()
-    except FileNotFoundError:
-        getfile("twitch-oauth", "w")
-        getfile("twitch-refresh", "w")
-
 
 async def Twitch_startup():
     global TConn
 
     TConn = TwitchConn(
-        token=config.twitch.oauth_token,
+        #token=config.twitch.oauth_token,
         prefix=config.bot.prefix,
-        initial_channels=[config.twitch.channel],
+        #initial_channels=[config.twitch.channel],
         case_insensitive=True,
+        client_id=config.twitch.client_id,
+        client_secret=config.twitch.client_secret,
+        bot_id=config.twitch.bot_id,
+        owner_id=config.twitch.owner_id,
+        subscriptions=_eventsub_subs,
+        force_subscribe=True,
     )
-    TConn._http.client_id = config.twitch.extended.client_id
-    TConn._http.client_secret = config.twitch.extended.client_secret
-    for cmd in _to_add_twitch:
-        TConn.add_command(cmd)
-    load(asyncio.get_event_loop())
 
-    if config.twitch.extended.enabled:
-        app = AppClient.from_client_credentials(
-            config.twitch.extended.client_id,
-            config.twitch.extended.client_secret,
-        )
-        token = await get_oauth_token()
-        if token:
-            app._http.token = token
-        TConn.app = app
-
-    esbot = EventSubBot.from_client_credentials(
-        config.server.websocket_client.id,
-        config.server.websocket_client.secret,
-        prefix=config.bot.prefix,
-    )
-    TConn.esclient = EventSubClient(
-        esbot, config.server.webhook.secret, f"{config.server.url}/eventsub"
-    )
-    # await TConn.eventsub_setup()
-
-    await TConn.connect()
-
+    await TConn.start()
 
 async def Twitch_cleanup():
     if TConn._session is not None:
         await TConn._session.close()
+    await TConn.save_tokens()
     await TConn.close()
 
 

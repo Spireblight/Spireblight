@@ -11,11 +11,6 @@ twitch:
   # If the Twitch part of the bot is enabled or not.
   enabled: true
 
-  # Token to connect to the Twitch IRC. You can get one at
-  # https://twitchapps.com/tmi/. You probably don't want to use your own
-  # personal account, but rather a testing or dev account.
-  oauth_token: ""
-
   # Channel that the bot connects to. Unless you are deploying, this should
   # _never_ be the live channel (e.g. "baalorlord"). Doing so will make the
   # account connected to the OAuth token above to respond to bot commands
@@ -27,20 +22,22 @@ twitch:
   # The Twitch usernames of the channel editors
   editors: []
 
-  # This indicates whether we should use extended or classic access.
-  # Classic access needs a simple OAuth token, and no additional fluff.
+  # The user IDs (as integers) of the bot and the channel to stream in
+  bot_id: 0
+  owner_id: 0
+
+  # As of version 0.8, extended Twitch OAuth is mandatory.
   # Extended uses the full Authorization Grant Flow mechanism
   # This mode requires connecting the client to the streamer's Twitch account
-  # To set it up, set this to true, start the server, and then start the client
+  # To set it up, set this, start the server, and then start the client
   # Once it has been authorized, the bot will start with proper credentials
   # Using Extended mode allows for more features, defined in scopes
   # To update scopes, you need to force a re-auth by deleting the token
-  extended:
-    enabled: false
-    # This is the publicly-available Client ID
-    client_id: ""
-    client_secret: ""
-    scopes: []
+  # This is the publicly-available Client ID
+  client_id: ""
+  client_secret: ""
+
+  scopes: []
 
   timers:
     # The default interval for new timers

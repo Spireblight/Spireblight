@@ -83,19 +83,25 @@ class Config(_ConfigMapping):
             raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
 
 class Twitch(_ConfigMapping):
-    def __init__(self, channel: str, oauth_token: str, *, enabled: bool = True, editors: list[str], extended: dict, timers: dict):
+    def __init__(self, channel: str, enabled: bool, editors: list[str], bot_id: int, owner_id: int, client_id: str, client_secret: str, scopes: list[str], timers: dict):
         """Handle the Twitch aspect of the configuration.
 
         :param channel: The channel name to connect to.
         :type channel: str
-        :param oauth_token: The OAuth token of the account to use.
-        :type oauth_token: str
-        :param enabled: Whether to use the Twitch connection, defaults to True.
-        :type enabled: bool, optional
+        :param enabled: Whether to use the Twitch connection.
+        :type enabled: bool
         :param editors: A list of Twitch usernames who are editors for the channel.
-        :type editors: list[int]
-        :param extended: A mapping that will be used for Extended OAuth.
-        :type extended: dict
+        :type editors: list[str]
+        :param bot_id: The user ID of the bot.
+        :type bot_id: int
+        :param owner_id: The user ID of the owner of the bot.
+        :type owner_id: int
+        :param client_id: The publicly-available Client ID.
+        :type client_id: str
+        :param client_secret: The Twitch app Client Secret.
+        :type client_secret: str
+        :param scopes: a list of the scopes requested, defaults to None.
+        :type scopes: list[str] | None, optional
         :param timers: A mapping that will be used for timer interval.
         :type timers: dict
         """
@@ -103,45 +109,27 @@ class Twitch(_ConfigMapping):
         self._enabled = enabled
 
         self.channel = channel
-        self.oauth_token = oauth_token
         self.editors = editors
 
-        self.extended = _TwitchExtendedOAuth(**extended)
+        self.bot_id = bot_id
+        self.owner_id = owner_id
+
+        self.client_id = client_id
+        self.client_secret = client_secret
+
+        self.scopes = scopes or []
 
         self.timers = _TimerIntervals(**timers)
 
     @property
     def enabled(self):
-        if not (self.oauth_token and self.channel):
+        if not (self.channel):
             return False
         return self._enabled
 
     @enabled.setter
     def enabled(self, value: bool):
         self._enabled = value
-
-class _TwitchExtendedOAuth(_ConfigMapping):
-    def __init__(self, client_id: str, client_secret: str, scopes: list[str] | None = None, *, enabled: bool = False):
-        """Create an Extended OAuth mapping.
-
-        If this is used, we will be using the full Authorization Grant Flow.
-        This needs the streamer to accept the connection, and then the
-        client ID and secret stored here will no longer be needed.
-
-        :param client_id: The publicly-available Client ID.
-        :type client_id: str
-        :param client_secret: The Twitch app Client Secret.
-        :type client_secret: str
-        :param scopes: a list of the scopes requested, defaults to None.
-        :type scopes: list[str] | None, optional
-        :param enabled: Whether we use Extended OAuth, defaults to False.
-        :type enabled: bool, optional
-        """
-
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.scopes = scopes or []
-        self.enabled = enabled
 
 class _TimerIntervals(_ConfigMapping):
     def __init__(self, default_interval: int, stagger_interval: int):
