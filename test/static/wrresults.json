@@ -1,0 +1,31 @@
+{
+    "v1": [
+        {
+            "ironclad": {
+                "streak": 32,
+                "username": "XecnaR",
+                "ongoing": true
+            },
+            "silent": {
+                "streak": 27,
+                "username": "XecnaR",
+                "ongoing": false
+            },
+            "defect": {
+                "streak": 29,
+                "username": "XecnaR",
+                "ongoing": false
+            },
+            "watcher": {
+                "streak": 71,
+                "username": "OnePunMan_",
+                "ongoing": false
+            },
+            "rotating": {
+                "streak": 30,
+                "username": "NaveGreed",
+                "ongoing": false
+            }
+        }
+    ]
+}
