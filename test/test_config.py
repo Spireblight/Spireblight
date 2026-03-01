@@ -73,9 +73,9 @@ class TestConfigFile(TestCase):
         self.assertEqual(self.config.bot.prefix, "%")
 
     def test_nested(self):
-        self.assertEqual(self.config.twitch.extended.client_id, "")
-        self.config.update({"twitch": {"extended": {"client_id": "eggs"}}})
-        self.assertEqual(self.config.twitch.extended.client_id, "eggs")
+        self.assertEqual(self.config.twitch.client_id, "") # this is no longer nested
+        self.config.update({"twitch": {"client_id": "eggs"}})
+        self.assertEqual(self.config.twitch.client_id, "eggs")
 
     def test_dict_type(self):
         # this should just succeed

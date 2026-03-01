@@ -1,5 +1,6 @@
 twitch:
   enabled: true
+  channel: ""
 
 discord:
   enabled: true
