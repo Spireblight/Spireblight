@@ -2789,6 +2789,52 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     await ctx.reply(msg.format(run_stats, run_stats.pb))
 
 
+#####################################
+#   World Records Data Structure    #
+#####################################
+#   --===--   Version 1   --===--   #
+# * * * * * * * * * * * * * * * * * #
+# {                                 #
+#     "Ironclad": {                 #
+#         "streak": 32,             #
+#         "username":"XecnaR",      #
+#         "ongoing": true           #
+#     },                            #
+#     "Silent": {                   #
+#         ...                       #
+#     },                            #
+#     ...                           #
+# }                                 #
+#####################################
+#   --===--   Version 2   --===--   #
+# * * * * * * * * * * * * * * * * * #
+# {                                 #
+#     "api_version": 2,             #
+#     "Slay the Spire": {           #
+#         "Ironclad": [             #
+#             {                     #
+#                 "streak": 22,     #
+#                 "ongoing": true,  #
+#                 "username": "A"   #
+#             },                    #
+#             {                     #
+#                 "streak": 22,     #
+#                 "ongoing": false, #
+#                 "username": "B"   #
+#             }                     #
+#         ],                        #
+#         "Silent": [               #
+#             ...                   #
+#         ],                        #
+#         ...                       #
+#     },                            #
+#     "Slay the Spire 2": {         #
+#         ...                       #
+#     }                             #
+# }                                 #
+#####################################
+
+
 @command("wr", "worldrecords")
 async def get_wrs(ctx: ContextType, *, _cache={"data": None, "text": None}):
     sent = _cache["text"]
