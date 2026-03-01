@@ -2790,7 +2790,20 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
 
 
 @command("wr", "worldrecords")
-async def get_wrs(ctx: ContextType):
+async def get_wrs(ctx: ContextType, *, _cache={"data": None, "text": None}):
+    sent = _cache["text"]
+    if sent is not None:
+        # send immediately the last message we sent
+        # this is because an API call takes a few seconds
+        # world records do not change often, after all
+        # and even if it did, we're checking for the updated data AFTER
+        # this *does* mean that if someone sent a command immediately after
+        # then it will wait a few seconds to respond
+        # this is a little annoying, but at most only as annoying as needing to wait for this
+        # and it's less of a deal since it'll happen only rarely
+        # Faely, 2026-03-01 (technically; it's just past midnight)
+        await ctx.reply(sent)
+
     url = "https://script.google.com/macros/s/AKfycbwwVnFP2FhAuTi1a4xh67uv_GYI63ggnX7e6wezlQmWlpr8z4B0IXVKuT_ta-seYnrt/exec?format=json"
     if TConn is not None:
         if TConn._session is None:
@@ -2815,8 +2828,17 @@ async def get_wrs(ctx: ContextType):
                     line += " (ongoing)"
                 msg.append(line)
 
-            await ctx.reply(f"As far as we know, these are the current A20H world records: {' | '.join(msg)} -- For Baalor's own records, see {config.bot.prefix}pb")
+            line = ("As far as we know, these are the current A20H world records: " +
+                    " | ".join(msg) +
+                    f"-- For Baalor's own records, see {config.bot.prefix}pb")
 
+    if not sent:
+        await ctx.reply(line)
+    elif sent != line:
+        await ctx.reply("Wait, no, THIS is correct: " + line)
+
+    _cache["data"] = data
+    _cache["text"] = line
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
