@@ -2795,12 +2795,12 @@ async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
 #   --===--   Version 1   --===--   #
 # * * * * * * * * * * * * * * * * * #
 # {                                 #
-#     "Ironclad": {                 #
+#     "ironclad": {                 #
 #         "streak": 32,             #
 #         "username":"XecnaR",      #
 #         "ongoing": true           #
 #     },                            #
-#     "Silent": {                   #
+#     "silent": {                   #
 #         ...                       #
 #     },                            #
 #     ...                           #
@@ -2860,31 +2860,60 @@ async def get_wrs(ctx: ContextType, *, _cache={"data": None, "text": None}):
 
     async with client.get(url) as resp:
         if not resp.ok:
-            return await ctx.reply("Sorry, couldn't access the data. Try again later.")
+            if not sent: # if we already sent the cached version, no one needs to know we can't access it :)
+                await ctx.reply("Sorry, couldn't access the data. Try again later.")
+            return
         data: dict = await resp.json()
 
     msg = []
 
     match data.get("api_version", 1):
-        case 1:
-            for char in _words:
+        case 1: # the original hacked-together script, doesn't even have an api_version key
+            for char in _words: # notably, v1 has lowercase chars
                 c = data[char.lower()]
                 line = f"{char}: {c['streak']} by {c['username']}"
                 if c['ongoing']:
                     line += " (ongoing)"
                 msg.append(line)
 
-            line = ("As far as we know, these are the current A20H world records: " +
+            final = ("As far as we know, these are the current A20H world records: " +
                     " | ".join(msg) +
                     f"-- For Baalor's own records, see {config.bot.prefix}pb")
 
-    if not sent:
-        await ctx.reply(line)
-    elif sent != line:
-        await ctx.reply("Wait, no, THIS is correct: " + line)
+        case 2:
+            for game in ("Slay the Spire", "Slay the Spire 2"):
+                lst = []
+                for char, streaks in data[game].items():
+                    icr = [] # individual character records
+                    for c in streaks:
+                        line = f"{c['streak']} by {c['username']}"
+                        if c['ongoing']:
+                            line += " (ongoing)"
+                        icr.append(line)
+                    if icr:
+                        lst.append(f"[{char}]: {' & '.join(icr)}")
+
+                if lst:
+                    msg.append(f"{game}: {' '.join(lst)}")
+
+            # TODO: have a better phrase for "max difficulty" for both games
+            final = ("The current Ascension 20 Heart world records are: " +
+                     " | ".join(msg) +
+                     f"-- For Baalor's own records, see {config.bot.prefix}pb")
+
+    if not msg:
+        await ctx.reply("I'm sorry, I wasn't able to get that information.")
+        final = None
+    elif not sent:
+        await ctx.reply(final)
+    elif sent != final:
+        # TODO: use stored data to correctly say e.g. "Actually, Defect is 31 now"
+        # for now, just re-sending the full line is good enough
+        # Faely, 2026-03-01 (again, just barely)
+        await ctx.reply("Wait, no, THIS is correct: " + final)
 
     _cache["data"] = data
-    _cache["text"] = line
+    _cache["text"] = final
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
