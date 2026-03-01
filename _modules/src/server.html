@@ -3443,12 +3443,12 @@
 <span class="c1">#   --===--   Version 1   --===--   #</span>
 <span class="c1"># * * * * * * * * * * * * * * * * * #</span>
 <span class="c1"># {                                 #</span>
-<span class="c1">#     &quot;Ironclad&quot;: {                 #</span>
+<span class="c1">#     &quot;ironclad&quot;: {                 #</span>
 <span class="c1">#         &quot;streak&quot;: 32,             #</span>
 <span class="c1">#         &quot;username&quot;:&quot;XecnaR&quot;,      #</span>
 <span class="c1">#         &quot;ongoing&quot;: true           #</span>
 <span class="c1">#     },                            #</span>
-<span class="c1">#     &quot;Silent&quot;: {                   #</span>
+<span class="c1">#     &quot;silent&quot;: {                   #</span>
 <span class="c1">#         ...                       #</span>
 <span class="c1">#     },                            #</span>
 <span class="c1">#     ...                           #</span>
@@ -3510,31 +3510,60 @@
 
     <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Sorry, couldn&#39;t access the data. Try again later.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sent</span><span class="p">:</span> <span class="c1"># if we already sent the cached version, no one needs to know we can&#39;t access it :)</span>
+                <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Sorry, couldn&#39;t access the data. Try again later.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
         <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="n">msg</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">match</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;api_version&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">_words</span><span class="p">:</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># the original hacked-together script, doesn&#39;t even have an api_version key</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">_words</span><span class="p">:</span> <span class="c1"># notably, v1 has lowercase chars</span>
                 <span class="n">c</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;streak&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ongoing&#39;</span><span class="p">]:</span>
                     <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; (ongoing)&quot;</span>
                 <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-            <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;As far as we know, these are the current A20H world records: &quot;</span> <span class="o">+</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;As far as we know, these are the current A20H world records: &quot;</span> <span class="o">+</span>
                     <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">+</span>
                     <span class="sa">f</span><span class="s2">&quot;-- For Baalor&#39;s own records, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">pb&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">sent</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">sent</span> <span class="o">!=</span> <span class="n">line</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Wait, no, THIS is correct: &quot;</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">game</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;Slay the Spire&quot;</span><span class="p">,</span> <span class="s2">&quot;Slay the Spire 2&quot;</span><span class="p">):</span>
+                <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">streaks</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">game</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">icr</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># individual character records</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">streaks</span><span class="p">:</span>
+                        <span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;streak&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;ongoing&#39;</span><span class="p">]:</span>
+                            <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; (ongoing)&quot;</span>
+                        <span class="n">icr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">icr</span><span class="p">:</span>
+                        <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; &amp; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">icr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">lst</span><span class="p">:</span>
+                    <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">game</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># TODO: have a better phrase for &quot;max difficulty&quot; for both games</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;The current Ascension 20 Heart world records are: &quot;</span> <span class="o">+</span>
+                     <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">+</span>
+                     <span class="sa">f</span><span class="s2">&quot;-- For Baalor&#39;s own records, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">pb&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;I&#39;m sorry, I wasn&#39;t able to get that information.&quot;</span><span class="p">)</span>
+        <span class="n">final</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">sent</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sent</span> <span class="o">!=</span> <span class="n">final</span><span class="p">:</span>
+        <span class="c1"># TODO: use stored data to correctly say e.g. &quot;Actually, Defect is 31 now&quot;</span>
+        <span class="c1"># for now, just re-sending the full line is good enough</span>
+        <span class="c1"># Faely, 2026-03-01 (again, just barely)</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Wait, no, THIS is correct: &quot;</span> <span class="o">+</span> <span class="n">final</span><span class="p">)</span>
 
     <span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
-    <span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span></div>
+    <span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final</span></div>
 
 
 <div class="viewcode-block" id="calculate_winrate_cmd">
