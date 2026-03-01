@@ -12,7 +12,6 @@ last_version
 /.vscode/
 .python-version
 docs/build/
-.tio.tokens.json
 
 # emacs files
 *~

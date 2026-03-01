@@ -1021,6 +1021,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             await ctx.reply(f"Command {name} has been disabled.")
 
         case "alias":  # cannot sanely sanitize this
+            # name = existing command, args = aliases
             if not args:
                 if name not in _cmds and name in _cmd_aliases:
                     await ctx.reply(f"Alias {name} is bound to {_cmd_aliases[name]}.")
@@ -1042,14 +1043,17 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             if set(args) & cmds.keys():
                 await ctx.reply(
-                    f"Error: aliases {set(args) & cmds.keys()} already exist as commands."
+                    f"Error: aliases {', '.join(set(args) & cmds.keys())} already exist as commands and/or aliases."
                 )
                 return
             for arg in args:
                 if TConn is not None:
-                    TConn.commands[arg].aliases.append(name)
+                    comm = TConn.commands[name]
+                    comm.aliases.append(arg)
+                    TConn.commands[arg] = comm
                 if DConn is not None:
                     DConn.get_command(name).aliases.append(arg)
+                _cmd_aliases[arg] = name
             if "aliases" not in _cmds[name]:
                 _cmds[name]["aliases"] = []
             _cmds[name]["aliases"].extend(args)
@@ -1083,12 +1087,13 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 )
                 return
             if TConn is not None:
-                TConn.commands[name].aliases.remove(args[0])
+                comm = TConn.remove_command(args[0])
+                comm.aliases.remove(args[0])
             if DConn is not None:
                 dcmd: DiscordCommand = DConn.get_command(name)
                 if args[0] in dcmd.aliases:
                     dcmd.aliases.remove(args[0])
-            _cmds[name]["aliases"].remove(name)
+            _cmds[name]["aliases"].remove(args[0])
             del _cmd_aliases[args[0]]
             update_db()
             await ctx.reply(f"Alias {args[0]} has been removed from command {name}.")
