@@ -161,6 +161,8 @@ _timers: dict[str, Timer] = {}
 
 _prediction_terms = {}
 
+_cmd_aliases: dict[str, str] = {}
+
 _eventsub_subs: list[WSSub.SubscriptionPayload] = [
     WSSub.ChatMessageSubscription(broadcaster_user_id=str(config.twitch.owner_id), user_id=str(config.twitch.bot_id)),
     WSSub.ChannelRaidSubscription(to_broadcaster_user_id=str(config.twitch.owner_id)),
@@ -374,6 +376,8 @@ def command(
         wrapped.__cooldowns__ = [TCooldown(rate=burst, per=rate)]
         wrapped.__doc__ = func.__doc__
         # wrapped.__commands_cooldown__ = DCooldown(burst, rate, DBucket.default)
+        for alias in aliases:
+            _cmd_aliases[alias] = name
         if twitch:
             tcmd = TwitchCommand(
                 name=name, aliases=list(aliases), func=wrapped, flag=flag
@@ -884,7 +888,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
     """Syntax: command <action> <name> [+flag] <output>"""
     args = list(args)
     msg = " ".join(args)
-    name = name.lstrip(config.bot.prefix)
+    name = name.lstrip(config.bot.prefix).lower()
     cmds: dict[str, list[CommandType]] = {}
     if TConn is not None:
         for cname, cmd in TConn.commands.items():
@@ -894,16 +898,6 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if cmd.name not in cmds:
                 cmds[cmd.name] = []
             cmds[cmd.name].append(cmd)
-    aliases: dict[str, list[str]] = {}
-    if TConn is not None:
-        for alias, cmd in TConn._command_aliases.items():
-            aliases[alias] = [cmd]
-    if DConn is not None:
-        for dcmd in DConn.commands:
-            for alias in dcmd.aliases:
-                if alias not in aliases:
-                    aliases[alias] = []
-                aliases[alias].append(dcmd.name)
 
     sanitizer = _get_sanitizer(ctx, name, args, cmds)
     match action:
@@ -911,9 +905,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(in_mapping=False):
                 return
-            if name in aliases:
+            if name in _cmd_aliases:
                 await ctx.reply(
-                    f"Error: {name} is an alias to {aliases[name][0]}. Use 'unalias {aliases[name][0]} {name}' first."
+                    f"Error: {name} is an alias to {_cmd_aliases[name]}. Use 'unalias {_cmd_aliases[name]} {name}' first."
                 )
                 return
             flag = ""
@@ -934,9 +928,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer():
                 return
-            if name in aliases:
+            if name in _cmd_aliases:
                 await ctx.reply(
-                    f"Error: cannot edit alias. Use 'edit {aliases[name][0]}' instead."
+                    f"Error: cannot edit alias. Use 'edit {_cmd_aliases[name]}' instead."
                 )
                 return
             if name not in _cmds:
@@ -962,9 +956,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
-            if name in aliases:
+            if name in _cmd_aliases:
                 await ctx.reply(
-                    f"Error: cannot delete alias. Use 'remove {aliases[name][0]}' or 'unalias {aliases[name][0]} {name}' instead."
+                    f"Error: cannot delete alias. Use 'remove {_cmd_aliases[name]}' or 'unalias {_cmd_aliases[name]} {name}' instead."
                 )
                 return
             if name not in _cmds:
@@ -982,9 +976,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
-            if name in aliases:
+            if name in _cmd_aliases:
                 await ctx.reply(
-                    f"Error: cannot enable alias. Use 'enable {aliases[name][0]}' instead."
+                    f"Error: cannot enable alias. Use 'enable {_cmd_aliases[name]}' instead."
                 )
                 return
             if all(cmds[name]):
@@ -1006,9 +1000,9 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             # sanitizer will call ctx.reply() with error message if input is invalid
             if not await sanitizer(require_args=False):
                 return
-            if name in aliases:
+            if name in _cmd_aliases:
                 await ctx.reply(
-                    f"Error: cannot disable alias. Use 'disable {aliases[name][0]}' or 'unalias {aliases[name][0]} {name}' instead."
+                    f"Error: cannot disable alias. Use 'disable {_cmd_aliases[name]}' or 'unalias {_cmd_aliases[name]} {name}' instead."
                 )
                 return
             if not all(cmds[name]):
@@ -1028,8 +1022,8 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
 
         case "alias":  # cannot sanely sanitize this
             if not args:
-                if name not in _cmds and name in aliases:
-                    await ctx.reply(f"Alias {name} is bound to {aliases[name][0]}.")
+                if name not in _cmds and name in _cmd_aliases:
+                    await ctx.reply(f"Alias {name} is bound to {_cmd_aliases[name]}.")
                 elif _cmds[name].get("aliases"):
                     await ctx.reply(
                         f"Command {name} has the following aliases: {', '.join(_cmds[name]['aliases'])}"
@@ -1053,7 +1047,7 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
                 return
             for arg in args:
                 if TConn is not None:
-                    TConn._command_aliases[arg] = name
+                    TConn.commands[arg].aliases.append(name)
                 if DConn is not None:
                     DConn.get_command(name).aliases.append(arg)
             if "aliases" not in _cmds[name]:
@@ -1077,24 +1071,25 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name not in cmds:
                 await ctx.reply(f"Error: command {name} does not exist.")
                 return
-            if args[0] not in aliases:
+            if args[0] not in _cmd_aliases:
                 await ctx.reply("Error: not an alias.")
                 return
             if name not in _cmds:
                 await ctx.reply("Error: cannot unalias built-in commands.")
                 return
-            if aliases[args[0]][0] != name:
+            if _cmd_aliases[args[0]] != name:
                 await ctx.reply(
-                    f"Error: alias {args[0]} does not match command {name} (bound to {aliases[args[0]][0].name})."
+                    f"Error: alias {args[0]} does not match command {name} (bound to {_cmd_aliases[args[0]]})."
                 )
                 return
             if TConn is not None:
-                TConn._command_aliases.pop(args[0], None)
+                TConn.commands[name].aliases.remove(args[0])
             if DConn is not None:
                 dcmd: DiscordCommand = DConn.get_command(name)
                 if args[0] in dcmd.aliases:
                     dcmd.aliases.remove(args[0])
             _cmds[name]["aliases"].remove(name)
+            del _cmd_aliases[args[0]]
             update_db()
             await ctx.reply(f"Alias {args[0]} has been removed from command {name}.")
 

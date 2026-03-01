@@ -1,4 +1,5 @@
 from discord.ext.commands import Command, Context
+from discord import Guild
 
 from src.logger import logger
 
@@ -25,10 +26,11 @@ class DiscordCommand(Command):
                     break
             else:
                 return
+            guild: Guild
             mod_role = guild.get_role(config.discord.moderator_role)
             if self.flag and (
-                (context.author().id not in config.discord.owners) and
-                ("m" in self.flag and mod_role not in context.author().roles)
+                (context.author.id not in config.discord.owners) and
+                ("m" in self.flag and mod_role not in context.author.roles)
             ):
                 return
         logger.debug(f"Invoking Discord command {self.name} by {context.author().display_name}")
