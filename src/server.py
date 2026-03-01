@@ -2802,18 +2802,20 @@ async def get_wrs(ctx: ContextType):
     async with client.get(url) as resp:
         if not resp.ok:
             return await ctx.reply("Sorry, couldn't access the data. Try again later.")
-        data = await resp.json()
+        data: dict = await resp.json()
 
     msg = []
 
-    for char in _words:
-        c = data[char.lower()]
-        line = f"{char}: {c['streak']} by {c['username']}"
-        if c['ongoing']:
-            line += " (ongoing)"
-        msg.append(line)
+    match data.get("api_version", 1):
+        case 1:
+            for char in _words:
+                c = data[char.lower()]
+                line = f"{char}: {c['streak']} by {c['username']}"
+                if c['ongoing']:
+                    line += " (ongoing)"
+                msg.append(line)
 
-    await ctx.reply(f"As far as we know, these are the current A20H world records: {' | '.join(msg)} -- For Baalor's own records, see {config.bot.prefix}pb")
+            await ctx.reply(f"As far as we know, these are the current A20H world records: {' | '.join(msg)} -- For Baalor's own records, see {config.bot.prefix}pb")
 
 
 @command("winrate")
