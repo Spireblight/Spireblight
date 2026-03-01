@@ -344,6 +344,7 @@
                   
   <h1>Source code for src.disc</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discord.ext.commands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Command</span><span class="p">,</span> <span class="n">Context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">discord</span><span class="w"> </span><span class="kn">import</span> <span class="n">Guild</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
@@ -374,10 +375,11 @@
                     <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span>
+            <span class="n">guild</span><span class="p">:</span> <span class="n">Guild</span>
             <span class="n">mod_role</span> <span class="o">=</span> <span class="n">guild</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">moderator_role</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="p">(</span>
-                <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">owners</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="n">mod_role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">roles</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">owners</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="n">mod_role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">roles</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="k">return</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invoking Discord command </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
