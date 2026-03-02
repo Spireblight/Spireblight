@@ -3258,6 +3258,8 @@ async def Twitch_startup():
     await TConn.start()
 
 async def Twitch_cleanup():
+    if TConn is None: # doesn't even exist!
+        return
     if TConn._session is not None:
         await TConn._session.close()
     await TConn.save_tokens()

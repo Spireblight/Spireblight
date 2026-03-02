@@ -226,7 +226,8 @@ def get_run_mod(name: str) -> str:
 async def load():
     _cache.clear()
     done = set()
-    async with ClientSession() as session:
+    client = ClientSession()
+    async with client as session:
         for mod in config.bot.spire_mods:
             if mod.lower() in done:
                 continue
@@ -247,6 +248,8 @@ async def load():
                         _query_cache[sanitize(inst.name)].append(inst)
 
             done.add(mod.lower())
+
+    await client.close()
 
     base = Path(".")
 
