@@ -2299,9 +2299,93 @@ async def relics_page2(ctx: ContextType, save: Savefile):
     await ctx.reply(f"The relics past page 1 are {', '.join(relics)}")
 
 
-@with_savefile("seen", "seenrelic", "available")
+_colours = {"Red": "Ironclad", "Green": "Silent", "Blue": "Defect", "Purple": "Watcher"}
+
+def _see_relic(data: Relic, save: Savefile):
+    if data in save.relics_bare:
+        return f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}."
+    s = None
+    match data.tier:
+        case "Common" | "Uncommon" | "Rare" | "Shop":
+            if save.available_relic(data):
+                return f"We have not seen {data.name} yet! There's a chance we'll see it!"
+            elif (c := _colours.get(data.pool)) and c != save.character:
+                return "Nice try, we're not even playing the right character!"
+            elif data.pool: # modded character
+                return "You expect me to know about your modded characters, too?"
+            else:
+                return f"We have already seen {data.name} this run, and cannot get it again baalorHubris"
+        case "Boss":
+            s = f"For boss relics, see {config.bot.prefix}picked instead."
+        case "Starter":
+            s = "Starter relics can't exactly be seen during a run. What?"
+        case "Special":
+            s = "We can only see Special relics from events."
+        case a:
+            s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
+
+    return f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}"
+
+def _see_card(data: Card, save: Savefile):
+    have = yeet = pick = skip = 0
+
+    for cd in save.get_cards():
+        if cd.card == data:
+            have += cd.count
+            break
+
+    for rd in save.get_removals():
+        if rd.card == data:
+            yeet += rd.count
+            break
+
+    for node in save.path:
+        for p in node.picked:
+            if p.card == data:
+                pick += 1
+        for s in node.skipped:
+            if s.card == data:
+                skip += 1
+        for o in node.cards_obtained:
+            if o.card == data:
+                pick += 1
+
+    # important! match-case is greedy, matching whatever first condition fits
+    # this is why there's a lot of seemingly-impossible conditions
+    # I want to make sure that, visually, we have everything
+    match (have, yeet, pick, skip):
+        case (0, 0, 0, 0):
+            return f"We've not seen a single {data.name} this run."
+        case (1, 0, 0, 0):
+            return f"We somehow have {data.name} in our deck, despite never picking it."
+        case (n, 0, 0, 0):
+            return f"We somehow have {n} copies of {data.name}, yet we never picked any."
+        case (0, 1, 0, 0):
+            return "Error: Index out of bound."
+        case (0, n, 0, 0):
+            return f"Error: Core #{n} failure."
+        case (0, 0, 1, 0):
+            return "Error: Cosmic ray encounter."
+        case (0, 0, n, 0):
+            return f"Error: Airlock breach on the space datacenter #{n}."
+        case (0, 0, 0, 1):
+            return f"Well, we saw just one {data.name}, but didn't grab it."
+        case (0, 0, 0, 2):
+            return f"Jeez Baalor, your mom lets you skip {data.name} TWICE?"
+        case (0, 0, 0, n):
+            return f"We were offered {data.name} {n} times, and turned them all down."
+        case (1, 0, 1, 0):
+            return f"Oh yeah we have {data.name}, it's right here in our deck!"
+        case (0, 1, _, 1):
+            return f"We used to have a single {data.name}, but we got rid of it."
+        case (0, n, _, _):
+            return f"We used to have up to {n} {data.name}, but we removed them all."
+        case (a, b, c, d):
+            return f"I didn't write anything special for having {a} copies, removing {b} of them, picking {c}, and skipping {d}."
+
+@with_savefile("seen", "seenrelic", "seencard", "available")
 async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
-    """Output whether a given relic has been seen."""
+    """Output whether a given relic or card has been seen."""
     relic = " ".join(relic)
     relics = [relic]
 
@@ -2312,39 +2396,16 @@ async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
 
     replies = []
     for relic in relics:
-        data: Relic = query(relic)
+        data = query(relic)
         if not data:
-            replies.append(f"Could not find relic {relic!r}.")
-        elif data.cls_name != "relic":
-            replies.append("Can only look for relics seen.")
-        elif data in save.relics_bare:
-            replies.append(
-                f"We already have {data.name}! It's at position {save.relics_bare.index(data)+1}."
-            )
-        elif data.tier not in ("Common", "Uncommon", "Rare", "Shop"):
-            match data.tier:
-                case "Boss":
-                    s = f"For boss relics, see {config.bot.prefix}picked instead."
-                case "Starter":
-                    s = "Starter relics can't exactly be seen during a run. What?"
-                case "Special":
-                    s = "We can only see Special relics from events."
-                case a:
-                    s = f"This relic is tagged as rarity {a!r}, and I don't know what that means."
-            replies.append(
-                f"We can only check for Common, Uncommon, Rare, or Shop relics. {s}"
-            )
-        elif save.available_relic(data):
-            replies.append(
-                f"We have not seen {data.name} yet! There's a chance we'll see it!"
-            )
+            replies.append(f"Could not find relic or card {relic!r}.")
+        elif data.cls_name == "relic":
+            replies.append(_see_relic(data, save))
+        elif data.cls_name == "card":
+            replies.append(_see_card(data, save))
         else:
-            s = ""
-            if data.pool:
-                s = " (or maybe it doesn't belong to this character)"
-            replies.append(
-                f"We have already seen {data.name} this run{s}, and cannot get it again baalorHubris"
-            )
+            replies.append("Can only look for cards or relics seen.")
+
     await ctx.reply("\n".join(replies))
 
 
@@ -2891,15 +2952,15 @@ async def get_wrs(ctx: ContextType, *, _cache={"data": None, "text": None}):
                             line += " (ongoing)"
                         icr.append(line)
                     if icr:
-                        lst.append(f"[{char}]: {' & '.join(icr)}")
+                        lst.append(f"{char}: {' & '.join(icr)}")
 
                 if lst:
-                    msg.append(f"{game}: {' '.join(lst)}")
+                    msg.append(f"{game}: {' | '.join(lst)}")
 
             # TODO: have a better phrase for "max difficulty" for both games
             final = ("The current Ascension 20 Heart world records are: " +
-                     " | ".join(msg) +
-                     f"-- For Baalor's own records, see {config.bot.prefix}pb")
+                     " || ".join(msg) +
+                     f" -- For Baalor's own records, see {config.bot.prefix}pb")
 
     if not msg:
         await ctx.reply("I'm sorry, I wasn't able to get that information.")
