@@ -589,7 +589,8 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">():</span>
     <span class="n">_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">done</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">mod</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">spire_mods</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">done</span><span class="p">:</span>
                 <span class="k">continue</span>
@@ -610,6 +611,8 @@
                         <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
 
             <span class="n">done</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+    <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 

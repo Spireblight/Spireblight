@@ -2866,11 +2866,95 @@
 
 
 
+<span class="n">_colours</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Red&quot;</span><span class="p">:</span> <span class="s2">&quot;Ironclad&quot;</span><span class="p">,</span> <span class="s2">&quot;Green&quot;</span><span class="p">:</span> <span class="s2">&quot;Silent&quot;</span><span class="p">,</span> <span class="s2">&quot;Blue&quot;</span><span class="p">:</span> <span class="s2">&quot;Defect&quot;</span><span class="p">,</span> <span class="s2">&quot;Purple&quot;</span><span class="p">:</span> <span class="s2">&quot;Watcher&quot;</span><span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_see_relic</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics_bare</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We already have </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">! It&#39;s at position </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">relics_bare</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">.&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">match</span> <span class="n">data</span><span class="o">.</span><span class="n">tier</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;Common&quot;</span> <span class="o">|</span> <span class="s2">&quot;Uncommon&quot;</span> <span class="o">|</span> <span class="s2">&quot;Rare&quot;</span> <span class="o">|</span> <span class="s2">&quot;Shop&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">available_relic</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We have not seen </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> yet! There&#39;s a chance we&#39;ll see it!&quot;</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">c</span> <span class="o">:=</span> <span class="n">_colours</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">pool</span><span class="p">))</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">save</span><span class="o">.</span><span class="n">character</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Nice try, we&#39;re not even playing the right character!&quot;</span>
+            <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">pool</span><span class="p">:</span> <span class="c1"># modded character</span>
+                <span class="k">return</span> <span class="s2">&quot;You expect me to know about your modded characters, too?&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We have already seen </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> this run, and cannot get it again baalorHubris&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;Boss&quot;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;For boss relics, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">picked instead.&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;Starter&quot;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Starter relics can&#39;t exactly be seen during a run. What?&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;Special&quot;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;We can only see Special relics from events.&quot;</span>
+        <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;This relic is tagged as rarity </span><span class="si">{</span><span class="n">a</span><span class="si">!r}</span><span class="s2">, and I don&#39;t know what that means.&quot;</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We can only check for Common, Uncommon, Rare, or Shop relics. </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_see_card</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+    <span class="n">have</span> <span class="o">=</span> <span class="n">yeet</span> <span class="o">=</span> <span class="n">pick</span> <span class="o">=</span> <span class="n">skip</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">get_cards</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">cd</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">have</span> <span class="o">+=</span> <span class="n">cd</span><span class="o">.</span><span class="n">count</span>
+            <span class="k">break</span>
+
+    <span class="k">for</span> <span class="n">rd</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">get_removals</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">rd</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">yeet</span> <span class="o">+=</span> <span class="n">rd</span><span class="o">.</span><span class="n">count</span>
+            <span class="k">break</span>
+
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">picked</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">pick</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">skipped</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">skip</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">cards_obtained</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">pick</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># important! match-case is greedy, matching whatever first condition fits</span>
+    <span class="c1"># this is why there&#39;s a lot of seemingly-impossible conditions</span>
+    <span class="c1"># I want to make sure that, visually, we have everything</span>
+    <span class="k">match</span> <span class="p">(</span><span class="n">have</span><span class="p">,</span> <span class="n">yeet</span><span class="p">,</span> <span class="n">pick</span><span class="p">,</span> <span class="n">skip</span><span class="p">):</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We&#39;ve not seen a single </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> this run.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We somehow have </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> in our deck, despite never picking it.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We somehow have </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> copies of </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, yet we never picked any.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;Error: Index out of bound.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error: Core #</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> failure.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;Error: Cosmic ray encounter.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error: Airlock breach on the space datacenter #</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Well, we saw just one </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, but didn&#39;t grab it.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Jeez Baalor, your mom lets you skip </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> TWICE?&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We were offered </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> times, and turned them all down.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Oh yeah we have </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, it&#39;s right here in our deck!&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="k">_</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We used to have a single </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, but we got rid of it.&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="k">_</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;We used to have up to </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, but we removed them all.&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;I didn&#39;t write anything special for having </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> copies, removing </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> of them, picking </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, and skipping </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">.&quot;</span>
+
 <div class="viewcode-block" id="seen_relic">
 <a class="viewcode-back" href="../../server.html#src.server.seen_relic">[docs]</a>
-<span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seen&quot;</span><span class="p">,</span> <span class="s2">&quot;seenrelic&quot;</span><span class="p">,</span> <span class="s2">&quot;available&quot;</span><span class="p">)</span>
+<span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seen&quot;</span><span class="p">,</span> <span class="s2">&quot;seenrelic&quot;</span><span class="p">,</span> <span class="s2">&quot;seencard&quot;</span><span class="p">,</span> <span class="s2">&quot;available&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seen_relic</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="o">*</span><span class="n">relic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Output whether a given relic has been seen.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Output whether a given relic or card has been seen.&quot;&quot;&quot;</span>
     <span class="n">relic</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
     <span class="n">relics</span> <span class="o">=</span> <span class="p">[</span><span class="n">relic</span><span class="p">]</span>
 
@@ -2881,39 +2965,16 @@
 
     <span class="n">replies</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">relic</span> <span class="ow">in</span> <span class="n">relics</span><span class="p">:</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Relic</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find relic </span><span class="si">{</span><span class="n">relic</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">!=</span> <span class="s2">&quot;relic&quot;</span><span class="p">:</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Can only look for relics seen.&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics_bare</span><span class="p">:</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;We already have </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">! It&#39;s at position </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">relics_bare</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">tier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;Common&quot;</span><span class="p">,</span> <span class="s2">&quot;Uncommon&quot;</span><span class="p">,</span> <span class="s2">&quot;Rare&quot;</span><span class="p">,</span> <span class="s2">&quot;Shop&quot;</span><span class="p">):</span>
-            <span class="k">match</span> <span class="n">data</span><span class="o">.</span><span class="n">tier</span><span class="p">:</span>
-                <span class="k">case</span> <span class="s2">&quot;Boss&quot;</span><span class="p">:</span>
-                    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;For boss relics, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">picked instead.&quot;</span>
-                <span class="k">case</span> <span class="s2">&quot;Starter&quot;</span><span class="p">:</span>
-                    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Starter relics can&#39;t exactly be seen during a run. What?&quot;</span>
-                <span class="k">case</span> <span class="s2">&quot;Special&quot;</span><span class="p">:</span>
-                    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;We can only see Special relics from events.&quot;</span>
-                <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
-                    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;This relic is tagged as rarity </span><span class="si">{</span><span class="n">a</span><span class="si">!r}</span><span class="s2">, and I don&#39;t know what that means.&quot;</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;We can only check for Common, Uncommon, Rare, or Shop relics. </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="n">save</span><span class="o">.</span><span class="n">available_relic</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;We have not seen </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> yet! There&#39;s a chance we&#39;ll see it!&quot;</span>
-            <span class="p">)</span>
+            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find relic or card </span><span class="si">{</span><span class="n">relic</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">==</span> <span class="s2">&quot;relic&quot;</span><span class="p">:</span>
+            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_see_relic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">==</span> <span class="s2">&quot;card&quot;</span><span class="p">:</span>
+            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_see_card</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">pool</span><span class="p">:</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot; (or maybe it doesn&#39;t belong to this character)&quot;</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;We have already seen </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> this run</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">, and cannot get it again baalorHubris&quot;</span>
-            <span class="p">)</span>
+            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Can only look for cards or relics seen.&quot;</span><span class="p">)</span>
+
     <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">replies</span><span class="p">))</span></div>
 
 
@@ -3541,15 +3602,15 @@
                             <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; (ongoing)&quot;</span>
                         <span class="n">icr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">icr</span><span class="p">:</span>
-                        <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; &amp; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">icr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; &amp; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">icr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">lst</span><span class="p">:</span>
-                    <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">game</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">game</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; | &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="c1"># TODO: have a better phrase for &quot;max difficulty&quot; for both games</span>
             <span class="n">final</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;The current Ascension 20 Heart world records are: &quot;</span> <span class="o">+</span>
-                     <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">+</span>
-                     <span class="sa">f</span><span class="s2">&quot;-- For Baalor&#39;s own records, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">pb&quot;</span><span class="p">)</span>
+                     <span class="s2">&quot; || &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">+</span>
+                     <span class="sa">f</span><span class="s2">&quot; -- For Baalor&#39;s own records, see </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">pb&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;I&#39;m sorry, I wasn&#39;t able to get that information.&quot;</span><span class="p">)</span>
@@ -3950,6 +4011,8 @@
 <div class="viewcode-block" id="Twitch_cleanup">
 <a class="viewcode-back" href="../../server.html#src.server.Twitch_cleanup">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Twitch_cleanup</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># doesn&#39;t even exist!</span>
+        <span class="k">return</span>
     <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">save_tokens</span><span class="p">()</span>
