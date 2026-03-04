@@ -771,13 +771,13 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator for commands that require a save.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_savefile_get</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_savefile_get</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">get_savefile</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No savefile&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">optional_save</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Not in a run.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># while the Spire 2 integration is being worked on, don&#39;t error</span>
+                    <span class="k">pass</span> <span class="c1">#await ctx.reply(&quot;Not in a run.&quot;)</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not in a run&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">optional_save</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
@@ -2953,21 +2953,21 @@
 <div class="viewcode-block" id="seen_relic">
 <a class="viewcode-back" href="../../server.html#src.server.seen_relic">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seen&quot;</span><span class="p">,</span> <span class="s2">&quot;seenrelic&quot;</span><span class="p">,</span> <span class="s2">&quot;seencard&quot;</span><span class="p">,</span> <span class="s2">&quot;available&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seen_relic</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="o">*</span><span class="n">relic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seen_relic</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="o">*</span><span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Output whether a given relic or card has been seen.&quot;&quot;&quot;</span>
-    <span class="n">relic</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
-    <span class="n">relics</span> <span class="o">=</span> <span class="p">[</span><span class="n">relic</span><span class="p">]</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
-    <span class="c1"># Check if the relic is referencing a relic set:</span>
-    <span class="n">relic_set</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+    <span class="c1"># Check if we are referencing a relic set:</span>
+    <span class="n">relic_set</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">relic_set</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">):</span>
-        <span class="n">relics</span> <span class="o">=</span> <span class="n">relic_set</span><span class="o">.</span><span class="n">relic_list</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">relic_set</span><span class="o">.</span><span class="n">relic_list</span>
 
     <span class="n">replies</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">relic</span> <span class="ow">in</span> <span class="n">relics</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">query</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find relic or card </span><span class="si">{</span><span class="n">relic</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find relic or card </span><span class="si">{</span><span class="n">item</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">==</span> <span class="s2">&quot;relic&quot;</span><span class="p">:</span>
             <span class="n">replies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_see_relic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">==</span> <span class="s2">&quot;card&quot;</span><span class="p">:</span>
