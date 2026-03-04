@@ -403,13 +403,13 @@ def with_savefile(name: str, *aliases: str, optional_save: bool = False, **kwarg
     """Decorator for commands that require a save."""
 
     def inner(func):
-        async def _savefile_get(ctx) -> list:
+        async def _savefile_get(ctx: ContextType) -> list:
             res = get_savefile()
             if res is None:
                 raise ValueError("No savefile")
             if res.character is None and not optional_save:
-                if ctx is not None:
-                    await ctx.reply("Not in a run.")
+                if ctx is not None: # while the Spire 2 integration is being worked on, don't error
+                    pass #await ctx.reply("Not in a run.")
                 raise ValueError("Not in a run")
             if res.character is None and optional_save:
                 return [None]
@@ -2384,21 +2384,21 @@ def _see_card(data: Card, save: Savefile):
             return f"I didn't write anything special for having {a} copies, removing {b} of them, picking {c}, and skipping {d}."
 
 @with_savefile("seen", "seenrelic", "seencard", "available")
-async def seen_relic(ctx: ContextType, save: Savefile, *relic: str):
+async def seen_relic(ctx: ContextType, save: Savefile, *item: str):
     """Output whether a given relic or card has been seen."""
-    relic = " ".join(relic)
-    relics = [relic]
+    item = " ".join(item)
+    items = [item]
 
-    # Check if the relic is referencing a relic set:
-    relic_set = query(relic)
+    # Check if we are referencing a relic set:
+    relic_set = query(item)
     if isinstance(relic_set, RelicSet):
-        relics = relic_set.relic_list
+        items = relic_set.relic_list
 
     replies = []
-    for relic in relics:
-        data = query(relic)
+    for item in items:
+        data = query(item)
         if not data:
-            replies.append(f"Could not find relic or card {relic!r}.")
+            replies.append(f"Could not find relic or card {item!r}.")
         elif data.cls_name == "relic":
             replies.append(_see_relic(data, save))
         elif data.cls_name == "card":
