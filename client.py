@@ -353,13 +353,13 @@ async def main():
                                 content = f.read()
                         except OSError:
                             possible = None
-                            continue
-                        content = content.encode("utf-8", "xmlcharrefreplace")
-                        char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
-                        async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
-                            if resp.ok:
-                                last = cur
-                                has_save = True
+                        else:
+                            content = content.encode("utf-8", "xmlcharrefreplace")
+                            char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
+                            async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
+                                if resp.ok:
+                                    last = cur
+                                    has_save = True
 
                     if poss_2 is not None and cur2 != last2:
                         content = ""
@@ -368,12 +368,12 @@ async def main():
                                 content = f.read()
                         except OSError:
                             poss_2 = None
-                            continue
-                        content = content.encode("utf-8", "xmlcharrefreplace")
-                        async with session.post("/sync/save-2", data={"savefile": content}, params={"key": cfg.secret, "start": start}) as resp:
-                            if resp.ok:
-                                last2 = cur2
-                                s2_save = True
+                        else:
+                            content = content.encode("utf-8", "xmlcharrefreplace")
+                            async with session.post("/sync/save-2", data={"savefile": content}, params={"key": cfg.secret, "start": start}) as resp:
+                                if resp.ok:
+                                    last2 = cur2
+                                    s2_save = True
 
                 except (ClientError, ServerDisconnectedError):
                     timeout = 10 # give it a bit of time
