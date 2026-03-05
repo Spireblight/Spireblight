@@ -63,6 +63,7 @@ class Base:
         self.name = data["name"]
         self.description = data["description"]
         self.mod = data.get("mod")
+        self.v = data.get("v", 1)
         if self.mod == "Slay the Spire":
             self.mod = None
 

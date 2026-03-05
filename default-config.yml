@@ -109,7 +109,7 @@ bot:
   name: ""
 
   # Which Spire mods we should support for !info and run history pages
-  spire_mods: ["Slay the Spire"]
+  spire_mods: ["Slay the Spire", "2-slay the spire 2"]
 
 server:
   # If this is true, we enable debug logging.

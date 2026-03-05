@@ -450,6 +450,15 @@ class Savefile(FileParser):
 
 _savefile = Savefile()
 
+class Save2:
+    def __init__(self):
+        self._data: dict | None = None
+
+    def update_data(self, data: dict):
+        self._data = data
+
+_save2 = Save2()
+
 def _truthy(x: str | None) -> bool:
     if x and x.lower() in ("1", "true", "yes"):
         return True
@@ -509,6 +518,17 @@ async def receive_save(req: Request):
 
     return Response()
 
+@router.post("/sync/save-2")
+async def get_save2(req: Request):
+    content = await get_req_data(req, "savefile")
+
+    if content:
+        _save2.update_data(content)
+
+    return Response()
+
 def get_savefile() -> Savefile:
     """Get the current savefile. Check for :meth:`Savefile.in_game` before using."""
-    return _savefile
+    # XXX Temporary measure while Spire 2 integration is being worked on
+    #return _savefile
+    return _save2
