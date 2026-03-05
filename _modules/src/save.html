@@ -903,10 +903,10 @@
 
 <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/save-2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_save2</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;savefile&quot;</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;savefile&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
         <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
