@@ -7,7 +7,7 @@ import time
 import math
 import os
 
-from aiohttp.web import Request, HTTPNotFound, HTTPFound, Response
+from aiohttp.web import Request, HTTPNotFound, HTTPFound, HTTPNotImplemented, Response
 
 import aiohttp_jinja2
 
@@ -489,6 +489,14 @@ async def save_chart(req: Request) -> Response:
         raise HTTPNotFound()
 
     return _savefile.graph(req)
+
+@router.get("/current-2")
+async def current_2(req: Request):
+    return HTTPNotImplemented("This has not been done yet")
+
+@router.get("/current-2/raw")
+async def current2_raw(req: Request):
+    return Response(text=json.dumps(_save2._data, indent=4), content_type="application/json")
 
 @router.post("/sync/save")
 async def receive_save(req: Request):
