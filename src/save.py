@@ -545,6 +545,7 @@ async def get_save2(req: Request):
     if content:
         j = json.loads(content[0])
         _save2.update_data(j)
+        print("Savefile received")
 
     return Response()
 
