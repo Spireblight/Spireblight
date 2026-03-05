@@ -865,7 +865,7 @@
 
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/current-2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">current_2</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">HTTPNotImplemented</span><span class="p">(</span><span class="s2">&quot;This has not been done yet&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTTPNotImplemented</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;This has not been done yet&quot;</span><span class="p">)</span>
 
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/current-2/raw&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">current2_raw</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
@@ -904,7 +904,8 @@
     <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;savefile&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
 
