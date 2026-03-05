@@ -95,7 +95,7 @@ class Card(Base):
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
         self.color: str = data["color"]
-        self.rarity: str = data["rarity"]
+        self.rarity: str = data.get("rarity")
         self.type: str = data["type"]
         self.cost: str | None = data["cost"] or None
         self.pack: str | None = data.get("pack")
