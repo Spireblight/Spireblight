@@ -454,6 +454,16 @@ class Save2:
     def __init__(self):
         self._data: dict | None = None
 
+    @property
+    def in_game(self):
+        return bool(self._data)
+
+    @property
+    def character(self):
+        char_id: str = self._data["players"][0]["character_id"]
+        c, _, name = char_id.partition(".")
+        return name.title()
+
     def update_data(self, data: dict):
         self._data = data
 
