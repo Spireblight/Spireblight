@@ -98,6 +98,7 @@ class Card(Base):
         self.rarity: str = data.get("rarity")
         self.type: str = data["type"]
         self.cost: str | None = data["cost"] or None
+        self.star_cost: str | None = data.get("starCost")
         self.pack: str | None = data.get("pack")
 
     @property
@@ -107,7 +108,10 @@ class Card(Base):
             mod = f"(Packmaster: {self.pack})"
         elif self.mod:
             mod = f"(Mod: {self.mod})"
-        return f"{self.name} - [{self.cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
+            cost = self.cost
+            if self.star_cost:
+                cost = f" (Stars: {self.star_cost})"
+        return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
 
 class SingleCard:
     def __init__(self, card: Card, upgrades: int = 0):
