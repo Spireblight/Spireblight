@@ -64,7 +64,7 @@ class Base:
         self.description = data["description"]
         self.mod = data.get("mod")
         self.v = data.get("v", 1)
-        if self.mod == "Slay the Spire":
+        if self.mod in ("Slay the Spire", "2-slay the spire 2"):
             self.mod = None
 
     @property
