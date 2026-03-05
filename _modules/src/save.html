@@ -813,6 +813,15 @@
 
 <span class="n">_savefile</span> <span class="o">=</span> <span class="n">Savefile</span><span class="p">()</span>
 
+<span class="k">class</span><span class="w"> </span><span class="nc">Save2</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+
+<span class="n">_save2</span> <span class="o">=</span> <span class="n">Save2</span><span class="p">()</span>
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_truthy</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -872,11 +881,22 @@
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
 
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/save-2&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_save2</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;savefile&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
+
 <div class="viewcode-block" id="get_savefile">
 <a class="viewcode-back" href="../../fileparser.html#src.save.get_savefile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_savefile</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Savefile</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the current savefile. Check for :meth:`Savefile.in_game` before using.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_savefile</span></div>
+    <span class="c1"># XXX Temporary measure while Spire 2 integration is being worked on</span>
+    <span class="c1">#return _savefile</span>
+    <span class="k">return</span> <span class="n">_save2</span></div>
 
 </pre></div>
 
