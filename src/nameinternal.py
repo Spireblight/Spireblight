@@ -163,7 +163,7 @@ class Potion(Base):
     cls_name = "potion"
     def __init__(self, data: dict[str, str]):
         super().__init__(data)
-        self.rarity: str = data["rarity"]
+        self.rarity: str = data.get("rarity")
         self.color: str = data.get("color")
 
     @property
