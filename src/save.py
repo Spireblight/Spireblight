@@ -460,9 +460,11 @@ class Save2:
 
     @property
     def character(self):
-        char_id: str = self._data["players"][0]["character_id"]
-        c, _, name = char_id.partition(".")
-        return name.title()
+        if self._data:
+            char_id: str = self._data["players"][0]["character_id"]
+            c, _, name = char_id.partition(".")
+            return name.title()
+        return None
 
     def update_data(self, data: dict):
         self._data = data
@@ -541,7 +543,7 @@ async def get_save2(req: Request):
     content = await get_req_data(req, "savefile")
 
     if content:
-        j = json.loads(content)
+        j = json.loads(content[0])
         _save2.update_data(j)
 
     return Response()
