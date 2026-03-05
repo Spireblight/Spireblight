@@ -502,7 +502,7 @@ async def save_chart(req: Request) -> Response:
 
 @router.get("/current-2")
 async def current_2(req: Request):
-    return HTTPNotImplemented("This has not been done yet")
+    return HTTPNotImplemented(reason="This has not been done yet")
 
 @router.get("/current-2/raw")
 async def current2_raw(req: Request):
@@ -541,7 +541,8 @@ async def get_save2(req: Request):
     content = await get_req_data(req, "savefile")
 
     if content:
-        _save2.update_data(content)
+        j = json.loads(content)
+        _save2.update_data(j)
 
     return Response()
 
