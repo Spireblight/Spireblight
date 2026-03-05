@@ -2,6 +2,7 @@ from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
 import traceback
 import platform
+import pathlib
 import asyncio
 import pickle
 import time
@@ -17,6 +18,7 @@ class Config:
     use_mt = False
     use_slice = False
     slice_curses = ""
+    spire2 = ""
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -34,6 +36,11 @@ class Config:
             elif kwargs: # Other Operating systems do not have defaults set; only error if any data was set
                 raise NotImplementedError(f"No default spiredir set for os: '{system_os}'\nSet spiredir manually in config file.")
 
+        if not self.spire2:
+            raise NotImplementedError("Set the Spire 2 dir (under AppData).")
+
+        self.spire2 = pathlib.Path(self.spire2)
+
     def export(self):
         return {
             "playing_file": self.playing_file,
@@ -44,6 +51,7 @@ class Config:
             "use_mt": self.use_mt,
             "use_slice": self.use_slice,
             "slice_curses": self.slice_curses,
+            "spire2": self.spire2,
         }
 
 async def main():
@@ -60,12 +68,16 @@ async def main():
     use_mt = cfg.use_mt
     last_exc = None
     user = None
+    s2_save = True
+    last2 = 0
+    cur2 = 0
     try:
         with open("last_run") as f:
             last_run = f.read().strip()
     except OSError:
         last_run = ""
     possible = None
+    poss_2 = None
     playing = None
     timeout = 1
     if not cfg.server_url or not cfg.secret:
@@ -132,6 +144,17 @@ async def main():
                         cur = os.path.getmtime(os.path.join(cfg.spiredir, "saves", possible))
                     except OSError:
                         possible = None
+
+                if poss_2 is None: # TODO: carry over profiles, more save stuff
+                    potential: list[pathlib.Path] = []
+                    for file in cfg.spire2.iterdir():
+                        if file.name.startswith("profile"):
+                            save2 = file / "saves" / "current_run.save"
+                            if save2.exists():
+                                potential.append(save2)
+                    if len(potential) == 1:
+                        poss_2 = potential[0]
+                        cur2 = poss_2.stat().st_mtime
 
                 if use_sd:
                     try:
@@ -213,6 +236,11 @@ async def main():
                         async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                             if resp.ok:
                                 has_save = False
+
+                    if poss_2 is None and s2_save: # server has a save, but we don't (anymore)
+                        async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": False, "start": start}) as resp:
+                            if resp.ok:
+                                s2_save = False
 
                     if use_mt:
                         ## MT1
@@ -332,6 +360,20 @@ async def main():
                             if resp.ok:
                                 last = cur
                                 has_save = True
+
+                    if poss_2 is not None and cur2 != last2:
+                        content = ""
+                        try:
+                            with poss_2.open() as f:
+                                content = f.read()
+                        except OSError:
+                            poss_2 = None
+                            continue
+                        content = content.encode("utf-8", "xmlcharrefreplace")
+                        async with session.post("/sync/save-2", data={"savefile": content}, params={"key": cfg.secret, "start": start}) as resp:
+                            if resp.ok:
+                                last2 = cur2
+                                s2_save = True
 
                 except (ClientError, ServerDisconnectedError):
                     timeout = 10 # give it a bit of time
