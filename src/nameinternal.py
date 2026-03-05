@@ -104,11 +104,11 @@ class Card(Base):
     @property
     def info(self) -> str:
         mod = ""
+        cost = self.cost
         if self.pack:
             mod = f"(Packmaster: {self.pack})"
         elif self.mod:
             mod = f"(Mod: {self.mod})"
-            cost = self.cost
             if self.star_cost:
                 cost = f" (Stars: {self.star_cost})"
         return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
