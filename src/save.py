@@ -540,10 +540,10 @@ async def receive_save(req: Request):
 
 @router.post("/sync/save-2")
 async def get_save2(req: Request):
-    content = await get_req_data(req, "savefile")
+    content = (await get_req_data(req, "savefile"))[0]
 
     if content:
-        j = json.loads(content[0])
+        j = json.loads(content)
         _save2.update_data(j)
 
     return Response()
