@@ -475,9 +475,8 @@ class Save2:
 
     @property
     def relics(self):
-        relic: dict[str, str]
         for relic in self._data["players"][0]["relics"]:
-            yield relic["id"].partition(".")[2].replace("_", " ").title()
+            yield relic["id"]
 
     @property
     def ancient_choices(self):

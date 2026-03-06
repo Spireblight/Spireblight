@@ -126,6 +126,7 @@ async def main():
 
         while True:
             try:
+                print(f"{poss_2=}")
                 time.sleep(timeout)
                 start = time.time()
                 timeout = 1
@@ -154,7 +155,12 @@ async def main():
                                 potential.append(save2)
                     if len(potential) == 1:
                         poss_2 = potential[0]
+
+                if poss_2 is not None:
+                    try:
                         cur2 = poss_2.stat().st_mtime
+                    except OSError:
+                        poss_2 = None
 
                 if use_sd:
                     try:
@@ -193,7 +199,7 @@ async def main():
                                         files.append(file)
 
                 try:
-                    if possible is None:
+                    if possible is None and poss_2 is None:
                         async with session.get("/playing", params={"key": cfg.secret}) as resp:
                             if resp.ok:
                                 j = await resp.json()
