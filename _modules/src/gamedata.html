@@ -457,6 +457,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">game_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>       <span class="c1">#: Which game version this mapping is for.</span>
+
     <span class="n">room_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>         <span class="c1">#: The display name of map nodes.</span>
     <span class="n">end_of_act</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1">#: Whether to add a newline after this map node.</span>
 
@@ -1392,8 +1394,6 @@
 
 
 
-<div class="viewcode-block" id="FileParser">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileParser</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="n">_variables_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;current_hp&quot;</span><span class="p">:</span> <span class="s2">&quot;Current HP&quot;</span><span class="p">,</span>
@@ -1766,21 +1766,15 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_master_deck</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<div class="viewcode-block" id="FileParser.get_cards">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_cards">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">CardData</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield each card with no repetition, with count.&quot;&quot;&quot;</span>
         <span class="n">master_deck</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_deck</span>
         <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">master_deck</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">master_deck</span><span class="p">)</span></div>
+            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">master_deck</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="FileParser.get_meta_scaling_cards">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_meta_scaling_cards">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_meta_scaling_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return info about the meta-scaling cards.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[]</span></div>
-
+        <span class="k">return</span> <span class="p">[]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
@@ -1788,8 +1782,6 @@
         <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cards</span><span class="p">():</span>
             <span class="k">yield from</span> <span class="n">card</span><span class="o">.</span><span class="n">as_cards</span><span class="p">()</span>
 
-<div class="viewcode-block" id="FileParser.get_purchases">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_purchases">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_purchases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">ShopContents</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a mapping of purchases for a given floor.&quot;&quot;&quot;</span>
         <span class="n">bought</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">ShopContents</span><span class="p">]</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="n">ShopContents</span><span class="p">)</span>
@@ -1805,11 +1797,8 @@
                 <span class="k">case</span> <span class="s2">&quot;potion&quot;</span><span class="p">:</span>
                     <span class="n">bought</span><span class="p">[</span><span class="n">purchased</span><span class="p">]</span><span class="o">.</span><span class="n">add_potion</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">bought</span></div>
+        <span class="k">return</span> <span class="n">bought</span>
 
-
-<div class="viewcode-block" id="FileParser.get_shop_contents">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_shop_contents">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_shop_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">ShopContents</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a mapping of unpurchased shop contents for a given floor.&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">()</span>
@@ -1828,8 +1817,7 @@
             <span class="k">for</span> <span class="n">potion</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;potions&quot;</span><span class="p">]:</span>
                 <span class="n">contents</span><span class="o">.</span><span class="n">add_potion</span><span class="p">(</span><span class="n">potion</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">results</span></div>
-
+        <span class="k">return</span> <span class="n">results</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
@@ -1848,14 +1836,11 @@
         <span class="n">all_removals</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">store_removals</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">all_removals</span>
 
-<div class="viewcode-block" id="FileParser.get_removals">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_removals">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">CardData</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield each removed card with no repetition, with count.&quot;&quot;&quot;</span>
         <span class="n">removals</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removals</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">removals</span><span class="p">):</span> <span class="c1"># remove duplicates</span>
-            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">removals</span><span class="p">)</span></div>
-
+            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">removals</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">has_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -1869,19 +1854,13 @@
             <span class="n">cdata</span> <span class="o">=</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="p">[])</span>
             <span class="k">yield</span> <span class="p">(</span><span class="n">cdata</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">floor</span><span class="p">)</span>
 
-<div class="viewcode-block" id="FileParser.master_deck_as_html">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.master_deck_as_html">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">master_deck_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the cards from the deck suitable for the website.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_cards</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_cards</span><span class="p">())</span>
 
-
-<div class="viewcode-block" id="FileParser.removals_as_html">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.removals_as_html">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">removals_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the removed cards suitable for the website.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_removals</span><span class="p">())</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_removals</span><span class="p">())</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cards</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">CardData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="n">text</span> <span class="o">=</span> <span class="p">(</span>
@@ -2047,17 +2026,13 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">score_breakdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<div class="viewcode-block" id="FileParser.get_floor">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.FileParser.get_floor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_floor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">floor</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseNode</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">floor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">neow_bonus</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">floor</span> <span class="o">==</span> <span class="n">floor</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">node</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-</div>
-
+        <span class="k">return</span> <span class="kc">None</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_nodes</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">FileParser</span><span class="p">,</span> <span class="n">maybe_cached</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NodeData</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">NodeData</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span> <span class="c1">#PRIV#</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the map nodes. This should only ever be called from &#39;FileParser.path&#39; to get the cache.&quot;&quot;&quot;</span>
@@ -3040,12 +3015,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span></div>
 
 
-<div class="viewcode-block" id="BottleRelic">
-<a class="viewcode-back" href="../../fileparser.html#src.gamedata.BottleRelic">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BottleRelic</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
     <span class="n">bottle_id</span><span class="p">:</span> <span class="nb">str</span> <span class="c1">#: The name of the bottle.</span>
-    <span class="n">card</span><span class="p">:</span> <span class="n">SingleCard</span> <span class="c1">#: The card which is bottled.</span></div>
-
+    <span class="n">card</span><span class="p">:</span> <span class="n">SingleCard</span> <span class="c1">#: The card which is bottled.</span>
 </pre></div>
 
                 </article>

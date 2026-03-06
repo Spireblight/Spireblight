@@ -425,7 +425,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_latest_run</span><span class="p">,</span> <span class="n">get_parser</span><span class="p">,</span> <span class="n">_ts_cache</span> <span class="k">as</span> <span class="n">_runs_cache</span><span class="p">,</span> <span class="n">RunParser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.gamedata</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelicData</span><span class="p">,</span> <span class="n">Treasure</span><span class="p">,</span> <span class="n">Event</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">CommandType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">CommandType</span><span class="p">,</span> <span class="n">SaveType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">events</span><span class="p">,</span> <span class="n">archive</span>
 
 <span class="n">TConn</span><span class="p">:</span> <span class="n">TwitchConn</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2557,7 +2557,7 @@
 <div class="viewcode-block" id="save_cache">
 <a class="viewcode-back" href="../../server.html#src.server.save_cache">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">save_cache</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">save_cache</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="c1"># TODO: &#39;cache reload&#39;, to reload the JSON, but it needs a bunch of state changing</span>
     <span class="c1"># (need to clear all the commands from both bots first)</span>
     <span class="k">match</span> <span class="n">arg</span><span class="p">:</span>
@@ -2592,8 +2592,12 @@
 <div class="viewcode-block" id="bluekey">
 <a class="viewcode-back" href="../../server.html#src.server.bluekey">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;bluekey&quot;</span><span class="p">,</span> <span class="s2">&quot;sapphirekey&quot;</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">bluekey</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">bluekey</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display what was skipped for the Sapphire key.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">game_version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;We can&#39;t get keys yet!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">save</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">sapphire_key_obtained</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;We do not have the Sapphire key.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
@@ -2613,7 +2617,7 @@
 <div class="viewcode-block" id="cards_removed">
 <a class="viewcode-back" href="../../server.html#src.server.cards_removed">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;removals&quot;</span><span class="p">,</span> <span class="s2">&quot;removed&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">cards_removed</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">cards_removed</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display which cards were removed.&quot;&quot;&quot;</span>
     <span class="n">removed</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">card</span><span class="p">,</span> <span class="n">floor</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">removals</span><span class="p">:</span>
@@ -2627,22 +2631,25 @@
 
 <div class="viewcode-block" id="neowbonus">
 <a class="viewcode-back" href="../../server.html#src.server.neowbonus">[docs]</a>
-<span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;neow&quot;</span><span class="p">,</span> <span class="s2">&quot;neowbonus&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">neowbonus</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;ancients&quot;</span><span class="p">,</span> <span class="s2">&quot;ancient&quot;</span><span class="p">,</span> <span class="s2">&quot;ancientbonus&quot;</span><span class="p">,</span> <span class="s2">&quot;neow&quot;</span><span class="p">,</span> <span class="s2">&quot;neowbonus&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">neowbonus</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display what the Neow bonus was.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">choice_made</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;No Neow bonus taken yet.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">game_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">choice_made</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;No Neow bonus taken yet.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Option taken: </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">boon_picked</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">as_str</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">has_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Option taken: </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">boon_picked</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">as_str</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">has_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span></div>
+        <span class="k">pass</span></div>
 
 
 
 <div class="viewcode-block" id="neow_skipped">
 <a class="viewcode-back" href="../../server.html#src.server.neow_skipped">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;neowskipped&quot;</span><span class="p">,</span> <span class="s2">&quot;skippedbonus&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">neow_skipped</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">neow_skipped</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">save</span><span class="o">.</span><span class="n">neow_bonus</span><span class="o">.</span><span class="n">choice_made</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;No Neow bonus taken yet.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -2653,7 +2660,7 @@
 <div class="viewcode-block" id="what_if_box">
 <a class="viewcode-back" href="../../server.html#src.server.what_if_box">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;pandora&quot;</span><span class="p">,</span> <span class="s2">&quot;pbox&quot;</span><span class="p">,</span> <span class="s2">&quot;pandorasbox&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">what_if_box</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">what_if_box</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Tell us what the Pandora&#39;s Box gave us.&quot;&quot;&quot;</span>
     <span class="n">pbox</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">:</span>
@@ -2681,7 +2688,7 @@
 <div class="viewcode-block" id="seed_cmd">
 <a class="viewcode-back" href="../../server.html#src.server.seed_cmd">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seed&quot;</span><span class="p">,</span> <span class="s2">&quot;currentseed&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seed_cmd</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seed_cmd</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the run&#39;s current seed.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Current seed: </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">seed</span><span class="si">}{</span><span class="s1">&#39; (set manually)&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">save</span><span class="o">.</span><span class="n">is_seeded</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2692,7 +2699,7 @@
 <div class="viewcode-block" id="is_seeded">
 <a class="viewcode-back" href="../../server.html#src.server.is_seeded">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seeded&quot;</span><span class="p">,</span> <span class="s2">&quot;isthisseeded&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">is_seeded</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">is_seeded</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display whether the current run is seeded.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">is_seeded</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
@@ -2708,7 +2715,7 @@
 <div class="viewcode-block" id="run_playtime">
 <a class="viewcode-back" href="../../server.html#src.server.run_playtime">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;playtime&quot;</span><span class="p">,</span> <span class="s2">&quot;runtime&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;played&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_playtime</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_playtime</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current playtime for the run.&quot;&quot;&quot;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">-</span> <span class="n">save</span><span class="o">.</span><span class="n">timedelta</span>
     <span class="n">seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>
@@ -2723,7 +2730,7 @@
 <div class="viewcode-block" id="shop_removal_cost">
 <a class="viewcode-back" href="../../server.html#src.server.shop_removal_cost">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;shopremoval&quot;</span><span class="p">,</span> <span class="s2">&quot;cardremoval&quot;</span><span class="p">,</span> <span class="s2">&quot;removal&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">shop_removal_cost</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">shop_removal_cost</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current shop removal cost.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Current card removal cost: </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">current_purge</span><span class="si">}</span><span class="s2"> (removed </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">purge_totals</span><span class="si">}</span><span class="s2"> card</span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">save</span><span class="o">.</span><span class="n">purge_totals</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;s&#39;</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -2734,7 +2741,7 @@
 <div class="viewcode-block" id="shop_prices">
 <a class="viewcode-back" href="../../server.html#src.server.shop_prices">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;shopprices&quot;</span><span class="p">,</span> <span class="s2">&quot;shopranges&quot;</span><span class="p">,</span> <span class="s2">&quot;shoprange&quot;</span><span class="p">,</span> <span class="s2">&quot;ranges&quot;</span><span class="p">,</span> <span class="s2">&quot;shop&quot;</span><span class="p">,</span> <span class="s2">&quot;prices&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">shop_prices</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">shop_prices</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current shop price ranges.&quot;&quot;&quot;</span>
     <span class="n">cards</span><span class="p">,</span> <span class="n">colorless</span><span class="p">,</span> <span class="n">relics</span><span class="p">,</span> <span class="n">potions</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">shop_prices</span>
     <span class="n">cc</span><span class="p">,</span> <span class="n">uc</span><span class="p">,</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">cards</span>
@@ -2754,7 +2761,7 @@
 <div class="viewcode-block" id="campfire_heal">
 <a class="viewcode-back" href="../../server.html#src.server.campfire_heal">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;rest&quot;</span><span class="p">,</span> <span class="s2">&quot;heal&quot;</span><span class="p">,</span> <span class="s2">&quot;restheal&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">campfire_heal</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">campfire_heal</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current heal at campfires.&quot;&quot;&quot;</span>
     <span class="n">base</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">max_health</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">relic</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">:</span>
@@ -2774,7 +2781,7 @@
 <div class="viewcode-block" id="nloth_traded">
 <a class="viewcode-back" href="../../server.html#src.server.nloth_traded">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;nloth&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">nloth_traded</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">nloth_traded</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display which relic was traded for N&#39;loth&#39;s Gift.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">get</span><span class="p">(</span><span class="s2">&quot;Nloth&#39;s Gift&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics_bare</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;We do not have N&#39;loth&#39;s Gift.&quot;</span><span class="p">)</span>
@@ -2792,7 +2799,7 @@
 <div class="viewcode-block" id="event_likelihood">
 <a class="viewcode-back" href="../../server.html#src.server.event_likelihood">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;eventchances&quot;</span><span class="p">,</span> <span class="s2">&quot;event&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_likelihood</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_likelihood</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display current event chances for the various possibilities in ? rooms.&quot;&quot;&quot;</span>
     <span class="c1"># note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms</span>
     <span class="n">elite</span><span class="p">,</span> <span class="n">hallway</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="n">chest</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">event_chances</span>
@@ -2812,7 +2819,7 @@
 <div class="viewcode-block" id="rare_card_chances">
 <a class="viewcode-back" href="../../server.html#src.server.rare_card_chances">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;rare&quot;</span><span class="p">,</span> <span class="s2">&quot;rarecard&quot;</span><span class="p">,</span> <span class="s2">&quot;rarechance&quot;</span><span class="p">)</span>  <span class="c1"># see comment in save.py -- this is not entirely accurate</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">rare_card_chances</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">rare_card_chances</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current chance to see rare cards in rewards and shops.&quot;&quot;&quot;</span>
     <span class="n">regular</span><span class="p">,</span> <span class="n">elites</span><span class="p">,</span> <span class="n">shops</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">rare_chance</span>
     <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
@@ -2826,7 +2833,7 @@
 <div class="viewcode-block" id="relic_info">
 <a class="viewcode-back" href="../../server.html#src.server.relic_info">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;relic&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">relic_info</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">relic_info</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display information about the current relics.&quot;&quot;&quot;</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="p">:</span>
@@ -2851,7 +2858,7 @@
 <div class="viewcode-block" id="relics_page2">
 <a class="viewcode-back" href="../../server.html#src.server.relics_page2">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;allrelics&quot;</span><span class="p">,</span> <span class="s2">&quot;offscreen&quot;</span><span class="p">,</span> <span class="s2">&quot;page2&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">relics_page2</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">relics_page2</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the relics on page 2.&quot;&quot;&quot;</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">:</span>
@@ -2953,7 +2960,7 @@
 <div class="viewcode-block" id="seen_relic">
 <a class="viewcode-back" href="../../server.html#src.server.seen_relic">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;seen&quot;</span><span class="p">,</span> <span class="s2">&quot;seenrelic&quot;</span><span class="p">,</span> <span class="s2">&quot;seencard&quot;</span><span class="p">,</span> <span class="s2">&quot;available&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seen_relic</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="o">*</span><span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">seen_relic</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">,</span> <span class="o">*</span><span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Output whether a given relic or card has been seen.&quot;&quot;&quot;</span>
     <span class="n">item</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
     <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
@@ -2982,7 +2989,7 @@
 <div class="viewcode-block" id="skipped_boss_relics">
 <a class="viewcode-back" href="../../server.html#src.server.skipped_boss_relics">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;skipped&quot;</span><span class="p">,</span> <span class="s2">&quot;picked&quot;</span><span class="p">,</span> <span class="s2">&quot;skippedboss&quot;</span><span class="p">,</span> <span class="s2">&quot;bossrelic&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">skipped_boss_relics</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">skipped_boss_relics</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the boss relics that were taken and skipped.&quot;&quot;&quot;</span>
     <span class="n">choices</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">boss_relics</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">choices</span><span class="p">:</span>
@@ -3011,7 +3018,7 @@
 <div class="viewcode-block" id="bottled_cards">
 <a class="viewcode-back" href="../../server.html#src.server.bottled_cards">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span> <span class="s2">&quot;bottled&quot;</span><span class="p">,</span> <span class="s2">&quot;bottledcards&quot;</span><span class="p">,</span> <span class="s2">&quot;bottledcard&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">bottled_cards</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">bottled_cards</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;List all bottled cards.&quot;&quot;&quot;</span>
     <span class="n">emoji_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;Bottled Flame&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\N{FIRE}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -3032,7 +3039,7 @@
 <div class="viewcode-block" id="dagger_scaling">
 <a class="viewcode-back" href="../../server.html#src.server.dagger_scaling">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;dagger&quot;</span><span class="p">,</span> <span class="s2">&quot;ritualdagger&quot;</span><span class="p">)</span> <span class="c1"># TODO: add tests for these</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">dagger_scaling</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">dagger_scaling</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the damage value of Ritual Dagger.&quot;&quot;&quot;</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">scaling</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">get_meta_scaling_cards</span><span class="p">()</span>
@@ -3059,7 +3066,7 @@
 <div class="viewcode-block" id="algo_scaling">
 <a class="viewcode-back" href="../../server.html#src.server.algo_scaling">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;algo&quot;</span><span class="p">,</span> <span class="s2">&quot;genetic&quot;</span><span class="p">,</span> <span class="s2">&quot;algorithm&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">algo_scaling</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">algo_scaling</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the block value of Genetic Algorithm.&quot;&quot;&quot;</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">scaling</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">get_meta_scaling_cards</span><span class="p">()</span>
@@ -3083,7 +3090,7 @@
 <div class="viewcode-block" id="modifiers">
 <a class="viewcode-back" href="../../server.html#src.server.modifiers">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span> <span class="s2">&quot;modifiers&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">modifiers</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">modifiers</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;List all custom modifiers for the run.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">modifiers</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">modifiers</span><span class="p">))</span>
@@ -3095,7 +3102,7 @@
 <div class="viewcode-block" id="score">
 <a class="viewcode-back" href="../../server.html#src.server.score">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the current score of the run&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">modded</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current Score: ~</span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
@@ -3670,7 +3677,7 @@
 <div class="viewcode-block" id="unmastered">
 <a class="viewcode-back" href="../../server.html#src.server.unmastered">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;unmastered&quot;</span><span class="p">,</span> <span class="n">optional_save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unmastered</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unmastered</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;unmastered&quot;</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;unmastered&quot;</span><span class="p">])</span>
         <span class="k">return</span>
@@ -3753,7 +3760,7 @@
 <div class="viewcode-block" id="current_mastery_check">
 <a class="viewcode-back" href="../../server.html#src.server.current_mastery_check">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;candidates&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">current_mastery_check</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">current_mastery_check</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Output what cards in the current run can be mastered if won.&quot;&quot;&quot;</span>
     <span class="n">one_ofs</span><span class="p">,</span> <span class="n">cards_can_master</span><span class="p">,</span> <span class="n">relics_can_master</span> <span class="o">=</span> <span class="n">get_current_masteries</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cards_can_master</span><span class="p">:</span>
@@ -3768,7 +3775,7 @@
 <div class="viewcode-block" id="calipers">
 <a class="viewcode-back" href="../../server.html#src.server.calipers">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;cwbgh&quot;</span><span class="p">,</span> <span class="s2">&quot;cwbg&quot;</span><span class="p">,</span> <span class="n">optional_save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">calipers</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Savefile</span><span class="p">]):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">calipers</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SaveType</span><span class="p">]):</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Calipers would be good here baalorCalipers baalorSmug&quot;</span>
     <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
         <span class="k">if</span> <span class="s1">&#39;Barricade&#39;</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">deck_card_ids</span><span class="p">:</span>
@@ -3785,7 +3792,7 @@
 <div class="viewcode-block" id="active_mods">
 <a class="viewcode-back" href="../../server.html#src.server.active_mods">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;mods&quot;</span><span class="p">,</span> <span class="n">optional_save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">active_mods</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">active_mods</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
     <span class="c1"># use the old message if we don&#39;t have info from activemods</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods&quot;</span>
     <span class="k">if</span> <span class="n">save</span> <span class="ow">and</span> <span class="n">save</span><span class="o">.</span><span class="n">has_activemods</span><span class="p">:</span>
@@ -3800,7 +3807,7 @@
 <div class="viewcode-block" id="active_mod_info">
 <a class="viewcode-back" href="../../server.html#src.server.active_mod_info">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;mod&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">active_mod_info</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">,</span> <span class="o">*</span><span class="n">modname</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">active_mod_info</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">,</span> <span class="o">*</span><span class="n">modname</span><span class="p">):</span>
     <span class="c1"># don&#39;t do anything if we don&#39;t have info from activemods</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">has_activemods</span><span class="p">:</span>
         <span class="n">modname</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
