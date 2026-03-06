@@ -238,7 +238,7 @@ async def main():
                                 has_save = False
 
                     if poss_2 is None and s2_save: # server has a save, but we don't (anymore)
-                        async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": False, "start": start}) as resp:
+                        async with session.post("/sync/save-2", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
                             if resp.ok:
                                 s2_save = False
 
