@@ -552,14 +552,16 @@ async def receive_save(req: Request):
 @router.post("/sync/save-2")
 async def get_save2(req: Request):
     content = (await get_req_data(req, "savefile"))[0]
+    print("Syncing save")
 
     if content:
         j = json.loads(content)
         _save2.update_data(j)
+        print("Data updated!")
 
     return Response()
 
-def get_savefile() -> Savefile:
+def get_savefile() -> Savefile | Save2:
     """Get the current savefile. Check for :meth:`Savefile.in_game` before using."""
     if _save2.in_game:
         return _save2
