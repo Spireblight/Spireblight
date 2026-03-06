@@ -474,6 +474,12 @@ class Save2:
         return None
 
     @property
+    def relics(self):
+        relic: dict[str, str]
+        for relic in self._data["players"][0]["relics"]:
+            yield relic["id"].partition(".")[2].replace("_", " ").title()
+
+    @property
     def ancient_choices(self):
         pass
 
@@ -552,12 +558,10 @@ async def receive_save(req: Request):
 @router.post("/sync/save-2")
 async def get_save2(req: Request):
     content = (await get_req_data(req, "savefile"))[0]
-    print("Syncing save")
 
     if content:
         j = json.loads(content)
         _save2.update_data(j)
-        print("Data updated!")
 
     return Response()
 

@@ -2269,6 +2269,19 @@ async def rare_card_chances(ctx: ContextType, save: SaveType):
     )
 
 
+def _sts1_relics(index: int, lst: list[RelicData]):
+    relicData = lst[index - 1]
+    stats = ""
+    if (s := relicData.get_details()):
+        stats = " (" + " | ".join(s) + ")"
+    return f"The relic at position {index} is {relicData.name}: {relicData.relic.description}{stats}"
+
+def _sts2_relics(index: int, lst: list[str]):
+    relic = lst[index - 1].partition(".")[2]
+    data: Relic = get(relic)
+
+    return f"The relic at position {index} is {data.name}: {data.description}"
+
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, save: SaveType, index: int = 0):
     """Display information about the current relics."""
@@ -2282,13 +2295,10 @@ async def relic_info(ctx: ContextType, save: SaveType, index: int = 0):
         await ctx.reply(f"We only have {len(l)} relics!")
         return
 
-    relicData = l[index - 1]
-    stats = ""
-    if (s := relicData.get_details()):
-        stats = " (" + " | ".join(s) + ")"
-    await ctx.reply(
-        f"The relic at position {index} is {relicData.name}: {relicData.relic.description}{stats}"
-    )
+    if save.game_version == 1:
+        await ctx.reply(_sts1_relics(index, l))
+    else:
+        await ctx.reply(_sts2_relics(index, l))
 
 
 @with_savefile("allrelics", "offscreen", "page2")
