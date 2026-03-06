@@ -80,7 +80,7 @@ from src.save import get_savefile, Savefile
 from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
 from src.gamedata import RelicData, Treasure, Event
 
-from src.typehints import ContextType, CommandType
+from src.typehints import ContextType, CommandType, SaveType
 from src import events, archive
 
 TConn: TwitchConn = None
@@ -2039,7 +2039,7 @@ async def card_with_art(ctx: ContextType, *line: str):
 
 
 @with_savefile("cache", flag="m")
-async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
+async def save_cache(ctx: ContextType, save: SaveType, arg: str, *args: str):
     # TODO: 'cache reload', to reload the JSON, but it needs a bunch of state changing
     # (need to clear all the commands from both bots first)
     match arg:
@@ -2071,8 +2071,12 @@ async def save_cache(ctx: ContextType, save: Savefile, arg: str, *args: str):
 
 
 @with_savefile("bluekey", "sapphirekey", "key")
-async def bluekey(ctx: ContextType, save: Savefile):
+async def bluekey(ctx: ContextType, save: SaveType):
     """Display what was skipped for the Sapphire key."""
+    if save.game_version == 2:
+        await ctx.reply("We can't get keys yet!")
+        return
+
     if not save.keys.sapphire_key_obtained:
         await ctx.reply("We do not have the Sapphire key.")
         return
@@ -2089,7 +2093,7 @@ async def bluekey(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("removals", "removed")
-async def cards_removed(ctx: ContextType, save: Savefile):
+async def cards_removed(ctx: ContextType, save: SaveType):
     """Display which cards were removed."""
     removed = []
     for card, floor in save.removals:
@@ -2100,19 +2104,22 @@ async def cards_removed(ctx: ContextType, save: Savefile):
         await ctx.reply(f"We removed {len(removed)} cards: {', '.join(removed)}.")
 
 
-@with_savefile("neow", "neowbonus")
-async def neowbonus(ctx: ContextType, save: Savefile):
+@with_savefile("ancients", "ancient", "ancientbonus", "neow", "neowbonus")
+async def neowbonus(ctx: ContextType, save: SaveType):
     """Display what the Neow bonus was."""
-    if not save.neow_bonus.choice_made:
-        await ctx.reply("No Neow bonus taken yet.")
+    if save.game_version == 1:
+        if not save.neow_bonus.choice_made:
+            await ctx.reply("No Neow bonus taken yet.")
+        else:
+            await ctx.reply(
+                f"Option taken: {save.neow_bonus.boon_picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
+            )
     else:
-        await ctx.reply(
-            f"Option taken: {save.neow_bonus.boon_picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
-        )
+        pass
 
 
 @with_savefile("neowskipped", "skippedbonus")
-async def neow_skipped(ctx: ContextType, save: Savefile):
+async def neow_skipped(ctx: ContextType, save: SaveType):
     if not save.neow_bonus.choice_made:
         await ctx.reply("No Neow bonus taken yet.")
     else:
@@ -2120,7 +2127,7 @@ async def neow_skipped(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("pandora", "pbox", "pandorasbox")
-async def what_if_box(ctx: ContextType, save: Savefile):
+async def what_if_box(ctx: ContextType, save: SaveType):
     """Tell us what the Pandora's Box gave us."""
     pbox = None
     for data in save.relics:
@@ -2145,7 +2152,7 @@ async def what_if_box(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("seed", "currentseed")
-async def seed_cmd(ctx: ContextType, save: Savefile):
+async def seed_cmd(ctx: ContextType, save: SaveType):
     """Display the run's current seed."""
     await ctx.reply(
         f"Current seed: {save.seed}{' (set manually)' if save.is_seeded else ''}"
@@ -2153,7 +2160,7 @@ async def seed_cmd(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("seeded", "isthisseeded")
-async def is_seeded(ctx: ContextType, save: Savefile):
+async def is_seeded(ctx: ContextType, save: SaveType):
     """Display whether the current run is seeded."""
     if save.is_seeded:
         await ctx.reply(
@@ -2166,7 +2173,7 @@ async def is_seeded(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("playtime", "runtime", "time", "played")
-async def run_playtime(ctx: ContextType, save: Savefile):
+async def run_playtime(ctx: ContextType, save: SaveType):
     """Display the current playtime for the run."""
     start = save.timestamp - save.timedelta
     seconds = int(time.time() - start.timestamp())
@@ -2178,7 +2185,7 @@ async def run_playtime(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("shopremoval", "cardremoval", "removal")
-async def shop_removal_cost(ctx: ContextType, save: Savefile):
+async def shop_removal_cost(ctx: ContextType, save: SaveType):
     """Display the current shop removal cost."""
     await ctx.reply(
         f"Current card removal cost: {save.current_purge} (removed {save.purge_totals} card{'' if save.purge_totals == 1 else 's'})"
@@ -2186,7 +2193,7 @@ async def shop_removal_cost(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("shopprices", "shopranges", "shoprange", "ranges", "shop", "prices")
-async def shop_prices(ctx: ContextType, save: Savefile):
+async def shop_prices(ctx: ContextType, save: SaveType):
     """Display the current shop price ranges."""
     cards, colorless, relics, potions = save.shop_prices
     cc, uc, rc = cards
@@ -2203,7 +2210,7 @@ async def shop_prices(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("rest", "heal", "restheal")
-async def campfire_heal(ctx: ContextType, save: Savefile):
+async def campfire_heal(ctx: ContextType, save: SaveType):
     """Display the current heal at campfires."""
     base = int(save.max_health * 0.3)
     for relic in save.relics:
@@ -2220,7 +2227,7 @@ async def campfire_heal(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("nloth")
-async def nloth_traded(ctx: ContextType, save: Savefile):
+async def nloth_traded(ctx: ContextType, save: SaveType):
     """Display which relic was traded for N'loth's Gift."""
     if get("Nloth's Gift") not in save.relics_bare:
         await ctx.reply("We do not have N'loth's Gift.")
@@ -2235,7 +2242,7 @@ async def nloth_traded(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("eventchances", "event")
-async def event_likelihood(ctx: ContextType, save: Savefile):
+async def event_likelihood(ctx: ContextType, save: SaveType):
     """Display current event chances for the various possibilities in ? rooms."""
     # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
     elite, hallway, shop, chest = save.event_chances
@@ -2252,7 +2259,7 @@ async def event_likelihood(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("rare", "rarecard", "rarechance")  # see comment in save.py -- this is not entirely accurate
-async def rare_card_chances(ctx: ContextType, save: Savefile):
+async def rare_card_chances(ctx: ContextType, save: SaveType):
     """Display the current chance to see rare cards in rewards and shops."""
     regular, elites, shops = save.rare_chance
     await ctx.reply(
@@ -2263,7 +2270,7 @@ async def rare_card_chances(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
+async def relic_info(ctx: ContextType, save: SaveType, index: int = 0):
     """Display information about the current relics."""
     l = list(save.relics)
     if not index:
@@ -2285,7 +2292,7 @@ async def relic_info(ctx: ContextType, save: Savefile, index: int = 0):
 
 
 @with_savefile("allrelics", "offscreen", "page2")
-async def relics_page2(ctx: ContextType, save: Savefile):
+async def relics_page2(ctx: ContextType, save: SaveType):
     """Display the relics on page 2."""
     l = list(save.relics)
     if len(l) <= 25:
@@ -2384,7 +2391,7 @@ def _see_card(data: Card, save: Savefile):
             return f"I didn't write anything special for having {a} copies, removing {b} of them, picking {c}, and skipping {d}."
 
 @with_savefile("seen", "seenrelic", "seencard", "available")
-async def seen_relic(ctx: ContextType, save: Savefile, *item: str):
+async def seen_relic(ctx: ContextType, save: SaveType, *item: str):
     """Output whether a given relic or card has been seen."""
     item = " ".join(item)
     items = [item]
@@ -2410,7 +2417,7 @@ async def seen_relic(ctx: ContextType, save: Savefile, *item: str):
 
 
 @with_savefile("skipped", "picked", "skippedboss", "bossrelic")
-async def skipped_boss_relics(ctx: ContextType, save: Savefile):
+async def skipped_boss_relics(ctx: ContextType, save: SaveType):
     """Display the boss relics that were taken and skipped."""
     choices = save.boss_relics
     if not choices:
@@ -2436,7 +2443,7 @@ async def skipped_boss_relics(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("bottle", "bottled", "bottledcards", "bottledcard")
-async def bottled_cards(ctx: ContextType, save: Savefile):
+async def bottled_cards(ctx: ContextType, save: SaveType):
     """List all bottled cards."""
     emoji_dict = {
         "Bottled Flame": "\N{FIRE}",
@@ -2454,7 +2461,7 @@ async def bottled_cards(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("dagger", "ritualdagger") # TODO: add tests for these
-async def dagger_scaling(ctx: ContextType, save: Savefile):
+async def dagger_scaling(ctx: ContextType, save: SaveType):
     """Get the damage value of Ritual Dagger."""
     ret = []
     scaling = save.get_meta_scaling_cards()
@@ -2478,7 +2485,7 @@ async def dagger_scaling(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("algo", "genetic", "algorithm")
-async def algo_scaling(ctx: ContextType, save: Savefile):
+async def algo_scaling(ctx: ContextType, save: SaveType):
     """Get the block value of Genetic Algorithm."""
     ret = []
     scaling = save.get_meta_scaling_cards()
@@ -2499,7 +2506,7 @@ async def algo_scaling(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("custom", "modifiers")
-async def modifiers(ctx: ContextType, save: Savefile):
+async def modifiers(ctx: ContextType, save: SaveType):
     """List all custom modifiers for the run."""
     if save.modifiers:
         await ctx.reply(", ".join(save.modifiers))
@@ -2508,7 +2515,7 @@ async def modifiers(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("score")
-async def score(ctx: ContextType, save: Savefile):
+async def score(ctx: ContextType, save: SaveType):
     """Display the current score of the run"""
     if save.modded:
         await ctx.reply(f"Current Score: ~{save.score} points")
@@ -3014,7 +3021,7 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
 
 
 @with_savefile("unmastered", optional_save=True)
-async def unmastered(ctx: ContextType, save: Savefile):
+async def unmastered(ctx: ContextType, save: SaveType):
     if save is not None and "unmastered" in save._cache:
         await ctx.reply(save._cache["unmastered"])
         return
@@ -3091,7 +3098,7 @@ async def mastered_stuff(ctx: ContextType, *card: str):
 
 
 @with_savefile("candidates")
-async def current_mastery_check(ctx: ContextType, save: Savefile):
+async def current_mastery_check(ctx: ContextType, save: SaveType):
     """Output what cards in the current run can be mastered if won."""
     one_ofs, cards_can_master, relics_can_master = get_current_masteries(save)
     if cards_can_master:
@@ -3103,7 +3110,7 @@ async def current_mastery_check(ctx: ContextType, save: Savefile):
 
 
 @with_savefile("cwbgh", "cwbg", optional_save=True)
-async def calipers(ctx: ContextType, save: Optional[Savefile]):
+async def calipers(ctx: ContextType, save: Optional[SaveType]):
     msg = "Calipers would be good here baalorCalipers baalorSmug"
     if save:
         if 'Barricade' in save.deck_card_ids:
@@ -3117,7 +3124,7 @@ async def calipers(ctx: ContextType, save: Optional[Savefile]):
     await ctx.reply(msg)
 
 @with_savefile("mods", optional_save=True)
-async def active_mods(ctx: ContextType, save: Savefile):
+async def active_mods(ctx: ContextType, save: SaveType):
     # use the old message if we don't have info from activemods
     msg = "Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods"
     if save and save.has_activemods:
@@ -3129,7 +3136,7 @@ async def active_mods(ctx: ContextType, save: Savefile):
     await ctx.reply(msg)
 
 @with_savefile("mod")
-async def active_mod_info(ctx: ContextType, save: Savefile, *modname):
+async def active_mod_info(ctx: ContextType, save: SaveType, *modname):
     # don't do anything if we don't have info from activemods
     if save.has_activemods:
         modname = " ".join(modname).strip()

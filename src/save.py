@@ -26,7 +26,7 @@ import src.score as _s
 
 from src.config import config
 
-__all__ = ["get_savefile", "Savefile"]
+__all__ = ["get_savefile"]
 
 _savefile = None
 
@@ -451,6 +451,13 @@ class Savefile(FileParser):
 _savefile = Savefile()
 
 class Save2:
+    """Slay the Spire 2 Savefile.
+
+    A lot of the data present here will be split between
+    run and save data like for Spire 1."""
+
+    game_version = 2
+
     def __init__(self):
         self._data: dict | None = None
 
@@ -465,6 +472,10 @@ class Save2:
             c, _, name = char_id.partition(".")
             return name.title()
         return None
+
+    @property
+    def ancient_choices(self):
+        pass
 
     def update_data(self, data: dict):
         self._data = data
@@ -550,6 +561,6 @@ async def get_save2(req: Request):
 
 def get_savefile() -> Savefile:
     """Get the current savefile. Check for :meth:`Savefile.in_game` before using."""
-    # XXX Temporary measure while Spire 2 integration is being worked on
-    #return _savefile
-    return _save2
+    if _save2.in_game:
+        return _save2
+    return _savefile

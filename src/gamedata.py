@@ -110,6 +110,8 @@ class BaseNode(ABC):
 
     """
 
+    game_version: int = 1       #: Which game version this mapping is for.
+
     room_type: str = ""         #: The display name of map nodes.
     end_of_act: bool = False    #: Whether to add a newline after this map node.
 

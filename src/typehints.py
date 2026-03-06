@@ -7,13 +7,19 @@ from discord.ext.commands import Context as DContext
 from src.twitch import TwitchCommand
 from src.disc import DiscordCommand
 
+from src.save import Savefile, Save2
+
 from src.nameinternal import Relic, Potion, SingleCard
 
 __all__ = [
+    "SaveType",
     "ContextType", "CommandType",
     "CardRewards", "RelicRewards", "PotionRewards",
     "ItemFloor", "BossRelicChoice",
 ]
+
+# game-related types
+SaveType: TypeAlias = Union[Savefile, Save2]
 
 # transport-related support
 ContextType: TypeAlias = Union[TContext, DContext]
