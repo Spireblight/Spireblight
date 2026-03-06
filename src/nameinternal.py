@@ -32,12 +32,22 @@ def sanitize(x: str) -> str:
     return x
 
 def query(name: str, type: str | None = None):
+    force = False
+    if name.endswith(" 1"): # force spire 1 data
+        name = name[:-2]
+        force = True
     name = sanitize(name)
     res = complete_match(name, _query_cache)
     if len(res) == 1:
-        ret = _query_cache[res[0]].pop(0)
+        lst = _query_cache[res[0]]
+        for i, item in enumerate(lst):
+            if item.v == (force and 1 or 2):
+                break
+        else:
+            i = 0
+        ret = lst.pop(i)
         # this makes sure to cycle through cards if there are multiple
-        _query_cache[res[0]].append(ret)
+        lst.append(ret)
         return ret
     return None
 
@@ -63,7 +73,7 @@ class Base:
         self.name = data["name"]
         self.description = data["description"]
         self.mod = data.get("mod")
-        self.v = data.get("v", 1)
+        self.v: int = data.get("v", 1)
         if self.mod in ("Slay the Spire", "Slay the Spire 2"):
             self.mod = None
 
