@@ -126,7 +126,6 @@ async def main():
 
         while True:
             try:
-                print(f"{poss_2=}")
                 time.sleep(timeout)
                 start = time.time()
                 timeout = 1
