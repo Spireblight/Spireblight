@@ -5,6 +5,7 @@ Full Spireblight API
    :maxdepth: 4
 
    fileparser
+   spire2parser
    nodes
    activemods
    archive

@@ -411,11 +411,18 @@
 <div class="viewcode-block" id="get_card">
 <a class="viewcode-back" href="../../nameinternal.html#src.nameinternal.get_card">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_card</span><span class="p">(</span><span class="n">card</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleCard</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a single card for Slay the Spire.&quot;&quot;&quot;</span>
     <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">upgrades</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
     <span class="n">inst</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">SingleCard</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">upgrades</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">))</span></div>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">get_card2</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleCard</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a single card for Slay the Spire 2.&quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">card</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SingleCard</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;current_upgrade_level&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;floor_added_to_deck&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enchantment&quot;</span><span class="p">))</span>
 
 <span class="nd">@total_ordering</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">:</span>
@@ -477,10 +484,23 @@
             <span class="n">cost</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; (Stars: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">star_cost</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - [</span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">mod</span><span class="si">}</span><span class="s2">&quot;</span>
 
+<span class="k">class</span><span class="w"> </span><span class="nc">Enchantment</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">cls_name</span> <span class="o">=</span> <span class="s2">&quot;enchantment&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">SingleCard</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span> <span class="n">upgrades</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">enchantment</span><span class="p">:</span> <span class="n">Enchantment</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span> <span class="n">upgrades</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">floor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enchantment</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="n">card</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upgrades</span> <span class="o">=</span> <span class="n">upgrades</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floor_added</span> <span class="o">=</span> <span class="n">floor</span> <span class="c1"># if None, we simply don&#39;t have the info</span>
+        <span class="k">if</span> <span class="n">enchantment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">enc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">enchantment</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">enc</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enchantment</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">enchantment</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -491,7 +511,12 @@
                 <span class="n">up</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span>
             <span class="k">case</span> <span class="n">n</span><span class="p">:</span>
                 <span class="n">up</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;+</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="n">up</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">enc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enchantment</span><span class="p">:</span>
+            <span class="n">enc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">enchantment</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">]&quot;</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="n">up</span><span class="si">}{</span><span class="n">enc</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -568,13 +593,16 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Unknown attribute </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
-<span class="n">_str_to_cls</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">_str_to_cls</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">Base</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;cards&quot;</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span>
     <span class="s2">&quot;relics&quot;</span><span class="p">:</span> <span class="n">Relic</span><span class="p">,</span>
     <span class="s2">&quot;relic_set&quot;</span><span class="p">:</span> <span class="n">RelicSet</span><span class="p">,</span>
     <span class="s2">&quot;potions&quot;</span><span class="p">:</span> <span class="n">Potion</span><span class="p">,</span>
     <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">Keyword</span><span class="p">,</span>
     <span class="s2">&quot;score_bonuses&quot;</span><span class="p">:</span> <span class="n">ScoreBonus</span><span class="p">,</span>
+    <span class="c1">#&quot;events&quot;: Event, # both games have it</span>
+    <span class="c1">#&quot;creatures&quot;: Enemy, # and this one too</span>
+    <span class="s2">&quot;enchantments&quot;</span><span class="p">:</span> <span class="n">Enchantment</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_name</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -620,7 +648,7 @@
             <span class="k">for</span> <span class="n">cat</span><span class="p">,</span> <span class="n">maps</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">_str_to_cls</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">maps</span><span class="p">:</span>
-                        <span class="n">inst</span><span class="p">:</span> <span class="n">Base</span> <span class="o">=</span> <span class="n">_str_to_cls</span><span class="p">[</span><span class="n">cat</span><span class="p">](</span><span class="n">mapping</span><span class="p">)</span>
+                        <span class="n">inst</span> <span class="o">=</span> <span class="n">_str_to_cls</span><span class="p">[</span><span class="n">cat</span><span class="p">](</span><span class="n">mapping</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">store_internal</span><span class="p">:</span>
                             <span class="n">_internal_cache</span><span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst</span>
                         <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
