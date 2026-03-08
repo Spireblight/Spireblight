@@ -58,10 +58,17 @@ def get(name: str) -> Base:
     return Unknown(name)
 
 def get_card(card: str) -> SingleCard:
+    """Return a single card for Slay the Spire."""
     name, _, upgrades = card.partition("+")
     inst = get(name)
     return SingleCard(inst, int(upgrades or 0))
 
+def get_card2(data: dict) -> SingleCard:
+    """Return a single card for Slay the Spire 2."""
+    c: str = data["id"]
+    _, _, name = c.partition(".")
+    card = get(name)
+    return SingleCard(card, data.get("current_upgrade_level", 0), data["floor_added_to_deck"], data.get("enchantment"))
 
 @total_ordering
 class Base:
@@ -123,10 +130,23 @@ class Card(Base):
             cost = f" (Stars: {self.star_cost})"
         return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
 
+class Enchantment(Base):
+    cls_name = "enchantment"
+    def __init__(self, data: dict[str: str | int]):
+        super().__init__(data)
+
 class SingleCard:
-    def __init__(self, card: Card, upgrades: int = 0):
+    enchantment: Enchantment | None = None
+    amount: int = 0
+    def __init__(self, card: Card, upgrades: int = 0, floor: int | None = None, enchantment: dict | None = None):
         self.card = card
         self.upgrades = upgrades
+        self.floor_added = floor # if None, we simply don't have the info
+        if enchantment is not None:
+            enc: str = enchantment["id"]
+            _, _, name = enc.partition(".")
+            self.enchantment = get(name)
+            self.amount = enchantment["amount"]
 
     @property
     def name(self):
@@ -137,7 +157,12 @@ class SingleCard:
                 up = "+"
             case n:
                 up = f"+{n}"
-        return f"{self.card.name}{up}"
+
+        enc = ""
+        if self.enchantment:
+            enc = f" [{self.enchantment.name} {self.amount}]"
+
+        return f"{self.card.name}{up}{enc}"
 
     def __hash__(self):
         return hash(self.name)
@@ -214,13 +239,16 @@ class Unknown(Base):
     def __getattr__(self, attr: str):
         return f"<Unknown attribute {attr}>"
 
-_str_to_cls: dict[str, Base] = {
+_str_to_cls: dict[str, type[Base]] = {
     "cards": Card,
     "relics": Relic,
     "relic_set": RelicSet,
     "potions": Potion,
     "keywords": Keyword,
     "score_bonuses": ScoreBonus,
+    #"events": Event, # both games have it
+    #"creatures": Enemy, # and this one too
+    "enchantments": Enchantment,
 }
 
 def _get_name(x: str, d: str, default: str) -> str:
@@ -257,7 +285,7 @@ async def load():
             for cat, maps in data.items():
                 if cat in _str_to_cls:
                     for mapping in maps:
-                        inst: Base = _str_to_cls[cat](mapping)
+                        inst = _str_to_cls[cat](mapping)
                         if inst.store_internal:
                             _internal_cache[inst.internal] = inst
                         _query_cache[sanitize(inst.name)].append(inst)
