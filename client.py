@@ -18,7 +18,8 @@ class Config:
     use_mt = False
     use_slice = False
     slice_curses = ""
-    spire2 = ""
+    steam_id = ""
+    user_profile = ""
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -36,10 +37,18 @@ class Config:
             elif kwargs: # Other Operating systems do not have defaults set; only error if any data was set
                 raise NotImplementedError(f"No default spiredir set for os: '{system_os}'\nSet spiredir manually in config file.")
 
-        if not self.spire2:
-            raise NotImplementedError("Set the Spire 2 dir (under AppData).")
+        self.spiredir = pathlib.Path(self.spiredir)
 
-        self.spire2 = pathlib.Path(self.spire2)
+        if not self.steam_id:
+            raise NotImplementedError("Please enter your Steam ID.")
+
+        if not self.user_profile:
+            try:
+                self.user_profile = os.environ["USERPROFILE"]
+            except KeyError:
+                raise ValueError("Please set user_profile in the config (typically << C:/Users/[USERNAME] >> on Windows).")
+
+        self.user_profile = pathlib.Path(self.user_profile)
 
     def export(self):
         return {
@@ -51,7 +60,8 @@ class Config:
             "use_mt": self.use_mt,
             "use_slice": self.use_slice,
             "slice_curses": self.slice_curses,
-            "spire2": self.spire2,
+            "steam_id": self.steam_id,
+            "user_profile": self.user_profile,
         }
 
 async def main():
@@ -67,7 +77,6 @@ async def main():
     use_sd = cfg.use_slice
     use_mt = cfg.use_mt
     last_exc = None
-    user = None
     s2_save = True
     last2 = 0
     cur2 = 0
@@ -84,21 +93,23 @@ async def main():
         print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
         time.sleep(3)
         return
-    try:
-        user = os.environ["USERPROFILE"]
-    except KeyError:
-        pass
 
-    print(f"User profile folder: {user}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
+    print(f"User profile folder: {cfg.user_profile}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
 
     if use_mt:
-        mt_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain")
-        mt_file = os.path.join(mt_folder, "saves", "save-singlePlayer.json")
+        mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
+        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
         print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
 
-        mt2_folder = os.path.join(user, "AppData", "LocalLow", "Shiny Shoe", "MonsterTrain2")
-        mt2_file = os.path.join(mt2_folder, "saves", "save-singlePlayer.json")
+        mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
+        mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
         print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
+
+    if use_sd:
+        sd_file = cfg.user_profile / ".prefs" / "slice-and-dice-3"
+
+    spire1_saves = cfg.spiredir / "saves"
+    spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
 
     async with ClientSession(cfg.server_url) as session:
         # Check if the app is registered, prompt it if not
@@ -130,8 +141,8 @@ async def main():
                 start = time.time()
                 timeout = 1
                 if possible is None:
-                    for file in os.listdir(os.path.join(cfg.spiredir, "saves")):
-                        if file.endswith(".autosave"):
+                    for file in (cfg.spiredir / "saves").iterdir():
+                        if file.name.endswith(".autosave"):
                             if possible is None:
                                 possible = file
                             else:
@@ -141,13 +152,13 @@ async def main():
 
                 if possible is not None:
                     try:
-                        cur = os.path.getmtime(os.path.join(cfg.spiredir, "saves", possible))
+                        cur = (spire1_saves / possible).stat().st_mtime
                     except OSError:
                         possible = None
 
                 if poss_2 is None: # TODO: carry over profiles, more save stuff
                     potential: list[pathlib.Path] = []
-                    for file in cfg.spire2.iterdir():
+                    for file in spire2_saves.iterdir():
                         if file.name.startswith("profile"):
                             save2 = file / "saves" / "current_run.save"
                             if save2.exists():
@@ -163,12 +174,12 @@ async def main():
 
                 if use_sd:
                     try:
-                        cur_sd = os.path.getmtime(os.path.join(user, ".prefs", "slice-and-dice-3"))
+                        cur_sd = sd_file.stat().st_mtime
                     except OSError:
                         pass
                     else:
                         if cur_sd != last_sd:
-                            with open(os.path.join(user, ".prefs", "slice-and-dice-3")) as f:
+                            with sd_file.open() as f:
                                 sd_data = f.read()
                             sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
                             async with session.post("/sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
@@ -183,18 +194,32 @@ async def main():
                                         except OSError:
                                             pass
 
-                to_send = []
+                to_send: list[tuple[pathlib.Path, list[str], str, str]] = []
                 files = []
-                if possible is None and cfg.sync_runs: # don't check run files during a run
-                    for path, folders, _f in os.walk(os.path.join(cfg.spiredir, "runs")):
+                if possible is None and poss_2 is None and cfg.sync_runs: # don't check run files during a run
+                    # Spire 1
+                    for path, folders, _f in (cfg.spiredir / "runs").walk():
                         for folder in folders:
                             profile = "0"
                             if folder[0].isdigit():
                                 profile = folder[0]
-                            for p1, d1, f1 in os.walk(os.path.join(path, folder)):
+                            for p1, d1, f1 in (path / folder).walk():
                                 for file in f1:
                                     if file > last_run:
-                                        to_send.append((p1, file, profile))
+                                        to_send.append((p1, [file], profile, "1"))
+                                        files.append(file)
+
+                    # Spire 2
+                    for path, folders, _f in spire2_saves.walk():
+                        for folder in folders:
+                            profile = folder[-1]
+                            runpath = path / folder / "saves" / "history"
+                            if not runpath.exists():
+                                continue
+                            for p2, d2, f2 in runpath.walk():
+                                for file in f2:
+                                    if file > last_run:
+                                        to_send.append((p2, [folder, "saves", "history"], profile, "2"))
                                         files.append(file)
 
                 try:
@@ -225,11 +250,13 @@ async def main():
 
                     all_sent = True
                     if to_send: # send runs first so savefile can seamlessly transfer its cache
-                        for path, file, profile in to_send:
-                            with open(os.path.join(path, file)) as f:
+                        for path, files, profile, version in to_send:
+                            for file in files:
+                                path /= file
+                            with path.open() as f:
                                 content = f.read()
                             content = content.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile}, params={"key": cfg.secret, "start": start}) as resp:
+                            async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile, "version": version}, params={"key": cfg.secret, "start": start}) as resp:
                                 if not resp.ok:
                                     all_sent = False
                         if all_sent:
@@ -237,6 +264,7 @@ async def main():
                             with open("last_run", "w") as f:
                                 f.write(last_run)
 
+                    # XXX: consolidate into one endpoint
                     if possible is None and has_save: # server has a save, but we don't (anymore)
                         async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
                             if resp.ok:
@@ -354,13 +382,13 @@ async def main():
                     if possible is not None and cur != last:
                         content = ""
                         try:
-                            with open(os.path.join(cfg.spiredir, "saves", possible)) as f:
+                            with possible.open() as f:
                                 content = f.read()
                         except OSError:
                             possible = None
                         else:
                             content = content.encode("utf-8", "xmlcharrefreplace")
-                            char = possible[:-9].encode("utf-8", "xmlcharrefreplace")
+                            char = possible.name[:-9].encode("utf-8", "xmlcharrefreplace")
                             async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
                                 if resp.ok:
                                     last = cur

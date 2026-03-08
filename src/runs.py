@@ -402,15 +402,21 @@ async def compare_runs(req: Request):
 
 @router.post("/sync/run")
 async def receive_run(req: Request) -> Response:
-    content, name, profile = await get_req_data(req, "run", "name", "profile")
+    content, name, profile, version = await get_req_data(req, "run", "name", "profile", "version")
 
-    with open(os.path.join("data", "runs", profile, name), "w") as f:
-        f.write(content)
-    data = json.loads(content)
-    if name not in _cache:
-        _cache[name] = parser = RunParser(name, int(profile), data)
-        _ts_cache[parser._data["timestamp"]] = parser
-        _update_cache()
+    if version == "1":
+        with open(os.path.join("data", "runs", profile, name), "w") as f:
+            f.write(content)
+        data = json.loads(content)
+        if name not in _cache:
+            _cache[name] = parser = RunParser(name, int(profile), data)
+            _ts_cache[parser._data["timestamp"]] = parser
+            _update_cache()
+
+    elif version == "2":
+        # TODO: Run handling. we can store them for later, though
+        with open(os.path.join("data", "runs_spire2", profile, name), "w") as f:
+            f.write(content)
 
     logger.debug(f"Received run history file. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
 
