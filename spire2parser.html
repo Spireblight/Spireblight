@@ -381,59 +381,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-src.2game2data">
-<span id="slay-the-spire-2-run-parsing"></span><h1>Slay the Spire 2 run parsing<a class="headerlink" href="#module-src.2game2data" title="Link to this heading">#</a></h1>
-<p>Parsing of Slay the Spire 2 run history and savefile.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="src.2game2data.Player">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/2game2data.html#Player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.2game2data.Player" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Hold game information for one player.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="src.2game2data.Player.character">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><a class="headerlink" href="#src.2game2data.Player.character" title="Link to this definition">#</a></dt>
-<dd><p>Which character we’re playing.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.2game2data.Player.relics">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relics</span></span><a class="headerlink" href="#src.2game2data.Player.relics" title="Link to this definition">#</a></dt>
-<dd><p>The relics at run end/current node.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.2game2data.Player.deck">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deck</span></span><a class="headerlink" href="#src.2game2data.Player.deck" title="Link to this definition">#</a></dt>
-<dd><p>The deck at run end/current node.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.2game2data.FileParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/2game2data.html#FileParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.2game2data.FileParser" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Hold a single run (ongoing or not) data.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="src.2game2data.FileParser.ascension">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ascension</span></span><a class="headerlink" href="#src.2game2data.FileParser.ascension" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.2game2data.FileParser.players">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">players</span></span><a class="headerlink" href="#src.2game2data.FileParser.players" title="Link to this definition">#</a></dt>
-<dd><p>Read-only list of all players in this game.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.2game2data.RelicData">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RelicData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/2game2data.html#RelicData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.2game2data.RelicData" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>View relics and their information.</p>
-</dd></dl>
-
+  <section id="slay-the-spire-2-run-parsing">
+<h1>Slay the Spire 2 run parsing<a class="headerlink" href="#slay-the-spire-2-run-parsing" title="Link to this heading">#</a></h1>
 </section>
 
 
@@ -474,29 +423,6 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.Player.character"><code class="docutils literal notranslate"><span class="pre">Player.character</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.Player.relics"><code class="docutils literal notranslate"><span class="pre">Player.relics</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.Player.deck"><code class="docutils literal notranslate"><span class="pre">Player.deck</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.FileParser"><code class="docutils literal notranslate"><span class="pre">FileParser</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.FileParser.ascension"><code class="docutils literal notranslate"><span class="pre">FileParser.ascension</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.FileParser.players"><code class="docutils literal notranslate"><span class="pre">FileParser.players</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.2game2data.RelicData"><code class="docutils literal notranslate"><span class="pre">RelicData</span></code></a></li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
