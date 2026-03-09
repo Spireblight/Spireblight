@@ -240,6 +240,8 @@
         {% for node in run.path %}
           <img src="/static/icons/{{ node.map_icon }}"
             title="Floor {{ node.floor }}"
+            width="48"
+            height="48"
             onclick="neowText('Floor {{ node.floor }}', '{{ node.escaped_description() }}')">
           {# This is unfortunate logic, but it does the thing. #}
           {% if node.end_of_act %}
