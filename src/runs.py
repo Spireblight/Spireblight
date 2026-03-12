@@ -19,6 +19,7 @@ from src.cache.cache_helpers import RunLinkedListNode
 from src.cache.mastered import update_mastery_stats
 from src.cache.streaks import update_streak_collections
 from src.sts_profile import get_profile
+from src.gamedata2 import FileParser as FP2
 from src.gamedata import FileParser, KeysObtained, _enemies
 from src.webpage import router
 from src.logger import logger
@@ -31,8 +32,8 @@ if TYPE_CHECKING:
 
 __all__ = ["get_latest_run", "get_parser", "RunParser", "StreakInfo"]
 
-_cache: dict[str, RunParser] = {}
-_ts_cache: dict[int, RunParser] = {}
+_cache: dict[str, RunParser | Run2Parser] = {}
+_ts_cache: dict[int, RunParser | Run2Parser] = {}
 
 def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
     _update_cache()
@@ -249,6 +250,11 @@ class RunParser(FileParser):
     def mods(self) -> list[ActiveMod]:
         return self.activemods.all_mods
 
+class Run2Parser(FP2):
+    def __init__(self, data):
+        super().__init__(data)
+        self.matched = RunLinkedListNode()
+
 class StreakInfo(NamedTuple):
     """Contain run streak information."""
     streak: int
@@ -259,52 +265,56 @@ class StreakInfo(NamedTuple):
 async def _setup_cache():
     for i in range(3):
         os.makedirs(os.path.join("data", "runs", str(i)), exist_ok=True)
+    for i in range(3):
+        os.makedirs(os.path.join("data", "runs2", str(i+1)), exist_ok=True)
     _update_cache()
 
 def _update_cache():
     start = time.time()
-    for path, folders, files in os.walk(os.path.join("data", "runs")):
-        for folder in folders:
-            profile = int(folder)
-            _cur_cache: dict[int, RunParser] = {}
-            for p1, d1, f1 in os.walk(os.path.join(path, folder)):
-                for file in f1:
-                    if file in _cache:
-                        parser = _cache[file]
-                    else:
-                        with open(os.path.join(p1, file)) as f:
-                            _cache[file] = parser = RunParser(file, profile, json.load(f))
-                            _ts_cache[parser._data["timestamp"]] = parser
-                    _cur_cache[parser._data["timestamp"]] = parser
+    for i in range(2):
+        for path, folders, files in os.walk(os.path.join("data", (i and "runs2" or "runs"))):
+            cls = i and Run2Parser or RunParser
+            for folder in folders:
+                profile = int(folder)
+                _cur_cache: dict[int, RunParser | Run2Parser] = {}
+                for p1, d1, f1 in os.walk(os.path.join(path, folder)):
+                    for file in f1:
+                        if file in _cache:
+                            parser = _cache[file]
+                        else:
+                            with open(os.path.join(p1, file)) as f:
+                                _cache[file] = parser = cls(file, profile, json.load(f))
+                                _ts_cache[parser._data["timestamp"]] = parser
+                        _cur_cache[parser._data["timestamp"]] = parser
 
-            prev = None
-            prev_char: dict[str, RunParser | None] = {}
-            prev_win = None
-            prev_loss = None
+                prev = None
+                prev_char: dict[str, RunParser | Run2Parser | None] = {}
+                prev_win = None
+                prev_loss = None
 
-            for t in sorted(_cur_cache):
-                cur = _cur_cache[t]
-                if prev is not None:
-                    if cur.matched.prev is None:
-                        prev.matched.next = cur
-                        cur.matched.prev = prev
-                    if cur.character not in prev_char:
-                        prev_char[cur.character] = None
-                    if cur.matched.prev_char is None and (c := prev_char[cur.character]) is not None:
-                        c.matched.next_char = cur
-                        cur.matched.prev_char = c
-                    prev_char[cur.character] = cur
-                    if cur.won:
-                        if cur.matched.prev_win is None and prev_win is not None:
-                            prev_win.matched.next_win = cur
-                            cur.matched.prev_win = prev_win
-                        prev_win = cur
-                    else:
-                        if cur.matched.prev_loss is None and prev_loss is not None:
-                            prev_loss.matched.next_loss = cur
-                            cur.matched.prev_loss = prev_loss
-                        prev_loss = cur
-                prev = cur
+                for t in sorted(_cur_cache):
+                    cur = _cur_cache[t]
+                    if prev is not None:
+                        if cur.matched.prev is None:
+                            prev.matched.next = cur
+                            cur.matched.prev = prev
+                        if cur.character not in prev_char:
+                            prev_char[cur.character] = None
+                        if cur.matched.prev_char is None and (c := prev_char[cur.character]) is not None:
+                            c.matched.next_char = cur
+                            cur.matched.prev_char = c
+                        prev_char[cur.character] = cur
+                        if cur.won:
+                            if cur.matched.prev_win is None and prev_win is not None:
+                                prev_win.matched.next_win = cur
+                                cur.matched.prev_win = prev_win
+                            prev_win = cur
+                        else:
+                            if cur.matched.prev_loss is None and prev_loss is not None:
+                                prev_loss.matched.next_loss = cur
+                                cur.matched.prev_loss = prev_loss
+                            prev_loss = cur
+                    prev = cur
 
     update_all_run_stats()
     update_mastery_stats()
@@ -415,7 +425,7 @@ async def receive_run(req: Request) -> Response:
 
     elif version == "2":
         # TODO: Run handling. we can store them for later, though
-        with open(os.path.join("data", "runs_spire2", profile, name), "w") as f:
+        with open(os.path.join("data", "runs2", profile, name), "w") as f:
             f.write(content)
 
     logger.debug(f"Received run history file. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
