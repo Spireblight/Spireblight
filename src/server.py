@@ -2993,6 +2993,22 @@ async def get_wrs(ctx: ContextType, *, _cache={"data": None, "text": None}):
     _cache["data"] = data
     _cache["text"] = final
 
+@command("damage")
+async def architect_total_damage(ctx: ContextType):
+    """Return the total damage that The Architect has sustained."""
+    data = None
+    if TConn._session is None:
+        TConn._session = ClientSession()
+    async with TConn._session.get("https://api.steampowered.com/ISteamUserStats/GetGlobalStatsForGame/v1/?appid=2868840&count=1&name%5B0%5D=architect_damage") as resp:
+        if resp.ok:
+            data = await resp.json()
+
+    if data is not None:
+        dmg = int(data["response"]["globalstats"]["architect_damage"]["total"])
+        return await ctx.reply(f"The total damage The Architect has received is {dmg:,}")
+
+    await ctx.reply("Could not query Steam API.")
+
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the winrate for Baalor's A20 Heart kills for an optional date range."""
