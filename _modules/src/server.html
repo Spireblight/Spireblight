@@ -3358,7 +3358,7 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wall_card</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch the card in the wall for the ladder savefile.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">get_profile</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">get_profile</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;ladder&quot;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
             <span class="k">break</span>
     <span class="k">else</span><span class="p">:</span>

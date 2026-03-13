@@ -361,7 +361,7 @@
 <a class="viewcode-back" href="../../../cache.html#src.cache.streaks.update_streak_collections">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_streak_collections</span><span class="p">():</span>
     <span class="c1"># First we grab all the runs from the BaalorA20 profile.</span>
-    <span class="n">profile</span> <span class="o">=</span> <span class="n">get_profile</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">get_profile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">profile</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">profile</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No runs found to group into streak&quot;</span><span class="p">)</span>
         <span class="k">return</span>
