@@ -954,22 +954,15 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TwitchConn.event_chat_notification">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_chat_notification">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_chat_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatNotification</span><span class="p">):</span>
-        <span class="k">match</span> <span class="n">payload</span><span class="o">.</span><span class="n">notice_type</span><span class="p">:</span>
-            <span class="k">case</span> <span class="s2">&quot;raid&quot;</span><span class="p">:</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_raid</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">broadcaster</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">raid</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="TwitchConn.event_raid">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_raid">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatRaid</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatRaid</span><span class="p">):</span>
         <span class="n">viewer_count</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">viewer_count</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">user</span>
         <span class="k">if</span> <span class="n">viewer_count</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">))</span><span class="o">.</span><span class="n">user</span>
         <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send_announcement</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Welcome along </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2"> with your </span><span class="si">{</span><span class="n">viewer_count</span><span class="si">}</span><span class="s2"> friends! &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;Everyone, go give them a follow over at https://twitch.tv/</span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - &quot;</span>
