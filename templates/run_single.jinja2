@@ -150,11 +150,11 @@
     <section id="top-section" class="section">
       <div id="run-info" class="columns is-marginless">
         <div class="column message neow is-paddingless is-marginless box">
-          {% if run.game_version == 1 %}
             <div class="message-header">
               <p id="neow-header">Neow bonus</p>
             </div>
             <div id="neow-body-original" class="message-body">
+            {% if run.game_version == 1 %}
               <p>
                 {% if run.neow_bonus.has_info %}
                   {{ run.neow_bonus.as_str() }}
@@ -192,7 +192,9 @@
                   </ul>
                 </div>
               {% endif %}
-          {% endif %}
+              {% else %}
+              <p>Spire 2 data is coming soon . . .</p>
+              {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>

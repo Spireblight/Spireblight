@@ -41,7 +41,7 @@ class Player:
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
-        return f"This has not yet been implemented ({self.__class__}.{name})"
+        return f"This has not yet been implemented ({self.__class__.__name__}.{name})"
 
 class FileParser:
     """Hold a single run (ongoing or not) data."""
@@ -91,10 +91,11 @@ class FileParser:
             # there's one list per player, even though we all climb together
             # but everyone gets different rewards, so keep track of that
             paths.extend(PathNode(x, i+1) for x in player_list)
+        return paths
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
-        return f"This has not yet been implemented ({self.__class__}.{name})"
+        return f"This has not yet been implemented ({self.__class__.__name__}.{name})"
 
 class RelicData:
     """View relics and their information."""
@@ -104,6 +105,10 @@ class RelicData:
         r, _, name = data["id"].partition(".")
         self.relic = get(name)
         self.props: dict | None = data.get("props")
+
+    @property
+    def name(self):
+        return self.relic.name
 
     @property
     def mod(self) -> str:
@@ -128,7 +133,7 @@ class RelicData:
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
-        return f"This has not yet been implemented ({self.__class__}.{name})"
+        return f"This has not yet been implemented ({self.__class__.__name__}.{name})"
 
 class PathNode:
     def __init__(self, data: dict, floor: int):
@@ -166,4 +171,4 @@ class PathNode:
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
-        return f"This has not yet been implemented ({self.__class__}.{name})"
+        return f"This has not yet been implemented ({self.__class__.__name__}.{name})"

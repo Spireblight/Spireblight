@@ -207,7 +207,7 @@ async def main():
                             for p1, d1, f1 in (path / folder).walk():
                                 for file in f1:
                                     if file > last_run:
-                                        to_send.append((p1, [file], profile, "1"))
+                                        to_send.append((p1, file, profile, "1"))
                                         files.append(file)
 
                     # Spire 2
@@ -220,7 +220,7 @@ async def main():
                             for p2, d2, f2 in runpath.walk():
                                 for file in f2:
                                     if file > last_run:
-                                        to_send.append((p2, [folder, "saves", "history"], profile, "2"))
+                                        to_send.append((p2, file, profile, "2"))
                                         files.append(file)
 
                 try:
@@ -251,8 +251,8 @@ async def main():
 
                     all_sent = True
                     if to_send: # send runs first so savefile can seamlessly transfer its cache
-                        for path, files, profile, version in to_send:
-                            for file in files:
+                        for path, file, profile, version in to_send:
+                            if file:
                                 path /= file
                             with path.open() as f:
                                 content = f.read()
