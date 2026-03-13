@@ -87,10 +87,11 @@ class FileParser:
     def path(self):
         """The path taken through the Spire."""
         paths = []
-        for i, player_list in enumerate(self._data["map_point_history"]):
-            # there's one list per player, even though we all climb together
-            # but everyone gets different rewards, so keep track of that
-            paths.extend(PathNode(x, i+1) for x in player_list)
+        i = 0
+        for act in self._data["map_point_history"]:
+            for node in act:
+                i += 1
+                paths.append(PathNode(node, i))
         return paths
 
     def __getattr__(self, name):
