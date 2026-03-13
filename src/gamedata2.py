@@ -1,5 +1,7 @@
 """Parsing of Slay the Spire 2 run history and savefile."""
 
+import datetime
+
 from src.nameinternal import get, get_card2
 from src.config import config
 from src.utils import format_for_slaytabase
@@ -93,6 +95,21 @@ class FileParser:
                 i += 1
                 paths.append(PathNode(node, i))
         return paths
+
+    @property
+    def epoch(self) -> int:
+        """Time in seconds since Jan 1, 1970."""
+        return self._data["start_time"] + self._data["run_time"]
+
+    @property
+    def timestamp(self) -> datetime.datetime:
+        """Time when the run finished, as UTC."""
+        return datetime.datetime.fromtimestamp(self.epoch, datetime.UTC)
+
+    @property
+    def timedelta(self) -> datetime.timedelta:
+        """Difference between now and the run."""
+        return datetime.datetime.now(datetime.UTC) - self.timestamp
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""

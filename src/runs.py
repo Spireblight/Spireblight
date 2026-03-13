@@ -296,21 +296,6 @@ class Run2Parser(FP2):
         return f"({self.character} {self.verb}) {self.timestamp}"
 
     @property
-    def epoch(self) -> int:
-        """Time in seconds since Jan 1, 1970."""
-        return self._data["start_time"] + self._data["run_time"]
-
-    @property
-    def timestamp(self) -> datetime.datetime:
-        """Time when the run finished, as UTC."""
-        return datetime.datetime.fromtimestamp(self.epoch, datetime.UTC)
-
-    @property
-    def timedelta(self) -> datetime.timedelta:
-        """Difference between now and the run."""
-        return datetime.datetime.now(datetime.UTC) - self.timestamp
-
-    @property
     def won(self) -> bool:
         return self._data["win"]
 
