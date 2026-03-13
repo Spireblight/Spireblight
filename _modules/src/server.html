@@ -401,7 +401,7 @@
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_masteries</span><span class="p">,</span> <span class="n">get_mastered</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sanitize</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">,</span> <span class="n">_internal_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">,</span> <span class="n">_internal_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.sts_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_profile</span><span class="p">,</span> <span class="n">get_current_profile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span><span class="p">,</span> <span class="n">playlists</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span>
@@ -422,7 +422,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.disc</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscordCommand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_savefile</span><span class="p">,</span> <span class="n">Savefile</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_latest_run</span><span class="p">,</span> <span class="n">get_parser</span><span class="p">,</span> <span class="n">_ts_cache</span> <span class="k">as</span> <span class="n">_runs_cache</span><span class="p">,</span> <span class="n">RunParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_latest_run</span><span class="p">,</span> <span class="n">RunParser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.gamedata</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelicData</span><span class="p">,</span> <span class="n">Treasure</span><span class="p">,</span> <span class="n">Event</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">CommandType</span><span class="p">,</span> <span class="n">SaveType</span>
@@ -2554,41 +2554,6 @@
 
 
 
-<div class="viewcode-block" id="save_cache">
-<a class="viewcode-back" href="../../server.html#src.server.save_cache">[docs]</a>
-<span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">save_cache</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="c1"># TODO: &#39;cache reload&#39;, to reload the JSON, but it needs a bunch of state changing</span>
-    <span class="c1"># (need to clear all the commands from both bots first)</span>
-    <span class="k">match</span> <span class="n">arg</span><span class="p">:</span>
-        <span class="k">case</span> <span class="s2">&quot;clear&quot;</span><span class="p">:</span>
-            <span class="n">save</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-            <span class="n">save</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">save</span>
-            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Cache cleared.&quot;</span><span class="p">)</span>
-        <span class="k">case</span> <span class="s2">&quot;key&quot;</span> <span class="o">|</span> <span class="s2">&quot;find&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">_cache</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">_cache</span>
-            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                        <span class="k">pass</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
-                    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                        <span class="k">break</span>
-
-            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value in cache: </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Argument </span><span class="si">{</span><span class="n">a</span><span class="si">!r}</span><span class="s2"> not recognized.&quot;</span><span class="p">)</span></div>
-
-
-
 <div class="viewcode-block" id="bluekey">
 <a class="viewcode-back" href="../../server.html#src.server.bluekey">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;bluekey&quot;</span><span class="p">,</span> <span class="s2">&quot;sapphirekey&quot;</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">)</span>
@@ -3208,22 +3173,6 @@
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The unequipped items are </span><span class="si">{</span><span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;We have no unequipped items.&quot;</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="fairy_released">
-<a class="viewcode-back" href="../../server.html#src.server.fairy_released">[docs]</a>
-<span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;fairyreleased&quot;</span><span class="p">,</span> <span class="s2">&quot;released&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fairy_released</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the count of fairy that have been released after the Heart.&quot;&quot;&quot;</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">_runs_cache</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">won</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">pot</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">discarded_potions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">pot</span><span class="o">.</span><span class="n">internal</span> <span class="o">==</span> <span class="s2">&quot;FairyPotion&quot;</span><span class="p">:</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;We have freed </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> fairies at the top of the Spire!&quot;</span><span class="p">)</span></div>
 
 
 
