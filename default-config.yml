@@ -145,6 +145,10 @@ server:
   webhook:
     secret: <secret not set>
 
+  # The Steam ID of the main player (streamer)
+  # This is optional but ensures the accuracy of the run parser
+  steam_id: ""
+
 # This is for Now Playing: functionality from Spotify
 spotify:
   # https://developer.spotify.com/documentation/general/guides/authorization/

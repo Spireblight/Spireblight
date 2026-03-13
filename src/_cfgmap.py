@@ -266,7 +266,7 @@ class Bot(_ConfigMapping):
         self.spire_mods = spire_mods
 
 class Server(_ConfigMapping):
-    def __init__(self, debug: bool, secret: str, url: str, host: str, port: int, json_indent: int, business_email: str, websocket_client: dict, webhook: dict):
+    def __init__(self, debug: bool, secret: str, url: str, host: str, port: int, json_indent: int, business_email: str, websocket_client: dict, webhook: dict, steam_id: str):
         """Hold server-related configuration.
 
         :param debug: Whether we are in debug mode.
@@ -287,6 +287,8 @@ class Server(_ConfigMapping):
         :type websocket_client: dict
         :param webhook: The webhook secret.
         :type webhook: dict
+        :param steam_id: The Steam ID of the streamer.
+        :type steam_id: str
         """
 
         self.debug = debug
@@ -300,6 +302,7 @@ class Server(_ConfigMapping):
         self.port = port
         self.json_indent = json_indent
         self.business_email = business_email
+        self.steam_id = steam_id
 
         self.websocket_client = _WebsocketClient(**websocket_client)
         self.webhook = _Webhook(**webhook)

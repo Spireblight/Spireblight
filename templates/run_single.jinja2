@@ -198,20 +198,22 @@
         </div>
 
         <div class="column is-one-fifth">
-          <div class="keys">
-            {# Since we want the keys to be rendered in a specific order, we
-            can't just loop  #}
-            {% for key, obtained, floor in run.keys.as_list() %}
-              <img class="{{ key | lower }} {% if not obtained %} missing{% endif %}"
-                src="/static/keys/{{ key | urlencode }}.png"
-                onclick="neowText('{{ key }}',
-                      {% if obtained %}
-                      'Obtained on floor {{ floor }}<br>{{ run.get_floor(floor).escaped_description() }}'
-                      {% else %}
-                      'This key hasn\'t been obtained yet.'
-                      {% endif %})">
-            {% endfor %}
-          </div>
+          {% if run.game_version == 1 %}
+            <div class="keys">
+              {# Since we want the keys to be rendered in a specific order, we
+              can't just loop  #}
+              {% for key, obtained, floor in run.keys.as_list() %}
+                <img class="{{ key | lower }} {% if not obtained %} missing{% endif %}"
+                  src="/static/keys/{{ key | urlencode }}.png"
+                  onclick="neowText('{{ key }}',
+                        {% if obtained %}
+                        'Obtained on floor {{ floor }}<br>{{ run.get_floor(floor).escaped_description() }}'
+                        {% else %}
+                        'This key hasn\'t been obtained yet.'
+                        {% endif %})">
+              {% endfor %}
+            </div>
+          {% endif %}
           <div class="hint" onclick="neowReset()">
             <p>Hint: You can click on relics, floors, cards, and the keys.</p>
           </div>

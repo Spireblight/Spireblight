@@ -1,6 +1,7 @@
 """Parsing of Slay the Spire 2 run history and savefile."""
 
 from src.nameinternal import get, get_card2
+from src.config import config
 from src.utils import format_for_slaytabase
 
 class Player:
@@ -19,8 +20,19 @@ class Player:
         return c.partition(".")[2]
 
     @property
+    def id(self):
+        try:
+            return self._data["id"]
+        except KeyError:
+            return self._data["net_id"]
+
+    @property
     def relics(self):
         """The relics at run end/current node."""
+        ret = []
+        for rel in self._data["relics"]:
+            ret.append(RelicData(rel))
+        return ret
 
     @property
     def deck(self):
@@ -34,8 +46,21 @@ class Player:
 class FileParser:
     """Hold a single run (ongoing or not) data."""
 
+    game_version = 2
+
     def __init__(self, data: dict):
         self._data = data
+
+    def get_main_player(self):
+        """Return the player we care about, AKA the streamer."""
+        pl = self.players
+        if len(pl) == 1:
+            return pl[0]
+        if config.server.steam_id:
+            for x in pl:
+                if x.id == config.server.steam_id:
+                    return x
+        return pl[0] # fallback
 
     @property
     def ascension(self) -> int:
@@ -46,6 +71,10 @@ class FileParser:
     def players(self):
         """Read-only list of all players in this game (host first)."""
         return [Player(x) for x in self._data["players"]]
+
+    @property
+    def relics(self):
+        return self.get_main_player().relics
 
     @property
     def path(self):
@@ -82,6 +111,13 @@ class RelicData:
         if ":" in name:
             name = name[name.index(":")+1:]
         return f"{format_for_slaytabase(name)}.png"
+
+    def description(self):
+        desc = [f"Obtained on floor {self.floor}", self.relic.description]
+        return "\n".join(desc)
+
+    def escaped_description(self) -> str:
+        return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""

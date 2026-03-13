@@ -14,6 +14,7 @@ import aiohttp_jinja2
 from response_objects.run_single import RunResponse
 from src.nameinternal import get, get_card, Relic
 from src.sts_profile import get_current_profile
+from src.gamedata2 import FileParser as FP2
 from src.gamedata import FileParser, BottleRelic, KeysObtained, _enemies
 from src.webpage import router
 from src.logger import logger
@@ -450,16 +451,14 @@ class Savefile(FileParser):
 
 _savefile = Savefile()
 
-class Save2:
+class Save2(FP2):
     """Slay the Spire 2 Savefile.
 
     A lot of the data present here will be split between
     run and save data like for Spire 1."""
 
-    game_version = 2
-
     def __init__(self):
-        self._data: dict | None = None
+        super().__init__(None)
 
     @property
     def in_game(self):
@@ -472,11 +471,6 @@ class Save2:
             c, _, name = char_id.partition(".")
             return name.title()
         return None
-
-    @property
-    def relics(self):
-        for relic in self._data["players"][0]["relics"]:
-            yield relic["id"]
 
     @property
     def ancient_choices(self):

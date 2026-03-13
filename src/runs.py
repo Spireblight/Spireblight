@@ -100,9 +100,14 @@ class RunParser(FileParser):
         return get_profile(self._profile)
 
     @property
+    def epoch(self) -> int:
+        """Time in seconds since Jan 1, 1970."""
+        return self._data["timestamp"]
+
+    @property
     def timestamp(self) -> datetime.datetime:
         """Time when the run finished, as UTC."""
-        return datetime.datetime.fromtimestamp(self._data["timestamp"], datetime.UTC)
+        return datetime.datetime.fromtimestamp(self.epoch, datetime.UTC)
 
     @property
     def timedelta(self) -> datetime.timedelta:
@@ -251,9 +256,63 @@ class RunParser(FileParser):
         return self.activemods.all_mods
 
 class Run2Parser(FP2):
-    def __init__(self, data):
+    def __init__(self, filename: str, profile: int, data: dict):
         super().__init__(data)
         self.matched = RunLinkedListNode()
+        self.filename = filename
+        self.name, _, ext = filename.partition(".")
+        self.vod: VOD = None
+        self._profile = profile
+
+    def __repr__(self):
+        return f"Run2<{self.display_name}>"
+
+    @property
+    def has_archive_link(self) -> bool:
+        """Whether we have a (timestamped or not) link to an archive video."""
+        if self.vod is not None:
+            for run in self.vod.runs:
+                if run.run is self:
+                    return True
+        return False
+
+    @property
+    def archive_link(self) -> str:
+        """The full link to the archive video with the run."""
+        for run in self.vod.runs:
+            if run.run is self:
+                return run.get_url()
+
+    @property
+    def profile(self):
+        return get_profile(self._profile)
+
+    @property
+    def display_name(self) -> str:
+        return f"({self.character} {self.verb}) {self.timestamp}"
+
+    @property
+    def epoch(self) -> int:
+        """Time in seconds since Jan 1, 1970."""
+        return self._data["start_time"] + self._data["run_time"]
+
+    @property
+    def timestamp(self) -> datetime.datetime:
+        """Time when the run finished, as UTC."""
+        return datetime.datetime.fromtimestamp(self.epoch, datetime.UTC)
+
+    @property
+    def timedelta(self) -> datetime.timedelta:
+        """Difference between now and the run."""
+        return datetime.datetime.now(datetime.UTC) - self.timestamp
+
+    @property
+    def won(self) -> bool:
+        return self._data["win"]
+
+    @property
+    def verb(self) -> str:
+        return "victory" if self.won else "loss"
 
 class StreakInfo(NamedTuple):
     """Contain run streak information."""
@@ -284,8 +343,8 @@ def _update_cache():
                         else:
                             with open(os.path.join(p1, file)) as f:
                                 _cache[file] = parser = cls(file, profile, json.load(f))
-                                _ts_cache[parser._data["timestamp"]] = parser
-                        _cur_cache[parser._data["timestamp"]] = parser
+                                _ts_cache[parser.epoch] = parser
+                        _cur_cache[parser.epoch] = parser
 
                 prev = None
                 prev_char: dict[str, RunParser | Run2Parser | None] = {}
@@ -420,13 +479,18 @@ async def receive_run(req: Request) -> Response:
         data = json.loads(content)
         if name not in _cache:
             _cache[name] = parser = RunParser(name, int(profile), data)
-            _ts_cache[parser._data["timestamp"]] = parser
+            _ts_cache[parser.epoch] = parser
             _update_cache()
 
     elif version == "2":
         # TODO: Run handling. we can store them for later, though
         with open(os.path.join("data", "runs2", profile, name), "w") as f:
             f.write(content)
+        data = json.loads(content)
+        if name not in _cache:
+            _cache[name] = parser = Run2Parser(name, int(profile), data)
+            _ts_cache[parser.epoch] = parser
+            _update_cache()
 
     logger.debug(f"Received run history file. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
 
