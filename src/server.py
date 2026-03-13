@@ -559,17 +559,13 @@ class TwitchConn(TBot):
             await self.fetch_streams(user_logins=[config.twitch.channel])
         )
 
-    async def event_chat_notification(self, payload: ChatNotification):
-        match payload.notice_type:
-            case "raid":
-                await self.event_raid(payload.broadcaster, payload.raid)
-
-    async def event_raid(self, channel: PartialUser, payload: ChatRaid):
+    async def event_raid(self, payload: ChatRaid):
         viewer_count = payload.viewer_count
         user = payload.user
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)
+        channel = (await self.fetch_channel(config.twitch.owner_id)).user
         await channel.send_announcement(
             f"Welcome along {user.display_name} with your {viewer_count} friends! "
             f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
