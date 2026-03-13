@@ -82,8 +82,9 @@ def get_run_stats_by_date(start_date: datetime | None = None, end_date: datetime
 
 def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, end_date: datetime | None = None):
     # we should only have to load this one time this way, after that we can just use the most recent run to update values
+    # XXX: this is only the main profile of Spire 1
     try:
-        runs = list(get_profile(0).runs) # BaalorA20 profile
+        runs = list(get_profile(0, 1).runs) # BaalorA20 profile
     except:
         runs = []
 

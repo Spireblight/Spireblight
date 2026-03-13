@@ -17,7 +17,7 @@ _mastery_stats = MasteryStats()
 __all__ = ["update_mastery_stats", "get_mastered", "get_current_masteries"]
 
 def update_mastery_stats():
-    profile = get_profile(0)
+    profile = get_profile(0, 1)
     if profile is None:
         runs = []
     else:
