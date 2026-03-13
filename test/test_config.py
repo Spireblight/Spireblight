@@ -89,19 +89,19 @@ class TestConfigFile(TestCase):
 
     def test_list_type(self):
         lst = self.config.bot.spire_mods
-        self.assertEqual(lst, ["Slay the Spire"])
+        self.assertEqual(lst, ["Slay the Spire", "2-slay the spire 2"])
         self.config.update({"bot": {"spire_mods": "Downfall"}})
-        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "Downfall"])
+        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "2-slay the spire 2", "Downfall"])
 
         self.assertIs(self.config.bot.spire_mods, lst)
 
         self.config.update({"bot": {"spire_mods": {"Packmaster"}}})
-        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "Downfall", "Packmaster"])
+        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "2-slay the spire 2", "Downfall", "Packmaster"])
 
         self.assertIs(self.config.bot.spire_mods, lst)
 
         self.config.update({"bot": {"spire_mods": ["Downfall", "Hermit"]}})
-        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "Downfall", "Packmaster", "Hermit"])
+        self.assertEqual(self.config.bot.spire_mods, ["Slay the Spire", "2-slay the spire 2", "Downfall", "Packmaster", "Hermit"])
 
         self.assertIs(self.config.bot.spire_mods, lst)
 
