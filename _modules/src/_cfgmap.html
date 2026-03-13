@@ -643,7 +643,7 @@
 <div class="viewcode-block" id="Server">
 <a class="viewcode-back" href="../../config.html#src._cfgmap.Server">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Server</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">json_indent</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">business_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">websocket_client</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">webhook</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">json_indent</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">business_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">websocket_client</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">webhook</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">steam_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Hold server-related configuration.</span>
 
 <span class="sd">        :param debug: Whether we are in debug mode.</span>
@@ -664,6 +664,8 @@
 <span class="sd">        :type websocket_client: dict</span>
 <span class="sd">        :param webhook: The webhook secret.</span>
 <span class="sd">        :type webhook: dict</span>
+<span class="sd">        :param steam_id: The Steam ID of the streamer.</span>
+<span class="sd">        :type steam_id: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
@@ -677,6 +679,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">json_indent</span> <span class="o">=</span> <span class="n">json_indent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">business_email</span> <span class="o">=</span> <span class="n">business_email</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steam_id</span> <span class="o">=</span> <span class="n">steam_id</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">websocket_client</span> <span class="o">=</span> <span class="n">_WebsocketClient</span><span class="p">(</span><span class="o">**</span><span class="n">websocket_client</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">webhook</span> <span class="o">=</span> <span class="n">_Webhook</span><span class="p">(</span><span class="o">**</span><span class="n">webhook</span><span class="p">)</span></div>
