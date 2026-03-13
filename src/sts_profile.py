@@ -29,15 +29,19 @@ __all__ = ["get_profile", "get_current_profile"]
 _profiles: dict[int, Profile] = {}
 _slots: dict[str, str] = {}
 
-def get_profile(x: int) -> Profile:
-    return _profiles.get(x, None)
+def get_profile(x: int, v: int) -> Profile:
+    if v == 1:
+        return _profiles.get(x, None)
+    elif v == 2:
+        return _profiles.get(x + 10, None)
+    raise ValueError(v)
 
 def get_current_profile() -> Profile:
     return _profiles[int(_slots["DEFAULT_SLOT"])]
 
 def profile_from_request(req: Request) -> Profile:
     try:
-        profile = get_profile(int(req.match_info["profile"]))
+        profile = get_profile(int(req.match_info["profile"]), 1) # this may not be true, but URLs already correct for it
         if profile is None:
             raise HTTPNotFound()
     except ValueError:
@@ -191,7 +195,7 @@ async def runs_as_zipfile(req: Request) -> Response:
 
 @router.post("/sync/profile")
 async def sync_profiles(req: Request) -> Response:
-    slots, *profiles = await get_req_data(req, "slots", "0", "1", "2")
+    slots, *profiles = await get_req_data(req, "slots", "0", "1", "2", "11", "12", "13")
 
     if slots:
         _slots.clear()
@@ -203,6 +207,19 @@ async def sync_profiles(req: Request) -> Response:
         profile = profiles[i]
         if not profile:
             continue # either it doesn't exist, or it hasn't changed
+        with open(os.path.join("data", f"profile_{i}"), "w") as f:
+            f.write(profile)
+        profile = json.loads(profile)
+        if i not in _profiles:
+            _profiles[i] = Profile(i, profile)
+        else:
+            _profiles[i].data = profile
+
+    for i in range(3):
+        profile = profile[i+3] # index
+        if not profile:
+            continue
+        i += 11 # map all spire 2 profiles to be +10
         with open(os.path.join("data", f"profile_{i}"), "w") as f:
             f.write(profile)
         profile = json.loads(profile)

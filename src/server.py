@@ -2729,7 +2729,7 @@ async def next_run(ctx: ContextType):
 async def wall_card(ctx: ContextType):
     """Fetch the card in the wall for the ladder savefile."""
     for i in range(2):
-        p = get_profile(i)
+        p = get_profile(i, 1)
         if p is not None and "ladder" in p.name.lower():
             break
     else:

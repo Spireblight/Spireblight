@@ -97,7 +97,7 @@ class RunParser(FileParser):
 
     @property
     def profile(self):
-        return get_profile(self._profile)
+        return get_profile(self._profile, 1)
 
     @property
     def epoch(self) -> int:
@@ -285,7 +285,7 @@ class Run2Parser(FP2):
 
     @property
     def profile(self):
-        return get_profile(self._profile)
+        return get_profile(self._profile, 2)
 
     @property
     def display_name(self) -> str:
@@ -391,9 +391,12 @@ def _update_cache():
 async def pick_profile(req: Request):
     profiles = []
     for i in range(3):
-        profile = get_profile(i)
+        profile = get_profile(i, 1)
         if profile is not None:
             profiles.append(profile)
+        pf2 = get_profile(i+1, 2)
+        if pf2 is not None:
+            profiles.append(pf2)
 
     if not profiles:
         raise HTTPNotImplemented(reason="No run files were found")

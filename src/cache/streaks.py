@@ -14,7 +14,7 @@ _streak_collections = StreakCache(datetime(2023, 10, 24, tzinfo=UTC))
 
 def update_streak_collections():
     # First we grab all the runs from the BaalorA20 profile.
-    profile = get_profile(0)
+    profile = get_profile(0, 1)
     if profile is None or not profile.runs:
         logger.info(f"No runs found to group into streak")
         return

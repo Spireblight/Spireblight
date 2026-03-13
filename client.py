@@ -70,6 +70,7 @@ async def main():
     last = 0
     last_slots = 0
     lasp = [0, 0, 0]
+    lasp2 = [None, 0, 0, 0] # this is 1-indexed, so use None as filler
     last_sd = 0
     last_mt = 0
     last_mt2 = 0
@@ -349,12 +350,15 @@ async def main():
                         "0": b"",
                         "1": b"",
                         "2": b"",
+                        "11": b"",
+                        "12": b"",
+                        "13": b"",
                     }
 
                     # always send the save slots; it's possible it changed, even during a run (e.g. wall card)
-                    cur_slots = os.path.getmtime(os.path.join(cfg.spiredir, "preferences", "STSSaveSlots"))
+                    cur_slots = (cfg.spiredir / "preferences" / "STSSaveSlots").stat().st_mtime
                     if cur_slots != last_slots:
-                        with open(os.path.join(cfg.spiredir, "preferences", "STSSaveSlots")) as f:
+                        with (cfg.spiredir / "preferences" / "STSSaveSlots").open() as f:
                             data["slots"] = f.read().encode("utf-8", "xmlcharrefreplace")
                     tobe_lasp = [0, 0, 0]
                     for i in range(3):
@@ -362,12 +366,26 @@ async def main():
                         if i:
                             name = f"{i}_{name}"
                         try:
-                            fname = os.path.join(cfg.spiredir, "preferences", name)
-                            tobe_lasp[i] = m = os.path.getmtime(fname)
+                            fname = cfg.spiredir / "preferences" / name
+                            tobe_lasp[i] = m = fname.stat().st_mtime
                             if m == lasp[i]:
                                 continue # unchanged, don't bother
-                            with open(fname) as f:
+                            with fname.open() as f:
                                 data[str(i)] = f.read().encode("utf-8", "xmlcharrefreplace")
+                        except OSError:
+                            continue
+
+                    tobe_lasp2 = [None, 0, 0, 0]
+                    for i in range(3):
+                        i += 1
+                        name = f"profile{i}"
+                        try:
+                            fname = spire2_saves / name / "saves" / "progress.save"
+                            tobe_lasp2[i] = m = fname.stat().st_mtime
+                            if m == lasp2[i]:
+                                continue # unchanged
+                            with fname.open() as f:
+                                data[str(i+10)] = f.read().encode("utf-8", "xmlcharrefreplace")
                         except OSError:
                             continue
 
@@ -375,6 +393,7 @@ async def main():
                         async with session.post("/sync/profile", data=data, params={"key": cfg.secret, "start": start}) as resp:
                             if resp.ok:
                                 lasp = tobe_lasp
+                                lasp2 = tobe_lasp2
                                 last_slots = cur_slots
                             else:
                                 print("Warning: Profiles were not successfully updated. Desyncs may occur.")
