@@ -63,7 +63,9 @@ class Profile:
 
     @property
     def name(self) -> str:
-        return _slots[f"{self._prefix}PROFILE_NAME"]
+        if self.index < 10: # spire 1
+            return _slots[f"{self._prefix}PROFILE_NAME"]
+        return f"Spire 2: Profile {self.index-10}"
 
     @property
     def completion(self) -> str:
@@ -96,7 +98,7 @@ class Profile:
         l.sort()
         l.reverse()
         for ts in l:
-            if _ts_cache[ts]._profile == self.index:
+            if _ts_cache[ts].profile is self:
                 yield _ts_cache[ts]
 
     def paged_runs(self, page):
@@ -216,7 +218,7 @@ async def sync_profiles(req: Request) -> Response:
             _profiles[i].data = profile
 
     for i in range(3):
-        profile = profile[i+3] # index
+        profile = profiles[i+3] # index
         if not profile:
             continue
         i += 11 # map all spire 2 profiles to be +10
@@ -241,6 +243,14 @@ async def fetch_profiles():
         pass
 
     for i in range(3):
+        try:
+            with open(os.path.join("data", f"profile_{i}")) as f:
+                _profiles[i] = Profile(i, json.load(f))
+        except OSError:
+            continue
+
+    for i in range(3):
+        i += 11
         try:
             with open(os.path.join("data", f"profile_{i}")) as f:
                 _profiles[i] = Profile(i, json.load(f))

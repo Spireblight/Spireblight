@@ -150,47 +150,49 @@
     <section id="top-section" class="section">
       <div id="run-info" class="columns is-marginless">
         <div class="column message neow is-paddingless is-marginless box">
-          <div class="message-header">
-            <p id="neow-header">Neow bonus</p>
-          </div>
-          <div id="neow-body-original" class="message-body">
-            <p>
-              {% if run.neow_bonus.has_info %}
-                {{ run.neow_bonus.as_str() }}
-              {% else %}
-                {{ run.neow_bonus.boon_picked }}
+          {% if run.game_version == 1 %}
+            <div class="message-header">
+              <p id="neow-header">Neow bonus</p>
+            </div>
+            <div id="neow-body-original" class="message-body">
+              <p>
+                {% if run.neow_bonus.has_info %}
+                  {{ run.neow_bonus.as_str() }}
+                {% else %}
+                  {{ run.neow_bonus.boon_picked }}
+                {% endif %}
+              </p>
+              {% if run.neow_bonus.has_data %}
+                <div class="skipped">
+                  <p>And we skipped</p>
+                  <ul>
+                    {% for skipped in run.neow_bonus.boons_skipped %}
+                      <li> {{ skipped }} </li>
+                    {% endfor %}
+                  </ul>
+                </div>
               {% endif %}
-            </p>
-            {% if run.neow_bonus.has_data %}
-              <div class="skipped">
-                <p>And we skipped</p>
-                <ul>
-                  {% for skipped in run.neow_bonus.boons_skipped %}
-                    <li> {{ skipped }} </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-            {% if run.modifiers %}
-              <div>
-                <h3 class="subtitle">Modifiers</h3>
-                <ul>
-                  {% for modifier in run.modifiers_with_desc %}
-                    <li>{{ modifier }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-            {% if run.score_breakdown %}
-              <div class="score mt-4">
-                <h3 class="subtitle mb-1">Score breakdown</h3>
-                <ul>
-                  {% for score in run.score_breakdown %}
-                    <li>{{ score }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
+              {% if run.modifiers %}
+                <div>
+                  <h3 class="subtitle">Modifiers</h3>
+                  <ul>
+                    {% for modifier in run.modifiers_with_desc %}
+                      <li>{{ modifier }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              {% if run.score_breakdown %}
+                <div class="score mt-4">
+                  <h3 class="subtitle mb-1">Score breakdown</h3>
+                  <ul>
+                    {% for score in run.score_breakdown %}
+                      <li>{{ score }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+          {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>

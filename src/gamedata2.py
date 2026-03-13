@@ -77,13 +77,20 @@ class FileParser:
         return self.get_main_player().relics
 
     @property
+    def has_removals(self):
+        return False # TODO
+
+    def master_deck_as_html(self):
+        return ["The deck will be here, eventually."]
+
+    @property
     def path(self):
         """The path taken through the Spire."""
         paths = []
-        for player_list in self._data["map_point_history"]:
+        for i, player_list in enumerate(self._data["map_point_history"]):
             # there's one list per player, even though we all climb together
             # but everyone gets different rewards, so keep track of that
-            paths.extend(PathNode(x) for x in player_list)
+            paths.extend(PathNode(x, i+1) for x in player_list)
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
@@ -124,12 +131,19 @@ class RelicData:
         return f"This has not yet been implemented ({self.__class__}.{name})"
 
 class PathNode:
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, floor: int):
         self._data = data
+        self.floor = floor
 
     @property
     def end_of_act(self) -> bool:
         return self._data["map_point_type"] == "boss"
+
+    def description(self):
+        return "This has yet to be implemented."
+
+    def escaped_description(self) -> str:
+        return self.description().replace("\n", "<br>").replace("'", "\\'")
 
     @property
     def map_icon(self):

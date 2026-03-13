@@ -288,6 +288,10 @@ class Run2Parser(FP2):
         return get_profile(self._profile, 2)
 
     @property
+    def character(self):
+        return self.get_main_player().character
+
+    @property
     def display_name(self) -> str:
         return f"({self.character} {self.verb}) {self.timestamp}"
 
@@ -331,8 +335,12 @@ async def _setup_cache():
 def _update_cache():
     start = time.time()
     for i in range(2):
-        for path, folders, files in os.walk(os.path.join("data", (i and "runs2" or "runs"))):
-            cls = i and Run2Parser or RunParser
+        _pf = "runs"
+        cls = RunParser
+        if i == 1:
+            _pf = "runs2"
+            cls = Run2Parser
+        for path, folders, files in os.walk(os.path.join("data", _pf)):
             for folder in folders:
                 profile = int(folder)
                 _cur_cache: dict[int, RunParser | Run2Parser] = {}
@@ -403,7 +411,7 @@ async def pick_profile(req: Request):
 
     return convert_class_to_obj(ProfilesResponse(profiles))
 
-def get_parser(name) -> RunParser | None:
+def get_parser(name) -> RunParser | Run2Parser | None:
     parser = _cache.get(f"{name}.run") # most common case
     if parser is None:
         _update_cache()

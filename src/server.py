@@ -56,7 +56,7 @@ from src.cache.run_stats import (
 )
 
 from src.cache.mastered import get_current_masteries, get_mastered
-from src.nameinternal import get, query, sanitize, Base, Card, Relic, RelicSet, _internal_cache
+from src.nameinternal import get, query, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
 from src.webpage import router, playlists
 from src.wrapper import wrapper
@@ -77,7 +77,7 @@ from src.utils import (
 
 from src.disc import DiscordCommand
 from src.save import get_savefile, Savefile
-from src.runs import get_latest_run, get_parser, _ts_cache as _runs_cache, RunParser
+from src.runs import get_latest_run, RunParser
 from src.gamedata import RelicData, Treasure, Event
 
 from src.typehints import ContextType, CommandType, SaveType
@@ -2038,38 +2038,6 @@ async def card_with_art(ctx: ContextType, *line: str):
     )
 
 
-@with_savefile("cache", flag="m")
-async def save_cache(ctx: ContextType, save: SaveType, arg: str, *args: str):
-    # TODO: 'cache reload', to reload the JSON, but it needs a bunch of state changing
-    # (need to clear all the commands from both bots first)
-    match arg:
-        case "clear":
-            save._cache.clear()
-            save._cache["self"] = save
-            await ctx.reply("Cache cleared.")
-        case "key" | "find":
-            if arg == "key":
-                val = save._cache
-            else:
-                val = get_parser(args[0])._cache
-            for a in args:
-                try:
-                    val = getattr(val, a)
-                except AttributeError:
-                    try:
-                        a = int(a)
-                    except ValueError:
-                        pass
-                    try:
-                        val = val[a]
-                    except (IndexError, KeyError, TypeError):
-                        break
-
-            await ctx.reply(f"Value in cache: {val}")
-        case a:
-            await ctx.reply(f"Argument {a!r} not recognized.")
-
-
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: SaveType):
     """Display what was skipped for the Sapphire key."""
@@ -2600,19 +2568,6 @@ async def items(ctx: ContextType, save: CurrentRun):
         await ctx.reply(f"The unequipped items are {'; '.join(save.items)}.")
     else:
         await ctx.reply("We have no unequipped items.")
-
-
-@command("fairyreleased", "released")
-async def fairy_released(ctx: ContextType):
-    """Get the count of fairy that have been released after the Heart."""
-    count = 0
-    for run in _runs_cache.values():
-        if run.won:
-            for pot in run.path[-2].discarded_potions:
-                if pot.internal == "FairyPotion":
-                    count += 1
-
-    await ctx.reply(f"We have freed {count} fairies at the top of the Spire!")
 
 
 @command("last")

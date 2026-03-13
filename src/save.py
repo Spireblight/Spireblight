@@ -457,6 +457,8 @@ class Save2(FP2):
     A lot of the data present here will be split between
     run and save data like for Spire 1."""
 
+    _matches = False # XXX: auto-redirect
+
     def __init__(self):
         super().__init__(None)
 
@@ -490,9 +492,10 @@ def _truthy(x: str | None) -> bool:
 @aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     redirect = _truthy(req.query.get("redirect"))
-    context = RunResponse(_savefile, autorefresh=True, redirect=redirect)
-    if not _savefile.in_game and not redirect:
-        if _savefile._matches and time.time() - _savefile._last <= 60:
+    save = get_savefile()
+    context = RunResponse(save, autorefresh=True, redirect=redirect)
+    if not save.in_game and not redirect:
+        if save._matches and time.time() - save._last <= 60:
             latest = get_latest_run(None, None)
             if latest is not None:
                 raise HTTPFound(f"/runs/{latest.name}?redirect=true")
@@ -511,10 +514,6 @@ async def save_chart(req: Request) -> Response:
         raise HTTPNotFound()
 
     return _savefile.graph(req)
-
-@router.get("/current-2")
-async def current_2(req: Request):
-    return HTTPNotImplemented(reason="This has not been done yet")
 
 @router.get("/current-2/raw")
 async def current2_raw(req: Request):
@@ -549,7 +548,7 @@ async def receive_save(req: Request):
     return Response()
 
 @router.post("/sync/save-2")
-async def get_save2(req: Request):
+async def receive_save2(req: Request):
     content = (await get_req_data(req, "savefile"))[0]
 
     if content:
