@@ -3644,6 +3644,25 @@
     <span class="n">_cache</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final</span></div>
 
 
+<div class="viewcode-block" id="architect_total_damage">
+<a class="viewcode-back" href="../../server.html#src.server.architect_total_damage">[docs]</a>
+<span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;damage&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">architect_total_damage</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the total damage that The Architect has sustained.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.steampowered.com/ISteamUserStats/GetGlobalStatsForGame/v1/?appid=2868840&amp;count=1&amp;name%5B0%5D=architect_damage&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dmg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">][</span><span class="s2">&quot;globalstats&quot;</span><span class="p">][</span><span class="s2">&quot;architect_damage&quot;</span><span class="p">][</span><span class="s2">&quot;total&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The total damage The Architect has received is </span><span class="si">{</span><span class="n">dmg</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Could not query Steam API.&quot;</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="calculate_winrate_cmd">
 <a class="viewcode-back" href="../../server.html#src.server.calculate_winrate_cmd">[docs]</a>
 <span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;winrate&quot;</span><span class="p">)</span>
