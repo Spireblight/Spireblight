@@ -29,7 +29,7 @@ class Player:
             return self._data["net_id"]
 
     @property
-    def relics(self):
+    def relics(self) -> list["RelicData"]:
         """The relics at run end/current node."""
         ret = []
         for rel in self._data["relics"]:

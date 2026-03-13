@@ -2244,11 +2244,9 @@ def _sts1_relics(index: int, lst: list[RelicData]):
         stats = " (" + " | ".join(s) + ")"
     return f"The relic at position {index} is {relicData.name}: {relicData.relic.description}{stats}"
 
-def _sts2_relics(index: int, lst: list[str]):
-    relic = lst[index - 1].partition(".")[2]
-    data: Relic = get(relic)
-
-    return f"The relic at position {index} is {data.name}: {data.description}"
+def _sts2_relics(index: int, lst: list[RelicData]):
+    relic = lst[index - 1]
+    return f"The relic at position {index} is {relic.name}: {relic.description()}"
 
 @with_savefile("relic")
 async def relic_info(ctx: ContextType, save: SaveType, index: int = 0):
