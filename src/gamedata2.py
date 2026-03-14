@@ -65,6 +65,13 @@ class FileParser:
         return pl[0] # fallback
 
     @property
+    def seed(self) -> str:
+        try:
+            return self._data["seed"]
+        except KeyError:
+            return self._data["rng"]["seed"]
+
+    @property
     def ascension(self) -> int:
         """Which Ascension level the run was played at."""
         return self._data["ascension"]

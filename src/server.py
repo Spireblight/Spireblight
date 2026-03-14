@@ -30,7 +30,7 @@ from twitchio.ext.commands import (
 from twitchio.ext.routines import routine, Routine
 # from twitchio.ext.eventsub import EventSubClient
 #from twitchio.channel import Channel
-from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, ChatNotification, ChatRaid
+from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, ChatNotification, ChatRaid, ChannelRaid
 from twitchio.exceptions import HTTPException
 from twitchio.models import Stream, Prediction, Clip as TClip
 
@@ -559,9 +559,9 @@ class TwitchConn(TBot):
             await self.fetch_streams(user_logins=[config.twitch.channel])
         )
 
-    async def event_raid(self, payload: ChatRaid):
+    async def event_raid(self, payload: ChannelRaid):
         viewer_count = payload.viewer_count
-        user = payload.user
+        user = payload.from_broadcaster
         if viewer_count < 10:
             return
         chan = await self.fetch_channel(user.id)

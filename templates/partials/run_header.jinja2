@@ -31,9 +31,11 @@
         </div>
 
         <div class="score">
+          {% if run.game_version == 1 %}
           <div class="points">
             {{ run.score }} points
           </div>
+          {% endif %}
           <div class="kills-bosses">
             {% if run.done %}
               {% if not run.won %}
