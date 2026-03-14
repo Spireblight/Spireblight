@@ -19,7 +19,7 @@ class Player:
             c: str = self._data["character"] # run history
         except KeyError:
             c: str = self._data["character_id"] # savefile
-        return c.partition(".")[2]
+        return c.partition(".")[2].title()
 
     @property
     def id(self):

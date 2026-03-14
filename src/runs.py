@@ -284,6 +284,15 @@ class Run2Parser(FP2):
                 return run.get_url()
 
     @property
+    def run_length(self) -> str:
+        seconds = self._data["run_time"]
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        if hours:
+            return f"{hours}:{minutes:>02}:{seconds:>02}"
+        return f"{minutes:>02}:{seconds:>02}"
+
+    @property
     def profile(self):
         return get_profile(self._profile, 2)
 
