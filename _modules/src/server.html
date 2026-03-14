@@ -375,7 +375,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.ext.routines</span><span class="w"> </span><span class="kn">import</span> <span class="n">routine</span><span class="p">,</span> <span class="n">Routine</span>
 <span class="c1"># from twitchio.ext.eventsub import EventSubClient</span>
 <span class="c1">#from twitchio.channel import Channel</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">StreamOffline</span><span class="p">,</span> <span class="n">StreamOnline</span><span class="p">,</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">ChatNotification</span><span class="p">,</span> <span class="n">ChatRaid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">StreamOffline</span><span class="p">,</span> <span class="n">StreamOnline</span><span class="p">,</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">ChatNotification</span><span class="p">,</span> <span class="n">ChatRaid</span><span class="p">,</span> <span class="n">ChannelRaid</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stream</span><span class="p">,</span> <span class="n">Prediction</span><span class="p">,</span> <span class="n">Clip</span> <span class="k">as</span> <span class="n">TClip</span>
 
@@ -956,9 +956,9 @@
 
 <div class="viewcode-block" id="TwitchConn.event_raid">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.event_raid">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChatRaid</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_raid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">ChannelRaid</span><span class="p">):</span>
         <span class="n">viewer_count</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">viewer_count</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">user</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">from_broadcaster</span>
         <span class="k">if</span> <span class="n">viewer_count</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
