@@ -127,7 +127,7 @@ class Card(Base):
             mod = f"(Mod: {self.mod})"
         cost = self.cost
         if self.star_cost:
-            cost = f" (Stars: {self.star_cost})"
+            cost += f" (Stars: {self.star_cost})"
         return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
 
 class Enchantment(Base):
