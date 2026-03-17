@@ -72,7 +72,11 @@ class FileParser:
             return self._data["rng"]["seed"]
 
     @property
-    def ascension(self) -> int:
+    def seeded(self) -> bool:
+        return False # temporary fix
+
+    @property
+    def ascension_level(self) -> int:
         """Which Ascension level the run was played at."""
         return self._data["ascension"]
 
