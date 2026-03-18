@@ -1,5 +1,7 @@
 """Parsing of Slay the Spire 2 run history and savefile."""
 
+from __future__ import annotations
+
 import datetime
 
 from src.nameinternal import get, get_card2
@@ -112,7 +114,7 @@ class FileParser:
         return ["The deck will be here, eventually."]
 
     @property
-    def path(self):
+    def path(self) -> list[PathNode]:
         """The path taken through the Spire."""
         paths = []
         i = 0
@@ -129,6 +131,7 @@ class FileParser:
             for node in act:
                 i += 1
                 paths.append(PathNode(node, i, name))
+
         return paths
 
     @property
