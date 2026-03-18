@@ -264,6 +264,8 @@ class Run2Parser(FP2):
         self.name, _, ext = filename.partition(".")
         self.vod: VOD = None
         self._profile = profile
+        self._character_streak = None
+        self._rotating_streak = None
 
     def __repr__(self):
         return f"Run2<{self.display_name}>"

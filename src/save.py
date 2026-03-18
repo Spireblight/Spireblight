@@ -469,9 +469,7 @@ class Save2(FP2):
     @property
     def character(self):
         if self._data:
-            char_id: str = self._data["players"][0]["character_id"]
-            c, _, name = char_id.partition(".")
-            return name.title()
+            return self.get_main_player().character
         return None
 
     @property

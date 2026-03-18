@@ -118,19 +118,24 @@ class FileParser:
         """The path taken through the Spire."""
         paths = []
         i = 0
-        acts: list[str] = self._data["acts"]
-        act_names = []
-        if isinstance(acts, dict): # savefile
-            acts = [x["id"] for x in acts]
-        for a in acts:
-            n, _, name = a.partition(".")
-            assert n == "ACT", "An update has changed the Act definition"
-            act_names.append(name.title())
+        #acts: list[str] = self._data["acts"]
+        #act_names = []
+        #if isinstance(acts, dict): # savefile
+        #    acts = [x["id"] for x in acts]
+        #for a in acts:
+        #    n, _, name = a.partition(".")
+        #    assert n == "ACT", "An update has changed the Act definition"
+        #    act_names.append(name.title())
 
-        for act, name in zip(self._data["map_point_history"], act_names):
+        #for act, name in zip(self._data["map_point_history"], act_names):
+        #    for node in act:
+        #        i += 1
+        #        paths.append(PathNode(node, i, name))
+
+        for act in self._data["map_point_history"]:
             for node in act:
                 i += 1
-                paths.append(PathNode(node, i, name))
+                paths.append(PathNode(node, i))
 
         return paths
 
@@ -200,7 +205,7 @@ class RelicData:
         return f"Not implemented ({self.__class__.__name__}.{name})"
 
 class PathNode:
-    def __init__(self, data: dict, floor: int, act: str):
+    def __init__(self, data: dict, floor: int, act: str = None):
         self._data = data
         self.floor = floor
         self.act = act
