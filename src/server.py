@@ -566,10 +566,11 @@ class TwitchConn(TBot):
             return
         chan = await self.fetch_channel(user.id)
         channel = (await self.fetch_channel(config.twitch.owner_id)).user
-        await channel.send_announcement(
+        await channel.send_announcement(moderator=config.twitch.bot_id, message=(
             f"Welcome along {user.display_name} with your {viewer_count} friends! "
             f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
             f"last I checked, they were playing some {chan.game_name}!"
+            )
         )
 
     def __getattr__(self, name: str):

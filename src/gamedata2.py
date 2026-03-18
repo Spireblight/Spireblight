@@ -72,8 +72,8 @@ class FileParser:
 
     @property
     def won(self) -> bool:
-        """Whether or not we won the run. Not implemented on savefiles."""
-        raise NotImplementedError
+        """Whether or not we won the run."""
+        return False
 
     @property
     def seed(self) -> str:

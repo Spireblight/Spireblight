@@ -1106,10 +1106,9 @@ class FileParser(ABC):
         return f"/static/characters/{c}-{n}.png"
 
     @property
-    @abstractmethod
     def won(self) -> bool:
-        """Whether or not we won the run. Not implemented on savefiles."""
-        raise NotImplementedError
+        """Whether or not we won the run."""
+        return False
 
     @property
     @abstractmethod
