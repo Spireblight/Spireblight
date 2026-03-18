@@ -256,6 +256,7 @@ class RunParser(FileParser):
         return self.activemods.all_mods
 
 class Run2Parser(FP2):
+    done = True
     def __init__(self, filename: str, profile: int, data: dict):
         super().__init__(data)
         self.matched = RunLinkedListNode()
