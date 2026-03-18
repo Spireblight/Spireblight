@@ -458,6 +458,7 @@ class Save2(FP2):
     run and save data like for Spire 1."""
 
     _matches = False # XXX: auto-redirect
+    verb = "ongoing"
 
     def __init__(self):
         super().__init__(None)
@@ -467,10 +468,37 @@ class Save2(FP2):
         return bool(self._data)
 
     @property
+    def current_floor(self):
+        return len(self.path)
+
+    @property
+    def upcoming_boss(self):
+        idx: int = self._data["current_act_index"]
+        rooms = self._data["acts"][idx]["rooms"]
+        boss_id: str = rooms["boss_id"]
+        enc, _, name = boss_id.partition(".")
+        words = name.replace("_", " ").split()[:-1]
+        return " ".join(words).title()
+
+    @property
     def character(self):
         if self._data:
             return self.get_main_player().character
         return None
+
+    @property
+    def rotating_streak(self) -> StreakInfo:
+        last = get_latest_run(None, None)
+        if last is not None:
+            return last.rotating_streak
+        return StreakInfo(0, 0, True)
+
+    @property
+    def character_streak(self) -> StreakInfo:
+        try:
+            return get_latest_run(self.character, None).character_streak
+        except AttributeError: # no character played like this; likely a mod
+            return StreakInfo(0, 0, True)
 
     @property
     def ancient_choices(self):
