@@ -56,7 +56,7 @@
                 Today!
               {% endif %}
             </div>
-          {% else %}
+          {% elif run.game_version == 1 %}
             <div>
               {{ run.potion_chance }}% potion chance
             </div>
