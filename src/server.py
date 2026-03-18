@@ -2291,7 +2291,7 @@ def _see_relic(data: Relic, save: Savefile):
                 return f"We have not seen {data.name} yet! There's a chance we'll see it!"
             elif (c := _colours.get(data.pool)) and c != save.character:
                 return "Nice try, we're not even playing the right character!"
-            elif data.pool: # modded character
+            elif data.mod not in ("Slay the Spire", "Slay the Spire 2"): # modded character
                 return "You expect me to know about your modded characters, too?"
             else:
                 return f"We have already seen {data.name} this run, and cannot get it again baalorHubris"

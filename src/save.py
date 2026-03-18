@@ -500,9 +500,14 @@ class Save2(FP2):
         except AttributeError: # no character played like this; likely a mod
             return StreakInfo(0, 0, True)
 
-    @property
-    def ancient_choices(self):
-        pass
+    def available_relic(self, relic: Relic) -> bool:
+        if relic.tier not in ("Common", "Uncommon", "Rare", "Shop"):
+            raise ValueError(f"Relic tier is {relic.tier}, not supported.")
+
+        base = self._data["shared_relic_grab_bag"]["relic_id_lists"]
+        pool = base[relic.tier.lower()]
+        name = f"RELIC.{relic.internal}"
+        return name in pool
 
     def update_data(self, data: dict):
         self._data = data

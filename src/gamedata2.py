@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import datetime
 
-from src.nameinternal import get, get_card2
+from src.nameinternal import get, get_card2, Relic
 from src.config import config
 from src.utils import format_for_slaytabase
 
@@ -105,6 +105,10 @@ class FileParser:
     @property
     def relics(self):
         return self.get_main_player().relics
+
+    @property
+    def relics_bare(self) -> list[Relic]:
+        return [x.relic for x in self.relics]
 
     @property
     def has_removals(self):
