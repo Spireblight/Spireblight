@@ -131,7 +131,7 @@ class FileParser:
             assert n == "ACT", "An update has changed the Act definition"
             act_names.append(name.title())
 
-        for act, name in zip(self._data["map_point_history"], act_names):
+        for act, name in zip(self._data.get("map_point_history", ()), act_names):
             for node in act:
                 i += 1
                 paths.append(PathNode(node, i, name))
