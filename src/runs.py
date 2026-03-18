@@ -313,6 +313,56 @@ class Run2Parser(FP2):
     def verb(self) -> str:
         return "victory" if self.won else "loss"
 
+    @property
+    def character_streak(self) -> StreakInfo:
+        streak = self._character_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=True)
+            if not streak.is_ongoing:
+                self._character_streak = streak
+        return streak
+
+    @property
+    def rotating_streak(self) -> StreakInfo:
+        streak = self._rotating_streak
+        if streak is None:
+            streak = self._get_streak(is_character_streak=False)
+            if not streak.is_ongoing:
+                self._rotating_streak = streak
+        return streak
+
+    def _get_streak(self, *, is_character_streak: bool) -> StreakInfo:
+        if self.won:
+            streak_total = 1
+            position_in_streak = 1
+            is_ongoing = True
+
+            def loop_cached_runs(*, is_prev: bool):
+                nonlocal streak_total, position_in_streak, is_ongoing
+                current_run: Run2Parser = self.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)
+                if current_run is not None:
+                    last_char = self.character
+                    while current_run.won:
+                        # If rotating, only iterate if not same char
+                        if is_character_streak or current_run.character != last_char:
+                            streak_total += 1
+                            # only iterate the position if the Win came before the current run
+                            if is_prev:
+                                position_in_streak += 1
+
+                        if (run := current_run.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)) is not None:
+                            last_char = current_run.character
+                            current_run = run
+                        else:
+                            break
+                    does_upcoming_loss_exist = not is_prev and not current_run.won
+                    if does_upcoming_loss_exist:
+                        is_ongoing = False
+            loop_cached_runs(is_prev=True)
+            loop_cached_runs(is_prev=False)
+            return StreakInfo(streak_total, position_in_streak, is_ongoing)
+        return StreakInfo(0, 0, False)
+
 class StreakInfo(NamedTuple):
     """Contain run streak information."""
     streak: int
