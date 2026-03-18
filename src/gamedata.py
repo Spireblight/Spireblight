@@ -1098,6 +1098,19 @@ class FileParser(ABC):
                     plt.close(fig)
                     return file.getvalue()
 
+    def get_char_portrait(self):
+        c = self.character.lower()
+        n = "face"
+        if self.done and not self.won:
+            n = "loss"
+        return f"/static/characters/{c}-{n}.png"
+
+    @property
+    @abstractmethod
+    def won(self) -> bool:
+        """Whether or not we won the run. Not implemented on savefiles."""
+        raise NotImplementedError
+
     @property
     @abstractmethod
     def floor(self) -> int:

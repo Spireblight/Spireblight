@@ -2,7 +2,7 @@
   <div class="box run-header is-paddingless">
     <div class="avatar">
       <img class="{{ run.character | lower }} {{ run.verb }}"
-        src="/static/characters/{{ run.character | lower }}-{% if run.done and not run.won %}loss{% else %}face{% endif %}.png"/>
+        src="{{ run.get_char_portrait() }}"/>
     </div>
     <div class="run-header-content">
       <div class="run-title pt-4 pr-4 pb-4">
