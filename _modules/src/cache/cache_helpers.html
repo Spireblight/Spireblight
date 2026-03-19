@@ -351,7 +351,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunParser</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunParser</span><span class="p">,</span> <span class="n">Run2Parser</span>
 
 <div class="viewcode-block" id="Statistic">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.Statistic">[docs]</a>
@@ -362,15 +362,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">silent_count</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">defect_count</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">necrobinder_count</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regent_count</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">set_default</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">all_character_count</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ironclad_count</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">silent_count</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">defect_count</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">necrobinder_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regent_count</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;all_character_count: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_character_count</span><span class="si">}</span><span class="s1">, IC: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ironclad_count</span><span class="si">}</span><span class="s1">, Silent: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">silent_count</span><span class="si">}</span><span class="s1">, Defect: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">defect_count</span><span class="si">}</span><span class="s1">, Watcher: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher_count</span><span class="si">}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;all_character_count: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_character_count</span><span class="si">}</span><span class="s1">, IC: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ironclad_count</span><span class="si">}</span><span class="s1">, Silent: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">silent_count</span><span class="si">}</span><span class="s1">, Defect: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">defect_count</span><span class="si">}</span><span class="s1">, Watcher: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher_count</span><span class="si">}</span><span class="s1">, Necrobinder: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">necrobinder_count</span><span class="si">}</span><span class="s1">, Regent: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">regent_count</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="RunStats">
@@ -446,7 +450,13 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">defect_count</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span>
                 <span class="k">case</span> <span class="s2">&quot;Watcher&quot;</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">&lt;</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span></div>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span>
+                <span class="k">case</span> <span class="s2">&quot;Necrobinder&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">necrobinder_count</span> <span class="o">&lt;</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">necrobinder_count</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span>
+                <span class="k">case</span> <span class="s2">&quot;Regent&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">regent_count</span> <span class="o">&lt;</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">regent_count</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">character_streak</span><span class="o">.</span><span class="n">streak</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_increment_stat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stat</span><span class="p">:</span> <span class="n">Statistic</span><span class="p">,</span> <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -459,6 +469,10 @@
                 <span class="n">stat</span><span class="o">.</span><span class="n">defect_count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">case</span> <span class="s2">&quot;Watcher&quot;</span><span class="p">:</span>
                 <span class="n">stat</span><span class="o">.</span><span class="n">watcher_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">case</span> <span class="s2">&quot;Necrobinder&quot;</span><span class="p">:</span>
+                <span class="n">stat</span><span class="o">.</span><span class="n">necrobinder_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">case</span> <span class="s2">&quot;Regent&quot;</span><span class="p">:</span>
+                <span class="n">stat</span><span class="o">.</span><span class="n">regent_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">stat</span><span class="o">.</span><span class="n">all_character_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="RunStats.clear">
@@ -582,7 +596,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winning_streak</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">runs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winning_streak</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">runs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RunParser</span> <span class="o">|</span> <span class="n">Run2Parser</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">winning_streak</span> <span class="o">=</span> <span class="n">winning_streak</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ongoing</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runs</span> <span class="o">=</span> <span class="n">runs</span>
