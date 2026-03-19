@@ -109,7 +109,8 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                     run_stats.add_win(run.character, run.timestamp)
                 else:
                     run_stats.add_loss(run.character, run.timestamp)
-                
+                if run.ascension_level != 10: # do not add to streaks if not on A10
+                    continue # FIXME: this is temporary until we can implement a better fix (or it's been long enough that it doesn't matter)
                 if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
                     run_stats.streaks.ironclad_count = run.character_streak.streak
                 elif run_stats.streaks.silent_count is None and run.character == "Silent":
