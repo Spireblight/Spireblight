@@ -20,10 +20,13 @@ _range = _RangeCache()
 _all_run_stats = RunStats()
 _run_stats_by_date = RunStatsByDate()
 
-__all__ = ["update_all_run_stats", 
-           "get_all_run_stats", 
-           "get_run_stats_by_date", 
-           "get_run_stats_by_date_string"]
+__all__ = [
+    "update_all_run_stats", 
+    "get_all_run_stats", 
+    "get_run_stats_by_date", 
+    "get_run_stats_by_date_string",
+    "Character",
+]
 
 def update_all_run_stats():
     _update_run_stats(_all_run_stats)

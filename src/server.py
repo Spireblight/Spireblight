@@ -48,7 +48,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession, ContentTypeError
 
-from cache.cache_helpers import Character
+from src.cache.cache_helpers import Character
 from src.cache.run_stats import (
     get_all_run_stats,
     get_run_stats_by_date,
@@ -2980,24 +2980,8 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
         except TypeError:
             await ctx.reply("Start date is after end date")
             return
-    wins = [
-        run_stats.all_wins.all_character_count,
-        run_stats.all_wins.character_counts[Character.IRONCLAD],
-        run_stats.all_wins.character_counts[Character.SILENT],
-        run_stats.all_wins.character_counts[Character.DEFECT],
-        run_stats.all_wins.character_counts[Character.WATCHER],
-        run_stats.all_wins.character_counts[Character.NECROBINDER],
-        run_stats.all_wins.character_counts[Character.REGENT],
-    ]
-    losses = [
-        run_stats.all_losses.all_character_count,
-        run_stats.all_losses.character_counts[Character.IRONCLAD],
-        run_stats.all_losses.character_counts[Character.SILENT],
-        run_stats.all_losses.character_counts[Character.DEFECT],
-        run_stats.all_losses.character_counts[Character.WATCHER],
-        run_stats.all_losses.character_counts[Character.NECROBINDER],
-        run_stats.all_losses.character_counts[Character.REGENT],
-    ]
+    wins = [run_stats.all_wins.all_character_count] + [run_stats.all_wins.character_counts[c] for c in Character]
+    losses = [run_stats.all_losses.all_character_count] + [run_stats.all_losses.character_counts[c] for c in Character]
     rate = [0 if (a + b == 0) else a / (a + b) for a, b in zip(wins, losses)]
     await ctx.reply(
         #f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}"

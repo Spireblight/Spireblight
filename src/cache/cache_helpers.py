@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import field
-import datetime # TODO: UTC?
 from enum import Enum
+
+import datetime # TODO: UTC?
 import math
 
 from typing import TYPE_CHECKING
@@ -28,7 +28,7 @@ class Statistic:
             self.character_counts: dict[Character, int] = {char: 0 for char in Character}
             
     def __str__(self) -> str:
-        return f'all_character_count: {self.all_character_count}, IC: {self.character_counts[Character.IRONCLAD]}, Silent: {self.character_counts[Character.SILENT]}, Defect: {self.character_counts[Character.DEFECT]}, Watcher: {self.character_counts[Character.WATCHER]}, Necrobinder: {self.character_counts[Character.NECROBINDER]}, Regent: {self.character_counts[Character.REGENT]}'
+        return f"All characters: {self.all_character_count}, {', '.join(f'{x.value}: {self.character_counts[x]}' for x in Character)}"
 
 class RunStats:
     def __init__(self):
