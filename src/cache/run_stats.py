@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 import os
-from src.cache.cache_helpers import RunStats, RunStatsByDate
+from src.cache.cache_helpers import Character, RunStats, RunStatsByDate
 from src.sts_profile import get_profile
 from src.logger import logger
 from src.utils import parse_date_range, _parse_dates_with_optional_month_day
@@ -110,18 +110,9 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                 else:
                     run_stats.add_loss(run.character, run.timestamp)
                 
-                if run_stats.streaks.ironclad_count is None and run.character == "Ironclad":
-                    run_stats.streaks.ironclad_count = run.character_streak.streak
-                elif run_stats.streaks.silent_count is None and run.character == "Silent":
-                    run_stats.streaks.silent_count = run.character_streak.streak
-                elif run_stats.streaks.defect_count is None and run.character == "Defect":
-                    run_stats.streaks.defect_count = run.character_streak.streak
-                elif run_stats.streaks.watcher_count is None and run.character == "Watcher":
-                    run_stats.streaks.watcher_count = run.character_streak.streak
-                elif run_stats.streaks.necrobinder_count is None and run.character == "Necrobinder":
-                    run_stats.streaks.necrobinder_count = run.character_streak.streak
-                elif run_stats.streaks.regent_count is None and run.character == "Regent":
-                    run_stats.streaks.regent_count = run.character_streak.streak
+                character = Character(run.character)
+                if run_stats.streaks.character_counts[character] is None:
+                    run_stats.streaks.character_counts[character] = run.character_streak.streak
 
         # set the stats from most recent run's rotating streak and character streak
         last_run = runs[0]
@@ -137,26 +128,10 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
             else:
                 run_stats.add_loss(last_run.character, last_run.timestamp)
             run_stats.streaks.all_character_count = last_run.rotating_streak.streak
-            match last_run.character:
-                case "Ironclad":
-                    run_stats.streaks.ironclad_count = last_run.character_streak.streak
-                case "Silent":
-                    run_stats.streaks.silent_count = last_run.character_streak.streak
-                case "Defect":
-                    run_stats.streaks.defect_count = last_run.character_streak.streak
-                case "Watcher":
-                    run_stats.streaks.watcher_count = last_run.character_streak.streak
-                case "Necrobinder":
-                    run_stats.streaks.necrobinder_count = last_run.character_streak.streak
-                case "Regent":
-                    run_stats.streaks.regent_count = last_run.character_streak.streak
+            last_run_char = Character(last_run.character)
+            run_stats.streaks[last_run_char] = last_run.character_streak.streak
     else:
-        run_stats.streaks.ironclad_count = 0
-        run_stats.streaks.silent_count = 0
-        run_stats.streaks.defect_count = 0
-        run_stats.streaks.watcher_count = 0
-        run_stats.streaks.necrobinder_count = 0
-        run_stats.streaks.regent_count = 0
+        run_stats.streaks.character_counts = {char: 0 for char in Character}
 
 def get_all_run_stats():
     return _all_run_stats

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import field
 import datetime # TODO: UTC?
+from enum import Enum
 import math
 
 from typing import TYPE_CHECKING
@@ -8,26 +10,25 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.runs import RunParser, Run2Parser
 
+class Character(Enum):
+    IRONCLAD = "Ironclad"
+    SILENT = "Silent"
+    DEFECT = "Defect"
+    WATCHER = "Watcher"
+    NECROBINDER = "Necrobinder"
+    REGENT = "Regent"
+
 class Statistic:
     def __init__(self, *, set_default: bool = False):
         self.all_character_count = None
-        self.ironclad_count = None
-        self.silent_count = None
-        self.defect_count = None
-        self.watcher_count = None
-        self.necrobinder_count = None
-        self.regent_count = None
+        self.character_counts: dict[Character, int] = {char: None for char in Character}
+
         if set_default:
             self.all_character_count = 0
-            self.ironclad_count = 0
-            self.silent_count = 0
-            self.defect_count = 0
-            self.watcher_count = 0
-            self.necrobinder_count = 0
-            self.regent_count = 0
-
+            self.character_counts: dict[Character, int] = {char: 0 for char in Character}
+            
     def __str__(self) -> str:
-        return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}, Necrobinder: {self.necrobinder_count}, Regent: {self.regent_count}'
+        return f'all_character_count: {self.all_character_count}, IC: {self.character_counts[Character.IRONCLAD]}, Silent: {self.character_counts[Character.SILENT]}, Defect: {self.character_counts[Character.DEFECT]}, Watcher: {self.character_counts[Character.WATCHER]}, Necrobinder: {self.character_counts[Character.NECROBINDER]}, Regent: {self.character_counts[Character.REGENT]}'
 
 class RunStats:
     def __init__(self):
@@ -80,40 +81,13 @@ class RunStats:
         if not run.modded:
             if self.pb.all_character_count < run.rotating_streak.streak:
                 self.pb.all_character_count = run.rotating_streak.streak
-            match run.character:
-                case "Ironclad":
-                    if self.pb.ironclad_count < run.character_streak.streak:
-                        self.pb.ironclad_count = run.character_streak.streak
-                case "Silent":
-                    if self.pb.silent_count < run.character_streak.streak:
-                        self.pb.silent_count = run.character_streak.streak
-                case "Defect":
-                    if self.pb.defect_count < run.character_streak.streak:
-                        self.pb.defect_count = run.character_streak.streak
-                case "Watcher":
-                    if self.pb.watcher_count < run.character_streak.streak:
-                        self.pb.watcher_count = run.character_streak.streak
-                case "Necrobinder":
-                    if self.pb.necrobinder_count < run.character_streak.streak:
-                        self.pb.necrobinder_count = run.character_streak.streak
-                case "Regent":
-                    if self.pb.regent_count < run.character_streak.streak:
-                        self.pb.regent_count = run.character_streak.streak
+            character = Character(run.character)
+            if self.pb.character_counts[character] < run.character_streak.streak:
+                self.pb.character_counts[character] = run.character_streak.streak
 
     def _increment_stat(self, stat: Statistic, char: str):
-        match char:
-            case "Ironclad":
-                stat.ironclad_count += 1
-            case "Silent":
-                stat.silent_count += 1
-            case "Defect":
-                stat.defect_count += 1
-            case "Watcher":
-                stat.watcher_count += 1
-            case "Necrobinder":
-                stat.necrobinder_count += 1
-            case "Regent":
-                stat.regent_count += 1
+        character = Character(char)
+        stat.character_counts[character] += 1
         stat.all_character_count += 1
 
     def clear(self):

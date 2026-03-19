@@ -9,6 +9,7 @@ from aiohttp import web, ClientSession
 import aiohttp_jinja2
 import jinja2
 
+from cache.cache_helpers import Character
 from src.logger import logger
 from src.config import __author__, __github__, __version__
 
@@ -85,9 +86,9 @@ class ChallengeCharacter:
 async def challenge(req: web.Request):
     from src.cache.run_stats import get_all_run_stats # TODO: Fix circular imports with router
     run_stats = get_all_run_stats()
-    kills = [run_stats.all_wins.ironclad_count, run_stats.all_wins.silent_count, run_stats.all_wins.defect_count, run_stats.all_wins.watcher_count]
-    losses = [run_stats.all_losses.ironclad_count, run_stats.all_losses.silent_count, run_stats.all_losses.defect_count, run_stats.all_losses.watcher_count]
-    streak = [run_stats.streaks.ironclad_count, run_stats.streaks.silent_count, run_stats.streaks.defect_count, run_stats.streaks.watcher_count]
+    kills = [run_stats.all_wins.character_counts[Character.IRONCLAD], run_stats.all_wins.character_counts[Character.SILENT], run_stats.all_wins.character_counts[Character.DEFECT], run_stats.all_wins.character_counts[Character.WATCHER]]
+    losses = [run_stats.all_losses.character_counts[Character.IRONCLAD], run_stats.all_losses.character_counts[Character.SILENT], run_stats.all_losses.character_counts[Character.DEFECT], run_stats.all_losses.character_counts[Character.WATCHER]]
+    streak = [run_stats.streaks.character_counts[Character.IRONCLAD], run_stats.streaks.character_counts[Character.SILENT], run_stats.streaks.character_counts[Character.DEFECT], run_stats.streaks.character_counts[Character.WATCHER]]
     characters = []
     for x, char in enumerate(("Ironclad", "Silent", "Defect", "Watcher")):
         characters.append(ChallengeCharacter(char, kills[x], losses[x], streak[x]))
