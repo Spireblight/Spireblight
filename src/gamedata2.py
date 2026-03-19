@@ -85,7 +85,7 @@ class FileParser:
             return self._data["rng"]["seed"]
 
     @property
-    def seeded(self) -> bool:
+    def is_seeded(self) -> bool:
         return False # temporary fix
 
     @property
