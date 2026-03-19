@@ -541,7 +541,6 @@ async def receive_run(req: Request) -> Response:
             _update_cache()
 
     elif version == "2":
-        # TODO: Run handling. we can store them for later, though
         with open(os.path.join("data", "runs2", profile, name), "w") as f:
             f.write(content)
         data = json.loads(content)
