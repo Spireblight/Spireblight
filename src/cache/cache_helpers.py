@@ -6,7 +6,7 @@ import math
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.runs import RunParser
+    from src.runs import RunParser, Run2Parser
 
 class Statistic:
     def __init__(self, *, set_default: bool = False):
@@ -15,15 +15,19 @@ class Statistic:
         self.silent_count = None
         self.defect_count = None
         self.watcher_count = None
+        self.necrobinder_count = None
+        self.regent_count = None
         if set_default:
             self.all_character_count = 0
             self.ironclad_count = 0
             self.silent_count = 0
             self.defect_count = 0
             self.watcher_count = 0
+            self.necrobinder_count = 0
+            self.regent_count = 0
 
     def __str__(self) -> str:
-        return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}'
+        return f'all_character_count: {self.all_character_count}, IC: {self.ironclad_count}, Silent: {self.silent_count}, Defect: {self.defect_count}, Watcher: {self.watcher_count}, Necrobinder: {self.necrobinder_count}, Regent: {self.regent_count}'
 
 class RunStats:
     def __init__(self):
@@ -89,6 +93,12 @@ class RunStats:
                 case "Watcher":
                     if self.pb.watcher_count < run.character_streak.streak:
                         self.pb.watcher_count = run.character_streak.streak
+                case "Necrobinder":
+                    if self.pb.necrobinder_count < run.character_streak.streak:
+                        self.pb.necrobinder_count = run.character_streak.streak
+                case "Regent":
+                    if self.pb.regent_count < run.character_streak.streak:
+                        self.pb.regent_count = run.character_streak.streak
 
     def _increment_stat(self, stat: Statistic, char: str):
         match char:
@@ -100,6 +110,10 @@ class RunStats:
                 stat.defect_count += 1
             case "Watcher":
                 stat.watcher_count += 1
+            case "Necrobinder":
+                stat.necrobinder_count += 1
+            case "Regent":
+                stat.regent_count += 1
         stat.all_character_count += 1
 
     def clear(self):
@@ -196,7 +210,7 @@ class StreakContainer:
 
     """
 
-    def __init__(self, winning_streak: bool, runs):
+    def __init__(self, winning_streak: bool, runs: list[RunParser | Run2Parser]):
         self.winning_streak = winning_streak
         self.ongoing = False
         self.runs = runs

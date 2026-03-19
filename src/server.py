@@ -2745,7 +2745,7 @@ async def _send_standard_run_stats_message(
 
 
 _display = []
-_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher")
+_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher", "Necrobinder", "Regent")
 
 
 def _get_set_display():
@@ -2764,7 +2764,7 @@ def _get_set_display():
 @command("rotation", "display", flag="m")
 async def streak_display(ctx: ContextType, new: str):
     """Change the !streak command display."""
-    value = "risdw"
+    value = "risdwne"
     word = []
     _display.clear()
     for i, l in enumerate(value):
@@ -2799,7 +2799,8 @@ async def calculate_streak_cmd(ctx: ContextType):
 @command("pb")
 async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills for an optional date range."""
-    msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
+    #msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
+    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Necrobinder: {1.necrobinder_count} - Regent: {1.regent_count}"
     run_stats = None
     if date_string is None:
         run_stats = get_all_run_stats()

@@ -84,7 +84,8 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
     # we should only have to load this one time this way, after that we can just use the most recent run to update values
     # XXX: this is only the main profile of Spire 1
     try:
-        runs = list(get_profile(0, 1).runs) # BaalorA20 profile
+        #runs = list(get_profile(0, 1).runs) # BaalorA20 profile
+        runs = list(get_profile(1, 2).runs) # Spire 2 A10
     except:
         runs = []
 
@@ -117,6 +118,10 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                     run_stats.streaks.defect_count = run.character_streak.streak
                 elif run_stats.streaks.watcher_count is None and run.character == "Watcher":
                     run_stats.streaks.watcher_count = run.character_streak.streak
+                elif run_stats.streaks.necrobinder_count is None and run.character == "Necrobinder":
+                    run_stats.streaks.necrobinder_count = run.character_streak.streak
+                elif run_stats.streaks.regent_count is None and run.character == "Regent":
+                    run_stats.streaks.regent_count = run.character_streak.streak
 
         # set the stats from most recent run's rotating streak and character streak
         last_run = runs[0]
@@ -141,11 +146,17 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                     run_stats.streaks.defect_count = last_run.character_streak.streak
                 case "Watcher":
                     run_stats.streaks.watcher_count = last_run.character_streak.streak
+                case "Necrobinder":
+                    run_stats.streaks.necrobinder_count = last_run.character_streak.streak
+                case "Regent":
+                    run_stats.streaks.regent_count = last_run.character_streak.streak
     else:
         run_stats.streaks.ironclad_count = 0
         run_stats.streaks.silent_count = 0
         run_stats.streaks.defect_count = 0
         run_stats.streaks.watcher_count = 0
+        run_stats.streaks.necrobinder_count = 0
+        run_stats.streaks.regent_count = 0
 
 def get_all_run_stats():
     return _all_run_stats
