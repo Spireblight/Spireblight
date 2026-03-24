@@ -2539,7 +2539,10 @@
     <span class="n">info</span><span class="p">:</span> <span class="n">Card</span>
 
     <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/&quot;</span>
-    <span class="n">mod</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">mod</span> <span class="ow">or</span> <span class="s2">&quot;Slay the Spire&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">modname</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">mod</span> <span class="ow">or</span> <span class="s2">&quot;Slay the Spire&quot;</span>
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">v</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">modname</span> <span class="o">=</span> <span class="s2">&quot;2 slay the spire&quot;</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">format_for_slaytabase</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
     <span class="n">link</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mod</span><span class="si">}</span><span class="s2">/cards/</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">.png&quot;</span>
 
