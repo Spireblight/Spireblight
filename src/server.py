@@ -48,6 +48,7 @@ from aiohttp_jinja2 import template
 from aiohttp.web import Request, HTTPNotFound, Response, HTTPServiceUnavailable
 from aiohttp import ClientSession, ContentTypeError
 
+from src.cache.cache_helpers import Character
 from src.cache.run_stats import (
     get_all_run_stats,
     get_run_stats_by_date,
@@ -2714,7 +2715,7 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
 async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of wins for an optional date range."""
     #msg = "A20 Heart kills ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's A10 kills ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Regent: {1.regent_count} - Necrobinder: {1.necrobinder_count} - Defect: {1.defect_count}"
+    msg = "Baalor's A10 kills ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
     await _send_standard_run_stats_message(ctx, msg, "all_wins", date_string)
 
 
@@ -2722,7 +2723,7 @@ async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None
 async def calculate_losses_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of losses for an optional date range."""
     #msg = "A20 Heart losses ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's A10 losses ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Regent: {1.regent_count} - Necrobinder: {1.necrobinder_count} - Defect: {1.defect_count}"
+    msg = "Baalor's A10 losses ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
     await _send_standard_run_stats_message(ctx, msg, "all_losses", date_string)
 
 
@@ -2802,7 +2803,7 @@ async def calculate_streak_cmd(ctx: ContextType):
 async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills for an optional date range."""
     #msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Regent: {1.regent_count} - Necrobinder: {1.necrobinder_count} - Defect: {1.defect_count}"
+    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
     run_stats = None
     if date_string is None:
         run_stats = get_all_run_stats()
@@ -2979,24 +2980,8 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
         except TypeError:
             await ctx.reply("Start date is after end date")
             return
-    wins = [
-        run_stats.all_wins.all_character_count,
-        run_stats.all_wins.ironclad_count,
-        run_stats.all_wins.silent_count,
-        run_stats.all_wins.defect_count,
-        run_stats.all_wins.watcher_count,
-        run_stats.all_wins.necrobinder_count,
-        run_stats.all_wins.regent_count,
-    ]
-    losses = [
-        run_stats.all_losses.all_character_count,
-        run_stats.all_losses.ironclad_count,
-        run_stats.all_losses.silent_count,
-        run_stats.all_losses.defect_count,
-        run_stats.all_losses.watcher_count,
-        run_stats.all_losses.necrobinder_count,
-        run_stats.all_losses.regent_count,
-    ]
+    wins = [run_stats.all_wins.all_character_count] + [run_stats.all_wins.character_counts[c] for c in Character]
+    losses = [run_stats.all_losses.all_character_count] + [run_stats.all_losses.character_counts[c] for c in Character]
     rate = [0 if (a + b == 0) else a / (a + b) for a, b in zip(wins, losses)]
     await ctx.reply(
         #f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}"
