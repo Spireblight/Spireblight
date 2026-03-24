@@ -133,7 +133,7 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
                 run_stats.add_loss(last_run.character, last_run.timestamp)
             run_stats.streaks.all_character_count = last_run.rotating_streak.streak
             last_run_char = Character(last_run.character)
-            run_stats.streaks[last_run_char] = last_run.character_streak.streak
+            run_stats.streaks.character_counts[last_run_char] = last_run.character_streak.streak
     else:
         run_stats.streaks.character_counts = {char: 0 for char in Character}
 
