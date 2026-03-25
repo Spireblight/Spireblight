@@ -582,9 +582,10 @@ async def receive_save(req: Request):
 async def receive_save2(req: Request):
     content = (await get_req_data(req, "savefile"))[0]
 
+    j = None
     if content:
         j = json.loads(content)
-        _save2.update_data(j)
+    _save2.update_data(j)
 
     return Response()
 
