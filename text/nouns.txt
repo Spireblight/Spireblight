@@ -40,3 +40,7 @@ Snecko Eye
 caption
 orb
 dome
+Necrobinder
+Regent
+sly
+waffle
