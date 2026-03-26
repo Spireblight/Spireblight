@@ -24,7 +24,7 @@ class Player:
         return c.partition(".")[2].title()
 
     @property
-    def id(self):
+    def id(self) -> int:
         try:
             return self._data["id"]
         except KeyError:
@@ -63,7 +63,7 @@ class FileParser:
             return pl[0]
         if config.server.steam_id:
             for x in pl:
-                if x.id == config.server.steam_id:
+                if x.id == int(config.server.steam_id): # just in case
                     return x
         return pl[0] # fallback
 
