@@ -3423,18 +3423,19 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Display Baalor&#39;s current streak for Ascension 20 Heart kills.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_display</span><span class="p">:</span>
         <span class="n">_get_set_display</span><span class="p">()</span>
+    <span class="n">run_stats</span> <span class="o">=</span> <span class="n">get_all_run_stats</span><span class="p">()</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_display</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">l</span><span class="p">:</span>
             <span class="n">word</span> <span class="o">=</span> <span class="n">_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">arg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_count&quot;</span> <span class="k">if</span> <span class="n">word</span> <span class="o">!=</span> <span class="s2">&quot;Rotating&quot;</span> <span class="k">else</span> <span class="s2">&quot;all_character_count&quot;</span>
-            <span class="p">)</span>
-            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">: </span><span class="se">{{</span><span class="s2">0.</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s2">&quot;Rotating&quot;</span><span class="p">:</span>
+                <span class="n">stat</span> <span class="o">=</span> <span class="n">run_stats</span><span class="o">.</span><span class="n">streaks</span><span class="o">.</span><span class="n">all_character_count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stat</span> <span class="o">=</span> <span class="n">run_stats</span><span class="o">.</span><span class="n">streaks</span><span class="o">.</span><span class="n">character_counts</span><span class="p">[</span><span class="n">Character</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
 
-    <span class="n">final</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Current streak: </span><span class="si">{</span><span class="s1">&#39; - &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">run_stats</span> <span class="o">=</span> <span class="n">get_all_run_stats</span><span class="p">()</span>
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">run_stats</span><span class="o">.</span><span class="n">streaks</span><span class="p">))</span></div>
+            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current streak: </span><span class="si">{</span><span class="s1">&#39; - &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 
