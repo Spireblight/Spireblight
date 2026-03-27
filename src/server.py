@@ -2788,18 +2788,19 @@ async def calculate_streak_cmd(ctx: ContextType):
     """Display Baalor's current streak for Ascension 20 Heart kills."""
     if not _display:
         _get_set_display()
+    run_stats = get_all_run_stats()
     msg = []
     for i, l in enumerate(_display):
         if l:
             word = _words[i]
-            arg = (
-                f"{word.lower()}_count" if word != "Rotating" else "all_character_count"
-            )
-            msg.append(f"{word}: {{0.{arg}}}")
+            if word == "Rotating":
+                stat = run_stats.streaks.all_character_count
+            else:
+                stat = run_stats.streaks.character_counts[Character(word)]
 
-    final = f"Current streak: {' - '.join(msg)}"
-    run_stats = get_all_run_stats()
-    await ctx.reply(final.format(run_stats.streaks))
+            msg.append(f"{word}: {stat}")
+
+    await ctx.reply(f"Current streak: {' - '.join(msg)}")
 
 
 @command("pb")
