@@ -271,6 +271,23 @@ class Run2Parser(FP2):
         return f"Run2<{self.display_name}>"
 
     @property
+    def floor_reached(self):
+        return len(self.path)
+
+    @property
+    def killed_by(self) -> str | None:
+        key1: str = self._data["killed_by_encounter"]
+        key2: str = self._data["killed_by_event"]
+        res = None
+        for key in (key1, key2):
+            ktype, _, spec = key.partition(".")
+            if ktype == "NONE":
+                continue # nothing happened, so who cares
+            res = spec.replace("_", " ").title()
+
+        return res # could be None, in which case this shouldn't even get called
+
+    @property
     def has_archive_link(self) -> bool:
         """Whether we have a (timestamped or not) link to an archive video."""
         if self.vod is not None:
