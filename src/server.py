@@ -3328,34 +3328,40 @@ async def Discord_cleanup():
 async def Youtube_startup():
     ref = 60
     prev = ""
+    close = False
     if TConn is not None:
         if TConn._session is None:
             TConn._session = ClientSession()
         client = TConn._session
     else:
+        close = True
         client = ClientSession()
-    async with client as session:
-        logger.info(f"Starting Youtube playlist sheet download. Will refresh every {ref}s.")
-        while True:
-            text = ""
-            async with session.get(config.youtube.playlist_sheet) as response:
-                text = await response.text()
-            if text == prev or not text: # no need to update anything (or nothing to update)
+    try:
+        async with client as session:
+            logger.info(f"Starting Youtube playlist sheet download. Will refresh every {ref}s.")
+            while True:
+                text = ""
+                async with session.get(config.youtube.playlist_sheet) as response:
+                    text = await response.text()
+                if text == prev or not text: # no need to update anything (or nothing to update)
+                    await asyncio.sleep(ref)
+                    continue
+                data = text.splitlines()
+                # We're using DictReader with a defined set of fields so that if any keys are added to
+                # the sheet the display code here won't break.
+                reader = csv.DictReader(data, fieldnames=(
+                    "Game", "Youtube Link", "Origin", "Steam Link",
+                ))
+                # Skip the header line (needed when setting fieldnames)
+                next(reader)
+                # Serialize from a special object down to a pure list so we can json dump later
+                playlists.clear()
+                playlists.extend(reader)
+                prev = text
                 await asyncio.sleep(ref)
-                continue
-            data = text.splitlines()
-            # We're using DictReader with a defined set of fields so that if any keys are added to
-            # the sheet the display code here won't break.
-            reader = csv.DictReader(data, fieldnames=(
-                "Game", "Youtube Link", "Origin", "Steam Link",
-            ))
-            # Skip the header line (needed when setting fieldnames)
-            next(reader)
-            # Serialize from a special object down to a pure list so we can json dump later
-            playlists.clear()
-            playlists.extend(reader)
-            prev = text
-            await asyncio.sleep(ref)
+    finally:
+        if close:
+            await client.close()
 
 async def Archive_startup():
     logger.info("Fetching YouTube Archive run information.")
