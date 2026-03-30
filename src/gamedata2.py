@@ -70,7 +70,7 @@ class FileParser:
     def get_char_portrait(self):
         c = self.character.lower()
         # we do not currently account for losses
-        return f"/static/characters/{c}-portrait-2.png"
+        return f"/static/characters/{c}-portrait-3.png"
 
     @property
     def won(self) -> bool:
