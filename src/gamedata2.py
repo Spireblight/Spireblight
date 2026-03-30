@@ -43,6 +43,11 @@ class Player:
         """The deck at run end/current node."""
         return [get_card2(x) for x in self._data["deck"]]
 
+    def __eq__(self, value):
+        if not isinstance(value, Player):
+            return NotImplemented
+        return self._data == value._data
+
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
         return f"This has not yet been implemented ({self.__class__.__name__}.{name})"
@@ -55,17 +60,34 @@ class FileParser:
 
     def __init__(self, data: dict):
         self._data = data
+        self._main_player_index: int | None = None
 
     def get_main_player(self):
         """Return the player we care about, AKA the streamer."""
         pl = self.players
+        if self._main_player_index is not None:
+            return pl[self._main_player_index]
+
         if len(pl) == 1:
+            self._main_player_index = 0
             return pl[0]
+
         if config.server.steam_id:
-            for x in pl:
+            for i, x in enumerate(pl):
                 if x.id == int(config.server.steam_id): # just in case
+                    self._main_player_index = i
                     return x
         return pl[0] # fallback
+
+    def get_player_index(self):
+        if self._main_player_index is not None:
+            return self._main_player_index
+        pl = self.get_main_player()
+        try:
+            return self.players.index(pl)
+        except ValueError: # for some reason
+            # it's possible our call above set it
+            return self._main_player_index or 0
 
     def get_char_portrait(self):
         c = self.character.lower()
@@ -134,7 +156,7 @@ class FileParser:
         for act, name in zip(self._data.get("map_point_history", ()), act_names):
             for node in act:
                 i += 1
-                paths.append(PathNode(node, i, name))
+                paths.append(PathNode(self, node, i, name))
 
         return paths
 
@@ -204,17 +226,39 @@ class RelicData:
         return f"Not implemented ({self.__class__.__name__}.{name})"
 
 class PathNode:
-    def __init__(self, data: dict, floor: int, act: str = None):
+    def __init__(self, parser: FileParser, data: dict, floor: int, act_name: str = None):
+        self.parser = parser
         self._data = data
         self.floor = floor
-        self.act = act
+        self.act_name = act_name
 
     @property
     def end_of_act(self) -> bool:
-        return self._data["map_point_type"] == "boss"
+        # this is a weird thing, but because of double boss, we don't wanna multiline it
+        return self.floor < 48 and self._data["map_point_type"] == "boss"
 
     def description(self):
-        return "This has yet to be implemented."
+        choices = self._data["player_stats"][self.parser.get_player_index()]
+
+        match self._data["map_point_type"]:
+            case "ancient":
+                not_picked = []
+                picked = None
+                if "ancient_choice" not in choices:
+                    return "No bonus picked."
+
+                for d in choices["ancient_choice"]:
+                    key: str = d["title"]["key"]
+                    name, _, _ = key.partition(".")
+                    relic = get(name)
+                    if d["was_chosen"]:
+                        picked = relic
+                    else:
+                        not_picked.append(relic)
+
+                return f"We picked {picked.name}."
+
+        return "Data coming soon . . ."
 
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")

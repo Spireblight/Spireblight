@@ -192,9 +192,9 @@
                   </ul>
                 </div>
               {% endif %}
-              {% else %}
-              <p>Spire 2 data is coming soon . . .</p>
-              {% endif %}
+            {% else %}
+              <p>{{ run.path[0].description() }}</p>
+            {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
             <p id="neow-body-content"></p>
