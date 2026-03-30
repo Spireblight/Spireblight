@@ -4023,34 +4023,40 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Youtube_startup</span><span class="p">():</span>
     <span class="n">ref</span> <span class="o">=</span> <span class="mi">60</span>
     <span class="n">prev</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">close</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="n">close</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting Youtube playlist sheet download. Will refresh every </span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">s.&quot;</span><span class="p">)</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">youtube</span><span class="o">.</span><span class="n">playlist_sheet</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-                <span class="n">text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">prev</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span> <span class="c1"># no need to update anything (or nothing to update)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting Youtube playlist sheet download. Will refresh every </span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">s.&quot;</span><span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">youtube</span><span class="o">.</span><span class="n">playlist_sheet</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">prev</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span> <span class="c1"># no need to update anything (or nothing to update)</span>
+                    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+                <span class="c1"># We&#39;re using DictReader with a defined set of fields so that if any keys are added to</span>
+                <span class="c1"># the sheet the display code here won&#39;t break.</span>
+                <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="p">(</span>
+                    <span class="s2">&quot;Game&quot;</span><span class="p">,</span> <span class="s2">&quot;Youtube Link&quot;</span><span class="p">,</span> <span class="s2">&quot;Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;Steam Link&quot;</span><span class="p">,</span>
+                <span class="p">))</span>
+                <span class="c1"># Skip the header line (needed when setting fieldnames)</span>
+                <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                <span class="c1"># Serialize from a special object down to a pure list so we can json dump later</span>
+                <span class="n">playlists</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="n">playlists</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">text</span>
                 <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
-                <span class="k">continue</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-            <span class="c1"># We&#39;re using DictReader with a defined set of fields so that if any keys are added to</span>
-            <span class="c1"># the sheet the display code here won&#39;t break.</span>
-            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="p">(</span>
-                <span class="s2">&quot;Game&quot;</span><span class="p">,</span> <span class="s2">&quot;Youtube Link&quot;</span><span class="p">,</span> <span class="s2">&quot;Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;Steam Link&quot;</span><span class="p">,</span>
-            <span class="p">))</span>
-            <span class="c1"># Skip the header line (needed when setting fieldnames)</span>
-            <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-            <span class="c1"># Serialize from a special object down to a pure list so we can json dump later</span>
-            <span class="n">playlists</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-            <span class="n">playlists</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-            <span class="n">prev</span> <span class="o">=</span> <span class="n">text</span>
-            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Archive_startup">
