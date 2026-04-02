@@ -14,7 +14,7 @@ a lantern! In radiance may we find victory!
 a Maw Bank! Interesting.
 an Oddly Smooth Stone! It fills you with determination.
 an Omamori! For when there's something strange in the neighbourhood.
-Orichalcum! The reckless kind of armor.
+the Orichalcum! The reckless kind of armor.
 a Pen Nib! It's super effective!
 a Potion Belt! Maximum Entropy! baalorPotion
 a Preserved Insect! A different kind of butterfly effect.
@@ -90,5 +90,56 @@ the Wing Boots! Don't fly too close to the sun!
 a Boat Thingy! You're a boat!
 a Cloak Clasp! Fashionable!
 a Damaru! Drum solo time.
-Duality! It's not a knockoff Kunai, I swear.
-A shovel! baalorStare
+the Duality! It's not a knockoff Kunai, I swear.
+a Shovel! How?! baalorStare
+an Amethyst Aubergine! Decorative only, not for eating.
+a Bone Flute! Comes in real handy.
+the Book of Five Rings! No, this is not about Spire olympics.
+a Fencing Manual! Step 1: Forge a sword.
+a Festive Popper! Caution: VERY loud!
+a Gorget! Prevents enemies from going for the throat.
+a Pendulum! Not actually infinite, but close enough.
+the Permafrost! Please give that back to Demeter.
+a Tiny Mailbox! Mail-order potions not endorsed by Merchant.
+Some Bellows! This relic blows.
+a Book Repair Knife! The Illiterates are doomed!
+a Bowler Hat! So snazzy that everyone you meet is suddenly richer.
+a Candelabra! Does not evolve into Candelkadabra.
+a Funerary Mask! I see dead people!
+some Galactic Dust! The Spice must flow!
+a Joss Paper! I'm too exhausted to burn this.
+a Kusarigama! The ninjas are getting too powerful.
+a Lucky Fysh! It's still ceramic.
+a Miniature Cannon! Cannonballs not included.
+a Parrying Shield! A good defense is an extra basic Strike.
+a Petrified Toad! Secretly actually makes rock-shaped potions.
+a Planisphere! Into the Spire-verse!
+some Regalite! Really motivates those minions.
+a Reptile Trinket! Creates an overabundance of flex potions.
+a Ripple Basin! Rumored to belong to Sun Tzu.
+some Sparkling Rouge! The power of the femme fatale.
+a Stone Cracker! Polly wants one of those.
+a Tuning Fork! The fork is the more useful part.
+a Vambrace! Single-use only.
+a Beating Remnant of the heart! Literally invincible.
+a Big Hat! Mysteriously disappears if not worn.
+a Bookmark! Created by applying Pressure Points to a certain Spire 1 elite.
+a Chandelier! I have a sudden urge to swing from it...
+a Demon Tongue! I wonder if this would have worked on Blasphemy...
+a Game Piece! Somehow absorbs heat incredibly well.
+a Helical Dart! After-Image at home?
+an Intimidating Helmet! Actually makes those expensive cards less intimidating to click on.
+an Ivory Tile! I want a refund!
+a Lasting Candy! The Power(s)!
+a Lunar Pastry! Tastes heavenly.
+a Metronome! The beat of death.
+a Mini Regent! Made by Shrink Beetle.
+some Orange Dough! Vaguely minion-shaped.
+a Power Cell! The Defects secret Turbo button.
+a Rainbow Ring! Now how do I double this...
+a Razor Tooth! Makes (you) the card sharp?
+a Ruined Helmet! It limit broke.
+a Sturdy Clamp! Would it be good here?
+an Unsettling Lamp! Contains Malaises aplenty.
+a Vexing Puzzlebox! Secretly just a fancier Toolbox.
+a White Star! Darv freshly painted this one.
