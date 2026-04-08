@@ -25,7 +25,7 @@ _cache: dict[str, dict[str, str]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
-def sanitize(x: str) -> str:
+def _sanitize(x: str) -> str:
     x = x.lower()
     for s in _replace_str:
         x = x.replace(s, "")
@@ -36,7 +36,7 @@ def query(name: str, type: str | None = None):
     if name.endswith(" 1"): # force spire 1 data
         name = name[:-2]
         force = True
-    name = sanitize(name)
+    name = _sanitize(name)
     res = complete_match(name, _query_cache)
     if len(res) == 1:
         lst = _query_cache[res[0]]
@@ -288,7 +288,7 @@ async def load():
                         inst = _str_to_cls[cat](mapping)
                         if inst.store_internal:
                             _internal_cache[inst.internal] = inst
-                        _query_cache[sanitize(inst.name)].append(inst)
+                        _query_cache[_sanitize(inst.name)].append(inst)
 
             done.add(mod.lower())
 
@@ -301,7 +301,7 @@ async def load():
         for x in j["score_bonuses"]:
             inst = ScoreBonus(x)
             _internal_cache[inst.internal] = inst
-            _query_cache[sanitize(inst.name)].append(inst)
+            _query_cache[_sanitize(inst.name)].append(inst)
 
     for file in (base / "argo" / "sts1").iterdir():
         if not file.stem.startswith("_"):
