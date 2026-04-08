@@ -633,8 +633,64 @@ collection.</p>
 <dd></dd></dl>
 
 </section>
-<section id="cache-run-stats-module">
-<h2>cache.run_stats module<a class="headerlink" href="#cache-run-stats-module" title="Link to this heading">#</a></h2>
+<section id="module-src.cache.run_stats">
+<span id="cache-run-stats-module"></span><h2>cache.run_stats module<a class="headerlink" href="#module-src.cache.run_stats" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.cache.run_stats.update_all_run_stats">
+<span class="sig-name descname"><span class="pre">update_all_run_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/cache/run_stats.html#update_all_run_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.cache.run_stats.update_all_run_stats" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.cache.run_stats.get_all_run_stats">
+<span class="sig-name descname"><span class="pre">get_all_run_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/cache/run_stats.html#get_all_run_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.cache.run_stats.get_all_run_stats" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.cache.run_stats.get_run_stats_by_date">
+<span class="sig-name descname"><span class="pre">get_run_stats_by_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.cache.cache_helpers.RunStatsByDate" title="src.cache.cache_helpers.RunStatsByDate"><span class="pre">RunStatsByDate</span></a></span></span><a class="reference internal" href="_modules/src/cache/run_stats.html#get_run_stats_by_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.cache.run_stats.get_run_stats_by_date" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.cache.run_stats.get_run_stats_by_date_string">
+<span class="sig-name descname"><span class="pre">get_run_stats_by_date_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.cache.cache_helpers.RunStatsByDate" title="src.cache.cache_helpers.RunStatsByDate"><span class="pre">RunStatsByDate</span></a></span></span><a class="reference internal" href="_modules/src/cache/run_stats.html#get_run_stats_by_date_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.cache.run_stats.get_run_stats_by_date_string" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Character</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/cache/cache_helpers.html#Character"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.cache.run_stats.Character" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.IRONCLAD">
+<span class="sig-name descname"><span class="pre">IRONCLAD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ironclad'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.IRONCLAD" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.SILENT">
+<span class="sig-name descname"><span class="pre">SILENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Silent'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.SILENT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.DEFECT">
+<span class="sig-name descname"><span class="pre">DEFECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Defect'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.DEFECT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.WATCHER">
+<span class="sig-name descname"><span class="pre">WATCHER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Watcher'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.WATCHER" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.NECROBINDER">
+<span class="sig-name descname"><span class="pre">NECROBINDER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Necrobinder'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.NECROBINDER" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.cache.run_stats.Character.REGENT">
+<span class="sig-name descname"><span class="pre">REGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Regent'</span></em><a class="headerlink" href="#src.cache.run_stats.Character.REGENT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-src.cache.streaks">
 <span id="cache-streaks-module"></span><h2>cache.streaks module<a class="headerlink" href="#module-src.cache.streaks" title="Link to this heading">#</a></h2>
@@ -755,7 +811,22 @@ collection.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.mastered.get_current_masteries"><code class="docutils literal notranslate"><span class="pre">get_current_masteries()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-run-stats-module">cache.run_stats module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.cache.run_stats">cache.run_stats module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.update_all_run_stats"><code class="docutils literal notranslate"><span class="pre">update_all_run_stats()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.get_all_run_stats"><code class="docutils literal notranslate"><span class="pre">get_all_run_stats()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.get_run_stats_by_date"><code class="docutils literal notranslate"><span class="pre">get_run_stats_by_date()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.get_run_stats_by_date_string"><code class="docutils literal notranslate"><span class="pre">get_run_stats_by_date_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character"><code class="docutils literal notranslate"><span class="pre">Character</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.IRONCLAD"><code class="docutils literal notranslate"><span class="pre">Character.IRONCLAD</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.SILENT"><code class="docutils literal notranslate"><span class="pre">Character.SILENT</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.DEFECT"><code class="docutils literal notranslate"><span class="pre">Character.DEFECT</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.WATCHER"><code class="docutils literal notranslate"><span class="pre">Character.WATCHER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.NECROBINDER"><code class="docutils literal notranslate"><span class="pre">Character.NECROBINDER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.run_stats.Character.REGENT"><code class="docutils literal notranslate"><span class="pre">Character.REGENT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.cache.streaks">cache.streaks module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.cache.streaks.update_streak_collections"><code class="docutils literal notranslate"><span class="pre">update_streak_collections()</span></code></a></li>
 </ul>
