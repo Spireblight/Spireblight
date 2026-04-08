@@ -27,21 +27,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,14 +50,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
@@ -88,7 +93,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -365,7 +370,7 @@
 <li class="toctree-l3"><a class="reference internal" href="cache.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.cache_helpers">cache.cache_helpers module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.mastered">cache.mastered module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.run_stats">cache.run_stats module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cache.html#cache-run-stats-module">cache.run_stats module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache.streaks">cache.streaks module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cache.html#module-src.cache">Module contents</a></li>
 </ul>
@@ -408,9 +413,9 @@
 <li class="toctree-l2"><a class="reference internal" href="logger.html">logger module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monster.html">monster package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="monster.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster.server">monster.server module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#monster-server-module">monster.server module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster.static">monster.static module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="monster.html#module-src.monster">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="monster.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nameinternal.html">nameinternal module</a><ul>
@@ -445,109 +450,7 @@
 <li class="toctree-l3"><a class="reference internal" href="score.html#src.score.get_poopy_bonus"><code class="docutils literal notranslate"><span class="pre">get_poopy_bonus()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="server.html">server module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Formatter"><code class="docutils literal notranslate"><span class="pre">Formatter</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.readline"><code class="docutils literal notranslate"><span class="pre">readline()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.add_cmd"><code class="docutils literal notranslate"><span class="pre">add_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.command"><code class="docutils literal notranslate"><span class="pre">command()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.with_savefile"><code class="docutils literal notranslate"><span class="pre">with_savefile()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.slice_command"><code class="docutils literal notranslate"><span class="pre">slice_command()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_command"><code class="docutils literal notranslate"><span class="pre">mt_command()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.TwitchConn"><code class="docutils literal notranslate"><span class="pre">TwitchConn</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.DiscordConn"><code class="docutils literal notranslate"><span class="pre">DiscordConn</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.timers_list"><code class="docutils literal notranslate"><span class="pre">timers_list()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.timer_cmd"><code class="docutils literal notranslate"><span class="pre">timer_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.command_cmd"><code class="docutils literal notranslate"><span class="pre">command_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Quote"><code class="docutils literal notranslate"><span class="pre">Quote</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_raw_quotes"><code class="docutils literal notranslate"><span class="pre">get_raw_quotes()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.quote_stuff"><code class="docutils literal notranslate"><span class="pre">quote_stuff()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.setup_clips"><code class="docutils literal notranslate"><span class="pre">setup_clips()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Clip"><code class="docutils literal notranslate"><span class="pre">Clip</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_clip_info"><code class="docutils literal notranslate"><span class="pre">get_clip_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.clip_cmd"><code class="docutils literal notranslate"><span class="pre">clip_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bot_cmd"><code class="docutils literal notranslate"><span class="pre">bot_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.help_cmd"><code class="docutils literal notranslate"><span class="pre">help_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shoutout"><code class="docutils literal notranslate"><span class="pre">shoutout()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.stream_title"><code class="docutils literal notranslate"><span class="pre">stream_title()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.stream_uptime"><code class="docutils literal notranslate"><span class="pre">stream_uptime()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.fetch_run_offset"><code class="docutils literal notranslate"><span class="pre">fetch_run_offset()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.start_prediction"><code class="docutils literal notranslate"><span class="pre">start_prediction()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.resolve_prediction"><code class="docutils literal notranslate"><span class="pre">resolve_prediction()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.auto_resolve_pred"><code class="docutils literal notranslate"><span class="pre">auto_resolve_pred()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.handle_prediction"><code class="docutils literal notranslate"><span class="pre">handle_prediction()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing"><code class="docutils literal notranslate"><span class="pre">now_playing()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing_client"><code class="docutils literal notranslate"><span class="pre">now_playing_client()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_handle"><code class="docutils literal notranslate"><span class="pre">giveaway_handle()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_enter"><code class="docutils literal notranslate"><span class="pre">giveaway_enter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.card_info"><code class="docutils literal notranslate"><span class="pre">card_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_info"><code class="docutils literal notranslate"><span class="pre">mt_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.card_with_art"><code class="docutils literal notranslate"><span class="pre">card_with_art()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bluekey"><code class="docutils literal notranslate"><span class="pre">bluekey()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.cards_removed"><code class="docutils literal notranslate"><span class="pre">cards_removed()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.neowbonus"><code class="docutils literal notranslate"><span class="pre">neowbonus()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.neow_skipped"><code class="docutils literal notranslate"><span class="pre">neow_skipped()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.what_if_box"><code class="docutils literal notranslate"><span class="pre">what_if_box()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.seed_cmd"><code class="docutils literal notranslate"><span class="pre">seed_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.is_seeded"><code class="docutils literal notranslate"><span class="pre">is_seeded()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.run_playtime"><code class="docutils literal notranslate"><span class="pre">run_playtime()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shop_removal_cost"><code class="docutils literal notranslate"><span class="pre">shop_removal_cost()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.shop_prices"><code class="docutils literal notranslate"><span class="pre">shop_prices()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.campfire_heal"><code class="docutils literal notranslate"><span class="pre">campfire_heal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.nloth_traded"><code class="docutils literal notranslate"><span class="pre">nloth_traded()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.event_likelihood"><code class="docutils literal notranslate"><span class="pre">event_likelihood()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.rare_card_chances"><code class="docutils literal notranslate"><span class="pre">rare_card_chances()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.relic_info"><code class="docutils literal notranslate"><span class="pre">relic_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.relics_page2"><code class="docutils literal notranslate"><span class="pre">relics_page2()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.seen_relic"><code class="docutils literal notranslate"><span class="pre">seen_relic()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.skipped_boss_relics"><code class="docutils literal notranslate"><span class="pre">skipped_boss_relics()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.bottled_cards"><code class="docutils literal notranslate"><span class="pre">bottled_cards()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.dagger_scaling"><code class="docutils literal notranslate"><span class="pre">dagger_scaling()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.algo_scaling"><code class="docutils literal notranslate"><span class="pre">algo_scaling()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.modifiers"><code class="docutils literal notranslate"><span class="pre">modifiers()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_clans"><code class="docutils literal notranslate"><span class="pre">mt_clans()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_mutators"><code class="docutils literal notranslate"><span class="pre">mt_mutators()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_challenge"><code class="docutils literal notranslate"><span class="pre">mt_challenge()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_artifact"><code class="docutils literal notranslate"><span class="pre">mt_artifact()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mt_pyre"><code class="docutils literal notranslate"><span class="pre">mt_pyre()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.curses"><code class="docutils literal notranslate"><span class="pre">curses()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.items"><code class="docutils literal notranslate"><span class="pre">items()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last"><code class="docutils literal notranslate"><span class="pre">get_last()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_run"><code class="docutils literal notranslate"><span class="pre">get_last_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_win"><code class="docutils literal notranslate"><span class="pre">get_last_win()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_last_loss"><code class="docutils literal notranslate"><span class="pre">get_last_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.next_run"><code class="docutils literal notranslate"><span class="pre">next_run()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.wall_card"><code class="docutils literal notranslate"><span class="pre">wall_card()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.set_run_stats_by_date"><code class="docutils literal notranslate"><span class="pre">set_run_stats_by_date()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_wins_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_wins_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_losses_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_losses_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.streak_display"><code class="docutils literal notranslate"><span class="pre">streak_display()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_streak_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_streak_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_pb_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_pb_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_wrs"><code class="docutils literal notranslate"><span class="pre">get_wrs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.architect_total_damage"><code class="docutils literal notranslate"><span class="pre">architect_total_damage()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calculate_winrate_cmd"><code class="docutils literal notranslate"><span class="pre">calculate_winrate_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.unmastered"><code class="docutils literal notranslate"><span class="pre">unmastered()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.mastered_stuff"><code class="docutils literal notranslate"><span class="pre">mastered_stuff()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.current_mastery_check"><code class="docutils literal notranslate"><span class="pre">current_mastery_check()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.calipers"><code class="docutils literal notranslate"><span class="pre">calipers()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.active_mods"><code class="docutils literal notranslate"><span class="pre">active_mods()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.active_mod_info"><code class="docutils literal notranslate"><span class="pre">active_mod_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.commands_page"><code class="docutils literal notranslate"><span class="pre">commands_page()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.individual_cmd"><code class="docutils literal notranslate"><span class="pre">individual_cmd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.automatic_client_report"><code class="docutils literal notranslate"><span class="pre">automatic_client_report()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.check_token_validity"><code class="docutils literal notranslate"><span class="pre">check_token_validity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.get_new_token"><code class="docutils literal notranslate"><span class="pre">get_new_token()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Twitch_startup"><code class="docutils literal notranslate"><span class="pre">Twitch_startup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Twitch_cleanup"><code class="docutils literal notranslate"><span class="pre">Twitch_cleanup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Discord_startup"><code class="docutils literal notranslate"><span class="pre">Discord_startup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Discord_cleanup"><code class="docutils literal notranslate"><span class="pre">Discord_cleanup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Youtube_startup"><code class="docutils literal notranslate"><span class="pre">Youtube_startup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Archive_startup"><code class="docutils literal notranslate"><span class="pre">Archive_startup()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="server.html">server module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slice.html">slice module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.Hero"><code class="docutils literal notranslate"><span class="pre">Hero</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slice.html#src.slice.CurrentRun"><code class="docutils literal notranslate"><span class="pre">CurrentRun</span></code></a></li>
@@ -639,8 +542,8 @@
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Spireblight documentation</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -648,13 +551,13 @@
   </nav></div>
 
   <div class="sidebar-secondary-item">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div></div>
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
 
 </div></div>
               
@@ -669,8 +572,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -704,7 +607,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
 </p></div>
       
     </div>
