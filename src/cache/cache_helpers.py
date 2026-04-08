@@ -21,7 +21,7 @@ class Character(Enum):
 
 class CharDict(defaultdict):
     def __missing__(self, key):
-        return Character(key)
+        return self[Character(key)]
 
 class Statistic:
     def __init__(self, *, set_default: bool = False):
