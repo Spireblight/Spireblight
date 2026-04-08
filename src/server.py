@@ -3372,3 +3372,7 @@ async def Archive_startup():
         archive.archive.determine_offset()
         archive.archive.write_to_disk()
         await asyncio.sleep(config.youtube.cache_timeout)
+
+async def Archive_cleanup():
+    if archive.archive._session is not None:
+        await archive.archive._session.close()

@@ -16,7 +16,7 @@ from src.utils import getfile
 from src.runs import get_parser, RunParser, _cache
 
 _date_re = re.compile(r"(\d\d\d\d\-\d\d\-\d\d)")
-_chapter_re = re.compile(r"^(\d\d?):(\d\d):(\d\d) Slay the Spire \- (\w+)$")
+_chapter_re = re.compile(r"^(\d\d?):(\d\d):(\d\d) Slay the Spire( 2)? - (\w+)( \(.*\))?$")
 
 archive: _ArchiveHandler = None
 
@@ -71,7 +71,7 @@ class VOD:
         final: list[tuple[int, str]] = []
         for line in self.data.description.splitlines():
             if (c := _chapter_re.match(line)):
-                h, m, s, char = c.groups()
+                h, m, s, _, char, _ = c.groups()
                 minutes = int(m)
                 minutes += int(h) * 60
                 seconds = int(s) + minutes * 60
