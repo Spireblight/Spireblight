@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from enum import Enum
 
 import datetime # TODO: UTC?
@@ -18,14 +19,18 @@ class Character(Enum):
     NECROBINDER = "Necrobinder"
     REGENT = "Regent"
 
+class CharDict(defaultdict):
+    def __missing__(self, key):
+        return Character(key)
+
 class Statistic:
     def __init__(self, *, set_default: bool = False):
         self.all_character_count = None
-        self.character_counts: dict[Character, int] = {char: None for char in Character}
+        self.character_counts: CharDict[Character, int] = CharDict({char: None for char in Character})
 
         if set_default:
             self.all_character_count = 0
-            self.character_counts: dict[Character, int] = {char: 0 for char in Character}
+            self.character_counts: CharDict[Character, int] = CharDict({char: 0 for char in Character})
             
     def __str__(self) -> str:
         return f"All characters: {self.all_character_count}, {', '.join(f'{x.value}: {self.character_counts[x]}' for x in Character)}"

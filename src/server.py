@@ -2807,7 +2807,7 @@ async def calculate_streak_cmd(ctx: ContextType):
 async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills for an optional date range."""
     #msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
+    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.character_counts[Ironclad]} - Silent: {1.character_counts[Silent]} - Regent: {1.character_counts[Regent]} - Necrobinder: {1.character_counts[Necrobinder]} - Defect: {1.character_counts[Defect]}"
     run_stats = None
     if date_string is None:
         run_stats = get_all_run_stats()
