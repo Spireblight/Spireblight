@@ -26,11 +26,11 @@ class CharDict(defaultdict):
 class Statistic:
     def __init__(self, *, set_default: bool = False):
         self.all_character_count = None
-        self.character_counts: CharDict[Character, int] = CharDict({char: None for char in Character})
+        self.character_counts: CharDict[Character, int] = CharDict(None, {char: None for char in Character})
 
         if set_default:
             self.all_character_count = 0
-            self.character_counts: CharDict[Character, int] = CharDict({char: 0 for char in Character})
+            self.character_counts: CharDict[Character, int] = CharDict(None, {char: 0 for char in Character})
             
     def __str__(self) -> str:
         return f"All characters: {self.all_character_count}, {', '.join(f'{x.value}: {self.character_counts[x]}' for x in Character)}"
