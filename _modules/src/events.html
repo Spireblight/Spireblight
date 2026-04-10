@@ -348,7 +348,15 @@
                 <article class="bd-article">
                   
   <h1>Source code for src.events</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;Lightweight event system to support plug-in modules.</span>
+
+<span class="sd">Modules with listeners must be imported for the</span>
+<span class="sd">listeners to be active.</span>
+
+<span class="sd">Any event with `setup` in the name is guaranteed to never</span>
+<span class="sd">be called more than once (which could be not at all).&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Coroutine</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
@@ -397,6 +405,8 @@
     <span class="n">rets</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
         <span class="n">rets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">listener</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">if</span> <span class="s2">&quot;setup&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span> <span class="c1"># make sure this only ever gets called once</span>
+        <span class="n">EVENTS</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">rets</span></div>
 
 </pre></div>

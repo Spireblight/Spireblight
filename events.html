@@ -395,6 +395,11 @@
                   
   <section id="module-src.events">
 <span id="events-module"></span><h1>events module<a class="headerlink" href="#module-src.events" title="Link to this heading">#</a></h1>
+<p>Lightweight event system to support plug-in modules.</p>
+<p>Modules with listeners must be imported for the
+listeners to be active.</p>
+<p>Any event with <cite>setup</cite> in the name is guaranteed to never
+be called more than once (which could be not at all).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.events.EventListener">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EventListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Coroutine</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/events.html#EventListener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.events.EventListener" title="Link to this definition">#</a></dt>
