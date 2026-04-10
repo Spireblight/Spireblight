@@ -31,7 +31,7 @@ def _sanitize(x: str) -> str:
         x = x.replace(s, "")
     return x
 
-def query(name: str, type: str | None = None):
+def query(name: str):
     force = False
     if name.endswith(" 1"): # force spire 1 data
         name = name[:-2]
@@ -55,7 +55,21 @@ def get(name: str) -> Base:
     if name in _internal_cache:
         return _internal_cache[name]
 
-    return Unknown(name)
+    fail = Unknown(name)
+
+    # basic test failed, attempt Spire 2 id
+    ntype, sep, sname = name.partition(".")
+    if not sep:
+        return fail
+
+    if sname == "title": # choice key
+        return _internal_cache.get(ntype, fail)
+
+    val = _internal_cache.get(sname, fail)
+    if val is not fail and val.cls_name != ntype.lower():
+        raise ValueError(f"Found {sname} but it's a {val.cls_name} (explicitly asked for {ntype})")
+
+    return val
 
 def get_card(card: str) -> SingleCard:
     """Return a single card for Slay the Spire."""
