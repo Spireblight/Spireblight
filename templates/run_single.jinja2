@@ -192,8 +192,10 @@
                   </ul>
                 </div>
               {% endif %}
-            {% else %}
+            {% elif run.path  %}
               <p>{{ run.path[0].description() }}</p>
+            {% else %}
+              <p>No bonus picked yet.</p>
             {% endif %}
           </div>
           <div id="neow-body-new" class="message-body hidden">
