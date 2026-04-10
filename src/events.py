@@ -1,3 +1,11 @@
+"""Lightweight event system to support plug-in modules.
+
+Modules with listeners must be imported for the
+listeners to be active.
+
+Any event with `setup` in the name is guaranteed to never
+be called more than once (which could be not at all)."""
+
 from __future__ import annotations
 
 from typing import Callable, Coroutine
@@ -33,4 +41,6 @@ async def invoke(name: str, /, *args, **kwargs) -> list:
     rets = []
     for listener in get(name):
         rets.append(await listener.invoke(args, kwargs))
+    if "setup" in name: # make sure this only ever gets called once
+        EVENTS.pop(name, None)
     return rets
