@@ -1,0 +1,16 @@
+{
+    "cards": [],
+    "relics": [
+        {
+            "id": "HEFTY_TABLET",
+            "name": "Hefty Tablet",
+            "pool": "colorless",
+            "tier": "Ancient",
+            "description": "Upon picked, choose 1 of 3 Rare cards to add to your Deck, add 1 Injury to your deck.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        }
+    ],
+    "potions": []
+}

@@ -278,7 +278,7 @@ async def load():
             async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
                 if resp.ok:
                     decoded = await resp.text()
-                    data = json.loads(decoded)
+                    data: dict = json.loads(decoded)
             if data is None:
                 raise ValueError(f"Mod {mod} could not be found.")
 
@@ -319,3 +319,16 @@ async def load():
         inst = _internal_cache[name]
         for alias in aliases:
             _query_cache[alias].append(inst)
+
+    # Load data that isn't yet live on the main branch (for beta patch stuff)
+    # Notably, this will override the stuff from the Slaytabase JSON
+    with (base / "argo" / "stb_missing.json").open() as f:
+        j: dict = json.load(f)
+        for cat, maps in j.items():
+            if cat in _str_to_cls:
+                for mapping in maps:
+                    inst = _str_to_cls[cat](mapping)
+                    if inst.store_internal:
+                        _internal_cache[inst.internal] = inst
+                    _query_cache[_sanitize(inst.name)].append(inst)
+
