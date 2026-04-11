@@ -77,12 +77,12 @@ def get_card(card: str) -> SingleCard:
     inst = get(name)
     return SingleCard(inst, int(upgrades or 0))
 
-def get_card2(data: dict) -> SingleCard:
+def get_card2(data: dict, floor_added: int | None = None) -> SingleCard:
     """Return a single card for Slay the Spire 2."""
     c: str = data["id"]
     _, _, name = c.partition(".")
     card = get(name)
-    return SingleCard(card, data.get("current_upgrade_level", 0), data["floor_added_to_deck"], data.get("enchantment"))
+    return SingleCard(card, data.get("current_upgrade_level", 0), data.get("floor_added_to_deck", floor_added), data.get("enchantment"))
 
 @total_ordering
 class Base:
