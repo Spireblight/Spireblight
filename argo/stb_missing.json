@@ -10,6 +10,36 @@
             "flavorText": "Details for this relic will be revealed in the future...",
             "v": 2,
             "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "PHIAL_HOLSTER",
+            "name": "Phial Holster",
+            "pool": "colorless",
+            "tier": "Ancient",
+            "description": "Upon picked, gain a potion slot and a random potion.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "WINGED_BOOTS",
+            "name": "Winged Boots",
+            "pool": "colorless",
+            "tier": "Ancient",
+            "description": "You may ignore paths when traversing the map up to 3 times.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "NEOWS_BONES",
+            "name": "Neow's Bones",
+            "pool": "colorless",
+            "tier": "Ancient",
+            "description": "Gain a random curse and 2 random Neow relics.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
         }
     ],
     "potions": []
