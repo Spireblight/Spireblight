@@ -157,9 +157,7 @@ class SingleCard:
         self.upgrades = upgrades
         self.floor_added = floor # if None, we simply don't have the info
         if enchantment is not None:
-            enc: str = enchantment["id"]
-            _, _, name = enc.partition(".")
-            self.enchantment = get(name)
+            self.enchantment = get(enchantment["id"])
             self.amount = enchantment["amount"]
 
     @property

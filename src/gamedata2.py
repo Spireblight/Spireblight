@@ -45,6 +45,10 @@ class Player:
         """The deck at run end/current node."""
         return [get_card2(x) for x in self._data["deck"]]
 
+    @property
+    def badges(self):
+        return [Badge(x) for x in self._data.get("badges", ())]
+
     def __eq__(self, value):
         if not isinstance(value, Player):
             return NotImplemented
@@ -121,14 +125,8 @@ class FileParser:
         return self.get_main_player().character
 
     @property
-    def ascension_level(self) -> int:
-        """Which Ascension level the run was played at."""
-        return self._data["ascension"]
-
-    @property
-    def players(self):
-        """Read-only list of all players in this game (host first)."""
-        return [Player(x, self) for x in self._data["players"]]
+    def deck(self):
+        return self.get_main_player().deck
 
     @property
     def relics(self):
@@ -137,6 +135,20 @@ class FileParser:
     @property
     def relics_bare(self) -> list[Relic]:
         return [x.relic for x in self.relics]
+
+    @property
+    def badges(self):
+        return self.get_main_player().badges
+
+    @property
+    def ascension_level(self) -> int:
+        """Which Ascension level the run was played at."""
+        return self._data["ascension"]
+
+    @property
+    def players(self):
+        """Read-only list of all players in this game (host first)."""
+        return [Player(x, self) for x in self._data["players"]]
 
     @property
     def has_removals(self):
@@ -192,6 +204,30 @@ class FileParser:
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
         return f"Not implemented ({self.__class__.__name__}.{name})"
+
+class Badge: # XXX make sure to properly translate names when this comes on main
+    """Run badges."""
+
+    def __init__(self, data: dict[str, str]):
+        self._data = data
+
+    @property
+    def name(self):
+        return self._data["id"].lower()
+
+    @property
+    def rarity(self):
+        return self._data["rarity"].lower()
+
+    def as_html(self):
+        result = (
+            '<svg width="64" height="64">'
+            '<image width="64" height="64" xlink:href="{website}/static/badges/rarity_{rarity}.png"></image>'
+            '<image width="64" height="64" xlink:href="{website}/static/badges/{name}.png"></image>'
+            '<title>{title}</title>'
+            '</svg>'
+        )
+        return result.format(website=config.server.url, rarity=self.rarity, name=self.name, title=self.name.replace("_", " ").title())
 
 class RelicData:
     """View relics and their information."""

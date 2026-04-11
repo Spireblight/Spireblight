@@ -219,6 +219,12 @@
                         {% endif %})">
               {% endfor %}
             </div>
+          {% else %}
+            <div>
+              {% for badge in run.badges %}
+                {{ badge.as_html() | safe }}
+              {% endfor %}
+            </div>
           {% endif %}
           <div class="hint" onclick="neowReset()">
             {% if run.game_version == 1 %}
