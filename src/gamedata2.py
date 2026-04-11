@@ -316,7 +316,7 @@ class PathNode:
                 self.cards_obtained.append(card)
 
         for u in choices.get("upgraded_cards", ()):
-            self.cards_upgraded.append(get_card2(u))
+            self.cards_upgraded.append(get(u))
 
         for r in choices.get("relic_choices", ()):
             relic = get(r["choice"])
