@@ -12,8 +12,9 @@ from src.utils import format_for_slaytabase
 class Player:
     """Hold game information for one player."""
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, parser: FileParser):
         self._data = data
+        self._parser = parser
 
     @property
     def character(self) -> str:
@@ -32,11 +33,11 @@ class Player:
             return self._data["net_id"]
 
     @property
-    def relics(self) -> list["RelicData"]:
+    def relics(self) -> list[RelicData]:
         """The relics at run end/current node."""
         ret = []
         for rel in self._data["relics"]:
-            ret.append(RelicData(rel))
+            ret.append(RelicData(rel, self._parser))
         return ret
 
     @property
@@ -127,7 +128,7 @@ class FileParser:
     @property
     def players(self):
         """Read-only list of all players in this game (host first)."""
-        return [Player(x) for x in self._data["players"]]
+        return [Player(x, self) for x in self._data["players"]]
 
     @property
     def relics(self):
@@ -195,10 +196,11 @@ class FileParser:
 class RelicData:
     """View relics and their information."""
 
-    def __init__(self, data: dict[str, str]):
+    def __init__(self, data: dict[str, str], parser: FileParser):
         self.floor: int = data["floor_added_to_deck"] # works for both run and save
         self.relic = get(data["id"])
         self.props: dict | None = data.get("props")
+        self._parser = parser
 
     @property
     def name(self):
@@ -223,7 +225,12 @@ class RelicData:
         return "\n".join(desc)
 
     def escaped_description(self) -> str:
-        return self.description().replace("\n", "<br>").replace("'", "\\'")
+        """Escape the description for HTML display."""
+        escaped = self.description().replace("\n", "<br>").replace("'", "\\'")
+        char = self._parser.character.lower()
+        escaped = escaped.replace("[E]", f'<img src="/static/symbols/{char}_energy_2.png" alt="Energy symbol">')
+        escaped = escaped.replace("[STAR]", '<img src="/static/symbols/star.png" alt="Star symbol">')
+        return escaped
 
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
@@ -348,11 +355,14 @@ class PathNode:
         if self.name != "Neow":
             return "If you can read this, there is a bug!"
 
-        choices: list[dict] = self._data["player_stats"][self.parser.get_player_index()]["ancient_choice"]
+        choices: list[dict] = self._data["player_stats"][self.parser.get_player_index()]
+
+        if "ancient_choice" not in choices:
+            return "No bonus picked."
 
         picked: Relic | None = None
         not_picked: list[Relic] = []
-        for d in choices:
+        for d in choices["ancient_choice"]:
             relic: Relic = get(d["title"]["key"])
             if d["was_chosen"]:
                 picked = relic
