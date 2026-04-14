@@ -164,6 +164,11 @@ async def main():
                             save2 = file / "saves" / "current_run.save"
                             if save2.exists():
                                 potential.append(save2)
+                            else:
+                                save2_mp = file / "saves" / "current_run_mp.save"
+                                if save2_mp.exists():
+                                    potential.append(save2_mp)
+
                     if len(potential) == 1:
                         poss_2 = potential[0]
 
