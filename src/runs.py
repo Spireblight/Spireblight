@@ -362,12 +362,13 @@ class Run2Parser(FP2):
                 if current_run is not None:
                     last_char = self.character
                     while current_run.won:
-                        # If rotating, only iterate if not same char
-                        if is_character_streak or current_run.character != last_char:
-                            streak_total += 1
-                            # only iterate the position if the Win came before the current run
-                            if is_prev:
-                                position_in_streak += 1
+                        if current_run.ascension_level == 10:
+                            # If rotating, only iterate if not same char
+                            if is_character_streak or current_run.character != last_char:
+                                streak_total += 1
+                                # only iterate the position if the Win came before the current run
+                                if is_prev:
+                                    position_in_streak += 1
 
                         if (run := current_run.matched.get_run(is_prev=is_prev, is_character_specific=is_character_streak)) is not None:
                             last_char = current_run.character
@@ -513,7 +514,7 @@ async def run_single(req: Request):
         except ValueError:
             raise HTTPBadRequest(reason="Only integers may follow @")
     try:
-        parser.set_index(index)
+        parser.set_index(index) # XXX this is "permanent" (until changed back) and may cause unforeseen bugs
     except IndexError as e:
         raise HTTPBadRequest(reason=f"There is no player of index {e.args[0]}")
     except TypeError:
