@@ -7,7 +7,7 @@ import json
 import time
 import os
 
-from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotImplemented
+from aiohttp.web import Request, Response, HTTPNotFound, HTTPForbidden, HTTPNotImplemented, HTTPBadRequest
 
 import aiohttp_jinja2
 
@@ -501,9 +501,23 @@ def _falsey(x: str | None) -> bool:
 @router.get("/runs/{name}")
 @aiohttp_jinja2.template("run_single.jinja2")
 async def run_single(req: Request):
-    parser = get_parser(req.match_info["name"])
+    name, at, index = req.match_info["name"].partition("@")
+    parser = get_parser(name)
     if parser is None:
         raise HTTPNotFound()
+    if not index:
+        index = None
+    else:
+        try:
+            index = int(index)
+        except ValueError:
+            raise HTTPBadRequest(reason="Only integers may follow @")
+    try:
+        parser.set_index(index)
+    except IndexError as e:
+        raise HTTPBadRequest(reason=f"There is no player of index {e.args[0]}")
+    except TypeError:
+        raise HTTPBadRequest(reason="This is not supported for this run")
     redirect = _truthy(req.query.get("redirect"))
 
     response = RunResponse(parser, parser.matched, autorefresh=False, redirect=redirect)

@@ -1105,6 +1105,11 @@ class FileParser(ABC):
             n = "loss"
         return f"/static/characters/{c}-{n}.png"
 
+    def set_index(self, index: int | None):
+        """Force a specific player index. Not supported for Spire 1."""
+        if index is not None:
+            raise TypeError("Spire 1 runs cannot specify a player index.")
+
     @property
     def won(self) -> bool:
         """Whether or not we won the run."""

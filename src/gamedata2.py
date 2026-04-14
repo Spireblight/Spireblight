@@ -68,6 +68,13 @@ class FileParser:
         self._data = data
         self._main_player_index: int | None = None
 
+    def set_index(self, index: int | None):
+        """Force a specific player index to be considered."""
+        if index is not None:
+            if not (0 <= index < len(self.players)):
+                raise IndexError(index)
+        self._main_player_index = index
+
     def get_main_player(self):
         """Return the player we care about, AKA the streamer."""
         pl = self.players
