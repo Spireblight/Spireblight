@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import collections
 import datetime
+import urllib.parse
 
 from src.nameinternal import get, get_card2, Relic, Card, SingleCard, Potion
 from src.config import config
 from src.utils import format_for_slaytabase
+
+from typing import Iterable, Generator
 
 class Player:
     """Hold game information for one player."""
@@ -161,8 +164,83 @@ class FileParser:
     def has_removals(self):
         return False # TODO
 
+    def get_cards(self) -> Generator[CardData, None, None]:
+        """Yield each card with no repetition, with count."""
+        master_deck = self.deck
+        for card in set(master_deck):
+            yield CardData(card, master_deck)
+
+    @property
+    def cards(self) -> Generator[str, None, None]:
+        """All the cards in the deck, with upgrade."""
+        for card in self.get_cards():
+            yield from card.as_cards()
+
     def master_deck_as_html(self):
-        return ["The deck will be here, eventually."]
+        """Return the cards from the deck suitable for the website."""
+        return self._cards_as_html(self.get_cards())
+
+    def _cards_as_html(self, cards: Iterable[CardData]) -> Generator[str, None, None]:
+        # I got these colors from screenshotting the game and using pipette
+        standard = "fff6e2" # eggshell-ish
+        upgraded = "7fff00" # green
+        enhanced = "ee82ee" # purple
+
+        text = (
+            '<a class="card" style="color:#{style}" href="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/cards/{card_url}.png" target="_blank">'
+            '<svg width="32" height="32">'
+            '<image width="32" height="32" xlink:href="{website}/static/card2/Back_{color}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card2/Desc_{color}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card2/Type_{card.type_safe}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/card2/Banner_{banner}.png"></image>'
+            '</svg><span>{card.display_name}</span></a>'
+        )
+
+        def new_color() -> dict[str | None, list[CardData]]:
+            return {"Rare": [], "Uncommon": [], "Common": [], "Event": [], "Ancient": [], "Curse": [], None: []}
+
+        order = ["ironclad", "silent", "regent", "necrobinder", "defect", "colorless", "curse"]
+        content = collections.defaultdict(new_color)
+        for card in cards:
+            color = card.color
+            if color == "event":
+                color = "colorless"
+            if color not in order:
+                order.insert(0, color)
+            content[color][card.rarity_safe].append(card)
+
+        final = []
+
+        for color in order:
+            for rarity, all_cards in content[color].items():
+                all_cards.sort(key=lambda x: f"{x.name}{x.upgrades}")
+                for card in all_cards:
+                    style = standard
+                    if card.upgrades:
+                        style = upgraded
+                    if card.enhancement:
+                        style = enhanced
+                    format_map = {
+                        "style": style,
+                        "color": color,
+                        "website": config.server.url,
+                        "banner": rarity or "Common",
+                        "mod": urllib.parse.quote(card.card.mod or "2-slay the spire 2").lower(),
+                        "card_url": format_for_slaytabase(card.card.internal),
+                        "card": card,
+                    }
+                    final.append(text.format_map(format_map))
+
+        step, rem = divmod(len(final), 3)
+        end = []
+        while rem:
+            end.append(final.pop(step*rem))
+            rem -= 1
+        end.reverse()
+        for i in range(step):
+            yield from final[i::step]
+        yield from end
+
 
     @property
     def path(self) -> list[PathNode]:
@@ -219,6 +297,10 @@ class Badge: # XXX make sure to properly translate names when this comes on main
         self._data = data
 
     @property
+    def title(self):
+        return self.name.replace("_", " ").title()
+
+    @property
     def name(self):
         return self._data["id"].lower()
 
@@ -234,7 +316,7 @@ class Badge: # XXX make sure to properly translate names when this comes on main
             '<title>{title}</title>'
             '</svg>'
         )
-        return result.format(website=config.server.url, rarity=self.rarity, name=self.name, title=self.name.replace("_", " ").title())
+        return result.format(website=config.server.url, rarity=self.rarity, name=self.name, title=self.title)
 
 class RelicData:
     """View relics and their information."""
@@ -278,6 +360,74 @@ class RelicData:
     def __getattr__(self, name):
         """Backup to prevent crashing pages."""
         return f"Not implemented ({self.__class__.__name__}.{name})"
+
+class CardData:
+    def __init__(self, card: str | SingleCard, cards_list: list[str]):
+        self.orig = card
+        if isinstance(card, str):
+            card = get_card2(card)
+        self._cards_list = list(cards_list)
+        self.single = card
+        self.card: Card = card.card
+        self.upgrades = card.upgrades
+        self.enhancement = card.enchantment
+        self.amount = card.amount
+
+    def as_cards(self):
+        for i in range(self.count):
+            yield self.name
+
+    @property
+    def color(self) -> str:
+        return self.card.color
+
+    @property
+    def type(self) -> str:
+        return self.card.type
+
+    @property
+    def type_safe(self) -> str:
+        if self.type not in ("Attack", "Skill", "Power"):
+            return "Skill"
+        return self.type
+
+    @property
+    def rarity(self) -> str:
+        return self.card.rarity
+
+    @property
+    def rarity_safe(self) -> str | None:
+        if self.rarity not in ("Rare", "Uncommon", "Common", "Curse", "Event", "Ancient"):
+            return None
+        return self.rarity
+
+    @property
+    def count(self) -> int:
+        if self._cards_list:
+            return self._cards_list.count(self.orig)
+        return 1 # support standalone card stuff
+
+    @property
+    def name(self) -> str:
+        res = ""
+        match self.upgrades:
+            case 0:
+                res = self.card.name
+            case 1:
+                res = f"{self.card.name}+"
+            case a:
+                res = f"{self.card.name}+{a}"
+
+        if self.enhancement:
+            res = f"{res} @ {self.enhancement.name} {self.amount}"
+
+        return res
+
+    @property
+    def display_name(self) -> str:
+        if self.count > 1:
+            return f"{self.count}x {self.name}"
+        return self.name
 
 class PathNode:
     def __init__(self, parser: FileParser, data: dict, floor: int, act_name: str = None):
