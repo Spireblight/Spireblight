@@ -1111,6 +1111,11 @@ class FileParser(ABC):
             raise TypeError("Spire 1 runs cannot specify a player index.")
 
     @property
+    def is_multiplayer(self):
+        """Whether the current run is multiplayer."""
+        return False
+
+    @property
     def won(self) -> bool:
         """Whether or not we won the run."""
         return False
