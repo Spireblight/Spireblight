@@ -538,12 +538,13 @@ async def current_run(req: Request):
             latest = get_latest_run(None, None)
             if latest is not None:
                 raise HTTPFound(f"/runs/{latest.name}?redirect=true")
-    try:
-        save.set_index(index)
-    except IndexError as e:
-        raise HTTPBadRequest(reason=f"There is no player of index {e.args[0]}")
-    except TypeError:
-        raise HTTPBadRequest(reason="This is not supported for this run")
+    if save.in_game:
+        try:
+            save.set_index(index)
+        except IndexError as e:
+            raise HTTPBadRequest(reason=f"There is no player of index {e.args[0]}")
+        except TypeError:
+            raise HTTPBadRequest(reason="This is not supported for this run")
 
     return convert_class_to_obj(context)
 
