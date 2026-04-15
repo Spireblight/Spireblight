@@ -7,7 +7,7 @@ import time
 import math
 import os
 
-from aiohttp.web import Request, HTTPNotFound, HTTPFound, HTTPNotImplemented, Response
+from aiohttp.web import Request, HTTPNotFound, HTTPFound, HTTPNotImplemented, Response, HTTPBadRequest
 
 import aiohttp_jinja2
 
@@ -519,9 +519,17 @@ def _truthy(x: str | None) -> bool:
         return True
     return False
 
+@router.get("/current@{index}")
 @router.get("/current")
 @aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
+    index = req.match_info.get("index")
+    if index is not None:
+        try:
+            index = int(index)
+        except ValueError:
+            raise HTTPBadRequest(reason="Only integers may follow an @")
+
     redirect = _truthy(req.query.get("redirect"))
     save = get_savefile()
     context = RunResponse(save, autorefresh=True, redirect=redirect)
@@ -530,6 +538,12 @@ async def current_run(req: Request):
             latest = get_latest_run(None, None)
             if latest is not None:
                 raise HTTPFound(f"/runs/{latest.name}?redirect=true")
+    try:
+        save.set_index(index)
+    except IndexError as e:
+        raise HTTPBadRequest(reason=f"There is no player of index {e.args[0]}")
+    except TypeError:
+        raise HTTPBadRequest(reason="This is not supported for this run")
 
     return convert_class_to_obj(context)
 
@@ -591,6 +605,7 @@ async def receive_save2(req: Request):
 
 def get_savefile() -> Savefile | Save2:
     """Get the current savefile. Check for :meth:`Savefile.in_game` before using."""
+    _save2.set_index(None) # force reset
     if _save2.in_game:
         return _save2
     return _savefile
