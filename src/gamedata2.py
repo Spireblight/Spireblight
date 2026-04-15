@@ -188,11 +188,12 @@ class FileParser:
 
         text = (
             '<a class="card" style="color:#{style}" href="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod}/cards/{card_url}.png" target="_blank">'
-            '<svg width="32" height="32">'
+            '<svg width="48" height="40">' # the enhancement is slightly off-center, so we're making a slightly bigger SVG to account for it
             '<image width="32" height="32" xlink:href="{website}/static/card2/Back_{color}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card2/Desc_{color}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card2/Type_{card.type_safe}.png"></image>'
             '<image width="32" height="32" xlink:href="{website}/static/card2/Banner_{banner}.png"></image>'
+            '<image width="32" height="32" xlink:href="{website}/static/enhancements/{enhancement}.png" x=16 y=8></image>'
             '</svg><span>{card.display_name}</span></a>'
         )
 
@@ -220,6 +221,9 @@ class FileParser:
                         style = upgraded
                     if card.enhancement:
                         style = enhanced
+                    enhancement = "empty"
+                    if card.enhancement is not None:
+                        enhancement = card.enhancement.internal
                     format_map = {
                         "style": style,
                         "color": color,
@@ -228,6 +232,7 @@ class FileParser:
                         "mod": urllib.parse.quote(card.card.mod or "2-slay the spire 2").lower(),
                         "card_url": format_for_slaytabase(card.card.internal),
                         "card": card,
+                        "enhancement": enhancement,
                     }
                     final.append(text.format_map(format_map))
 
