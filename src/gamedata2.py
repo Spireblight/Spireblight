@@ -223,7 +223,7 @@ class FileParser:
                         style = enhanced
                     enhancement = "empty"
                     if card.enhancement is not None:
-                        enhancement = card.enhancement.internal
+                        enhancement = card.enhancement.internal.lower()
                     format_map = {
                         "style": style,
                         "color": color,
