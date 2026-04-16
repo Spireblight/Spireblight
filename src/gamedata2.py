@@ -161,6 +161,18 @@ class FileParser:
         return [Player(x, self) for x in self._data["players"]]
 
     @property
+    def current_hp_counts(self):
+        return [x.current_hp for x in self.path]
+
+    @property
+    def max_hp_counts(self):
+        return [x.max_hp for x in self.path]
+
+    @property
+    def gold_counts(self):
+        return [x.gold for x in self.path]
+
+    @property
     def has_removals(self):
         return False # TODO
 
