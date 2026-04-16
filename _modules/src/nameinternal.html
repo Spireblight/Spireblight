@@ -440,7 +440,10 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a single card for Slay the Spire 2.&quot;&quot;&quot;</span>
     <span class="n">c</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">card</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;MAD_SCIENCE&quot;</span><span class="p">:</span>
+        <span class="n">card</span> <span class="o">=</span> <span class="n">MadScience</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;props&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">card</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">SingleCard</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;current_upgrade_level&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;floor_added_to_deck&quot;</span><span class="p">,</span> <span class="n">floor_added</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enchantment&quot;</span><span class="p">))</span>
 
 <span class="nd">@total_ordering</span>
@@ -503,6 +506,51 @@
             <span class="n">cost</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; (Stars: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">star_cost</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - [</span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">mod</span><span class="si">}</span><span class="s2">&quot;</span>
 
+<span class="k">class</span><span class="w"> </span><span class="nc">MadScience</span><span class="p">(</span><span class="n">Card</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Mad Science&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;MAD_SCIENCE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;event&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rarity&quot;</span><span class="p">:</span> <span class="s2">&quot;Event&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cost&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;ints&quot;</span><span class="p">]:</span>
+            <span class="k">match</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span>
+                <span class="k">case</span> <span class="s2">&quot;TinkerTimeType&quot;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Attack&quot;</span>
+                        <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Skill&quot;</span>
+                        <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Power&quot;</span>
+
+                <span class="k">case</span> <span class="s2">&quot;TinkerTimeRider&quot;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Deal 12 damage. Apply 2 Weak and 2 Vulnerable.&quot;</span>
+                        <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Deal 12 damage 3 times&quot;</span>
+                        <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Deal 12 damage. Whenever you play a card this turn, the enemy loses 6 HP.&quot;</span>
+                        <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Gain 8 Block. Gain [E][E].&quot;</span>
+                        <span class="k">case</span> <span class="mi">5</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Gain 8 Block. Draw 3 cards.&quot;</span>
+                        <span class="k">case</span> <span class="mi">6</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Add a random card to your hand. It&#39;s free to play this turn.&quot;</span>
+                        <span class="k">case</span> <span class="mi">7</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Gain 2 Strength and 2 Dexterity.&quot;</span>
+                        <span class="k">case</span> <span class="mi">8</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Powers cost 1 [E] less.&quot;</span>
+                        <span class="k">case</span> <span class="mi">9</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;(Innate.) Upgrade a random card at the end of combat.&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Enchantment</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">cls_name</span> <span class="o">=</span> <span class="s2">&quot;enchantment&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]):</span>
@@ -511,10 +559,11 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">SingleCard</span><span class="p">:</span>
     <span class="n">enchantment</span><span class="p">:</span> <span class="n">Enchantment</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span> <span class="n">upgrades</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">floor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enchantment</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span> <span class="n">upgrades</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">floor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enchantment</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">=</span> <span class="n">card</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upgrades</span> <span class="o">=</span> <span class="n">upgrades</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">floor_added</span> <span class="o">=</span> <span class="n">floor</span> <span class="c1"># if None, we simply don&#39;t have the info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span>
         <span class="k">if</span> <span class="n">enchantment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">enchantment</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">enchantment</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">enchantment</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span>
