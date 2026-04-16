@@ -81,7 +81,10 @@ def get_card2(data: dict, floor_added: int | None = None) -> SingleCard:
     """Return a single card for Slay the Spire 2."""
     c: str = data["id"]
     _, _, name = c.partition(".")
-    card = get(name)
+    if name == "MAD_SCIENCE":
+        card = MadScience(data["props"])
+    else:
+        card = get(name)
     return SingleCard(card, data.get("current_upgrade_level", 0), data.get("floor_added_to_deck", floor_added), data.get("enchantment"))
 
 @total_ordering
@@ -144,6 +147,51 @@ class Card(Base):
             cost += f" (Stars: {self.star_cost})"
         return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
 
+class MadScience(Card):
+    def __init__(self, properties: dict):
+        data = {
+            "name": "Mad Science",
+            "id": "MAD_SCIENCE",
+            "v": 2,
+            "color": "event",
+            "rarity": "Event",
+            "cost": "1",
+        }
+
+        for d in properties["ints"]:
+            match d["name"]:
+                case "TinkerTimeType":
+                    match d["value"]:
+                        case 1:
+                            data["type"] = "Attack"
+                        case 2:
+                            data["type"] = "Skill"
+                        case 3:
+                            data["type"] = "Power"
+
+                case "TinkerTimeRider":
+                    match d["value"]:
+                        case 1:
+                            data["description"] = "(Innate.) Deal 12 damage. Apply 2 Weak and 2 Vulnerable."
+                        case 2:
+                            data["description"] = "(Innate.) Deal 12 damage 3 times"
+                        case 3:
+                            data["description"] = "(Innate.) Deal 12 damage. Whenever you play a card this turn, the enemy loses 6 HP."
+                        case 4:
+                            data["description"] = "(Innate.) Gain 8 Block. Gain [E][E]."
+                        case 5:
+                            data["description"] = "(Innate.) Gain 8 Block. Draw 3 cards."
+                        case 6:
+                            data["description"] = "(Innate.) Add a random card to your hand. It's free to play this turn."
+                        case 7:
+                            data["description"] = "(Innate.) Gain 2 Strength and 2 Dexterity."
+                        case 8:
+                            data["description"] = "(Innate.) Powers cost 1 [E] less."
+                        case 9:
+                            data["description"] = "(Innate.) Upgrade a random card at the end of combat."
+
+        super().__init__(data)
+
 class Enchantment(Base):
     cls_name = "enchantment"
     def __init__(self, data: dict[str: str | int]):
@@ -152,10 +200,11 @@ class Enchantment(Base):
 class SingleCard:
     enchantment: Enchantment | None = None
     amount: int = 0
-    def __init__(self, card: Card, upgrades: int = 0, floor: int | None = None, enchantment: dict | None = None):
+    def __init__(self, card: Card, upgrades: int = 0, floor: int | None = None, enchantment: dict | None = None, properties: dict | None = None):
         self.card = card
         self.upgrades = upgrades
         self.floor_added = floor # if None, we simply don't have the info
+        self.properties = properties
         if enchantment is not None:
             self.enchantment = get(enchantment["id"])
             self.amount = enchantment["amount"]
