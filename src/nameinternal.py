@@ -25,6 +25,21 @@ _cache: dict[str, dict[str, str]] = {}
 _internal_cache: dict[str, Base] = {}
 _query_cache: dict[str, list[Base]] = defaultdict(list)
 
+_specifics: dict[str, list[str]] = {
+    "MAD_SCIENCE": [
+        None,
+        "Sapping",
+        "Violence",
+        "Choking",
+        "Energized",
+        "Wisdom",
+        "Chaos",
+        "Expertise",
+        "Curious",
+        "Improvement",
+    ],
+}
+
 def _sanitize(x: str) -> str:
     x = x.lower()
     for s in _replace_str:
@@ -81,11 +96,13 @@ def get_card2(data: dict, floor_added: int | None = None) -> SingleCard:
     """Return a single card for Slay the Spire 2."""
     c: str = data["id"]
     _, _, name = c.partition(".")
-    if name == "MAD_SCIENCE":
-        card = MadScience(data["props"])
-    else:
-        card = get(name)
-    return SingleCard(card, data.get("current_upgrade_level", 0), data.get("floor_added_to_deck", floor_added), data.get("enchantment"))
+    if name in _specifics:
+        for d in data["props"]["ints"]:
+            if d["name"] == "TinkerTimeRider":
+                val = _specifics[name][d["value"]]
+                name = f"{name}-{val}"
+
+    return SingleCard(get(name), data.get("current_upgrade_level", 0), data.get("floor_added_to_deck", floor_added), data.get("enchantment"))
 
 @total_ordering
 class Base:
@@ -146,51 +163,6 @@ class Card(Base):
         if self.star_cost:
             cost += f" (Stars: {self.star_cost})"
         return f"{self.name} - [{cost}] {self.color} {self.rarity} {self.type}: {self.description} {mod}"
-
-class MadScience(Card):
-    def __init__(self, properties: dict):
-        data = {
-            "name": "Mad Science",
-            "id": "MAD_SCIENCE",
-            "v": 2,
-            "color": "event",
-            "rarity": "Event",
-            "cost": "1",
-        }
-
-        for d in properties["ints"]:
-            match d["name"]:
-                case "TinkerTimeType":
-                    match d["value"]:
-                        case 1:
-                            data["type"] = "Attack"
-                        case 2:
-                            data["type"] = "Skill"
-                        case 3:
-                            data["type"] = "Power"
-
-                case "TinkerTimeRider":
-                    match d["value"]:
-                        case 1:
-                            data["description"] = "(Innate.) Deal 12 damage. Apply 2 Weak and 2 Vulnerable."
-                        case 2:
-                            data["description"] = "(Innate.) Deal 12 damage 3 times"
-                        case 3:
-                            data["description"] = "(Innate.) Deal 12 damage. Whenever you play a card this turn, the enemy loses 6 HP."
-                        case 4:
-                            data["description"] = "(Innate.) Gain 8 Block. Gain [E][E]."
-                        case 5:
-                            data["description"] = "(Innate.) Gain 8 Block. Draw 3 cards."
-                        case 6:
-                            data["description"] = "(Innate.) Add a random card to your hand. It's free to play this turn."
-                        case 7:
-                            data["description"] = "(Innate.) Gain 2 Strength and 2 Dexterity."
-                        case 8:
-                            data["description"] = "(Innate.) Powers cost 1 [E] less."
-                        case 9:
-                            data["description"] = "(Innate.) Upgrade a random card at the end of combat."
-
-        super().__init__(data)
 
 class Enchantment(Base):
     cls_name = "enchantment"
