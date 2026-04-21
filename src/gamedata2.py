@@ -6,7 +6,7 @@ import collections
 import datetime
 import urllib.parse
 
-from src.nameinternal import get, get_card2, Relic, Card, SingleCard, Potion
+from src.nameinternal import get, get_card2, get_badge, Relic, Card, SingleCard, Potion, Enemy
 from src.config import config
 from src.utils import format_for_slaytabase
 
@@ -307,15 +307,12 @@ class FileParser:
         """Backup to prevent crashing pages."""
         return f"Not implemented ({self.__class__.__name__}.{name})"
 
-class Badge: # XXX make sure to properly translate names when this comes on main
+class Badge:
     """Run badges."""
 
     def __init__(self, data: dict[str, str]):
         self._data = data
-
-    @property
-    def title(self):
-        return self.name.replace("_", " ").title()
+        self.title, self.description = get_badge(data)
 
     @property
     def name(self):
@@ -328,12 +325,12 @@ class Badge: # XXX make sure to properly translate names when this comes on main
     def as_html(self):
         result = (
             '<svg width="64" height="64">'
-            '<image width="64" height="64" xlink:href="{website}/static/badges/rarity_{rarity}.png"></image>'
-            '<image width="64" height="64" xlink:href="{website}/static/badges/{name}.png"></image>'
-            '<title>{title}</title>'
+            '<image width="64" height="64" xlink:href="{website}/static/badges/rarity_{self.rarity}.png"></image>'
+            '<image width="64" height="64" xlink:href="{website}/static/badges/{self.name}.png"></image>'
+            '<title>{self.title}\n{self.description}</title>'
             '</svg>'
         )
-        return result.format(website=config.server.url, rarity=self.rarity, name=self.name, title=self.title)
+        return result.format(website=config.server.url, self=self)
 
 class RelicData:
     """View relics and their information."""

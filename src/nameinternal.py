@@ -19,6 +19,7 @@ __all__ = [
     "get_relic_stats",
     "get_event",
     "query", "get_run_mod",
+    "get_badge",
 ]
 
 _cache: dict[str, dict[str, str]] = {}
@@ -298,6 +299,24 @@ def get_relic_stats(name: str) -> list[str]:
 def get_run_mod(name: str) -> str:
     return f'{_cache["run_mods"][name]["NAME"]} - {_cache["run_mods"][name]["DESCRIPTION"]}'
 
+def get_badge(data: dict[str, str]) -> tuple[str, str]:
+    """Return a (title, description) tuple for the matching badge."""
+    cache = _cache["badges"]
+    name = data["id"]
+    rarity = data["rarity"]
+
+    title = f"{name}.title"
+    desc = f"{name}.description"
+    try:
+        return (cache[title], cache[desc])
+    except KeyError:
+        title = title.replace(".t", f".{rarity}T")
+        desc = desc.replace(".d", f".{rarity}D")
+        try:
+            return (cache[title], cache[desc])
+        except KeyError:
+            return (f"Unknown badge {name}", "Could not find description for this badge.")
+
 @add_listener("setup_init")
 async def load():
     _cache.clear()
@@ -336,10 +355,11 @@ async def load():
             _internal_cache[inst.internal] = inst
             _query_cache[_sanitize(inst.name)].append(inst)
 
-    for file in (base / "argo" / "sts1").iterdir():
-        if not file.stem.startswith("_"):
-            with file.open() as f:
-                _cache[file.stem] = json.load(f)
+    for gamedir in ("sts1", "sts2"):
+        for file in (base / "argo" / gamedir).iterdir():
+            if not file.stem.startswith("_"):
+                with file.open() as f:
+                    _cache[file.stem] = json.load(f)
 
     # Load relic sets
     with (base / "argo" / "misc" / "relic_sets.json").open() as f:
@@ -364,4 +384,3 @@ async def load():
                     if inst.store_internal:
                         _internal_cache[inst.internal] = inst
                     _query_cache[_sanitize(inst.name)].append(inst)
-
