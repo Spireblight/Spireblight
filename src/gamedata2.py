@@ -6,7 +6,7 @@ import collections
 import datetime
 import urllib.parse
 
-from src.nameinternal import get, get_card2, get_badge, Relic, Card, SingleCard, Potion, Enemy
+from src.nameinternal import get, get_card2, get_badge, Relic, Card, SingleCard, Potion
 from src.config import config
 from src.utils import format_for_slaytabase
 
