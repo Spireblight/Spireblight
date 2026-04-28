@@ -113,7 +113,7 @@ class Base:
         assert self.cls_name, "Cannot instantiate Base"
         self.internal = data.get("id", data["name"])
         self.name = data["name"]
-        self.description = data["description"]
+        self.description = data.get("description", "")
         self.mod = data.get("mod")
         self.v: int = data.get("v", 1)
         if self.mod in ("Slay the Spire", "Slay the Spire 2"):
@@ -249,6 +249,16 @@ class Potion(Base):
             color = f" ({self.color})"
         return f"{self.name} - {self.rarity}{color}: {self.description} {mod}"
 
+class Enemy(Base):
+    cls_name = "monster"
+    def __init__(self, data: dict[str, str | int]):
+        super().__init__(data)
+        self.is_player = (data["type"] == "Player")
+        self.min_hp = data["minHP"]
+        self.min_hp_asc = data.get("minHPA", 0)
+        self.max_hp = data["maxHP"]
+        self.max_hp_asc = data.get("maxHPA", 0)
+
 class Keyword(Base):
     cls_name = "keyword"
     store_internal = False
@@ -281,7 +291,7 @@ _str_to_cls: dict[str, type[Base]] = {
     "keywords": Keyword,
     "score_bonuses": ScoreBonus,
     #"events": Event, # both games have it
-    #"creatures": Enemy, # and this one too
+    #"creatures": Enemy,
     "enchantments": Enchantment,
 }
 

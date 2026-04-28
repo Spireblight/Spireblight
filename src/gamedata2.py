@@ -449,24 +449,33 @@ class PathNode:
         self._data = data
         self.floor = floor
         self.act_name = act_name
-        self._set_room_name()
-        self._set_picks()
+        self._set_room_data()
+        self._set_player_picks()
 
     @property
     def end_of_act(self) -> bool:
         # this is a weird thing, but because of double boss, we don't wanna multiline it
         return self.floor < 48 and self._data["map_point_type"] == "boss"
 
-    def _set_room_name(self):
+    def _set_room_data(self):
+        """Set the data specific to this node."""
         # idk why rooms is a list, but there's only ever one item, even in mp
-        room = self._data["rooms"][0]
+        room: dict[str, str | int | list[str]] = self._data["rooms"][0]
+
+        self.turns_taken: int = room["turns_taken"]
+        #self.enemies: list[Enemy] = []
+
         map_point = self._data["map_point_type"]
         room_type = room["room_type"]
         model_id: str | None = room.get("model_id")
         self.name = ""
         if model_id:
+            # TODO: just get the ID from... something
             _, _, name = model_id.partition(".")
             self.name = name.replace("_", " ").title()
+
+        #for m in room.get("monster_ids", ()):
+        #    self.enemies.append(get(m))
 
         match (map_point, room_type):
             case ("ancient", "event"):
@@ -488,16 +497,25 @@ class PathNode:
             case ("boss", "boss"):
                 self.room_type = "Boss fight"
 
-    def _set_picks(self):
-        """Set all the variables for this node."""
+    def _set_player_picks(self):
+        """Set all the player variables for this node."""
         choices: dict[str] = self._data["player_stats"][self.parser.get_player_index()]
 
         self.gold: int = choices["current_gold"]
+        self.gold_gained: int = choices["gold_gained"]
+        self.gold_lost: int = choices["gold_lost"]
+        self.gold_spent: int = choices["gold_spent"]
+        self.gold_stolen: int = choices["gold_stolen"]
+    
         self.damage_taken: int = choices["damage_taken"]
+        self.hp_healed: int = choices["hp_healed"]
         self.current_hp: int = choices["current_hp"]
+
         self.max_hp: int = choices["max_hp"]
         self.max_hp_gained: int = choices["max_hp_gained"]
         self.max_hp_lost: int = choices["max_hp_lost"]
+
+        self.rest_site_choices: list[str] = choices.get("rest_site_choices", [])
 
         self.picked: list[SingleCard] = []
         self.skipped: list[SingleCard] = []
@@ -505,6 +523,7 @@ class PathNode:
         self.cards_removed: list[SingleCard] = []
         self.cards_transformed: list[SingleCard] = []
         self.cards_upgraded: list[SingleCard] = []
+        self.cards_enchanted: list[SingleCard] = []
 
         self.relics: list[Relic] = []
         self.relics_lost: list[Relic] = []
@@ -516,6 +535,10 @@ class PathNode:
         self.potions_from_entropic: list[Potion] = []
         self.discarded_potions: list[Potion] = []
         self.skipped_potions: list[Potion] = []
+
+        for a in choices.get("ancient_choice", ()):
+            if not a["was_chosen"]:
+                self.skipped_relics.append(get(a["TextKey"]))
 
         for c in choices.get("card_choices", ()):
             card = get_card2(c["card"], self.floor)
@@ -529,8 +552,14 @@ class PathNode:
             if card not in self.picked:
                 self.cards_obtained.append(card)
 
+        for l in choices.get("bought_colorless", ()):
+            self.cards_obtained.append(get_card2(l, self.floor))
+
         for u in choices.get("upgraded_cards", ()):
             self.cards_upgraded.append(get(u))
+
+        for e in choices.get("cards_enchanted", ()):
+            self.cards_enchanted.append(get_card2(e["card"]))
 
         for r in choices.get("relic_choices", ()):
             relic = get(r["choice"])
@@ -601,6 +630,13 @@ class PathNode:
         if self.name:
             to_append[0].append(self.name)
 
+        if self.turns_taken:
+            to_append[4].append(f"{self.damage_taken} damage taken")
+            to_append[4].append(f"{self.turns_taken} turns")
+
+        for action in self.rest_site_choices:
+            to_append[6].append(self.get_rest_action(action))
+
         if self.potions:
             to_append[10].append("Potions obtained:")
             to_append[10].extend(f"- {x.name}" for x in self.potions)
@@ -645,6 +681,23 @@ class PathNode:
 
     def escaped_description(self) -> str:
         return self.description().replace("\n", "<br>").replace("'", "\\'")
+
+    def get_rest_action(self, action: str) -> str:
+        match action:
+            case "HEAL":
+                return "Rested"
+            case "MEND":
+                return "Mended an ally"
+            case "SMITH":
+                return "Upgraded a card"
+            case "LIFT": # this and others below have not been verified (yet). also missing clone and cook
+                return "Lifted for additional strength"
+            case "DIG":
+                return "Dug!"
+            case "PURGE":
+                return "Toked a card"
+            case a:
+                return f"Did {a!r}, but I'm not sure what this means"
 
     @property
     def map_icon(self):
