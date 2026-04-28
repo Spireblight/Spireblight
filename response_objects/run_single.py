@@ -10,6 +10,3 @@ class RunResponse:
         self.linked_runs = run_linked_node
         self.autorefresh = autorefresh
         self.redirect = redirect
-        self.rel_link = "/current"
-        if parser.done: # make the relative link for runs
-            self.rel_link = f"/runs/{parser.name}"

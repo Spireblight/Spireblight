@@ -464,6 +464,10 @@ class Save2(FP2):
         super().__init__(None)
 
     @property
+    def rel_link(self):
+        return "/current"
+
+    @property
     def in_game(self):
         return bool(self._data)
 

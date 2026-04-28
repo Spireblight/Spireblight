@@ -130,6 +130,11 @@ class FileParser:
         return ret
 
     @property
+    def rel_link(self) -> str:
+        """Give the relative page for this run."""
+        return ""
+
+    @property
     def won(self) -> bool:
         """Whether or not we won the run."""
         return False
@@ -566,9 +571,6 @@ class PathNode:
             card = get_card2(g, self.floor)
             if card not in self.picked:
                 self.cards_obtained.append(card)
-
-        for l in choices.get("bought_colorless", ()):
-            self.cards_obtained.append(get_card2(l, self.floor))
 
         for u in choices.get("upgraded_cards", ()):
             self.cards_upgraded.append(get(u))

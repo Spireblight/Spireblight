@@ -54,6 +54,7 @@ def get_latest_run(character: str | None, victory: bool | None) -> RunParser:
             while latest.won:
                 latest = latest.matched.get_run(is_prev=True, is_character_specific=is_character_specific)
 
+    latest.set_index(None)
     return latest
 
 class RunParser(FileParser):
@@ -269,6 +270,10 @@ class Run2Parser(FP2):
 
     def __repr__(self):
         return f"Run2<{self.display_name}>"
+
+    @property
+    def rel_link(self):
+        return f"/runs/{self.name}"
 
     @property
     def floor_reached(self):
@@ -487,6 +492,8 @@ def get_parser(name) -> RunParser | Run2Parser | None:
                     parser = run_parser
                     break
 
+    if parser is not None:
+        parser.set_index(None)
     return parser
 
 def _truthy(x: str | None) -> bool:
