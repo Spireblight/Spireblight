@@ -474,7 +474,7 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_name</span><span class="p">,</span> <span class="s2">&quot;Cannot instantiate Base&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mod</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mod&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mod</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;Slay the Spire&quot;</span><span class="p">,</span> <span class="s2">&quot;Slay the Spire 2&quot;</span><span class="p">):</span>
@@ -610,6 +610,16 @@
             <span class="n">color</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="si">}{</span><span class="n">color</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">mod</span><span class="si">}</span><span class="s2">&quot;</span>
 
+<span class="k">class</span><span class="w"> </span><span class="nc">Enemy</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">cls_name</span> <span class="o">=</span> <span class="s2">&quot;monster&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_player</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Player&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_hp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;minHP&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_hp_asc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;minHPA&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_hp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;maxHP&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_hp_asc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maxHPA&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Keyword</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">cls_name</span> <span class="o">=</span> <span class="s2">&quot;keyword&quot;</span>
     <span class="n">store_internal</span> <span class="o">=</span> <span class="kc">False</span>
@@ -642,7 +652,7 @@
     <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">Keyword</span><span class="p">,</span>
     <span class="s2">&quot;score_bonuses&quot;</span><span class="p">:</span> <span class="n">ScoreBonus</span><span class="p">,</span>
     <span class="c1">#&quot;events&quot;: Event, # both games have it</span>
-    <span class="c1">#&quot;creatures&quot;: Enemy, # and this one too</span>
+    <span class="c1">#&quot;creatures&quot;: Enemy,</span>
     <span class="s2">&quot;enchantments&quot;</span><span class="p">:</span> <span class="n">Enchantment</span><span class="p">,</span>
 <span class="p">}</span>
 
