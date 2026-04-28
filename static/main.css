@@ -160,6 +160,24 @@ section.section {
     display: flex !important;
     flex-grow: 1;
   }
+  .run-header-multiplayer {
+    display: flex !important;
+    overflow: hidden;
+    flex-grow: 0;
+  }
+  .run-header-multiplayer .portrait  {
+    height: 86px;
+    width: 130px;
+    max-width: 130px;
+    max-height: 86px;
+  }
+  .run-header-multiplayer .portrait img {
+    height: 100%;
+    width: 100%;
+    max-width: 130px;
+    max-height: 86px;
+    object-fit: none;
+  }
   /* TODO(olivia): Probably consolidate with .command-title above */
   .run-title {
     display: flex;

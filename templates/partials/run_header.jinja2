@@ -19,19 +19,6 @@
           {% endif %}
         </div>
 
-        <div class="multiplayer">
-          {% if run.is_multiplayer %}
-            {% for portrait in run.get_multiplayer_portraits() %}
-              <a href="{{ rel_link }}@{{ loop.index0 }}">
-                <img class="portrait"
-                  src="{{ portrait }}"
-                  alt="Player {{ loop.index }}"
-                  title="Player {{ loop.index }}">
-              </a>
-            {% endfor %}
-          {% endif %}
-        </div>
-
         <div class="mods">
           {% if run.modded %}
             <i title="This is a modded character. Not all data will be accurate."
@@ -102,6 +89,18 @@
         {% endif %}
 
       </div>
+    </div>
+    <div class="run-header-multiplayer">
+      {% if run.is_multiplayer %}
+        {% for portrait in run.get_multiplayer_portraits() %}
+          <a href="{{ run.rel_link }}@{{ loop.index0 }}">
+            <img class="portrait"
+              src="{{ portrait }}"
+              alt="Player {{ loop.index }}"
+              title="Player {{ loop.index }}">
+          </a>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
