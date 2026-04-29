@@ -2029,7 +2029,7 @@ async def card_with_art(ctx: ContextType, *line: str):
     base = "https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/"
     modname = info.mod or "Slay the Spire"
     if info.v == 2:
-        modname = "2 slay the spire"
+        modname = "2-slay the spire 2"
     mod = urllib.parse.quote(modname).lower()
     id = format_for_slaytabase(info.internal)
     link = f"{mod}/cards/{id}.png"
