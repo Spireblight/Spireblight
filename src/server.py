@@ -2718,7 +2718,7 @@ async def set_run_stats_by_date(ctx: ContextType, date_string: str):
 async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of wins for an optional date range."""
     #msg = "A20 Heart kills ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's A10 kills ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
+    msg = "Baalor's A10 kills ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Ironclad]} - Silent: {1.character_counts[Silent]} - Regent: {1.character_counts[Regent]} - Necrobinder: {1.character_counts[Necrobinder]} - Defect: {1.character_counts[Defect]}"
     await _send_standard_run_stats_message(ctx, msg, "all_wins", date_string)
 
 
@@ -2726,7 +2726,7 @@ async def calculate_wins_cmd(ctx: ContextType, date_string: Optional[str] = None
 async def calculate_losses_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display the cumulative number of losses for an optional date range."""
     #msg = "A20 Heart losses ({0.date_range_string}): Total: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's A10 losses ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Character.IRONCLAD]} - Silent: {1.character_counts[Character.SILENT]} - Regent: {1.character_counts[Character.REGENT]} - Necrobinder: {1.character_counts[Character.NECROBINDER]} - Defect: {1.character_counts[Character.DEFECT]}"
+    msg = "Baalor's A10 losses ({0.date_range_string}) | Total: {1.all_character_count} - Ironclad: {1.character_counts[Ironclad]} - Silent: {1.character_counts[Silent]} - Regent: {1.character_counts[Regent]} - Necrobinder: {1.character_counts[Necrobinder]} - Defect: {1.character_counts[Defect]}"
     await _send_standard_run_stats_message(ctx, msg, "all_losses", date_string)
 
 
