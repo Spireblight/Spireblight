@@ -210,7 +210,7 @@ class FileParser:
         )
 
         def new_color() -> dict[str | None, list[CardData]]:
-            return {"Rare": [], "Uncommon": [], "Common": [], "Event": [], "Ancient": [], "Curse": [], None: []}
+            return {"Rare": [], "Uncommon": [], "Common": [], "Event": [], "Ancient": [], "Curse": [], "Quest": [], None: []}
 
         order = ["ironclad", "silent", "regent", "necrobinder", "defect", "colorless", "curse"]
         content = collections.defaultdict(new_color)
@@ -411,7 +411,7 @@ class CardData:
 
     @property
     def rarity_safe(self) -> str | None:
-        if self.rarity not in ("Rare", "Uncommon", "Common", "Curse", "Event", "Ancient"):
+        if self.rarity not in ("Rare", "Uncommon", "Common", "Curse", "Event", "Ancient", "Quest"):
             return None
         return self.rarity
 
