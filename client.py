@@ -12,6 +12,7 @@ import os
 class Config:
     playing_file = ""
     sync_runs = False
+    modded = False
     spiredir = ""
     server_url = ""
     secret = ""
@@ -111,6 +112,8 @@ async def main():
 
     spire1_saves = cfg.spiredir / "saves"
     spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
+    if cfg.modded:
+        spire2_saves /= "modded"
 
     async with ClientSession(cfg.server_url) as session:
         # Check if the app is registered, prompt it if not
