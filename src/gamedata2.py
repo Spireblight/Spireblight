@@ -78,6 +78,10 @@ class FileParser:
                 raise IndexError(index)
         self._main_player_index = index
 
+    @property
+    def is_multiplayer(self):
+        return len(self.players) > 1
+
     def get_main_player(self):
         """Return the player we care about, AKA the streamer."""
         pl = self.players
@@ -113,6 +117,22 @@ class FileParser:
         c = self.character.lower()
         # we do not currently account for losses
         return f"/static/characters/{c}-portrait-3.png"
+
+    def get_multiplayer_portraits(self) -> list[str]:
+        ret = []
+        for i, player in enumerate(self.players):
+            c = player.character.lower()
+            p = "portrait-2"
+            if i == self.get_player_index():
+                p = "locked"
+            ret.append(f"/static/characters/{c}-{p}.png")
+
+        return ret
+
+    @property
+    def rel_link(self) -> str:
+        """Give the relative page for this run."""
+        return ""
 
     @property
     def won(self) -> bool:

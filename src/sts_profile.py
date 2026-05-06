@@ -99,6 +99,7 @@ class Profile:
         l.reverse()
         for ts in l:
             if _ts_cache[ts].profile is self:
+                _ts_cache[ts].set_index(None) # force the profile page to only ever show the main character 
                 yield _ts_cache[ts]
 
     def paged_runs(self, page):

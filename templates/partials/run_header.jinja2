@@ -90,5 +90,17 @@
 
       </div>
     </div>
+    <div class="run-header-multiplayer">
+      {% if run.is_multiplayer %}
+        {% for portrait in run.get_multiplayer_portraits() %}
+          <a href="{{ run.rel_link }}@{{ loop.index0 }}">
+            <img class="portrait"
+              src="{{ portrait }}"
+              alt="Player {{ loop.index }}"
+              title="Player {{ loop.index }}">
+          </a>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
 </section>
