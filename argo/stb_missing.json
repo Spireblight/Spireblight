@@ -1,1 +1,48 @@
-{}
+{
+    "relics": [
+        {
+            "id": "PUMPKIN_CANDLE",
+            "name": "Pumpkin Candle",
+            "pool": "colorless",
+            "ancient": "Tezcatara",
+            "tier": "Ancient",
+            "description": "Gain [E] at the start of each turn. Extinguishes after 5 combats. Can be Kindled at Rest Sites.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "KALEIDOSCOPE",
+            "name": "Kaleidoscope",
+            "pool": "colorless",
+            "ancient": "Neow",
+            "tier": "Ancient",
+            "description": "Upon pickup, obtain 2 card rewards from other characters.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "FISHING_ROD",
+            "name": "Fishing Rod",
+            "pool": "colorless",
+            "ancient": "Neow",
+            "tier": "Ancient",
+            "description": "Every 3 normal combats, Upgrade a random card in your Deck.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        },
+        {
+            "id": "SILKEN_TRESS",
+            "name": "Silken Tress",
+            "pool": "colorless",
+            "ancient": "Neow",
+            "tier": "Ancient",
+            "description": "Enchant all cards in the first card reward with Glam.",
+            "flavorText": "Details for this relic will be revealed in the future...",
+            "v": 2,
+            "mod": "Slay the Spire 2"
+        }
+    ]
+}
