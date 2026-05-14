@@ -552,11 +552,11 @@ class PathNode:
             if card not in self.picked:
                 self.cards_obtained.append(card)
 
-        for l in choices.get("bought_colorless", ()):
-            # XXX egg likely doesn't work here
-            card = get(l)
-            if card not in self.picked:
-                self.cards_obtained.append(card)
+        #for l in choices.get("bought_colorless", ()):
+        #    # XXX egg likely doesn't work here
+        #    card = get(l)
+        #    if card not in self.picked:
+        #        self.cards_obtained.append(card)
 
         for u in choices.get("upgraded_cards", ()):
             self.cards_upgraded.append(get(u))
