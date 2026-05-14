@@ -552,6 +552,12 @@ class PathNode:
             if card not in self.picked:
                 self.cards_obtained.append(card)
 
+        for l in choices.get("bought_colorless", ()):
+            # XXX egg likely doesn't work here
+            card = get(l)
+            if card not in self.picked:
+                self.cards_obtained.append(card)
+
         for u in choices.get("upgraded_cards", ()):
             self.cards_upgraded.append(get(u))
 
@@ -628,11 +634,16 @@ class PathNode:
             to_append[0].append(self.name)
 
         if self.turns_taken:
-            to_append[4].append(f"{self.damage_taken} damage taken")
-            to_append[4].append(f"{self.turns_taken} turns")
+            to_append[2].append(f"{self.damage_taken} damage taken")
+            to_append[2].append(f"{self.turns_taken} turns")
+
+        if self.hp_healed:
+            to_append[4].append(f"Healed for {self.hp_healed}")
 
         for action in self.rest_site_choices:
             to_append[6].append(self.get_rest_action(action))
+
+        # 8 used to be Neow/Ancient bonus, but it's now superseded by relic gain/skip
 
         if self.potions:
             to_append[10].append("Potions obtained:")
@@ -658,21 +669,71 @@ class PathNode:
             to_append[20].append("Potions skipped:")
             to_append[20].extend(f"- {x.name}" for x in self.skipped_potions)
 
+        # used to skip from 20->30; relic entry now lowered to 24
+
         if self.relics:
-            to_append[30].append("Relics obtained:")
-            to_append[30].extend(f"- {x.name}" for x in self.relics)
+            to_append[24].append("Relics obtained:")
+            to_append[24].extend(f"- {x.name}" for x in self.relics)
 
         if self.skipped_relics:
-            to_append[32].append("Relics skipped:")
-            to_append[32].extend(f"- {x.name}" for x in self.skipped_relics)
+            to_append[26].append("Relics skipped:")
+            to_append[26].extend(f"- {x.name}" for x in self.skipped_relics)
+
+        if self.relics_lost:
+            to_append[28].append("Relics lost:")
+            to_append[28].extend(f"- {x.name}" for x in self.relics_lost)
+
+        # we skip a step when changing types, to allow for better extension if needed
 
         if self.picked:
-            to_append[34].append("Picked:")
-            to_append[34].extend(f"- {x}" for x in self.picked)
+            to_append[32].append("Picked:")
+            to_append[32].extend(f"- {x}" for x in self.picked)
 
         if self.skipped:
-            to_append[36].append("Skipped:")
-            to_append[36].extend(f"- {x}" for x in self.skipped)
+            to_append[34].append("Skipped:")
+            to_append[34].extend(f"- {x}" for x in self.skipped)
+
+        if self.cards_obtained:
+            to_append[36].append("Cards obtained:")
+            to_append[36].extend(f"- {x}" for x in self.cards_obtained)
+
+        if self.cards_upgraded:
+            to_append[38].append("Cards upgraded:")
+            to_append[38].extend(f"- {x}" for x in self.cards_upgraded)
+
+        if self.cards_enchanted:
+            to_append[40].append("Cards enchanted:")
+            to_append[40].extend(f"- {x}" for x in self.cards_enchanted)
+
+        if self.cards_transformed:
+            to_append[42].append("Cards transformed:")
+            to_append[42].extend(f"- {x}" for x in self.cards_transformed)
+
+        if self.cards_removed:
+            to_append[44].append("Cards removed:")
+            to_append[44].extend(f"- {x}" for x in self.cards_removed)
+
+        # a lot of these options have been moved around; notably, card info comes first now
+
+        if self.gold_gained:
+            to_append[44].append(f"Picked up {self.gold_gained} gold")
+
+        if self.gold_spent:
+            to_append[46].append(f"Spent {self.gold_spent} gold")
+
+        if self.gold_lost:
+            to_append[48].append(f"Lost {self.gold_lost} gold")
+
+        if self.gold_stolen:
+            to_append[50].append(f"Got {self.gold_stolen} gold stolen")
+
+        # and finally, health info
+
+        if self.max_hp_gained:
+            to_append[54].append(f"Gained {self.max_hp_gained} max HP")
+
+        if self.max_hp_lost:
+            to_append[56].append(f"Lost {self.max_hp_lost} max HP")
 
         return to_append
 
@@ -683,16 +744,24 @@ class PathNode:
         match action:
             case "HEAL":
                 return "Rested"
-            case "MEND":
-                return "Mended an ally"
             case "SMITH":
                 return "Upgraded a card"
-            case "LIFT": # this and others below have not been verified (yet). also missing clone and cook
+            case "MEND":
+                return "Mended an ally"
+            case "LIFT": # XXX can we figure out how much we lifted for?
                 return "Lifted for additional strength"
             case "DIG":
-                return "Dug!"
-            case "PURGE":
+                return "Dug for a relic"
+            case "COOK": # and those
+                return "Cooked two cards for 9 max HP"
+            case "TOKE":
                 return "Toked a card"
+            case "CLONE":
+                return "Duplicated every clone"
+            case "HATCH":
+                return "Took good care of the baby bird and gained a new friend"
+            case "KINDLE":
+                return "Put some more fire into your Pumpkin Candle"
             case a:
                 return f"Did {a!r}, but I'm not sure what this means"
 
