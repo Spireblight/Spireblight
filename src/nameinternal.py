@@ -327,6 +327,27 @@ def get_badge(data: dict[str, str]) -> tuple[str, str]:
         except KeyError:
             return (f"Unknown badge {name}", "Could not find description for this badge.")
 
+async def fetch_mod_data(session: ClientSession, mod: str):
+    data = None
+    async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
+        if resp.ok:
+            decoded = await resp.text()
+            data: dict = json.loads(decoded)
+
+    if data is None:
+        raise ValueError(f"Mod {mod} could not be found.")
+
+    return data
+
+def store_mod_info(data: dict):
+    for cat, maps in data.items():
+        if cat in _str_to_cls:
+            for mapping in maps:
+                inst = _str_to_cls[cat](mapping)
+                if inst.store_internal:
+                    _internal_cache[inst.internal] = inst
+                _query_cache[_sanitize(inst.name)].append(inst)
+
 @add_listener("setup_init")
 async def load():
     _cache.clear()
@@ -336,22 +357,8 @@ async def load():
         for mod in config.bot.spire_mods:
             if mod.lower() in done:
                 continue
-            data = None
-            async with session.get(f"https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/{mod.lower()}/data.json") as resp:
-                if resp.ok:
-                    decoded = await resp.text()
-                    data: dict = json.loads(decoded)
-            if data is None:
-                raise ValueError(f"Mod {mod} could not be found.")
-
-            for cat, maps in data.items():
-                if cat in _str_to_cls:
-                    for mapping in maps:
-                        inst = _str_to_cls[cat](mapping)
-                        if inst.store_internal:
-                            _internal_cache[inst.internal] = inst
-                        _query_cache[_sanitize(inst.name)].append(inst)
-
+            data = await fetch_mod_data(session=session, mod=mod)
+            store_mod_info(data)
             done.add(mod.lower())
 
     await client.close()
@@ -386,11 +393,4 @@ async def load():
     # Load data that isn't yet live on the main branch (for beta patch stuff)
     # Notably, this will override the stuff from the Slaytabase JSON
     with (base / "argo" / "stb_missing.json").open() as f:
-        j: dict = json.load(f)
-        for cat, maps in j.items():
-            if cat in _str_to_cls:
-                for mapping in maps:
-                    inst = _str_to_cls[cat](mapping)
-                    if inst.store_internal:
-                        _internal_cache[inst.internal] = inst
-                    _query_cache[_sanitize(inst.name)].append(inst)
+        store_mod_info(json.load(f))
