@@ -83,7 +83,8 @@ class Config(_ConfigMapping):
             raise RuntimeError(f"Unrecognized config values: {', '.join(kwargs.keys())}")
 
 class Twitch(_ConfigMapping):
-    def __init__(self, channel: str, enabled: bool, editors: list[str], bot_id: int, owner_id: int, client_id: str, client_secret: str, scopes: list[str], timers: dict):
+    def __init__(self, channel: str, enabled: bool, editors: list[str], bot_id: int, owner_id: int,
+                 client_id: str, client_secret: str, scopes: list[str], bot_scopes: list[str], timers: dict):
         """Handle the Twitch aspect of the configuration.
 
         :param channel: The channel name to connect to.
@@ -100,8 +101,10 @@ class Twitch(_ConfigMapping):
         :type client_id: str
         :param client_secret: The Twitch app Client Secret.
         :type client_secret: str
-        :param scopes: a list of the scopes requested, defaults to None.
+        :param scopes: A list of the channel scopes requested, defaults to None.
         :type scopes: list[str] | None, optional
+        :param bot_scopes: The scopes needed for the bot to function.
+        :type bot_scopes: list[str] | None, optional
         :param timers: A mapping that will be used for timer interval.
         :type timers: dict
         """
@@ -118,6 +121,7 @@ class Twitch(_ConfigMapping):
         self.client_secret = client_secret
 
         self.scopes = scopes or []
+        self.bot_scopes = bot_scopes or []
 
         self.timers = _TimerIntervals(**timers)
 
