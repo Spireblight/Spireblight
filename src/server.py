@@ -3214,7 +3214,7 @@ async def automatic_client_report(req: Request):
 _oauth_state = None
 
 
-@router.post("/twitch/check-token")
+@router.post("/twitch/check-token/{type}")
 async def check_token_validity(req: Request):
     await get_req_data(req)  # check if the key is OK
     if not config.twitch.enabled:
@@ -3222,7 +3222,17 @@ async def check_token_validity(req: Request):
     if not (config.twitch.client_id and config.twitch.client_secret):
         return Response(text="NO_CREDENTIALS")
 
-    if str(config.twitch.owner_id) in TConn.tokens:
+    match req.match_info["type"]:
+        case "broadcaster":
+            id_ = config.twitch.owner_id
+            scopes = config.twitch.scopes
+        case "bot":
+            id_ = config.twitch.bot_id
+            scopes = config.twitch.bot_scopes
+        case t:
+            return Response(text="UNKNOWN_TYPE")
+
+    if str(id_) in TConn.tokens:
         return Response(text="WORKING")
 
     # Need to authenticate for the first time (presumably)
@@ -3236,7 +3246,7 @@ async def check_token_validity(req: Request):
         "client_id": config.twitch.client_id,
         "redirect_uri": f"{config.server.url}/twitch/receive-token",
         "response_type": "code",
-        "scope": " ".join(config.twitch.scopes),
+        "scope": " ".join(scopes),
         "state": _oauth_state,
     }
 

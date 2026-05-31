@@ -38,6 +38,8 @@ twitch:
   client_secret: ""
 
   # These are channel scopes, i.e. what we are allowed to do on the channel
+  # If you change any of them, make sure to delete the data/tokens.json file
+  # This will force a re-auth (via the client)
   scopes: ["channel:bot"]
 
   # And these are the scopes the bot user itself (us) will have

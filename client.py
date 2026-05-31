@@ -115,29 +115,58 @@ async def main():
     if cfg.modded:
         spire2_saves /= "modded"
 
+    needs_restart = False
+
     async with ClientSession(cfg.server_url) as session:
         # Check if the app is registered, prompt it if not
         try:
-            async with session.post("/twitch/check-token", params={"key": cfg.secret}) as resp:
-                if resp.ok:
-                    text = await resp.text()
-                    match text:
-                        case "DISABLED":
-                            print("\nTwitch connectivity is disabled.")
-                        case "NO_CREDENTIALS":
-                            print("\nExtended OAuth is not properly set-up. Contact the server owner.")
-                        case "WORKING":
-                            print("\nExtended OAuth validated.")
-                        case a:
-                            if a.startswith("NEEDS_CONNECTION"):
-                                nc, cl, url = a.partition(":")
-                                import webbrowser
-                                webbrowser.open_new_tab(url)
-                            else:
-                                print(f"\nERROR: Unrecognized return value:\n\n{a}")
+            for ttype in ("broadcaster", "bot"):
+                if ttype == "broadcaster":
+                    print("Verifying channel access permissions . . .")
+                else:
+                    print("Verifying Twitch bot permissions . . .")
+                async with session.post(f"/twitch/check-token/{ttype}", params={"key": cfg.secret}) as resp:
+                    if resp.ok:
+                        text = await resp.text()
+                        match text:
+                            case "DISABLED":
+                                print("\nTwitch connectivity is disabled.")
+                                break
+                            case "NO_CREDENTIALS":
+                                print("\nExtended OAuth is not properly set-up. Contact the server owner.")
+                                break
+                            case "WORKING":
+                                print("\nExtended OAuth validated.")
+                            case "UNKNOWN_TYPE":
+                                print(f"Type {ttype!r} unrecognized (this is a bug).")
+                            case a:
+                                if a.startswith("NEEDS_CONNECTION"):
+                                    needs_restart = True
+                                    nc, cl, url = a.partition(":")
+                                    ob = True # do we open a browser window?
+                                    if ttype == "bot":
+                                        val = input(
+                                            "--==-- Twitch bot access required --==--\n"
+                                            "Please login to your Twitch bot account.\n\n"
+                                            "Then press Enter, and make sure to authorize to the bot account!\n"
+                                            "If this doesn't work for whatever reason, type in 'Link' then Enter. "
+                                            )
+                                        if val: # anything at all, really
+                                            ob = False
+                                            print(f"Please copy-paste the following in your browser:\n\n{url}")
+                                    if ob:
+                                        import webbrowser
+                                        webbrowser.open_new_tab(url)
+                                    input("\nPress Enter if the handshake is successful.")
+                                else:
+                                    print(f"\nERROR: Unrecognized return value:\n\n{a}")
 
         except (ClientError, ServerDisconnectedError):
             print("\nServer is offline, cannot confirm OAuth mode.\nYou may safely ignore this if you previously authorized the app.")
+
+        if needs_restart:
+            input("Please wait for the server to reboot, then restart this.")
+            exit()
 
         while True:
             try:
