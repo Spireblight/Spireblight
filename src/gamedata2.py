@@ -588,29 +588,23 @@ class PathNode:
         """All potions which were used or discarded this floor."""
         return self.used_potions + self.discarded_potions
 
-    def short_description(self):
-        """Short description meant to fit on one line."""
-        # typically only Neow/floor 1 will use this
-        if self.name != "Neow":
-            return "If you can read this, there is a bug!"
-
+    def ancient_desc(self):
+        """Ancient-specific description."""
         choices: list[dict] = self._data["player_stats"][self.parser.get_player_index()]
 
-        if "ancient_choice" not in choices:
-            return "No bonus picked."
+        if "ancient_choice" in choices:
+            picked: Relic | None = None
+            not_picked: list[Relic] = []
+            for d in choices["ancient_choice"]:
+                relic: Relic = get(d["title"]["key"])
+                if d["was_chosen"]:
+                    picked = relic
+                else:
+                    not_picked.append(relic)
 
-        picked: Relic | None = None
-        not_picked: list[Relic] = []
-        for d in choices["ancient_choice"]:
-            relic: Relic = get(d["title"]["key"])
-            if d["was_chosen"]:
-                picked = relic
-            else:
-                not_picked.append(relic)
-
-        if picked is not None:
-            return f"We picked {picked.name}, and skipped {' and '.join(x.name for x in not_picked)}."
-        return "No bonus picked yet."
+            if picked is not None:
+                return f"We picked {picked.name}, and skipped {' and '.join(x.name for x in not_picked)}."
+        return "No bonus picked."
 
     def description(self):
         result = self.get_description()

@@ -2084,16 +2084,32 @@ async def neowbonus(ctx: ContextType, save: SaveType):
                 f"Option taken: {save.neow_bonus.boon_picked} {save.neow_bonus.as_str() if save.neow_bonus.has_info else ''}"
             )
     else:
-        pass
-
+        ret = []
+        for node in save.path:
+            if node.room_type == "Ancient":
+                ret.append((node.name, node.ancient_desc()))
+        if ret:
+            await ctx.reply(" | ".join(f"From {x}: {y}" for x,y in ret))
+        else:
+            await ctx.reply("No bonus picked yet.")
 
 @with_savefile("neowskipped", "skippedbonus")
 async def neow_skipped(ctx: ContextType, save: SaveType):
-    if not save.neow_bonus.choice_made:
-        await ctx.reply("No Neow bonus taken yet.")
-    else:
-        await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.boons_skipped)}")
+    if save.game_version == 1:
+        if not save.neow_bonus.choice_made:
+            await ctx.reply("No Neow bonus taken yet.")
+        else:
+            await ctx.reply(f"Options skipped: {' | '.join(save.neow_bonus.boons_skipped)}")
 
+    else:
+        ret = []
+        for node in save.path:
+            if node.room_type == "Ancient":
+                ret.append((node.name, node.ancient_desc()))
+        if ret:
+            await ctx.reply(" | ".join(f"From {x}: {y}" for x,y in ret))
+        else:
+            await ctx.reply("No bonus picked yet.")
 
 @with_savefile("pandora", "pbox", "pandorasbox")
 async def what_if_box(ctx: ContextType, save: SaveType):
