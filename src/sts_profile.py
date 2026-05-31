@@ -91,6 +91,18 @@ class Profile:
         return name
 
     @property
+    def floors_climbed(self) -> int:
+        return self.data["floors_climbed"]
+
+    @property
+    def architect_damage(self) -> int:
+        return self.data["architect_damage"]
+
+    @property
+    def wongo_points(self) -> int:
+        return self.data["wongo_points"]
+
+    @property
     def runs(self) -> Generator[RunParser, None, None]:
         """Return all runs from the matching profile, newest first."""
         from src.runs import _ts_cache
