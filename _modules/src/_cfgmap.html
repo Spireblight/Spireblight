@@ -458,7 +458,8 @@
 <div class="viewcode-block" id="Twitch">
 <a class="viewcode-back" href="../../config.html#src._cfgmap.Twitch">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Twitch</span><span class="p">(</span><span class="n">_ConfigMapping</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">editors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">bot_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">timers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">editors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">bot_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">bot_scopes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">timers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the Twitch aspect of the configuration.</span>
 
 <span class="sd">        :param channel: The channel name to connect to.</span>
@@ -475,8 +476,10 @@
 <span class="sd">        :type client_id: str</span>
 <span class="sd">        :param client_secret: The Twitch app Client Secret.</span>
 <span class="sd">        :type client_secret: str</span>
-<span class="sd">        :param scopes: a list of the scopes requested, defaults to None.</span>
+<span class="sd">        :param scopes: A list of the channel scopes requested, defaults to None.</span>
 <span class="sd">        :type scopes: list[str] | None, optional</span>
+<span class="sd">        :param bot_scopes: The scopes needed for the bot to function.</span>
+<span class="sd">        :type bot_scopes: list[str] | None, optional</span>
 <span class="sd">        :param timers: A mapping that will be used for timer interval.</span>
 <span class="sd">        :type timers: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -493,6 +496,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span> <span class="o">=</span> <span class="n">scopes</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot_scopes</span> <span class="o">=</span> <span class="n">bot_scopes</span> <span class="ow">or</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">timers</span> <span class="o">=</span> <span class="n">_TimerIntervals</span><span class="p">(</span><span class="o">**</span><span class="n">timers</span><span class="p">)</span>
 

@@ -3926,7 +3926,7 @@
 
 <div class="viewcode-block" id="check_token_validity">
 <a class="viewcode-back" href="../../server.html#src.server.check_token_validity">[docs]</a>
-<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/twitch/check-token&quot;</span><span class="p">)</span>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/twitch/check-token/</span><span class="si">{type}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_token_validity</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>  <span class="c1"># check if the key is OK</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
@@ -3934,7 +3934,17 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_secret</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;NO_CREDENTIALS&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TConn</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span>
+    <span class="k">match</span> <span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]:</span>
+        <span class="k">case</span> <span class="s2">&quot;broadcaster&quot;</span><span class="p">:</span>
+            <span class="n">id_</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">owner_id</span>
+            <span class="n">scopes</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">scopes</span>
+        <span class="k">case</span> <span class="s2">&quot;bot&quot;</span><span class="p">:</span>
+            <span class="n">id_</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">bot_id</span>
+            <span class="n">scopes</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">bot_scopes</span>
+        <span class="k">case</span> <span class="n">t</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;UNKNOWN_TYPE&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">TConn</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;WORKING&quot;</span><span class="p">)</span>
 
     <span class="c1"># Need to authenticate for the first time (presumably)</span>
@@ -3948,7 +3958,7 @@
         <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
         <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/twitch/receive-token&quot;</span><span class="p">,</span>
         <span class="s2">&quot;response_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">scopes</span><span class="p">),</span>
+        <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">scopes</span><span class="p">),</span>
         <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">_oauth_state</span><span class="p">,</span>
     <span class="p">}</span>
 
