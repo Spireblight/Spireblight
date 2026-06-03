@@ -37,7 +37,13 @@ twitch:
   client_id: ""
   client_secret: ""
 
-  scopes: []
+  # These are channel scopes, i.e. what we are allowed to do on the channel
+  # If you change any of them, make sure to delete the data/tokens.json file
+  # This will force a re-auth (via the client)
+  scopes: ["channel:bot"]
+
+  # And these are the scopes the bot user itself (us) will have
+  bot_scopes: ["user:bot", "user:read:chat", "user:write:chat"]
 
   timers:
     # The default interval for new timers
