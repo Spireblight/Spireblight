@@ -198,9 +198,12 @@ async def runs_as_zipfile(req: Request) -> Response:
 
     with io.BytesIO() as zfile:
         with zipfile.ZipFile(zfile, mode="w") as archive:
+            rf = "runs"
+            if profile.index > 10:
+                rf = "runs2"
             for run in profile.runs:
                 if start <= run.timestamp.timestamp() <= end:
-                    archive.write(f"data/runs/{profile.index}/{run.filename}")
+                    archive.write(f"data/{rf}/{profile.index}/{run.filename}")
                     has_file = True
 
         if not has_file:
