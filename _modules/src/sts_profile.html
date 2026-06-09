@@ -393,6 +393,9 @@
 <span class="n">_profiles</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Profile</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_slots</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
+<span class="c1"># TODO: track this depending on which game was last played (save/run files)</span>
+<span class="n">_SPIRE_2</span> <span class="o">=</span> <span class="kc">True</span>
+
 <div class="viewcode-block" id="get_profile">
 <a class="viewcode-back" href="../../sts_profile.html#src.sts_profile.get_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_profile</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Profile</span><span class="p">:</span>
@@ -406,7 +409,10 @@
 <div class="viewcode-block" id="get_current_profile">
 <a class="viewcode-back" href="../../sts_profile.html#src.sts_profile.get_current_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_current_profile</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Profile</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_profiles</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">_slots</span><span class="p">[</span><span class="s2">&quot;DEFAULT_SLOT&quot;</span><span class="p">])]</span></div>
+    <span class="n">slot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_slots</span><span class="p">[</span><span class="s2">&quot;DEFAULT_SLOT&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">_SPIRE_2</span><span class="p">:</span> <span class="c1"># basically always true, for now</span>
+        <span class="n">slot</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="k">return</span> <span class="n">_profiles</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">profile_from_request</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Profile</span><span class="p">:</span>
@@ -466,11 +472,17 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">architect_damage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;architect_damage&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;architect_damage&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">wongo_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;wongo_points&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;wongo_points&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">runs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RunParser</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
