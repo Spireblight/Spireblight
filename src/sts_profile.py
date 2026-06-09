@@ -29,6 +29,9 @@ __all__ = ["get_profile", "get_current_profile"]
 _profiles: dict[int, Profile] = {}
 _slots: dict[str, str] = {}
 
+# TODO: track this depending on which game was last played (save/run files)
+_SPIRE_2 = True
+
 def get_profile(x: int, v: int) -> Profile:
     if v == 1:
         return _profiles.get(x, None)
@@ -37,7 +40,10 @@ def get_profile(x: int, v: int) -> Profile:
     raise ValueError(v)
 
 def get_current_profile() -> Profile:
-    return _profiles[int(_slots["DEFAULT_SLOT"])]
+    slot = int(_slots["DEFAULT_SLOT"])
+    if _SPIRE_2: # basically always true, for now
+        slot = 11
+    return _profiles[slot]
 
 def profile_from_request(req: Request) -> Profile:
     try:
@@ -96,11 +102,17 @@ class Profile:
 
     @property
     def architect_damage(self) -> int:
-        return self.data["architect_damage"]
+        try:
+            return self.data["architect_damage"]
+        except KeyError:
+            return 0
 
     @property
     def wongo_points(self) -> int:
-        return self.data["wongo_points"]
+        try:
+            return self.data["wongo_points"]
+        except KeyError:
+            return 0
 
     @property
     def runs(self) -> Generator[RunParser, None, None]:

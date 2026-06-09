@@ -2977,11 +2977,19 @@ async def architect_total_damage(ctx: ContextType):
         if resp.ok:
             data = await resp.json()
 
+    selfdmg = get_profile(1, 2).architect_damage
+
     if data is not None:
         dmg = int(data["response"]["globalstats"]["architect_damage"]["total"])
-        return await ctx.reply(f"The total damage The Architect has received is {dmg:,}")
+        return await ctx.reply(f"The Architect has received a total {dmg:,} points of damage, {selfdmg:,} of which was from Baalor.")
 
-    await ctx.reply("Could not query Steam API.")
+    await ctx.reply(f"Baalor has dealt a total of {selfdmg:,} points of damage to The Architect.")
+
+@command("wongo")
+async def wongo_points(ctx: ContextType):
+    """Display how many Wongo points we have."""
+    wongo = get_profile(1, 2).wongo_points
+    await ctx.reply(f"We have {wongo:,} Wongo points.")
 
 @command("winrate")
 async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = None):
