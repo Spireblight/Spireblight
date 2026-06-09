@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from datetime import datetime, UTC
+import pathlib
 import json
 import os
 
@@ -18,32 +19,38 @@ import asyncio, src.events as events
 
 asyncio.run(events.invoke("setup_init"))
 
-rm = wa = streamer = None
+rm = wa = streamer = r2 = None
+
+base = pathlib.Path(".") / "test" / "static"
 
 # this is an older save, and doesn't have all the RHP features
 # this is actually good, as it lets us test for what happens when it's lacking
-with open(os.path.join("test", "static", "dummy_savefile.json")) as f:
+with (base / "dummy_savefile.json").open() as f:
     s.update_data(json.load(f), "THE_SILENT", "false")
 
 # this is more recent, and should have all the fields we care about
 # (at least as of June 2025. we all know how these things go)
 
 # this save and the run file that follow are from the save run, and thus should match closely
-with open(os.path.join("test", "static", "save_matched.json")) as f:
+with (base / "save_matched.json").open() as f:
     sm = Savefile(_debug=True)
     sm.update_data(json.load(f), "IRONCLAD", "false")
 
-with open(os.path.join("test", "static", "run_matched.json")) as f:
+with (base / "run_matched.json").open() as f:
     rm = RunParser("run_matched.json", 0, json.load(f))
 
-with open(os.path.join("test", "static", "watcher.json")) as f:
+with (base / "watcher.json").open() as f:
     wa = RunParser("watcher.json", 0, json.load(f))
 
-with open(os.path.join("test", "static", "slay_the_streamer.json")) as f:
+with (base / "slay_the_streamer.json").open() as f:
     streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
 
-assert rm is not None and wa is not None and streamer is not None, "could not load test run files"
-assert s._data is not None and sm._data is not None, "could not load test save files"
+assert rm is not None, "could not load matched run"
+assert wa is not None, "could not load normal watcher run"
+assert streamer is not None, "could not load slay the streamer run"
+
+assert s._data is not None, "could not load dummy save"
+assert sm._data is not None, "could not load matched save files"
 
 # END SETUP
 
