@@ -5,8 +5,8 @@ import pathlib
 import json
 import os
 
-from src.save import Savefile, get_savefile, _savefile as s
-from src.runs import RunParser
+from src.save import Savefile, Save2, get_savefile, _savefile as s, _save2 as s2
+from src.runs import RunParser, Run2Parser
 
 # TODO: make profiles work for testing
 
@@ -45,9 +45,13 @@ with (base / "watcher.json").open() as f:
 with (base / "slay_the_streamer.json").open() as f:
     streamer = RunParser("slay_the_streamer.json", 2, json.load(f))
 
+with (base / "run2_defect.json").open() as f:
+    r2 = Run2Parser("run2_defect.json", 1, json.load(f))
+
 assert rm is not None, "could not load matched run"
 assert wa is not None, "could not load normal watcher run"
 assert streamer is not None, "could not load slay the streamer run"
+assert r2 is not None, "could not load spire 2 run"
 
 assert s._data is not None, "could not load dummy save"
 assert sm._data is not None, "could not load matched save files"
@@ -1612,6 +1616,15 @@ class _streamer_contents:
         ("Runic Dome", ("Calling Bell", "Cursed Key")),
     ]
 
+class _run2_contents:
+    # TODO: populate this more
+    badges = [
+        ("C-c-c-Combo", "bronze"),
+        ("Elite Killer", "silver"),
+        ("Ka-Ching!", "bronze"),
+        ("Money Money", "bronze")
+    ]
+
 # END CONSTANTS
 
 class TestFileParser(TestCase):
@@ -1620,6 +1633,7 @@ class TestFileParser(TestCase):
         self.assertEqual(sm.character, "Ironclad")
         self.assertEqual(rm.character, "Ironclad")
         self.assertEqual(wa.character, "Watcher")
+        self.assertEqual(r2.character, "Defect")
 
     def test_modded(self):
         self.assertFalse(s.modded)
@@ -1630,6 +1644,9 @@ class TestFileParser(TestCase):
     def test_seed(self):
         self.assertEqual(s.seed, "57Z3V6XL40NZS")
         self.assertEqual(sm.seed, rm.seed)
+        # this is stored as-is in the file, and is only included for completion
+        # if this breaks, the disk is probably corruted
+        self.assertEqual(r2.seed, "72H9J5S75Q")
 
     def test_seeded(self):
         self.assertFalse(s.is_seeded)
@@ -1641,6 +1658,7 @@ class TestFileParser(TestCase):
         self.assertEqual(s.timestamp, datetime(2022, 5, 3, 20, 14, 30, 317000, tzinfo=UTC))
         self.assertEqual(wa.timestamp, datetime(2023, 6, 16, 20, 34, 58, tzinfo=UTC))
         self.assertEqual(streamer.timestamp, datetime(2023, 7, 12, 20, 9, 44, tzinfo=UTC))
+        self.assertEqual(r2.timestamp, datetime(2026, 6, 4, 18, 39, 20, tzinfo=UTC))
 
     def test_boss_relics(self):
         for fp, contents in ( (s, _save_contents), (sm, _matched_contents), (rm, _matched_contents), (wa, _run_contents), (streamer, _streamer_contents) ):
@@ -1707,6 +1725,7 @@ class TestRunParser(TestCase):
     def test_won(self):
         self.assertTrue(wa.won)
         self.assertFalse(streamer.won)
+        self.assertTrue(r2.won)
 
     def test_keys(self):
         k = wa.keys
@@ -1737,6 +1756,7 @@ class TestPath(TestCase):
         self.assertEqual(len(s.path), 45)
         self.assertEqual(len(wa.path), 57)
         self.assertEqual(len(streamer.path), 50)
+        self.assertEqual(len(r2.path), 49)
 
     def test_streamer(self):
         # Slay the Streamer has a weird thing after the chest
@@ -1746,15 +1766,18 @@ class TestPath(TestCase):
     def test_current_hp(self):
         self.assertEqual([x.current_hp for x in s.path], s.current_hp_counts[1:])
         self.assertEqual([x.current_hp for x in wa.path][:-1], wa.current_hp_counts[1:])
+        self.assertEqual([x.current_hp for x in r2.path], r2.current_hp_counts)
         # slay the streamer kinda breaks this
 
     def test_max_hp(self):
         self.assertEqual([x.max_hp for x in s.path], s.max_hp_counts[1:])
         self.assertEqual([x.max_hp for x in wa.path][:-1], wa.max_hp_counts[1:])
+        self.assertEqual([x.max_hp for x in r2.path], r2.max_hp_counts)
 
     def test_gold(self):
         self.assertEqual([x.gold for x in s.path], s.gold_counts[1:])
         self.assertEqual([x.gold for x in wa.path][:-1], wa.gold_counts[1:])
+        self.assertEqual([x.gold for x in r2.path], r2.gold_counts)
 
 class TestNodeSave(TestCase):
     def test_room_type(self):
@@ -1930,3 +1953,13 @@ class TestNodeMatched(TestCase):
         for save, run, count in path:
             self.assertEqual(save.turns_count, count)
             self.assertEqual(save.turns_count, run.turns_count)
+
+class TestFP2(TestCase):
+    # TODO: multiplayer handling
+    # this is specifically for things Spire 2 does
+    def test_solo_player_index(self):
+        self.assertEqual(r2.get_player_index(), 0)
+
+    def test_badges(self):
+        self.assertEqual([(x.title, x.rarity) for x in r2.badges], _run2_contents.badges)
+
