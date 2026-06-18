@@ -31,7 +31,7 @@ with (base / "dummy_savefile.json").open() as f:
 # this is more recent, and should have all the fields we care about
 # (at least as of June 2025. we all know how these things go)
 
-# this save and the run file that follow are from the save run, and thus should match closely
+# this save and the run file that follow are from the same run, and thus should match closely
 with (base / "save_matched.json").open() as f:
     sm = Savefile(_debug=True)
     sm.update_data(json.load(f), "IRONCLAD", "false")
@@ -1624,6 +1624,25 @@ class _run2_contents:
         ("Ka-Ching!", "bronze"),
         ("Money Money", "bronze")
     ]
+    relics = [ # because we output the description, patches may break this
+        ("Cracked Core", 1, "At the start of each combat, Channel 1 Lightning."),
+        ("Precarious Shears", 1, "Upon pickup, remove 2 cards from your Deck and lose 16 HP."),
+        ("Sword of Jade", 42, "Start each combat with 3 Strength."), # idk how to check for the sword of stone
+        ("Letter Opener", 8, "Every time you play 3 Skills in a single turn, deal 5 damage to ALL enemies."),
+        ("Bronze Scales", 10, "Start each combat with 3 Thorns."),
+        ("Amethyst Aubergine", 11, "Enemies drop 15 additional Gold."),
+        ("Data Disk", 14, "Start each combat with 1 Focus."),
+        ("Pael's Blood", 18, "At the start of your turn, draw 1 additional card."),
+        ("Symbiotic Virus", 22, "At the start of each combat, Channel 1 Dark."),
+        ("Old Coin", 26, "Upon pickup, gain 300 Gold."),
+        ("Planisphere", 27, "Whenever you enter a ? room, heal 5 HP."),
+        ("Snecko Eye", 34, "At the start of your turn, draw 2 additional cards. Start each combat Confused."),
+        ("Bag of Preparation", 36, "At the start of each combat, draw 2 additional cards."),
+        ("War Paint", 36, "Upon pickup, Upgrade 2 random Skills."),
+        ("Pendulum", 41, "Every 3 turns, draw 1 card."),
+        ("Festive Popper", 42, "At the start of each combat, deal 9 damage to ALL enemies."),
+        ("Kusarigama", 45, "Every time you play 3 Attacks in a single turn, deal 6 damage to a random enemy."),
+    ]
 
 # END CONSTANTS
 
@@ -1743,6 +1762,12 @@ class TestRelicData(TestCase):
         for relic, (name, floor, details) in relics:
             self.assertEqual(relic.name, name)
             self.assertEqual(relic.description(), f"Obtained on floor {floor}{details}")
+
+    def test_sts2(self):
+        relics = zip(r2.relics, _run2_contents.relics, strict=True)
+        for relic, (name, floor, details) in relics:
+            self.assertEqual(relic.name, name)
+            self.assertEqual(relic.description(), f"Obtained on floor {floor}\n{details}")
 
     def test_matched(self):
         relics = zip(sm.relics, rm.relics[:21], _matched_contents.relics, strict=True)
