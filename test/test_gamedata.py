@@ -1643,6 +1643,58 @@ class _run2_contents:
         ("Festive Popper", 42, "At the start of each combat, deal 9 damage to ALL enemies."),
         ("Kusarigama", 45, "Every time you play 3 Attacks in a single turn, deal 6 damage to a random enemy."),
     ]
+    rooms = [
+        "Ancient",
+        "Enemy",
+        "Event",
+        "Merchant",
+        "Enemy",
+        "Event",
+        "Rest site",
+        "Elite fight",
+        "Rest site",
+        "Treasure chest",
+        "Elite fight",
+        "Event",
+        "Rest site",
+        "Elite fight",
+        "Enemy",
+        "Rest site",
+        "Boss fight",
+        "Ancient",
+        "Enemy",
+        "Enemy",
+        "Enemy",
+        "Merchant",
+        "Enemy",
+        "Enemy",
+        "Rest site",
+        "Treasure chest",
+        "Elite fight",
+        "Rest site",
+        "Enemy",
+        "Enemy",
+        "Enemy",
+        "Rest site",
+        "Boss fight",
+        "Ancient",
+        "Enemy",
+        "Merchant",
+        "Enemy",
+        "Enemy",
+        "Enemy",
+        "Rest site",
+        "Treasure chest",
+        "Elite fight",
+        "Enemy",
+        "Rest site",
+        "Elite fight",
+        "Enemy",
+        "Rest site",
+        "Boss fight",
+        "Boss fight",
+    ]
+
 
 # END CONSTANTS
 
@@ -1988,3 +2040,6 @@ class TestFP2(TestCase):
     def test_badges(self):
         self.assertEqual([(x.title, x.rarity) for x in r2.badges], _run2_contents.badges)
 
+    def test_room_type(self):
+        for node, name in zip(r2.path, _run2_contents.rooms, strict=True):
+            self.assertEqual(node.room_type, name)
