@@ -67,6 +67,8 @@ class FileParser:
     game_version: int = 2       #: Which version of the game we care about.
     done: bool = False          #: Whether the run is over.
 
+    has_activemods = False      #: Whether we know which mods are enabled.
+
     def __init__(self, data: dict):
         self._data = data
         self._main_player_index: int | None = None
