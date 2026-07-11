@@ -3116,7 +3116,9 @@ async def calipers(ctx: ContextType, save: Optional[SaveType]):
             msg = "Calipers ARE good here! baalorCalipers baalorSmug"
         elif 'Blur' in save.deck_card_ids:
             msg = "We have Calipers at home! baalorSmug\nAt home: Blur"
-        elif not save.available_relic(query("calipers")):
+        elif "PROLONG" in save.deck_card_ids:
+            msg = "We have Prolong, that's basically the same! baalorSmug"
+        elif save.game_version == 1 and not save.available_relic(query("calipers")):
             msg = "Calipers would have been good here... baalorHubris"
     await ctx.reply(msg)
 
