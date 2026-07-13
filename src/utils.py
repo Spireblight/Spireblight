@@ -5,6 +5,7 @@ from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthor
 from twitchio import models, client, http as _http
 
 import os
+import sys
 import json
 import functools
 import traceback
@@ -47,7 +48,7 @@ async def get_req_data(req: Request, *keys: str) -> list[str]:
 
     return res
 
-async def send_report(data: str) -> bool:
+async def send_report(text: str) -> bool:
     from src.server import DConn # here to prevent circular imports
     ar = config.discord.auto_report
     if not ar.enabled or not ar.server or not ar.channel:
@@ -63,14 +64,27 @@ async def send_report(data: str) -> bool:
     if channel is None:
         return False
 
-    await channel.send(data)
+    # Also print the traceback and local variables from the guilty frame
+    exc = sys.exception()
+    if exc is None:
+        return await channel.send(text)
+
+    tb = exc.__traceback__
+    while tb.tb_next is not None:
+        tb = tb.tb_next
+    frame_vars = tb.tb_frame.f_locals
+    # prettify the output
+    maxlen = max(len(a) for a in frame_vars)
+    res = [f"{k.ljust(maxlen)} = {repr(v)}" for k,v in frame_vars.items()]
+
+    await channel.send(f"{text}\n```{traceback.format_exc()}``````[Locals]\n\n{"\n".join(res)}```")
 
 def catch_error(func: Coroutine):
     async def caller(*args, **kwargs):
         try:
             return await func(*args, **kwargs)
         except Exception: # don't wanna catch stuff like stopiteration
-            await send_report(f"[Error caught in `{func.__module__}.{func.__qualname__}`]\n\n```{traceback.format_exc()}```")
+            await send_report(f"[Error caught in `{func.__qualname__}`]")
             raise # other things may be expecting this
 
     functools.update_wrapper(caller, func)

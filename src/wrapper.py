@@ -1,6 +1,5 @@
 from typing import Callable, Coroutine, Optional
 
-import traceback
 import inspect
 
 from twitchio.ext.commands import Context, CommandNotFound, CommandOnCooldown
@@ -81,7 +80,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
         except (CommandNotFound, CommandOnCooldown): # the first except block gets hit first
             pass # we don't want to error on these
         except Exception:
-            await send_report(f"[Exception in command {name}]\n\n```{traceback.format_exc()}```")
+            await send_report(f"[Exception in command `{name}`]")
             raise
 
 
