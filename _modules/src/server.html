@@ -438,6 +438,8 @@
     <span class="n">update_db</span><span class="p">,</span>
     <span class="n">get_req_data</span><span class="p">,</span>
     <span class="n">post_prediction</span><span class="p">,</span>
+    <span class="n">send_report</span><span class="p">,</span>
+    <span class="n">catch_error</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.disc</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscordCommand</span>
@@ -3846,6 +3848,7 @@
 <a class="viewcode-back" href="../../server.html#src.server.commands_page">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/commands&quot;</span><span class="p">)</span>
 <span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;commands.jinja2&quot;</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">commands_page</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;botname&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;commands&quot;</span><span class="p">:</span> <span class="p">[]}</span>
     <span class="n">cmds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -3863,6 +3866,7 @@
 <a class="viewcode-back" href="../../server.html#src.server.individual_cmd">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/commands/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;command_single.jinja2&quot;</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">individual_cmd</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
@@ -3918,20 +3922,9 @@
 <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/report&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">automatic_client_report</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;traceback&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">ar</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">auto_report</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">server</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span>
-
-    <span class="n">guild</span> <span class="o">=</span> <span class="n">DConn</span><span class="o">.</span><span class="n">get_guild</span><span class="p">(</span><span class="n">ar</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">guild</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="n">guild</span><span class="o">.</span><span class="n">get_channel</span><span class="p">(</span><span class="n">ar</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span>
-
-    <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;[Automatic Client Reporting]</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
-
+    <span class="k">if</span> <span class="n">send_report</span><span class="p">(</span><span class="s2">&quot;[Automatic Client Reporting]</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Report successful&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span></div>
 
 
 <span class="n">_oauth_state</span> <span class="o">=</span> <span class="kc">None</span>

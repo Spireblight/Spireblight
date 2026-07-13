@@ -364,17 +364,21 @@
   <h1>Source code for src.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">calendar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">UTC</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Coroutine</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">HTTPNotImplemented</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">HTTPUnauthorized</span><span class="p">,</span> <span class="n">FileField</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">http</span> <span class="k">as</span> <span class="n">_http</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;get_req_data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;send_report&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;catch_error&quot;</span><span class="p">,</span>
     <span class="s2">&quot;post_prediction&quot;</span><span class="p">,</span>
     <span class="s2">&quot;getfile&quot;</span><span class="p">,</span>
     <span class="s2">&quot;update_db&quot;</span><span class="p">,</span>
@@ -408,6 +412,41 @@
         <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="send_report">
+<a class="viewcode-back" href="../../utils.html#src.utils.send_report">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_report</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">src.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">DConn</span> <span class="c1"># here to prevent circular imports</span>
+    <span class="n">ar</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">auto_report</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">server</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ar</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">DConn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">guild</span> <span class="o">=</span> <span class="n">DConn</span><span class="o">.</span><span class="n">get_guild</span><span class="p">(</span><span class="n">ar</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">guild</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="n">guild</span><span class="o">.</span><span class="n">get_channel</span><span class="p">(</span><span class="n">ar</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="catch_error">
+<a class="viewcode-back" href="../../utils.html#src.utils.catch_error">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">catch_error</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">caller</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># don&#39;t wanna catch stuff like stopiteration</span>
+            <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error caught in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="si">}</span><span class="s2">```&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="c1"># other things may be expecting this</span>
+
+    <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">caller</span></div>
 
 
 <span class="c1"># TODO: Merge this upstream to TwitchIO eventually</span>
