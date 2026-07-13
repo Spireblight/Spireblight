@@ -75,9 +75,9 @@ async def send_report(text: str) -> bool:
     frame_vars = tb.tb_frame.f_locals
     # prettify the output
     maxlen = max(len(a) for a in frame_vars)
-    res = [f"{k.ljust(maxlen)} = {repr(v)}" for k,v in frame_vars.items()]
+    res = "\n".join([f"{k.ljust(maxlen)} = {repr(v)}" for k,v in frame_vars.items()])
 
-    await channel.send(f"{text}\n```{traceback.format_exc()}``````[Locals]\n\n{'\n'.join(res)}```")
+    await channel.send(f"{text}\n```{traceback.format_exc()}``````[Locals]\n\n{res}```")
 
 def catch_error(func: Coroutine):
     async def caller(*args, **kwargs):
