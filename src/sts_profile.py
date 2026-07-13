@@ -19,7 +19,7 @@ from src.nameinternal import get
 from src.webpage import router
 from src.logger import logger
 from src.events import add_listener
-from src.utils import get_req_data
+from src.utils import get_req_data, catch_error
 
 if TYPE_CHECKING: # circular imports otherwise
     from src.runs import RunParser
@@ -139,6 +139,7 @@ class Profile:
 @router.get("/profile/{profile}/runs")
 @router.get("/profile/{profile}/runs/{page}")
 @aiohttp_jinja2.template("runs.jinja2")
+@catch_error
 async def runs_page(req: Request):
     profile = profile_from_request(req)
 
@@ -160,6 +161,7 @@ async def runs_page(req: Request):
 
 @router.get("/profile/{profile}/runs/by-timestamp/{timestamp}")
 @aiohttp_jinja2.template("runs_timestamp.jinja2")
+@catch_error
 async def runs_by_timestamp(req: Request):
     profile = profile_from_request(req)
     from src.runs import _update_cache
@@ -191,6 +193,7 @@ async def runs_by_timestamp(req: Request):
     }
 
 @router.get("/archive/{profile}/{timestamp}.zip")
+@catch_error
 async def runs_as_zipfile(req: Request) -> Response:
     profile = profile_from_request(req)
     from src.runs import _update_cache

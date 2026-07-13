@@ -24,7 +24,7 @@ from src.gamedata import FileParser, KeysObtained, _enemies
 from src.webpage import router
 from src.logger import logger
 from src.events import add_listener
-from src.utils import convert_class_to_obj, get_req_data
+from src.utils import convert_class_to_obj, get_req_data, catch_error
 from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
 if TYPE_CHECKING:
@@ -461,6 +461,7 @@ def _update_cache():
 
 @router.get("/runs")
 @aiohttp_jinja2.template("runs_profile.jinja2")
+@catch_error
 async def pick_profile(req: Request):
     profiles = []
     for i in range(3):
@@ -501,6 +502,7 @@ def _falsey(x: str | None) -> bool:
 
 @router.get("/runs/{name}")
 @aiohttp_jinja2.template("run_single.jinja2")
+@catch_error
 async def run_single(req: Request):
     name, at, index = req.match_info["name"].partition("@")
     parser = get_parser(name)
@@ -542,6 +544,7 @@ async def run_chart(req: Request) -> Response:
 
 #@router.get("/compare/view")
 @aiohttp_jinja2.template("compare_single.jinja2")
+@catch_error
 async def compare_runs(req: Request):
     context = {}
     try:

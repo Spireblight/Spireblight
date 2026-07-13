@@ -19,7 +19,7 @@ from src.gamedata import FileParser, BottleRelic, KeysObtained, _enemies
 from src.webpage import router
 from src.logger import logger
 from src.events import invoke
-from src.utils import convert_class_to_obj, get_req_data
+from src.utils import convert_class_to_obj, get_req_data, catch_error
 from src.runs import get_latest_run, StreakInfo
 from src.activemods import ActiveMods, ActiveMod, ACTIVEMODS_KEY
 
@@ -522,6 +522,7 @@ def _truthy(x: str | None) -> bool:
 @router.get("/current@{index}")
 @router.get("/current")
 @aiohttp_jinja2.template("run_single.jinja2")
+@catch_error
 async def current_run(req: Request):
     index = req.match_info.get("index")
     if index is not None:

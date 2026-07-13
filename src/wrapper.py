@@ -1,10 +1,12 @@
 from typing import Callable, Coroutine, Optional
 
+import traceback
 import inspect
 
-from twitchio.ext.commands import Context
+from twitchio.ext.commands import Context, CommandNotFound, CommandOnCooldown
 
 from src.logger import logger
+from src.utils import send_report
 
 __all__ = ["wrapper"]
 
@@ -74,7 +76,14 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
         if len(new_args) != len(args) and force_argcount: # too many args and we enforce it
             await ctx.reply(f"Error: too many arguments (maximum {co.co_argcount - 1})")
             return
-        await func(ctx, *new_args)
+        try:
+            await func(ctx, *new_args)
+        except (CommandNotFound, CommandOnCooldown): # the first except block gets hit first
+            pass # we don't want to error on these
+        except Exception:
+            await send_report(f"[Exception in command {name}]\n\n```{traceback.format_exc()}```")
+            raise
+
 
     co = func.__code__
     req = co.co_argcount - 1

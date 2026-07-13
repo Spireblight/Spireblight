@@ -74,6 +74,8 @@ from src.utils import (
     update_db,
     get_req_data,
     post_prediction,
+    send_report,
+    catch_error,
 )
 
 from src.disc import DiscordCommand
@@ -3156,6 +3158,7 @@ async def active_mod_info(ctx: ContextType, save: SaveType, *modname):
 
 @router.get("/commands")
 @template("commands.jinja2")
+@catch_error
 async def commands_page(req: Request):
     d = {"prefix": config.bot.prefix, "botname": config.bot.name, "commands": []}
     cmds = set()
@@ -3170,6 +3173,7 @@ async def commands_page(req: Request):
 
 @router.get("/commands/{name}")
 @template("command_single.jinja2")
+@catch_error
 async def individual_cmd(req: Request):
     name = req.match_info["name"]
     d = {"name": name}
@@ -3222,20 +3226,9 @@ async def individual_cmd(req: Request):
 @router.post("/report")
 async def automatic_client_report(req: Request):
     data = (await get_req_data(req, "traceback"))[0]
-    ar = config.discord.auto_report
-    if not ar.enabled or not ar.server or not ar.channel:
-        raise HTTPServiceUnavailable
-
-    guild = DConn.get_guild(ar.server)
-    if guild is None:
-        raise HTTPServiceUnavailable
-    channel = guild.get_channel(ar.channel)
-    if channel is None:
-        raise HTTPServiceUnavailable
-
-    await channel.send("[Automatic Client Reporting]\n\n" + data)
-    return Response()
-
+    if send_report("[Automatic Client Reporting]\n\n" + data):
+        return Response(text="Report successful")
+    raise HTTPServiceUnavailable
 
 _oauth_state = None
 

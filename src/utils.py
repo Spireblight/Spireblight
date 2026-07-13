@@ -1,16 +1,20 @@
 import calendar
 from datetime import datetime, UTC
-from typing import Any, Iterable
+from typing import Any, Iterable, Coroutine
 from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
 from twitchio import models, client, http as _http
 
 import os
 import json
+import functools
+import traceback
 
 from src.config import config
 
 __all__ = [
     "get_req_data",
+    "send_report",
+    "catch_error",
     "post_prediction",
     "getfile",
     "update_db",
@@ -42,6 +46,35 @@ async def get_req_data(req: Request, *keys: str) -> list[str]:
         res.append(value)
 
     return res
+
+async def send_report(data: str) -> bool:
+    from src.server import DConn # here to prevent circular imports
+    ar = config.discord.auto_report
+    if not ar.enabled or not ar.server or not ar.channel:
+        return False
+
+    if DConn is None:
+        return False
+
+    guild = DConn.get_guild(ar.server)
+    if guild is None:
+        return False
+    channel = guild.get_channel(ar.channel)
+    if channel is None:
+        return False
+
+    await channel.send(data)
+
+def catch_error(func: Coroutine):
+    async def caller(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except Exception: # don't wanna catch stuff like stopiteration
+            await send_report(f"[Error caught in `{func.__module__}.{func.__qualname__}`]\n\n```{traceback.format_exc()}```")
+            raise # other things may be expecting this
+
+    functools.update_wrapper(caller, func)
+    return caller
 
 # TODO: Merge this upstream to TwitchIO eventually
 # DEPCHECK
