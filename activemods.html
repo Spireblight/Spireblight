@@ -408,80 +408,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-src.activemods">
-<span id="activemods-module"></span><h1>activemods module<a class="headerlink" href="#module-src.activemods" title="Link to this heading">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="src.activemods.ActiveMods">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ActiveMods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/activemods.html#ActiveMods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.activemods.ActiveMods" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMods.all_mods">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_mods</span></span><a class="headerlink" href="#src.activemods.ActiveMods.all_mods" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.activemods.ActiveMods.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/activemods.html#ActiveMods.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.activemods.ActiveMods.normalize" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.activemods.ActiveMods.edit_distance_ratio">
-<span class="sig-name descname"><span class="pre">edit_distance_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/activemods.html#ActiveMods.edit_distance_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.activemods.ActiveMods.edit_distance_ratio" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.activemods.ActiveMods.find_mod">
-<span class="sig-name descname"><span class="pre">find_mod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/activemods.html#ActiveMods.find_mod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.activemods.ActiveMods.find_mod" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ActiveMod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/activemods.html#ActiveMod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.activemods.ActiveMod" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.mod_url">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mod_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.activemods.ActiveMod.mod_url" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.version">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.activemods.ActiveMod.version" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.major_version">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">major_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.activemods.ActiveMod.major_version" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.minor_version">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minor_version</span></span><a class="headerlink" href="#src.activemods.ActiveMod.minor_version" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.patch_version">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">patch_version</span></span><a class="headerlink" href="#src.activemods.ActiveMod.patch_version" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.authors_formatted">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authors_formatted</span></span><a class="headerlink" href="#src.activemods.ActiveMod.authors_formatted" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.description_formatted">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description_formatted</span></span><a class="headerlink" href="#src.activemods.ActiveMod.description_formatted" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="src.activemods.ActiveMod.normalized_name">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalized_name</span></span><a class="headerlink" href="#src.activemods.ActiveMod.normalized_name" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+  <section id="activemods-module">
+<h1>activemods module<a class="headerlink" href="#activemods-module" title="Link to this heading">#</a></h1>
 </section>
 
 
@@ -522,35 +450,6 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMods"><code class="docutils literal notranslate"><span class="pre">ActiveMods</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMods.all_mods"><code class="docutils literal notranslate"><span class="pre">ActiveMods.all_mods</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMods.normalize"><code class="docutils literal notranslate"><span class="pre">ActiveMods.normalize()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMods.edit_distance_ratio"><code class="docutils literal notranslate"><span class="pre">ActiveMods.edit_distance_ratio()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMods.find_mod"><code class="docutils literal notranslate"><span class="pre">ActiveMods.find_mod()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod"><code class="docutils literal notranslate"><span class="pre">ActiveMod</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.mod_url"><code class="docutils literal notranslate"><span class="pre">ActiveMod.mod_url</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.version"><code class="docutils literal notranslate"><span class="pre">ActiveMod.version</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.major_version"><code class="docutils literal notranslate"><span class="pre">ActiveMod.major_version</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.minor_version"><code class="docutils literal notranslate"><span class="pre">ActiveMod.minor_version</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.patch_version"><code class="docutils literal notranslate"><span class="pre">ActiveMod.patch_version</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.authors_formatted"><code class="docutils literal notranslate"><span class="pre">ActiveMod.authors_formatted</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.description_formatted"><code class="docutils literal notranslate"><span class="pre">ActiveMod.description_formatted</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.activemods.ActiveMod.normalized_name"><code class="docutils literal notranslate"><span class="pre">ActiveMod.normalized_name</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
 
