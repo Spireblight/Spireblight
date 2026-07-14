@@ -2679,7 +2679,7 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
 async def next_run(ctx: ContextType):
     """Return which character is next in the rotation."""
     save = get_savefile()
-    if save.character is not None and save.profile.index == 0:
+    if save.character is not None and save.profile.index in (0, 11):
         return await ctx.reply("You're watching it right now!")
 
     latest = get_latest_run(None, None)
