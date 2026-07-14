@@ -365,7 +365,7 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">calendar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">UTC</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Coroutine</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">HTTPNotImplemented</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">HTTPUnauthorized</span><span class="p">,</span> <span class="n">FileField</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">HTTPNotImplemented</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">HTTPUnauthorized</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">FileField</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">http</span> <span class="k">as</span> <span class="n">_http</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -375,6 +375,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">IGNORE_REASONS</span> <span class="o">=</span> <span class="p">(</span> <span class="c1"># reasons from HTTP exceptions which won&#39;t be reported</span>
+    <span class="s2">&quot;This command does not exist.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;This run does not exist.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;get_req_data&quot;</span><span class="p">,</span>
@@ -455,6 +460,10 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">caller</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">HTTPException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IGNORE_REASONS</span><span class="p">:</span>
+                <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error code </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> returned in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># don&#39;t wanna catch stuff like stopiteration</span>
             <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error caught in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="c1"># other things may be expecting this</span>

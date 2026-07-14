@@ -3876,8 +3876,8 @@
     <span class="k">if</span> <span class="n">DConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dcmd</span><span class="p">:</span> <span class="n">DiscordCommand</span> <span class="o">=</span> <span class="n">DConn</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">tcmd</span> <span class="ow">or</span> <span class="n">dcmd</span>
-    <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPNotFound</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># if the error message is modified, update it in utils.py too</span>
+        <span class="k">raise</span> <span class="n">HTTPNotFound</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;This command does not exist.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_cmds</span><span class="p">:</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;builtin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">_cmds</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
