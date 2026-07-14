@@ -3183,8 +3183,8 @@ async def individual_cmd(req: Request):
     if DConn is not None:
         dcmd: DiscordCommand = DConn.get_command(name)
     cmd = tcmd or dcmd
-    if cmd is None:
-        raise HTTPNotFound()
+    if cmd is None: # if the error message is modified, update it in utils.py too
+        raise HTTPNotFound(reason="This command does not exist.")
     if name in _cmds:
         d["builtin"] = False
         output: str = _cmds[name]["output"]

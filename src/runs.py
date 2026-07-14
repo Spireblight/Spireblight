@@ -506,8 +506,8 @@ def _falsey(x: str | None) -> bool:
 async def run_single(req: Request):
     name, at, index = req.match_info["name"].partition("@")
     parser = get_parser(name)
-    if parser is None:
-        raise HTTPNotFound()
+    if parser is None: # if the error message is modified, update it in utils.py too
+        raise HTTPNotFound(reason="This run does not exist.")
     if not index:
         index = None
     else:

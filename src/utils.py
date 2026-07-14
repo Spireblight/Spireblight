@@ -1,7 +1,7 @@
 import calendar
 from datetime import datetime, UTC
 from typing import Any, Iterable, Coroutine
-from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, FileField
+from aiohttp.web import Request, HTTPNotImplemented, HTTPForbidden, HTTPUnauthorized, HTTPException, FileField
 from twitchio import models, client, http as _http
 
 import os
@@ -11,6 +11,11 @@ import functools
 import traceback
 
 from src.config import config
+
+IGNORE_REASONS = ( # reasons from HTTP exceptions which won't be reported
+    "This command does not exist.",
+    "This run does not exist.",
+)
 
 __all__ = [
     "get_req_data",
@@ -83,6 +88,10 @@ def catch_error(func: Coroutine):
     async def caller(*args, **kwargs):
         try:
             return await func(*args, **kwargs)
+        except HTTPException as e:
+            if e.reason not in IGNORE_REASONS:
+                await send_report(f"[Error code {e.status} returned in `{func.__qualname__}`]")
+            raise
         except Exception: # don't wanna catch stuff like stopiteration
             await send_report(f"[Error caught in `{func.__qualname__}`]")
             raise # other things may be expecting this
