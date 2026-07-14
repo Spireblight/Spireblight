@@ -13,7 +13,7 @@ import aiohttp_jinja2
 
 from response_objects.run_single import RunResponse
 from src.nameinternal import get, get_card, Relic
-from src.sts_profile import get_current_profile
+from src.sts_profile import get_current_profile, get_profile
 from src.gamedata2 import FileParser as FP2
 from src.gamedata import FileParser, BottleRelic, KeysObtained, _enemies
 from src.webpage import router
@@ -462,6 +462,10 @@ class Save2(FP2):
 
     def __init__(self):
         super().__init__(None)
+
+    @property
+    def profile(self):
+        return get_profile(1, 2)
 
     @property
     def in_game(self):
