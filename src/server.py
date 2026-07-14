@@ -2683,17 +2683,33 @@ async def next_run(ctx: ContextType):
         return await ctx.reply("You're watching it right now!")
 
     latest = get_latest_run(None, None)
-    while latest.profile.index != 0:
+    while latest.profile.index not in (0, 11):
         latest = latest.matched.prev
+        if latest is None:
+            return await ctx.reply("Couldn't figure out who goes next . . .")
 
-    c = ("Ironclad", "Silent", "Defect", "Watcher")
-    try:
-        i = c.index(latest.character)
-    except ValueError:
-        return await ctx.reply("Something went wrong.")
+    if latest.profile.index == 0:
+        c = ("Ironclad", "Silent", "Defect", "Watcher")
+        try:
+            i = c.index(latest.character)
+        except ValueError:
+            return await ctx.reply("Something went wrong.")
 
-    if i == 3:
-        i = -1
+        if i == 3:
+            i = -1
+
+    elif latest.profile.index == 11:
+        c = ("Ironclad", "Silent", "Regent", "Necrobinder", "Defect")
+        try:
+            i = c.index(latest.character)
+        except ValueError:
+            return await ctx.reply("Something went wrong.")
+
+        if i == 4:
+            i = -1
+
+    else:
+        return await ctx.reply(f"Something went wrong . . .")
 
     await ctx.reply(f"The next run will be with {c[i+1]}.")
 
