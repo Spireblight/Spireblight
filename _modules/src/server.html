@@ -3319,17 +3319,33 @@
         <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;You&#39;re watching it right now!&quot;</span><span class="p">)</span>
 
     <span class="n">latest</span> <span class="o">=</span> <span class="n">get_latest_run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">latest</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">latest</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
         <span class="n">latest</span> <span class="o">=</span> <span class="n">latest</span><span class="o">.</span><span class="n">matched</span><span class="o">.</span><span class="n">prev</span>
+        <span class="k">if</span> <span class="n">latest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t figure out who goes next . . .&quot;</span><span class="p">)</span>
 
-    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Ironclad&quot;</span><span class="p">,</span> <span class="s2">&quot;Silent&quot;</span><span class="p">,</span> <span class="s2">&quot;Defect&quot;</span><span class="p">,</span> <span class="s2">&quot;Watcher&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">latest</span><span class="o">.</span><span class="n">character</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Something went wrong.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">latest</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Ironclad&quot;</span><span class="p">,</span> <span class="s2">&quot;Silent&quot;</span><span class="p">,</span> <span class="s2">&quot;Defect&quot;</span><span class="p">,</span> <span class="s2">&quot;Watcher&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">latest</span><span class="o">.</span><span class="n">character</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Something went wrong.&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">latest</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Ironclad&quot;</span><span class="p">,</span> <span class="s2">&quot;Silent&quot;</span><span class="p">,</span> <span class="s2">&quot;Regent&quot;</span><span class="p">,</span> <span class="s2">&quot;Necrobinder&quot;</span><span class="p">,</span> <span class="s2">&quot;Defect&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">latest</span><span class="o">.</span><span class="n">character</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Something went wrong.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Something went wrong . . .&quot;</span><span class="p">)</span>
 
     <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The next run will be with </span><span class="si">{</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
