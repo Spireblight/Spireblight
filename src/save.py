@@ -525,8 +525,8 @@ def _truthy(x: str | None) -> bool:
 
 @router.get("/current@{index}")
 @router.get("/current")
-@aiohttp_jinja2.template("run_single.jinja2")
 @catch_error
+@aiohttp_jinja2.template("run_single.jinja2")
 async def current_run(req: Request):
     index = req.match_info.get("index")
     if index is not None:
@@ -571,6 +571,7 @@ async def current2_raw(req: Request):
     return Response(text=json.dumps(_save2._data, indent=4), content_type="application/json")
 
 @router.post("/sync/save")
+@catch_error
 async def receive_save(req: Request):
     content, name = await get_req_data(req, "savefile", "character")
 
@@ -599,6 +600,7 @@ async def receive_save(req: Request):
     return Response()
 
 @router.post("/sync/save-2")
+@catch_error
 async def receive_save2(req: Request):
     content = (await get_req_data(req, "savefile"))[0]
 

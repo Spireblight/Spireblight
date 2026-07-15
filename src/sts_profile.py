@@ -138,8 +138,8 @@ class Profile:
 
 @router.get("/profile/{profile}/runs")
 @router.get("/profile/{profile}/runs/{page}")
-@aiohttp_jinja2.template("runs.jinja2")
 @catch_error
+@aiohttp_jinja2.template("runs.jinja2")
 async def runs_page(req: Request):
     profile = profile_from_request(req)
 
@@ -160,8 +160,8 @@ async def runs_page(req: Request):
     }
 
 @router.get("/profile/{profile}/runs/by-timestamp/{timestamp}")
-@aiohttp_jinja2.template("runs_timestamp.jinja2")
 @catch_error
+@aiohttp_jinja2.template("runs_timestamp.jinja2")
 async def runs_by_timestamp(req: Request):
     profile = profile_from_request(req)
     from src.runs import _update_cache

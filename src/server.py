@@ -3143,7 +3143,7 @@ async def calipers(ctx: ContextType, save: Optional[SaveType]):
 @with_savefile("mods", optional_save=True)
 async def active_mods(ctx: ContextType, save: SaveType):
     # use the old message if we don't have info from activemods
-    msg = "Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods"
+    msg = f"Baalor uses a variety of mods for the stream. You can see a list of all mods here: {config.server.url}/mods"
     if save and save.has_activemods:
         names = [x.name for x in save.mods]
         mods = ", ".join(names[:-1])
@@ -3173,8 +3173,8 @@ async def active_mod_info(ctx: ContextType, save: SaveType, *modname):
 
 
 @router.get("/commands")
-@template("commands.jinja2")
 @catch_error
+@template("commands.jinja2")
 async def commands_page(req: Request):
     d = {"prefix": config.bot.prefix, "botname": config.bot.name, "commands": []}
     cmds = set()
@@ -3188,8 +3188,8 @@ async def commands_page(req: Request):
 
 
 @router.get("/commands/{name}")
-@template("command_single.jinja2")
 @catch_error
+@template("command_single.jinja2")
 async def individual_cmd(req: Request):
     name = req.match_info["name"]
     d = {"name": name}

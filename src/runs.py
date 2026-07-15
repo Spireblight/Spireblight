@@ -460,8 +460,8 @@ def _update_cache():
     logger.info(f"Updated run parser cache in {time.time() - start}s")
 
 @router.get("/runs")
-@aiohttp_jinja2.template("runs_profile.jinja2")
 @catch_error
+@aiohttp_jinja2.template("runs_profile.jinja2")
 async def pick_profile(req: Request):
     profiles = []
     for i in range(3):
@@ -501,8 +501,8 @@ def _falsey(x: str | None) -> bool:
     return True
 
 @router.get("/runs/{name}")
-@aiohttp_jinja2.template("run_single.jinja2")
 @catch_error
+@aiohttp_jinja2.template("run_single.jinja2")
 async def run_single(req: Request):
     name, at, index = req.match_info["name"].partition("@")
     parser = get_parser(name)
@@ -543,8 +543,8 @@ async def run_chart(req: Request) -> Response:
     return parser.graph(req)
 
 #@router.get("/compare/view")
-@aiohttp_jinja2.template("compare_single.jinja2")
 @catch_error
+@aiohttp_jinja2.template("compare_single.jinja2")
 async def compare_runs(req: Request):
     context = {}
     try:
@@ -563,6 +563,7 @@ async def compare_runs(req: Request):
     return context
 
 @router.post("/sync/run")
+@catch_error
 async def receive_run(req: Request) -> Response:
     content, name, profile, version = await get_req_data(req, "run", "name", "profile", "version")
 
