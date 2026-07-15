@@ -3827,7 +3827,7 @@
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;mods&quot;</span><span class="p">,</span> <span class="n">optional_save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">active_mods</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">SaveType</span><span class="p">):</span>
     <span class="c1"># use the old message if we don&#39;t have info from activemods</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Baalor uses a variety of mods for the stream. You can see a list of all mods here: https://baalorlord.tv/mods&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Baalor uses a variety of mods for the stream. You can see a list of all mods here: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/mods&quot;</span>
     <span class="k">if</span> <span class="n">save</span> <span class="ow">and</span> <span class="n">save</span><span class="o">.</span><span class="n">has_activemods</span><span class="p">:</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">mods</span><span class="p">]</span>
         <span class="n">mods</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -3863,8 +3863,8 @@
 <div class="viewcode-block" id="commands_page">
 <a class="viewcode-back" href="../../server.html#src.server.commands_page">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/commands&quot;</span><span class="p">)</span>
-<span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;commands.jinja2&quot;</span><span class="p">)</span>
 <span class="nd">@catch_error</span>
+<span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;commands.jinja2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">commands_page</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;botname&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;commands&quot;</span><span class="p">:</span> <span class="p">[]}</span>
     <span class="n">cmds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -3881,8 +3881,8 @@
 <div class="viewcode-block" id="individual_cmd">
 <a class="viewcode-back" href="../../server.html#src.server.individual_cmd">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/commands/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;command_single.jinja2&quot;</span><span class="p">)</span>
 <span class="nd">@catch_error</span>
+<span class="nd">@template</span><span class="p">(</span><span class="s2">&quot;command_single.jinja2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">individual_cmd</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">match_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>

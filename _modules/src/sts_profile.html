@@ -508,8 +508,8 @@
 
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/profile/</span><span class="si">{profile}</span><span class="s2">/runs&quot;</span><span class="p">)</span>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/profile/</span><span class="si">{profile}</span><span class="s2">/runs/</span><span class="si">{page}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;runs.jinja2&quot;</span><span class="p">)</span>
 <span class="nd">@catch_error</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;runs.jinja2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">runs_page</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">profile</span> <span class="o">=</span> <span class="n">profile_from_request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 
@@ -530,8 +530,8 @@
     <span class="p">}</span>
 
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/profile/</span><span class="si">{profile}</span><span class="s2">/runs/by-timestamp/</span><span class="si">{timestamp}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;runs_timestamp.jinja2&quot;</span><span class="p">)</span>
 <span class="nd">@catch_error</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;runs_timestamp.jinja2&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">runs_by_timestamp</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">profile</span> <span class="o">=</span> <span class="n">profile_from_request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_update_cache</span>
