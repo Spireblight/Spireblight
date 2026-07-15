@@ -74,15 +74,51 @@ async def send_report(text: str) -> bool:
     if exc is None:
         return await channel.send(text)
 
+    tb_text = [[]]
+    count = 0
+    for line in traceback.format_exception(exc):
+        count += len(line)
+        if count >= 1900:
+            tb_text.append([])
+            count = len(line)
+        tb_text[-1].append(line)
+
+    final = []
+
+    for i, lst in enumerate(tb_text):
+        if lst:
+            val = "".join(lst)
+            if i == 0:
+                final.append(f"{text}\n```{val}```")
+            else:
+                final.append(f"```{val}```")
+
     tb = exc.__traceback__
     while tb.tb_next is not None:
         tb = tb.tb_next
     frame_vars = tb.tb_frame.f_locals
     # prettify the output
     maxlen = max(len(a) for a in frame_vars)
-    res = "\n".join([f"{k.ljust(maxlen)} = {repr(v)}" for k,v in frame_vars.items()])
+    res = [[]]
+    count = 0
+    for k,v in frame_vars.items():
+        s = f"{k.ljust(maxlen)} = {repr(v)}"
+        count += len(s)
+        if count >= 1900: # limit is 2000, this is a bit of leeway just in case
+            res.append([])
+            count = len(s)
+        res[-1].append(s)
 
-    await channel.send(f"{text}\n```{traceback.format_exc()}``````[Locals]\n\n{res}```")
+    for i, lst in enumerate(res):
+        if lst:
+            val = "\n".join(lst)
+            if i == 0:
+                final.append(f"```[Locals]\n\n{val}```")
+            else:
+                final.append(f"```{val}```")
+
+    for resp in final:
+        await channel.send(resp)
 
 def catch_error(func: Coroutine):
     async def caller(*args, **kwargs):
