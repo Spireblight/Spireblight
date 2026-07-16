@@ -98,7 +98,7 @@
           <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
               <li><a href="/runs">Run histories</a></li>
-              <li><a href="/profile/{{ run.profile.index }}/runs">{{ run.profile.name }}</a></li>
+              <li><a href="/profile/{{ run.profile.profile_index }}/runs">{{ run.profile.name }}</a></li>
               <li class="is-active selectable">
                 <a href="#">
                   {{ run.character }} {{ run.verb }} on seed {{ run.seed }}
@@ -330,5 +330,5 @@
 {% endblock %}
 
 {% block footer %}
-  <a href="/profile/{{ run.profile.index }}/runs">Back to all runs</a><br>
+  <a href="/profile/{{ run.profile.profile_index }}/runs">Back to all runs</a><br>
 {% endblock %}

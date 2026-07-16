@@ -14,7 +14,7 @@
   <section id="profiles" class="section has-text-centered">
     <div class="columns is-centered">
       {% for profile in profiles %}
-        <a class="column box is-one-quarter" href="/profile/{{ profile.index }}/runs">
+        <a class="column box is-one-quarter" href="/profile/{{ profile.profile_index }}/runs">
           {{ profile.name }}
         </a>
       {% endfor %}
