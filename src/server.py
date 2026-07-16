@@ -2679,16 +2679,16 @@ async def _last_run(ctx: ContextType, character: str | None, arg: bool | None):
 async def next_run(ctx: ContextType):
     """Return which character is next in the rotation."""
     save = get_savefile()
-    if save.character is not None and save.profile.index in (0, 11):
+    if save.character is not None and save.profile.profile_index in (0, 11):
         return await ctx.reply("You're watching it right now!")
 
     latest = get_latest_run(None, None)
-    while latest.profile.index not in (0, 11):
+    while latest.profile.profile_index not in (0, 11):
         latest = latest.matched.prev
         if latest is None:
             return await ctx.reply("Couldn't figure out who goes next . . .")
 
-    if latest.profile.index == 0:
+    if latest.profile.profile_index == 0:
         c = ("Ironclad", "Silent", "Defect", "Watcher")
         try:
             i = c.index(latest.character)
@@ -2698,7 +2698,7 @@ async def next_run(ctx: ContextType):
         if i == 3:
             i = -1
 
-    elif latest.profile.index == 11:
+    elif latest.profile.profile_index == 11:
         c = ("Ironclad", "Silent", "Regent", "Necrobinder", "Defect")
         try:
             i = c.index(latest.character)

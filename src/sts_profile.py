@@ -58,7 +58,7 @@ class Profile:
     RUNS_PER_PAGE = 50
 
     def __init__(self, index: int, data: dict[str, str]):
-        self.index = index
+        self.profile_index = index
         self._prefix = ""
         if index:
             self._prefix = f"{index}_"
@@ -69,9 +69,9 @@ class Profile:
 
     @property
     def name(self) -> str:
-        if self.index < 10: # spire 1
+        if self.profile_index < 10: # spire 1
             return _slots[f"{self._prefix}PROFILE_NAME"]
-        return f"Spire 2: Profile {self.index-10}"
+        return f"Spire 2: Profile {self.profile_index-10}"
 
     @property
     def completion(self) -> str:
@@ -214,11 +214,11 @@ async def runs_as_zipfile(req: Request) -> Response:
     with io.BytesIO() as zfile:
         with zipfile.ZipFile(zfile, mode="w") as archive:
             rf = "runs"
-            if profile.index > 10:
+            if profile.profile_index > 10:
                 rf = "runs2"
             for run in profile.runs:
                 if start <= run.timestamp.timestamp() <= end:
-                    archive.write(f"data/{rf}/{profile.index}/{run.filename}")
+                    archive.write(f"data/{rf}/{profile.profile_index}/{run.filename}")
                     has_file = True
 
         if not has_file:
