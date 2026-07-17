@@ -1620,7 +1620,10 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         # make sure we step through the iterator even if it's cached
         node = [actual, None]
         if iterate and node[0] is not None:
-            node[1] = on_map[floor-offset]
+            try:
+                node[1] = on_map[floor-offset]
+            except IndexError: # probably abandoned
+                break # XXX this is an imperfect solution, but it'll do for now
         elif iterate:
             offset += 1
 
