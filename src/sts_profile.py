@@ -51,7 +51,7 @@ def profile_from_request(req: Request) -> Profile:
         if profile is None:
             raise HTTPNotFound()
     except ValueError:
-        raise HTTPForbidden(reason="profile must be integer")
+        raise HTTPForbidden(reason="HELP! I am seeing this error in my logs and I have no idea what causes it! Please join the dev discord @ https://discord.gg/RHYrs3Nsve and tell me (Faely) what you were doing before")
     return profile
 
 class Profile:
