@@ -2084,11 +2084,12 @@
         <span class="n">maybe_cached</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;path_per_floor&quot;</span><span class="p">]</span>
     <span class="n">taken_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;path_taken&quot;</span><span class="p">])</span>
-    <span class="n">actual_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;path_per_floor&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
+    <span class="n">actual_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">visited</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
     <span class="n">last_changed</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">offset</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">floor</span><span class="p">,</span> <span class="n">actual</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;path_per_floor&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">floor</span><span class="p">,</span> <span class="n">actual</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">visited</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">iterate</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># Slay the Streamer boss pick</span>
         <span class="k">if</span> <span class="n">actual_len</span> <span class="o">&gt;</span> <span class="n">taken_len</span> <span class="ow">and</span> <span class="n">actual</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span> <span class="ow">and</span> <span class="n">floor</span> <span class="o">==</span> <span class="n">last_changed</span> <span class="o">+</span> <span class="mi">10</span><span class="p">:</span>
@@ -2163,7 +2164,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">value</span><span class="p">:</span> <span class="n">NodeData</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">floor</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="c1"># this can happen for savefiles if we&#39;re on the latest floor</span>
-            <span class="k">if</span> <span class="n">taken_len</span> <span class="o">==</span> <span class="n">floor</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">floor</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">visited</span><span class="p">):</span>
                 <span class="k">continue</span> <span class="c1"># we&#39;re on the last floor</span>
             <span class="k">raise</span>
         <span class="k">else</span><span class="p">:</span>
