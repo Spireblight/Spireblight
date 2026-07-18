@@ -73,7 +73,7 @@ class RunParser(FileParser):
         self._activemods = None
 
     def __repr__(self):
-        return f"Run<{self.display_name}>"
+        return f"Run<{self.display_name}> / {self.name}"
 
     @property
     def has_archive_link(self) -> bool:
