@@ -629,8 +629,10 @@ class PathNode:
         if self.name:
             to_append[0].append(self.name)
 
-        if self.turns_taken:
+        if self.damage_taken:
             to_append[2].append(f"{self.damage_taken} damage taken")
+
+        if self.turns_taken:
             to_append[2].append(f"{self.turns_taken} turns")
 
         if self.hp_healed:
