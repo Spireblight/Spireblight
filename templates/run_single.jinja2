@@ -23,11 +23,17 @@
     <script type="text/javascript">
      // TODO(olivia): We can probably grab more descriptive names for more
      // floors than just Neow and Mr. Heart! 😎
+     {% if run.game_version == 1 %}
      const labels = [
        'Neow',
        {% for x in range(1, 55) %} 'Floor {{ x }}', {% endfor %}
        'Mr. Heart',
      ];
+     {% else %}
+     const labels = [
+       {% for x in range(2, 50) %} 'Floor {{ x }}', {% endfor %}
+     ];
+     {% endif %}
 
      const data = {
        labels: labels,
