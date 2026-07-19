@@ -10,7 +10,10 @@ from src.nameinternal import get, get_card2, get_badge, Relic, Card, SingleCard,
 from src.config import config
 from src.utils import format_for_slaytabase
 
-from typing import Iterable, Generator
+from typing import Iterable, Generator, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.typehints import ItemFloor
 
 class Player:
     """Hold game information for one player."""
@@ -175,8 +178,28 @@ class FileParser:
         return [x.gold for x in self.path]
 
     @property
+    def _removals(self) -> list[tuple[SingleCard, int]]:
+        res = []
+        for node in self.path:
+            for card in node.cards_removed:
+                res.append((card, node.floor))
+        return res
+
+    @property
+    def removals(self) -> Generator[ItemFloor, None, None]:
+        """Every (name, floor) tuple of removed card and their floor."""
+        for card, floor in self._removals:
+            yield (card.name, floor)
+
+    def get_removals(self) -> Generator[CardData, None, None]:
+        """Yield each removed card with no repetition, with count."""
+        removals = [x[0] for x in self._removals]
+        for card in set(removals): # remove duplicates
+            yield CardData(card, removals)
+
+    @property
     def has_removals(self):
-        return False # TODO
+        return bool(self._removals)
 
     def get_cards(self) -> Generator[CardData, None, None]:
         """Yield each card with no repetition, with count."""
@@ -193,6 +216,10 @@ class FileParser:
     def master_deck_as_html(self):
         """Return the cards from the deck suitable for the website."""
         return self._cards_as_html(self.get_cards())
+
+    def removals_as_html(self):
+        """Return the removed cards suitable for the website."""
+        return self._cards_as_html(self.get_removals())
 
     def _cards_as_html(self, cards: Iterable[CardData]) -> Generator[str, None, None]:
         # I got these colors from screenshotting the game and using pipette
@@ -523,7 +550,7 @@ class PathNode:
         self.skipped: list[SingleCard] = []
         self.cards_obtained: list[SingleCard] = []
         self.cards_removed: list[SingleCard] = []
-        self.cards_transformed: list[SingleCard] = []
+        self.cards_transformed: list[SingleCard] = [] # XXX Nothing modifies this
         self.cards_upgraded: list[SingleCard] = []
         self.cards_enchanted: list[SingleCard] = []
 
@@ -565,6 +592,9 @@ class PathNode:
 
         for e in choices.get("cards_enchanted", ()):
             self.cards_enchanted.append(get_card2(e["card"]))
+
+        for m in choices.get("cards_removed", ()):
+            self.cards_removed.append(get_card2(m))
 
         for r in choices.get("relic_choices", ()):
             relic = get(r["choice"])
