@@ -68,6 +68,12 @@ class Profile:
         return self.name
 
     @property
+    def index_safe(self) -> int:
+        if self.profile_index > 10:
+            return self.profile_index - 10
+        return self.profile_index
+
+    @property
     def name(self) -> str:
         if self.profile_index < 10: # spire 1
             return _slots[f"{self._prefix}PROFILE_NAME"]
@@ -218,7 +224,7 @@ async def runs_as_zipfile(req: Request) -> Response:
                 rf = "runs2"
             for run in profile.runs:
                 if start <= run.timestamp.timestamp() <= end:
-                    archive.write(f"data/{rf}/{profile.profile_index}/{run.filename}")
+                    archive.write(f"data/{rf}/{profile.index_safe}/{run.filename}")
                     has_file = True
 
         if not has_file:
