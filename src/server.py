@@ -2268,7 +2268,7 @@ def _sts2_relics(index: int, lst: list[RelicData]):
     return f"The relic at position {index} is {relic.name}: {relic.description()}"
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: SaveType, index: int | str = 0, *rest):
+async def relic_info(ctx: ContextType, save: SaveType, index: str = 0, *rest):
     """Display information about the current relics."""
     try:
         index = int(index)
