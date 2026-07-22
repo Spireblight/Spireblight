@@ -1,12 +1,12 @@
 """Port the data missing from Slaytabase"""
 
 from aiohttp import ClientSession
-
 import asyncio
 import pathlib
 import json
+import jsonstream
 
-from src import nameinternal # this should not have a cascading effect..... hopefully
+from src import nameinternal
 
 # It is very difficult to compare what's old and new
 # because the data are in slightly different formats,
@@ -25,8 +25,8 @@ async def export():
 
     cur_data = await nameinternal.fetch_mod_data(client, "2-slay the spire 2")
 
-    with file.open() as f:
-        new_data: dict = json.load(f)
+    with open(file, 'r') as f:
+        new_data = jsonstream.parse(f)
 
     diff = {}
 
@@ -34,8 +34,6 @@ async def export():
         oldv = cur_data[key]
         for d in values:
             cid = d["id"]
-
-
 
 if __name__ == "__main__":
     asyncio.run(export())
