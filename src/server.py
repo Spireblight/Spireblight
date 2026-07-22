@@ -2268,8 +2268,12 @@ def _sts2_relics(index: int, lst: list[RelicData]):
     return f"The relic at position {index} is {relic.name}: {relic.description()}"
 
 @with_savefile("relic")
-async def relic_info(ctx: ContextType, save: SaveType, index: int = 0):
+async def relic_info(ctx: ContextType, save: SaveType, index: int | str = 0, *rest):
     """Display information about the current relics."""
+    try:
+        index = int(index)
+    except ValueError:
+        return await card_info(ctx, index, *rest)
     l = list(save.relics)
     if not index:
         await ctx.reply(f"We have {len(l)} relics.")
@@ -2418,6 +2422,9 @@ async def skipped_boss_relics(ctx: ContextType, save: SaveType):
     if not choices:
         await ctx.reply("We have not picked any boss relics yet.")
         return
+
+    if save.game_version == 2:
+        return await neowbonus(ctx, save)
 
     skip_template = "We saw {1[0]}, {1[1]} and {1[2]} at the end of Act {0} and skipped all that junk! baalorBoot"
     template = "We picked {1[0]} at the end of Act {0}, and skipped {1[1]} and {1[2]}."
