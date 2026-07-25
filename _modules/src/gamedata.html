@@ -2164,9 +2164,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">value</span><span class="p">:</span> <span class="n">NodeData</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">floor</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="c1"># this can happen for savefiles if we&#39;re on the latest floor</span>
-            <span class="k">if</span> <span class="n">floor</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">visited</span><span class="p">):</span>
-                <span class="k">continue</span> <span class="c1"># we&#39;re on the last floor</span>
-            <span class="k">raise</span>
+            <span class="k">pass</span> <span class="c1"># idk</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">value</span><span class="p">,</span> <span class="kc">False</span>
 
