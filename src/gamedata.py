@@ -1686,9 +1686,7 @@ def _get_nodes(parser: FileParser, maybe_cached: list[NodeData] | None) -> Gener
         try:
             value: NodeData = cls(parser, floor)
         except ValueError: # this can happen for savefiles if we're on the latest floor
-            if floor == len(visited):
-                continue # we're on the last floor
-            raise
+            pass # idk
         else:
             yield value, False
 
