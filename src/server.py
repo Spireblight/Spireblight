@@ -2234,6 +2234,8 @@ async def nloth_traded(ctx: ContextType, save: SaveType):
 @with_savefile("eventchances", "event")
 async def event_likelihood(ctx: ContextType, save: SaveType):
     """Display current event chances for the various possibilities in ? rooms."""
+    if save.game_version == 2:
+        return await ctx.reply("There is no such information available for Spire 2.")
     # note: this does not handle pRNG calls like it should - event_seed_count might have something? though only appears to be count of seen ? rooms
     elite, hallway, shop, chest = save.event_chances
     # elite likelihood is only for the "Deadly Events" custom modifier
