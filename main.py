@@ -31,7 +31,7 @@ if config.server.debug:
 
 logger.info("Starting the bot")
 
-if sys.platform == "win32": # postgres compat
+if False and sys.platform == "win32": # postgres compat
     asyncio.set_event_loop_policy(
         asyncio.WindowsSelectorEventLoopPolicy()
     )
