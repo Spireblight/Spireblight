@@ -1605,12 +1605,15 @@ async def help_cmd(ctx: ContextType, name: str = ""):
 async def shoutout(ctx: ContextType, name: str):
     """Give a shoutout to a fellow streamer."""
     try:
-        chan = await TConn.fetch_channel(name)
+        user = await TConn.fetch_user(login=name)
+        if user is None:
+            return await ctx.reply("Could not find a channel by that name.")
+        chan = await TConn.fetch_channel(user.id)
     except IndexError as e:
         await ctx.send(e.args[0])
         return
     except HTTPException as e:
-        await ctx.send(e.message)
+        await ctx.send(e.args[0])
         return
 
     msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} -"]
@@ -1634,7 +1637,7 @@ async def shoutout(ctx: ContextType, name: str):
             f"last time they were live, they were seen playing {chan.game_name}!"
         )
 
-    await ctx.send(" ".join(msg))
+    await ctx.send_announcement(" ".join(msg))
 
 
 @command("title")
