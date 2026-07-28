@@ -276,6 +276,9 @@ class Unknown(Base):
     cls_name = "<unknown>"
     def __init__(self, name: str):
         self.internal = name
+        if name.endswith(".title"):
+            name = name[:-6]
+        name = name.replace("_", " ").title()
         self.name = name
         self.description = f"Could not find description for {name!r} (this is a bug)"
         self.mod = None
