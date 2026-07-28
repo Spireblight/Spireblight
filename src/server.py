@@ -1618,7 +1618,7 @@ async def shoutout(ctx: ContextType, name: str):
 
     msg = [f"Go give a warm follow to https://twitch.tv/{chan.user.name} -"]
 
-    live: list[Stream] = await TConn.fetch_streams([chan.user.id])
+    live: list[Stream] = await TConn.fetch_streams(user_ids=[chan.user.id])
     if live:
         stream = live[0]
         game = stream.game_name
