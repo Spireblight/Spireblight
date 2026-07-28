@@ -2094,12 +2094,15 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">shoutout</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Give a shoutout to a fellow streamer.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_user</span><span class="p">(</span><span class="n">login</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Could not find a channel by that name.&quot;</span><span class="p">)</span>
+        <span class="n">chan</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">fetch_channel</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span>
     <span class="k">except</span> <span class="n">HTTPException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span>
 
     <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Go give a warm follow to https://twitch.tv/</span><span class="si">{</span><span class="n">chan</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> -&quot;</span><span class="p">]</span>
@@ -2123,7 +2126,7 @@
             <span class="sa">f</span><span class="s2">&quot;last time they were live, they were seen playing </span><span class="si">{</span><span class="n">chan</span><span class="o">.</span><span class="n">game_name</span><span class="si">}</span><span class="s2">!&quot;</span>
         <span class="p">)</span>
 
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">send_announcement</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
 
 
 
