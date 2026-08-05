@@ -1,0 +1,12 @@
+*.pyc
+data/
+last_run
+/bin/
+/lib/
+/lib64
+/env/
+!default-config.yml
+*-config.yml
+/static/bulma/
+/.vscode/
+.python-version
