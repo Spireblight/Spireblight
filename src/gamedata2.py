@@ -610,6 +610,13 @@ class PathNode:
             else:
                 self.skipped_potions.append(potion)
 
+        if self.name == "Thieving Hopper Weak": # don't remove+add a card here
+            both = set(self.cards_obtained) & set(self.cards_removed)
+            if len(both) == 1: # only care if there's exactly one card that matches
+                card = both.pop()
+                self.cards_obtained.remove(card)
+                self.cards_removed.remove(card)
+
     @property
     def all_potions_received(self) -> list[Potion]:
         """All potions which were received on this floor."""
