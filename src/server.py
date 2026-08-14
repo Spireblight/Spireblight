@@ -2048,7 +2048,10 @@ async def card_with_art(ctx: ContextType, *line: str):
 async def tier_rankings(ctx: ContextType, name: str = ""):
     match name.casefold():
         case "":
-            return await ctx.reply(f"To view Baalor's tier lists, do '{_consts['prefix']}tier <character>'")
+            return await ctx.reply(
+                "All of Baalor's tier lists are here: https://sts2.untapped.gg/en/tier-lists?creator=Baalorlord - "
+                f"use '{_consts['prefix']}tier <character, ancient, or rarity>' for specific card/relic rankings."
+            )
         case "ironclad" | "clad":
             link = "004de170-026a-4dd4-a280-3b904be0b5d6"
         case "silent":
@@ -2061,10 +2064,20 @@ async def tier_rankings(ctx: ContextType, name: str = ""):
             link = "5a512e04-4583-4a16-9271-d46864c6cb4c"
         case "colorless":
             link = "0a626c22-dc49-433e-ac6e-76cc9abf5684"
-        case a:
+        case "neow" | "act1":
+            link = "212160e5-eb82-4281-b706-88e40a5941d5"
+        case "act2" | "ancients2" | "tez" | "tezcatara" | "orobas" | "pael" | "darv2":
+            link = "b4cec0df-7a2f-41b5-b91e-4eaac766c7bd"
+        case "act3" | "ancients3" | "tanx" | "nonu" | "nonupeipe" | "vakuu" | "vakku" | "vaaku" | "darv3":
+            link = "a4b2b8b1-fd28-4588-8af0-8a42e1bc4227"
+        case "common":
+            link = "25dfc0a0-00f8-4c78-9409-4393f3f8492f"
+        case "darv":
+            return await ctx.reply("There are two list rankings for Darv: use Darv2 or Darv3 for the relevant act.")
+        case _:
             return await ctx.reply("I'm afraid I don't have a tier list for that.")
 
-    await ctx.reply(f"View the {name} card rankings here: https://sts2.untapped.gg/en/tier-list/{link}")
+    await ctx.reply(f"View the {name} rankings here: https://sts2.untapped.gg/en/tier-list/{link}")
 
 
 @with_savefile("bluekey", "sapphirekey", "key")
