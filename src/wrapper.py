@@ -42,13 +42,13 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
                     try:
                         arg = int(arg)
                     except ValueError:
-                        await ctx.reply(f"Error: Argument #{i-delta} ({var!r}) must be an integer.")
+                        await ctx.reply(f"Error: Expecting an integer for {var!r} (word #{i-delta}).")
                         return
                 elif expected == float:
                     try:
                         arg = float(arg)
                     except ValueError:
-                        await ctx.reply(f"Error: Argument #{i-delta} ({var!r}) must be a floating point number.")
+                        await ctx.reply(f"Error: Expecting a decimal number for {var!r} (word #{i-delta}).")
                         return
                 elif expected == bool:
                     if arg.lower() in ("yes", "y", "on", "true", "1"):
@@ -56,7 +56,7 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
                     elif arg.lower() in ("no", "n", "off", "false", "0"):
                         arg = False
                     else:
-                        await ctx.reply(f"Error: Argument #{i-delta} ({var!r}) must be parsable as a boolean value.")
+                        await ctx.reply(f"Error: Expecting 'yes' or 'no' for {var!r} (word #{i-delta}).")
                         return
                 elif expected != str:
                     await ctx.reply(f"Warning: Unhandled type {expected!r} for argument #{i} ({var!r}) - please ping @FaeLyka")
@@ -65,15 +65,15 @@ def wrapper(func: Callable, force_argcount: bool, wrapper_func: Optional[Corouti
         if req > len(new_args):
             names = co.co_varnames[len(new_args)+1:req]
             if len(names) == 1:
-                await ctx.reply(f"Error: Missing required argument {names[0]!r}")
+                await ctx.reply(f"I need more information (for {names[0]!r}).")
             else:
-                await ctx.reply(f"Error: Missing required arguments {names!r}")
+                await ctx.reply(f"Missing some information (for all these: {names!r})")
             return
         if multiple: # function supports *args, don't check further
             await func(ctx, *new_args)
             return
         if len(new_args) != len(args) and force_argcount: # too many args and we enforce it
-            await ctx.reply(f"Error: too many arguments (maximum {co.co_argcount - 1})")
+            await ctx.reply(f"That's too many words! (maximum {co.co_argcount - 1})")
             return
         try:
             await func(ctx, *new_args)
