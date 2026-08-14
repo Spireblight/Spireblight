@@ -2044,6 +2044,29 @@ async def card_with_art(ctx: ContextType, *line: str):
     )
 
 
+@command("tier", "tierlist", "tierlists", "ranking")
+async def tier_rankings(ctx: ContextType, name: str = ""):
+    match name.casefold():
+        case "":
+            return await ctx.reply(f"To view Baalor's tier lists, do '{_consts['prefix']}tier <character>'")
+        case "ironclad" | "clad":
+            link = "004de170-026a-4dd4-a280-3b904be0b5d6"
+        case "silent":
+            link = "6d61ea21-0552-4c49-8bb5-a5c15530fc00"
+        case "regent":
+            link = "0e6c1e23-bec6-4887-a9e0-dbf49ede974d"
+        case "necrobinder" | "necro":
+            link = "43d0b41f-7d6d-4ce9-928e-c1310a413983"
+        case "defect":
+            link = "5a512e04-4583-4a16-9271-d46864c6cb4c"
+        case "colorless":
+            link = "0a626c22-dc49-433e-ac6e-76cc9abf5684"
+        case a:
+            return await ctx.reply("I'm afraid I don't have a tier list for that.")
+
+    await ctx.reply(f"View the {name} card rankings here: https://sts2.untapped.gg/en/tier-list/{link}")
+
+
 @with_savefile("bluekey", "sapphirekey", "key")
 async def bluekey(ctx: ContextType, save: SaveType):
     """Display what was skipped for the Sapphire key."""
