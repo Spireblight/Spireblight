@@ -2576,6 +2576,32 @@
 
 
 
+<div class="viewcode-block" id="tier_rankings">
+<a class="viewcode-back" href="../../server.html#src.server.tier_rankings">[docs]</a>
+<span class="nd">@command</span><span class="p">(</span><span class="s2">&quot;tier&quot;</span><span class="p">,</span> <span class="s2">&quot;tierlist&quot;</span><span class="p">,</span> <span class="s2">&quot;tierlists&quot;</span><span class="p">,</span> <span class="s2">&quot;ranking&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">tier_rankings</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">name</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
+        <span class="k">case</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To view Baalor&#39;s tier lists, do &#39;</span><span class="si">{</span><span class="n">_consts</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">tier &lt;character&gt;&#39;&quot;</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s2">&quot;ironclad&quot;</span> <span class="o">|</span> <span class="s2">&quot;clad&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;004de170-026a-4dd4-a280-3b904be0b5d6&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;silent&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;6d61ea21-0552-4c49-8bb5-a5c15530fc00&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;regent&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;0e6c1e23-bec6-4887-a9e0-dbf49ede974d&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;necrobinder&quot;</span> <span class="o">|</span> <span class="s2">&quot;necro&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;43d0b41f-7d6d-4ce9-928e-c1310a413983&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;defect&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;5a512e04-4583-4a16-9271-d46864c6cb4c&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;colorless&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;0a626c22-dc49-433e-ac6e-76cc9abf5684&quot;</span>
+        <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;I&#39;m afraid I don&#39;t have a tier list for that.&quot;</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;View the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> card rankings here: https://sts2.untapped.gg/en/tier-list/</span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="bluekey">
 <a class="viewcode-back" href="../../server.html#src.server.bluekey">[docs]</a>
 <span class="nd">@with_savefile</span><span class="p">(</span><span class="s2">&quot;bluekey&quot;</span><span class="p">,</span> <span class="s2">&quot;sapphirekey&quot;</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">)</span>
