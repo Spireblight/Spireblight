@@ -2582,7 +2582,10 @@
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">tier_rankings</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="k">match</span> <span class="n">name</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
         <span class="k">case</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To view Baalor&#39;s tier lists, do &#39;</span><span class="si">{</span><span class="n">_consts</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">tier &lt;character&gt;&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
+                <span class="s2">&quot;All of Baalor&#39;s tier lists are here: https://sts2.untapped.gg/en/tier-lists?creator=Baalorlord - &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;use &#39;</span><span class="si">{</span><span class="n">_consts</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">tier &lt;character, ancient, or rarity&gt;&#39; for specific card/relic rankings.&quot;</span>
+            <span class="p">)</span>
         <span class="k">case</span> <span class="s2">&quot;ironclad&quot;</span> <span class="o">|</span> <span class="s2">&quot;clad&quot;</span><span class="p">:</span>
             <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;004de170-026a-4dd4-a280-3b904be0b5d6&quot;</span>
         <span class="k">case</span> <span class="s2">&quot;silent&quot;</span><span class="p">:</span>
@@ -2595,10 +2598,20 @@
             <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;5a512e04-4583-4a16-9271-d46864c6cb4c&quot;</span>
         <span class="k">case</span> <span class="s2">&quot;colorless&quot;</span><span class="p">:</span>
             <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;0a626c22-dc49-433e-ac6e-76cc9abf5684&quot;</span>
-        <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;neow&quot;</span> <span class="o">|</span> <span class="s2">&quot;act1&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;212160e5-eb82-4281-b706-88e40a5941d5&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;act2&quot;</span> <span class="o">|</span> <span class="s2">&quot;ancients2&quot;</span> <span class="o">|</span> <span class="s2">&quot;tez&quot;</span> <span class="o">|</span> <span class="s2">&quot;tezcatara&quot;</span> <span class="o">|</span> <span class="s2">&quot;orobas&quot;</span> <span class="o">|</span> <span class="s2">&quot;pael&quot;</span> <span class="o">|</span> <span class="s2">&quot;darv2&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;b4cec0df-7a2f-41b5-b91e-4eaac766c7bd&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;act3&quot;</span> <span class="o">|</span> <span class="s2">&quot;ancients3&quot;</span> <span class="o">|</span> <span class="s2">&quot;tanx&quot;</span> <span class="o">|</span> <span class="s2">&quot;nonu&quot;</span> <span class="o">|</span> <span class="s2">&quot;nonupeipe&quot;</span> <span class="o">|</span> <span class="s2">&quot;vakuu&quot;</span> <span class="o">|</span> <span class="s2">&quot;vakku&quot;</span> <span class="o">|</span> <span class="s2">&quot;vaaku&quot;</span> <span class="o">|</span> <span class="s2">&quot;darv3&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;a4b2b8b1-fd28-4588-8af0-8a42e1bc4227&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;common&quot;</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;25dfc0a0-00f8-4c78-9409-4393f3f8492f&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;darv&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;There are two list rankings for Darv: use Darv2 or Darv3 for the relevant act.&quot;</span><span class="p">)</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;I&#39;m afraid I don&#39;t have a tier list for that.&quot;</span><span class="p">)</span>
 
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;View the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> card rankings here: https://sts2.untapped.gg/en/tier-list/</span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;View the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> rankings here: https://sts2.untapped.gg/en/tier-list/</span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 
