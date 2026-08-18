@@ -373,7 +373,7 @@
 <a class="viewcode-back" href="../../exceptions.html#src.exceptions.InvalidConfigType">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InvalidConfigType</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">:</span> <span class="n">_ConfigMapping</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Raised when the user config has an invalid value type.</span>
+<span class="w">        </span><span class="sd">"""Raised when the user config has an invalid value type.</span>
 
 <span class="sd">        :param inst: The class which is handling the assignment.</span>
 <span class="sd">        :type inst: _ConfigMapping</span>
@@ -381,14 +381,14 @@
 <span class="sd">        :type key: str</span>
 <span class="sd">        :param expected: Which type we expect to receive.</span>
 <span class="sd">        :type expected: type</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">:=</span> <span class="n">inst</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;Config&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
-                <span class="n">n</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">n</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">:=</span> <span class="n">inst</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"Config"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_"</span><span class="p">):</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="n">n</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;"</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is not the right type (should be </span><span class="si">{</span><span class="n">expected</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> instead).&quot;</span><span class="p">)</span></div>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is not the right type (should be </span><span class="si">{</span><span class="n">expected</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> instead)."</span><span class="p">)</span></div>
 
 </pre></div>
 

@@ -370,8 +370,8 @@
     <span class="c1"># we want:</span>
     <span class="c1">## search a string and return (ideally) a single string that most closely matches</span>
     <span class="c1">## to be able to create everything in one fell swoop, not have to insert everything all at once</span>
-    <span class="c1"># however, i don&#39;t have time to do the space-optimized trie right now, and honestly it doesn&#39;t really matter</span>
-    <span class="c1"># because it&#39;s only ever going to hold like 20 strings max</span>
+    <span class="c1"># however, i don't have time to do the space-optimized trie right now, and honestly it doesn't really matter</span>
+    <span class="c1"># because it's only ever going to hold like 20 strings max</span>
 
     <span class="c1"># words:</span>
     <span class="c1">## deck, did, dog, dogs, doggie, doe, do</span>
@@ -430,7 +430,7 @@
 
         <span class="k">def</span><span class="w"> </span><span class="nf">__iter_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_end</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">yield from</span> <span class="n">v</span><span class="o">.</span><span class="n">__iter_helper</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span><span class="p">])</span>
             
@@ -499,30 +499,30 @@
 
 
 <span class="c1"># this stuff happens if you run this as a script instead of importing it as a package</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">Trie</span><span class="p">()</span>
 
     <span class="n">words</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;admiration&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;acute&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;assignment&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;answer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;back&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;bulletin&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;bird&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;competence&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;cord&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;cousin&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;circle&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;claim&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;deck&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;did&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;dog&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;dogs&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;doggie&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;doe&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;do&quot;</span><span class="p">,</span>
+        <span class="s2">"admiration"</span><span class="p">,</span>
+        <span class="s2">"acute"</span><span class="p">,</span>
+        <span class="s2">"assignment"</span><span class="p">,</span>
+        <span class="s2">"answer"</span><span class="p">,</span>
+        <span class="s2">"bottle"</span><span class="p">,</span>
+        <span class="s2">"back"</span><span class="p">,</span>
+        <span class="s2">"bulletin"</span><span class="p">,</span>
+        <span class="s2">"bird"</span><span class="p">,</span>
+        <span class="s2">"competence"</span><span class="p">,</span>
+        <span class="s2">"cord"</span><span class="p">,</span>
+        <span class="s2">"cousin"</span><span class="p">,</span>
+        <span class="s2">"circle"</span><span class="p">,</span>
+        <span class="s2">"claim"</span><span class="p">,</span>
+        <span class="s2">"deck"</span><span class="p">,</span>
+        <span class="s2">"did"</span><span class="p">,</span>
+        <span class="s2">"dog"</span><span class="p">,</span>
+        <span class="s2">"dogs"</span><span class="p">,</span>
+        <span class="s2">"doggie"</span><span class="p">,</span>
+        <span class="s2">"doe"</span><span class="p">,</span>
+        <span class="s2">"do"</span><span class="p">,</span>
     <span class="p">]</span>
 
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
@@ -531,9 +531,9 @@
     <span class="c1">#for x in t:</span>
     <span class="c1">#    print(x)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;doreimi&quot;</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"doreimi"</span><span class="p">)))</span>
 
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">""</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>      
 </pre></div>
 

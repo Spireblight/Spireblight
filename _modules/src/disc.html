@@ -369,15 +369,15 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DiscordCommand&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"DiscordCommand"</span><span class="p">]</span>
 
 <div class="viewcode-block" id="DiscordCommand">
 <a class="viewcode-back" href="../../disc.html#src.disc.DiscordCommand">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DiscordCommand</span><span class="p">(</span><span class="n">Command</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span>
-        <span class="c1">#logger.debug(f&quot;Creating Discord command {func.__name__}&quot;)</span>
+        <span class="c1">#logger.debug(f"Creating Discord command {func.__name__}")</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -398,10 +398,10 @@
             <span class="n">mod_role</span> <span class="o">=</span> <span class="n">guild</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">moderator_role</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="p">(</span>
                 <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">discord</span><span class="o">.</span><span class="n">owners</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="n">mod_role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">roles</span><span class="p">)</span>
+                <span class="p">(</span><span class="s2">"m"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">and</span> <span class="n">mod_role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">roles</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="k">return</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invoking Discord command </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invoking Discord command </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">author</span><span class="p">()</span><span class="o">.</span><span class="n">display_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">await</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
 </div>
 

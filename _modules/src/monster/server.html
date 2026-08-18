@@ -386,7 +386,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
             <span class="k">pass</span>
@@ -400,52 +400,52 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">main_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;mainClassInfo&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;className&quot;</span> <span class="ow">in</span> <span class="n">main</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">&quot;className&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">&quot;classId&quot;</span><span class="p">])</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mainClassInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"className"</span> <span class="ow">in</span> <span class="n">main</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">"className"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">"classId"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">main_exiled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;mainClassInfo&quot;</span><span class="p">][</span><span class="s2">&quot;championIndex&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mainClassInfo"</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sub_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;subclassInfo&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;className&quot;</span> <span class="ow">in</span> <span class="n">sub</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">&quot;className&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">&quot;classId&quot;</span><span class="p">])</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"subclassInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"className"</span> <span class="ow">in</span> <span class="n">sub</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">"className"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">"classId"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sub_exiled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;subclassInfo&quot;</span><span class="p">][</span><span class="s2">&quot;championIndex&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"subclassInfo"</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Artifact</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">art</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;blessings&quot;</span><span class="p">]:</span>
-            <span class="k">yield</span> <span class="n">get</span><span class="p">(</span><span class="n">art</span><span class="p">[</span><span class="s2">&quot;relicDataID&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">art</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"blessings"</span><span class="p">]:</span>
+            <span class="k">yield</span> <span class="n">get</span><span class="p">(</span><span class="n">art</span><span class="p">[</span><span class="s2">"relicDataID"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">challenge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Challenge</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;spChallengeId&quot;</span><span class="p">]</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"spChallengeId"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">ch</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">covenant_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;ascensionLevel&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"ascensionLevel"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pyre</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Character</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;pyreCharacterId&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"pyreCharacterId"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">mutators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mutator</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;startingConditions&quot;</span><span class="p">][</span><span class="s2">&quot;mutators&quot;</span><span class="p">]]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mutators"</span><span class="p">]]</span></div>
 
 
-<span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">&quot;monster-train-save.json&quot;</span><span class="p">)</span>
-<span class="n">_save2</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">&quot;monster-train-2-save.json&quot;</span><span class="p">)</span>
+<span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-save.json"</span><span class="p">)</span>
+<span class="n">_save2</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-2-save.json"</span><span class="p">)</span>
 
 <div class="viewcode-block" id="get_savefile">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.get_savefile">[docs]</a>
@@ -457,16 +457,16 @@
         <span class="k">return</span> <span class="n">_save2</span>
 
     <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Not in a run.&quot;</span><span class="p">)</span></div>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"Not in a run."</span><span class="p">)</span></div>
 
 
 
-<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/monster&quot;</span><span class="p">)</span>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/monster"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;save&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
     <span class="n">_savefile</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;monster-train-save.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"monster-train-save.json"</span><span class="p">),</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
 
     <span class="c1"># handle database stuff</span>
@@ -476,23 +476,23 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mt-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"mt-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3"</span><span class="p">),</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">post</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;main&quot;</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.db&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"main"</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".db"</span><span class="p">):</span>
             <span class="n">write_db</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
 
 <div class="viewcode-block" id="get_data">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.get_data">[docs]</a>
-<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/monster-2&quot;</span><span class="p">)</span>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/monster-2"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;save&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
     <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;monster-train-2-save.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"monster-train-2-save.json"</span><span class="p">),</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
 
     <span class="c1"># handle database stuff</span>
@@ -502,11 +502,11 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;mt2-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"mt2-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3"</span><span class="p">),</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">post</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;main&quot;</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.db&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"main"</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".db"</span><span class="p">):</span>
             <span class="n">write_db</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
@@ -514,15 +514,15 @@
 
 <div class="viewcode-block" id="mt_current">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.mt_current">[docs]</a>
-<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/mt/debug&quot;</span><span class="p">)</span>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/mt/debug"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mt_current</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">save</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_savefile</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;No savefile present on server&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No savefile present on server"</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">_data</span>
-    <span class="k">if</span> <span class="s2">&quot;raw&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">"raw"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">)</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_sanitized</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>

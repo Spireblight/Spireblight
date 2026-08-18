@@ -376,34 +376,34 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
-<span class="n">IGNORE_REASONS</span> <span class="o">=</span> <span class="p">(</span> <span class="c1"># reasons from HTTP exceptions which won&#39;t be reported</span>
-    <span class="s2">&quot;This command does not exist.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;This run does not exist.&quot;</span><span class="p">,</span>
+<span class="n">IGNORE_REASONS</span> <span class="o">=</span> <span class="p">(</span> <span class="c1"># reasons from HTTP exceptions which won't be reported</span>
+    <span class="s2">"This command does not exist."</span><span class="p">,</span>
+    <span class="s2">"This run does not exist."</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;get_req_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;send_report&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;catch_error&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;post_prediction&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;getfile&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;update_db&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;convert_class_to_obj&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;format_for_slaytabase&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;complete_match&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;parse_date_range&quot;</span><span class="p">,</span>
+    <span class="s2">"get_req_data"</span><span class="p">,</span>
+    <span class="s2">"send_report"</span><span class="p">,</span>
+    <span class="s2">"catch_error"</span><span class="p">,</span>
+    <span class="s2">"post_prediction"</span><span class="p">,</span>
+    <span class="s2">"getfile"</span><span class="p">,</span>
+    <span class="s2">"update_db"</span><span class="p">,</span>
+    <span class="s2">"convert_class_to_obj"</span><span class="p">,</span>
+    <span class="s2">"format_for_slaytabase"</span><span class="p">,</span>
+    <span class="s2">"complete_match"</span><span class="p">,</span>
+    <span class="s2">"parse_date_range"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <div class="viewcode-block" id="get_req_data">
 <a class="viewcode-back" href="../../utils.html#src.utils.get_req_data">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="n">pw</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">)</span>
+    <span class="n">pw</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"key"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPUnauthorized</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;No API key provided&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPUnauthorized</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No API key provided"</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPNotImplemented</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;No API key present in config&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPNotImplemented</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No API key present in config"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pw</span> <span class="o">!=</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">secret</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPForbidden</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Invalid API key provided&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPForbidden</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"Invalid API key provided"</span><span class="p">)</span>
 
     <span class="n">post</span> <span class="o">=</span> <span class="k">await</span> <span class="n">req</span><span class="o">.</span><span class="n">post</span><span class="p">()</span>
 
@@ -414,7 +414,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s2">&quot;xmlcharrefreplace&quot;</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="s2">"xmlcharrefreplace"</span><span class="p">)</span>
         <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">res</span></div>
@@ -456,11 +456,11 @@
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">lst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tb_text</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">lst</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```&quot;</span><span class="p">)</span>
+                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```"</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```&quot;</span><span class="p">)</span>
+                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```"</span><span class="p">)</span>
 
     <span class="n">tb</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">__traceback__</span>
     <span class="k">while</span> <span class="n">tb</span><span class="o">.</span><span class="n">tb_next</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -471,7 +471,7 @@
     <span class="n">res</span> <span class="o">=</span> <span class="p">[[]]</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">frame_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">k</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="n">count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">1900</span><span class="p">:</span> <span class="c1"># limit is 2000, this is a bit of leeway just in case</span>
             <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
@@ -480,11 +480,11 @@
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">lst</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">lst</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;```[Locals]</span><span class="se">\n\n</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```&quot;</span><span class="p">)</span>
+                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"```[Locals]</span><span class="se">\n\n</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```"</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```&quot;</span><span class="p">)</span>
+                <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"```</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">```"</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">resp</span> <span class="ow">in</span> <span class="n">final</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div>
@@ -498,10 +498,10 @@
             <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">HTTPException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IGNORE_REASONS</span><span class="p">:</span>
-                <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error code </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> returned in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]&quot;</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Error code </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> returned in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]"</span><span class="p">)</span>
             <span class="k">raise</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># don&#39;t wanna catch stuff like stopiteration</span>
-            <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error caught in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># don't wanna catch stuff like stopiteration</span>
+            <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[Error caught in `</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">`]"</span><span class="p">)</span>
             <span class="k">raise</span> <span class="c1"># other things may be expecting this</span>
 
     <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
@@ -514,13 +514,13 @@
 <a class="viewcode-back" href="../../utils.html#src.utils.post_prediction">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">post_prediction</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="n">broadcaster_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">prediction_window</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;broadcaster_id&quot;</span><span class="p">:</span> <span class="n">broadcaster_id</span><span class="p">,</span>
-        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
-        <span class="s2">&quot;prediction_window&quot;</span><span class="p">:</span> <span class="n">prediction_window</span><span class="p">,</span>
-        <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">outcomes</span><span class="p">],</span>
+        <span class="s2">"broadcaster_id"</span><span class="p">:</span> <span class="n">broadcaster_id</span><span class="p">,</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+        <span class="s2">"prediction_window"</span><span class="p">:</span> <span class="n">prediction_window</span><span class="p">,</span>
+        <span class="s2">"outcomes"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"title"</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">outcomes</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="n">val</span> <span class="o">=</span> <span class="k">await</span> <span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
-        <span class="n">_http</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span><span class="p">),</span>
+        <span class="n">_http</span><span class="o">.</span><span class="n">Route</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="s2">"predictions"</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">token</span><span class="p">),</span>
         <span class="n">paginate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">models</span><span class="o">.</span><span class="n">Prediction</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">_http</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
@@ -529,14 +529,14 @@
 <div class="viewcode-block" id="getfile">
 <a class="viewcode-back" href="../../utils.html#src.utils.getfile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">getfile</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="update_db">
 <a class="viewcode-back" href="../../utils.html#src.utils.update_db">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_db</span><span class="p">():</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">src.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">_cmds</span>
-    <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">&quot;data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="s2">"data.json"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">_cmds</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span></div>
 
 
@@ -549,7 +549,7 @@
 <div class="viewcode-block" id="format_for_slaytabase">
 <a class="viewcode-back" href="../../utils.html#src.utils.format_for_slaytabase">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_for_slaytabase</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">":"</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="complete_match">
@@ -567,33 +567,33 @@
 <div class="viewcode-block" id="parse_date_range">
 <a class="viewcode-back" href="../../utils.html#src.utils.parse_date_range">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_date_range</span><span class="p">(</span><span class="n">date_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">datetime</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;valid date strings: YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""valid date strings: YYYY/MM/DD-YYYY/MM/DD (MM and DD optional), YYYY/MM/DD+ (no end date), YYYY/MM/DD- (no start date)"""</span>
     <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">date_string</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">date_string</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"+"</span><span class="p">:</span>
         <span class="n">start_date</span> <span class="o">=</span> <span class="n">_parse_dates_with_optional_month_day</span><span class="p">(</span><span class="n">date_string</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">date_string</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">date_string</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"-"</span><span class="p">:</span>
         <span class="n">end_date</span> <span class="o">=</span> <span class="n">_parse_dates_with_optional_month_day</span><span class="p">(</span><span class="n">date_string</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">date_parts</span> <span class="o">=</span> <span class="n">date_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+        <span class="n">date_parts</span> <span class="o">=</span> <span class="n">date_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_string</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># only a year was passed, default to Jan 1 - Dec 31 of the specified year</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">date_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">UTC</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">date_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">UTC</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Range format is invalid&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Range format is invalid"</span><span class="p">)</span>
 
         <span class="n">start_date</span> <span class="o">=</span> <span class="n">_parse_dates_with_optional_month_day</span><span class="p">(</span><span class="n">date_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">end_date</span> <span class="o">=</span> <span class="n">_parse_dates_with_optional_month_day</span><span class="p">(</span><span class="n">date_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end_date</span> <span class="o">&lt;</span> <span class="n">start_date</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Start date was after End Date&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Start date was after End Date"</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_dates_with_optional_month_day</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">isEndDate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base val should be in YYYY/MM/DD where MM and DD are optional, defaulted to start or end of year&quot;&quot;&quot;</span>
-    <span class="n">date_parts</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Base val should be in YYYY/MM/DD where MM and DD are optional, defaulted to start or end of year"""</span>
+    <span class="n">date_parts</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
     <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">date_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">month</span> <span class="o">=</span> <span class="mi">12</span> <span class="k">if</span> <span class="n">isEndDate</span> <span class="k">else</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">date_parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>

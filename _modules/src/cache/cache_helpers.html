@@ -378,12 +378,12 @@
 <div class="viewcode-block" id="Character">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.Character">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Character</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">IRONCLAD</span> <span class="o">=</span> <span class="s2">&quot;Ironclad&quot;</span>
-    <span class="n">SILENT</span> <span class="o">=</span> <span class="s2">&quot;Silent&quot;</span>
-    <span class="n">DEFECT</span> <span class="o">=</span> <span class="s2">&quot;Defect&quot;</span>
-    <span class="n">WATCHER</span> <span class="o">=</span> <span class="s2">&quot;Watcher&quot;</span>
-    <span class="n">NECROBINDER</span> <span class="o">=</span> <span class="s2">&quot;Necrobinder&quot;</span>
-    <span class="n">REGENT</span> <span class="o">=</span> <span class="s2">&quot;Regent&quot;</span></div>
+    <span class="n">IRONCLAD</span> <span class="o">=</span> <span class="s2">"Ironclad"</span>
+    <span class="n">SILENT</span> <span class="o">=</span> <span class="s2">"Silent"</span>
+    <span class="n">DEFECT</span> <span class="o">=</span> <span class="s2">"Defect"</span>
+    <span class="n">WATCHER</span> <span class="o">=</span> <span class="s2">"Watcher"</span>
+    <span class="n">NECROBINDER</span> <span class="o">=</span> <span class="s2">"Necrobinder"</span>
+    <span class="n">REGENT</span> <span class="o">=</span> <span class="s2">"Regent"</span></div>
 
 
 <div class="viewcode-block" id="CharDict">
@@ -405,7 +405,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">character_counts</span><span class="p">:</span> <span class="n">CharDict</span><span class="p">[</span><span class="n">Character</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">CharDict</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="n">char</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">Character</span><span class="p">})</span>
             
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;All characters: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_character_count</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">character_counts</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Character</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"All characters: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_character_count</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">character_counts</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Character</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span></div>
 
 
 <div class="viewcode-block" id="RunStats">
@@ -427,7 +427,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">last_timestamp</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;all_wins: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_wins</span><span class="si">}</span><span class="se">\n</span><span class="s1">all_losses: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_losses</span><span class="si">}</span><span class="se">\n</span><span class="s1">streaks: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">streaks</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'all_wins: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_wins</span><span class="si">}</span><span class="se">\n</span><span class="s1">all_losses: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">all_losses</span><span class="si">}</span><span class="se">\n</span><span class="s1">streaks: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">streaks</span><span class="si">}</span><span class="s1">'</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -439,7 +439,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">date_range_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;all-time&quot;</span>
+        <span class="k">return</span> <span class="s2">"all-time"</span>
 
 <div class="viewcode-block" id="RunStats.add_win">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.RunStats.add_win">[docs]</a>
@@ -496,16 +496,16 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">date_range_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">date_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">&quot;</span>
+        <span class="n">date_str</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="s2">"%Y/%m/</span><span class="si">%d</span><span class="s2">"</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">date_str</span> <span class="o">=</span> <span class="s2">&quot;all-time&quot;</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="s2">"all-time"</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;starting with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'starting with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;before </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'before </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span>
         <span class="k">return</span> <span class="n">date_str</span></div>
 
 
@@ -552,17 +552,17 @@
 <div class="viewcode-block" id="StreakCache">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.StreakCache">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StreakCache</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A streak superclass that contains StreakContainer objects.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">since</span> <span class="o">=</span> <span class="n">since</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">containers</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;StreakCache of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"StreakCache of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="si">}</span><span class="s2">"</span>
 
 <div class="viewcode-block" id="StreakCache.clear">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.StreakCache.clear">[docs]</a>
@@ -584,7 +584,7 @@
 <div class="viewcode-block" id="StreakContainer">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.StreakContainer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StreakContainer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Collection of runs that form a winning or losing streak.</span>
 
 <span class="sd">    The `winning_streak` attribute denotes if the streak contains wins</span>
@@ -592,13 +592,13 @@
 <span class="sd">    show how many runs were between the streaks.</span>
 
 <span class="sd">    The `ongoing` attribute denotes if the streak is still going.  If</span>
-<span class="sd">    it&#39;s True, this is shown on the streak date in the UI.</span>
+<span class="sd">    it's True, this is shown on the streak date in the UI.</span>
 
 <span class="sd">    The `runs` attribute is the list of runs in the streak.  If the</span>
 <span class="sd">    streak is over, the losing run that broke it should be in there as</span>
 <span class="sd">    well so it can be shown in the UI as the one that broke it.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winning_streak</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">runs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">RunParser</span> <span class="o">|</span> <span class="n">Run2Parser</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">winning_streak</span> <span class="o">=</span> <span class="n">winning_streak</span>
@@ -606,7 +606,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">runs</span> <span class="o">=</span> <span class="n">runs</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Streaks&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">verb</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Streaks&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">verb</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">&gt;"</span>
 
 <div class="viewcode-block" id="StreakContainer.append">
 <a class="viewcode-back" href="../../../cache.html#src.cache.cache_helpers.StreakContainer.append">[docs]</a>
@@ -622,12 +622,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">display_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The runs, but with possible added context runs:</span>
 <span class="sd">        - The losing run included if this is a winning streak that is over.</span>
 <span class="sd">        - The current run if we are live and the stream is ongoing.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ongoing</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">src.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">_savefile</span>
 
@@ -638,19 +638,19 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%-d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%b </span><span class="si">%-d</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># We use &#39;display_runs&#39; here so that if the streak is over we show the date of the run that</span>
+        <span class="c1"># We use 'display_runs' here so that if the streak is over we show the date of the run that</span>
         <span class="c1"># broke the streak.</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_runs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%-d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_runs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%b </span><span class="si">%-d</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">runs_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;/profile/0/runs/by-timestamp/</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s2">..</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/profile/0/runs/by-timestamp/</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s2">..</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">character</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -666,26 +666,26 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        The amount of blobs to show for this group.</span>
 
 <span class="sd">        If less than 20, show 20.</span>
 <span class="sd">        After 20, show ten more for every ten passed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">20</span>
         <span class="k">return</span> <span class="mi">10</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">streak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Counts the amount of runs that were the actual streak.</span>
 
-<span class="sd">        Without this, the streak would show one too many once it&#39;s over</span>
+<span class="sd">        Without this, the streak would show one too many once it's over</span>
 <span class="sd">        since we care to show the losing run inside the streak</span>
 <span class="sd">        collection.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">won</span><span class="p">])</span></div>
 
 </pre></div>

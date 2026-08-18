@@ -376,10 +376,10 @@
 <div class="viewcode-block" id="Score">
 <a class="viewcode-back" href="../../score.html#src.score.Score">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Score</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">should_show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">should_show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score_bonus</span> <span class="o">=</span> <span class="n">score</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">should_show</span> <span class="o">=</span> <span class="n">should_show</span>            
-        <span class="bp">self</span><span class="o">.</span><span class="n">_format_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_format_string</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">data</span><span class="p">:</span> <span class="n">ScoreBonus</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
@@ -387,11 +387,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">description</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_format_string</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid score bonus name&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid score bonus name"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">full_display</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_string</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">score_bonus</span><span class="si">}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_string</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">score_bonus</span><span class="si">}</span><span class="s1">'</span></div>
 
 
 <div class="viewcode-block" id="get_ascension_score_bonus">
@@ -422,56 +422,56 @@
             <span class="n">get_combo_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
         <span class="p">])</span>
         <span class="n">score</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">bonuses_total</span> <span class="o">*</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">ascension_level</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Ascension&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">ascension_level</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">ascension_level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Ascension"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">ascension_level</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">ascension_level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_floors_climbed_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_floors_climbed_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_floors_climbed_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 5 points for each floor climbed.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Floors Climbed&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">current_floor</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">current_floor</span><span class="p">),</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 5 points for each floor climbed."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Floors Climbed"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">current_floor</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">current_floor</span><span class="p">),</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_enemies_killed_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_enemies_killed_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_enemies_killed_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 2 points for each monster defeated.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Enemies Killed&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">monsters_killed</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">monsters_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 2 points for each monster defeated."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Enemies Killed"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">monsters_killed</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">monsters_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_act1_elites_killed_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_act1_elites_killed_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_act1_elites_killed_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 10 points for each Act 1 elite killed.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Exordium Elites Killed&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act1_elites_killed</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act1_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 10 points for each Act 1 elite killed."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Exordium Elites Killed"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act1_elites_killed</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act1_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_act2_elites_killed_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_act2_elites_killed_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_act2_elites_killed_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 20 points for each Act 2 elite killed.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;City Elites Killed&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act2_elites_killed</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act2_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">act_num</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 20 points for each Act 2 elite killed."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"City Elites Killed"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act2_elites_killed</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act2_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">act_num</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_act3_elites_killed_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_act3_elites_killed_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_act3_elites_killed_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 30 points for each Act 3 elite killed.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Beyond Elites Killed&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act3_elites_killed</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act3_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">act_num</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 30 points for each Act 3 elite killed."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Beyond Elites Killed"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">act3_elites_killed</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">act3_elites_killed</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="n">save</span><span class="o">.</span><span class="n">act_num</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_champions_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_champions_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_champions_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 25 points for each elite perfected.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Champion&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_elites</span><span class="p">,</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_elites</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">"""Get 25 points for each elite perfected."""</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Champion"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_elites</span><span class="p">,</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_elites</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_bosses_slain_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_bosses_slain_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_bosses_slain_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 25 points for each boss killed.&quot;&quot;&quot;</span>
-    <span class="n">boss_nodes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">path</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">room_type</span> <span class="o">==</span> <span class="s2">&quot;Boss&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Get 25 points for each boss killed."""</span>
+    <span class="n">boss_nodes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">path</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">room_type</span> <span class="o">==</span> <span class="s2">"Boss"</span><span class="p">)</span>
     <span class="k">match</span> <span class="n">boss_nodes</span><span class="p">:</span>
         <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
@@ -487,38 +487,38 @@
             <span class="n">score</span> <span class="o">=</span> <span class="mi">750</span>
         <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="mi">750</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Bosses Slain&quot;</span><span class="p">,</span> <span class="n">boss_nodes</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Bosses Slain"</span><span class="p">,</span> <span class="n">boss_nodes</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">should_show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_perfect_bosses_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_perfect_bosses_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_perfect_bosses_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 50 points for each boss perfected, if 3 or more return 200.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get 50 points for each boss perfected, if 3 or more return 200."""</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_bosses</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Beyond Perfect&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Beyond Perfect"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Perfect&quot;</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_bosses</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_bosses</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Perfect"</span><span class="p">,</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_bosses</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span> <span class="o">*</span> <span class="n">save</span><span class="o">.</span><span class="n">perfect_bosses</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">bonus</span></div>
 
 
 <div class="viewcode-block" id="get_collector_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_collector_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_collector_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get 25 points for each non-starter card with 4 copies.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get 25 points for each non-starter card with 4 copies."""</span>
     <span class="n">card_dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">deck_card_ids</span><span class="p">)</span>
-    <span class="n">nonstarter_cards_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">card_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">rarity</span> <span class="o">!=</span> <span class="s2">&quot;Basic&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Collector&quot;</span><span class="p">,</span> <span class="n">nonstarter_cards_count</span><span class="p">,</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">nonstarter_cards_count</span><span class="p">)</span> </div>
+    <span class="n">nonstarter_cards_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">card_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">rarity</span> <span class="o">!=</span> <span class="s2">"Basic"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Collector"</span><span class="p">,</span> <span class="n">nonstarter_cards_count</span><span class="p">,</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">nonstarter_cards_count</span><span class="p">)</span> </div>
 
 
 <div class="viewcode-block" id="get_deck_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_deck_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_deck_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get points depending on how big the deck is.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get points depending on how big the deck is."""</span>
     <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">cards</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Encyclopedian&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Encyclopedian"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Librarian&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Librarian"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">bonus</span></div>
@@ -527,64 +527,64 @@
 <div class="viewcode-block" id="get_overkill_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_overkill_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_overkill_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deal 99 damage with a single attack.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Deal 99 damage with a single attack."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">has_overkill</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="mi">25</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Overkill&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Overkill"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_mystery_machine_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_mystery_machine_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_mystery_machine_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Traveled to 15+ ? rooms.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Traveled to 15+ ? rooms."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">mystery_machine_counter</span> <span class="o">&gt;=</span> <span class="mi">15</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="mi">25</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Mystery Machine&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Mystery Machine"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_shiny_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_shiny_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_shiny_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Have 25 or more Relics.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Have 25 or more Relics."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">25</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="mi">50</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Shiny&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Shiny"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_max_hp_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_max_hp_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_max_hp_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get points based on how much max HP gained, ignores Ascension 14 penalty.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get points based on how much max HP gained, ignores Ascension 14 penalty."""</span>
     <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">()</span>
     <span class="n">max_hp_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Ironclad&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-        <span class="s2">&quot;Silent&quot;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
-        <span class="s2">&quot;Defect&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
-        <span class="s2">&quot;Watcher&quot;</span><span class="p">:</span> <span class="mi">72</span>
+        <span class="s2">"Ironclad"</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="s2">"Silent"</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
+        <span class="s2">"Defect"</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+        <span class="s2">"Watcher"</span><span class="p">:</span> <span class="mi">72</span>
     <span class="p">}</span>
 
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">character</span> <span class="ow">in</span> <span class="n">max_hp_dict</span><span class="p">:</span>
         <span class="n">max_hp_gain</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">max_health</span> <span class="o">-</span> <span class="n">max_hp_dict</span><span class="p">[</span><span class="n">save</span><span class="o">.</span><span class="n">character</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">max_hp_gain</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">:</span>
-            <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Stuffed&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+            <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Stuffed"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">max_hp_gain</span> <span class="o">&gt;=</span> <span class="mi">15</span><span class="p">:</span>
-            <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Well Fed&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+            <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Well Fed"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">bonus</span></div>
 
 
 <div class="viewcode-block" id="get_gold_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_gold_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_gold_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get points based on how much accrued gold.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get points based on how much accrued gold."""</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">total_gold_gained</span> <span class="o">&gt;=</span> <span class="mi">3000</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;I Like Gold&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"I Like Gold"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">save</span><span class="o">.</span><span class="n">total_gold_gained</span> <span class="o">&gt;=</span> <span class="mi">2000</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Raining Money&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Raining Money"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">save</span><span class="o">.</span><span class="n">total_gold_gained</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">:</span>
-        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Money Money&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+        <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Money Money"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">bonus</span> <span class="o">=</span> <span class="n">Score</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">bonus</span></div>
@@ -593,33 +593,33 @@
 <div class="viewcode-block" id="get_combo_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_combo_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_combo_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Play 20 cards in a single turn.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Play 20 cards in a single turn."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">has_combo</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="mi">25</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Combo&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Combo"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_curses_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_curses_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_curses_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Your deck contains 5 curses.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Your deck contains 5 curses."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">curses</span> <span class="o">=</span> <span class="p">[</span><span class="n">card</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">deck_card_ids</span> <span class="k">if</span> <span class="n">get</span><span class="p">(</span><span class="n">card</span><span class="p">)</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s2">&quot;Curse&quot;</span><span class="p">]</span>
+    <span class="n">curses</span> <span class="o">=</span> <span class="p">[</span><span class="n">card</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">deck_card_ids</span> <span class="k">if</span> <span class="n">get</span><span class="p">(</span><span class="n">card</span><span class="p">)</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s2">"Curse"</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">curses</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Curses&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Curses"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_poopy_bonus">
 <a class="viewcode-back" href="../../score.html#src.score.get_poopy_bonus">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_poopy_bonus</span><span class="p">(</span><span class="n">save</span><span class="p">:</span> <span class="n">Savefile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Score</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Possess Spirit Poop.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Possess Spirit Poop."""</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">relics</span> <span class="o">=</span> <span class="p">[</span><span class="n">relic</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">relic</span> <span class="ow">in</span> <span class="n">save</span><span class="o">.</span><span class="n">relics</span><span class="p">]</span>
-    <span class="k">if</span> <span class="s2">&quot;Spirit Poop&quot;</span> <span class="ow">in</span> <span class="n">relics</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">"Spirit Poop"</span> <span class="ow">in</span> <span class="n">relics</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">&quot;Poopy&quot;</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">(</span><span class="s2">"Poopy"</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span></div>
 
 </pre></div>
 

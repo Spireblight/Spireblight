@@ -373,21 +373,21 @@
 <span class="n">parsed_data</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="n">_NULL</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span>
-<span class="n">_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;o&quot;</span><span class="p">:</span> <span class="s2">&quot;Orange&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;Yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="s2">&quot;Grey&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="s2">&quot;Blue&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;Green&quot;</span><span class="p">}</span>
-<span class="n">_gen_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[oygbrn]\d\.[0-9a-f]</span><span class="si">{3}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"o"</span><span class="p">:</span> <span class="s2">"Orange"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">:</span> <span class="s2">"Yellow"</span><span class="p">,</span> <span class="s2">"g"</span><span class="p">:</span> <span class="s2">"Grey"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">:</span> <span class="s2">"Blue"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"Red"</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">:</span> <span class="s2">"Green"</span><span class="p">}</span>
+<span class="n">_gen_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"^[oygbrn]\d\.[0-9a-f]</span><span class="si">{3}</span><span class="s2">$"</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Hero">
 <a class="viewcode-back" href="../../slice.html#src.slice.Hero">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Hero</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"~"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dead</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">_gen_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">):</span> <span class="c1"># generated hero. otherwise idfk</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">_colors</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rest</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">"D"</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dead</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -395,13 +395,13 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">:</span>
-            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead</span><span class="p">:</span>
-            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;[Died last fight]&quot;</span><span class="p">)</span>
+            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"[Died last fight]"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
-            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Equipped: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Equipped: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">final</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">final</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CurrentRun">
@@ -412,23 +412,23 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">difficulty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;c&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"d"</span><span class="p">][</span><span class="s2">"c"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;m&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"d"</span><span class="p">][</span><span class="s2">"m"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;p&quot;</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"d"</span><span class="p">][</span><span class="s2">"p"</span><span class="p">][</span><span class="s2">"e"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">heroes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Hero</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">Hero</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;p&quot;</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Hero</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"d"</span><span class="p">][</span><span class="s2">"p"</span><span class="p">][</span><span class="s2">"h"</span><span class="p">]]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">preset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;p&quot;</span><span class="p">][</span><span class="s2">&quot;plt&quot;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"d"</span><span class="p">][</span><span class="s2">"p"</span><span class="p">][</span><span class="s2">"plt"</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="get_runs">
@@ -436,7 +436,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">get_runs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CurrentRun</span><span class="p">]:</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">parsed_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;stats&quot;</span><span class="p">,</span> <span class="s2">&quot;settings&quot;</span><span class="p">,</span> <span class="s2">&quot;run_history&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"stats"</span><span class="p">,</span> <span class="s2">"settings"</span><span class="p">,</span> <span class="s2">"run_history"</span><span class="p">):</span>
             <span class="k">continue</span>
         <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">CurrentRun</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span></div>
@@ -451,29 +451,29 @@
 <span class="k">else</span><span class="p">:</span>
 <div class="viewcode-block" id="receive_slice">
 <a class="viewcode-back" href="../../slice.html#src.slice.receive_slice">[docs]</a>
-    <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/sync/slice&quot;</span><span class="p">)</span>
+    <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/slice"</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_slice</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-data&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"slice-data"</span><span class="p">),</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">populate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-data&quot;</span><span class="p">))</span>
+        <span class="n">populate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"slice-data"</span><span class="p">))</span>
         <span class="c1"># This is to allow the client to display curses</span>
-        <span class="c1"># We don&#39;t have easy access to the actual content currently</span>
-        <span class="c1"># So it&#39;s disabled for the time being</span>
+        <span class="c1"># We don't have easy access to the actual content currently</span>
+        <span class="c1"># So it's disabled for the time being</span>
         <span class="c1">#run = get_current_run()</span>
         <span class="c1">#if run is not None:</span>
         <span class="c1">#    return Response(body=pickle.dumps(run.curses))</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
 
 
-    <span class="nd">@add_listener</span><span class="p">(</span><span class="s2">&quot;setup_init&quot;</span><span class="p">)</span>
+    <span class="nd">@add_listener</span><span class="p">(</span><span class="s2">"setup_init"</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">():</span>
         <span class="n">load</span><span class="p">()</span>
 
 <div class="viewcode-block" id="decode">
 <a class="viewcode-back" href="../../slice.html#src.slice.decode">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="mi">50</span> <span class="o">+</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">50</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="p">)</span></div>
@@ -488,17 +488,17 @@
 <div class="viewcode-block" id="populate">
 <a class="viewcode-back" href="../../slice.html#src.slice.populate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">populate</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode the savefile and populate the variables.</span>
+<span class="w">    </span><span class="sd">"""Decode the savefile and populate the variables.</span>
 
-<span class="sd">    Return True if decoding was successful, False otherwise.&quot;&quot;&quot;</span>
+<span class="sd">    Return True if decoding was successful, False otherwise."""</span>
 
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;USERPROFILE&quot;</span><span class="p">]</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"USERPROFILE"</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;.prefs&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-and-dice-3&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s2">".prefs"</span><span class="p">,</span> <span class="s2">"slice-and-dice-3"</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">decoded</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -508,10 +508,10 @@
     <span class="n">root</span> <span class="o">=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"key"</span><span class="p">]</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">decode</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="n">fn</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;run_history&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">"run_history"</span><span class="p">:</span>
             <span class="n">fn</span> <span class="o">=</span> <span class="n">deserialize</span>
         <span class="n">parsed_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -521,25 +521,25 @@
 <div class="viewcode-block" id="load">
 <a class="viewcode-back" href="../../slice.html#src.slice.load">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">():</span>
-    <span class="n">populate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;slice-data&quot;</span><span class="p">))</span>
+    <span class="n">populate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"slice-data"</span><span class="p">))</span>
     <span class="k">return</span> <span class="c1"># Temporary (ha! ha!) fix until we have proper info again</span>
-    <span class="k">for</span> <span class="n">file</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">&quot;curses&quot;</span><span class="p">,</span> <span class="n">curses</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="n">items</span><span class="p">)):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;argo&quot;</span><span class="p">,</span> <span class="s2">&quot;slicedice&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">file</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"curses"</span><span class="p">,</span> <span class="n">curses</span><span class="p">),</span> <span class="p">(</span><span class="s2">"items"</span><span class="p">,</span> <span class="n">items</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"argo"</span><span class="p">,</span> <span class="s2">"slicedice"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.txt"</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># remove trailing newline</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\t\t</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># remove trailing newline</span>
                 <span class="k">if</span> <span class="n">cont</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'"'</span><span class="p">):</span>
                         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                         <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
-                    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">"</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">name</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">desc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
+                    <span class="n">name</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">desc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'"'</span><span class="p">):</span>
                         <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
                         <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">cont</span><span class="p">:</span>
-                    <span class="n">var</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="n">tier</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">desc</span><span class="p">}</span></div>
+                    <span class="n">var</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tier"</span><span class="p">:</span> <span class="n">tier</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">:</span> <span class="n">desc</span><span class="p">}</span></div>
 
 </pre></div>
 

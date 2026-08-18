@@ -370,23 +370,23 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">_cfgmap</span>
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.8&quot;</span>
-<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Anilyka Barry&quot;</span>
-<span class="n">__github__</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/Spireblight/Spireblight&quot;</span>
-<span class="n">__botname__</span> <span class="o">=</span> <span class="s2">&quot;Spireblight&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">"0.8"</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">"Anilyka Barry"</span>
+<span class="n">__github__</span> <span class="o">=</span> <span class="s2">"https://github.com/Spireblight/Spireblight"</span>
+<span class="n">__botname__</span> <span class="o">=</span> <span class="s2">"Spireblight"</span>
 
 <span class="c1"># This is the minimal development config needed.</span>
 <span class="n">DEFAULT_DEV_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;twitch&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="s2">&quot;oauth_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;Get one at https://twitchapps.com/tmi/&gt;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;baalorlord&quot;</span><span class="p">,</span>
+    <span class="s2">"twitch"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">"oauth_token"</span><span class="p">:</span> <span class="s2">"&lt;Get one at https://twitchapps.com/tmi/&gt;"</span><span class="p">,</span>
+        <span class="s2">"channel"</span><span class="p">:</span> <span class="s2">"baalorlord"</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;discord&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="s2">&quot;oauth_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;token unset&gt;&quot;</span>
+    <span class="s2">"discord"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">"oauth_token"</span><span class="p">:</span> <span class="s2">"&lt;token unset&gt;"</span>
     <span class="p">},</span>
-    <span class="s2">&quot;server&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;i-haven&#39;t-set-a-secret&gt;&quot;</span><span class="p">},</span>
+    <span class="s2">"server"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"debug"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"secret"</span><span class="p">:</span> <span class="s2">"&lt;i-haven't-set-a-secret&gt;"</span><span class="p">},</span>
 <span class="p">}</span>
 
 <span class="n">curpath</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span>
@@ -394,32 +394,32 @@
 
 <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">__botname__</span><span class="p">)</span>
 
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--config-file&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Add a config file to use&quot;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__botname__</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no-twitch&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Disable the Twitch bot&quot;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no-discord&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Disable the Discord bot&quot;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--channel&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Which Twitch channel to join&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--config-file"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Add a config file to use"</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--version"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"version"</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">__botname__</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--no-twitch"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Disable the Twitch bot"</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--no-discord"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Disable the Discord bot"</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--channel"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Which Twitch channel to join"</span><span class="p">)</span>
 
 <div class="viewcode-block" id="load_default_config">
 <a class="viewcode-back" href="../../config.html#src.config.load_default_config">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_default_config</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the default configuration into memory.</span>
+<span class="w">    </span><span class="sd">"""Load the default configuration into memory.</span>
 
 <span class="sd">    :raises RuntimeError: If the default config file cannot be found</span>
 <span class="sd">    :return: The configuration object, ready for use</span>
 <span class="sd">    :rtype: _cfgmap.Config</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">global</span> <span class="n">curpath</span>
     <span class="k">if</span> <span class="n">curpath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">curpath</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">curpath</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
     <span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
         <span class="n">f</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">curpath</span> <span class="o">/</span> <span class="s2">&quot;default-config.yml&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">curpath</span> <span class="o">/</span> <span class="s2">"default-config.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">IsADirectoryError</span><span class="p">):</span> <span class="c1"># you never know</span>
-            <span class="n">curpath</span> <span class="o">=</span> <span class="n">curpath</span> <span class="o">/</span> <span class="s2">&quot;..&quot;</span>
+            <span class="n">curpath</span> <span class="o">=</span> <span class="n">curpath</span> <span class="o">/</span> <span class="s2">".."</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">conf</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">break</span> <span class="c1"># this will break out of the loop, but finally always happens :&gt;</span>
@@ -428,7 +428,7 @@
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">conf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No default config could be found.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"No default config could be found."</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">_cfgmap</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="o">**</span><span class="n">conf</span><span class="p">)</span></div>
 
@@ -436,14 +436,14 @@
 <div class="viewcode-block" id="parse_launch_args">
 <a class="viewcode-back" href="../../config.html#src.config.parse_launch_args">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_launch_args</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse the launch arguments, and find the files to load.</span>
+<span class="w">    </span><span class="sd">"""Parse the launch arguments, and find the files to load.</span>
 
 <span class="sd">    :param argv: The command-line arguments to use, sys.argv if not specified.</span>
 <span class="sd">    :type argv: list[str]</span>
 <span class="sd">    :raises RuntimeError: If a specified config file could not be found.</span>
 <span class="sd">    :return: A tuple of the files to load, and the override values.</span>
 <span class="sd">    :rtype: tuple[list[pathlib.Path], dict]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">argv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># first arg is just the program name</span>
@@ -460,29 +460,29 @@
             <span class="n">file</span><span class="p">:</span> <span class="nb">str</span>
             <span class="n">curfile</span> <span class="o">=</span> <span class="n">curpath</span> <span class="o">/</span> <span class="n">file</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">curfile</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Config file </span><span class="si">{</span><span class="n">file</span><span class="si">!r}</span><span class="s2"> could not be found.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Config file </span><span class="si">{</span><span class="n">file</span><span class="si">!r}</span><span class="s2"> could not be found."</span><span class="p">)</span>
             <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curfile</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span> <span class="c1"># none specified, use the dev one</span>
-        <span class="n">devfile</span> <span class="o">=</span> <span class="n">curpath</span> <span class="o">/</span> <span class="s2">&quot;dev-config.yml&quot;</span>
+        <span class="n">devfile</span> <span class="o">=</span> <span class="n">curpath</span> <span class="o">/</span> <span class="s2">"dev-config.yml"</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">devfile</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span> <span class="c1"># make our own</span>
-            <span class="k">with</span> <span class="n">devfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">devfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">DEFAULT_DEV_CONFIG</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No dev-config.yml file found.&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A skeleton has been written for you.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"No dev-config.yml file found."</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"A skeleton has been written for you."</span><span class="p">)</span>
 
         <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">devfile</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span>
-        <span class="n">override</span><span class="p">[</span><span class="s2">&quot;twitch&quot;</span><span class="p">][</span><span class="s2">&quot;channel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">channel</span>
+        <span class="n">override</span><span class="p">[</span><span class="s2">"twitch"</span><span class="p">][</span><span class="s2">"channel"</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">channel</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">no_twitch</span><span class="p">:</span>
-        <span class="n">override</span><span class="p">[</span><span class="s2">&quot;twitch&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">override</span><span class="p">[</span><span class="s2">"twitch"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">no_discord</span><span class="p">:</span>
-        <span class="n">override</span><span class="p">[</span><span class="s2">&quot;discord&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">override</span><span class="p">[</span><span class="s2">"discord"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">return</span> <span class="n">files</span><span class="p">,</span> <span class="n">override</span></div>
 
@@ -490,13 +490,13 @@
 <div class="viewcode-block" id="load_user_config">
 <a class="viewcode-back" href="../../config.html#src.config.load_user_config">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_user_config</span><span class="p">(</span><span class="n">conf</span><span class="p">:</span> <span class="n">_cfgmap</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modify in-place the config with the user config.</span>
+<span class="w">    </span><span class="sd">"""Modify in-place the config with the user config.</span>
 
 <span class="sd">    :param conf: The configuration object.</span>
 <span class="sd">    :type conf: _cfgmap.Config</span>
 <span class="sd">    :param file: A Path object pointing to the file.</span>
 <span class="sd">    :type file: pathlib.Path</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">with</span> <span class="n">file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">cf</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cf</span><span class="p">)</span></div>
@@ -505,7 +505,7 @@
 <div class="viewcode-block" id="load">
 <a class="viewcode-back" href="../../config.html#src.config.load">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the full configuration for the program.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Load the full configuration for the program."""</span>
     <span class="k">global</span> <span class="n">config</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">load_default_config</span><span class="p">()</span>
 
