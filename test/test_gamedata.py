@@ -19,7 +19,7 @@ import asyncio, src.events as events
 
 asyncio.run(events.invoke("setup_init"))
 
-rm = wa = streamer = r2 = None
+rm = wa = streamer = r2 = mp = None
 
 base = pathlib.Path(".") / "test" / "static"
 
@@ -47,6 +47,9 @@ with (base / "slay_the_streamer.json").open() as f:
 
 with (base / "run2_defect.json").open() as f:
     r2 = Run2Parser("run2_defect.json", 1, json.load(f))
+
+with (base / "multiplayer.json").open() as f:
+    mp = Run2Parser("multiplayer.json", 1, json.load(f))
 
 assert rm is not None, "could not load matched run"
 assert wa is not None, "could not load normal watcher run"
@@ -1695,6 +1698,276 @@ class _run2_contents:
         "Boss fight",
     ]
 
+class _multiplayer_contents:
+    character = ['Regent', 'Silent', 'Silent', 'Defect']
+    ids = [76561198050103334, 76561198026140971, 76561198119322688, 76561199007888215]
+    badges = [
+        ["Elite Killer", "Ka-Ching!", "Flawless"],
+        [
+            "Damage Leader",
+            "Debuffer",
+            "Elite Killer",
+            "Big Deck",
+            "Flawless",
+            "Restless",
+            "Team Player",
+        ],
+        ["Elite Killer", "Big Deck"],
+        ["C-c-c-Combo", "Elite Killer", "Big Deck", "Restless", "Team Player"],
+    ]
+    relics = [
+        [
+            "Divine Right",
+            "Massive Scroll",
+            "Bag of Preparation",
+            "Planisphere",
+            "Wing Charm",
+            "Ripple Basin",
+            "Archaic Tooth",
+            "Blood Vial",
+            "Pendulum",
+            "Lasting Candy",
+            "Candelabra",
+            "Signet Ring",
+            "Orange Dough",
+            "Akabeko",
+            "Cauldron",
+            "Festive Popper",
+            "Tuning Fork",
+            "Meat on the Bone",
+            "Permafrost",
+        ],
+        [
+            "Ring of the Snake",
+            "Relic.Dowsing Rod",
+            "Pen Nib",
+            "Bronze Scales",
+            "Oddly Smooth Stone",
+            "Glass Eye",
+            "Sparkling Rouge",
+            "Festive Popper",
+            "Venerable Tea Set",
+            "Blessed Antler",
+            "Snecko Skull",
+            "Lee's Waffle",
+            "Gremlin Horn",
+            "Vajra",
+            "Vambrace",
+        ],
+        [
+            "Ring of the Snake",
+            "New Leaf",
+            "Orichalcum",
+            "Helical Dart",
+            "Permafrost",
+            "Sea Glass",
+            "Lantern",
+            "Meal Ticket",
+            "Gambling Chip",
+            "War Paint",
+            "Brilliant Scarf",
+            "Chemical X",
+            "Anchor",
+            "Twisted Funnel",
+            "Miniature Cannon",
+            "Vambrace",
+        ],
+        [
+            "Cracked Core",
+            "Massive Scroll",
+            "Parrying Shield",
+            "Oddly Smooth Stone",
+            "White Beast Statue",
+            "Glass Eye",
+            "Regal Pillow",
+            "Meat on the Bone",
+            "Eternal Feather",
+            "Reptile Trinket",
+            "Glitter",
+            "Bag of Marbles",
+            "Membership Card",
+            "Prayer Wheel",
+            "Unceasing Top",
+            "Bronze Scales",
+            "Emotion Chip",
+        ],
+    ]
+    deck = [
+        [
+            "Strike",
+            "Strike",
+            "Strike",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Venerate+",
+            "Ascender's Bane",
+            "Crescent Spear",
+            "Astral Pulse",
+            "Spoils of Battle",
+            "Spectrum Shift",
+            "Glitterstream+",
+            "Gather Light",
+            "Wrought in War",
+            "Largesse",
+            "Refine Blade [Swift 1]",
+            "Cosmic Indifference+ [Swift 1]",
+            "Monarch's Gaze",
+            "Meteor Shower",
+            "Plot+",
+            "BEGONE! [Swift 1]",
+            "BEGONE!+ [Swift 1]",
+            "Know Thy Place [Swift 1]",
+            "Metamorphosis",
+            "Refine Blade+ [Swift 1]",
+            "Patter+",
+            "Hidden Cache [Swift 1]",
+            "Bulwark+",
+            "Know Thy Place [Swift 1]",
+            "Mad Science",
+            "Parry",
+            "Summon Forth+",
+            "Alchemize",
+            "Spoils of Battle",
+            "Reflect",
+            "Glitterstream+ [Swift 1]",
+        ],
+        [
+            "Strike",
+            "Strike",
+            "Strike",
+            "Strike",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Neutralize",
+            "Survivor",
+            "Ascender's Bane",
+            "Up My Sleeve",
+            "Blade Dance",
+            "Blade Dance",
+            "Cloak and Dagger",
+            "Backflip",
+            "Hand Trick",
+            "Backflip",
+            "Accuracy+",
+            "Finisher",
+            "Leading Strike",
+            "Envenom+",
+            "Piercing Wail",
+            "Accuracy",
+            "Finisher",
+            "Master Planner+",
+            "Gang Up+",
+            "Blade Symphony+",
+            "Cloak and Dagger",
+            "Piercing Wail",
+            "Piercing Wail",
+            "Sneaky+",
+            "Envenom",
+            "Piercing Wail",
+            "Adrenaline",
+            "Prepared+",
+            "Hidden Daggers",
+            "Abundance+",
+            "Mad Science+",
+            "Infinite Blades",
+        ],
+        [
+            "Strike",
+            "Strike",
+            "Strike",
+            "Strike",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Defend+",
+            "Neutralize",
+            "Survivor",
+            "Ascender's Bane",
+            "Blade Dance",
+            "Pounce+",
+            "Catastrophe+",
+            "Blade Dance+",
+            "Snakebite",
+            "Poisoned Stab",
+            "Bouncing Flask",
+            "Murder",
+            "Memento Mori",
+            "Dagger Throw",
+            "Pounce",
+            "Cloak and Dagger+",
+            "Malaise",
+            "Infernal Blade",
+            "Mangle",
+            "Crimson Mantle+",
+            "Drum of Battle",
+            "Infinite Blades+",
+            "Piercing Wail",
+            "Metamorphosis",
+            "Calculated Gamble+",
+            "Infinite Blades",
+            "Burst+",
+            "Blade Dance",
+            "Prepared",
+            "Sneaky+",
+            "Backstab",
+            "Mad Science",
+            "Blade Dance+",
+            "Piercing Wail",
+        ],
+        [
+            "Strike+",
+            "Strike+",
+            "Strike",
+            "Strike+",
+            "Defend",
+            "Defend",
+            "Defend",
+            "Zap",
+            "Dualcast",
+            "Ascender's Bane",
+            "Energy Surge+",
+            "Rocket Punch",
+            "Hotfix",
+            "Gunk Up",
+            "Glacier+",
+            "Cold Snap",
+            "Lightning Rod",
+            "Creative AI+",
+            "Subroutine+",
+            "Boost Away",
+            "TURBO",
+            "Energy Surge",
+            "Trash to Treasure+",
+            "Imitation Learning",
+            "Overclock",
+            "Hologram",
+            "Coolheaded",
+            "Boot Sequence",
+            "Hibernate+",
+            "Lightning Rod",
+            "Hologram",
+            "Hologram+",
+            "Metamorphosis+",
+            "Flak Cannon",
+            "Helix Drill",
+            "Compact",
+            "Coolheaded+",
+            "Hotfix",
+            "Modded+",
+            "Hotfix [Glam 1]",
+            "Hologram [Glam 1]",
+            "Mad Science",
+            "Gunk Up [Glam 1]",
+            "Double Energy+ [Glam 1]",
+            "Momentum Strike+ [Glam 1]",
+            "Lightning Rod+ [Glam 1]",
+        ],
+    ]
 
 # END CONSTANTS
 
@@ -1797,6 +2070,7 @@ class TestRunParser(TestCase):
         self.assertTrue(wa.won)
         self.assertFalse(streamer.won)
         self.assertTrue(r2.won)
+        self.assertTrue(mp.won)
 
     def test_keys(self):
         k = wa.keys
@@ -2032,7 +2306,6 @@ class TestNodeMatched(TestCase):
             self.assertEqual(save.turns_count, run.turns_count)
 
 class TestFP2(TestCase):
-    # TODO: multiplayer handling
     # this is specifically for things Spire 2 does
     def test_solo_player_index(self):
         self.assertEqual(r2.get_player_index(), 0)
@@ -2043,3 +2316,27 @@ class TestFP2(TestCase):
     def test_room_type(self):
         for node, name in zip(r2.path, _run2_contents.rooms, strict=True):
             self.assertEqual(node.room_type, name)
+
+class TestMultiplayer(TestCase):
+    def test_character(self):
+        for player, expected in zip(mp.players, _multiplayer_contents.character, strict=True):
+            self.assertEqual(player.character, expected)
+
+    def test_id(self):
+        for player, expected in zip(mp.players, _multiplayer_contents.ids, strict=True):
+            self.assertEqual(player.id, expected)
+
+    def test_relics(self):
+        for player, relic_list in zip(mp.players, _multiplayer_contents.relics, strict=True):
+            for relic, expected in zip(player.relics, relic_list, strict=True):
+                self.assertEqual(relic.name, expected)
+
+    def test_deck(self):
+        for player, deck_list in zip(mp.players, _multiplayer_contents.deck, strict=True):
+            for card, expected in zip(player.deck, deck_list, strict=True):
+                self.assertEqual(card.name, expected)
+
+    def test_badges(self):
+        for player, badge_list in zip(mp.players, _multiplayer_contents.badges, strict=True):
+            for badge, expected in zip(player.badges, badge_list, strict=True):
+                self.assertEqual(badge.title, expected)
