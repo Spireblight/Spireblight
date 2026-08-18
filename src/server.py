@@ -572,7 +572,7 @@ class TwitchConn(TBot):
         await channel.send_announcement(moderator=config.twitch.bot_id, message=(
             f"Welcome along {user.display_name} with your {viewer_count} friends! "
             f"Everyone, go give them a follow over at https://twitch.tv/{user.name} - "
-            f"last I checked, they were playing some {chan.game_name}!"
+            f"looks like they were playing {chan.game_name} just now!"
             )
         )
 
