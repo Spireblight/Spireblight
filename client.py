@@ -51,6 +51,9 @@ class Config:
 
         self.user_profile = pathlib.Path(self.user_profile)
 
+        if self.slice_curses:
+            self.slice_curses = pathlib.Path(self.slice_curses)
+
     def export(self):
         return {
             "playing_file": self.playing_file,
@@ -65,67 +68,86 @@ class Config:
             "user_profile": self.user_profile,
         }
 
-async def main():
-    print("Client running. Will periodically check for the savefile and send it over!\n")
-    has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
-    last = 0
-    last_slots = 0
-    lasp = [0, 0, 0]
-    lasp2 = [None, 0, 0, 0] # this is 1-indexed, so use None as filler
-    last_sd = 0
-    last_mt = 0
-    last_mt2 = 0
-    runs_last = {}
-    use_sd = cfg.use_slice
-    use_mt = cfg.use_mt
-    last_exc = None
-    s2_save = True
-    last2 = 0
-    cur2 = 0
-    try:
-        with open("last_run") as f:
-            last_run = f.read().strip()
-    except OSError:
-        last_run = ""
-    possible = None
-    poss_2 = None
-    playing = None
-    timeout = 1
-    if not cfg.server_url or not cfg.secret:
-        print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
-        time.sleep(3)
-        return
+class Main:
+    def __init__(self):
+        print("Client running. Will periodically check for the savefile and send it over!\n")
+        if not cfg.server_url or not cfg.secret:
+            print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
+            time.sleep(3)
+            return
 
-    print(f"User profile folder: {cfg.user_profile}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
+        self.session = None
 
-    if use_mt:
-        mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
-        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
-        print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
+        self.spire1_saves = cfg.spiredir / "saves"
+        self.spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
+        if cfg.modded:
+            self.spire2_saves /= "modded"
 
-        mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
-        mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
-        print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
+        self.last_modified = {
+            "sts1": None,
+            "sts2": None,
+            "slice_dice": None,
+        }
 
-    if use_sd:
-        sd_file = cfg.user_profile / ".prefs" / "slice-and-dice-3"
+    async def run(self):
+        has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
+        last = 0
+        last_slots = 0
+        lasp = [0, 0, 0]
+        lasp2 = [None, 0, 0, 0] # this is 1-indexed, so use None as filler
+        last_mt = 0
+        last_mt2 = 0
+        runs_last = {}
+        use_mt = cfg.use_mt
+        last_exc = None
+        try:
+            with open("last_run") as f:
+                last_run = f.read().strip()
+        except OSError:
+            last_run = ""
+        playing = None
+        timeout = 1
 
-    spire1_saves = cfg.spiredir / "saves"
-    spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
-    if cfg.modded:
-        spire2_saves /= "modded"
+        print(
+            f"User profile folder: {cfg.user_profile}",
+            f"Fetch Slice & Dice Data: {'YES' if cfg.use_slice else 'NO'}",
+            f"Fetch Monster Train Data: {'YES' if cfg.use_mt else 'NO'}",
+            sep="\n"
+        )
 
-    needs_restart = False
+        if use_mt:
+            mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
+            mt_file = mt_folder / "saves" / "save-singlePlayer.json"
+            print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
 
-    async with ClientSession(cfg.server_url) as session:
-        # Check if the app is registered, prompt it if not
+            mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
+            mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
+            print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
+
+        self.session = ClientSession(cfg.server_url)
+
+        await self.check_twitch_credentials()
+
+        while True:
+            try:
+                await asyncio.sleep(timeout)
+                timeout = 1
+
+                await self.sync_slice_dice_data()
+
+            except:
+                pass
+
+    async def check_twitch_credentials(self):
+        """Check if the app is registered, prompt it if not."""
+        needs_restart = False
         try:
             for ttype in ("broadcaster", "bot"):
                 if ttype == "broadcaster":
                     print("Verifying channel access permissions . . .")
                 else:
                     print("Verifying Twitch bot permissions . . .")
-                async with session.post(f"/twitch/check-token/{ttype}", params={"key": cfg.secret}) as resp:
+                async with self.session.post(f"/twitch/check-token/{ttype}", params={"key": cfg.secret}) as resp:
                     if resp.ok:
                         text = await resp.text()
                         match text:
@@ -168,70 +190,134 @@ async def main():
             input("Please wait for the server to reboot, then restart this.")
             exit()
 
+    def get_savefile_sts1(self) -> pathlib.Path:
+        possible = None
+        for file in (cfg.spiredir / "saves").iterdir():
+            if file.name.endswith(".autosave"):
+                if possible is None:
+                    possible = file
+                else:
+                    print("Error: Multiple savefiles detected.")
+                    possible = None
+                    raise ValueError("Multiple savefiles detected")
+
+        return self.spire1_saves / possible
+
+        # make sure caller does this where needed
+        if possible is not None:
+            try:
+                cur = (self.spire1_saves / possible).stat().st_mtime
+            except OSError:
+                possible = None
+
+    def get_savefile_sts2(self) -> pathlib.Path:
+        potential: list[pathlib.Path] = []
+        for file in self.spire2_saves.iterdir():
+            if file.name.startswith("profile"):
+                save2 = file / "saves" / "current_run.save"
+                if save2.exists():
+                    potential.append(save2)
+                else:
+                    save2_mp = file / "saves" / "current_run_mp.save"
+                    if save2_mp.exists():
+                        potential.append(save2_mp)
+
+        if len(potential) == 1:
+            return potential[0]
+
+        print("Error: Multiple savefiles detected.")
+        raise ValueError("Multiple savefiles detected")
+
+        if poss_2 is not None:
+            try:
+                cur2 = poss_2.stat().st_mtime
+            except OSError:
+                poss_2 = None
+
+    async def sync_slice_dice_data(self): # XXX Server side is not updated for S&D 3.x
+        if not cfg.use_slice:
+            return
+
+        file = cfg.user_profile / ".prefs" / "slice-and-dice-3"
+        try:
+            cur = file.stat().st_mtime
+        except OSError:
+            return
+
+        if cur == self.last_modified["slice_dice"]: # not changed, don't do anything
+            return
+
+        with file.open() as f:
+            sd_data = f.read()
+        sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
+
+        async with self.session.post("/sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
+            if resp.ok:
+                self.last_modified["slice_dice"] = cur
+                curses = await resp.read()
+                if curses and cfg.slice_curses:
+                    decoded: list[str] = pickle.loads(curses)
+                    try:
+                        with cfg.slice_curses.open("w") as f:
+                            f.write("\n".join(decoded))
+                    except OSError:
+                        pass
+
+
+
+async def main():
+    print("Client running. Will periodically check for the savefile and send it over!\n")
+    has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
+    last = 0
+    last_slots = 0
+    lasp = [0, 0, 0]
+    lasp2 = [None, 0, 0, 0] # this is 1-indexed, so use None as filler
+    last_sd = 0
+    last_mt = 0
+    last_mt2 = 0
+    runs_last = {}
+    use_sd = cfg.use_slice
+    use_mt = cfg.use_mt
+    last_exc = None
+    s2_save = True
+    last2 = 0
+    try:
+        with open("last_run") as f:
+            last_run = f.read().strip()
+    except OSError:
+        last_run = ""
+    playing = None
+    timeout = 1
+    if not cfg.server_url or not cfg.secret:
+        print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
+        time.sleep(3)
+        return
+
+    print(f"User profile folder: {cfg.user_profile}\nFetch Slice & Dice Data: {'YES' if use_sd else 'NO'}\nFetch Monster Train Data: {'YES' if use_mt else 'NO'}")
+
+    if use_mt:
+        mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
+        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
+        print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
+
+        mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
+        mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
+        print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
+
+    if use_sd:
+        sd_file = cfg.user_profile / ".prefs" / "slice-and-dice-3"
+
+    spire1_saves = cfg.spiredir / "saves"
+    spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
+    if cfg.modded:
+        spire2_saves /= "modded"
+
+    async with ClientSession(cfg.server_url) as session:
         while True:
             try:
                 time.sleep(timeout)
                 start = time.time()
                 timeout = 1
-                if possible is None:
-                    for file in (cfg.spiredir / "saves").iterdir():
-                        if file.name.endswith(".autosave"):
-                            if possible is None:
-                                possible = file
-                            else:
-                                print("Error: Multiple savefiles detected.")
-                                possible = None
-                                raise ValueError("Multiple savefiles detected")
-
-                if possible is not None:
-                    try:
-                        cur = (spire1_saves / possible).stat().st_mtime
-                    except OSError:
-                        possible = None
-
-                if poss_2 is None: # TODO: carry over profiles, more save stuff
-                    potential: list[pathlib.Path] = []
-                    for file in spire2_saves.iterdir():
-                        if file.name.startswith("profile"):
-                            save2 = file / "saves" / "current_run.save"
-                            if save2.exists():
-                                potential.append(save2)
-                            else:
-                                save2_mp = file / "saves" / "current_run_mp.save"
-                                if save2_mp.exists():
-                                    potential.append(save2_mp)
-
-                    if len(potential) == 1:
-                        poss_2 = potential[0]
-
-                if poss_2 is not None:
-                    try:
-                        cur2 = poss_2.stat().st_mtime
-                    except OSError:
-                        poss_2 = None
-
-                if use_sd:
-                    try:
-                        cur_sd = sd_file.stat().st_mtime
-                    except OSError:
-                        pass
-                    else:
-                        if cur_sd != last_sd:
-                            with sd_file.open() as f:
-                                sd_data = f.read()
-                            sd_data = sd_data.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/slice", data={"data": sd_data}, params={"key": cfg.secret}) as resp:
-                                if resp.ok:
-                                    last_sd = cur_sd
-                                    curses = await resp.read()
-                                    if curses and cfg.slice_curses:
-                                        decoded: list[str] = pickle.loads(curses)
-                                        try:
-                                            with open(cfg.slice_curses, "w") as f:
-                                                f.write("\n".join(decoded))
-                                        except OSError:
-                                            pass
-
                 to_send: list[tuple[pathlib.Path, list[str], str, str]] = []
                 files = []
                 if possible is None and poss_2 is None and cfg.sync_runs: # don't check run files during a run
