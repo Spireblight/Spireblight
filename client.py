@@ -5,6 +5,7 @@ import platform
 import pathlib
 import asyncio
 import pickle
+import json
 import time
 import yaml
 import os
@@ -83,11 +84,47 @@ class Main:
         if cfg.modded:
             self.spire2_saves /= "modded"
 
-        self.last_modified = {
-            "sts1": None,
-            "sts2": None,
+        self.last_modified = { # some of these are int, some are str
+            "save_sts1": None,
+            "save_sts2": None,
+            "runs_sts1": None,
+            "runs_sts2": None,
             "slice_dice": None,
         }
+
+        self.last_modified_file = pathlib.Path(".") / "last_modified.json"
+
+        self.load_last_modified()
+
+    def load_last_modified(self):
+        """Load last-modified information, to save on network transfers."""
+        try:
+            with self.last_modified_file.open() as f:
+                data: dict[str, int | str] = json.load(f)
+        except FileNotFoundError:
+            print("last_modified.json not found, will send everything to server.")
+        except PermissionError:
+            print("last_modified.json is not readable, check permissions.")
+        except OSError:
+            print("Could not load data from last_modified.json")
+        else:
+            for key, value in data.items():
+                if key not in self.last_modified:
+                    # it's unlikely to happen, and we store it anyway, just in case
+                    print(f"Unrecognized key {key!r} in last_modified.json, will have no effect")
+                lasval = self.last_modified.get(key)
+                if lasval and value > lasval:
+                    self.last_modified[key] = value
+
+    def save_last_modified(self): # could be a perf bottleneck, since it writes no matter what
+        """Save last-modified information, for cross-session persistence."""
+        try:
+            with self.last_modified_file.open("w") as f:
+                json.dump(self.last_modified, f)
+        except PermissionError:
+            print("last_modified.json is not writable, check permissions.")
+        except OSError:
+            print("Could not write data to last_modified.json")
 
     async def run(self):
         has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
@@ -134,6 +171,15 @@ class Main:
                 timeout = 1
 
                 await self.sync_slice_dice_data()
+
+                sts1_save = self.get_savefile_sts1()
+                sts2_save = self.get_savefile_sts2()
+
+                if sts1_save is None and sts2_save is None and cfg.sync_runs:
+                    await self.sync_runfiles_sts1()
+                    await self.sync_runfiles_sts2()
+
+                self.save_last_modified()
 
             except:
                 pass
@@ -191,6 +237,12 @@ class Main:
             exit()
 
     def get_savefile_sts1(self) -> pathlib.Path:
+        """Find and return the current run save file, or None if no run is ongoing.
+
+        :raises ValueError: If multiple possible saves are detected.
+        :return: Slay the Spire current run save file.
+        :rtype: pathlib.Path
+        """
         possible = None
         for file in (cfg.spiredir / "saves").iterdir():
             if file.name.endswith(".autosave"):
@@ -201,7 +253,11 @@ class Main:
                     possible = None
                     raise ValueError("Multiple savefiles detected")
 
-        return self.spire1_saves / possible
+        # fun fact: and/or binary operators always return one of their operands
+        # if the first operand ('possible') is false, it always returns it
+        # otherwise, it returns whatever the second one is, without even checking it
+        # or is the same, but returns the first if it's true instead
+        return possible and self.spire1_saves / possible
 
         # make sure caller does this where needed
         if possible is not None:
@@ -211,6 +267,12 @@ class Main:
                 possible = None
 
     def get_savefile_sts2(self) -> pathlib.Path:
+        """Find and return the current run save file, or None if no run is ongoing.
+
+        :raises ValueError: If multiple possible saves are detected.
+        :return: Slay the Spire 2 current run save file.
+        :rtype: pathlib.Path
+        """
         potential: list[pathlib.Path] = []
         for file in self.spire2_saves.iterdir():
             if file.name.startswith("profile"):
@@ -233,6 +295,65 @@ class Main:
                 cur2 = poss_2.stat().st_mtime
             except OSError:
                 poss_2 = None
+
+    async def sync_runfiles_sts1(self):
+        """Fetch and sync the Spire 1 run files."""
+        last_sent = ""
+        update = True
+        last = self.last_modified.get("runs_sts1", "")
+        for path, folders, _f in (cfg.spiredir / "runs").walk():
+            for folder in folders:
+                profile = "0"
+                if folder[0].isdigit():
+                    profile = folder[0]
+                for p1, d1, f1 in (path / folder).walk():
+                    for file in f1:
+                        if file > last:
+                            with (p1 / file).open() as f:
+                                content = f.read()
+                            data = {
+                                "run": content.encode("utf-8", "xmlcharrefreplace"),
+                                "name": file,
+                                "profile": profile,
+                                "version": "1",
+                            }
+                            async with self.session.post("/sync/run", data=data, params={"key": cfg.secret}) as resp:
+                                if not resp.ok:
+                                    update = False
+                                elif update:
+                                    last_sent = max(last_sent, file)
+
+        self.last_modified["runs_sts1"] = last_sent
+
+    async def sync_runfiles_sts2(self):
+        """Fetch and sync the Spire 2 run files."""
+        last_sent = ""
+        update = True
+        last = self.last_modified.get("runs_sts2", "")
+        for path, folders, _f in self.spire2_saves.walk():
+            for folder in folders:
+                profile = folder[-1]
+                runpath = path / folder / "saves" / "history"
+                if not runpath.exists():
+                    continue
+                for p2, d2, f2 in runpath.walk():
+                    for file in f2:
+                        if file > last:
+                            with (p2 / file).open() as f:
+                                content = f.read()
+                            data = {
+                                "run": content.encode("utf-8", "xmlcharrefreplace"),
+                                "name": file,
+                                "profile": profile,
+                                "version": "2",
+                            }
+                            async with self.session.post("/sync/run", data=data, params={"key": cfg.secret}) as resp:
+                                if not resp.ok:
+                                    update = False
+                                elif update:
+                                    last_sent = max(last_sent, file)
+
+        self.last_modified["runs_sts2"] = last_sent
 
     async def sync_slice_dice_data(self): # XXX Server side is not updated for S&D 3.x
         if not cfg.use_slice:
@@ -318,34 +439,6 @@ async def main():
                 time.sleep(timeout)
                 start = time.time()
                 timeout = 1
-                to_send: list[tuple[pathlib.Path, list[str], str, str]] = []
-                files = []
-                if possible is None and poss_2 is None and cfg.sync_runs: # don't check run files during a run
-                    # Spire 1
-                    for path, folders, _f in (cfg.spiredir / "runs").walk():
-                        for folder in folders:
-                            profile = "0"
-                            if folder[0].isdigit():
-                                profile = folder[0]
-                            for p1, d1, f1 in (path / folder).walk():
-                                for file in f1:
-                                    if file > last_run:
-                                        to_send.append((p1, file, profile, "1"))
-                                        files.append(file)
-
-                    # Spire 2
-                    for path, folders, _f in spire2_saves.walk():
-                        for folder in folders:
-                            profile = folder[-1]
-                            runpath = path / folder / "saves" / "history"
-                            if not runpath.exists():
-                                continue
-                            for p2, d2, f2 in runpath.walk():
-                                for file in f2:
-                                    if file > last_run:
-                                        to_send.append((p2, file, profile, "2"))
-                                        files.append(file)
-
                 try:
                     if possible is None and poss_2 is None:
                         async with session.get("/playing", params={"key": cfg.secret}) as resp:
@@ -527,7 +620,7 @@ async def main():
                             with possible.open() as f:
                                 content = f.read()
                         except OSError:
-                            possible = None
+                            pass#possible = None
                         else:
                             content = content.encode("utf-8", "xmlcharrefreplace")
                             char = possible.name[:-9].encode("utf-8", "xmlcharrefreplace")
@@ -542,7 +635,7 @@ async def main():
                             with poss_2.open() as f:
                                 content = f.read()
                         except OSError:
-                            poss_2 = None
+                            pass#poss_2 = None
                         else:
                             content = content.encode("utf-8", "xmlcharrefreplace")
                             async with session.post("/sync/save-2", data={"savefile": content}, params={"key": cfg.secret, "start": start}) as resp:
