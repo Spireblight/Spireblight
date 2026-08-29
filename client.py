@@ -175,14 +175,17 @@ class Main:
                 sts1_save = self.get_savefile_sts1()
                 sts2_save = self.get_savefile_sts2()
 
-                if sts1_save is None and sts2_save is None and cfg.sync_runs:
-                    await self.sync_runfiles_sts1()
-                    await self.sync_runfiles_sts2()
+                if sts1_save is None and sts2_save is None:
+                    if cfg.sync_runs:
+                        await self.sync_runfiles_sts1()
+                        await self.sync_runfiles_sts2()
+
+                    await self.get_now_playing()
 
                 self.save_last_modified()
 
             except:
-                pass
+                pass # todo
 
     async def check_twitch_credentials(self):
         """Check if the app is registered, prompt it if not."""
@@ -384,7 +387,30 @@ class Main:
                     except OSError:
                         pass
 
+    async def get_now_playing(self):
+        async with self.session.get("/playing", params={"key": cfg.secret}) as resp:
+            if resp.ok:
+                j = await resp.json()
+                if j and j.get("item"):
+                    track = j['item']['name']
+                    artists = ", ".join(x['name'] for x in j['item']['artists'])
+                    album = j['item']['album']['name']
+                    text = f"{track}\n{artists}\n{album}"
+                    if playing != text:
+                        try:
+                            with open(cfg.playing_file, "w") as f:
+                                f.write(text)
+                            playing = text
+                        except OSError:
+                            pass
 
+                else:
+                    playing = None
+                    try:
+                        with open(cfg.playing_file, "w") as f:
+                            pass # make it an empty file
+                    except OSError:
+                        pass
 
 async def main():
     print("Client running. Will periodically check for the savefile and send it over!\n")
@@ -440,47 +466,6 @@ async def main():
                 start = time.time()
                 timeout = 1
                 try:
-                    if possible is None and poss_2 is None:
-                        async with session.get("/playing", params={"key": cfg.secret}) as resp:
-                            if resp.ok:
-                                j = await resp.json()
-                                if j and j.get("item"):
-                                    track = j['item']['name']
-                                    artists = ", ".join(x['name'] for x in j['item']['artists'])
-                                    album = j['item']['album']['name']
-                                    text = f"{track}\n{artists}\n{album}"
-                                    if playing != text:
-                                        try:
-                                            with open(cfg.playing_file, "w") as f:
-                                                f.write(text)
-                                            playing = text
-                                        except OSError:
-                                            pass
-
-                                else:
-                                    playing = None
-                                    try:
-                                        with open(cfg.playing_file, "w") as f:
-                                            pass # make it an empty file
-                                    except OSError:
-                                        pass
-
-                    all_sent = True
-                    if to_send: # send runs first so savefile can seamlessly transfer its cache
-                        for path, file, profile, version in to_send:
-                            if file:
-                                path /= file
-                            with path.open() as f:
-                                content = f.read()
-                            content = content.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/run", data={"run": content, "name": file, "profile": profile, "version": version}, params={"key": cfg.secret, "start": start}) as resp:
-                                if not resp.ok:
-                                    all_sent = False
-                        if all_sent:
-                            last_run = max(files)
-                            with open("last_run", "w") as f:
-                                f.write(last_run)
-
                     # XXX: consolidate into one endpoint
                     if possible is None and has_save: # server has a save, but we don't (anymore)
                         async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:

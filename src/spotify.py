@@ -3,23 +3,23 @@
 This exposes a single instance, and the main class should not be instantiated more than once."""
 
 from aiohttp import ClientSession, ContentTypeError
-from aiohttp.web import Request, Response, HTTPForbidden
+from aiohttp.web import Request, Response, HTTPForbidden, HTTPServiceUnavailable
 
 import datetime
 import secrets
 import base64
 import json
 
-# lines here end satisfyingly
+from src.webpage import router
 from src.config import config
 from src.logger import logger
-from src.utils import getfile
+from src.utils import getfile, get_req_data, catch_error
 
-from src.webpage import router
 
 __all__ = ["spotify"]
 
 @router.get("/spotify/oauth2")
+@catch_error
 async def get_new_tokens(req: Request):
     params = req.query
     if spotify.token_handler.state != params["state"]:
@@ -31,6 +31,17 @@ async def get_new_tokens(req: Request):
         raise HTTPForbidden(reason=params["error"])
 
     await spotify.token_handler.get_new_access_token(code=params["code"])
+
+@router.get("/spotify/now-playing")
+@catch_error
+async def get_now_playing(req: Request):
+    await get_req_data(req)  # just checking if key is OK
+
+    data = await spotify.now_playing()
+
+    if data:
+        return Response(text=json.dumps(data), content_type="application/json")
+    raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
 class TokenHandler:
     _filename_default: str = "spotify_tokens.json" #: JSON file under the data/ folder where tokens will be saved.
