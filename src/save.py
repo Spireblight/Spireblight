@@ -595,7 +595,6 @@ async def receive_save(req: Request):
             json.dump(j, f, indent=config.server.json_indent)
         else:
             f.write("{}")
-    logger.debug(f"Updated data. Final transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()
 

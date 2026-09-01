@@ -8,6 +8,7 @@ import pickle
 import json
 import time
 import yaml
+import sys
 import os
 
 class Config:
@@ -78,6 +79,7 @@ class Main:
             return
 
         self.session = None
+        self.last_exception: Exception | None = None
 
         self.spire1_saves = cfg.spiredir / "saves"
         self.spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
@@ -100,6 +102,27 @@ class Main:
         self.last_modified_file = pathlib.Path(".") / "last_modified.json"
 
         self.load_last_modified()
+
+    def is_exception_recurring(self) -> bool:
+        """Check if the ongoing exception keeps re-ocurring.
+
+        :raises RuntimeError: If there is no active exception.
+        :return: True if the exception is the same as the previous one, False otherwise.
+        :rtype: bool
+        """
+        exc = sys.exception()
+        if exc is None:
+            raise RuntimeError("no exception ongoing")
+
+        ret = False # if there was no prior exception, it is new
+        if self.last_exception is not None:
+            ret = (
+                type(exc) is type(self.last_exception) and
+                exc.args == self.last_exception.args # exceptions are never equal, so args is second best bet
+            )
+
+        self.last_exception = exc
+        return ret
 
     def load_last_modified(self):
         """Load last-modified information, to save on network transfers."""
@@ -160,12 +183,6 @@ class Main:
         last_mt2 = 0
         runs_last = {}
         use_mt = cfg.use_mt
-        last_exc = None
-        try:
-            with open("last_run") as f:
-                last_run = f.read().strip()
-        except OSError:
-            last_run = ""
         playing = None
         timeout = 1
 
@@ -208,8 +225,21 @@ class Main:
 
                 self.save_last_modified()
 
-            except:
-                pass # todo
+            except (ClientError, ServerDisconnectedError):
+                timeout = 10 # give it a bit of time
+                print("Error: Server is offline! Retrying in 10s")
+                continue
+            except Exception:
+                # since the loop is every second, don't spam the report feature
+                if self.is_exception_recurring():
+                    continue
+                text = traceback.format_exc()
+                try:
+                    async with self.session.post("/report", data={"traceback": text}, params={"key": cfg.secret}) as resp:
+                        if not resp.ok:
+                            print(text)
+                except Exception:
+                    print(text)
 
     async def check_twitch_credentials(self):
         """Check if the app is registered, prompt it if not."""
