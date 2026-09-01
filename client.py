@@ -84,6 +84,11 @@ class Main:
         if cfg.modded:
             self.spire2_saves /= "modded"
 
+        self.timestamps = {
+            "last_modified": None,
+            "last_committed": None,
+        }
+
         self.last_modified = { # some of these are int, some are str
             "save_sts1": None,
             "save_sts2": None,
@@ -116,8 +121,25 @@ class Main:
                 if lasval and value > lasval:
                     self.last_modified[key] = value
 
-    def save_last_modified(self): # could be a perf bottleneck, since it writes no matter what
-        """Save last-modified information, for cross-session persistence."""
+            self.timestamps["last_modified"] = self.timestamps["last_committed"] = time.time()
+
+    def modified(self, key: str, value: str | int | float):
+        """Keep track of what was modified, to only update when needed."""
+        if key not in self.last_modified:
+            raise KeyError(f"Could not find key {key!r} for last modified")
+
+        self.last_modified[key] = value
+        self.timestamps["last_modified"] = time.time()
+
+    def save_last_modified(self, *, force=False):
+        """Save last-modified information, for cross-session persistence.
+        
+        :param force: Whether to force a commit to disk.
+        :type force: bool, default False"""
+
+        ts = self.timestamps
+        if not force and ts["last_modified"] == ts["last_committed"]: # nothing changed
+            return
         try:
             with self.last_modified_file.open("w") as f:
                 json.dump(self.last_modified, f)
@@ -125,6 +147,8 @@ class Main:
             print("last_modified.json is not writable, check permissions.")
         except OSError:
             print("Could not write data to last_modified.json")
+        else:
+            ts["last_modified"] = ts["last_committed"] = time.time()
 
     async def run(self):
         has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
@@ -326,7 +350,7 @@ class Main:
                                 elif update:
                                     last_sent = max(last_sent, file)
 
-        self.last_modified["runs_sts1"] = last_sent
+        self.modified("runs_sts1", last_sent)
 
     async def sync_runfiles_sts2(self):
         """Fetch and sync the Spire 2 run files."""
@@ -356,7 +380,7 @@ class Main:
                                 elif update:
                                     last_sent = max(last_sent, file)
 
-        self.last_modified["runs_sts2"] = last_sent
+        self.modified("runs_sts2", last_sent)
 
     async def sync_slice_dice_data(self): # XXX Server side is not updated for S&D 3.x
         if not cfg.use_slice:
@@ -386,6 +410,8 @@ class Main:
                             f.write("\n".join(decoded))
                     except OSError:
                         pass
+                    else:
+                        self.modified("slice_dice", time.time())
 
     async def get_now_playing(self):
         async with self.session.get("/playing", params={"key": cfg.secret}) as resp:
