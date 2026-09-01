@@ -86,6 +86,18 @@ class Main:
         if cfg.modded:
             self.spire2_saves /= "modded"
 
+        self.last_sent = { # last save timestamp, or time.time() if no save
+            "save_sts1": None,
+            "save_sts2": None,
+        }
+
+        self.all_sent = {
+            "save_sts1": False,
+            "save_sts2": False,
+            "runs_sts1": False,
+            "runs_sts2": False,
+        }
+
         self.timestamps = {
             "last_modified": None,
             "last_committed": None,
@@ -293,12 +305,12 @@ class Main:
             input("Please wait for the server to reboot, then restart this.")
             exit()
 
-    def get_savefile_sts1(self) -> pathlib.Path:
+    def get_savefile_sts1(self) -> pathlib.Path | None:
         """Find and return the current run save file, or None if no run is ongoing.
 
         :raises ValueError: If multiple possible saves are detected.
         :return: Slay the Spire current run save file.
-        :rtype: pathlib.Path
+        :rtype: pathlib.Path | None
         """
         possible = None
         for file in (cfg.spiredir / "saves").iterdir():
@@ -323,12 +335,17 @@ class Main:
             except OSError:
                 possible = None
 
-    def get_savefile_sts2(self) -> pathlib.Path:
+    async def sync_savefile_sts1(self, savefile: pathlib.Path | None):
+        if savefile is None: # no save locally, check if we must inform
+            if not self.all_sent["save_sts1"] or self.last_sent["save_sts1"]: # idk if this is correct, im too stoned and stopping here
+                pass
+
+    def get_savefile_sts2(self) -> pathlib.Path | None:
         """Find and return the current run save file, or None if no run is ongoing.
 
         :raises ValueError: If multiple possible saves are detected.
         :return: Slay the Spire 2 current run save file.
-        :rtype: pathlib.Path
+        :rtype: pathlib.Path | None
         """
         potential: list[pathlib.Path] = []
         for file in self.spire2_saves.iterdir():
@@ -381,6 +398,7 @@ class Main:
                                     last_sent = max(last_sent, file)
 
         self.modified("runs_sts1", last_sent)
+        self.all_sent["runs_sts1"] = update
 
     async def sync_runfiles_sts2(self):
         """Fetch and sync the Spire 2 run files."""
@@ -411,6 +429,7 @@ class Main:
                                     last_sent = max(last_sent, file)
 
         self.modified("runs_sts2", last_sent)
+        self.all_sent["runs_sts2"] = update
 
     async def sync_slice_dice_data(self): # XXX Server side is not updated for S&D 3.x
         if not cfg.use_slice:
