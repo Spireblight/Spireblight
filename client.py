@@ -86,7 +86,7 @@ class Main:
         if cfg.modded:
             self.spire2_saves /= "modded"
 
-        self.last_sent = { # last save timestamp, or time.time() if no save
+        self.last_sent = { # last save timestamp, or None if no save
             "save_sts1": None,
             "save_sts2": None,
         }
@@ -235,6 +235,12 @@ class Main:
 
                     await self.get_now_playing()
 
+                if sts1_save is None:
+                    await self.sync_savefile(None, 1)
+
+                if sts2_save is None:
+                    await self.sync_savefile(None, 2)
+
                 self.save_last_modified()
 
             except (ClientError, ServerDisconnectedError):
@@ -328,18 +334,6 @@ class Main:
         # or is the same, but returns the first if it's true instead
         return possible and self.spire1_saves / possible
 
-        # make sure caller does this where needed
-        if possible is not None:
-            try:
-                cur = (self.spire1_saves / possible).stat().st_mtime
-            except OSError:
-                possible = None
-
-    async def sync_savefile_sts1(self, savefile: pathlib.Path | None):
-        if savefile is None: # no save locally, check if we must inform
-            if not self.all_sent["save_sts1"] or self.last_sent["save_sts1"]: # idk if this is correct, im too stoned and stopping here
-                pass
-
     def get_savefile_sts2(self) -> pathlib.Path | None:
         """Find and return the current run save file, or None if no run is ongoing.
 
@@ -364,11 +358,59 @@ class Main:
         print("Error: Multiple savefiles detected.")
         raise ValueError("Multiple savefiles detected")
 
-        if poss_2 is not None:
+    async def sync_savefile(self, savefile: pathlib.Path | None, game_version: int):
+        key = f"save_sts{game_version}"
+        post = f"/sync/save-{game_version}"
+        if savefile is None: # no save locally, check if we must inform
+            # either we didn't send it all (just restarted) or there is a savefile on the server
+            if not self.all_sent[key] or self.last_sent[key] is not None:
+                async with self.session.post(
+                    post,
+                    data = {
+                        "savefile": b"",
+                        "character": b"",
+                    },
+                    params = {
+                        "key": cfg.secret,
+                        "has_run": str(self.all_sent[key]).lower(),
+                    }) as resp:
+
+                    if resp.ok:
+                        self.all_sent[key] = True
+                        self.last_sent[key] = None # no save
+
+            return # the rest of the code expects a savefile
+
+        try:
+            mtime = savefile.stat().st_mtime # last-modified timestamp
+        except FileNotFoundError:
+            return # basically a race condition, just forget about it
+
+        if mtime != self.last_sent[key]: # just don't send if it's identical
+            content = ""
             try:
-                cur2 = poss_2.stat().st_mtime
+                with savefile.open() as f:
+                    content = f.read()
+            except PermissionError:
+                print(f"Cannot read savefile for Spire {game_version}, check permissions")
             except OSError:
-                poss_2 = None
+                pass
+            if content:
+                data = {"savefile": content.encode("utf-8", "xmlcharrefreplace")}
+                if game_version == 1:
+                    char, _, ext = savefile.name.partition(".")
+                    data["character"] = char.encode("utf-8", "xmlcharrefreplace")
+                async with self.session.post(
+                    post,
+                    data = data,
+                    params = {
+                        "key": cfg.secret,
+                        "has_run": "false",
+                    }) as resp:
+
+                    if resp.ok:
+                        self.last_sent[key] = mtime
+                        self.all_sent[key] = True
 
     async def sync_runfiles_sts1(self):
         """Fetch and sync the Spire 1 run files."""
@@ -541,17 +583,6 @@ async def main():
                 start = time.time()
                 timeout = 1
                 try:
-                    # XXX: consolidate into one endpoint
-                    if possible is None and has_save: # server has a save, but we don't (anymore)
-                        async with session.post("/sync/save", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
-                            if resp.ok:
-                                has_save = False
-
-                    if poss_2 is None and s2_save: # server has a save, but we don't (anymore)
-                        async with session.post("/sync/save-2", data={"savefile": b"", "character": b""}, params={"key": cfg.secret, "has_run": str(all_sent).lower(), "start": start}) as resp:
-                            if resp.ok:
-                                s2_save = False
-
                     if use_mt:
                         ## MT1
                         try:
