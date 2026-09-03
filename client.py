@@ -103,12 +103,17 @@ class Main:
             "last_committed": None,
         }
 
-        self.last_modified = { # some of these are int, some are str
-            "save_sts1": None,
-            "save_sts2": None,
+        self.last_modified = { # these are int (or float) timestamps
             "runs_sts1": None,
             "runs_sts2": None,
             "slice_dice": None,
+            "profile_slots": None,
+            "profile_0": None,
+            "profile_1": None,
+            "profile_2": None,
+            "profile_11": None,
+            "profile_12": None,
+            "profile_13": None,
         }
 
         self.last_modified_file = pathlib.Path(".") / "last_modified.json"
@@ -158,12 +163,14 @@ class Main:
 
             self.timestamps["last_modified"] = self.timestamps["last_committed"] = time.time()
 
-    def modified(self, key: str, value: str | int | float):
+    def update_modified_timestamp(self, **kwargs: dict[str, str | int | float | None]):
         """Keep track of what was modified, to only update when needed."""
-        if key not in self.last_modified:
-            raise KeyError(f"Could not find key {key!r} for last modified")
+        for key, value in kwargs.items():
+            if key not in self.last_modified:
+                raise KeyError(f"Could not find key {key!r} for last modified")
 
-        self.last_modified[key] = value
+            if value is not None: # None here means hasn't been modified
+                self.last_modified[key] = value
         self.timestamps["last_modified"] = time.time()
 
     def save_last_modified(self, *, force=False):
@@ -186,16 +193,8 @@ class Main:
             ts["last_modified"] = ts["last_committed"] = time.time()
 
     async def run(self):
-        has_save = True # whether the server has a save file - we lie at first in case we just restarted and it has an old one
-        last = 0
-        last_slots = 0
-        lasp = [0, 0, 0]
-        lasp2 = [None, 0, 0, 0] # this is 1-indexed, so use None as filler
         last_mt = 0
         last_mt2 = 0
-        runs_last = {}
-        use_mt = cfg.use_mt
-        playing = None
         timeout = 1
 
         print(
@@ -205,7 +204,7 @@ class Main:
             sep="\n"
         )
 
-        if use_mt:
+        if cfg.use_mt:
             mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
             mt_file = mt_folder / "saves" / "save-singlePlayer.json"
             print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
@@ -235,11 +234,10 @@ class Main:
 
                     await self.get_now_playing()
 
-                if sts1_save is None:
-                    await self.sync_savefile(None, 1)
+                await self.sync_profiles()
 
-                if sts2_save is None:
-                    await self.sync_savefile(None, 2)
+                await self.sync_savefile(sts1_save, 1)
+                await self.sync_savefile(sts2_save, 2)
 
                 self.save_last_modified()
 
@@ -439,7 +437,7 @@ class Main:
                                 elif update:
                                     last_sent = max(last_sent, file)
 
-        self.modified("runs_sts1", last_sent)
+        self.update_modified_timestamp(runs_sts1=last_sent)
         self.all_sent["runs_sts1"] = update
 
     async def sync_runfiles_sts2(self):
@@ -470,8 +468,55 @@ class Main:
                                 elif update:
                                     last_sent = max(last_sent, file)
 
-        self.modified("runs_sts2", last_sent)
+        self.update_modified_timestamp(runs_sts2=last_sent)
         self.all_sent["runs_sts2"] = update
+
+    async def sync_profiles(self):
+        """Update all Spire profiles."""
+        data = {
+            "slots": b"",
+            "0": b"",
+            "1": b"",
+            "2": b"",
+            "11": b"",
+            "12": b"",
+            "13": b"",
+        }
+
+        files = { # some of these may not exist - we check that later
+            "slots": cfg.spiredir / "preferences" / "STSSaveSlots",
+            "0": cfg.spiredir / "preferences" / "STSPlayer",
+            "1": cfg.spiredir / "preferences" / "1_STSPlayer",
+            "2": cfg.spiredir / "preferences" / "2_STSPlayer",
+            "11": self.spire2_saves / "profile1" / "saves" / "progress.save",
+            "12": self.spire2_saves / "profile2" / "saves" / "progress.save",
+            "13": self.spire2_saves / "profile3" / "saves" / "progress.save",
+        }
+
+        modified = {
+            "slots": None,
+            "0": None,
+            "1": None,
+            "2": None,
+            "11": None,
+            "12": None,
+            "13": None,
+        }
+
+        for name, file in files.items():
+            mtime = file.stat().st_mtime
+            if mtime != self.last_modified[f"profile_{name}"]: # modified since last time, send
+                with file.open() as f:
+                    data[name] = f.read().encode("utf-8", "xmlcharrefreplace")
+
+                modified[name] = mtime
+
+        if any(modified.values()): # see if anything was modified at all
+            async with self.session.post("/sync/profile", data=data, params={"key": cfg.secret}) as resp:
+                if resp.ok:
+                    self.update_modified_timestamp(**modified)
+                else:
+                    print("Warning: Profiles were not successfully updated. Desyncs may occur.")
 
     async def sync_slice_dice_data(self): # XXX Server side is not updated for S&D 3.x
         if not cfg.use_slice:
@@ -502,7 +547,7 @@ class Main:
                     except OSError:
                         pass
                     else:
-                        self.modified("slice_dice", time.time())
+                        self.update_modified_timestamp("slice_dice", time.time())
 
     async def get_now_playing(self):
         async with self.session.get("/playing", params={"key": cfg.secret}) as resp:
@@ -650,60 +695,6 @@ async def main():
                                         runs_last.update(mt2_runs_last)
                                     else:
                                         print(f"ERROR: Monster Train 2 data not properly sent:\n{resp.reason}")
-
-                    # update all profiles
-                    data = {
-                        "slots": b"",
-                        "0": b"",
-                        "1": b"",
-                        "2": b"",
-                        "11": b"",
-                        "12": b"",
-                        "13": b"",
-                    }
-
-                    # always send the save slots; it's possible it changed, even during a run (e.g. wall card)
-                    cur_slots = (cfg.spiredir / "preferences" / "STSSaveSlots").stat().st_mtime
-                    if cur_slots != last_slots:
-                        with (cfg.spiredir / "preferences" / "STSSaveSlots").open() as f:
-                            data["slots"] = f.read().encode("utf-8", "xmlcharrefreplace")
-                    tobe_lasp = [0, 0, 0]
-                    for i in range(3):
-                        name = "STSPlayer"
-                        if i:
-                            name = f"{i}_{name}"
-                        try:
-                            fname = cfg.spiredir / "preferences" / name
-                            tobe_lasp[i] = m = fname.stat().st_mtime
-                            if m == lasp[i]:
-                                continue # unchanged, don't bother
-                            with fname.open() as f:
-                                data[str(i)] = f.read().encode("utf-8", "xmlcharrefreplace")
-                        except OSError:
-                            continue
-
-                    tobe_lasp2 = [None, 0, 0, 0]
-                    for i in range(3):
-                        i += 1
-                        name = f"profile{i}"
-                        try:
-                            fname = spire2_saves / name / "saves" / "progress.save"
-                            tobe_lasp2[i] = m = fname.stat().st_mtime
-                            if m == lasp2[i]:
-                                continue # unchanged
-                            with fname.open() as f:
-                                data[str(i+10)] = f.read().encode("utf-8", "xmlcharrefreplace")
-                        except OSError:
-                            continue
-
-                    if any(data.values()):
-                        async with session.post("/sync/profile", data=data, params={"key": cfg.secret, "start": start}) as resp:
-                            if resp.ok:
-                                lasp = tobe_lasp
-                                lasp2 = tobe_lasp2
-                                last_slots = cur_slots
-                            else:
-                                print("Warning: Profiles were not successfully updated. Desyncs may occur.")
 
                     if possible is not None and cur != last:
                         content = ""
