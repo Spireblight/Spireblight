@@ -71,14 +71,31 @@ class Config:
         }
 
 class Main:
+    """Main client class. Only one instance should be active at a time."""
     def __init__(self):
+        """Setup important runtime variables.
+
+        `last_sent` is for the last save sent for Spire 1 & 2. They have their own dict
+                    because the file may not exist, and we should check it regularly.
+        `all_sent` stores whether the Spire saves were properly sent. This is used for
+                   startup and persistence, so that we keep trying for the same save
+                   if we didn't send it, and to guarantee a syncing on startup.
+        `timestamps` keeps track of when the `last_modified` dict was last modified
+                     and saved to disk ("committed").
+        `last_modified` keeps track of the last-modified time (or "mtime") for the
+                        various files on disk. They will be None if they haven't been
+                        synced, or if the file doesn't exist. This helps prevent
+                        needless disk read operations (which we already do a lot).
+        """
+
+
         print("Client running. Will periodically check for the savefile and send it over!\n")
         if not cfg.server_url or not cfg.secret:
             print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
             time.sleep(3)
             exit()
 
-        self.session = None
+        self.session: ClientSession = None
         self.last_exception: Exception | None = None
 
         self.spire1_saves = cfg.spiredir / "saves"
@@ -94,8 +111,6 @@ class Main:
         self.all_sent = {
             "save_sts1": False,
             "save_sts2": False,
-            "runs_sts1": False,
-            "runs_sts2": False,
         }
 
         self.timestamps = {
@@ -202,15 +217,6 @@ class Main:
             sep="\n"
         )
 
-        if cfg.use_mt:
-            mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
-            mt_file = mt_folder / "saves" / "save-singlePlayer.json"
-            print(f"\nFolder-MT1: {mt_folder}\nSavefile-MT1: {mt_file}")
-
-            mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
-            mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
-            print(f"\nFolder-MT2: {mt2_folder}\nSavefile-MT2: {mt2_file}")
-
         self.session = ClientSession(cfg.server_url)
 
         await self.check_twitch_credentials()
@@ -237,6 +243,9 @@ class Main:
 
                 await self.sync_savefile(sts1_save, 1)
                 await self.sync_savefile(sts2_save, 2)
+
+                await self.sync_monster_train_save(1)
+                await self.sync_monster_train_save(2)
 
                 self.save_last_modified()
 
@@ -408,6 +417,8 @@ class Main:
                     if resp.ok:
                         self.last_sent[key] = mtime
                         self.all_sent[key] = True
+                    else:
+                        self.all_sent[key] = False
 
     async def sync_runfiles_sts1(self):
         """Fetch and sync the Spire 1 run files."""
@@ -437,7 +448,6 @@ class Main:
                                     last_sent = max(last_sent, file)
 
         self.update_modified_timestamp(runs_sts1=last_sent)
-        self.all_sent["runs_sts1"] = update
 
     async def sync_runfiles_sts2(self):
         """Fetch and sync the Spire 2 run files."""
@@ -468,7 +478,6 @@ class Main:
                                     last_sent = max(last_sent, file)
 
         self.update_modified_timestamp(runs_sts2=last_sent)
-        self.all_sent["runs_sts2"] = update
 
     async def sync_profiles(self):
         """Update all Spire profiles."""
@@ -554,6 +563,43 @@ class Main:
                         pass
                     else:
                         self.update_modified_timestamp("slice_dice", time.time())
+
+    def get_monster_train_folder(self, game_version: int):
+        """Get the filepatch for the Monster Train data. May not exist."""
+        file = "MonsterTrain"
+        if game_version == 2:
+            file += "2"
+
+        return cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / file
+
+    async def sync_monster_train_save(self, game_version: int):
+        if not cfg.use_mt:
+            return
+
+        mt_folder = self.get_monster_train_folder(game_version)
+        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
+
+        if not mt_file.exists():
+            print(f"We do not have a savefile for Monster Train {game_version}")
+            return
+
+        mtime = mt_file.stat().st_mtime
+        if mtime != self.last_modified[f"current_mt{game_version}"]:
+            data = {"game_version": game_version}
+
+            try:
+                with mt_file.open("rb") as f:
+                    data["save"] = f.read()
+            except PermissionError:
+                print(f"Could not read Monster Train {game_version} savefile.")
+                return
+
+            async with self.session.post("/sync/monster-train/save", data=data, params={"key": cfg.secret}) as resp:
+                if resp.ok:
+                    d = {f"current_mt{game_version}": mtime}
+                    self.update_modified_timestamp(**d)
+                else:
+                    print(f"ERROR: Monster Train {game_version} data not properly sent:\n{resp.reason}")
 
     async def get_now_playing(self):
         async with self.session.get("/playing", params={"key": cfg.secret}) as resp:

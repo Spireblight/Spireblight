@@ -3,11 +3,11 @@ from typing import Generator
 import json
 import os
 
-from aiohttp.web import Request, Response, HTTPServiceUnavailable, FileField
+from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.static import get, get_safe, Challenge, Mutator, Artifact, Character
 from src.webpage import router
-from src.utils import get_req_data
+from src.utils import get_req_data, getfile
 
 from src.typehints import ContextType
 
@@ -17,7 +17,7 @@ class MonsterSave:
     def __init__(self, file):
         data = None
         try:
-            with open(os.path.join("data", file), "r") as f:
+            with getfile(file, "r") as f:
                 data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
@@ -84,6 +84,25 @@ async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
     if ctx is not None:
         await ctx.reply("Not in a run.")
 
+@router.post("/sync/monster-train/save")
+async def receive_save_data(req: Request):
+    save, game_version = await get_req_data(req, "save", "game_version")
+    data = json.loads(save)
+    if game_version == 1:
+        savefile = _savefile
+        filename = "monster-train-save.json"
+    elif game_version == 2:
+        savefile = _save2
+        filename = "monster-train-2-save.json"
+    else:
+        raise HTTPForbidden(reason="game_version can only be 1 or 2")
+
+    savefile.update_data(data)
+
+    with getfile(filename, "w") as f:
+        json.dump(data, f, indent=config.server.json_indent)
+
+    return Response()
 
 @router.post("/sync/monster")
 async def get_data(req: Request):
