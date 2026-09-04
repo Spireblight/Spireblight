@@ -104,7 +104,9 @@ async def receive_save_data(req: Request):
 
     return Response()
 
-@router.post("/sync/monster")
+# TODO: implement MT run sending and parsing
+
+#@router.post("/sync/monster")
 async def get_data(req: Request):
     save = (await get_req_data(req, "save"))[0]
     data = json.loads(save)
@@ -128,7 +130,7 @@ async def get_data(req: Request):
 
     return Response()
 
-@router.post("/sync/monster-2")
+#@router.post("/sync/monster-2")
 async def get_data(req: Request):
     save = (await get_req_data(req, "save"))[0]
     data = json.loads(save)
