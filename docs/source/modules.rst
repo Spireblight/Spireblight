@@ -19,6 +19,7 @@ Full Spireblight API
    nameinternal
    score
    server
+   spotify
    slice
    sts_profile
    trie

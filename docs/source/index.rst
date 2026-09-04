@@ -8,6 +8,7 @@ Spireblight documentation
    intro
    owners
    modules
+   client
 
 Indices and tables
 ==================

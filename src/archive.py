@@ -118,6 +118,8 @@ class _ArchiveHandler:
             v = VOD(vod["id"])
             for run in vod["runs"]:
                 r = get_parser(run["id"])
+                if r is None:
+                    continue
                 r.vod = v
                 v.runs.append(Run(r, run["start"], v))
             v.data = VideoMetadata(vod["id"], vod["title"], vod["duration"], vod["description"])
