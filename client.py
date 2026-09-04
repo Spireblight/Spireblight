@@ -102,6 +102,8 @@ class Main:
         self.session: ClientSession = None
         self.last_exception: Exception | None = None
 
+        self.currently_playing = None
+
         self.spire1_saves = cfg.spiredir / "saves"
         self.spire2_saves = cfg.user_profile / "AppData" / "Roaming" / "SlayTheSpire2" / "steam" / cfg.steam_id
         if cfg.modded:
@@ -631,20 +633,26 @@ class Main:
                     return
                 j = json.loads(data)
                 if j and j.get("item"):
+                    if self.currently_playing is None:
+                        try:
+                            with open(cfg.playing_file) as f:
+                                self.currently_playing = f.read()
+                        except OSError:
+                            self.currently_playing = ""
                     track = j['item']['name']
                     artists = ", ".join(x['name'] for x in j['item']['artists'])
                     album = j['item']['album']['name']
                     text = f"{track}\n{artists}\n{album}"
-                    if playing != text:
+                    if self.currently_playing != text:
                         try:
                             with open(cfg.playing_file, "w") as f:
                                 f.write(text)
-                            playing = text
+                            self.currently_playing = text
                         except OSError:
                             pass
 
                 else:
-                    playing = None
+                    self.currently_playing = ""
                     try:
                         with open(cfg.playing_file, "w") as f:
                             pass # make it an empty file
