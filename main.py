@@ -111,6 +111,7 @@ async def main():
         if config.discord.enabled:
             await server.Discord_cleanup()
         await server.Archive_cleanup()
+        await server.Spotify_cleanup()
         print("Shutdown successfully completed.")
 
 if __name__ == "__main__":

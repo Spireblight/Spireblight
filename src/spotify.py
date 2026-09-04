@@ -2,6 +2,8 @@
 
 This exposes a single instance, and the main class should not be instantiated more than once."""
 
+from __future__ import annotations
+
 from aiohttp import ClientSession, ContentTypeError
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPServiceUnavailable
 
@@ -15,9 +17,6 @@ from src.webpage import router
 from src.config import config
 from src.logger import logger
 from src.utils import getfile, get_req_data, catch_error
-
-
-__all__ = ["spotify"]
 
 @router.get("/spotify/oauth2")
 @catch_error

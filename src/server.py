@@ -80,6 +80,7 @@ from src.utils import (
 from src.disc import DiscordCommand
 from src.save import get_savefile, Savefile
 from src.runs import get_latest_run, RunParser
+from src.spotify import spotify
 from src.gamedata import RelicData, Treasure, Event
 
 from src.typehints import ContextType, CommandType, SaveType
@@ -1787,7 +1788,10 @@ async def now_playing(ctx: ContextType):
             await ctx.reply("That's kinda creepy, not gonna lie...")
             return
 
-    j = await TConn.spotify_call()
+    if not await spotify.is_token_valid():
+        return await ctx.reply("There is no valid access token for Spotify. Ask streamer to re-authenticate.")
+
+    j = await spotify.now_playing()
     if j is None:
         await ctx.reply("Could not get token from Spotify API. Retry in a few seconds.")
     elif "error" in j:
@@ -3367,3 +3371,6 @@ async def Archive_startup():
 async def Archive_cleanup():
     if archive.archive._session is not None:
         await archive.archive._session.close()
+
+async def Spotify_cleanup():
+    await spotify.session.close()
