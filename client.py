@@ -76,7 +76,7 @@ class Main:
         if not cfg.server_url or not cfg.secret:
             print("Config is not complete. Please open 'client-config.yml' and edit it with your preferences.")
             time.sleep(3)
-            return
+            exit()
 
         self.session = None
         self.last_exception: Exception | None = None
@@ -114,6 +114,8 @@ class Main:
             "profile_11": None,
             "profile_12": None,
             "profile_13": None,
+            "current_mt1": None,
+            "current_mt2": None,
         }
 
         self.last_modified_file = pathlib.Path(".") / "last_modified.json"
@@ -193,10 +195,6 @@ class Main:
             ts["last_modified"] = ts["last_committed"] = time.time()
 
     async def run(self):
-        last_mt = 0
-        last_mt2 = 0
-        timeout = 1
-
         print(
             f"User profile folder: {cfg.user_profile}",
             f"Fetch Slice & Dice Data: {'YES' if cfg.use_slice else 'NO'}",
@@ -207,16 +205,17 @@ class Main:
         if cfg.use_mt:
             mt_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain"
             mt_file = mt_folder / "saves" / "save-singlePlayer.json"
-            print(f"\nFolder-1: {mt_folder}\nSavefile-1: {mt_file}")
+            print(f"\nFolder-MT1: {mt_folder}\nSavefile-MT1: {mt_file}")
 
             mt2_folder = cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / "MonsterTrain2"
             mt2_file = mt2_folder / "saves" / "save-singlePlayer.json"
-            print(f"\nFolder-2: {mt2_folder}\nSavefile-2: {mt2_file}")
+            print(f"\nFolder-MT2: {mt2_folder}\nSavefile-MT2: {mt2_file}")
 
         self.session = ClientSession(cfg.server_url)
 
         await self.check_twitch_credentials()
 
+        timeout = 1
         while True:
             try:
                 await asyncio.sleep(timeout)
@@ -504,12 +503,19 @@ class Main:
         }
 
         for name, file in files.items():
-            mtime = file.stat().st_mtime
-            if mtime != self.last_modified[f"profile_{name}"]: # modified since last time, send
-                with file.open() as f:
-                    data[name] = f.read().encode("utf-8", "xmlcharrefreplace")
+            try:
+                mtime = file.stat().st_mtime
+                if mtime != self.last_modified[f"profile_{name}"]: # modified since last time, send
+                    with file.open() as f:
+                        data[name] = f.read().encode("utf-8", "xmlcharrefreplace")
 
-                modified[name] = mtime
+                    modified[name] = mtime
+            except FileNotFoundError:
+                pass # we don't care
+            except PermissionError:
+                print(f"Could not read profile file {file.name}")
+            except OSError as e:
+                print(f"Something unexpected happened while trying to read profile {file.name}")
 
         if any(modified.values()): # see if anything was modified at all
             async with self.session.post("/sync/profile", data=data, params={"key": cfg.secret}) as resp:
@@ -696,35 +702,6 @@ async def main():
                                     else:
                                         print(f"ERROR: Monster Train 2 data not properly sent:\n{resp.reason}")
 
-                    if possible is not None and cur != last:
-                        content = ""
-                        try:
-                            with possible.open() as f:
-                                content = f.read()
-                        except OSError:
-                            pass#possible = None
-                        else:
-                            content = content.encode("utf-8", "xmlcharrefreplace")
-                            char = possible.name[:-9].encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/save", data={"savefile": content, "character": char}, params={"key": cfg.secret, "has_run": "false", "start": start}) as resp:
-                                if resp.ok:
-                                    last = cur
-                                    has_save = True
-
-                    if poss_2 is not None and cur2 != last2:
-                        content = ""
-                        try:
-                            with poss_2.open() as f:
-                                content = f.read()
-                        except OSError:
-                            pass#poss_2 = None
-                        else:
-                            content = content.encode("utf-8", "xmlcharrefreplace")
-                            async with session.post("/sync/save-2", data={"savefile": content}, params={"key": cfg.secret, "start": start}) as resp:
-                                if resp.ok:
-                                    last2 = cur2
-                                    s2_save = True
-
                 except (ClientError, ServerDisconnectedError):
                     timeout = 10 # give it a bit of time
                     print("Error: Server is offline! Retrying in 10s")
@@ -751,4 +728,5 @@ if __name__ == "__main__":
         cfg = Config()
         with open("client-config.yml", "w") as f:
             yaml.safe_dump(cfg.export(), f)
-    asyncio.run(main())
+    client = Main()
+    asyncio.run(client.run())
