@@ -88,10 +88,10 @@ async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
 async def receive_save_data(req: Request):
     save, game_version = await get_req_data(req, "save", "game_version")
     data = json.loads(save)
-    if game_version == 1:
+    if game_version == "1":
         savefile = _savefile
         filename = "monster-train-save.json"
-    elif game_version == 2:
+    elif game_version == "2":
         savefile = _save2
         filename = "monster-train-2-save.json"
     else:

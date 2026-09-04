@@ -16,6 +16,7 @@ class Config:
     playing_file = ""
     sync_runs = False
     modded = False
+    debug = False
     spiredir = ""
     server_url = ""
     secret = ""
@@ -61,6 +62,8 @@ class Config:
         return {
             "playing_file": self.playing_file,
             "sync_runs": self.sync_runs,
+            "modded": self.modded,
+            "debug": self.debug,
             "spiredir": self.spiredir,
             "server_url": self.server_url,
             "secret": self.secret,
@@ -259,13 +262,15 @@ class Main:
                 if self.is_exception_recurring():
                     continue
                 text = traceback.format_exc()
+                if cfg.debug:
+                    print(text)
+                    continue # don't send if in debug/dev mode
                 try:
                     async with self.session.post("/report", data={"traceback": text}, params={"key": cfg.secret}) as resp:
                         if not resp.ok:
                             print(text)
                 except Exception:
                     print(text)
-
     async def check_twitch_credentials(self):
         """Check if the app is registered, prompt it if not."""
         needs_restart = False
@@ -332,7 +337,7 @@ class Main:
                 else:
                     print("Error: Multiple savefiles detected.")
                     possible = None
-                    raise ValueError("Multiple savefiles detected")
+                    break
 
         # fun fact: and/or binary operators always return one of their operands
         # if the first operand ('possible') is false, it always returns it
@@ -360,9 +365,9 @@ class Main:
 
         if len(potential) == 1:
             return potential[0]
-
-        print("Error: Multiple savefiles detected.")
-        raise ValueError("Multiple savefiles detected")
+        elif len(potential) > 1:
+            print("Error: Multiple savefiles detected for Spire 2.")
+        return None
 
     async def sync_savefile(self, savefile: pathlib.Path | None, game_version: int):
         key = f"save_sts{game_version}"
@@ -502,13 +507,13 @@ class Main:
         }
 
         modified = {
-            "slots": None,
-            "0": None,
-            "1": None,
-            "2": None,
-            "11": None,
-            "12": None,
-            "13": None,
+            "profile_slots": None,
+            "profile_0": None,
+            "profile_1": None,
+            "profile_2": None,
+            "profile_11": None,
+            "profile_12": None,
+            "profile_13": None,
         }
 
         for name, file in files.items():
@@ -518,7 +523,7 @@ class Main:
                     with file.open() as f:
                         data[name] = f.read().encode("utf-8", "xmlcharrefreplace")
 
-                    modified[name] = mtime
+                    modified[f"profile_{name}"] = mtime
             except FileNotFoundError:
                 pass # we don't care
             except PermissionError:
@@ -585,7 +590,7 @@ class Main:
 
         mtime = mt_file.stat().st_mtime
         if mtime != self.last_modified[f"current_mt{game_version}"]:
-            data = {"game_version": game_version}
+            data = {"game_version": str(game_version)}
 
             try:
                 with mt_file.open("rb") as f:

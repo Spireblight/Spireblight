@@ -3192,7 +3192,7 @@ async def individual_cmd(req: Request):
 @router.post("/report")
 async def automatic_client_report(req: Request):
     data = (await get_req_data(req, "traceback"))[0]
-    if send_report("[Automatic Client Reporting]\n\n" + data):
+    if await send_report("[Automatic Client Reporting]\n\n" + data):
         return Response(text="Report successful")
     raise HTTPServiceUnavailable
 
