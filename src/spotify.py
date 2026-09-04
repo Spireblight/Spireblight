@@ -40,14 +40,15 @@ async def get_now_playing(req: Request):
 
     if not await spotify.is_token_valid():
         from src.server import TConn
-        live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
-        if not live: # don't prompt if we're not live
-            raise HTTPServiceUnavailable(reason="No active token and stream is offline")
+        if TConn is not None:
+            live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
+            if not live: # don't prompt if we're not live
+                raise HTTPServiceUnavailable(reason="No active token and stream is offline")
         return Response(text=f"SPOTIFY_OAUTH2:{spotify.authenticate()}")
 
     data = await spotify.now_playing()
 
-    if data:
+    if data is not None:
         return Response(text=json.dumps(data), content_type="application/json")
     raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
@@ -68,7 +69,7 @@ class TokenHandler:
 
         if self._token is None:
             self.load_tokens()
-        if self._expires_at < datetime.datetime.now(): # expired, get another one
+        if self._expires_at is None or self._expires_at < datetime.datetime.now(): # expired, get another one
             self._token = None
             await self.get_new_access_token()
         return self._token
@@ -164,7 +165,7 @@ class TokenHandler:
             "response_type": "code",
             "redirect_uri": f"{config.server.url}/spotify/oauth2",
             "state": self.state,
-            "scope": config.spotify.scopes,
+            "scope": " ".join(config.spotify.scopes),
             "show_dialog": "false", # whether to prompt every time
         }
 
@@ -206,7 +207,7 @@ class Spotify:
         """Obtain the currently-playing song using the Spotify API."""
         token = await self.token_handler.get_token()
         if token is None: # for whatever reason
-            return {}
+            return None
 
         async with self.session.get(
             "https://api.spotify.com/v1/me/player/currently-playing",

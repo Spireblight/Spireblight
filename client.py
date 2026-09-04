@@ -166,7 +166,7 @@ class Main:
         """Load last-modified information, to save on network transfers."""
         try:
             with self.last_modified_file.open() as f:
-                data: dict[str, int | str] = json.load(f)
+                data: dict[str, str | float] = json.load(f)
         except FileNotFoundError:
             print("last_modified.json not found, will send everything to server.")
         except PermissionError:
@@ -179,26 +179,30 @@ class Main:
                     # it's unlikely to happen, and we store it anyway, just in case
                     print(f"Unrecognized key {key!r} in last_modified.json, will have no effect")
                 lasval = self.last_modified.get(key)
-                if lasval and value > lasval:
+                if not lasval or value > lasval:
                     self.last_modified[key] = value
 
             self.timestamps["last_modified"] = self.timestamps["last_committed"] = time.time()
 
     def update_modified_timestamp(self, **kwargs: dict[str, str | int | float | None]):
         """Keep track of what was modified, to only update when needed."""
+        modified = False
         for key, value in kwargs.items():
             if key not in self.last_modified:
                 raise KeyError(f"Could not find key {key!r} for last modified")
 
-            if value is not None: # None here means hasn't been modified
+            if value is not None or self.last_modified[key] == value: # None here means hasn't been modified
+                modified = True
                 self.last_modified[key] = value
-        self.timestamps["last_modified"] = time.time()
+        if modified:
+            self.timestamps["last_modified"] = time.time()
 
     def save_last_modified(self, *, force=False):
         """Save last-modified information, for cross-session persistence.
         
         :param force: Whether to force a commit to disk.
-        :type force: bool, default False"""
+        :type force: bool, default False
+        """
 
         ts = self.timestamps
         if not force and ts["last_modified"] == ts["last_committed"]: # nothing changed
@@ -251,8 +255,6 @@ class Main:
                 await self.sync_monster_train_save(1)
                 await self.sync_monster_train_save(2)
 
-                self.save_last_modified()
-
             except (ClientError, ServerDisconnectedError):
                 timeout = 10 # give it a bit of time
                 print("Error: Server is offline! Retrying in 10s")
@@ -271,6 +273,9 @@ class Main:
                             print(text)
                 except Exception:
                     print(text)
+            finally: # always save to disk what succeeded even if something else breaks
+                self.save_last_modified()
+
     async def check_twitch_credentials(self):
         """Check if the app is registered, prompt it if not."""
         needs_restart = False
@@ -427,9 +432,8 @@ class Main:
 
     async def sync_runfiles_sts1(self):
         """Fetch and sync the Spire 1 run files."""
-        last_sent = ""
         update = True
-        last = self.last_modified.get("runs_sts1", "")
+        last = last_sent = self.last_modified["runs_sts1"] or ""
         for path, folders, _f in (cfg.spiredir / "runs").walk():
             for folder in folders:
                 profile = "0"
@@ -456,9 +460,8 @@ class Main:
 
     async def sync_runfiles_sts2(self):
         """Fetch and sync the Spire 2 run files."""
-        last_sent = ""
         update = True
-        last = self.last_modified.get("runs_sts2", "")
+        last = last_sent = self.last_modified["runs_sts2"] or ""
         for path, folders, _f in self.spire2_saves.walk():
             for folder in folders:
                 profile = folder[-1]
@@ -616,7 +619,7 @@ class Main:
                     val = input(
                         "--==-- Spotify access token required --==--\n"
                         "Please press Enter and accept authentication.\n"
-                        "(It may not ask anything if you've already accepted)"
+                        "(It may not ask anything if you've already accepted)\n"
                         "If this doesn't work for whatever reason, type in 'Link' then Enter. "
                         )
                     if val: # anything at all, really
@@ -624,6 +627,7 @@ class Main:
                         print(f"Please copy-paste the following in your browser:\n\n{url}")
                     if ob:
                         webbrowser.open_new_tab(url)
+                        input("Press Enter if the authentication is successful.")
                     return
                 j = json.loads(data)
                 if j and j.get("item"):
