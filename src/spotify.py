@@ -5,6 +5,7 @@ This exposes a single instance, and the main class should not be instantiated mo
 from aiohttp import ClientSession, ContentTypeError
 from aiohttp.web import Request, Response, HTTPForbidden, HTTPServiceUnavailable
 
+import urllib.parse
 import datetime
 import secrets
 import base64
@@ -31,11 +32,19 @@ async def get_new_tokens(req: Request):
         raise HTTPForbidden(reason=params["error"])
 
     await spotify.token_handler.get_new_access_token(code=params["code"])
+    return Response(text="Authentication successful! You may close this tab.")
 
 @router.get("/spotify/now-playing")
 @catch_error
 async def get_now_playing(req: Request):
     await get_req_data(req)  # just checking if key is OK
+
+    if not await spotify.is_token_valid():
+        from src.server import TConn
+        live = await TConn.fetch_streams(user_logins=[config.twitch.channel])
+        if not live: # don't prompt if we're not live
+            raise HTTPServiceUnavailable(reason="No active token and stream is offline")
+        return Response(text=f"SPOTIFY_OAUTH2:{spotify.authenticate()}")
 
     data = await spotify.now_playing()
 
@@ -144,7 +153,7 @@ class TokenHandler:
             if resp.ok:
                 self.populate_tokens(data)
 
-    def request_authentication_link(self): # TODO: make client use this
+    def request_authentication_link(self):
         """Request authentication from Spotify API and pass it on to the client.
 
         This is used once at first, and then whenever the refresh token expires."""
@@ -160,7 +169,7 @@ class TokenHandler:
             "show_dialog": "false", # whether to prompt every time
         }
 
-        return ("https://accounts.spotify.com/authorize", params)
+        return f"https://accounts.spotify.com/authorize?{urllib.parse.urlencode(params)}"
 
     def populate_tokens(self, data: dict[str, str | int]):
         """Tokens freshly obtained from Spotify."""
@@ -185,7 +194,11 @@ class Spotify:
         """The aiohttp session to connect to the Spotify API."""
         return self.token_handler.session
 
-    async def authenticate(self):
+    async def is_token_valid(self):
+        """Check if the tokens are still valid."""
+        return await self.token_handler.get_token() is not None
+
+    def authenticate(self):
         """Trigger a handshake to get new OAuth2 credentials."""
 
         return self.token_handler.request_authentication_link()

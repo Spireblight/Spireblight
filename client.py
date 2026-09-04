@@ -1,5 +1,6 @@
 from aiohttp import ClientSession, ClientError, ServerDisconnectedError
 
+import webbrowser
 import traceback
 import platform
 import pathlib
@@ -304,7 +305,6 @@ class Main:
                                             ob = False
                                             print(f"Please copy-paste the following in your browser:\n\n{url}")
                                     if ob:
-                                        import webbrowser
                                         webbrowser.open_new_tab(url)
                                     input("\nPress Enter if the handshake is successful.")
                                 else:
@@ -602,9 +602,25 @@ class Main:
                     print(f"ERROR: Monster Train {game_version} data not properly sent:\n{resp.reason}")
 
     async def get_now_playing(self):
-        async with self.session.get("/playing", params={"key": cfg.secret}) as resp:
+        async with self.session.get("/spotify/now-playing", params={"key": cfg.secret}) as resp:
             if resp.ok:
-                j = await resp.json()
+                data = await resp.text()
+                if data.startswith("SPOTIFY_OAUTH2:"):
+                    nc, cl, url = data.partition(":")
+                    ob = True # do we open a browser window?
+                    val = input(
+                        "--==-- Spotify access token required --==--\n"
+                        "Please press Enter and accept authentication.\n"
+                        "(It may not ask anything if you've already accepted)"
+                        "If this doesn't work for whatever reason, type in 'Link' then Enter. "
+                        )
+                    if val: # anything at all, really
+                        ob = False
+                        print(f"Please copy-paste the following in your browser:\n\n{url}")
+                    if ob:
+                        webbrowser.open_new_tab(url)
+                    return
+                j = json.loads(data)
                 if j and j.get("item"):
                     track = j['item']['name']
                     artists = ", ".join(x['name'] for x in j['item']['artists'])

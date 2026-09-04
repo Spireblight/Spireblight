@@ -9,7 +9,6 @@ from collections import defaultdict
 import urllib.parse
 import traceback
 import datetime
-import aiohttp
 import asyncio
 import random
 import string
@@ -1801,20 +1800,6 @@ async def now_playing(ctx: ContextType):
         )
     else:
         await ctx.reply("We are not currently listening to anything.")
-
-
-@router.get("/playing")
-async def now_playing_client(req: Request):
-    await get_req_data(req)  # just checking if key is OK
-
-    if TConn is None:  # no Twitch, no Spotify
-        raise HTTPServiceUnavailable(reason="Need Twitch connection for Spotify")
-
-    data = await TConn.spotify_call()
-
-    if data:
-        return Response(text=json.dumps(data), content_type="application/json")
-    raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
 
 _ongoing_giveaway = {
