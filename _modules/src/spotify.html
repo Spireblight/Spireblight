@@ -578,7 +578,7 @@
 <span class="w">        </span><span class="sd">"""Tokens freshly obtained from Spotify."""</span>
         <span class="c1"># we also have token_type ("Bearer")</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"access_token"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"refresh_token"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"refresh_token"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span><span class="p">)</span>
         <span class="c1"># scopes are space-delimited, but storing them as a list is more convenient</span>
         <span class="c1"># we technically have the list of scopes in config, but they might be wrong</span>
         <span class="c1"># they should be equal at all times, but on the off chance they're not, we save them here</span>
