@@ -175,7 +175,7 @@ class TokenHandler:
         """Tokens freshly obtained from Spotify."""
         # we also have token_type ("Bearer")
         self._token = data["access_token"]
-        self._refresh_token = data["refresh_token"]
+        self._refresh_token = data.get("refresh_token", self._refresh_token)
         # scopes are space-delimited, but storing them as a list is more convenient
         # we technically have the list of scopes in config, but they might be wrong
         # they should be equal at all times, but on the off chance they're not, we save them here
