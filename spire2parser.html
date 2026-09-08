@@ -27,16 +27,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -149,6 +149,13 @@
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
   </a>
 </li>
 
@@ -267,6 +274,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -340,6 +354,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">server module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spotify.html">spotify module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
@@ -408,8 +423,397 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="slay-the-spire-2-run-parsing">
-<h1>Slay the Spire 2 run parsing<a class="headerlink" href="#slay-the-spire-2-run-parsing" title="Link to this heading">#</a></h1>
+  <section id="module-src.gamedata2">
+<span id="slay-the-spire-2-run-parsing"></span><h1>Slay the Spire 2 run parsing<a class="headerlink" href="#module-src.gamedata2" title="Link to this heading">#</a></h1>
+<p>Parsing of Slay the Spire 2 run history and savefile.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.Player">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.gamedata2.FileParser" title="src.gamedata2.FileParser"><span class="pre">FileParser</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#Player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.Player" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hold game information for one player.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Player.character">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.Player.character" title="Link to this definition">#</a></dt>
+<dd><p>Which character we’re playing.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Player.id">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.gamedata2.Player.id" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Player.relics">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.gamedata2.RelicData" title="src.gamedata2.RelicData"><span class="pre">RelicData</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.Player.relics" title="Link to this definition">#</a></dt>
+<dd><p>The relics at run end/current node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Player.deck">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deck</span></span><a class="headerlink" href="#src.gamedata2.Player.deck" title="Link to this definition">#</a></dt>
+<dd><p>The deck at run end/current node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Player.badges">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">badges</span></span><a class="headerlink" href="#src.gamedata2.Player.badges" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hold a single run (ongoing or not) data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.game_version">
+<span class="sig-name descname"><span class="pre">game_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.gamedata2.FileParser.game_version" title="Link to this definition">#</a></dt>
+<dd><p>Which version of the game we care about.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.done">
+<span class="sig-name descname"><span class="pre">done</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#src.gamedata2.FileParser.done" title="Link to this definition">#</a></dt>
+<dd><p>Whether the run is over.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.has_activemods">
+<span class="sig-name descname"><span class="pre">has_activemods</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#src.gamedata2.FileParser.has_activemods" title="Link to this definition">#</a></dt>
+<dd><p>Whether we know which mods are enabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.set_index">
+<span class="sig-name descname"><span class="pre">set_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.set_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.set_index" title="Link to this definition">#</a></dt>
+<dd><p>Force a specific player index to be considered.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.get_main_player">
+<span class="sig-name descname"><span class="pre">get_main_player</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.get_main_player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.get_main_player" title="Link to this definition">#</a></dt>
+<dd><p>Return the player we care about, AKA the streamer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.get_player_index">
+<span class="sig-name descname"><span class="pre">get_player_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.get_player_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.get_player_index" title="Link to this definition">#</a></dt>
+<dd><p>Return the main player index.</p>
+<p>This is such that <cite>FP.players[FP.get_player_index()] == FP.get_main_player()</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.get_char_portrait">
+<span class="sig-name descname"><span class="pre">get_char_portrait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.get_char_portrait"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.get_char_portrait" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.won">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">won</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#src.gamedata2.FileParser.won" title="Link to this definition">#</a></dt>
+<dd><p>Whether or not we won the run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.seed">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.FileParser.seed" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.is_seeded">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_seeded</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#src.gamedata2.FileParser.is_seeded" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.character">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><a class="headerlink" href="#src.gamedata2.FileParser.character" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.deck">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deck</span></span><a class="headerlink" href="#src.gamedata2.FileParser.deck" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.relics">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relics</span></span><a class="headerlink" href="#src.gamedata2.FileParser.relics" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.relics_bare">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relics_bare</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Relic</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.FileParser.relics_bare" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.badges">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">badges</span></span><a class="headerlink" href="#src.gamedata2.FileParser.badges" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.ascension_level">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ascension_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.gamedata2.FileParser.ascension_level" title="Link to this definition">#</a></dt>
+<dd><p>Which Ascension level the run was played at.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.players">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">players</span></span><a class="headerlink" href="#src.gamedata2.FileParser.players" title="Link to this definition">#</a></dt>
+<dd><p>Read-only list of all players in this game (host first).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.current_hp_counts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_hp_counts</span></span><a class="headerlink" href="#src.gamedata2.FileParser.current_hp_counts" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.max_hp_counts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_hp_counts</span></span><a class="headerlink" href="#src.gamedata2.FileParser.max_hp_counts" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.gold_counts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gold_counts</span></span><a class="headerlink" href="#src.gamedata2.FileParser.gold_counts" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.removals">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">removals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">ItemFloor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.FileParser.removals" title="Link to this definition">#</a></dt>
+<dd><p>Every (name, floor) tuple of removed card and their floor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.get_removals">
+<span class="sig-name descname"><span class="pre">get_removals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.gamedata2.CardData" title="src.gamedata2.CardData"><span class="pre">CardData</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.get_removals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.get_removals" title="Link to this definition">#</a></dt>
+<dd><p>Yield each removed card with no repetition, with count.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.has_removals">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_removals</span></span><a class="headerlink" href="#src.gamedata2.FileParser.has_removals" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.get_cards">
+<span class="sig-name descname"><span class="pre">get_cards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.gamedata2.CardData" title="src.gamedata2.CardData"><span class="pre">CardData</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.get_cards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.get_cards" title="Link to this definition">#</a></dt>
+<dd><p>Yield each card with no repetition, with count.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.cards">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cards</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.FileParser.cards" title="Link to this definition">#</a></dt>
+<dd><p>All the cards in the deck, with upgrade.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.master_deck_as_html">
+<span class="sig-name descname"><span class="pre">master_deck_as_html</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.master_deck_as_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.master_deck_as_html" title="Link to this definition">#</a></dt>
+<dd><p>Return the cards from the deck suitable for the website.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.removals_as_html">
+<span class="sig-name descname"><span class="pre">removals_as_html</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#FileParser.removals_as_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.FileParser.removals_as_html" title="Link to this definition">#</a></dt>
+<dd><p>Return the removed cards suitable for the website.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.path">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.gamedata2.PathNode" title="src.gamedata2.PathNode"><span class="pre">PathNode</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.FileParser.path" title="Link to this definition">#</a></dt>
+<dd><p>The path taken through the Spire.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.epoch">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">epoch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.gamedata2.FileParser.epoch" title="Link to this definition">#</a></dt>
+<dd><p>Time in seconds since Jan 1, 1970.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.timestamp">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#src.gamedata2.FileParser.timestamp" title="Link to this definition">#</a></dt>
+<dd><p>Time when the run finished, as UTC.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.timedelta">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timedelta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">timedelta</span></em><a class="headerlink" href="#src.gamedata2.FileParser.timedelta" title="Link to this definition">#</a></dt>
+<dd><p>Difference between now and the run.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.modded">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modded</span></span><a class="headerlink" href="#src.gamedata2.FileParser.modded" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.FileParser.modifiers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modifiers</span></span><a class="headerlink" href="#src.gamedata2.FileParser.modifiers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.Badge">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Badge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#Badge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.Badge" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Run badges.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Badge.name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#src.gamedata2.Badge.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.Badge.rarity">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rarity</span></span><a class="headerlink" href="#src.gamedata2.Badge.rarity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.Badge.as_html">
+<span class="sig-name descname"><span class="pre">as_html</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#Badge.as_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.Badge.as_html" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RelicData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.gamedata2.FileParser" title="src.gamedata2.FileParser"><span class="pre">FileParser</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#RelicData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.RelicData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>View relics and their information.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData.name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#src.gamedata2.RelicData.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData.mod">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mod</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.RelicData.mod" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData.image">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.RelicData.image" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData.description">
+<span class="sig-name descname"><span class="pre">description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#RelicData.description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.RelicData.description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.RelicData.escaped_description">
+<span class="sig-name descname"><span class="pre">escaped_description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/gamedata2.html#RelicData.escaped_description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.RelicData.escaped_description" title="Link to this definition">#</a></dt>
+<dd><p>Escape the description for HTML display.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.CardData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CardData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">card</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SingleCard</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#CardData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.CardData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.as_cards">
+<span class="sig-name descname"><span class="pre">as_cards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#CardData.as_cards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.CardData.as_cards" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.color">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.color" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.type">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.type" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.type_safe">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type_safe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.type_safe" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.rarity">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rarity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.rarity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.rarity_safe">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rarity_safe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.gamedata2.CardData.rarity_safe" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.gamedata2.CardData.count" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.CardData.display_name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">display_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.gamedata2.CardData.display_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PathNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.gamedata2.FileParser" title="src.gamedata2.FileParser"><span class="pre">FileParser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.end_of_act">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_of_act</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#src.gamedata2.PathNode.end_of_act" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.all_potions_received">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_potions_received</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Potion</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.PathNode.all_potions_received" title="Link to this definition">#</a></dt>
+<dd><p>All potions which were received on this floor.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.all_potions_dropped">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_potions_dropped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Potion</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.gamedata2.PathNode.all_potions_dropped" title="Link to this definition">#</a></dt>
+<dd><p>All potions which were used or discarded this floor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.ancient_desc">
+<span class="sig-name descname"><span class="pre">ancient_desc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode.ancient_desc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode.ancient_desc" title="Link to this definition">#</a></dt>
+<dd><p>Ancient-specific description.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.description">
+<span class="sig-name descname"><span class="pre">description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode.description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode.description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.get_description">
+<span class="sig-name descname"><span class="pre">get_description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode.get_description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode.get_description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.escaped_description">
+<span class="sig-name descname"><span class="pre">escaped_description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode.escaped_description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode.escaped_description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.get_rest_action">
+<span class="sig-name descname"><span class="pre">get_rest_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/gamedata2.html#PathNode.get_rest_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.gamedata2.PathNode.get_rest_action" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.gamedata2.PathNode.map_icon">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map_icon</span></span><a class="headerlink" href="#src.gamedata2.PathNode.map_icon" title="Link to this definition">#</a></dt>
+<dd><p>The current page/run history map icon.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -452,6 +856,99 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player.character"><code class="docutils literal notranslate"><span class="pre">Player.character</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player.id"><code class="docutils literal notranslate"><span class="pre">Player.id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player.relics"><code class="docutils literal notranslate"><span class="pre">Player.relics</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player.deck"><code class="docutils literal notranslate"><span class="pre">Player.deck</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Player.badges"><code class="docutils literal notranslate"><span class="pre">Player.badges</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser"><code class="docutils literal notranslate"><span class="pre">FileParser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.game_version"><code class="docutils literal notranslate"><span class="pre">FileParser.game_version</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.done"><code class="docutils literal notranslate"><span class="pre">FileParser.done</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.has_activemods"><code class="docutils literal notranslate"><span class="pre">FileParser.has_activemods</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.set_index"><code class="docutils literal notranslate"><span class="pre">FileParser.set_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.get_main_player"><code class="docutils literal notranslate"><span class="pre">FileParser.get_main_player()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.get_player_index"><code class="docutils literal notranslate"><span class="pre">FileParser.get_player_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.get_char_portrait"><code class="docutils literal notranslate"><span class="pre">FileParser.get_char_portrait()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.won"><code class="docutils literal notranslate"><span class="pre">FileParser.won</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.seed"><code class="docutils literal notranslate"><span class="pre">FileParser.seed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.is_seeded"><code class="docutils literal notranslate"><span class="pre">FileParser.is_seeded</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.character"><code class="docutils literal notranslate"><span class="pre">FileParser.character</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.deck"><code class="docutils literal notranslate"><span class="pre">FileParser.deck</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.relics"><code class="docutils literal notranslate"><span class="pre">FileParser.relics</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.relics_bare"><code class="docutils literal notranslate"><span class="pre">FileParser.relics_bare</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.badges"><code class="docutils literal notranslate"><span class="pre">FileParser.badges</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.ascension_level"><code class="docutils literal notranslate"><span class="pre">FileParser.ascension_level</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.players"><code class="docutils literal notranslate"><span class="pre">FileParser.players</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.current_hp_counts"><code class="docutils literal notranslate"><span class="pre">FileParser.current_hp_counts</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.max_hp_counts"><code class="docutils literal notranslate"><span class="pre">FileParser.max_hp_counts</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.gold_counts"><code class="docutils literal notranslate"><span class="pre">FileParser.gold_counts</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.removals"><code class="docutils literal notranslate"><span class="pre">FileParser.removals</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.get_removals"><code class="docutils literal notranslate"><span class="pre">FileParser.get_removals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.has_removals"><code class="docutils literal notranslate"><span class="pre">FileParser.has_removals</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.get_cards"><code class="docutils literal notranslate"><span class="pre">FileParser.get_cards()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.cards"><code class="docutils literal notranslate"><span class="pre">FileParser.cards</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.master_deck_as_html"><code class="docutils literal notranslate"><span class="pre">FileParser.master_deck_as_html()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.removals_as_html"><code class="docutils literal notranslate"><span class="pre">FileParser.removals_as_html()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.path"><code class="docutils literal notranslate"><span class="pre">FileParser.path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.epoch"><code class="docutils literal notranslate"><span class="pre">FileParser.epoch</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.timestamp"><code class="docutils literal notranslate"><span class="pre">FileParser.timestamp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.timedelta"><code class="docutils literal notranslate"><span class="pre">FileParser.timedelta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.modded"><code class="docutils literal notranslate"><span class="pre">FileParser.modded</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.FileParser.modifiers"><code class="docutils literal notranslate"><span class="pre">FileParser.modifiers</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Badge"><code class="docutils literal notranslate"><span class="pre">Badge</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Badge.name"><code class="docutils literal notranslate"><span class="pre">Badge.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Badge.rarity"><code class="docutils literal notranslate"><span class="pre">Badge.rarity</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.Badge.as_html"><code class="docutils literal notranslate"><span class="pre">Badge.as_html()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData"><code class="docutils literal notranslate"><span class="pre">RelicData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData.name"><code class="docutils literal notranslate"><span class="pre">RelicData.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData.mod"><code class="docutils literal notranslate"><span class="pre">RelicData.mod</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData.image"><code class="docutils literal notranslate"><span class="pre">RelicData.image</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData.description"><code class="docutils literal notranslate"><span class="pre">RelicData.description()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.RelicData.escaped_description"><code class="docutils literal notranslate"><span class="pre">RelicData.escaped_description()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData"><code class="docutils literal notranslate"><span class="pre">CardData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.as_cards"><code class="docutils literal notranslate"><span class="pre">CardData.as_cards()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.color"><code class="docutils literal notranslate"><span class="pre">CardData.color</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.type"><code class="docutils literal notranslate"><span class="pre">CardData.type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.type_safe"><code class="docutils literal notranslate"><span class="pre">CardData.type_safe</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.rarity"><code class="docutils literal notranslate"><span class="pre">CardData.rarity</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.rarity_safe"><code class="docutils literal notranslate"><span class="pre">CardData.rarity_safe</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.count"><code class="docutils literal notranslate"><span class="pre">CardData.count</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.name"><code class="docutils literal notranslate"><span class="pre">CardData.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.CardData.display_name"><code class="docutils literal notranslate"><span class="pre">CardData.display_name</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode"><code class="docutils literal notranslate"><span class="pre">PathNode</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.end_of_act"><code class="docutils literal notranslate"><span class="pre">PathNode.end_of_act</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.all_potions_received"><code class="docutils literal notranslate"><span class="pre">PathNode.all_potions_received</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.all_potions_dropped"><code class="docutils literal notranslate"><span class="pre">PathNode.all_potions_dropped</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.ancient_desc"><code class="docutils literal notranslate"><span class="pre">PathNode.ancient_desc()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.description"><code class="docutils literal notranslate"><span class="pre">PathNode.description()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.get_description"><code class="docutils literal notranslate"><span class="pre">PathNode.get_description()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.escaped_description"><code class="docutils literal notranslate"><span class="pre">PathNode.escaped_description()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.get_rest_action"><code class="docutils literal notranslate"><span class="pre">PathNode.get_rest_action()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.gamedata2.PathNode.map_icon"><code class="docutils literal notranslate"><span class="pre">PathNode.map_icon</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
     <a href="_sources/spire2parser.rst.txt">
@@ -473,8 +970,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -508,7 +1005,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>

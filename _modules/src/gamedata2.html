@@ -1,0 +1,1345 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.gamedata2 &#8212; Spireblight 0.8 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../_static/documentation_options.js?v=a0e24af7"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/gamedata2';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.gamedata2</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.gamedata2</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Parsing of Slay the Spire 2 run history and savefile."""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_card2</span><span class="p">,</span> <span class="n">get_badge</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">SingleCard</span><span class="p">,</span> <span class="n">Potion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_for_slaytabase</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemFloor</span>
+
+<div class="viewcode-block" id="Player">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.Player">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Player</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Hold game information for one player."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">parser</span><span class="p">:</span> <span class="n">FileParser</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">parser</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">character</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Which character we're playing."""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">c</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"character"</span><span class="p">]</span> <span class="c1"># run history</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">c</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"character_id"</span><span class="p">]</span> <span class="c1"># savefile</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"net_id"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">RelicData</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The relics at run end/current node."""</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">rel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"relics"</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RelicData</span><span class="p">(</span><span class="n">rel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deck</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""The deck at run end/current node."""</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get_card2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"deck"</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">badges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Badge</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"badges"</span><span class="p">,</span> <span class="p">())]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Player</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">==</span> <span class="n">value</span><span class="o">.</span><span class="n">_data</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Backup to prevent crashing pages."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"This has not yet been implemented (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">)"</span></div>
+
+
+<div class="viewcode-block" id="FileParser">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Hold a single run (ongoing or not) data."""</span>
+
+    <span class="n">game_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>       <span class="c1">#: Which version of the game we care about.</span>
+    <span class="n">done</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>          <span class="c1">#: Whether the run is over.</span>
+
+    <span class="n">has_activemods</span> <span class="o">=</span> <span class="kc">False</span>      <span class="c1">#: Whether we know which mods are enabled.</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FileParser.set_index">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.set_index">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Force a specific player index to be considered."""</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">players</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="o">=</span> <span class="n">index</span></div>
+
+
+<div class="viewcode-block" id="FileParser.get_main_player">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.get_main_player">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_main_player</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the player we care about, AKA the streamer."""</span>
+        <span class="n">pl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">players</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pl</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">pl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">steam_id</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pl</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">steam_id</span><span class="p">):</span> <span class="c1"># just in case</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="k">return</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">pl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># fallback</span></div>
+
+
+<div class="viewcode-block" id="FileParser.get_player_index">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.get_player_index">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_player_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the main player index.</span>
+
+<span class="sd">        This is such that `FP.players[FP.get_player_index()] == FP.get_main_player()`."""</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span>
+        <span class="n">pl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_player</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">players</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="c1"># for some reason</span>
+            <span class="c1"># it's possible our call above set it</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main_player_index</span> <span class="ow">or</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="FileParser.get_char_portrait">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.get_char_portrait">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_char_portrait</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="c1"># we do not currently account for losses</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/characters/</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">-portrait-3.png"</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">won</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Whether or not we won the run."""</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">seed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"seed"</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"rng"</span><span class="p">][</span><span class="s2">"seed"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_seeded</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span> <span class="c1"># temporary fix</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">character</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_player</span><span class="p">()</span><span class="o">.</span><span class="n">character</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deck</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_player</span><span class="p">()</span><span class="o">.</span><span class="n">deck</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_player</span><span class="p">()</span><span class="o">.</span><span class="n">relics</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relics_bare</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Relic</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">relic</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relics</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">badges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_player</span><span class="p">()</span><span class="o">.</span><span class="n">badges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ascension_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Which Ascension level the run was played at."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"ascension"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">players</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read-only list of all players in this game (host first)."""</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Player</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"players"</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_hp_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">current_hp</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_hp_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">max_hp</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gold_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">gold</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">cards_removed</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">card</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">floor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">ItemFloor</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Every (name, floor) tuple of removed card and their floor."""</span>
+        <span class="k">for</span> <span class="n">card</span><span class="p">,</span> <span class="n">floor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removals</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">floor</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FileParser.get_removals">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.get_removals">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">CardData</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Yield each removed card with no repetition, with count."""</span>
+        <span class="n">removals</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removals</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">removals</span><span class="p">):</span> <span class="c1"># remove duplicates</span>
+            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">removals</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_removals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_removals</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FileParser.get_cards">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.get_cards">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">CardData</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Yield each card with no repetition, with count."""</span>
+        <span class="n">master_deck</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deck</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">master_deck</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">CardData</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">master_deck</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""All the cards in the deck, with upgrade."""</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cards</span><span class="p">():</span>
+            <span class="k">yield from</span> <span class="n">card</span><span class="o">.</span><span class="n">as_cards</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FileParser.master_deck_as_html">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.master_deck_as_html">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">master_deck_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the cards from the deck suitable for the website."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_cards</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="FileParser.removals_as_html">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.FileParser.removals_as_html">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removals_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the removed cards suitable for the website."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_removals</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cards_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cards</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">CardData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="c1"># I got these colors from screenshotting the game and using pipette</span>
+        <span class="n">standard</span> <span class="o">=</span> <span class="s2">"fff6e2"</span> <span class="c1"># eggshell-ish</span>
+        <span class="n">upgraded</span> <span class="o">=</span> <span class="s2">"7fff00"</span> <span class="c1"># green</span>
+        <span class="n">enhanced</span> <span class="o">=</span> <span class="s2">"ee82ee"</span> <span class="c1"># purple</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">'&lt;a class="card" style="color:#</span><span class="si">{style}</span><span class="s1">" href="https://raw.githubusercontent.com/OceanUwU/slaytabase/main/docs/</span><span class="si">{mod}</span><span class="s1">/cards/</span><span class="si">{card_url}</span><span class="s1">.png" target="_blank"&gt;'</span>
+            <span class="s1">'&lt;svg width="48" height="40"&gt;'</span> <span class="c1"># the enhancement is slightly off-center, so we're making a slightly bigger SVG to account for it</span>
+            <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/card2/Back_</span><span class="si">{color}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/card2/Desc_</span><span class="si">{color}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/card2/Type_</span><span class="si">{card.type_safe}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/card2/Banner_</span><span class="si">{banner}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/enhancements/</span><span class="si">{enhancement}</span><span class="s1">.png" x=16 y=8&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;/svg&gt;&lt;span&gt;</span><span class="si">{card.display_name}</span><span class="s1">&lt;/span&gt;&lt;/a&gt;'</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">new_color</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">CardData</span><span class="p">]]:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"Rare"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Uncommon"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Common"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Event"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Ancient"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Curse"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"Quest"</span><span class="p">:</span> <span class="p">[],</span> <span class="kc">None</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"ironclad"</span><span class="p">,</span> <span class="s2">"silent"</span><span class="p">,</span> <span class="s2">"regent"</span><span class="p">,</span> <span class="s2">"necrobinder"</span><span class="p">,</span> <span class="s2">"defect"</span><span class="p">,</span> <span class="s2">"colorless"</span><span class="p">,</span> <span class="s2">"curse"</span><span class="p">]</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="n">new_color</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">cards</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">color</span>
+            <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s2">"event"</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s2">"colorless"</span>
+            <span class="k">if</span> <span class="n">color</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+                <span class="n">order</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+            <span class="n">content</span><span class="p">[</span><span class="n">color</span><span class="p">][</span><span class="n">card</span><span class="o">.</span><span class="n">rarity_safe</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+
+        <span class="n">final</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">rarity</span><span class="p">,</span> <span class="n">all_cards</span> <span class="ow">in</span> <span class="n">content</span><span class="p">[</span><span class="n">color</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">all_cards</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="n">x</span><span class="o">.</span><span class="n">upgrades</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">all_cards</span><span class="p">:</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="n">standard</span>
+                    <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">upgrades</span><span class="p">:</span>
+                        <span class="n">style</span> <span class="o">=</span> <span class="n">upgraded</span>
+                    <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">enhancement</span><span class="p">:</span>
+                        <span class="n">style</span> <span class="o">=</span> <span class="n">enhanced</span>
+                    <span class="n">enhancement</span> <span class="o">=</span> <span class="s2">"empty"</span>
+                    <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">enhancement</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">enhancement</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">enhancement</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="n">format_map</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">"style"</span><span class="p">:</span> <span class="n">style</span><span class="p">,</span>
+                        <span class="s2">"color"</span><span class="p">:</span> <span class="n">color</span><span class="p">,</span>
+                        <span class="s2">"website"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                        <span class="s2">"banner"</span><span class="p">:</span> <span class="n">rarity</span> <span class="ow">or</span> <span class="s2">"Common"</span><span class="p">,</span>
+                        <span class="s2">"mod"</span><span class="p">:</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">card</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">mod</span> <span class="ow">or</span> <span class="s2">"2-slay the spire 2"</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+                        <span class="s2">"card_url"</span><span class="p">:</span> <span class="n">format_for_slaytabase</span><span class="p">(</span><span class="n">card</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">internal</span><span class="p">),</span>
+                        <span class="s2">"card"</span><span class="p">:</span> <span class="n">card</span><span class="p">,</span>
+                        <span class="s2">"enhancement"</span><span class="p">:</span> <span class="n">enhancement</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="n">final</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">format_map</span><span class="p">(</span><span class="n">format_map</span><span class="p">))</span>
+
+        <span class="n">step</span><span class="p">,</span> <span class="n">rem</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">rem</span><span class="p">:</span>
+            <span class="n">end</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">step</span><span class="o">*</span><span class="n">rem</span><span class="p">))</span>
+            <span class="n">rem</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">end</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="n">final</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">step</span><span class="p">]</span>
+        <span class="k">yield from</span> <span class="n">end</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PathNode</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The path taken through the Spire."""</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">acts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"acts"</span><span class="p">]</span>
+        <span class="n">act_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">acts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span> <span class="c1"># savefile</span>
+            <span class="n">acts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">acts</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">acts</span><span class="p">:</span>
+            <span class="n">n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">n</span> <span class="o">==</span> <span class="s2">"ACT"</span><span class="p">,</span> <span class="s2">"An update has changed the Act definition"</span>
+            <span class="n">act_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"map_point_history"</span><span class="p">,</span> <span class="p">()),</span> <span class="n">act_names</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">act</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PathNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">paths</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Time in seconds since Jan 1, 1970."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"start_time"</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"run_time"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Time when the run finished, as UTC."""</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timedelta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Difference between now and the run."""</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">modded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span> <span class="c1"># temporary</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"modifiers"</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Backup to prevent crashing pages."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Not implemented (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">)"</span></div>
+
+
+<div class="viewcode-block" id="Badge">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.Badge">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Badge</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Run badges."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">get_badge</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rarity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"rarity"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Badge.as_html">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.Badge.as_html">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">'&lt;svg width="64" height="64"&gt;'</span>
+            <span class="s1">'&lt;image width="64" height="64" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/badges/rarity_</span><span class="si">{self.rarity}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;image width="64" height="64" xlink:href="</span><span class="si">{website}</span><span class="s1">/static/badges/</span><span class="si">{self.name}</span><span class="s1">.png"&gt;&lt;/image&gt;'</span>
+            <span class="s1">'&lt;title&gt;</span><span class="si">{self.title}</span><span class="se">\n</span><span class="si">{self.description}</span><span class="s1">&lt;/title&gt;'</span>
+            <span class="s1">'&lt;/svg&gt;'</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">website</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="RelicData">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.RelicData">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RelicData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""View relics and their information."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">parser</span><span class="p">:</span> <span class="n">FileParser</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"floor_added_to_deck"</span><span class="p">]</span> <span class="c1"># works for both run and save</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relic</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"id"</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"props"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">parser</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relic</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mod</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">relic</span><span class="o">.</span><span class="n">mod</span><span class="p">:</span>
+            <span class="c1"># this is specifically for the github</span>
+            <span class="k">return</span> <span class="s2">"2-slay the spire 2"</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relic</span><span class="o">.</span><span class="n">mod</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relic</span><span class="o">.</span><span class="n">internal</span>
+        <span class="k">if</span> <span class="s2">":"</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">":"</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">format_for_slaytabase</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.png"</span>
+
+<div class="viewcode-block" id="RelicData.description">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.RelicData.description">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"Obtained on floor </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">floor</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">relic</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RelicData.escaped_description">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.RelicData.escaped_description">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">escaped_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Escape the description for HTML display."""</span>
+        <span class="n">escaped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"&lt;br&gt;"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">'"</span><span class="p">)</span>
+        <span class="n">char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">character</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">escaped</span> <span class="o">=</span> <span class="n">escaped</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"[E]"</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/symbols/</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s1">_energy_2.png" alt="Energy symbol"&gt;'</span><span class="p">)</span>
+        <span class="n">escaped</span> <span class="o">=</span> <span class="n">escaped</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"[STAR]"</span><span class="p">,</span> <span class="s1">'&lt;img src="/static/symbols/star.png" alt="Star symbol"&gt;'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">escaped</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Backup to prevent crashing pages."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Not implemented (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">)"</span></div>
+
+
+<div class="viewcode-block" id="CardData">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.CardData">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CardData</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">SingleCard</span><span class="p">,</span> <span class="n">cards_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig</span> <span class="o">=</span> <span class="n">card</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">card</span> <span class="o">=</span> <span class="n">get_card2</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cards_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cards_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single</span> <span class="o">=</span> <span class="n">card</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="p">:</span> <span class="n">Card</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">card</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upgrades</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">upgrades</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enhancement</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">enchantment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">amount</span>
+
+<div class="viewcode-block" id="CardData.as_cards">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.CardData.as_cards">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">color</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">color</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type_safe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"Attack"</span><span class="p">,</span> <span class="s2">"Skill"</span><span class="p">,</span> <span class="s2">"Power"</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">"Skill"</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rarity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">rarity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rarity_safe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"Rare"</span><span class="p">,</span> <span class="s2">"Uncommon"</span><span class="p">,</span> <span class="s2">"Common"</span><span class="p">,</span> <span class="s2">"Curse"</span><span class="p">,</span> <span class="s2">"Event"</span><span class="p">,</span> <span class="s2">"Ancient"</span><span class="p">,</span> <span class="s2">"Quest"</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cards_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="c1"># support standalone card stuff</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">upgrades</span><span class="p">:</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">+"</span>
+            <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enhancement</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">res</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">enhancement</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s2">"</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2">x </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="PathNode">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PathNode</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">:</span> <span class="n">FileParser</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">floor</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">act_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floor</span> <span class="o">=</span> <span class="n">floor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act_name</span> <span class="o">=</span> <span class="n">act_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_room_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_player_picks</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">end_of_act</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="c1"># this is a weird thing, but because of double boss, we don't wanna multiline it</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor</span> <span class="o">&lt;</span> <span class="mi">48</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"map_point_type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"boss"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_room_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Set the data specific to this node."""</span>
+        <span class="c1"># idk why rooms is a list, but there's only ever one item, even in mp</span>
+        <span class="n">room</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"rooms"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">turns_taken</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="s2">"turns_taken"</span><span class="p">]</span>
+        <span class="c1">#self.enemies: list[Enemy] = []</span>
+
+        <span class="n">map_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"map_point_type"</span><span class="p">]</span>
+        <span class="n">room_type</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="s2">"room_type"</span><span class="p">]</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">room</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_id"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">if</span> <span class="n">model_id</span><span class="p">:</span>
+            <span class="c1"># TODO: just get the ID from... something</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">model_id</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+        <span class="c1">#for m in room.get("monster_ids", ()):</span>
+        <span class="c1">#    self.enemies.append(get(m))</span>
+
+        <span class="k">match</span> <span class="p">(</span><span class="n">map_point</span><span class="p">,</span> <span class="n">room_type</span><span class="p">):</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"ancient"</span><span class="p">,</span> <span class="s2">"event"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Ancient"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"monster"</span><span class="p">,</span> <span class="s2">"monster"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Enemy"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"unknown"</span><span class="p">,</span> <span class="s2">"monster"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Enemy (unknown)"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"elite"</span><span class="p">,</span> <span class="s2">"elite"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Elite fight"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"unknown"</span><span class="p">,</span> <span class="s2">"event"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Event"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"rest_site"</span><span class="p">,</span> <span class="s2">"rest_site"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Rest site"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"treasure"</span><span class="p">,</span> <span class="s2">"treasure"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Treasure chest"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"shop"</span><span class="p">,</span> <span class="s2">"shop"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Merchant"</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">"boss"</span><span class="p">,</span> <span class="s2">"boss"</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span> <span class="o">=</span> <span class="s2">"Boss fight"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_player_picks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Set all the player variables for this node."""</span>
+        <span class="n">choices</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"player_stats"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_player_index</span><span class="p">()]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"current_gold"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gold_gained</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"gold_gained"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gold_lost</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"gold_lost"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gold_spent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"gold_spent"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gold_stolen</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"gold_stolen"</span><span class="p">]</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">damage_taken</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"damage_taken"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hp_healed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"hp_healed"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_hp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"current_hp"</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_hp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"max_hp"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_hp_gained</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"max_hp_gained"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_hp_lost</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"max_hp_lost"</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rest_site_choices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"rest_site_choices"</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">picked</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_transformed</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># XXX Nothing modifies this</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_upgraded</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards_enchanted</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SingleCard</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">relics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Relic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relics_lost</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Relic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped_relics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Relic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">potions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_potions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_alchemize</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_entropic</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discarded_potions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped_potions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ancient_choice"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">[</span><span class="s2">"was_chosen"</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">skipped_relics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">"TextKey"</span><span class="p">]))</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"card_choices"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="n">card</span> <span class="o">=</span> <span class="n">get_card2</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s2">"card"</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"was_picked"</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">picked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">skipped</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cards_gained"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="n">card</span> <span class="o">=</span> <span class="n">get_card2</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">card</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">picked</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+
+        <span class="c1">#for l in choices.get("bought_colorless", ()):</span>
+        <span class="c1">#    # XXX egg likely doesn't work here</span>
+        <span class="c1">#    card = get(l)</span>
+        <span class="c1">#    if card not in self.picked:</span>
+        <span class="c1">#        self.cards_obtained.append(card)</span>
+
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"upgraded_cards"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cards_upgraded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cards_enchanted"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cards_enchanted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_card2</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s2">"card"</span><span class="p">]))</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cards_removed"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_card2</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"relic_choices"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="n">relic</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"choice"</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">"was_picked"</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">relics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">skipped_relics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">choices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"potion_choices"</span><span class="p">,</span> <span class="p">()):</span>
+            <span class="n">potion</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">"choice"</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="s2">"was_picked"</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">potions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">potion</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">skipped_potions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">potion</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Thieving Hopper Weak"</span><span class="p">:</span> <span class="c1"># don't remove+add a card here</span>
+            <span class="n">both</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">both</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># only care if there's exactly one card that matches</span>
+                <span class="n">card</span> <span class="o">=</span> <span class="n">both</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_potions_received</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""All potions which were received on this floor."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_alchemize</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_entropic</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_potions_dropped</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Potion</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""All potions which were used or discarded this floor."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">used_potions</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">discarded_potions</span>
+
+<div class="viewcode-block" id="PathNode.ancient_desc">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode.ancient_desc">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ancient_desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Ancient-specific description."""</span>
+        <span class="n">choices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"player_stats"</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_player_index</span><span class="p">()]</span>
+
+        <span class="k">if</span> <span class="s2">"ancient_choice"</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">:</span>
+            <span class="n">picked</span><span class="p">:</span> <span class="n">Relic</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">not_picked</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Relic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">[</span><span class="s2">"ancient_choice"</span><span class="p">]:</span>
+                <span class="n">relic</span><span class="p">:</span> <span class="n">Relic</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"title"</span><span class="p">][</span><span class="s2">"key"</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s2">"was_chosen"</span><span class="p">]:</span>
+                    <span class="n">picked</span> <span class="o">=</span> <span class="n">relic</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">not_picked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">relic</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">picked</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">"We picked </span><span class="si">{</span><span class="n">picked</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, and skipped </span><span class="si">{</span><span class="s1">' and '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">not_picked</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="k">return</span> <span class="s2">"No bonus picked."</span></div>
+
+
+<div class="viewcode-block" id="PathNode.description">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode.description">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">()</span>
+
+        <span class="n">final</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="n">desc</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+            <span class="n">final</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">final</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PathNode.get_description">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode.get_description">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">to_append</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">room_type</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">room_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">to_append</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_hp</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_hp</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gold</span><span class="si">}</span><span class="s2"> gold"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">damage_taken</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">damage_taken</span><span class="si">}</span><span class="s2"> damage taken"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">turns_taken</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">turns_taken</span><span class="si">}</span><span class="s2"> turns"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp_healed</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Healed for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hp_healed</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rest_site_choices</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_rest_action</span><span class="p">(</span><span class="n">action</span><span class="p">))</span>
+
+        <span class="c1"># 8 used to be Neow/Ancient bonus, but it's now superseded by relic gain/skip</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions obtained:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">used_potions</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions used:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">used_potions</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_alchemize</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions obtained from Alchemize:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_alchemize</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_entropic</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions obtained from Entropic Brew:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">potions_from_entropic</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">discarded_potions</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions discarded:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">discarded_potions</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped_potions</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Potions skipped:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped_potions</span><span class="p">)</span>
+
+        <span class="c1"># used to skip from 20-&gt;30; relic entry now lowered to 24</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">relics</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Relics obtained:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relics</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped_relics</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">26</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Relics skipped:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">26</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped_relics</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">relics_lost</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Relics lost:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relics_lost</span><span class="p">)</span>
+
+        <span class="c1"># we skip a step when changing types, to allow for better extension if needed</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">picked</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Picked:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">picked</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">34</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Skipped:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">34</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipped</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">36</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Cards obtained:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">36</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_obtained</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_upgraded</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">38</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Cards upgraded:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">38</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_upgraded</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_enchanted</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">40</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Cards enchanted:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">40</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_enchanted</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_transformed</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">42</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Cards transformed:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">42</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_transformed</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">44</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Cards removed:"</span><span class="p">)</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">44</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards_removed</span><span class="p">)</span>
+
+        <span class="c1"># a lot of these options have been moved around; notably, card info comes first now</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold_gained</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">44</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Picked up </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gold_gained</span><span class="si">}</span><span class="s2"> gold"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold_spent</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">46</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Spent </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gold_spent</span><span class="si">}</span><span class="s2"> gold"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold_lost</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">48</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lost </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gold_lost</span><span class="si">}</span><span class="s2"> gold"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gold_stolen</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">50</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gold_stolen</span><span class="si">}</span><span class="s2"> gold stolen"</span><span class="p">)</span>
+
+        <span class="c1"># and finally, health info</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_hp_gained</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">54</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Gained </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_hp_gained</span><span class="si">}</span><span class="s2"> max HP"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_hp_lost</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">[</span><span class="mi">56</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lost </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_hp_lost</span><span class="si">}</span><span class="s2"> max HP"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">to_append</span></div>
+
+
+<div class="viewcode-block" id="PathNode.escaped_description">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode.escaped_description">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">escaped_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"&lt;br&gt;"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">'"</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PathNode.get_rest_action">
+<a class="viewcode-back" href="../../spire2parser.html#src.gamedata2.PathNode.get_rest_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_rest_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">match</span> <span class="n">action</span><span class="p">:</span>
+            <span class="k">case</span> <span class="s2">"HEAL"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Rested"</span>
+            <span class="k">case</span> <span class="s2">"SMITH"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Upgraded a card"</span>
+            <span class="k">case</span> <span class="s2">"MEND"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Mended an ally"</span>
+            <span class="k">case</span> <span class="s2">"LIFT"</span><span class="p">:</span> <span class="c1"># XXX can we figure out how much we lifted for?</span>
+                <span class="k">return</span> <span class="s2">"Lifted for additional strength"</span>
+            <span class="k">case</span> <span class="s2">"DIG"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Dug for a relic"</span>
+            <span class="k">case</span> <span class="s2">"COOK"</span><span class="p">:</span> <span class="c1"># and those</span>
+                <span class="k">return</span> <span class="s2">"Cooked two cards for 9 max HP"</span>
+            <span class="k">case</span> <span class="s2">"TOKE"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Toked a card"</span>
+            <span class="k">case</span> <span class="s2">"CLONE"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Duplicated every clone"</span>
+            <span class="k">case</span> <span class="s2">"HATCH"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Took good care of the baby bird and gained a new friend"</span>
+            <span class="k">case</span> <span class="s2">"KINDLE"</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">"Put some more fire into your Pumpkin Candle"</span>
+            <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">"Did </span><span class="si">{</span><span class="n">a</span><span class="si">!r}</span><span class="s2">, but I'm not sure what this means"</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""The current page/run history map icon."""</span>
+        <span class="n">room</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"rooms"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">on_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"map_point_type"</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="s2">"room_type"</span><span class="p">]</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">actual</span>
+        <span class="k">if</span> <span class="n">on_map</span> <span class="o">==</span> <span class="s2">"unknown"</span> <span class="ow">and</span> <span class="n">actual</span> <span class="o">!=</span> <span class="s2">"event"</span><span class="p">:</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"unknown_</span><span class="si">{</span><span class="n">icon</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">elif</span> <span class="n">on_map</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"ancient"</span><span class="p">,</span> <span class="s2">"boss"</span><span class="p">):</span>
+            <span class="n">m_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">room</span><span class="p">[</span><span class="s2">"model_id"</span><span class="p">]</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">m_id</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">icon</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"event"</span><span class="p">,</span> <span class="s2">"shop"</span><span class="p">):</span>
+            <span class="n">icon</span> <span class="o">+=</span> <span class="s2">"_2"</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">icon</span><span class="si">}</span><span class="s2">.png"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Backup to prevent crashing pages."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Not implemented (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">)"</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

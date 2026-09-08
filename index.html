@@ -27,16 +27,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -148,6 +148,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
   </a>
 </li>
 
@@ -268,6 +275,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -349,7 +363,15 @@
 <li class="toctree-l1"><a class="reference internal" href="owners.html">For bot owners</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Full Spireblight API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="fileparser.html">Slay the Spire run information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spire2parser.html">Slay the Spire 2 run parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spire2parser.html">Slay the Spire 2 run parsing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.FileParser"><code class="docutils literal notranslate"><span class="pre">FileParser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.Badge"><code class="docutils literal notranslate"><span class="pre">Badge</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.RelicData"><code class="docutils literal notranslate"><span class="pre">RelicData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.CardData"><code class="docutils literal notranslate"><span class="pre">CardData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spire2parser.html#src.gamedata2.PathNode"><code class="docutils literal notranslate"><span class="pre">PathNode</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="nodes.html">Slay the Spire path node data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.BaseNode"><code class="docutils literal notranslate"><span class="pre">BaseNode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="nodes.html#src.gamedata.NeowBonus"><code class="docutils literal notranslate"><span class="pre">NeowBonus</span></code></a></li>
@@ -498,7 +520,6 @@
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.auto_resolve_pred"><code class="docutils literal notranslate"><span class="pre">auto_resolve_pred()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.handle_prediction"><code class="docutils literal notranslate"><span class="pre">handle_prediction()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing"><code class="docutils literal notranslate"><span class="pre">now_playing()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.now_playing_client"><code class="docutils literal notranslate"><span class="pre">now_playing_client()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_handle"><code class="docutils literal notranslate"><span class="pre">giveaway_handle()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.giveaway_enter"><code class="docutils literal notranslate"><span class="pre">giveaway_enter()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.card_info"><code class="docutils literal notranslate"><span class="pre">card_info()</span></code></a></li>
@@ -569,6 +590,14 @@
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Youtube_startup"><code class="docutils literal notranslate"><span class="pre">Youtube_startup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Archive_startup"><code class="docutils literal notranslate"><span class="pre">Archive_startup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Archive_cleanup"><code class="docutils literal notranslate"><span class="pre">Archive_cleanup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="server.html#src.server.Spotify_cleanup"><code class="docutils literal notranslate"><span class="pre">Spotify_cleanup()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spotify.html">spotify module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spotify.html#src.spotify.get_new_tokens"><code class="docutils literal notranslate"><span class="pre">get_new_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spotify.html#src.spotify.get_now_playing"><code class="docutils literal notranslate"><span class="pre">get_now_playing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spotify.html#src.spotify.TokenHandler"><code class="docutils literal notranslate"><span class="pre">TokenHandler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="spotify.html#src.spotify.Spotify"><code class="docutils literal notranslate"><span class="pre">Spotify</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="slice.html">slice module</a><ul>
@@ -612,6 +641,44 @@
 <li class="toctree-l2"><a class="reference internal" href="webpage.html">webpage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wrapper.html">wrapper module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="wrapper.html#src.wrapper.wrapper"><code class="docutils literal notranslate"><span class="pre">wrapper()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Streamer client for game files transfer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="client.html#client.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.playing_file"><code class="docutils literal notranslate"><span class="pre">Config.playing_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.sync_runs"><code class="docutils literal notranslate"><span class="pre">Config.sync_runs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.modded"><code class="docutils literal notranslate"><span class="pre">Config.modded</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.debug"><code class="docutils literal notranslate"><span class="pre">Config.debug</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.secret"><code class="docutils literal notranslate"><span class="pre">Config.secret</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.use_mt"><code class="docutils literal notranslate"><span class="pre">Config.use_mt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.use_slice"><code class="docutils literal notranslate"><span class="pre">Config.use_slice</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.steam_id"><code class="docutils literal notranslate"><span class="pre">Config.steam_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.server_url"><code class="docutils literal notranslate"><span class="pre">Config.server_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.spiredir"><code class="docutils literal notranslate"><span class="pre">Config.spiredir</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.user_profile"><code class="docutils literal notranslate"><span class="pre">Config.user_profile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.slice_curses"><code class="docutils literal notranslate"><span class="pre">Config.slice_curses</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Config.export"><code class="docutils literal notranslate"><span class="pre">Config.export()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="client.html#client.Main"><code class="docutils literal notranslate"><span class="pre">Main</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.is_exception_recurring"><code class="docutils literal notranslate"><span class="pre">Main.is_exception_recurring()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.load_last_modified"><code class="docutils literal notranslate"><span class="pre">Main.load_last_modified()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.update_modified_timestamp"><code class="docutils literal notranslate"><span class="pre">Main.update_modified_timestamp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.save_last_modified"><code class="docutils literal notranslate"><span class="pre">Main.save_last_modified()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.run"><code class="docutils literal notranslate"><span class="pre">Main.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.check_twitch_credentials"><code class="docutils literal notranslate"><span class="pre">Main.check_twitch_credentials()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.get_savefile_sts1"><code class="docutils literal notranslate"><span class="pre">Main.get_savefile_sts1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.get_savefile_sts2"><code class="docutils literal notranslate"><span class="pre">Main.get_savefile_sts2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_savefile"><code class="docutils literal notranslate"><span class="pre">Main.sync_savefile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_runfiles_sts1"><code class="docutils literal notranslate"><span class="pre">Main.sync_runfiles_sts1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_runfiles_sts2"><code class="docutils literal notranslate"><span class="pre">Main.sync_runfiles_sts2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_profiles"><code class="docutils literal notranslate"><span class="pre">Main.sync_profiles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_slice_dice_data"><code class="docutils literal notranslate"><span class="pre">Main.sync_slice_dice_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.get_monster_train_folder"><code class="docutils literal notranslate"><span class="pre">Main.get_monster_train_folder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.sync_monster_train_save"><code class="docutils literal notranslate"><span class="pre">Main.sync_monster_train_save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="client.html#client.Main.get_now_playing"><code class="docutils literal notranslate"><span class="pre">Main.get_now_playing()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -694,8 +761,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -729,7 +796,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>

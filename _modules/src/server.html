@@ -26,16 +26,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="../../_static/documentation_options.js?v=a0e24af7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
@@ -146,6 +146,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../modules.html">
     Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../client.html">
+    Streamer client for game files transfer
   </a>
 </li>
 
@@ -262,6 +269,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -373,7 +387,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
@@ -445,6 +458,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.disc</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscordCommand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_savefile</span><span class="p">,</span> <span class="n">Savefile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.runs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_latest_run</span><span class="p">,</span> <span class="n">RunParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.spotify</span><span class="w"> </span><span class="kn">import</span> <span class="n">spotify</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.gamedata</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelicData</span><span class="p">,</span> <span class="n">Treasure</span><span class="p">,</span> <span class="n">Event</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">CommandType</span><span class="p">,</span> <span class="n">SaveType</span>
@@ -853,14 +867,6 @@
         <span class="c1"># self.esclient: EventSubClient = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">live_channels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">config</span><span class="o">.</span><span class="n">twitch</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="p">:</span> <span class="n">ClientSession</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"spotify_refresh_token"</span><span class="p">),</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="k">pass</span>
 
 <div class="viewcode-block" id="TwitchConn.load_tokens">
 <a class="viewcode-back" href="../../server.html#src.server.TwitchConn.load_tokens">[docs]</a>
@@ -881,91 +887,6 @@
         <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">_to_add_twitch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
         <span class="n">load</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">())</span></div>
-
-
-<div class="viewcode-block" id="TwitchConn.refresh_spotify_token">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.refresh_spotify_token">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">refresh_spotify_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">spotify</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
-
-        <span class="n">value</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">spotify</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">spotify</span><span class="o">.</span><span class="n">secret</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span>
-
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/x-www-form-urlencoded"</span><span class="p">,</span>
-            <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Basic </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span><span class="p">:</span>
-            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">"grant_type"</span><span class="p">:</span> <span class="s2">"refresh_token"</span><span class="p">,</span>
-                <span class="s2">"refresh_token"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span><span class="p">,</span>
-            <span class="p">}</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">"grant_type"</span><span class="p">:</span> <span class="s2">"authorization_code"</span><span class="p">,</span>
-                <span class="s2">"code"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">spotify</span><span class="o">.</span><span class="n">code</span><span class="p">,</span>
-                <span class="s2">"redirect_uri"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">/spotify"</span><span class="p">,</span>
-            <span class="p">}</span>
-
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-            <span class="s2">"https://accounts.spotify.com/api/token"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="s2">"access_token"</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-                    <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">content</span><span class="p">[</span><span class="s2">"expires_in"</span><span class="p">])</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
-                <span class="k">if</span> <span class="s2">"refresh_token"</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="s2">"refresh_token"</span><span class="p">]</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"spotify_refresh_token"</span><span class="p">),</span> <span class="s2">"w"</span>
-                        <span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>  <span class="c1"># oh no</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">"Could not write refresh token to file: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_spotify_refresh_token</span><span class="si">}</span><span class="s2">"</span>
-                        <span class="p">)</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
-
-
-<div class="viewcode-block" id="TwitchConn.spotify_call">
-<a class="viewcode-back" href="../../server.html#src.server.TwitchConn.spotify_call">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">spotify_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">spotify</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">&lt;</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">():</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_spotify_token</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">"https://api.spotify.com/v1/me/player/currently-playing"</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">"Accept"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
-                <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
-                <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_spotify_token</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-            <span class="p">},</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">ContentTypeError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">{}</span></div>
 
 
 <div class="viewcode-block" id="TwitchConn.event_ready">
@@ -2388,7 +2309,10 @@
             <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"That's kinda creepy, not gonna lie..."</span><span class="p">)</span>
             <span class="k">return</span>
 
-    <span class="n">j</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">spotify_call</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">spotify</span><span class="o">.</span><span class="n">is_token_valid</span><span class="p">():</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"There is no valid access token for Spotify. Ask streamer to re-authenticate."</span><span class="p">)</span>
+
+    <span class="n">j</span> <span class="o">=</span> <span class="k">await</span> <span class="n">spotify</span><span class="o">.</span><span class="n">now_playing</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"Could not get token from Spotify API. Retry in a few seconds."</span><span class="p">)</span>
     <span class="k">elif</span> <span class="s2">"error"</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
@@ -2401,23 +2325,6 @@
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"We are not currently listening to anything."</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="now_playing_client">
-<a class="viewcode-back" href="../../server.html#src.server.now_playing_client">[docs]</a>
-<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/playing"</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">now_playing_client</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>  <span class="c1"># just checking if key is OK</span>
-
-    <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no Twitch, no Spotify</span>
-        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"Need Twitch connection for Spotify"</span><span class="p">)</span>
-
-    <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">TConn</span><span class="o">.</span><span class="n">spotify_call</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"Could not connect to the Spotify API"</span><span class="p">)</span></div>
 
 
 
@@ -3989,7 +3896,7 @@
 <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/report"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">automatic_client_report</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"traceback"</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">send_report</span><span class="p">(</span><span class="s2">"[Automatic Client Reporting]</span><span class="se">\n\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="k">await</span> <span class="n">send_report</span><span class="p">(</span><span class="s2">"[Automatic Client Reporting]</span><span class="se">\n\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Report successful"</span><span class="p">)</span>
     <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span></div>
 
@@ -4196,6 +4103,12 @@
     <span class="k">if</span> <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">archive</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
+
+<div class="viewcode-block" id="Spotify_cleanup">
+<a class="viewcode-back" href="../../server.html#src.server.Spotify_cleanup">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">Spotify_cleanup</span><span class="p">():</span>
+    <span class="k">await</span> <span class="n">spotify</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
 </pre></div>
 
                 </article>
@@ -4225,8 +4138,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -4260,7 +4173,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>

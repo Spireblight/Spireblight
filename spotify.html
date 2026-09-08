@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>logger module &#8212; Spireblight 0.8 documentation</title>
+    <title>spotify module &#8212; Spireblight 0.8 documentation</title>
   
   
   
@@ -41,13 +41,13 @@
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'logger';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'spotify';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="monster package" href="monster.html" />
-    <link rel="prev" title="Custom Exceptions" href="exceptions.html" />
+    <link rel="next" title="slice module" href="slice.html" />
+    <link rel="prev" title="server module" href="server.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -349,12 +349,12 @@
 <li class="toctree-l1"><a class="reference internal" href="disc.html">disc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">events module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exceptions.html">Custom Exceptions</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">logger module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="monster.html">monster package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">server module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spotify.html">spotify module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spotify module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
@@ -406,7 +406,7 @@
     
     <li class="breadcrumb-item"><a href="modules.html" class="nav-link">Full Spireblight API</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">logger module</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">spotify module</span></li>
   </ul>
 </nav>
 </div>
@@ -423,8 +423,101 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-src.logger">
-<span id="logger-module"></span><h1>logger module<a class="headerlink" href="#module-src.logger" title="Link to this heading">#</a></h1>
+  <section id="module-src.spotify">
+<span id="spotify-module"></span><h1>spotify module<a class="headerlink" href="#module-src.spotify" title="Link to this heading">#</a></h1>
+<p>Module to handle talking to the Spotify API.</p>
+<p>This exposes a single instance, and the main class should not be instantiated more than once.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.spotify.get_new_tokens">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_new_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#get_new_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.get_new_tokens" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.spotify.get_now_playing">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_now_playing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#get_now_playing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.get_now_playing" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TokenHandler</span></span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.get_token">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.get_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.get_token" title="Link to this definition">#</a></dt>
+<dd><p>Get the Spotify token used for accessing the API.</p>
+<p>If the token is expired, obtain a new one. Otherwise, return the one saved on disk.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.session">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">session</span></span><a class="headerlink" href="#src.spotify.TokenHandler.session" title="Link to this definition">#</a></dt>
+<dd><p>The aiohttp session to connect to the Spotify API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.load_tokens">
+<span class="sig-name descname"><span class="pre">load_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.load_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.load_tokens" title="Link to this definition">#</a></dt>
+<dd><p>Load the access and refresh tokens from disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.save_tokens">
+<span class="sig-name descname"><span class="pre">save_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.save_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.save_tokens" title="Link to this definition">#</a></dt>
+<dd><p>Save the access and refresh tokens to disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.get_new_access_token">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_new_access_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.get_new_access_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.get_new_access_token" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a new access token using the refresh token.</p>
+<p>This doesn’t return any value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.request_authentication_link">
+<span class="sig-name descname"><span class="pre">request_authentication_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.request_authentication_link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.request_authentication_link" title="Link to this definition">#</a></dt>
+<dd><p>Request authentication from Spotify API and pass it on to the client.</p>
+<p>This is used once at first, and then whenever the refresh token expires.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.TokenHandler.populate_tokens">
+<span class="sig-name descname"><span class="pre">populate_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#TokenHandler.populate_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.TokenHandler.populate_tokens" title="Link to this definition">#</a></dt>
+<dd><p>Tokens freshly obtained from Spotify.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.spotify.Spotify">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spotify</span></span><a class="reference internal" href="_modules/src/spotify.html#Spotify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.Spotify" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.spotify.Spotify.session">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">session</span></span><a class="headerlink" href="#src.spotify.Spotify.session" title="Link to this definition">#</a></dt>
+<dd><p>The aiohttp session to connect to the Spotify API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.Spotify.is_token_valid">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_token_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#Spotify.is_token_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.Spotify.is_token_valid" title="Link to this definition">#</a></dt>
+<dd><p>Check if the tokens are still valid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.Spotify.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#Spotify.authenticate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.Spotify.authenticate" title="Link to this definition">#</a></dt>
+<dd><p>Trigger a handshake to get new OAuth2 credentials.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.spotify.Spotify.now_playing">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">now_playing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/spotify.html#Spotify.now_playing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.spotify.Spotify.now_playing" title="Link to this definition">#</a></dt>
+<dd><p>Obtain the currently-playing song using the Spotify API.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -438,20 +531,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="exceptions.html"
+       href="server.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Custom Exceptions</p>
+        <p class="prev-next-title">server module</p>
       </div>
     </a>
     <a class="right-next"
-       href="monster.html"
+       href="slice.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">monster package</p>
+        <p class="prev-next-title">slice module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -467,9 +560,39 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.get_new_tokens"><code class="docutils literal notranslate"><span class="pre">get_new_tokens()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.get_now_playing"><code class="docutils literal notranslate"><span class="pre">get_now_playing()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler"><code class="docutils literal notranslate"><span class="pre">TokenHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.get_token"><code class="docutils literal notranslate"><span class="pre">TokenHandler.get_token()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.session"><code class="docutils literal notranslate"><span class="pre">TokenHandler.session</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.load_tokens"><code class="docutils literal notranslate"><span class="pre">TokenHandler.load_tokens()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.save_tokens"><code class="docutils literal notranslate"><span class="pre">TokenHandler.save_tokens()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.get_new_access_token"><code class="docutils literal notranslate"><span class="pre">TokenHandler.get_new_access_token()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.request_authentication_link"><code class="docutils literal notranslate"><span class="pre">TokenHandler.request_authentication_link()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.TokenHandler.populate_tokens"><code class="docutils literal notranslate"><span class="pre">TokenHandler.populate_tokens()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.Spotify"><code class="docutils literal notranslate"><span class="pre">Spotify</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.Spotify.session"><code class="docutils literal notranslate"><span class="pre">Spotify.session</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.Spotify.is_token_valid"><code class="docutils literal notranslate"><span class="pre">Spotify.is_token_valid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.Spotify.authenticate"><code class="docutils literal notranslate"><span class="pre">Spotify.authenticate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.spotify.Spotify.now_playing"><code class="docutils literal notranslate"><span class="pre">Spotify.now_playing()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="_sources/logger.rst.txt">
+    <a href="_sources/spotify.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

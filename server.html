@@ -27,16 +27,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -46,7 +46,7 @@
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slice module" href="slice.html" />
+    <link rel="next" title="spotify module" href="spotify.html" />
     <link rel="prev" title="score module" href="score.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -149,6 +149,13 @@
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="modules.html">
     Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
   </a>
 </li>
 
@@ -267,6 +274,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -340,6 +354,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nameinternal.html">nameinternal module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="score.html">score module</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">server module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spotify.html">spotify module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slice.html">slice module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sts_profile.html">sts_profile module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trie.html">trie module</a></li>
@@ -476,7 +491,7 @@
 <p class="admonition-title">Note</p>
 <p>This method is called by the client during <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> but <strong>before</strong>
 <a class="reference internal" href="#src.server.TwitchConn.setup_hook" title="src.server.TwitchConn.setup_hook"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup_hook()</span></code></a> when the <code class="docutils literal notranslate"><span class="pre">load_tokens</span></code> keyword-argument
-is <code class="docutils literal notranslate"><span class="pre">True</span></code> in either, <code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code>, <a class="reference internal" href="#src.server.Timer.start" title="src.server.Timer.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> (Default).</p>
+is <code class="docutils literal notranslate"><span class="pre">True</span></code> in either, <a class="reference internal" href="client.html#client.Main.run" title="client.Main.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, <a class="reference internal" href="#src.server.Timer.start" title="src.server.Timer.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> (Default).</p>
 </div>
 <p>You can override this method to implement your own token loading logic into the client, such as from a database.</p>
 <p>By default this method loads tokens from a file named <cite>“.tio.tokens.json”</cite> if it is present;
@@ -514,7 +529,7 @@ as this has far less chance of being corrupted, damaged or lost.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method is called by the client when it is gracefully closed and the <code class="docutils literal notranslate"><span class="pre">save_tokens</span></code> keyword-argument
-is <code class="docutils literal notranslate"><span class="pre">True</span></code> in either, <code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code>, <a class="reference internal" href="#src.server.Timer.start" title="src.server.Timer.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> (Default).</p>
+is <code class="docutils literal notranslate"><span class="pre">True</span></code> in either, <a class="reference internal" href="client.html#client.Main.run" title="client.Main.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, <a class="reference internal" href="#src.server.Timer.start" title="src.server.Timer.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code> (Default).</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -536,16 +551,6 @@ it is preferred to use <code class="xref py py-meth docutils literal notranslate
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.setup_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.setup_hook" title="Link to this definition">#</a></dt>
 <dd><p>Set-up the bot’s hooks.</p>
 </dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.refresh_spotify_token">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh_spotify_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.refresh_spotify_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.refresh_spotify_token" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.server.TwitchConn.spotify_call">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">spotify_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#TwitchConn.spotify_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.TwitchConn.spotify_call" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.server.TwitchConn.event_ready">
@@ -795,11 +800,6 @@ mostly fine otherwise.</p>
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">now_playing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#now_playing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.now_playing" title="Link to this definition">#</a></dt>
 <dd><p>Return the currently-playing song on Spotify (if any).</p>
 </dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.server.now_playing_client">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">now_playing_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#now_playing_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.now_playing_client" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.server.giveaway_handle">
@@ -1194,6 +1194,11 @@ mostly fine otherwise.</p>
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Archive_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Archive_cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Archive_cleanup" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="src.server.Spotify_cleanup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spotify_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/server.html#Spotify_cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.server.Spotify_cleanup" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 
 
@@ -1216,11 +1221,11 @@ mostly fine otherwise.</p>
       </div>
     </a>
     <a class="right-next"
-       href="slice.html"
+       href="spotify.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">slice module</p>
+        <p class="prev-next-title">spotify module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1259,8 +1264,6 @@ mostly fine otherwise.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.load_tokens"><code class="docutils literal notranslate"><span class="pre">TwitchConn.load_tokens()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.save_tokens"><code class="docutils literal notranslate"><span class="pre">TwitchConn.save_tokens()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.setup_hook"><code class="docutils literal notranslate"><span class="pre">TwitchConn.setup_hook()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.refresh_spotify_token"><code class="docutils literal notranslate"><span class="pre">TwitchConn.refresh_spotify_token()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.spotify_call"><code class="docutils literal notranslate"><span class="pre">TwitchConn.spotify_call()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_ready"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_ready()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.TwitchConn.event_raid"><code class="docutils literal notranslate"><span class="pre">TwitchConn.event_raid()</span></code></a></li>
 </ul>
@@ -1306,7 +1309,6 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.auto_resolve_pred"><code class="docutils literal notranslate"><span class="pre">auto_resolve_pred()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.handle_prediction"><code class="docutils literal notranslate"><span class="pre">handle_prediction()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.now_playing"><code class="docutils literal notranslate"><span class="pre">now_playing()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.now_playing_client"><code class="docutils literal notranslate"><span class="pre">now_playing_client()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.giveaway_handle"><code class="docutils literal notranslate"><span class="pre">giveaway_handle()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.giveaway_enter"><code class="docutils literal notranslate"><span class="pre">giveaway_enter()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.card_info"><code class="docutils literal notranslate"><span class="pre">card_info()</span></code></a></li>
@@ -1377,6 +1379,7 @@ mostly fine otherwise.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Youtube_startup"><code class="docutils literal notranslate"><span class="pre">Youtube_startup()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Archive_startup"><code class="docutils literal notranslate"><span class="pre">Archive_startup()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Archive_cleanup"><code class="docutils literal notranslate"><span class="pre">Archive_cleanup()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src.server.Spotify_cleanup"><code class="docutils literal notranslate"><span class="pre">Spotify_cleanup()</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -1402,8 +1405,8 @@ mostly fine otherwise.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1437,7 +1440,7 @@ mostly fine otherwise.</p>
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>
