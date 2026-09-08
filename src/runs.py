@@ -585,6 +585,4 @@ async def receive_run(req: Request) -> Response:
             _ts_cache[parser.epoch] = parser
             _update_cache()
 
-    logger.debug(f"Received run history file. Updated data. Transaction time: {time.time() - float(req.query['start'])}s")
-
     return Response()

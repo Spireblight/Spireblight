@@ -1,7 +1,7 @@
 Slay the Spire 2 run parsing
 ============================
 
-.. automodule:: src.2game2data
+.. automodule:: src.gamedata2
    :members:
    :show-inheritance:
    :undoc-members:

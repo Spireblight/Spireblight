@@ -28,7 +28,8 @@ class _ConfigMapping:
                     exp.update(v)
                 case list():
                     if isinstance(v, str):
-                        v = [v]
+                        # fun fact: tuples are defined by the presence of commas. () are optional if not empty
+                        v = v,
                     try:
                         lst = list(v)
                     except TypeError:
@@ -335,7 +336,7 @@ class _Webhook(_ConfigMapping):
         self.secret = secret
 
 class Spotify(_ConfigMapping):
-    def __init__(self, enabled: bool, id: str, secret: str, code: str):
+    def __init__(self, enabled: bool, id: str, secret: str, scopes: list[str]):
         """Hold information for the Spotify "Now Playing" feature.
 
         :param enabled: Whether we use the "Now Playing" feature.
@@ -344,11 +345,11 @@ class Spotify(_ConfigMapping):
         :type id: str
         :param secret: The client secret of our app.
         :type secret: str
-        :param code: The one-time code needed to kickstart it.
-        :type code: str
+        :param scopes: A list of scopes we want access to.
+        :type scopes: list[str]
         """
 
         self.enabled = enabled
         self.id = id
         self.secret = secret
-        self.code = code # XXX: when we receive the code, immediately use it, don't store it
+        self.scopes = scopes

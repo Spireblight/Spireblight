@@ -2,6 +2,7 @@
 data/
 last_run
 last_version
+last_modified.json
 /bin/
 /lib/
 /lib64

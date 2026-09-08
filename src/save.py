@@ -570,7 +570,7 @@ async def save_chart(req: Request) -> Response:
 async def current2_raw(req: Request):
     return Response(text=json.dumps(_save2._data, indent=4), content_type="application/json")
 
-@router.post("/sync/save")
+@router.post("/sync/save-1")
 @catch_error
 async def receive_save(req: Request):
     content, name = await get_req_data(req, "savefile", "character")
@@ -595,7 +595,6 @@ async def receive_save(req: Request):
             json.dump(j, f, indent=config.server.json_indent)
         else:
             f.write("{}")
-    logger.debug(f"Updated data. Final transaction time: {time.time() - float(req.query['start'])}s")
 
     return Response()
 

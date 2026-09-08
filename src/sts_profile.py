@@ -266,8 +266,6 @@ async def sync_profiles(req: Request) -> Response:
         else:
             _profiles[i].data = profile
 
-    logger.debug(f"Received profiles. Transaction time: {time.time() - float(req.query['start'])}s")
-
     return Response()
 
 @add_listener("setup_init")

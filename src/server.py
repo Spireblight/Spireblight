@@ -9,7 +9,6 @@ from collections import defaultdict
 import urllib.parse
 import traceback
 import datetime
-import aiohttp
 import asyncio
 import random
 import string
@@ -81,6 +80,7 @@ from src.utils import (
 from src.disc import DiscordCommand
 from src.save import get_savefile, Savefile
 from src.runs import get_latest_run, RunParser
+from src.spotify import spotify
 from src.gamedata import RelicData, Treasure, Event
 
 from src.typehints import ContextType, CommandType, SaveType
@@ -457,14 +457,6 @@ class TwitchConn(TBot):
         # self.esclient: EventSubClient = None
         self.live_channels: dict[str, bool] = {config.twitch.channel: False}
         self._session: ClientSession | None = None
-        self._spotify_token: str = None
-        self._expires_at: int | float = 0
-        self._spotify_refresh_token: str = None
-        try:
-            with open(os.path.join("data", "spotify_refresh_token"), "r") as f:
-                self._spotify_refresh_token = f.read().strip()
-        except OSError:
-            pass
 
     def load_tokens(self, path = None):
         return super().load_tokens("data/tokens.json")
@@ -477,85 +469,6 @@ class TwitchConn(TBot):
         for cmd in _to_add_twitch:
             self.add_command(cmd)
         load(asyncio.get_event_loop())
-
-    async def refresh_spotify_token(self):
-        if not config.spotify.enabled:
-            return
-
-        if self._session is None:
-            self._session = ClientSession()
-
-        value = base64.urlsafe_b64encode(
-            f"{config.spotify.id}:{config.spotify.secret}".encode("utf-8")
-        )
-        value = value.decode("utf-8")
-
-        headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": f"Basic {value}",
-        }
-
-        if self._spotify_refresh_token:
-            params = {
-                "grant_type": "refresh_token",
-                "refresh_token": self._spotify_refresh_token,
-            }
-
-        else:
-            params = {
-                "grant_type": "authorization_code",
-                "code": config.spotify.code,
-                "redirect_uri": f"{config.server.url}/spotify",
-            }
-
-        async with self._session.post(
-            "https://accounts.spotify.com/api/token", headers=headers, params=params
-        ) as resp:
-            if resp.ok:
-                content = await resp.json()
-                self._spotify_token = content["access_token"]
-                self._expires_at = (
-                    datetime.datetime.now()
-                    + datetime.timedelta(seconds=content["expires_in"])
-                ).timestamp()
-                if "refresh_token" in content:
-                    self._spotify_refresh_token = content["refresh_token"]
-                    try:
-                        with open(
-                            os.path.join("data", "spotify_refresh_token"), "w"
-                        ) as f:
-                            f.write(self._spotify_refresh_token)
-                    except OSError:  # oh no
-                        logger.error(
-                            f"Could not write refresh token to file: {self._spotify_refresh_token}"
-                        )
-                return self._spotify_token
-            return None
-
-    async def spotify_call(self):
-        if not config.spotify.enabled:
-            return
-
-        if self._session is None:
-            self._session = ClientSession()
-
-        if not self._spotify_token or self._expires_at < time.time():
-            token = await self.refresh_spotify_token()
-            if not token:
-                return None
-
-        async with self._session.get(
-            "https://api.spotify.com/v1/me/player/currently-playing",
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {self._spotify_token}",
-            },
-        ) as resp:
-            try:
-                return await resp.json()
-            except ContentTypeError:
-                return {}
 
     async def event_ready(self):
         self.live_channels[config.twitch.channel] = live = bool(
@@ -1875,7 +1788,10 @@ async def now_playing(ctx: ContextType):
             await ctx.reply("That's kinda creepy, not gonna lie...")
             return
 
-    j = await TConn.spotify_call()
+    if not await spotify.is_token_valid():
+        return await ctx.reply("There is no valid access token for Spotify. Ask streamer to re-authenticate.")
+
+    j = await spotify.now_playing()
     if j is None:
         await ctx.reply("Could not get token from Spotify API. Retry in a few seconds.")
     elif "error" in j:
@@ -1888,20 +1804,6 @@ async def now_playing(ctx: ContextType):
         )
     else:
         await ctx.reply("We are not currently listening to anything.")
-
-
-@router.get("/playing")
-async def now_playing_client(req: Request):
-    await get_req_data(req)  # just checking if key is OK
-
-    if TConn is None:  # no Twitch, no Spotify
-        raise HTTPServiceUnavailable(reason="Need Twitch connection for Spotify")
-
-    data = await TConn.spotify_call()
-
-    if data:
-        return Response(text=json.dumps(data), content_type="application/json")
-    raise HTTPServiceUnavailable(reason="Could not connect to the Spotify API")
 
 
 _ongoing_giveaway = {
@@ -3290,7 +3192,7 @@ async def individual_cmd(req: Request):
 @router.post("/report")
 async def automatic_client_report(req: Request):
     data = (await get_req_data(req, "traceback"))[0]
-    if send_report("[Automatic Client Reporting]\n\n" + data):
+    if await send_report("[Automatic Client Reporting]\n\n" + data):
         return Response(text="Report successful")
     raise HTTPServiceUnavailable
 
@@ -3469,3 +3371,6 @@ async def Archive_startup():
 async def Archive_cleanup():
     if archive.archive._session is not None:
         await archive.archive._session.close()
+
+async def Spotify_cleanup():
+    await spotify.session.close()

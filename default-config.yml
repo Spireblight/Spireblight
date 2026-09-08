@@ -162,6 +162,5 @@ spotify:
   # id and secret are the credentials for the application that we're using
   id: <not set>
   secret: <not set>
-  # this code is a one-time use only. we then save the refresh token to disk and use that
-  # this should be obtained by doing a GET request to /authorize
-  code: <not set>
+  # which scopes we want access to. currently only this one is implemented
+  scopes: ["user-read-currently-playing"]
