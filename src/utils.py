@@ -15,6 +15,7 @@ from src.config import config
 IGNORE_REASONS = ( # reasons from HTTP exceptions which won't be reported
     "This command does not exist.",
     "This run does not exist.",
+    "No active token and stream is offline",
 )
 
 __all__ = [
