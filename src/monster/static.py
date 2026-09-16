@@ -209,11 +209,12 @@ class Relic(Base2):
     def __init__(self, data):
         super().__init__(data)
         self.clan: str = data["clan"] # could be empty string
-        self.unlock = int(data["unlock"])
+        self.unlock: int = data["unlock_level"]
         self.rarity: str = data["rarity"]
-        self.story_event: bool = data["story_event"]
-        self.dragons_hoard: bool = data["dragons_hoard"]
-        self.boss_artifact: bool = data["boss_artifact"]
+        self.story_event: bool = data["is_story_event"]
+        self.dragons_hoard: bool = data["is_dragons_hoard"]
+        self.boss_artifact: bool = data["is_boss_artifact"]
+        self.dlc: str | None = data["dlc"]
 
 class Trial(Base2):
     """Store trial information."""
