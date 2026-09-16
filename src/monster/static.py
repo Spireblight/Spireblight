@@ -216,10 +216,10 @@ class Relic(Base2):
 
 class Trial(Base2):
     """Store trial information."""
-    # trials values are not 100% certain
-    # aka the "Enemies heal for X" where X is guessed but not entirely known
-    # this is why the descriptions are a bit... weird
-    # to be able to identify them during runs, and thus fix
+    def __init__(self, data):
+        super().__init__(data)
+        self.trial = data["trial"] # this is like a status effect
+        self.rewards = data["rewards"]
 
 class Upgrade(Base2):
     def __init__(self, data):
@@ -278,7 +278,7 @@ def load_mt2():
         with open(os.path.join("argo", "mt2", file)) as f:
             data = json.load(f)
             for d in data:
-                value = _map2.get(file[:-5], Misc2)(d)
+                value = _map2.get(file.partition(".")[0], Misc2)(d)
                 if value.id: # temporary fix while some units have a blank ID
                     _internal_cache[value.id] = value
                 _query_cache[sanitize(value.name)].append(value)
