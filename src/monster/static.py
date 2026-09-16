@@ -134,6 +134,7 @@ class Base2:
         self.internal: str = data.get("internal", "")
         self.id: str = data.get("id")
         self.lore: str = data.get("lore", "")
+        self.is_hidden: bool = data.get("hidden", False)
 
     @property
     def info(self):
@@ -222,6 +223,7 @@ class Trial(Base2):
         self.rewards = data["rewards"]
 
 class Upgrade(Base2):
+    """Store upgrade information."""
     def __init__(self, data):
         super().__init__(data)
         self.bonus_atk: int = data["bonus_atk_pwr"]
@@ -238,28 +240,30 @@ class Upgrade(Base2):
         self.blocks_ability: bool = data["blocks_ability"]
 
 class Status(Base2):
+    """Store status information."""
     def __init__(self, data):
         super().__init__(data)
         self.card_tooltip: str = data["card_tooltip"]
         self.character_tooltip: str = data["character_tooltip"]
         self.notification: str = data["notification"]
-        self.hidden: bool = data["hidden"]
         self.status_class: str = data["status_class"]
 
 class Soul(Base2):
+    """Store soul (from Soul Savior) information."""
     def __init__(self, data):
         super().__init__(data)
         self.clan: str = data["clan"]
         self.unlock_level: int = data["unlock_level"]
         self.rarity: str = data["rarity"]
         self.is_dlc: bool = data["is_dlc"]
-        self.hidden = data["hidden"] # currently None for everyone?
         self.draft_min_distance: int = data["draft_min_distance"]
         self.draft_max_distance: int = data["draft_max_distance"]
 
+class Sin(Base2):
+    """Store sin information from fight trials."""
+
 class Misc2(Base2):
-    def __init__(self, data):
-        super().__init__(data)
+    """Store information for unknown data."""
 
 _map2 = {
     "cards": Card2,
@@ -274,6 +278,7 @@ _map2 = {
     "upgrades": Upgrade,
     "status": Status,
     "souls": Soul,
+    "sins": Sin,
 }
 
 def load_mt1():

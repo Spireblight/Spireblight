@@ -1,0 +1,506 @@
+[
+    {
+        "internal": "Enemy_SpawnSpikeRocksT3",
+        "name": "Thorn Guard",
+        "id": "f593e80b-2b81-4fa8-8a4c-1891a5aa84da",
+        "description": "A Penitent Prayerstone is spawned on each floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region1_Burst",
+        "name": "Stern Sister",
+        "id": "92a62d32-2cf9-47e5-899a-f2090529efe7",
+        "description": "Maera grants herself and enemy units [burst] [effect0.power] on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_TitanskinT2",
+        "name": "Tough as Nails",
+        "id": "c8292559-a269-4357-9dda-bf2f0057cb3b",
+        "description": "Enemy units enter with [titanskin] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_RevengeAttackHarvestHealth",
+        "name": "Bloody Harvest",
+        "id": "d65ab741-2ea1-432b-821f-f37ecf99bc45",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on [revenge]. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [siphon].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region4_BossBattle_1",
+        "name": "Plaguebringer",
+        "id": "2d1dfa38-1373-4f74-81a4-829914600d0f",
+        "description": "Gain [duality] at [effect0.power]% health.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_RevengeAttackHarvestHealth_TitanTrial",
+        "name": "Bloody Harvest II",
+        "id": "1d2d40fc-0677-47df-ad15-d083d7bbe659",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on [revenge]. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [siphon].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHordeT2",
+        "name": "Mark of Invasion",
+        "id": "3d34e290-785b-405a-ab46-66cee6dc2a10",
+        "description": "At the start of battle, enemy units appear on each floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedLifesteal",
+        "name": "Vampiric Feed",
+        "id": "2424d14a-6fd6-4458-836e-75ad7315a22a",
+        "description": "Cael and his cherubs grant +[effect0.power][attack] and [lifesteal] [effect1.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_AddMeleeWeaknessToUnit",
+        "name": "Champion of Savagery",
+        "id": "b61f922f-03e7-4fa3-bde7-37e55737c621",
+        "description": "<b>Seraph</b> enchants enemy units with [rage] [effect1.power]. Your units enter with [meleeweakness] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedLifesteal_TitanTrial",
+        "name": "Vampiric Feed II",
+        "id": "4501ae73-0ec3-489c-b78c-3d1155af0bd4",
+        "description": "Cael and his cherubs grant +[effect0.power][attack] and [lifesteal] [effect1.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3Rage_TitanTrial",
+        "name": "Pyre Hunter II",
+        "id": "7998304e-4d5b-437b-8652-3d3d7f125163",
+        "description": "If you have no units on the floor, Arkion deals damage to the Pyre. Arkion has +[effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Lifemother_Undying",
+        "name": "The Undying Bloom",
+        "id": "9b56ff60-2677-4801-8806-698ae22bfa13",
+        "description": "The Lifemother applies [witherbloom] [effect0.power] to the front friendly unit and [undying] [effect1.power] to front enemy unit at the end of the turn.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "BlightsInDeck_T2",
+        "name": "Rubbish",
+        "id": "9933f342-5fc1-437c-99a1-4782975a855d",
+        "description": "Add [effect0.power] [scrap] cards to your deck for this battle.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region1_Armor",
+        "name": "Eldest Scion",
+        "id": "9e831134-3dbb-4ade-9ce2-770d5dc7e848",
+        "description": "Maera applies [armor] to enemy units equal to their [attack] on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Lifemother_Infested",
+        "name": "The Swarmhost",
+        "id": "72f9f4e3-df23-4954-99e6-9040ab573590",
+        "description": "The Lifemother gains [infested] [effect0.power] on [harvest].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedAtkHP",
+        "name": "Nourishing Feed",
+        "id": "ac1a8e17-bd40-45fa-ad2b-7bacae9662ce",
+        "description": "Cael and his cherubs grant +[effect0.power][health] and [spikes] [effect1.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3SiphonRage",
+        "name": "Furious Frenzy",
+        "id": "85ee2dcc-aa59-4be3-90ad-2a1d6ecba3df",
+        "description": "Arkion gains [rage] [effect0.power] on [siphon].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region2_BossBattle_3",
+        "name": "Thick Skinned",
+        "id": "d029a392-703b-4b96-ae89-f89c2c38aaac",
+        "description": "Thaddius enters with [titanskin] [effect0.power] and gains [titanskin] [effect0.power] on [gorge].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_MoreMass_TitanTrial",
+        "name": "More Mass II",
+        "id": "28c0e907-d882-4052-93f4-0a07d88496af",
+        "description": "Fleshlings have [effect0.power][attack] and [effect1.power][health]. Fleshweaver has [effect4.power] more stacks of [mass].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "BlightsInDeck_T1",
+        "name": "Rubbish",
+        "id": "97d7ac5d-8ff6-49ea-912a-4bc518c05216",
+        "description": "Add [effect0.power] [scrap] cards to your deck for this battle.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_AddMultistrike",
+        "name": "Seal of Aggression",
+        "id": "8ffd2422-7707-4679-bb13-8e847c462437",
+        "description": "Non-boss enemy units get [multistrike].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_LowerEmberT1",
+        "name": "Pyre Dampener",
+        "id": "3158293f-a74d-4882-b4c9-79a766f15a0f",
+        "description": "[effect0.power][ember] per turn.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3Push_TitanTrial",
+        "name": "Hard Headed II",
+        "id": "7fd2ed62-2def-4c3a-83ca-586e4310ce41",
+        "description": "Arkion pushes attacked units to the back. Arkion has +[effect0.power][health].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3SiphonRage_TitanTrial",
+        "name": "Furious Frenzy II",
+        "id": "1ee2320c-75e1-4d28-93c6-24c160bab659",
+        "description": "Arkion gains [rage] [effect0.power] on [siphon].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region4_BossBattle_2",
+        "name": "Innoculation",
+        "id": "7a3a1549-1938-4437-8e24-43ec9de95801",
+        "description": "Gain [effect0.power]x [armor] per [malaise] on [strike].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region3_DuplicateEnemy",
+        "name": "Duplicitous",
+        "id": "37f3d7f8-2785-4afd-a632-d45c14546c6a",
+        "description": "Tivi creates a copy of the front enemy unit on the floor at the end of the turn. If there are no enemy units, Tivi creates a <b>Jeermask</b> unit.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_SlayAttackIncantHealth_TitanTrial",
+        "name": "Doombringers II",
+        "id": "6dd04165-0c8d-42b3-9215-405e39952466",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on [slay]. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [incant].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_HealOnAscend",
+        "name": "Heaven's Seal",
+        "id": "804934f0-cfa6-4c17-badf-8c0f918c9953",
+        "description": "Non-boss enemy units restore [effect0.power] health when they move up a floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_SlayAttackIncantHealth",
+        "name": "Doombringers",
+        "id": "9c13c474-4bb0-413e-ab1d-719f77ab11ae",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on [slay]. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [incant].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_LowerEmberT2",
+        "name": "Pyre Dampener",
+        "id": "83b4e842-b86a-4789-8ee5-d5ab1d0516f0",
+        "description": "[effect0.power][ember] per turn.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHordeT3",
+        "name": "Mark of Invasion",
+        "id": "55794a23-4b7f-413f-9569-713ef2922ee2",
+        "description": "At the start of battle, enemy units appear on each floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_AddMeleeWeaknessToUnit_TitanTrial",
+        "name": "Champion of Savagery II",
+        "id": "58306a0c-d4b4-4a99-8531-fb76ea12650c",
+        "description": "<b>Seraph</b> enchants enemy units with [rage] [effect1.power]. Your units enter with [meleeweakness] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region2_BossBattle_2",
+        "name": "Train Chomper",
+        "id": "0809140a-a5c5-41f7-ab7c-375e6d88fb14",
+        "description": "Reduce [capacity] by [effect0.power] and trigger [gorge] on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_LowerEmberT3",
+        "name": "Pyre Dampener",
+        "id": "2a156d6d-b563-426f-a270-393aea9e5966",
+        "description": "[effect0.power][ember] per turn.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_BuffAllies_TitanTrial",
+        "name": "Harbinger of Entropy II",
+        "id": "d6ccaea9-1de4-4861-b221-f971897049b5",
+        "description": "<b>Seraph</b> enchants your units with [sap] [effect0.power] and adds a <b>Curse of Entropy</b> to your deck on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region2_BossBattle_1",
+        "name": "Insatiable",
+        "id": "ce0711e4-7113-43cc-9cbf-ca92bbf1e4b3",
+        "description": "Trigger [gorge] on [slay].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_BuffAllies",
+        "name": "Harbinger of Entropy",
+        "id": "46a9ebcf-ed66-4e63-bc87-9431751cd4d1",
+        "description": "<b>Seraph</b> enchants your units with [sap] [effect0.power] and adds a <b>Curse of Entropy</b> to your deck on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_ApplyStatuses_TitanTrial",
+        "name": "Chosen of Dominion II",
+        "id": "db574c54-f2fb-4c40-9489-32ddb85ad443",
+        "description": "<b>Seraph</b> applies [corruption] [effect0.power] to your units each turn and doubles [corruption] on [strike].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnSpikeRocksT2",
+        "name": "Thorn Guard",
+        "id": "ddd058f2-9398-4e62-9636-ceed1c0bb419",
+        "description": "A Penitent Prayerstone is spawned on each floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Lifemother_Debuff",
+        "name": "The Corpseflower",
+        "id": "93efdaa9-7496-46d3-ae86-7a08223b8f94",
+        "description": "The Lifemother applies [malaise] [effect0.power] on [strike] and spreads [debuff] effects on [hellborneharvest].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3Push",
+        "name": "Hard Headed",
+        "id": "078e08bc-cd65-44e2-89a1-c35aec3e3c9f",
+        "description": "Arkion pushes attacked units to the back.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3Rage",
+        "name": "Pyre Hunter",
+        "id": "0095312c-25a4-472e-9b96-8a2a9b381d19",
+        "description": "If you have no units on the floor, Arkion deals damage to the Pyre. ",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_LowerDraw",
+        "name": "Mind Muddler",
+        "id": "674526dc-1c96-407e-802e-6c16434c48db",
+        "description": "Draw [effect0.power] each turn. ",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region4_BossBattle_3",
+        "name": "Energy Vampire",
+        "id": "999200cb-6890-4237-9d35-bc4a98340e4d",
+        "description": "Additionally apply [witherbloom] [effect0.power] to your units on [action].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_MoreMass",
+        "name": "More Mass",
+        "id": "e2dfd50f-5c41-40e0-a150-b4a639e0ee57",
+        "description": "Fleshlings have [effect0.power][attack] and [effect1.power][health]. Fleshweaver has [effect2.power] more stacks of [mass].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_LoopAttackResolveHealth_TitanTrial",
+        "name": "Inevitability II",
+        "id": "b3dfd677-fd55-4ce0-9872-9629efdf357b",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on <b>Loop</b>. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region1_AscendDescend",
+        "name": "Sibling Hierarchy",
+        "id": "e8cc344f-3273-467b-83f3-3c1ce23ceeec",
+        "description": "Maera applies [rage] [effect0.power] to enemy units on [shift].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_Spike",
+        "name": "Spiked Mass",
+        "id": "761daa1f-e432-441f-96bf-a3393873acd2",
+        "description": "Fleshlings have [effect0.power][attack] and [effect1.power][health] and gain [spikes] [effect2.power]. ",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_Corruption_TitanTrial",
+        "name": "Corrupted Mass II",
+        "id": "52dc060c-bd51-4b7b-865a-6d70f9806e53",
+        "description": "Fleshlings have [effect0.power][attack] and [effect0.power][health] and apply Corruption [effect2.power] on death to the unit that killed it. Fleshweaver has [effect3.power] more stacks of [mass].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_Corruption",
+        "name": "Corrupted Mass",
+        "id": "741546e7-71a9-4817-aab9-066af7c32fcf",
+        "description": "Fleshlings have [effect0.power][attack] and [effect0.power][health] and apply Corruption [effect1.power] on death to the unit that killed it.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHordeT1",
+        "name": "Mark of Invasion",
+        "id": "405b6d86-77fe-4943-94a6-3c4bdd48a27a",
+        "description": "At the start of battle, enemy units appear on each floor.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_FrontReanimationT2",
+        "name": "Stone of the Undying",
+        "id": "d5bc1611-0bd2-47c5-9d78-3280efbc8fbe",
+        "description": "The front non-boss enemy in each wave gets [undying] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level3_ImmortalMass_Spike_TitanTrial",
+        "name": "Spiked Mass II",
+        "id": "c4abfdc2-a89c-43cf-9e35-59f6ea3b39f7",
+        "description": "Fleshlings have [effect0.power][attack] and [effect1.power][health] and gain [spikes] [effect3.power]. Fleshweaver has [effect4.power] more stacks of [mass].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region3_SniperAdvance",
+        "name": "Mischevious Child",
+        "id": "51307fc3-5420-43fe-ba2d-8969ea0146da",
+        "description": "Tivi has <b>Sniper</b> and <b>Advances</b> the attacked unit on [strike].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_CorruptSeraph_ApplyStatuses",
+        "name": "Chosen of Dominion",
+        "id": "8d2aa7e6-2992-4809-87e1-6fe2befac166",
+        "description": "<b>Seraph</b> applies [corruption] [effect0.power] to your units each turn and doubles [corruption] on [strike].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_TitanskinT1",
+        "name": "Tough as Nails",
+        "id": "ea6dfcb7-0a2f-4a6c-a0c7-b413327d672d",
+        "description": "Enemy units enter with [titanskin] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedAtkHP_TitanTrial",
+        "name": "Nourishing Feed II",
+        "id": "7e1b3da5-e6c6-408f-8d2b-055e4b286657",
+        "description": "Cael and his cherubs grant +[effect0.power][health] and [spikes] [effect1.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedDamageShield",
+        "name": "Holy Feed",
+        "id": "35294974-aed1-4d8c-8bb0-2d7d3d2084a2",
+        "description": "Cael and his cherubs grant [damageshield] [effect0.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_FrontReanimationT3",
+        "name": "Stone of the Undying",
+        "id": "a8202bfb-55f0-4630-a592-d60177796bf0",
+        "description": "The front non-boss enemy in each wave gets [undying] [effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Boss_Railforged_Region3_Scourge",
+        "name": "Prankster",
+        "id": "719e2b49-f130-4d76-9572-672b2bc52283",
+        "description": "Tivi adds a <b>Tivi's Scourge</b> to your hand on [siphon].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_Boss_Level6_AngelDuo_LoopAttackResolveHealth",
+        "name": "Inevitability",
+        "id": "60c199fa-7176-4748-b184-6d59bbdfa246",
+        "description": "Stryx applies +[effect1.trigger0.effect0.power][attack] to Hallow on <b>Loop</b>. Hallow applies +[effect0.trigger0.effect0.power][health] to Stryx on [resolve].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_SpawnHeroEaterFeedDamageShield_TitanTrial",
+        "name": "Holy Feed II",
+        "id": "12f05d0b-df25-4cad-b7f3-9c52eac46e04",
+        "description": "Cael and his cherubs grant [damageshield] [effect0.power] and [spellshield] [effect1.power] to enemy units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "Enemy_EndlessScaling",
+        "name": "Endless Climb",
+        "id": "b342ef1d-306b-4d40-aa9d-782bbae58af3",
+        "description": "Enemy units get more [attack] and [health] every battle.",
+        "lore": "",
+        "hidden": false
+    }
+]
