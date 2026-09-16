@@ -1,0 +1,1787 @@
+[
+    {
+        "internal": "HelldriverUpgradeDemon",
+        "name": "HelldriverUpgradeDemon",
+        "id": "59fee6bd-3905-482b-bfcd-fe3a26762934",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftSubClassBannerReward2x",
+        "name": "CardDraftSubClassBannerReward2x",
+        "id": "aa51dad4-6276-405f-ad7c-6cf2b467fffc",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BoneDogArmy_RewardData",
+        "name": "BoneDogArmy_RewardData",
+        "id": "b60e6a7f-b461-4247-a2e9-bc4639b24f5f",
+        "trial_modifiers": false,
+        "description": "Get 5X Bone Dogs"
+    },
+    {
+        "internal": "DamagePerCardUnderX_RelicRewardData",
+        "name": "DamagePerCardUnderX_RelicRewardData",
+        "id": "6cabd246-6e89-4717-b689-e5a3d8bfee1b",
+        "trial_modifiers": false,
+        "description": "At the start of battle, take 1 Pyre damage per card fewer than 30 in your deck."
+    },
+    {
+        "internal": "CardDraftLevelUpUnitHellhorned",
+        "name": "CardDraftLevelUpUnitHellhorned",
+        "id": "f978c42e-d89c-4637-b991-f16a6c6f5d4b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftSubClassUncommonReward2x",
+        "name": "CardDraftSubClassUncommonReward2x",
+        "id": "97c369ee-de88-48c7-8306-61a332858817",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class7TomeReward",
+        "name": "Class7TomeReward",
+        "id": "69e23848-87e7-46bc-ad05-53ec93c85638",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "LegendaryHammer_RewardData",
+        "name": "LegendaryHammer_RewardData",
+        "id": "5d4093d8-d580-468d-86c7-9fc7ab65dd89",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "MoreExpensiveUnits_RelicRewardData",
+        "name": "MoreExpensiveUnits_RelicRewardData",
+        "id": "82b2c513-7744-42b5-923b-3eb7117e8505",
+        "trial_modifiers": false,
+        "description": "Units cost 1 more Ember."
+    },
+    {
+        "internal": "InscryptionEventManyLivesUpgradeReward",
+        "name": "InscryptionEventManyLivesUpgradeReward",
+        "id": "cc9d6596-4abc-4fa1-a6c0-6b09a16c6e1b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class4SpikeReward",
+        "name": "Class4SpikeReward",
+        "id": "23d43390-7297-486a-aba2-6329aafbe32c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "HelldriverUpgradeImp",
+        "name": "HelldriverUpgradeImp",
+        "id": "91ed832c-80f3-4d2f-b007-51c1a49a2986",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard_BlessingDraftBoss1_RewardData",
+        "name": "DragonHoard_BlessingDraftBoss1_RewardData",
+        "id": "98584b40-89fd-4f2d-b568-57f489a6570e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class3CardDraftRareReward",
+        "name": "Class3CardDraftRareReward",
+        "id": "605a5c03-aa45-4669-8ae2-dbf9fb9818f1",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward250",
+        "name": "GoldReward250",
+        "id": "dd943b8c-e0d2-4765-93a8-1d99f84ed839",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RerollSpellMerchantRewardData",
+        "name": "RerollSpellMerchantRewardData",
+        "id": "8c262c60-daf3-4457-add2-f433f0849342",
+        "trial_modifiers": false,
+        "description": "Randomize and refresh the offered goods."
+    },
+    {
+        "internal": "PyreHeartAddDuplicateReward",
+        "name": "PyreHeartAddDuplicateReward",
+        "id": "0f031366-4b9b-4905-b714-e9c31d539725",
+        "trial_modifiers": false,
+        "description": "Duplicate any card except your Champion."
+    },
+    {
+        "internal": "MothersRemnant1RelicReward",
+        "name": "MothersRemnant1RelicReward",
+        "id": "10431fce-2bbe-4236-a288-e7db4967d2a6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RerollUnitMerchantRewardData",
+        "name": "RerollUnitMerchantRewardData",
+        "id": "9d3893f4-d4fa-4c90-b0a7-ca7989acc057",
+        "trial_modifiers": false,
+        "description": "Randomize and refresh the offered goods."
+    },
+    {
+        "internal": "DuplicatorMandatoryReward",
+        "name": "DuplicatorMandatoryReward",
+        "id": "4ce86727-f7af-4016-9fb2-9fb2572b1efe",
+        "trial_modifiers": false,
+        "description": "You must duplicate a card from your deck."
+    },
+    {
+        "internal": "DragonsHoardCollectionRewardData",
+        "name": "DragonsHoardCollectionRewardData",
+        "id": "d41089d2-8aa1-4ff4-aa2d-e8f2105469b0",
+        "trial_modifiers": false,
+        "description": "Dragon's Hoard"
+    },
+    {
+        "internal": "SoulSavior_EquipmentMergeRewardMerchant_Upgraded",
+        "name": "SoulSavior_EquipmentMergeRewardMerchant_Upgraded",
+        "id": "0a439b0a-a81f-4834-bf46-496315747fe5",
+        "trial_modifiers": false,
+        "description": "Combine two Equipment cards into one. -2 Ember."
+    },
+    {
+        "internal": "PenanceFieldsMajorPenanceFollowUpgradeReward",
+        "name": "PenanceFieldsMajorPenanceFollowUpgradeReward",
+        "id": "7650c4d2-05db-4392-86f4-8611e3f2e1aa",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "MoreOrLessArtifactsRelicReward",
+        "name": "MoreOrLessArtifactsRelicReward",
+        "id": "9f54c88d-c867-44ec-81b5-a536c074d551",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BackTargetingBlessingReward",
+        "name": "BackTargetingBlessingReward",
+        "id": "321a48ef-0861-458f-978e-6453dadf8a0f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward325",
+        "name": "GoldReward325",
+        "id": "bd1b72f9-d7f8-45d4-9c45-16358595b229",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "UpgradeRegenReward",
+        "name": "UpgradeRegenReward",
+        "id": "5181308e-1cf8-49e2-a65b-92ccfc409580",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Region4MutatorRewardData",
+        "name": "Region4MutatorRewardData",
+        "id": "3d82e88b-4082-405e-9133-ff0becd9bbf6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard11_RewardData",
+        "name": "DragonHoard11_RewardData",
+        "id": "979a80cd-b12b-4d0b-9848-debaf82ed537",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftSubClassUncommonReward",
+        "name": "CardDraftSubClassUncommonReward",
+        "id": "f05cc7a7-ce79-494c-973e-401aa8ad9a1c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "UpgradeCostLessReward",
+        "name": "UpgradeCostLessReward",
+        "id": "8eda94fa-e2aa-434d-b0eb-23201e674cd9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CultOfTheLambUpgradeReward",
+        "name": "CultOfTheLambUpgradeReward",
+        "id": "6a1ec247-8362-422d-b417-bd316f3c303e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ChaosGuiseReward",
+        "name": "ChaosGuiseReward",
+        "id": "10c59101-5867-40cc-ba39-04b62e833523",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDuplicatorReward",
+        "name": "CardDuplicatorReward",
+        "id": "7ad92d5c-baec-4090-a94b-dd6a5ed1ea15",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "SoulSavior_FrontlineRewardData_Upgraded",
+        "name": "SoulSavior_FrontlineRewardData_Upgraded",
+        "id": "3df80ee2-25f4-4857-aece-3ccae8b7f840",
+        "trial_modifiers": false,
+        "description": "Upgrades an Equipment or Room to be drawn in the deployment phase. -2 Ember."
+    },
+    {
+        "internal": "ChampionUpgradeRewardDoubleReward",
+        "name": "ChampionUpgradeRewardDoubleReward",
+        "id": "9b95cc10-1568-46ff-81b5-4415ecd31856",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class5TomeReward",
+        "name": "Class5TomeReward",
+        "id": "91cd0f8e-42e1-4713-a275-0648fc75898d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class1TomeReward",
+        "name": "Class1TomeReward",
+        "id": "295561df-4b15-487e-83a5-b3341add711a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftRareReward",
+        "name": "CardDraftRareReward",
+        "id": "92f18544-c545-44cc-a80f-93f6feecec5e",
+        "trial_modifiers": false,
+        "description": "Gain a Pack with rare cards."
+    },
+    {
+        "internal": "BalatroEventPerkeoRelicReward",
+        "name": "BalatroEventPerkeoRelicReward",
+        "id": "f16f355a-7fdd-4b81-8c51-51d08c73f3cf",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class5SpikeReward",
+        "name": "Class5SpikeReward",
+        "id": "57fdcb87-4c13-4660-8063-c80341e6ef05",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "UpgradedJunkReward",
+        "name": "UpgradedJunkReward",
+        "id": "9d945109-cd1b-4131-8cc2-dee97a1cb15f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PyreHeartUpgradeFatherRelicReward",
+        "name": "PyreHeartUpgradeFatherRelicReward",
+        "id": "dcb4153c-e928-424a-8397-be16a146fe6f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PyreHeartUpgradeSonRelicReward",
+        "name": "PyreHeartUpgradeSonRelicReward",
+        "id": "2e73498c-439f-4289-b4c3-d4020e97974f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "FullHealReward",
+        "name": "FullHealReward",
+        "id": "933f82da-b9ec-4566-9d81-f0b4a5f5970a",
+        "trial_modifiers": false,
+        "description": "Restore all health"
+    },
+    {
+        "internal": "GoldRewardLevel4TrialsLarge",
+        "name": "GoldRewardLevel4TrialsLarge",
+        "id": "0062f0c6-9227-4601-86c4-d00ebb3b75cb",
+        "trial_modifiers": true,
+        "description": ""
+    },
+    {
+        "internal": "Class9CardDraftRareReward",
+        "name": "Class9CardDraftRareReward",
+        "id": "b5de1089-e08b-4da1-b14a-b2e6f8f6393b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward75",
+        "name": "GoldReward75",
+        "id": "3177f0f9-7d66-4844-9739-3960e05246e8",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlessingDraftReward",
+        "name": "BlessingDraftReward",
+        "id": "67f2e2e9-7c55-4c4e-9022-003aa66055de",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Region1MutatorRewardData",
+        "name": "Region1MutatorRewardData",
+        "id": "d2b3518e-4da9-4ae4-9dfc-4f5036fed844",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward50",
+        "name": "GoldReward50",
+        "id": "376fc22f-3390-43cc-aaf8-047265ed5428",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldRewardLevel4TrialsSmall",
+        "name": "GoldRewardLevel4TrialsSmall",
+        "id": "648eb0e3-0a82-493b-a5e7-317968a033ff",
+        "trial_modifiers": true,
+        "description": ""
+    },
+    {
+        "internal": "AlliedClassCardDraftRareReward",
+        "name": "AlliedClassCardDraftRareReward",
+        "id": "d5b27464-53ab-4665-815f-21ce2986be9e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlightVengefulShard_RewardData",
+        "name": "BlightVengefulShard_RewardData",
+        "id": "b4b880f5-9ec7-42c0-a786-af88c4f2687d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "LazarusLeagueLabRandomGraftReward",
+        "name": "LazarusLeagueLabRandomGraftReward",
+        "id": "8d1a2f34-8266-494c-86a1-77bee44b949b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftEquipmentOrRoom",
+        "name": "CardDraftEquipmentOrRoom",
+        "id": "4a74d384-8d5b-4c62-9758-eccd50f31f4a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardAnnihilateDuplicatorReward",
+        "name": "CardAnnihilateDuplicatorReward",
+        "id": "5ac06595-b24f-4028-a2ae-040828fb5c5a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class12TomeReward",
+        "name": "Class12TomeReward",
+        "id": "a6eb5d47-60f8-4fe2-a618-a49438b8b371",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "LazarusLeagueLabGraftReward",
+        "name": "LazarusLeagueLabGraftReward",
+        "id": "a19dc3d9-270d-400f-b87e-300708892742",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class7CardDraftRareReward",
+        "name": "Class7CardDraftRareReward",
+        "id": "0daf975b-adb6-4003-ba85-f5342af4912d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class10CardDraftRareReward",
+        "name": "Class10CardDraftRareReward",
+        "id": "e7424027-562e-4c3a-b893-ed6265edf6db",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "MapSkipRewardData",
+        "name": "MapSkipRewardData",
+        "id": "ccb73235-02cb-403d-8385-d0f66c742e87",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard12_RewardData",
+        "name": "DragonHoard12_RewardData",
+        "id": "793ca9a8-9164-47f2-9575-41e7023332f9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventChicotRelicReward",
+        "name": "BalatroEventChicotRelicReward",
+        "id": "d02491df-f339-4f98-9119-c3c6edbc7a44",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class9SpikeReward",
+        "name": "Class9SpikeReward",
+        "id": "c62c2025-b2cc-4279-8b77-1ff31a247539",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "EndlessMutatorRewardData",
+        "name": "EndlessMutatorRewardData",
+        "id": "c822e29a-786b-4f34-90e0-48dd7f81ae01",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InkboundLeakyPenRelicReward",
+        "name": "InkboundLeakyPenRelicReward",
+        "id": "e54d2298-b95f-47f7-b8e8-a0a7dcca9da3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TrainRoomInstallFloor2RelicReward",
+        "name": "TrainRoomInstallFloor2RelicReward",
+        "id": "97b8a705-2381-4514-a116-fc9d90b499a7",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldRewardLevel1Trials",
+        "name": "GoldRewardLevel1Trials",
+        "id": "cdd99faf-9bf9-45cf-a764-6008bfb61500",
+        "trial_modifiers": true,
+        "description": ""
+    },
+    {
+        "internal": "MoreRares_RelicRewardData",
+        "name": "MoreRares_RelicRewardData",
+        "id": "f56f3ba7-ecbb-44f3-83aa-6a5fb44b69fd",
+        "trial_modifiers": false,
+        "description": "Rares appear more frequently in drafts"
+    },
+    {
+        "internal": "PurifyingFlameEnhancerRewardData",
+        "name": "PurifyingFlameEnhancerRewardData",
+        "id": "c1584fa3-ae8f-4ddb-a5b6-2ea56283c97f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class8CardDraftRareReward",
+        "name": "Class8CardDraftRareReward",
+        "id": "29f2ef4d-9aeb-43b7-a8c3-5c818f620dc6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlightDeadweight_RewardData",
+        "name": "BlightDeadweight_RewardData",
+        "id": "a169049b-4dfd-40ce-b978-5a429d6b492b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ImpChangerBlessingReward",
+        "name": "ImpChangerBlessingReward",
+        "id": "ca69abf3-922d-4d08-aa95-12ad353d01a8",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanEntropyFrozenPowerReward",
+        "name": "TitanEntropyFrozenPowerReward",
+        "id": "1fe5ee28-c995-4073-97b5-6a4905f427bc",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftDragonhoardUncommon2Reward",
+        "name": "CardDraftDragonhoardUncommon2Reward",
+        "id": "c8f09441-850f-440c-ad30-ec0cb2ee2495",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class1CardDraftRareReward",
+        "name": "Class1CardDraftRareReward",
+        "id": "30d30167-7a65-4c96-9e6a-d6e77bf45d2b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GarfieldBoxesLargeReward",
+        "name": "GarfieldBoxesLargeReward",
+        "id": "b044dbbb-390f-4129-839d-dd02df098c6c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward125",
+        "name": "GoldReward125",
+        "id": "87f9d947-62f4-4d56-aed3-7000eec50d20",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftArsenalReward2x",
+        "name": "CardDraftArsenalReward2x",
+        "id": "c1cf972e-e461-4efd-9271-b2a598fef2d6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitBanished",
+        "name": "CardDraftLevelUpUnitBanished",
+        "id": "ffb45097-cb2a-4cad-be22-2416ead9f2d1",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "HelldriverImpDamageBuff",
+        "name": "HelldriverImpDamageBuff",
+        "id": "bf83e165-8ad6-4e0b-bd2f-686e59478f37",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class3TomeReward",
+        "name": "Class3TomeReward",
+        "id": "f4771429-94a4-4444-8ccb-f82e21bc2540",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DanteReturnsCardReward",
+        "name": "DanteReturnsCardReward",
+        "id": "d34cb698-6d82-4e9f-9d8d-e9448549f6ed",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanSavageryAttackReward",
+        "name": "TitanSavageryAttackReward",
+        "id": "36946cb7-d61a-4105-9370-c3c80b7b3c28",
+        "trial_modifiers": false,
+        "description": "Multistrike 1 per 40% Health missing"
+    },
+    {
+        "internal": "DanteReturnsFollowupCardReward",
+        "name": "DanteReturnsFollowupCardReward",
+        "id": "dfbf0df6-1a51-4000-b589-9befa0c8c110",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "SoulSavior_RewardNodeUpgradedHeal_RelicReward",
+        "name": "SoulSavior_RewardNodeUpgradedHeal_RelicReward",
+        "id": "ac5b3c13-4557-4b81-9a35-d0cab507eaa1",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventGrosMichelRelicReward",
+        "name": "BalatroEventGrosMichelRelicReward",
+        "id": "7c705dda-352a-43d7-8be6-2957f2f6901b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventYorickRelicReward",
+        "name": "BalatroEventYorickRelicReward",
+        "id": "aa42b154-f1f1-4270-b7b9-8e844edbbc5e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PathAngelUnitAbilityCourage",
+        "name": "PathAngelUnitAbilityCourage",
+        "id": "feabb43a-7e2b-4bc0-8fad-2db39d35d2f3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward300",
+        "name": "GoldReward300",
+        "id": "b8848d99-02e1-439e-b813-46583ec42046",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "AlliedClassRelicReward",
+        "name": "AlliedClassRelicReward",
+        "id": "6145f31a-8e5c-4178-9728-be6d87015f40",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TrainRoomInstallFloor1RelicReward",
+        "name": "TrainRoomInstallFloor1RelicReward",
+        "id": "af98a079-748b-48fb-b2be-1a16b1325a16",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "SoulDraftT1RewardData",
+        "name": "SoulDraftT1RewardData",
+        "id": "9ca7385d-758e-48b5-a277-a3eb30ce1f8d",
+        "trial_modifiers": false,
+        "description": "Draft a new Soul. Your Pyre gets +Attack and +Pyre Health."
+    },
+    {
+        "internal": "MothersRemnant3RelicReward",
+        "name": "MothersRemnant3RelicReward",
+        "id": "d1510cd0-bd5d-475c-9dae-cc864d783b62",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard10_RewardData",
+        "name": "DragonHoard10_RewardData",
+        "id": "093e19c9-fb84-42ab-9475-5c6bb8e0a6ee",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TfbTrialRewardB",
+        "name": "TfbTrialRewardB",
+        "id": "4998ee34-f452-442d-a1f1-455d337ccb7e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitUmbra",
+        "name": "CardDraftLevelUpUnitUmbra",
+        "id": "10fd6b15-787c-495d-bd0b-def279c4503b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class11TomeReward",
+        "name": "Class11TomeReward",
+        "id": "e0728b8c-1775-4a05-b4bc-14155aaf7da9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitLazarusLeague",
+        "name": "CardDraftLevelUpUnitLazarusLeague",
+        "id": "acdd3f84-9a58-4e98-b3ba-60df34d1b170",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "MoreExpensiveSpells_RelicRewardData",
+        "name": "MoreExpensiveSpells_RelicRewardData",
+        "id": "de632d99-b659-416d-a295-8cb2a707b878",
+        "trial_modifiers": false,
+        "description": "After casting a spell increase the cost of a random spell in hand by 1 Ember for the rest of the battle."
+    },
+    {
+        "internal": "GoldReward175",
+        "name": "GoldReward175",
+        "id": "55f40899-e2bd-4076-a96f-52330e92705d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class2CardDraftRareReward",
+        "name": "Class2CardDraftRareReward",
+        "id": "804c6002-31a7-4a35-b3ba-93386dc1377a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "AdditionalHealthReward",
+        "name": "AdditionalHealthReward",
+        "id": "13ceb30e-f653-4493-9210-8dac0f41c2f0",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PurgeRewardMerchant",
+        "name": "PurgeRewardMerchant",
+        "id": "ec45eeb1-8cf5-4c23-8a61-7be8c558e3d3",
+        "trial_modifiers": false,
+        "description": "Remove a card from your deck."
+    },
+    {
+        "internal": "HealthRestoreMap",
+        "name": "HealthRestoreMap",
+        "id": "b518a613-0bab-4de5-9ce3-c1d088b7ad1c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward100",
+        "name": "GoldReward100",
+        "id": "3895a6c9-6793-4c45-8286-01731b877c91",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitPyreborne",
+        "name": "CardDraftLevelUpUnitPyreborne",
+        "id": "8ab5396a-b8b4-4f37-8cfe-97cceab675e3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard_BlessingDraftBoss3_RewardData",
+        "name": "DragonHoard_BlessingDraftBoss3_RewardData",
+        "id": "675d1455-d705-475f-a836-bf424d3e881f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PathAngelUnitAbilityBenevolence",
+        "name": "PathAngelUnitAbilityBenevolence",
+        "id": "2b7d8044-25d5-4541-9985-45c9b8c2bf23",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InscryptionEventWorthySacrificeUpgradeReward",
+        "name": "InscryptionEventWorthySacrificeUpgradeReward",
+        "id": "7bb1e4b9-9ac9-4dd4-a501-8fe943a6ebc9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PenanceFieldsMinorPenanceFollowUpgradeReward",
+        "name": "PenanceFieldsMinorPenanceFollowUpgradeReward",
+        "id": "d561b24a-88cc-4f18-baa1-4c6402c86634",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GiganticGoldReward",
+        "name": "GiganticGoldReward",
+        "id": "4a62c52d-889b-4bfe-93f9-67e260257e94",
+        "trial_modifiers": false,
+        "description": "Gain Gold."
+    },
+    {
+        "internal": "DragonHoard_DHRelics1_RewardData",
+        "name": "DragonHoard_DHRelics1_RewardData",
+        "id": "61e9bb68-b64f-4028-a57d-acc6c4a78d6f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class4CardDraftRareReward",
+        "name": "Class4CardDraftRareReward",
+        "id": "f36f92e6-d0a3-482b-b76c-23d6ffdc5d09",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlessingDraftRewardNoChoice",
+        "name": "BlessingDraftRewardNoChoice",
+        "id": "cfabca2a-07a7-498c-b704-b26faac736b6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class6CardDraftRareReward",
+        "name": "Class6CardDraftRareReward",
+        "id": "9fea319e-2d3e-4716-a951-a6408867a296",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanEntropyTripleReward",
+        "name": "TitanEntropyTripleReward",
+        "id": "fbcbe307-8fbb-4352-ad57-3691a7d4d0f2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ColoringBookBlessingReward",
+        "name": "ColoringBookBlessingReward",
+        "id": "753e654f-026e-45d3-97ca-72a6a75deffd",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RewardsUnlockedReward",
+        "name": "RewardsUnlockedReward",
+        "id": "4d17b1b0-f6d3-4ae3-b2ff-f859bd19f1f6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DuplicatorUnit",
+        "name": "DuplicatorUnit",
+        "id": "5bfd363f-e37f-45b6-be82-bcfd1149e7cb",
+        "trial_modifiers": false,
+        "description": "Create a copy of a unit."
+    },
+    {
+        "internal": "BoneDogTitanPyreLifeRelicReward",
+        "name": "BoneDogTitanPyreLifeRelicReward",
+        "id": "a4827945-cafb-4880-bc01-55f5fd14a5dd",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanSavageryReduceDamageReward",
+        "name": "TitanSavageryReduceDamageReward",
+        "id": "39fa95ee-a871-48e8-9460-9cb91f48267c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward200",
+        "name": "GoldReward200",
+        "id": "42dd076a-71dc-4ccd-9e15-c082369b720f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward150",
+        "name": "GoldReward150",
+        "id": "39d3d781-d7eb-4fbf-8d57-3542a92206d5",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InkboundNimsOathRelicReward",
+        "name": "InkboundNimsOathRelicReward",
+        "id": "d7488b8f-6627-4a31-af85-814cd26d5a76",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ExhaustRelicReward",
+        "name": "ExhaustRelicReward",
+        "id": "590b45d1-9640-4262-a004-82ea744b830b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class12CardDraftRareReward",
+        "name": "Class12CardDraftRareReward",
+        "id": "77414bd1-e2c8-4995-a077-183c3962c3d3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ClippedWingsWing3Reward",
+        "name": "ClippedWingsWing3Reward",
+        "id": "37dd121f-b3fe-4af4-9a36-847908a1edcb",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RegionRewardUpgradeRewardData",
+        "name": "RegionRewardUpgradeRewardData",
+        "id": "7c38bb05-7167-4e98-a003-89ef759ab307",
+        "trial_modifiers": false,
+        "description": "A random Major Reward from each region has been upgraded."
+    },
+    {
+        "internal": "HephHitReward",
+        "name": "HephHitReward",
+        "id": "72082672-7067-4895-b8b7-ce2da16b94e7",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PurgeThreeReward",
+        "name": "PurgeThreeReward",
+        "id": "d675190a-0d77-4432-995e-a4e16247fc03",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class10TomeReward",
+        "name": "Class10TomeReward",
+        "id": "47e5e09b-79d6-4f9c-84b6-1b93ced375f2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DominionCurse_RelicRewardData",
+        "name": "DominionCurse_RelicRewardData",
+        "id": "53e076cf-7189-48d6-bd10-645973e61bf8",
+        "trial_modifiers": false,
+        "description": "All Friendly units take 3 damage when a unit is summoned."
+    },
+    {
+        "internal": "Class4TomeReward",
+        "name": "Class4TomeReward",
+        "id": "31c5efb2-085f-44b6-8e9d-ef26b54a95a2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitLunaCoven",
+        "name": "CardDraftLevelUpUnitLunaCoven",
+        "id": "806d952c-3617-4bd1-bf31-4a4894002b91",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward_AmbushFreeGold",
+        "name": "GoldReward_AmbushFreeGold",
+        "id": "b0d6e27f-94fd-4408-8732-f091274659cd",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanDominionCorruptionReward",
+        "name": "TitanDominionCorruptionReward",
+        "id": "ae127b5e-7543-486f-a12b-fcddb194eaf6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "AdditionalGoldReward",
+        "name": "AdditionalGoldReward",
+        "id": "d00ca132-5d00-4724-becd-6ea8939dfd5d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class5CardDraftRareReward",
+        "name": "Class5CardDraftRareReward",
+        "id": "d64d72d4-1536-4313-8025-db3f190d964b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard_DHRelics3_RewardData",
+        "name": "DragonHoard_DHRelics3_RewardData",
+        "id": "f7523457-b223-4f01-8a60-4158a9e50388",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InscryptionEventFecundityUpgradeReward",
+        "name": "InscryptionEventFecundityUpgradeReward",
+        "id": "e0fee3f6-d7b4-4a1b-8892-e561e6114172",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward10",
+        "name": "GoldReward10",
+        "id": "cb80e777-8d64-4af5-a51e-67e54dbfc0c6",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class6TomeReward",
+        "name": "Class6TomeReward",
+        "id": "7e68e7df-47d9-499d-aece-aea04e961739",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Region2MutatorRewardData",
+        "name": "Region2MutatorRewardData",
+        "id": "cca8e176-18f3-4ac5-bf21-07bf403e4b24",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "UpgradeGolemHealth",
+        "name": "UpgradeGolemHealth",
+        "id": "0fc42e35-bddf-49a2-a9b3-18eec49c1e2c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLegendaryEquipment_RewardData",
+        "name": "CardDraftLegendaryEquipment_RewardData",
+        "id": "23720767-21f5-47e9-805c-9f8eba027d74",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class2TomeReward",
+        "name": "Class2TomeReward",
+        "id": "56e616dd-84b5-4114-8fcb-7214b9bcb200",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventCanioRelicReward",
+        "name": "BalatroEventCanioRelicReward",
+        "id": "4fcd68a8-1709-4f7b-89bd-2b1bc2a06ed5",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlessingDraftBoss",
+        "name": "BlessingDraftBoss",
+        "id": "3ba5d3bc-17d2-4cd2-9121-371f8c2e8043",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InkboundKwillingCatcherRelicReward",
+        "name": "InkboundKwillingCatcherRelicReward",
+        "id": "ac7fd957-e6bc-4a8f-b78b-e05599f29755",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward400",
+        "name": "GoldReward400",
+        "id": "c590aadc-73f4-4960-a834-54f15a73af0d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftSubClassReward",
+        "name": "CardDraftSubClassReward",
+        "id": "3352f7ea-208b-4a59-8fa1-c9e022111b16",
+        "trial_modifiers": false,
+        "description": "Gain an Allied Clan Pack."
+    },
+    {
+        "internal": "MoreCommons_RelicRewardData",
+        "name": "MoreCommons_RelicRewardData",
+        "id": "7fa9cdc9-af44-487b-bd0e-b694d7d06652",
+        "trial_modifiers": false,
+        "description": "Common cards are more frequent in drafts"
+    },
+    {
+        "internal": "GoldReward225",
+        "name": "GoldReward225",
+        "id": "5a58432a-5f47-477f-a668-2b419c6b3f78",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PurgeReward",
+        "name": "PurgeReward",
+        "id": "5d700f1d-f163-4d15-bc79-69be1a23f3d6",
+        "trial_modifiers": false,
+        "description": "Remove a card from your deck."
+    },
+    {
+        "internal": "EquilibriusT1_PurgeToDeckLimitReward",
+        "name": "EquilibriusT1_PurgeToDeckLimitReward",
+        "id": "997b8465-1ce0-4cec-8b14-9ece8afc3846",
+        "trial_modifiers": false,
+        "description": "Removes cards from your deck until the deck limit is met."
+    },
+    {
+        "internal": "TfbTrialRewardC",
+        "name": "TfbTrialRewardC",
+        "id": "a5f1012f-bcc1-4162-9587-d56291964125",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventCavendishRelicReward",
+        "name": "BalatroEventCavendishRelicReward",
+        "id": "d9f6f9dc-4e10-4815-9382-b3c08f82e182",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftEquipmentDraftForTrialReward",
+        "name": "CardDraftEquipmentDraftForTrialReward",
+        "id": "753d20ec-1462-4a86-bae8-4a0a83d40067",
+        "trial_modifiers": false,
+        "description": "Gain an Equipment or Room Card."
+    },
+    {
+        "internal": "GoldReward275",
+        "name": "GoldReward275",
+        "id": "0699f364-b898-4280-bfac-4275bd1b9586",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class11CardDraftRareReward_ExcludeSome",
+        "name": "Class11CardDraftRareReward_ExcludeSome",
+        "id": "947377bc-0b0f-42ea-b0a2-c27f856cd751",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanSavageryRevengeReward",
+        "name": "TitanSavageryRevengeReward",
+        "id": "6f12ef66-39a0-4105-8f4b-cd20ae3663a8",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitMainOrAllied",
+        "name": "CardDraftLevelUpUnitMainOrAllied",
+        "id": "8a8782bf-3faf-4dd7-8f5d-413c1b269c3d",
+        "trial_modifiers": false,
+        "description": "Draft a Primary or Allied Clan Unit."
+    },
+    {
+        "internal": "CardDraftLevelUpUnitRailforged",
+        "name": "CardDraftLevelUpUnitRailforged",
+        "id": "52f0d07d-fbf2-4271-bc9d-e248dc918c29",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "LegendaryBulk_RewardData",
+        "name": "LegendaryBulk_RewardData",
+        "id": "d998d14b-b416-4451-92d6-861455f1afc5",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "HephBigHitReward",
+        "name": "HephBigHitReward",
+        "id": "9f966684-ea64-4b0d-b2b2-4262a6751501",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PurgeChampionRelicReward",
+        "name": "PurgeChampionRelicReward",
+        "id": "bae8b6c5-56d8-44ef-9760-6ef04d115a99",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "FireballSpawnCardReward",
+        "name": "FireballSpawnCardReward",
+        "id": "722a6728-d802-49bf-9915-f96ffc105aff",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DanteReturnsRelicReward",
+        "name": "DanteReturnsRelicReward",
+        "id": "f0f11115-0d4a-4920-a887-1ba948037396",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CapacityBreakingEquipmentReward",
+        "name": "CapacityBreakingEquipmentReward",
+        "id": "ad8e6a1a-e09a-4664-89da-5f0684c58056",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanDominionAllyReward",
+        "name": "TitanDominionAllyReward",
+        "id": "1c535ec1-fb2d-4157-be4b-7281a8a33640",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "EquipmentMergeRewardMerchant",
+        "name": "EquipmentMergeRewardMerchant",
+        "id": "5dfbd82b-76fd-43f5-86e7-1e7d6fad8d1a",
+        "trial_modifiers": false,
+        "description": "Combine two Equipment cards into one."
+    },
+    {
+        "internal": "PurgeChampionPurgeReward",
+        "name": "PurgeChampionPurgeReward",
+        "id": "c5c0fc78-2230-4c15-b7eb-fd2ad412cb8c",
+        "trial_modifiers": false,
+        "description": "Remove your champion from your deck."
+    },
+    {
+        "internal": "MothersRemnant2RelicReward",
+        "name": "MothersRemnant2RelicReward",
+        "id": "dfb572af-af8f-4f17-aae3-9a0a80ee5b59",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RerollMerchantRewardDataArtifactOnly",
+        "name": "RerollMerchantRewardDataArtifactOnly",
+        "id": "15f64927-1a39-4aa4-b53e-da3ac58d051d",
+        "trial_modifiers": false,
+        "description": "Randomize and refresh the offered goods."
+    },
+    {
+        "internal": "ForesightBlessingReward",
+        "name": "ForesightBlessingReward",
+        "id": "990928a3-773d-44a9-9f48-ef6a34a5a460",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CorruptedAngelRelicReward",
+        "name": "CorruptedAngelRelicReward",
+        "id": "b18699dc-d758-41e1-92b4-69f2c617bf68",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftMainClassBannerReward2x",
+        "name": "CardDraftMainClassBannerReward2x",
+        "id": "cb26f826-d581-4f4e-92bd-2540cd9999c7",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftMainClassReward",
+        "name": "CardDraftMainClassReward",
+        "id": "4209cb86-420d-4ac6-9545-433cf9b4f2ef",
+        "trial_modifiers": false,
+        "description": "Gain a Clan Pack."
+    },
+    {
+        "internal": "CardDraftLevelUpUnitRemnant",
+        "name": "CardDraftLevelUpUnitRemnant",
+        "id": "f95c94cf-4a5f-4f77-a27c-3c239b84aa3c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanSavageryCardReward",
+        "name": "TitanSavageryCardReward",
+        "id": "df46603c-952c-4bc7-95d1-84cb6cb28af8",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ArmorPiercingDamageReward",
+        "name": "ArmorPiercingDamageReward",
+        "id": "982cbb45-d7ff-4183-9c59-a5f56468c68b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RerollEquipmentMerchantRewardData",
+        "name": "RerollEquipmentMerchantRewardData",
+        "id": "8c570170-ec8b-4638-ba96-af277c0fb4c3",
+        "trial_modifiers": false,
+        "description": "Randomize and refresh the offered goods."
+    },
+    {
+        "internal": "CardDraftLevelUpUnitAwoken",
+        "name": "CardDraftLevelUpUnitAwoken",
+        "id": "ddc71f3d-e2b2-4abd-8de4-accb646db775",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CultOfTheLambCardReward",
+        "name": "CultOfTheLambCardReward",
+        "id": "7e9a300d-33d6-4345-a846-84947d5b9454",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InkboundWolosBloodletterRelicReward",
+        "name": "InkboundWolosBloodletterRelicReward",
+        "id": "266834d9-8fec-46ed-ae71-782f62edef09",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitUnderlegion",
+        "name": "CardDraftLevelUpUnitUnderlegion",
+        "id": "6ce35e67-b6ea-428e-b9bf-87836f7f0b98",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "EquilibriusT2_PurgeToDeckLimitReward",
+        "name": "EquilibriusT2_PurgeToDeckLimitReward",
+        "id": "10e35cf9-d102-4b78-8171-b530c2c8ad8a",
+        "trial_modifiers": false,
+        "description": "Removes cards from your deck until the deck limit is met."
+    },
+    {
+        "internal": "MoreExpensiveChampions_RelicRewardData",
+        "name": "MoreExpensiveChampions_RelicRewardData",
+        "id": "4143ddc9-17da-452d-a196-0f1303761c1a",
+        "trial_modifiers": false,
+        "description": "Champions cost 3 more Ember."
+    },
+    {
+        "internal": "TitanDominionCardReward",
+        "name": "TitanDominionCardReward",
+        "id": "9b1fbc2e-2b90-4a0a-8a0d-58edfd03cfe9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "UpgradeSpikesReward",
+        "name": "UpgradeSpikesReward",
+        "id": "d6a66cad-99f9-4093-bdc1-78598ed94fb2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DragonHoard_DHRelics3a_RewardData",
+        "name": "DragonHoard_DHRelics3a_RewardData",
+        "id": "ef39fb19-8af9-4244-b787-7203c0115b08",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ChampionUpgradeAlliedReward",
+        "name": "ChampionUpgradeAlliedReward",
+        "id": "1e1c187a-bebe-47f1-b753-8cdec410fce2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GarfieldBoxesJackInTheBoxReward",
+        "name": "GarfieldBoxesJackInTheBoxReward",
+        "id": "fb8b27b5-b525-4542-b394-027b35225179",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitWurm",
+        "name": "CardDraftLevelUpUnitWurm",
+        "id": "92278d7c-6c8e-4f44-aa51-a0af91b86531",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PyreBookBlessingReward",
+        "name": "PyreBookBlessingReward",
+        "id": "5ffdb6b5-6a56-4d3e-9e22-6e6e75b813d0",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DuplicatorGeneric",
+        "name": "DuplicatorGeneric",
+        "id": "5133c74a-2a9c-456c-8839-2f393c7d067f",
+        "trial_modifiers": false,
+        "description": "Duplicate any card except your Champion."
+    },
+    {
+        "internal": "Class12SpikeReward",
+        "name": "Class12SpikeReward",
+        "id": "ae93748f-0421-4f00-bf39-19b07d082ec3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanEntropyCardReward",
+        "name": "TitanEntropyCardReward",
+        "id": "5c89833e-0ef9-471a-9f71-76d96fdea606",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PenanceFieldsMajorPenanceUpgradeReward",
+        "name": "PenanceFieldsMajorPenanceUpgradeReward",
+        "id": "1d833a3c-1542-4aac-9b45-1626105014aa",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlessingDraftRewardBig",
+        "name": "BlessingDraftRewardBig",
+        "id": "aa0b3f17-611f-4213-8ea7-01ca10c9142b",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward_AmbushWager",
+        "name": "GoldReward_AmbushWager",
+        "id": "30f208df-16ea-4043-b544-2b324fd664e9",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class8SpikeReward",
+        "name": "Class8SpikeReward",
+        "id": "abbeb675-9059-4224-823b-1c6418678ca3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftUncommonReward",
+        "name": "CardDraftUncommonReward",
+        "id": "aee2da7b-22f4-49fd-8dca-fb6e1b544b04",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ChampionUpgradeReward",
+        "name": "ChampionUpgradeReward",
+        "id": "1a6c7fad-93f2-4357-a9e1-49492f9a59d1",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Region3MutatorRewardData",
+        "name": "Region3MutatorRewardData",
+        "id": "482c08bf-b5aa-4a17-b777-5f5883d99214",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanDominionStrikeReward",
+        "name": "TitanDominionStrikeReward",
+        "id": "0668ce42-0da5-44a1-8f11-f8470082f177",
+        "trial_modifiers": false,
+        "description": "Add Melee Weakness and Spell Weakness on Strike."
+    },
+    {
+        "internal": "SavageCurse_RelicRewardData",
+        "name": "SavageCurse_RelicRewardData",
+        "id": "90d33bf9-bb19-478d-bd97-ad9943415a69",
+        "trial_modifiers": false,
+        "description": "-6 Attack to all friendly units."
+    },
+    {
+        "internal": "GarfieldBoxesSmallReward",
+        "name": "GarfieldBoxesSmallReward",
+        "id": "757e95ee-0855-475b-804a-8ac47ebe8253",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TestCardReward",
+        "name": "TestCardReward",
+        "id": "62bbf068-6486-4c98-a1c5-2ea5892cab1d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ClippedWingsWing1Reward",
+        "name": "ClippedWingsWing1Reward",
+        "id": "3bb5e318-4e50-4522-a832-70fa568281e5",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BalatroEventTribouletRelicReward",
+        "name": "BalatroEventTribouletRelicReward",
+        "id": "bcda8f7e-b438-474a-84c6-ff3d10b59fa4",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftLevelUpUnitStygian",
+        "name": "CardDraftLevelUpUnitStygian",
+        "id": "9167ab85-50aa-49ce-89a0-8c065a36a47c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TfbTrialRewardA",
+        "name": "TfbTrialRewardA",
+        "id": "1c968432-c6c7-4800-a6c0-3fe71e7b9ca2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class3SpikeReward",
+        "name": "Class3SpikeReward",
+        "id": "63751a0c-4bd7-44b4-85ae-29469a339dcf",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PathAngelUnitAbilityWrath",
+        "name": "PathAngelUnitAbilityWrath",
+        "id": "f5662c95-43a0-4555-834e-345140eadac7",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ClippedWingsWing2Reward",
+        "name": "ClippedWingsWing2Reward",
+        "id": "81d1069b-66e2-4b88-a92b-5ec017aaec55",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "InkboundClepsydraniumRelicReward",
+        "name": "InkboundClepsydraniumRelicReward",
+        "id": "d8bee83f-e1f5-4c07-ba2c-4e1a8eb03363",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "EquilibriusT3_PurgeToDeckLimitReward",
+        "name": "EquilibriusT3_PurgeToDeckLimitReward",
+        "id": "88b6bae1-71e7-4dfc-b4e4-fc92eb0b2045",
+        "trial_modifiers": false,
+        "description": "Removes cards from your deck until the deck limit is met."
+    },
+    {
+        "internal": "DuplicatorSpell",
+        "name": "DuplicatorSpell",
+        "id": "adce38ca-8cf0-4106-9372-f70c420c43e2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "HugeGoldReward",
+        "name": "HugeGoldReward",
+        "id": "943feed2-37be-4092-b306-d61db8a69b04",
+        "trial_modifiers": false,
+        "description": "Gain Gold."
+    },
+    {
+        "internal": "Class2SpikeReward",
+        "name": "Class2SpikeReward",
+        "id": "43a78948-7197-43a2-a525-953dfe4b162a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class6SpikeReward",
+        "name": "Class6SpikeReward",
+        "id": "2319765e-fb2f-4c20-ab5f-5b568c37866c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class9TomeReward",
+        "name": "Class9TomeReward",
+        "id": "0460ae36-b1d6-46b5-9bd5-ed8bb52c99ef",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TowerDamageCardReward",
+        "name": "TowerDamageCardReward",
+        "id": "22cb568e-01be-42e1-ad42-54c4381cc8c7",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldRewardLevel7Trials",
+        "name": "GoldRewardLevel7Trials",
+        "id": "74ab90af-6ec7-4c09-89e7-3fafbb5faae2",
+        "trial_modifiers": true,
+        "description": ""
+    },
+    {
+        "internal": "PurifyingFlameCardRewardData",
+        "name": "PurifyingFlameCardRewardData",
+        "id": "297e220b-c668-4882-aa59-38f671a48c03",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PamphletCardReward",
+        "name": "PamphletCardReward",
+        "id": "2dfe195d-6945-497a-bdee-357586807b88",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ResetMerchantPurgeCost_RewardData",
+        "name": "ResetMerchantPurgeCost_RewardData",
+        "id": "ac55eff6-3e61-4048-95a2-c215e39e191f",
+        "trial_modifiers": false,
+        "description": "Reset the cost of purging a card back to the starting amount."
+    },
+    {
+        "internal": "PurgeTwoReward",
+        "name": "PurgeTwoReward",
+        "id": "b68b3835-45b0-4caf-b6ed-32bcec56c2f9",
+        "trial_modifiers": false,
+        "description": "Select and remove up to 2 cards from your deck."
+    },
+    {
+        "internal": "HealthRestore20",
+        "name": "HealthRestore20",
+        "id": "77d68e1c-8006-4455-89ce-ffd1551967e4",
+        "trial_modifiers": false,
+        "description": "Restore 20% of your Pyre's Health."
+    },
+    {
+        "internal": "CardDraftMainClassUncommonReward",
+        "name": "CardDraftMainClassUncommonReward",
+        "id": "df88fc93-f575-476e-860d-40e2a35d25f3",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "GoldReward25",
+        "name": "GoldReward25",
+        "id": "e849e9ac-e1d1-4d35-96f6-ee5edbb80550",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "RemoveQualityCard_RewardData",
+        "name": "RemoveQualityCard_RewardData",
+        "id": "4875f51d-f573-45c0-a6dc-eff025d2fa96",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "PenanceFieldsMinorPenanceUpgradeReward",
+        "name": "PenanceFieldsMinorPenanceUpgradeReward",
+        "id": "808d7eeb-4539-4438-84e2-bbf8585918fa",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "FrontlineRewardData",
+        "name": "FrontlineRewardData",
+        "id": "90e7b132-8198-4807-9f86-f8209b232692",
+        "trial_modifiers": false,
+        "description": "Upgrades an Equipment or Room to be drawn in the deployment phase."
+    },
+    {
+        "internal": "TrainHealCardReward",
+        "name": "TrainHealCardReward",
+        "id": "7b46db8a-59c9-46cd-98fa-8179e6f9346d",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "DuplicatorGenericMerchant",
+        "name": "DuplicatorGenericMerchant",
+        "id": "abfa0d0a-c2f6-409f-98a4-2eb5cb6b98ca",
+        "trial_modifiers": false,
+        "description": "Duplicate any card except your Champion."
+    },
+    {
+        "internal": "Class10SpikeReward",
+        "name": "Class10SpikeReward",
+        "id": "258d1732-69e8-4467-adc1-3767c6e4b8c2",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class8TomeReward",
+        "name": "Class8TomeReward",
+        "id": "3ad1dc8f-5ec2-4f93-b3d5-a0202aeea64c",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BoneDogTitanCardReward",
+        "name": "BoneDogTitanCardReward",
+        "id": "2f82ea98-6d5b-4fed-ae28-bd4026d77c76",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class7SpikeReward",
+        "name": "Class7SpikeReward",
+        "id": "16abb70d-238a-4e90-8822-cec7009bcb75",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "BlessingDraftBossLevel6",
+        "name": "BlessingDraftBossLevel6",
+        "id": "d0529826-7792-463c-8807-cb22f2583b8a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "TitanEntropyCheaperReward",
+        "name": "TitanEntropyCheaperReward",
+        "id": "c1921dde-48bf-412b-81ae-f5909a514b29",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "CardDraftMainClassUncommonReward2x",
+        "name": "CardDraftMainClassUncommonReward2x",
+        "id": "acff12b5-7db1-49b3-b7ce-8227a0f9276f",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "EntropyCurse_RelicRewardData",
+        "name": "EntropyCurse_RelicRewardData",
+        "id": "d2432773-8537-4f70-ae6d-8df95293f86c",
+        "trial_modifiers": false,
+        "description": "Each summoned unit gains Emberdrain 1."
+    },
+    {
+        "internal": "PurgeMandatoryReward",
+        "name": "PurgeMandatoryReward",
+        "id": "ac9f4bd1-7af5-454f-bd8b-e6379fef4e85",
+        "trial_modifiers": false,
+        "description": "You must remove two cards from your deck."
+    },
+    {
+        "internal": "UpgradeSummonDrawReward",
+        "name": "UpgradeSummonDrawReward",
+        "id": "abd19cd2-8788-4eb8-95f2-7807cc004c48",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class1SpikeReward",
+        "name": "Class1SpikeReward",
+        "id": "8fd29c76-9dce-4aa6-92dd-38d22172773e",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "LargeGoldReward",
+        "name": "LargeGoldReward",
+        "id": "72c058f1-6f8e-427d-b04b-1159e94ec049",
+        "trial_modifiers": false,
+        "description": "Gain Gold."
+    },
+    {
+        "internal": "TrainRoomInstallFloor3RelicReward",
+        "name": "TrainRoomInstallFloor3RelicReward",
+        "id": "3abdcf57-5a29-49c7-aca8-e273ae584d3a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "Class11SpikeReward",
+        "name": "Class11SpikeReward",
+        "id": "70aa29a8-10ee-4c33-ad83-018121ebb7de",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "AlliedClassRelicDraftReward",
+        "name": "AlliedClassRelicDraftReward",
+        "id": "99c32ade-0cdc-43ae-a7f2-3867fcff0e1a",
+        "trial_modifiers": false,
+        "description": ""
+    },
+    {
+        "internal": "ImpDollCardReward",
+        "name": "ImpDollCardReward",
+        "id": "2659db6d-60d1-47b0-aaa2-408516d3c7f3",
+        "trial_modifiers": false,
+        "description": ""
+    }
+]

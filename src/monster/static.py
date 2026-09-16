@@ -262,6 +262,12 @@ class Soul(Base2):
 class Sin(Base2):
     """Store sin information from fight trials."""
 
+class Reward(Base2):
+    """Store some kind of reward information?"""
+    def __init__(self, data):
+        super().__init__(data)
+        self.trial_modifiers = data["trial_modifiers"]
+
 class Misc2(Base2):
     """Store information for unknown data."""
 
@@ -279,6 +285,7 @@ _map2 = {
     "status": Status,
     "souls": Soul,
     "sins": Sin,
+    "rewards": Reward,
 }
 
 def load_mt1():
