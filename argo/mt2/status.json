@@ -1,0 +1,758 @@
+[
+    {
+        "internal": "relentless",
+        "name": "Relentless",
+        "card_tooltip": "",
+        "character_tooltip": "Combat in this room continues until all enemies are defeated. This unit cannot be rooted.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectRelentlessState"
+    },
+    {
+        "internal": "sweep",
+        "name": "Sweep",
+        "card_tooltip": "Attacks all enemy units.",
+        "character_tooltip": "Attacks all enemy units.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectHunterState"
+    },
+    {
+        "internal": "multistrike",
+        "name": "Multistrike",
+        "card_tooltip": "Attacks an additional time per turn.",
+        "character_tooltip": "Attacks [codeint0] times per turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectMultistrikeState"
+    },
+    {
+        "internal": "multistrike_on_missing_health",
+        "name": "+1 [multistrike] added per 40% [health] missing",
+        "card_tooltip": "Attacks an additional time each turn.",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectMultistrikeOnMissingHealthState"
+    },
+    {
+        "internal": "ambush",
+        "name": "Quick",
+        "card_tooltip": "Attacks before enemy units during combat.",
+        "character_tooltip": "Attacks before enemy units during combat.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectAmbushState"
+    },
+    {
+        "internal": "trample",
+        "name": "Trample",
+        "card_tooltip": "When attacking, excess damage is applied to the subsequent enemy unit.",
+        "character_tooltip": "When attacking, excess damage is applied to the subsequent enemy unit.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectTrampleState"
+    },
+    {
+        "internal": "immobile",
+        "name": "Immobile",
+        "card_tooltip": "Can't move between floors or change position on this floor.",
+        "character_tooltip": "Can't move between floors or change position on this floor.",
+        "notification": "Immobile",
+        "hidden": false,
+        "status_class": "StatusEffectImmobileState"
+    },
+    {
+        "internal": "inert",
+        "name": "Inert",
+        "card_tooltip": "This unit cannot attack unless it has <b>Fuel</b>.",
+        "character_tooltip": "This unit cannot attack unless it has <b>Fuel</b>.",
+        "notification": "Inert",
+        "hidden": false,
+        "status_class": "StatusEffectInertState"
+    },
+    {
+        "internal": "restricted",
+        "name": "Suppressed",
+        "card_tooltip": "This unit does not attack on its turn.",
+        "character_tooltip": "This unit does not attack on its turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectRestrictedState"
+    },
+    {
+        "internal": "dormant",
+        "name": "[dormant]",
+        "card_tooltip": "This unit's <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b> are disabled unless it has [spark].",
+        "character_tooltip": "This unit's <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b> are disabled unless it has [spark].",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDormantState"
+    },
+    {
+        "internal": "spark",
+        "name": "Fuel",
+        "card_tooltip": "Negates the effect of [inert] and [dormant]. Loses 1 stack every turn.",
+        "character_tooltip": "Negates the effect of [inert] and [dormant] for [codeint0] more turns.[i2p_One]Negates the effect of [inert] for [codeint0] more turn.",
+        "notification": "Fuel",
+        "hidden": false,
+        "status_class": "StatusEffectSparkState"
+    },
+    {
+        "internal": "immune",
+        "name": "Immunity",
+        "card_tooltip": "",
+        "character_tooltip": "Cannot gain status effects.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectImmuneState"
+    },
+    {
+        "internal": "endless",
+        "name": "Endless",
+        "card_tooltip": "When this unit dies or is eaten, return its card to the top of the draw pile.",
+        "character_tooltip": "When this unit dies or is eaten, return its card to the top of the draw pile.",
+        "notification": "Endless!",
+        "hidden": false,
+        "status_class": "StatusEffectEndlessState"
+    },
+    {
+        "internal": "silenced",
+        "name": "Silence",
+        "card_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>.",
+        "character_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>.",
+        "notification": "Silenced!",
+        "hidden": false,
+        "status_class": "StatusEffectSilencedState"
+    },
+    {
+        "internal": "haste",
+        "name": "Haste",
+        "card_tooltip": "Moves directly from the first floor to the third floor.",
+        "character_tooltip": "Moves directly from the first floor to the third floor.",
+        "notification": "Haste",
+        "hidden": false,
+        "status_class": "StatusEffectHasteState"
+    },
+    {
+        "internal": "armor",
+        "name": "Armor",
+        "card_tooltip": "Damage is dealt to [armor] before health. Each point of [armor] blocks one point of damage and is then removed.",
+        "character_tooltip": "This unit can take [codeint0] damage before losing health. Each point of [armor] blocks one point of damage and is then removed.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectArmorState"
+    },
+    {
+        "internal": "ephemeral",
+        "name": "Burnout",
+        "card_tooltip": "When [burnout] runs out, the unit dies.<br>Decreases every turn.",
+        "character_tooltip": "This unit will die in [codeint0] turns unless it gets more [burnout].[i2p_One]This unit will die next turn unless it gets more [burnout].",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectEphemeralState"
+    },
+    {
+        "internal": "cardless",
+        "name": "Cardless",
+        "card_tooltip": "",
+        "character_tooltip": "This unit was not summoned from a unit card. It won't appear in any card pile and it can't gain Endless.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectCardlessState"
+    },
+    {
+        "internal": "fragile",
+        "name": "Fragile",
+        "card_tooltip": "If this unit loses health, it dies.",
+        "character_tooltip": "If this unit loses health, it dies.",
+        "notification": "Fragile!",
+        "hidden": false,
+        "status_class": "StatusEffectFragileState"
+    },
+    {
+        "internal": "untouchable",
+        "name": "Stasis",
+        "card_tooltip": "Cannot attack. Cannot be damaged or targeted in any way.",
+        "character_tooltip": "Cannot attack. Cannot be damaged or targeted in any way.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectUntouchableState"
+    },
+    {
+        "internal": "eatmany",
+        "name": "Buffet",
+        "card_tooltip": "This unit can be eaten multiple times.",
+        "character_tooltip": "This unit can be eaten [codeint0] more times.[i2p_One]This unit can be eaten [codeint0] more time.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectEatManyState"
+    },
+    {
+        "internal": "stygian_blessing",
+        "name": "Shard",
+        "card_tooltip": "Powers <b>Solgard the Martyr</b>'s abilities.",
+        "character_tooltip": "Powers <b>Solgard the Martyr</b>'s abilities.",
+        "notification": "Shard",
+        "hidden": false,
+        "status_class": "StatusEffectStygianBlessingState"
+    },
+    {
+        "internal": "buff",
+        "name": "Rage",
+        "card_tooltip": "+[codeint0][attack] per stack.<br>Decreases every turn.",
+        "character_tooltip": "+[codeint0][attack] (+[codeint1][attack] per stack).<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectBuffState"
+    },
+    {
+        "internal": "mass",
+        "name": "Mass",
+        "card_tooltip": "+[codeint0][attack] per stack. Powers Fleshweaver's abilities.",
+        "character_tooltip": "+[codeint0][attack] (+[codeint1][attack] per stack). Powers Fleshweaver's abilities.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectMassState"
+    },
+    {
+        "internal": "spikes",
+        "name": "Spikes",
+        "card_tooltip": "When a unit with [spikes] is attacked, the attacker takes [codeint0] damage per stack.",
+        "character_tooltip": "Deal [codeint0] damage to any unit that attacks this one.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSpikesState"
+    },
+    {
+        "internal": "damage shield",
+        "name": "Damage Shield",
+        "card_tooltip": "Nullify the next source of damage.",
+        "character_tooltip": "Nullify the next source of damage.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDamageShieldState"
+    },
+    {
+        "internal": "spell shield",
+        "name": "Spell Shield",
+        "card_tooltip": "Absorbs the next damage from a spell or ability.",
+        "character_tooltip": "Nullify the next damage from a spell or ability.[i2p_One]Absorb the next damage spell.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSpellShieldState"
+    },
+    {
+        "internal": "regen",
+        "name": "Regen",
+        "card_tooltip": "Restores [codeint0] health per stack at the end of turn.<br>Decreases every turn.",
+        "character_tooltip": "Restores [codeint0] health at the end of turn.<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectRegenState"
+    },
+    {
+        "internal": "captured_soul",
+        "name": "Soul",
+        "card_tooltip": "Used by certain abilities.",
+        "character_tooltip": "Used by certain abilities.",
+        "notification": "Soul",
+        "hidden": false,
+        "status_class": "StatusEffectCapturedSoulState"
+    },
+    {
+        "internal": "stealth",
+        "name": "Stealth",
+        "card_tooltip": "Not a target in combat.<br>Decreases every turn.",
+        "character_tooltip": "Not a target in combat for the next [codeint0] turns.[i2p_One]Not a target in combat for the next turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectStealthState"
+    },
+    {
+        "internal": "lifesteal",
+        "name": "Lifesteal",
+        "card_tooltip": "When a unit with [lifesteal] attacks, it restores health equal to the damage dealt.<br>Decreases each time the unit attacks.",
+        "character_tooltip": "For the next [codeint0] attacks, restore health equal to the damage dealt.[i2p_One]On the next attack, restore health equal to the damage dealt.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectLifestealState"
+    },
+    {
+        "internal": "heal immunity",
+        "name": "Heartless",
+        "card_tooltip": "Cannot be healed.",
+        "character_tooltip": "Cannot be healed.",
+        "notification": "Heal Blocked!",
+        "hidden": false,
+        "status_class": "StatusEffectHealImmunityState"
+    },
+    {
+        "internal": "rooted",
+        "name": "Rooted",
+        "card_tooltip": "Prevents the next time a unit would move between floors.<br>Bosses are immune.",
+        "character_tooltip": "Prevent the next [codeint0] times this unit would move between floors.[i2p_One]Prevent the next time this unit would move between floors.",
+        "notification": "Rooted",
+        "hidden": false,
+        "status_class": "StatusEffectRootedState"
+    },
+    {
+        "internal": "dazed",
+        "name": "Dazed",
+        "card_tooltip": "As long as a unit is [dazed], it can't attack or use any <b>Action</b> or <b>Resolve</b> abilities.<br>Decreases every turn.",
+        "character_tooltip": "Can't attack or use any <b>Action</b> or <b>Resolve</b> abilities for the next [codeint0] turns.[i2p_One]Can't attack or use any <b>Action</b> or <b>Resolve</b> abilities for [codeint0] turn.",
+        "notification": "Dazed",
+        "hidden": false,
+        "status_class": "StatusEffectDazedState"
+    },
+    {
+        "internal": "debuff",
+        "name": "Sap",
+        "card_tooltip": "-[codeint0][attack] per stack.<br>Decreases every turn.",
+        "character_tooltip": "-[codeint0][attack] (-[codeint1][attack] per stack).<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDebuffState"
+    },
+    {
+        "internal": "poison",
+        "name": "Frostbite",
+        "card_tooltip": "Unit takes 1 damage per stack at the end of turn.<br>Decreases every turn.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPoisonState"
+    },
+    {
+        "internal": "corruption",
+        "name": "Corruption",
+        "card_tooltip": "Unit takes 1 damage per stack at the end of turn.<br>Stacks remain across turns.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Stacks remain across turns.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectCorruptionState"
+    },
+    {
+        "internal": "spell weakness",
+        "name": "Spell Weakness",
+        "card_tooltip": "The next time the unit is hit by a damage spell or ability, it takes that much damage again for each stack of [spellweakness].",
+        "character_tooltip": "Takes [codeint0]x damage from the next damage spell or ability.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSpellWeaknessState"
+    },
+    {
+        "internal": "scorch",
+        "name": "Emberdrain",
+        "card_tooltip": "At the start of turn, you lose 1[ember] for every stack of [emberdrain].<br>Decreases every turn.",
+        "character_tooltip": "You lose [codeint0][ember] at the start of the next turn.<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectScorchState"
+    },
+    {
+        "internal": "melee weakness",
+        "name": "Melee Weakness",
+        "card_tooltip": "The next time the unit is attacked, it takes that much damage again for each stack of [meleeweakness].",
+        "character_tooltip": "This unit takes [codeint0]x combat damage the next time it is attacked.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectMeleeWeaknessState"
+    },
+    {
+        "internal": "unit_ability",
+        "name": "Ability",
+        "card_tooltip": "This unit's [ability] can be activated when there are no stacks of [cooldown].",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectUnitAbilityState"
+    },
+    {
+        "internal": "unit_ability_available",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectUnitAbilityAvailableState"
+    },
+    {
+        "internal": "cooldown",
+        "name": "Cooldown",
+        "card_tooltip": "This unit's [ability] can't be activated while there are any stacks of [cooldown].",
+        "character_tooltip": "This unit's [ability] can't be activated while there are any stacks of [cooldown].",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectCooldownState"
+    },
+    {
+        "internal": "titanskin",
+        "name": "Titanskin",
+        "card_tooltip": "[codeint0] damage reduction per stack.",
+        "character_tooltip": "[codeint0] damage reduction (+[codeint1] per stack).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectTitanskinState"
+    },
+    {
+        "internal": "pyregel",
+        "name": "Pyregel",
+        "card_tooltip": "+[codeint0] incoming damage per stack.",
+        "character_tooltip": "+[codeint0] incoming damage (+[codeint1] per stack).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPyregelState"
+    },
+    {
+        "internal": "pyrestain",
+        "name": "Pyrestain",
+        "card_tooltip": "+[codeint0] incoming damage per stack.",
+        "character_tooltip": "+[codeint0] incoming damage (+[codeint1] per stack).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPyrestainState"
+    },
+    {
+        "internal": "valor",
+        "name": "Valor",
+        "card_tooltip": "+1[attack] per stack. Raise [armor] to stack count if this is the front unit after combat.",
+        "character_tooltip": "+1[attack] per stack. After combat, the front unit gains [armor] up to the stack count.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectValor"
+    },
+    {
+        "internal": "fullmoon",
+        "name": "Full Moon phase",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectMoonFullState"
+    },
+    {
+        "internal": "newmoon",
+        "name": "New Moon phase",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectMoonNewState"
+    },
+    {
+        "internal": "titanite",
+        "name": "Titanite",
+        "card_tooltip": "Incoming damage reduced by half.",
+        "character_tooltip": "Incoming damage reduced by half.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDamageReductionState"
+    },
+    {
+        "internal": "avarice",
+        "name": "Avarice",
+        "card_tooltip": "When a unit with [avarice] deals unblocked damage, gain [coin] equal to stacks of [avarice].",
+        "character_tooltip": "When dealing unblocked damage, +[codeint0][coin] (+[codeint1][coin] per stack).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectAvariceState"
+    },
+    {
+        "internal": "decay",
+        "name": "Decay",
+        "card_tooltip": "Unit takes 3 damage per stack at the end of turn.<br>Decreases every turn.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDecayState"
+    },
+    {
+        "internal": "unstable",
+        "name": "Unstable",
+        "card_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable.<br>\nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor.",
+        "character_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable.<br>\nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor ([codeint0] damage).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectUnstableState"
+    },
+    {
+        "internal": "horde",
+        "name": "[troop]",
+        "card_tooltip": "Troop gains bonus [attack] and [health] per stack. Additional Troop stacks on a floor are added to any existing Troop. When this unit loses health equal to the [health] granted by one stack, it loses a Troop stack.",
+        "character_tooltip": "Funguy gain bonus 3[attack] and 4[health] per [troop] stack. Lose a [troop] stack every 4[health] lost.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectHordeState"
+    },
+    {
+        "internal": "undying",
+        "name": "Reanimate",
+        "card_tooltip": "When a unit with [undying] is killed, it will be revived with 1 [health] and lose 1 stack of [undying].",
+        "character_tooltip": "When this unit is killed, it will be revived with 1 [health] and lose 1 stack of [undying].",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectUndyingState"
+    },
+    {
+        "internal": "unit_grafted_equipment",
+        "name": "Graft",
+        "card_tooltip": "Unit has equipment grafted to their body. When they die, the graft is severed for the rest of combat and the equipment goes into your hand.",
+        "character_tooltip": "Unit has equipment grafted to their body. When they die, the graft is severed for the rest of combat and the equipment goes into your hand.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectUnitGraftedEquipmentState"
+    },
+    {
+        "internal": "conduit",
+        "name": "Conduit",
+        "card_tooltip": "+[codeint0] [magicpower] on this floor per stack.",
+        "character_tooltip": "+[codeint0] [magicpower] on this floor (+[codeint1] [magicpower] per stack).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectConduitState"
+    },
+    {
+        "internal": "equalizer",
+        "name": "Equalizer",
+        "card_tooltip": "This unit\u2019s attack is always equal to its health. Cannot gain attack.",
+        "character_tooltip": "This unit\u2019s attack is always equal to its health. Cannot gain attack.",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectEqualizerState"
+    },
+    {
+        "internal": "mageblade",
+        "name": "Mageblade",
+        "card_tooltip": "+[codeint0][attack] per stack for each [magicpower] on the floor.",
+        "character_tooltip": "+[codeint1][attack] per stack for each [magicpower] on the floor (+[codeint0][attack]).",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectMagebladeState"
+    },
+    {
+        "internal": "redcrown",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectRedCrownState"
+    },
+    {
+        "internal": "showtime",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectShowtimeState"
+    },
+    {
+        "internal": "lifelink",
+        "name": "Fate Link",
+        "card_tooltip": "",
+        "character_tooltip": "Can not be killed until all units with Fate Link are at 1 HP. Immune to <b>Rooted</b> and Entropy is immune to <b>Dazed</b>.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectLifeLinkState"
+    },
+    {
+        "internal": "pyrebane",
+        "name": "Live to Fight",
+        "card_tooltip": "",
+        "character_tooltip": "Instead of entering the Pyre Room this unit moves back to the bottom floor.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPyreBaneState"
+    },
+    {
+        "internal": "pyrebound",
+        "name": "Pyre Bound",
+        "card_tooltip": "",
+        "character_tooltip": "Battles the Pyre Heart once a turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPyreBoundState"
+    },
+    {
+        "internal": "duality",
+        "name": "Dualism",
+        "card_tooltip": "Doubles the stacks of [armor] and [buff] and [debuff] status effects applied by this unit.",
+        "character_tooltip": "Doubles the stacks of [armor] and [buff] and [debuff] status effects applied by this unit.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectDualityState"
+    },
+    {
+        "internal": "muted",
+        "name": "Mute",
+        "card_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>. Decreases every turn.",
+        "character_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>. Decreases every turn.",
+        "notification": "Muted!",
+        "hidden": false,
+        "status_class": "StatusEffectMutedState"
+    },
+    {
+        "internal": "soul",
+        "name": "Soul",
+        "card_tooltip": "Used by certain abilities.",
+        "character_tooltip": "Used by certain abilities.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSoulState"
+    },
+    {
+        "internal": "fixedattack",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectFixedAttackState"
+    },
+    {
+        "internal": "sniper",
+        "name": "Sniper",
+        "card_tooltip": "Prioritizes attacking the back enemy unit.",
+        "character_tooltip": "Prioritizes attacking the back enemy unit.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSniperState"
+    },
+    {
+        "internal": "piercing",
+        "name": "Piercing",
+        "card_tooltip": "Damage dealt ignores armor, shields, and Titanskin.",
+        "character_tooltip": "Damage dealt ignores armor, shields, and Titanskin.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPiercingState"
+    },
+    {
+        "internal": "purify",
+        "name": "Purified",
+        "card_tooltip": "Remove all status effects and triggers. Cannot gain status effects or fire any triggers.",
+        "character_tooltip": "Remove all status effects and triggers. Cannot gain status effects or fire any triggers.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPurifyState"
+    },
+    {
+        "internal": "hatch",
+        "name": "[hatch]",
+        "card_tooltip": "At end of turn, remove [corrupt] from the floor to remove [hatch] from the front unit with [hatch]. When all [hatch] is removed, the unit will [hatched].",
+        "character_tooltip": "At end of turn, remove [corrupt] from the floor to remove [hatch] from the front unit with [hatch]. When all [hatch] is removed, the unit will [hatched].",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectHatchState"
+    },
+    {
+        "internal": "corrupt_poison",
+        "name": "Reap",
+        "card_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends.<br>Does not decrease.",
+        "character_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends.<br>Does not decrease.<br>([codeint0] damage)",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectCorruptPoisonState"
+    },
+    {
+        "internal": "powerup",
+        "name": "[powerup]",
+        "card_tooltip": "",
+        "character_tooltip": "Adjacent allies gain a bonus. If only one ally is adjacent, they gain it twice.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectPowerupState"
+    },
+    {
+        "internal": "hivemind",
+        "name": "[infested]",
+        "card_tooltip": "+1[attack] per [infested] stacks on the Train at turn start.",
+        "character_tooltip": "+1[attack] per [infested] stacks on the Train at turn start.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectHivemindState"
+    },
+    {
+        "internal": "hivemindkiller",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectHivemindKillerState"
+    },
+    {
+        "internal": "armorattack",
+        "name": "Steelmight",
+        "card_tooltip": "This unit's attack is equal to its stacks of armor.",
+        "character_tooltip": "This unit's attack is equal to its stacks of armor.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectArmorAttackState"
+    },
+    {
+        "internal": "burst",
+        "name": "Burst",
+        "card_tooltip": "Attacks an additional time per stack. Remove 1 stack after each attack made this way.",
+        "character_tooltip": "Attacks [codeint0] times. Remove 1 stack after each attack made this way.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectBurstState"
+    },
+    {
+        "internal": "malaise",
+        "name": "Malaise",
+        "card_tooltip": "-1[attack] and -1[health] per stack. [health] cannot be reduced below 1.",
+        "character_tooltip": "-[codeint1][attack] and -[codeint1][health] per stack. [health] cannot be reduced below 1.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectReduceMaxHpAndAttackState"
+    },
+    {
+        "internal": "doom",
+        "name": "Doom",
+        "card_tooltip": "Unit is destroyed when all stacks are removed.<br>Decreases every turn.",
+        "character_tooltip": "Unit is destroyed when all stacks are removed.<br>Decreases every turn.",
+        "notification": "Doom!",
+        "hidden": false,
+        "status_class": "StatusEffectDoomState"
+    },
+    {
+        "internal": "timebomb",
+        "name": "Timebomb",
+        "card_tooltip": "Counts down every turn. When [timebomb] runs out, the unit dies.",
+        "character_tooltip": "This unit will die in [codeint0] turns.[i2p_One]This unit will die next turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectTimebombState"
+    },
+    {
+        "internal": "witherbloom",
+        "name": "Witherbloom",
+        "card_tooltip": "Unit and adjacent units take 1 damage per stack at the end of turn.",
+        "character_tooltip": "This unit and adjacent units take [codeint0] damage per stack at the end of turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectWitherbloomState"
+    },
+    {
+        "internal": "steelguard",
+        "name": "Steelguard",
+        "card_tooltip": "Cannot lose more than [codeint0] [armor] per hit.",
+        "character_tooltip": "Cannot lose more than [codeint0] [armor] per hit.",
+        "notification": "",
+        "hidden": false,
+        "status_class": "StatusEffectSteelguardState"
+    },
+    {
+        "internal": "maniac",
+        "name": "",
+        "card_tooltip": "",
+        "character_tooltip": "",
+        "notification": "",
+        "hidden": true,
+        "status_class": "StatusEffectManiacState"
+    }
+]

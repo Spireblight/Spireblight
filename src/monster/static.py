@@ -132,7 +132,7 @@ class Base2:
         self.name: str = data.get("name", data.get("title", ""))
         self.description: str = data.get("description", data.get("raw", ""))
         self.internal: str = data.get("internal", "")
-        self.id: str = data["id"]
+        self.id: str = data.get("id")
         self.lore: str = data.get("lore", "")
 
     @property
@@ -237,6 +237,15 @@ class Upgrade(Base2):
         self.rarity: bool = data["rarity"] # why is this even a bool
         self.blocks_ability: bool = data["blocks_ability"]
 
+class Status(Base2):
+    def __init__(self, data):
+        super().__init__(data)
+        self.card_tooltip: str = data["card_tooltip"]
+        self.character_tooltip: str = data["character_tooltip"]
+        self.notification: str = data["notification"]
+        self.hidden: bool = data["hidden"]
+        self.status_class: str = data["status_class"]
+
 class Misc2:
     def __init__(self, data):
         pass
@@ -252,6 +261,7 @@ _map2 = {
     "relics": Relic,
     "trials": Trial,
     "upgrades": Upgrade,
+    "status": Status,
 }
 
 def load_mt1():
