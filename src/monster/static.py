@@ -224,16 +224,18 @@ class Trial(Base2):
 class Upgrade(Base2):
     def __init__(self, data):
         super().__init__(data)
-        self.bonus_atk = int(data["bonus_atk_pwr"])
-        self.bonus_hp = int(data["bonus_hp"])
-        self.bonus_heal = int(data["bonus_heal"])
-        self.bonus_size = int(data["bonus_size"])
-        self.cost_reduction = int(data["cost_reduction"])
-        self.x_cost_reduction = int(data["x_cost_reduction"])
+        self.bonus_atk: int = data["bonus_atk_pwr"]
+        self.bonus_hp: int = data["bonus_hp"]
+        self.bonus_heal: int = data["bonus_heal"]
+        self.bonus_size: int = data["bonus_size"]
+        self.cost_reduction: int = data["cost_reduction"]
+        self.x_cost_reduction: int = data["x_cost_reduction"]
         self.ability: str = data["ability"]
         self.unique: bool = data["unique"]
         self.clone_excluded: bool = data["clone_excluded"]
         self.do_not_replace_ability: bool = data["do_not_replace_ability"] # why it's phrased so ass-backwards is beyond me
+        self.rarity: bool = data["rarity"] # why is this even a bool
+        self.blocks_ability: bool = data["blocks_ability"]
 
 class Misc2:
     def __init__(self, data):
