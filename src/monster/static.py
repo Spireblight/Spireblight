@@ -246,9 +246,20 @@ class Status(Base2):
         self.hidden: bool = data["hidden"]
         self.status_class: str = data["status_class"]
 
-class Misc2:
+class Soul(Base2):
     def __init__(self, data):
-        pass
+        super().__init__(data)
+        self.clan: str = data["clan"]
+        self.unlock_level: int = data["unlock_level"]
+        self.rarity: str = data["rarity"]
+        self.is_dlc: bool = data["is_dlc"]
+        self.hidden = data["hidden"] # currently None for everyone?
+        self.draft_min_distance: int = data["draft_min_distance"]
+        self.draft_max_distance: int = data["draft_max_distance"]
+
+class Misc2(Base2):
+    def __init__(self, data):
+        super().__init__(data)
 
 _map2 = {
     "cards": Card2,
@@ -262,6 +273,7 @@ _map2 = {
     "trials": Trial,
     "upgrades": Upgrade,
     "status": Status,
+    "souls": Soul,
 }
 
 def load_mt1():
