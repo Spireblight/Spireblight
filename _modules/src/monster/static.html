@@ -558,9 +558,22 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> pips] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attack</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">health</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Clan</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Store data for clans.</span>
+<span class="sd">    </span>
+<span class="sd">    We also added "Clanless" to the list for easier access."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"dlc"</span><span class="p">]</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The clan icon link."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/clan/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s2">.png"</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Covenant</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -627,6 +640,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"rarity"</span><span class="p">]</span> <span class="c1"># why is this even a bool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blocks_ability</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"blocks_ability"</span><span class="p">]</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The image for the upgrade."""</span>
+        <span class="c1"># we use internal instead of name for two reasons:</span>
+        <span class="c1"># - we don't have to account for weird characters like -' or spaces</span>
+        <span class="c1"># - if anything gets renamed in-game, nothing here breaks</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ss_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"SoulSavior"</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">ss_name</span> <span class="c1"># the slab version just has a prefix here</span>
+        <span class="k">elif</span> <span class="n">ss_name</span><span class="p">:</span> <span class="c1"># something else has an underscore?</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"AddDamageShield"</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">"AddDamageShield3"</span> <span class="c1"># Soul Savior compat</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/upgrades/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.png"</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store status information."""</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -635,6 +663,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">character_tooltip</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"character_tooltip"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">notification</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"notification"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"status_class"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get the image link for the status."""</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"soul"</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">"captured_soul"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/status/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.png"</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Soul</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store soul (from Soul Savior) information."""</span>
