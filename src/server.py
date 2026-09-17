@@ -1951,7 +1951,7 @@ async def tier_rankings(ctx: ContextType, name: str = ""):
     match name.casefold():
         case "":
             return await ctx.reply(
-                "All of Baalor's tier lists are here: https://sts2.untapped.gg/en/tier-lists?creator=Baalorlord - "
+                "All of Baalor's tier lists are here: https://sts2.untapped.gg/en/tier-lists/beta?creator=Baalorlord - "
                 f"use '{_consts['prefix']}tier <character, ancient, or rarity>' for specific card/relic rankings."
             )
         case "ironclad" | "clad":
@@ -1972,14 +1972,22 @@ async def tier_rankings(ctx: ContextType, name: str = ""):
             link = "b4cec0df-7a2f-41b5-b91e-4eaac766c7bd"
         case "act3" | "ancients3" | "tanx" | "nonu" | "nonupeipe" | "vakuu" | "vakku" | "vaaku" | "darv3":
             link = "a4b2b8b1-fd28-4588-8af0-8a42e1bc4227"
-        case "common":
+        case "common" | "commons":
             link = "25dfc0a0-00f8-4c78-9409-4393f3f8492f"
+        case "uncommon" | "uncommons":
+            link = "4a750220-a84f-4fe9-b055-6434640b2768"
+        case "rare" | "rares":
+            link = "328008ad-b94f-46eb-bd60-fad2d93a86c1"
+        case "potion" | "potions":
+            link = "23c7557c-f36b-46e8-805d-b2d49242560b"
+        case "tasty" | "yummy" | "drink" | "taste":
+            link = "7deaa1af-bdb3-4da4-a71b-20f76e1cda76"
         case "darv":
             return await ctx.reply("There are two list rankings for Darv: use Darv2 or Darv3 for the relevant act.")
         case _:
             return await ctx.reply("I'm afraid I don't have a tier list for that.")
 
-    await ctx.reply(f"View the {name} rankings here: https://sts2.untapped.gg/en/tier-list/{link}")
+    await ctx.reply(f"View the {name} rankings here: https://sts2.untapped.gg/en/tier-list/{link}/beta")
 
 
 @with_savefile("bluekey", "sapphirekey", "key")
