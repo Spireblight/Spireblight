@@ -240,6 +240,21 @@ class Upgrade(Base2):
         self.rarity: bool = data["rarity"] # why is this even a bool
         self.blocks_ability: bool = data["blocks_ability"]
 
+    @property
+    def image(self) -> str:
+        """The image for the upgrade."""
+        # we use internal instead of name for two reasons:
+        # - we don't have to account for weird characters like -' or spaces
+        # - if anything gets renamed in-game, nothing here breaks
+        name, _, ss_name = self.internal.partition("_")
+        if name == "SoulSavior":
+            name = ss_name # the slab version just has a prefix here
+        elif ss_name: # something else has an underscore?
+            name = self.internal
+        if name == "AddDamageShield":
+            name = "AddDamageShield3" # Soul Savior compat
+        return f"/static/mt2/upgrades/{name}.png"
+
 class Status(Base2):
     """Store status information."""
     def __init__(self, data):
