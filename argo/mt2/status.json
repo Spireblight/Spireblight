@@ -146,7 +146,7 @@
     {
         "internal": "ephemeral",
         "name": "Burnout",
-        "card_tooltip": "When [burnout] runs out, the unit dies.<br>Decreases every turn.",
+        "card_tooltip": "When [burnout] runs out, the unit dies. Decreases every turn.",
         "character_tooltip": "This unit will die in [codeint0] turns unless it gets more [burnout].[i2p_One]This unit will die next turn unless it gets more [burnout].",
         "notification": "",
         "hidden": false,
@@ -200,8 +200,8 @@
     {
         "internal": "buff",
         "name": "Rage",
-        "card_tooltip": "+[codeint0][attack] per stack.<br>Decreases every turn.",
-        "character_tooltip": "+[codeint0][attack] (+[codeint1][attack] per stack).<br>Decreases every turn.",
+        "card_tooltip": "+[codeint0][attack] per stack. Decreases every turn.",
+        "character_tooltip": "+[codeint0][attack] (+[codeint1][attack] per stack). Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectBuffState"
@@ -245,8 +245,8 @@
     {
         "internal": "regen",
         "name": "Regen",
-        "card_tooltip": "Restores [codeint0] health per stack at the end of turn.<br>Decreases every turn.",
-        "character_tooltip": "Restores [codeint0] health at the end of turn.<br>Decreases every turn.",
+        "card_tooltip": "Restores [codeint0] health per stack at the end of turn. Decreases every turn.",
+        "character_tooltip": "Restores [codeint0] health at the end of turn. Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectRegenState"
@@ -263,7 +263,7 @@
     {
         "internal": "stealth",
         "name": "Stealth",
-        "card_tooltip": "Not a target in combat.<br>Decreases every turn.",
+        "card_tooltip": "Not a target in combat. Decreases every turn.",
         "character_tooltip": "Not a target in combat for the next [codeint0] turns.[i2p_One]Not a target in combat for the next turn.",
         "notification": "",
         "hidden": false,
@@ -272,7 +272,7 @@
     {
         "internal": "lifesteal",
         "name": "Lifesteal",
-        "card_tooltip": "When a unit with [lifesteal] attacks, it restores health equal to the damage dealt.<br>Decreases each time the unit attacks.",
+        "card_tooltip": "When a unit with [lifesteal] attacks, it restores health equal to the damage dealt. Decreases each time the unit attacks.",
         "character_tooltip": "For the next [codeint0] attacks, restore health equal to the damage dealt.[i2p_One]On the next attack, restore health equal to the damage dealt.",
         "notification": "",
         "hidden": false,
@@ -290,7 +290,7 @@
     {
         "internal": "rooted",
         "name": "Rooted",
-        "card_tooltip": "Prevents the next time a unit would move between floors.<br>Bosses are immune.",
+        "card_tooltip": "Prevents the next time a unit would move between floors. Bosses are immune.",
         "character_tooltip": "Prevent the next [codeint0] times this unit would move between floors.[i2p_One]Prevent the next time this unit would move between floors.",
         "notification": "Rooted",
         "hidden": false,
@@ -299,7 +299,7 @@
     {
         "internal": "dazed",
         "name": "Dazed",
-        "card_tooltip": "As long as a unit is [dazed], it can't attack or use any Action or Resolve abilities.<br>Decreases every turn.",
+        "card_tooltip": "As long as a unit is [dazed], it can't attack or use any Action or Resolve abilities. Decreases every turn.",
         "character_tooltip": "Can't attack or use any Action or Resolve abilities for the next [codeint0] turns.[i2p_One]Can't attack or use any Action or Resolve abilities for [codeint0] turn.",
         "notification": "Dazed",
         "hidden": false,
@@ -308,8 +308,8 @@
     {
         "internal": "debuff",
         "name": "Sap",
-        "card_tooltip": "-[codeint0][attack] per stack.<br>Decreases every turn.",
-        "character_tooltip": "-[codeint0][attack] (-[codeint1][attack] per stack).<br>Decreases every turn.",
+        "card_tooltip": "-[codeint0][attack] per stack. Decreases every turn.",
+        "character_tooltip": "-[codeint0][attack] (-[codeint1][attack] per stack). Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectDebuffState"
@@ -317,8 +317,8 @@
     {
         "internal": "poison",
         "name": "Frostbite",
-        "card_tooltip": "Unit takes 1 damage per stack at the end of turn.<br>Decreases every turn.",
-        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Decreases every turn.",
+        "card_tooltip": "Unit takes 1 damage per stack at the end of turn. Decreases every turn.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn. Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectPoisonState"
@@ -326,8 +326,8 @@
     {
         "internal": "corruption",
         "name": "Corruption",
-        "card_tooltip": "Unit takes 1 damage per stack at the end of turn.<br>Stacks remain across turns.",
-        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Stacks remain across turns.",
+        "card_tooltip": "Unit takes 1 damage per stack at the end of turn. Stacks remain across turns.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn. Stacks remain across turns.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectCorruptionState"
@@ -344,8 +344,8 @@
     {
         "internal": "scorch",
         "name": "Emberdrain",
-        "card_tooltip": "At the start of turn, you lose 1[ember] for every stack of [emberdrain].<br>Decreases every turn.",
-        "character_tooltip": "You lose [codeint0][ember] at the start of the next turn.<br>Decreases every turn.",
+        "card_tooltip": "At the start of turn, you lose 1[ember] for every stack of [emberdrain]. Decreases every turn.",
+        "character_tooltip": "You lose [codeint0][ember] at the start of the next turn. Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectScorchState"
@@ -461,8 +461,8 @@
     {
         "internal": "decay",
         "name": "Decay",
-        "card_tooltip": "Unit takes 3 damage per stack at the end of turn.<br>Decreases every turn.",
-        "character_tooltip": "Takes [codeint0] damage at the end of turn.<br>Decreases every turn.",
+        "card_tooltip": "Unit takes 3 damage per stack at the end of turn. Decreases every turn.",
+        "character_tooltip": "Takes [codeint0] damage at the end of turn. Decreases every turn.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectDecayState"
@@ -470,8 +470,8 @@
     {
         "internal": "unstable",
         "name": "Unstable",
-        "card_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable.<br>\nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor.",
-        "character_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable.<br>\nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor ([codeint0] damage).",
+        "card_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable. \nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor.",
+        "character_tooltip": "If a unit's HP is less than or equal to stacks of Unstable at the end of combat, they die if not invulnerable. \nOn death, this unit explodes, dealing damage equal to stacks to enemies on the floor ([codeint0] damage).",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectUnstableState"
@@ -650,8 +650,8 @@
     {
         "internal": "corrupt_poison",
         "name": "Reap",
-        "card_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends.<br>Does not decrease.",
-        "character_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends.<br>Does not decrease.<br>([codeint0] damage)",
+        "card_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends. Does not decrease.",
+        "character_tooltip": "Unit takes 1 damage per stack of [corrupt] after combat ends. Does not decrease. ([codeint0] damage)",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectCorruptPoisonState"
@@ -713,8 +713,8 @@
     {
         "internal": "doom",
         "name": "Doom",
-        "card_tooltip": "Unit is destroyed when all stacks are removed.<br>Decreases every turn.",
-        "character_tooltip": "Unit is destroyed when all stacks are removed.<br>Decreases every turn.",
+        "card_tooltip": "Unit is destroyed when all stacks are removed. Decreases every turn.",
+        "character_tooltip": "Unit is destroyed when all stacks are removed. Decreases every turn.",
         "notification": "Doom!",
         "hidden": false,
         "status_class": "StatusEffectDoomState"

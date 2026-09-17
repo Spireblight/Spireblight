@@ -277,6 +277,14 @@ class Status(Base2):
         self.notification: str = data["notification"]
         self.status_class: str = data["status_class"]
 
+    @property
+    def image(self) -> str:
+        """Get the image link for the status."""
+        name = self.internal
+        if name == "soul":
+            name = "captured_soul"
+        return f"/static/mt2/status/{name}.png"
+
 class Soul(Base2):
     """Store soul (from Soul Savior) information."""
     def __init__(self, data):
