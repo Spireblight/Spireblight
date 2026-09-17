@@ -171,9 +171,22 @@ class Character(Base2):
         return f"{self.name} [{self.size} pips] {self.attack}/{self.health} - {self.description}"
 
 class Clan(Base2):
+    """Store data for clans.
+    
+    We also added "Clanless" to the list for easier access."""
+
+    def __init__(self, data):
+        super().__init__(data)
+        self.dlc: str | None = data["dlc"]
+
     @property
     def info(self):
         return self.name
+
+    @property
+    def image(self) -> str:
+        """The clan icon link."""
+        return f"/static/mt2/clan/{self.internal}.png"
 
 class Covenant(Base2):
     def __init__(self, data):
