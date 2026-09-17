@@ -65,8 +65,8 @@
     {
         "internal": "inert",
         "name": "Inert",
-        "card_tooltip": "This unit cannot attack unless it has <b>Fuel</b>.",
-        "character_tooltip": "This unit cannot attack unless it has <b>Fuel</b>.",
+        "card_tooltip": "This unit cannot attack unless it has Fuel.",
+        "character_tooltip": "This unit cannot attack unless it has Fuel.",
         "notification": "Inert",
         "hidden": false,
         "status_class": "StatusEffectInertState"
@@ -82,9 +82,9 @@
     },
     {
         "internal": "dormant",
-        "name": "[dormant]",
-        "card_tooltip": "This unit's <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b> are disabled unless it has [spark].",
-        "character_tooltip": "This unit's <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b> are disabled unless it has [spark].",
+        "name": "Dormant",
+        "card_tooltip": "This unit's Triggers, Abilities, and Enchants are disabled unless it has [spark].",
+        "character_tooltip": "This unit's Triggers, Abilities, and Enchants are disabled unless it has [spark].",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectDormantState"
@@ -119,8 +119,8 @@
     {
         "internal": "silenced",
         "name": "Silence",
-        "card_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>.",
-        "character_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>.",
+        "card_tooltip": "Disables Triggers, Abilities, and Enchants.",
+        "character_tooltip": "Disables Triggers, Abilities, and Enchants.",
         "notification": "Silenced!",
         "hidden": false,
         "status_class": "StatusEffectSilencedState"
@@ -191,8 +191,8 @@
     {
         "internal": "stygian_blessing",
         "name": "Shard",
-        "card_tooltip": "Powers <b>Solgard the Martyr</b>'s abilities.",
-        "character_tooltip": "Powers <b>Solgard the Martyr</b>'s abilities.",
+        "card_tooltip": "Powers Solgard the Martyr's abilities.",
+        "character_tooltip": "Powers Solgard the Martyr's abilities.",
         "notification": "Shard",
         "hidden": false,
         "status_class": "StatusEffectStygianBlessingState"
@@ -299,8 +299,8 @@
     {
         "internal": "dazed",
         "name": "Dazed",
-        "card_tooltip": "As long as a unit is [dazed], it can't attack or use any <b>Action</b> or <b>Resolve</b> abilities.<br>Decreases every turn.",
-        "character_tooltip": "Can't attack or use any <b>Action</b> or <b>Resolve</b> abilities for the next [codeint0] turns.[i2p_One]Can't attack or use any <b>Action</b> or <b>Resolve</b> abilities for [codeint0] turn.",
+        "card_tooltip": "As long as a unit is [dazed], it can't attack or use any Action or Resolve abilities.<br>Decreases every turn.",
+        "character_tooltip": "Can't attack or use any Action or Resolve abilities for the next [codeint0] turns.[i2p_One]Can't attack or use any Action or Resolve abilities for [codeint0] turn.",
         "notification": "Dazed",
         "hidden": false,
         "status_class": "StatusEffectDazedState"
@@ -552,7 +552,7 @@
         "internal": "lifelink",
         "name": "Fate Link",
         "card_tooltip": "",
-        "character_tooltip": "Can not be killed until all units with Fate Link are at 1 HP. Immune to <b>Rooted</b> and Entropy is immune to <b>Dazed</b>.",
+        "character_tooltip": "Can not be killed until all units with Fate Link are at 1 HP. Immune to Rooted and Entropy is immune to Dazed.",
         "notification": "",
         "hidden": false,
         "status_class": "StatusEffectLifeLinkState"
@@ -587,8 +587,8 @@
     {
         "internal": "muted",
         "name": "Mute",
-        "card_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>. Decreases every turn.",
-        "character_tooltip": "Disables <b>Triggers</b>, <b>Abilities</b>, and <b>Enchants</b>. Decreases every turn.",
+        "card_tooltip": "Disables Triggers, Abilities, and Enchants. Decreases every turn.",
+        "character_tooltip": "Disables Triggers, Abilities, and Enchants. Decreases every turn.",
         "notification": "Muted!",
         "hidden": false,
         "status_class": "StatusEffectMutedState"
