@@ -2490,7 +2490,7 @@
     <span class="k">match</span> <span class="n">name</span><span class="o">.</span><span class="n">casefold</span><span class="p">():</span>
         <span class="k">case</span> <span class="s2">""</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
-                <span class="s2">"All of Baalor's tier lists are here: https://sts2.untapped.gg/en/tier-lists?creator=Baalorlord - "</span>
+                <span class="s2">"All of Baalor's tier lists are here: https://sts2.untapped.gg/en/tier-lists/beta?creator=Baalorlord - "</span>
                 <span class="sa">f</span><span class="s2">"use '</span><span class="si">{</span><span class="n">_consts</span><span class="p">[</span><span class="s1">'prefix'</span><span class="p">]</span><span class="si">}</span><span class="s2">tier &lt;character, ancient, or rarity&gt;' for specific card/relic rankings."</span>
             <span class="p">)</span>
         <span class="k">case</span> <span class="s2">"ironclad"</span> <span class="o">|</span> <span class="s2">"clad"</span><span class="p">:</span>
@@ -2511,14 +2511,22 @@
             <span class="n">link</span> <span class="o">=</span> <span class="s2">"b4cec0df-7a2f-41b5-b91e-4eaac766c7bd"</span>
         <span class="k">case</span> <span class="s2">"act3"</span> <span class="o">|</span> <span class="s2">"ancients3"</span> <span class="o">|</span> <span class="s2">"tanx"</span> <span class="o">|</span> <span class="s2">"nonu"</span> <span class="o">|</span> <span class="s2">"nonupeipe"</span> <span class="o">|</span> <span class="s2">"vakuu"</span> <span class="o">|</span> <span class="s2">"vakku"</span> <span class="o">|</span> <span class="s2">"vaaku"</span> <span class="o">|</span> <span class="s2">"darv3"</span><span class="p">:</span>
             <span class="n">link</span> <span class="o">=</span> <span class="s2">"a4b2b8b1-fd28-4588-8af0-8a42e1bc4227"</span>
-        <span class="k">case</span> <span class="s2">"common"</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">"common"</span> <span class="o">|</span> <span class="s2">"commons"</span><span class="p">:</span>
             <span class="n">link</span> <span class="o">=</span> <span class="s2">"25dfc0a0-00f8-4c78-9409-4393f3f8492f"</span>
+        <span class="k">case</span> <span class="s2">"uncommon"</span> <span class="o">|</span> <span class="s2">"uncommons"</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">"4a750220-a84f-4fe9-b055-6434640b2768"</span>
+        <span class="k">case</span> <span class="s2">"rare"</span> <span class="o">|</span> <span class="s2">"rares"</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">"328008ad-b94f-46eb-bd60-fad2d93a86c1"</span>
+        <span class="k">case</span> <span class="s2">"potion"</span> <span class="o">|</span> <span class="s2">"potions"</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">"23c7557c-f36b-46e8-805d-b2d49242560b"</span>
+        <span class="k">case</span> <span class="s2">"tasty"</span> <span class="o">|</span> <span class="s2">"yummy"</span> <span class="o">|</span> <span class="s2">"drink"</span> <span class="o">|</span> <span class="s2">"taste"</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="s2">"7deaa1af-bdb3-4da4-a71b-20f76e1cda76"</span>
         <span class="k">case</span> <span class="s2">"darv"</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"There are two list rankings for Darv: use Darv2 or Darv3 for the relevant act."</span><span class="p">)</span>
         <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"I'm afraid I don't have a tier list for that."</span><span class="p">)</span>
 
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"View the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> rankings here: https://sts2.untapped.gg/en/tier-list/</span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"View the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> rankings here: https://sts2.untapped.gg/en/tier-list/</span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">/beta"</span><span class="p">)</span></div>
 
 
 
