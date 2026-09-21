@@ -138,7 +138,7 @@ _map1 = {
 class Base2:
     def __init__(self, data: dict):
         self.name: str = data.get("name", data.get("title", ""))
-        self.description: str = data.get("description", data.get("raw", ""))
+        self._description: str = data.get("description", data.get("raw", ""))
         self.internal: str = data.get("internal", "")
         self.id: str = data.get("id")
         self.lore: str = data.get("lore", "")
@@ -147,6 +147,12 @@ class Base2:
     @property
     def info(self):
         return f"{self.__class__.__name__} {self.name}: {self.description}"
+
+    @property
+    def description(self) -> str: # TODO: quick-replace stuff like [ember] with an image (online)
+        if self.name in _descriptions:
+            return _descriptions[self.name]
+        return self._description
 
 class Card2(Base2):
     def __init__(self, data: dict):
@@ -370,6 +376,11 @@ class UpgradePath:
 
         raise ValueError(f"No upgrade called {name} exists.")
 
+_descriptions = {}
+
+def card_description(data: dict[str, str]):
+    _descriptions[data["name"]] = data["description"]
+
 class Misc2(Base2):
     """Store information for unknown data."""
 
@@ -389,6 +400,7 @@ _map2 = {
     "sins": Sin,
     "rewards": Reward,
     "upgrade_paths": UpgradePath,
+    "card_text": card_description,
 }
 
 def load_mt1():
