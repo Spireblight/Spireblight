@@ -169,14 +169,22 @@ class Character(Base2):
     def __init__(self, data: dict):
         super().__init__(data)
         self.ability: str = data["ability"]
-        self.attack = int(data["attack"])
-        self.health = int(data["health"])
-        self.grafted: str = data["grafted"]
-        self.size = int(data["size"])
+        self.attack: int = data["attack"]
+        self.health: int = data["health"]
+        self.grafted: str = data["grafted_equipment"]
+        self.size: int = data["size"]
+        self.artist: str = data["artist"]
+        self.gender: str = data["gender"] # why is that a field
 
     @property
     def info(self) -> str:
         return f"{self.name} [{self.size} pips] {self.attack}/{self.health} - {self.description}"
+
+    @property
+    def upgrades(self) -> UpgradePath | None:
+        if self.internal not in _upgrades:
+            return None
+        return _upgrades[self.internal]
 
 class Clan(Base2):
     """Store data for clans.
