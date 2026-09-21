@@ -1,0 +1,1562 @@
+[
+    {
+        "champion": "MonsterChampionRailforged1",
+        "upgrades": [
+            {
+                "name": "Blacksmith",
+                "upgrades": [
+                    {
+                        "internal": "Railforged1Path1a",
+                        "id": "6e5c62a9-18c3-4c99-9be7-5278342c1fe2",
+                        "title": "Blacksmith"
+                    },
+                    {
+                        "internal": "Railforged1Path1b",
+                        "id": "c602a902-771f-4a8b-8966-e26b2954857f",
+                        "title": "Blacksmith II"
+                    },
+                    {
+                        "internal": "Railforged1Path1c",
+                        "id": "bc21aa35-59c7-404c-aa0f-ace261d16404",
+                        "title": "Blacksmith III"
+                    }
+                ]
+            },
+            {
+                "name": "Pyresmith",
+                "upgrades": [
+                    {
+                        "internal": "Railforged1Path2a",
+                        "id": "82eb800a-d24f-4810-9e8d-9d7dc38b4281",
+                        "title": "Pyresmith"
+                    },
+                    {
+                        "internal": "Railforged1Path2b",
+                        "id": "22634378-cd0a-4668-85a3-eb2f99c0add6",
+                        "title": "Pyresmith II"
+                    },
+                    {
+                        "internal": "Railforged1Path2c",
+                        "id": "4ee13cfb-78bc-4ff1-94cc-8c06c616a249",
+                        "title": "Pyresmith III"
+                    }
+                ]
+            },
+            {
+                "name": "Enduring Steel",
+                "upgrades": [
+                    {
+                        "internal": "Railforged1Path3a",
+                        "id": "13355cb5-a54a-4f42-9b0d-237f2bc984c8",
+                        "title": "Enduring Steel"
+                    },
+                    {
+                        "internal": "Railforged1Path3b",
+                        "id": "7b7d8a04-3486-4942-9d0c-89545cf1a1ac",
+                        "title": "Enduring Steel II"
+                    },
+                    {
+                        "internal": "Railforged1Path3c",
+                        "id": "e4d0407c-bc66-4ed6-8e89-427144ce51be",
+                        "title": "Enduring Steel III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterLazarusLeagueChampion2",
+        "upgrades": [
+            {
+                "name": "Living Armory",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampEquipmentBuff1",
+                        "id": "97199a36-afd1-4f1b-9fdc-d7cdacb970a3",
+                        "title": "Living Armory"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampEquipmentBuff2",
+                        "id": "1de16831-460d-44ad-95e3-784f09785b07",
+                        "title": "Living Armory II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampEquipmentBuff3",
+                        "id": "c6ecb56b-d757-47c3-89dc-216d86dad95b",
+                        "title": "Living Armory III"
+                    }
+                ]
+            },
+            {
+                "name": "Learning Limb",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampGraftBuff1",
+                        "id": "ae4e622c-9a6c-4498-a5a8-5c187018984b",
+                        "title": "Learning Limb"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampGraftBuff2",
+                        "id": "0d0b2e6d-da55-4f4c-bf81-3069b78e982d",
+                        "title": "Learning Limb II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampGraftBuff3",
+                        "id": "35b53ee7-3c23-41c8-9244-fac560a5478d",
+                        "title": "Learning Limb III"
+                    }
+                ]
+            },
+            {
+                "name": "It Hungers",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampDevour1",
+                        "id": "1e17c118-2f0d-4bd6-b1c7-a49efc591698",
+                        "title": "It Hungers"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampDevour2",
+                        "id": "b065fcfe-ae7c-4fb1-9aa3-7d7ee74bf99b",
+                        "title": "It Hungers II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampDevour3",
+                        "id": "aaf1f5d2-69d2-4e8b-b023-52aaa7947400",
+                        "title": "It Hungers III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterWurmChampion2",
+        "upgrades": [
+            {
+                "name": "The Shellsmith",
+                "upgrades": [
+                    {
+                        "internal": "Wurm2ArmorOnResolve",
+                        "id": "0ae4c1de-dfc0-4753-8d02-025ea8cfd445",
+                        "title": "The Shellsmith"
+                    },
+                    {
+                        "internal": "Wurm2ArmorOnResolve2",
+                        "id": "ee65baf1-dc09-4b46-b75d-849f499db428",
+                        "title": "The Shellsmith II"
+                    },
+                    {
+                        "internal": "Wurm2ArmorOnResolve3",
+                        "id": "86e73cf7-63df-4a22-85bb-29f0de135f59",
+                        "title": "The Shellsmith III"
+                    }
+                ]
+            },
+            {
+                "name": "The Repeater",
+                "upgrades": [
+                    {
+                        "internal": "Wurm2ReturnConsumedSlay",
+                        "id": "9871c640-ba99-426a-9fca-31ba5124f79e",
+                        "title": "The Repeater"
+                    },
+                    {
+                        "internal": "Wurm2ReturnConsumedSlay2",
+                        "id": "882d6764-a8f9-4cda-98e5-a313ea5378ec",
+                        "title": "The Repeater II"
+                    },
+                    {
+                        "internal": "Wurm2ReturnConsumedSlay3",
+                        "id": "51244a47-e709-48d6-9e6e-bbe0e5ba8e2c",
+                        "title": "The Repeater III"
+                    }
+                ]
+            },
+            {
+                "name": "The Marshlord",
+                "upgrades": [
+                    {
+                        "internal": "Wurm2Summoner",
+                        "id": "194d0632-41ce-470d-a6a1-fadd845e5628",
+                        "title": "The Marshlord"
+                    },
+                    {
+                        "internal": "Wurm2Summoner2",
+                        "id": "f2ba172d-faef-4539-9a39-f0eb1af33723",
+                        "title": "The Marshlord II"
+                    },
+                    {
+                        "internal": "Wurm2Summoner3",
+                        "id": "cf48bcc3-248e-4e10-ba1b-637afd9af28c",
+                        "title": "The Marshlord III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterStygianChampionTethys",
+        "upgrades": [
+            {
+                "name": "Chillwind",
+                "upgrades": [
+                    {
+                        "internal": "TethysFrostbiteOnStrike",
+                        "id": "204f8182-3291-442c-af2c-39ce5aad63fa",
+                        "title": "Chillwind"
+                    },
+                    {
+                        "internal": "TethysFrostbiteOnStrike2",
+                        "id": "b7a75711-9b32-47c7-aa82-027169a1d538",
+                        "title": "Chillwind II"
+                    },
+                    {
+                        "internal": "TethysFrostbiteOnStrike3",
+                        "id": "b5abbfe2-2f7d-4449-9ea2-5d287b0b7ef3",
+                        "title": "Chillwind III"
+                    }
+                ]
+            },
+            {
+                "name": "Conduit",
+                "upgrades": [
+                    {
+                        "internal": "TethysReduceSpellCost",
+                        "id": "87fb9df8-c3cd-4d08-9bec-88c90880d804",
+                        "title": "Conduit"
+                    },
+                    {
+                        "internal": "TethysReduceSpellCost2",
+                        "id": "ba7b86f5-b775-47fb-91c2-039d09c779e9",
+                        "title": "Conduit II"
+                    },
+                    {
+                        "internal": "TethysReduceSpellCost3",
+                        "id": "210e1833-3cf8-4f84-ab8d-1c8a9f35e404",
+                        "title": "Conduit III"
+                    }
+                ]
+            },
+            {
+                "name": "Handheld Totem",
+                "upgrades": [
+                    {
+                        "internal": "TethysSpellWeaknessOnStrike",
+                        "id": "723ff87f-8aea-403b-85cd-561a15816c84",
+                        "title": "Handheld Totem"
+                    },
+                    {
+                        "internal": "TethysSpellWeaknessOnStrike2",
+                        "id": "27e907d6-e3dd-411c-82cd-61a63e7b5829",
+                        "title": "Handheld Totem II"
+                    },
+                    {
+                        "internal": "TethysSpellWeaknessOnStrike3",
+                        "id": "47fd83c4-d80c-47e3-b1f1-fe25028d322c",
+                        "title": "Handheld Totem III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionLunaCoven2",
+        "upgrades": [
+            {
+                "name": "Hierophant",
+                "upgrades": [
+                    {
+                        "internal": "ArduhnIncant1",
+                        "id": "9ef0eb9d-a049-485e-811f-8c1c6cfb1fab",
+                        "title": "Hierophant"
+                    },
+                    {
+                        "internal": "ArduhnIncant2",
+                        "id": "2daef93f-96ba-40e3-a503-6c440b540543",
+                        "title": "Hierophant II"
+                    },
+                    {
+                        "internal": "ArduhnIncant3",
+                        "id": "a37e79ab-d33a-4af8-85f1-c2558ce1d39b",
+                        "title": "Hierophant III"
+                    }
+                ]
+            },
+            {
+                "name": "Battleborne",
+                "upgrades": [
+                    {
+                        "internal": "ArduhnMageblade1",
+                        "id": "e9b39c4a-b253-4b9c-9c6c-9a15ccf670bc",
+                        "title": "Battleborne"
+                    },
+                    {
+                        "internal": "ArduhnMageblade2",
+                        "id": "e250d34d-46a9-4110-ab1c-3742f08ff6d0",
+                        "title": "Battleborne II"
+                    },
+                    {
+                        "internal": "ArduhnMageblade3",
+                        "id": "d7ac0daa-fc81-4a46-aff5-5ee2d517af40",
+                        "title": "Battleborne III"
+                    }
+                ]
+            },
+            {
+                "name": "Mystic Hammer",
+                "upgrades": [
+                    {
+                        "internal": "ArduhnMoonshade1",
+                        "id": "60196c31-19d6-4c91-a8ad-92455dcc3dc3",
+                        "title": "Mystic Hammer"
+                    },
+                    {
+                        "internal": "ArduhnMoonshade2",
+                        "id": "8306e564-9370-4b35-9806-36534fc6f582",
+                        "title": "Mystic Hammer II"
+                    },
+                    {
+                        "internal": "ArduhnMoonshade3",
+                        "id": "1fc9d605-77cf-4430-8d50-463fb8f74469",
+                        "title": "Mystic Hammer III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterFirstWaxer",
+        "upgrades": [
+            {
+                "name": "Fire Light",
+                "upgrades": [
+                    {
+                        "internal": "LittleFadeBuffFriendlyOnDeath",
+                        "id": "eb4f67b9-f3ad-40db-9212-4ed647e17296",
+                        "title": "Fire Light"
+                    },
+                    {
+                        "internal": "LittleFadeBuffFriendlyOnDeath2",
+                        "id": "2c87b675-8681-4662-82b7-ae22b1e254d2",
+                        "title": "Fire Light II"
+                    },
+                    {
+                        "internal": "LittleFadeBuffFriendlyOnDeath3",
+                        "id": "b3b74373-3afe-40fc-ae2c-8a77f5817f10",
+                        "title": "Fire Light III"
+                    }
+                ]
+            },
+            {
+                "name": "Eternal Flame",
+                "upgrades": [
+                    {
+                        "internal": "LittleFadeIncreaseCostOnDeath",
+                        "id": "738b4ac0-d62b-4d79-8340-e6dc154b1b5f",
+                        "title": "Eternal Flame"
+                    },
+                    {
+                        "internal": "LittleFadeIncreaseCostOnDeath2",
+                        "id": "5a3b4148-0c24-45cb-9ff2-5c0a19a0be7b",
+                        "title": "Eternal Flame II"
+                    },
+                    {
+                        "internal": "LittleFadeIncreaseCostOnDeath3",
+                        "id": "83b1594a-96c3-4984-9dc2-73db6f193e14",
+                        "title": "Eternal Flame III"
+                    }
+                ]
+            },
+            {
+                "name": "Little Icarus",
+                "upgrades": [
+                    {
+                        "internal": "LittleFadePermanentSpikes",
+                        "id": "08749cab-1cdb-451b-9164-b60be12c4b52",
+                        "title": "Little Icarus"
+                    },
+                    {
+                        "internal": "LittleFadePermanentSpikes2",
+                        "id": "0ccb5d0a-7bb9-4843-9139-8dd0b784d4c2",
+                        "title": "Little Icarus II"
+                    },
+                    {
+                        "internal": "LittleFadePermanentSpikes3",
+                        "id": "0d8186aa-0906-46d9-a41c-cfee1f997c5c",
+                        "title": "Little Icarus III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionHellhornedHornbreaker",
+        "upgrades": [
+            {
+                "name": "Reaper",
+                "upgrades": [
+                    {
+                        "internal": "HornbreakerAttackOnKill",
+                        "id": "96f93f28-0d3c-4b62-aabc-f7de6b655995",
+                        "title": "Reaper"
+                    },
+                    {
+                        "internal": "HornbreakerAttackOnKill2",
+                        "id": "86d92229-18f2-4644-8d01-08e195de9253",
+                        "title": "Reaper II"
+                    },
+                    {
+                        "internal": "HornbreakerAttackOnKill3",
+                        "id": "0bc77389-97b7-4073-b00e-111293e706a4",
+                        "title": "Reaper III"
+                    }
+                ]
+            },
+            {
+                "name": "Brawler",
+                "upgrades": [
+                    {
+                        "internal": "HornbreakerMultistrike",
+                        "id": "6057fccd-90dc-4c97-b64b-cca5a02f4766",
+                        "title": "Brawler"
+                    },
+                    {
+                        "internal": "HornbreakerMultistrike2",
+                        "id": "b1476ffd-d425-46d6-89d6-975921a8f58c",
+                        "title": "Brawler II"
+                    },
+                    {
+                        "internal": "HornbreakerMultistrike3",
+                        "id": "142535b6-ad20-4fa3-8a6b-4fff4ad45784",
+                        "title": "Brawler III"
+                    }
+                ]
+            },
+            {
+                "name": "Wrathful",
+                "upgrades": [
+                    {
+                        "internal": "HornbreakerRageful",
+                        "id": "bbedbbd7-cf93-4b27-920a-36815e404a9a",
+                        "title": "Wrathful"
+                    },
+                    {
+                        "internal": "HornbreakerRageful2",
+                        "id": "71ca2e13-c5de-426d-997a-45d0f9e21a34",
+                        "title": "Wrathful II"
+                    },
+                    {
+                        "internal": "HornbreakerRageful3",
+                        "id": "93e65477-e418-4da8-b456-e3e3d9d269fa",
+                        "title": "Wrathful III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterBanishedChampion1",
+        "upgrades": [
+            {
+                "name": "Unchained",
+                "upgrades": [
+                    {
+                        "internal": "FelAttackShift1",
+                        "id": "6e7b2a43-701c-4a47-80f6-51fd00f4ce89",
+                        "title": "Unchained"
+                    },
+                    {
+                        "internal": "FelAttackShift2",
+                        "id": "963210e1-cfd6-401f-b7f2-f818074f848b",
+                        "title": "Unchained II"
+                    },
+                    {
+                        "internal": "FelAttackShift3",
+                        "id": "ee759461-d0dd-419c-9a73-614a8851eb1e",
+                        "title": "Unchained III"
+                    }
+                ]
+            },
+            {
+                "name": "Vanguardian",
+                "upgrades": [
+                    {
+                        "internal": "FelDefenseShift1",
+                        "id": "40b59748-ff63-4269-9b85-bedf0ec9545c",
+                        "title": "Vanguardian"
+                    },
+                    {
+                        "internal": "FelDefenseShift2",
+                        "id": "51d8112b-5607-42ad-bd61-8864aae68435",
+                        "title": "Vanguardian II"
+                    },
+                    {
+                        "internal": "FelDefenseShift3",
+                        "id": "ea868f77-3370-4369-9a2a-5b594bc14549",
+                        "title": "Vanguardian III"
+                    }
+                ]
+            },
+            {
+                "name": "Savior",
+                "upgrades": [
+                    {
+                        "internal": "FelSummonBuff1",
+                        "id": "f6418fc7-08cf-410c-b593-ccf1b512820d",
+                        "title": "Savior"
+                    },
+                    {
+                        "internal": "FelSummonBuff2",
+                        "id": "76fc3780-7b3d-408c-ab87-1044da08dba3",
+                        "title": "Savior II"
+                    },
+                    {
+                        "internal": "FelSummonBuff3",
+                        "id": "f51716cd-6e42-4bf5-aee1-a73219d1cf60",
+                        "title": "Savior III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionUnderlegion2",
+        "upgrades": [
+            {
+                "name": "Maneater",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion2Ability1",
+                        "id": "1898aed4-acb7-4e8e-81a0-7744cb7a77f7",
+                        "title": "Maneater"
+                    },
+                    {
+                        "internal": "Underlegion2Ability2",
+                        "id": "de684106-43fd-42b4-8c41-cd0e19ace465",
+                        "title": "Maneater II"
+                    },
+                    {
+                        "internal": "Underlegion2Ability3",
+                        "id": "3630a4b3-4506-40d2-bd71-53b66e088ed4",
+                        "title": "Maneater III"
+                    }
+                ]
+            },
+            {
+                "name": "Sporesinger",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion2ApplyMoreDecay",
+                        "id": "9f21b155-6d10-4be7-a546-de2918520c99",
+                        "title": "Sporesinger"
+                    },
+                    {
+                        "internal": "Underlegion2ApplyMoreDecay2",
+                        "id": "6159ddcc-1214-49cf-83fe-1ce28a191eb7",
+                        "title": "Sporesinger II"
+                    },
+                    {
+                        "internal": "Underlegion2ApplyMoreDecay3",
+                        "id": "566f5b6c-1434-4129-a5d7-68d36f343356",
+                        "title": "Sporesinger III"
+                    }
+                ]
+            },
+            {
+                "name": "Everbloom",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion2PropagateOnIncant1",
+                        "id": "d6508d2d-34df-4fe9-8859-2b3852a42f4b",
+                        "title": "Everbloom"
+                    },
+                    {
+                        "internal": "Underlegion2PropagateOnIncant2",
+                        "id": "55c944ca-0ad8-4b69-b368-a2a3e464e5ac",
+                        "title": "Everbloom II"
+                    },
+                    {
+                        "internal": "Underlegion2PropagateOnIncant3",
+                        "id": "6bcb16f7-d6d7-40af-a021-7f212a1d029a",
+                        "title": "Everbloom III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterStygianChampionMartyr",
+        "upgrades": [
+            {
+                "name": "Direchannel",
+                "upgrades": [
+                    {
+                        "internal": "SolgardRevengeDamagePerBlessing",
+                        "id": "ca5e1e1a-09c5-44c7-b626-9d9f4a2b7eb2",
+                        "title": "Direchannel"
+                    },
+                    {
+                        "internal": "SolgardRevengeDamagePerBlessing2",
+                        "id": "65112eea-9b24-4318-82f6-5647b55679e3",
+                        "title": "Direchannel II"
+                    },
+                    {
+                        "internal": "SolgardRevengeDamagePerBlessing3",
+                        "id": "71b42d6e-5e0b-435c-8dfb-c93269415a46",
+                        "title": "Direchannel III"
+                    }
+                ]
+            },
+            {
+                "name": "Titanchannel",
+                "upgrades": [
+                    {
+                        "internal": "SolgardStasisGoodStats",
+                        "id": "462e09b7-886b-4d7c-8875-26cbca27c0c8",
+                        "title": "Titanchannel"
+                    },
+                    {
+                        "internal": "SolgardStasisGoodStats2",
+                        "id": "bf30a732-abd2-4e51-ad50-cebfa387425a",
+                        "title": "Titanchannel II"
+                    },
+                    {
+                        "internal": "SolgardStasisGoodStats3",
+                        "id": "67d682a3-00b6-4ad1-bb5d-6838c21621bd",
+                        "title": "Titanchannel III"
+                    }
+                ]
+            },
+            {
+                "name": "Coldchannel",
+                "upgrades": [
+                    {
+                        "internal": "SolgardStrikeFrostbitePerBlessing",
+                        "id": "c347b104-bc74-45ac-8239-df44ba4176ee",
+                        "title": "Coldchannel"
+                    },
+                    {
+                        "internal": "SolgardStrikeFrostbitePerBlessing2",
+                        "id": "b9d7d5f5-3fc8-438a-b8db-eed365ad9bad",
+                        "title": "Coldchannel II"
+                    },
+                    {
+                        "internal": "SolgardStrikeFrostbitePerBlessing3",
+                        "id": "7885ff96-ca87-4a02-b80c-58c503f3f4c5",
+                        "title": "Coldchannel III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterLazarusLeagueChampion1",
+        "upgrades": [
+            {
+                "name": "Reanimator",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampEquipAllyReanimate1",
+                        "id": "dd33a154-3959-4448-9a77-924c39e7504f",
+                        "title": "Reanimator"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampEquipAllyReanimate2",
+                        "id": "00e86788-fcf3-47c2-b9be-d3c874d77cd4",
+                        "title": "Reanimator II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampEquipAllyReanimate3",
+                        "id": "b4437d7a-d70b-43be-a145-83f825d5a8df",
+                        "title": "Reanimator III"
+                    }
+                ]
+            },
+            {
+                "name": "Mad Scientist",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampIncant1",
+                        "id": "a882dec1-68b6-4e10-b6bd-2388b4450468",
+                        "title": "Mad Scientist"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampIncant2",
+                        "id": "714951f8-dc2f-4032-9591-68b4fd67ff74",
+                        "title": "Mad Scientist II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampIncant3",
+                        "id": "e40a9462-fbb1-4d30-851b-41c832c0d065",
+                        "title": "Mad Scientist III"
+                    }
+                ]
+            },
+            {
+                "name": "Brewmaster",
+                "upgrades": [
+                    {
+                        "internal": "LazarusLeagueChampMix1",
+                        "id": "b5cae7f3-eae1-4401-a295-66f2810efaee",
+                        "title": "Brewmaster"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampMix2",
+                        "id": "f20c91a3-fb22-4bec-b8d5-6fa3ea7eba5f",
+                        "title": "Brewmaster II"
+                    },
+                    {
+                        "internal": "LazarusLeagueChampMix3",
+                        "id": "b9e08c5b-8446-49e8-adfe-f8a3512b45c8",
+                        "title": "Brewmaster III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionRailforged2",
+        "upgrades": [
+            {
+                "name": "Metalworker",
+                "upgrades": [
+                    {
+                        "internal": "Railforged2Metalworker",
+                        "id": "7a4edb1a-15a6-4e7e-b666-854336bc4e32",
+                        "title": "Metalworker"
+                    },
+                    {
+                        "internal": "Railforged2Metalworker2",
+                        "id": "e16764d8-51c2-4cea-8dab-fde85cb2041f",
+                        "title": "Metalworker II"
+                    },
+                    {
+                        "internal": "Railforged2Metalworker3",
+                        "id": "11387c2a-a140-4110-997e-8966c8f3f2c4",
+                        "title": "Metalworker III"
+                    }
+                ]
+            },
+            {
+                "name": "Handy",
+                "upgrades": [
+                    {
+                        "internal": "Railforged2Roomsmith",
+                        "id": "948ea149-8614-4fe8-a6f7-8a0d00e0ae32",
+                        "title": "Handy"
+                    },
+                    {
+                        "internal": "Railforged2Roomsmith2",
+                        "id": "6633c31d-c702-4a2f-a6ae-8e643e8b0dae",
+                        "title": "Handy II"
+                    },
+                    {
+                        "internal": "Railforged2Roomsmith3",
+                        "id": "aef447d6-ac1b-438a-95a1-ebc93b4ad6a6",
+                        "title": "Handy III"
+                    }
+                ]
+            },
+            {
+                "name": "Weaponsmith",
+                "upgrades": [
+                    {
+                        "internal": "Railforged2Weaponsmith",
+                        "id": "db8a69e6-bf8e-4241-9868-8b6be55a67dc",
+                        "title": "Weaponsmith"
+                    },
+                    {
+                        "internal": "Railforged2Weaponsmith2",
+                        "id": "5a5a34d2-0672-42ee-a26e-6121a35cdf4d",
+                        "title": "Weaponsmith II"
+                    },
+                    {
+                        "internal": "Railforged2Weaponsmith3",
+                        "id": "a4d43499-c70c-402b-a8c2-7ec0d9702e2e",
+                        "title": "Weaponsmith III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionAwokenHollow",
+        "upgrades": [
+            {
+                "name": "Explosive",
+                "upgrades": [
+                    {
+                        "internal": "SentientDamageOnHeal",
+                        "id": "9bce2977-33ae-4712-8354-436cd827300a",
+                        "title": "Explosive"
+                    },
+                    {
+                        "internal": "SentientDamageOnHeal2",
+                        "id": "e00b42a8-574f-4c0d-809d-5a1325a2e0b3",
+                        "title": "Explosive II"
+                    },
+                    {
+                        "internal": "SentientDamageOnHeal3",
+                        "id": "b93ecc14-e5d5-4120-b4d5-1c2be8692b99",
+                        "title": "Explosive III"
+                    }
+                ]
+            },
+            {
+                "name": "Cultivating",
+                "upgrades": [
+                    {
+                        "internal": "SentientDrawOnRevenge",
+                        "id": "f8032f84-d804-4b2e-ad51-679f949f5eb2",
+                        "title": "Cultivating"
+                    },
+                    {
+                        "internal": "SentientDrawOnRevenge2",
+                        "id": "09621571-ddd8-4ee9-bf99-55c846d565bd",
+                        "title": "Cultivating II"
+                    },
+                    {
+                        "internal": "SentientDrawOnRevenge3",
+                        "id": "48ab11a5-012e-489a-a095-afe7bd783c83",
+                        "title": "Cultivating III"
+                    }
+                ]
+            },
+            {
+                "name": "Bristling",
+                "upgrades": [
+                    {
+                        "internal": "SentientSpikes",
+                        "id": "15a21677-588c-427d-bef0-9b191458ad36",
+                        "title": "Bristling"
+                    },
+                    {
+                        "internal": "SentientSpikes2",
+                        "id": "fb36955d-ee11-4efd-af41-7a7aa4f17055",
+                        "title": "Bristling II"
+                    },
+                    {
+                        "internal": "SentientSpikes3",
+                        "id": "552a48c3-8298-48e8-89a0-fc525f2eab32",
+                        "title": "Bristling III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterBanishedChampion2",
+        "upgrades": [
+            {
+                "name": "Celestial Radiance",
+                "upgrades": [
+                    {
+                        "internal": "TalosApplyDebuff1",
+                        "id": "c5840a93-d39e-4f0d-96a9-f2a288165991",
+                        "title": "Celestial Radiance"
+                    },
+                    {
+                        "internal": "TalosApplyDebuff2",
+                        "id": "2066fdf7-5dc0-4657-a2ba-4d0f449261bc",
+                        "title": "Celestial Radiance II"
+                    },
+                    {
+                        "internal": "TalosApplyDebuff3",
+                        "id": "8949e2fb-cd15-4220-a771-2feb15fdc751",
+                        "title": "Celestial Radiance III"
+                    }
+                ]
+            },
+            {
+                "name": "Enchantress",
+                "upgrades": [
+                    {
+                        "internal": "TalosEquipment1",
+                        "id": "e00f63c8-d631-4cb3-b3a1-a1f26679d9fd",
+                        "title": "Enchantress"
+                    },
+                    {
+                        "internal": "TalosEquipment2",
+                        "id": "633e2481-a1a9-4ef3-bf2d-709651cbf40c",
+                        "title": "Enchantress II"
+                    },
+                    {
+                        "internal": "TalosEquipment3",
+                        "id": "1c84bc16-db0a-49e0-ad9d-70337adc7762",
+                        "title": "Enchantress III"
+                    }
+                ]
+            },
+            {
+                "name": "Battle Cleric",
+                "upgrades": [
+                    {
+                        "internal": "TalosRestoreHealth1",
+                        "id": "23afe227-21db-48f4-a638-f0b17a08c428",
+                        "title": "Battle Cleric"
+                    },
+                    {
+                        "internal": "TalosRestoreHealth2",
+                        "id": "90f17e30-6f7f-422f-8874-9af7778760c4",
+                        "title": "Battle Cleric II"
+                    },
+                    {
+                        "internal": "TalosRestoreHealth3",
+                        "id": "76df2c83-ad2d-44c7-a2ec-8b9d04b2415b",
+                        "title": "Battle Cleric III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionLunaCoven1",
+        "upgrades": [
+            {
+                "name": "Celestial Spellweaver",
+                "upgrades": [
+                    {
+                        "internal": "EkkaIncantConduit1",
+                        "id": "be05de07-774c-4ff3-acca-59071cc23879",
+                        "title": "Celestial Spellweaver"
+                    },
+                    {
+                        "internal": "EkkaIncantConduit2",
+                        "id": "b799a8f0-7ade-4aff-92b9-34872cad2a0f",
+                        "title": "Celestial Spellweaver II"
+                    },
+                    {
+                        "internal": "EkkaIncantConduit3",
+                        "id": "8286654f-a3d0-4342-8811-0d6fbd65afdc",
+                        "title": "Celestial Spellweaver III"
+                    }
+                ]
+            },
+            {
+                "name": "Silver Empress",
+                "upgrades": [
+                    {
+                        "internal": "EkkaMagicPowerMoonAbility1",
+                        "id": "3904f750-aff2-4a58-9b7f-8c1eed1eb755",
+                        "title": "Silver Empress"
+                    },
+                    {
+                        "internal": "EkkaMagicPowerMoonAbility2",
+                        "id": "3af916f7-d2c1-436f-a404-e9bd35fa8dbc",
+                        "title": "Silver Empress II"
+                    },
+                    {
+                        "internal": "EkkaMagicPowerMoonAbility3",
+                        "id": "736d05f7-5984-4a2b-bd6e-675ebdd04e80",
+                        "title": "Silver Empress III"
+                    }
+                ]
+            },
+            {
+                "name": "Lunar Steward",
+                "upgrades": [
+                    {
+                        "internal": "EkkaMooncycle1",
+                        "id": "a31e7e22-8e59-4f0c-83f8-6a208d5515c5",
+                        "title": "Lunar Steward"
+                    },
+                    {
+                        "internal": "EkkaMooncycle2",
+                        "id": "cc8c8255-a90b-4b6c-a3fe-9c151c47a556",
+                        "title": "Lunar Steward II"
+                    },
+                    {
+                        "internal": "EkkaMooncycle3",
+                        "id": "5d29dd75-f8d8-4f85-beef-7ae274a5831b",
+                        "title": "Lunar Steward III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterHarvestAttack",
+        "upgrades": [
+            {
+                "name": "Burn Bright",
+                "upgrades": [
+                    {
+                        "internal": "FlickerAddBurnoutToSelf",
+                        "id": "93da2f34-0c5d-4191-9416-ab6d0177c42e",
+                        "title": "Burn Bright"
+                    },
+                    {
+                        "internal": "FlickerAddBurnoutToSelf2",
+                        "id": "3a2a536d-5c20-460b-ba37-8e9d240b04c1",
+                        "title": "Burn Bright II"
+                    },
+                    {
+                        "internal": "FlickerAddBurnoutToSelf3",
+                        "id": "1928313f-4511-4b6f-ad32-dc7b7461d6c1",
+                        "title": "Burn Bright III"
+                    }
+                ]
+            },
+            {
+                "name": "Accumulator",
+                "upgrades": [
+                    {
+                        "internal": "FlickerHealOnHarvest",
+                        "id": "190e29a6-9c5f-4e85-97e3-abc5c6ca9dda",
+                        "title": "Accumulator"
+                    },
+                    {
+                        "internal": "FlickerHealOnHarvest2",
+                        "id": "176205b6-ae99-451c-b58a-7b6c08b51f20",
+                        "title": "Accumulator II"
+                    },
+                    {
+                        "internal": "FlickerHealOnHarvest3",
+                        "id": "d5a114ea-412a-432a-9283-c11f7a44a3fb",
+                        "title": "Accumulator III"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Calling",
+                "upgrades": [
+                    {
+                        "internal": "FlickerRaiseOnSlay",
+                        "id": "5ed5a523-6c23-45dd-9f8d-3543a52ac6fe",
+                        "title": "Dark Calling"
+                    },
+                    {
+                        "internal": "FlickerRaiseOnSlay2",
+                        "id": "3c935a9d-761d-48e9-a375-a3582a9abed5",
+                        "title": "Dark Calling II"
+                    },
+                    {
+                        "internal": "FlickerRaiseOnSlay3",
+                        "id": "24d93a75-44b0-4fbb-b030-f093ea2132fe",
+                        "title": "Dark Calling III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionAwokenRoot",
+        "upgrades": [
+            {
+                "name": "Predator",
+                "upgrades": [
+                    {
+                        "internal": "WyldentenQuickAndDamage",
+                        "id": "7f7a9349-f708-45b3-bfe6-202316e9a612",
+                        "title": "Predator"
+                    },
+                    {
+                        "internal": "WyldentenQuickAndDamage2",
+                        "id": "35030105-93bd-470b-95b8-63cda41a7bb5",
+                        "title": "Predator II"
+                    },
+                    {
+                        "internal": "WyldentenQuickAndDamage3",
+                        "id": "6084cb44-6002-4fe1-bcb2-14805ed08725",
+                        "title": "Predator III"
+                    }
+                ]
+            },
+            {
+                "name": "Strangler",
+                "upgrades": [
+                    {
+                        "internal": "WyldentenRootOnStrike",
+                        "id": "23179c5e-62aa-4a86-b861-c5aa6c594708",
+                        "title": "Strangler"
+                    },
+                    {
+                        "internal": "WyldentenRootOnStrike2",
+                        "id": "f539c91f-0877-4122-a4ff-07c8bf905dc2",
+                        "title": "Strangler II"
+                    },
+                    {
+                        "internal": "WyldentenRootOnStrike3",
+                        "id": "3309b5b7-24fc-4bf7-919b-a22b6c4832cd",
+                        "title": "Strangler III"
+                    }
+                ]
+            },
+            {
+                "name": "Thornlord",
+                "upgrades": [
+                    {
+                        "internal": "WyldentenSlayForSting",
+                        "id": "410a0c39-4d2a-4c62-a9ce-c1401e9259de",
+                        "title": "Thornlord"
+                    },
+                    {
+                        "internal": "WyldentenSlayForSting2",
+                        "id": "beceeab5-0940-4f08-946e-d8c8ea14a81c",
+                        "title": "Thornlord II"
+                    },
+                    {
+                        "internal": "WyldentenSlayForSting3",
+                        "id": "c13711f6-cdad-4951-ae72-d847048df6f1",
+                        "title": "Thornlord III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterWurmChampion1",
+        "upgrades": [
+            {
+                "name": "The Corruptor",
+                "upgrades": [
+                    {
+                        "internal": "Wurm1DamagePerCorruption",
+                        "id": "401f4e60-5879-4183-b204-53f391489c44",
+                        "title": "The Corruptor"
+                    },
+                    {
+                        "internal": "Wurm1DamagePerCorruption2",
+                        "id": "05ec6f6f-5a52-4bb9-967f-3a47b21426f9",
+                        "title": "The Corruptor II"
+                    },
+                    {
+                        "internal": "Wurm1DamagePerCorruption3",
+                        "id": "783817cc-10fb-4950-af7b-b42e12b07064",
+                        "title": "The Corruptor III"
+                    }
+                ]
+            },
+            {
+                "name": "The Decayer",
+                "upgrades": [
+                    {
+                        "internal": "Wurm1ShardbiteOnCorruption",
+                        "id": "2940cb92-d4da-4f0b-a88f-ecbd454c4f36",
+                        "title": "The Decayer"
+                    },
+                    {
+                        "internal": "Wurm1ShardbiteOnCorruption2",
+                        "id": "a168d788-7b47-4cd5-bce2-0e59aff36d5a",
+                        "title": "The Decayer II"
+                    },
+                    {
+                        "internal": "Wurm1ShardbiteOnCorruption3",
+                        "id": "f63ebb48-26c3-47b7-926d-e8972d997c44",
+                        "title": "The Decayer III"
+                    }
+                ]
+            },
+            {
+                "name": "The Infector",
+                "upgrades": [
+                    {
+                        "internal": "Wurm1StrikeAddCorruption",
+                        "id": "5d70a79f-1c26-4ad7-a549-f4bb1a7b9121",
+                        "title": "The Infector"
+                    },
+                    {
+                        "internal": "Wurm1StrikeAddCorruption2",
+                        "id": "e53c2bb3-f09c-46e1-b2b5-f115bad35b40",
+                        "title": "The Infector II"
+                    },
+                    {
+                        "internal": "Wurm1StrikeAddCorruption3",
+                        "id": "2e3164cc-59a2-4966-a1d0-412b2e45b463",
+                        "title": "The Infector III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionHellhornedShardtail",
+        "upgrades": [
+            {
+                "name": "Imp Parade",
+                "upgrades": [
+                    {
+                        "internal": "ShardtailGainImps",
+                        "id": "2c5a6dd2-3320-4d90-8fd8-af32a4f913e7",
+                        "title": "Imp Parade"
+                    },
+                    {
+                        "internal": "ShardtailGainImps2",
+                        "id": "acd50cf0-3ff0-43d1-81b7-c7abc4eac9c7",
+                        "title": "Imp Parade II"
+                    },
+                    {
+                        "internal": "ShardtailGainImps3",
+                        "id": "edbe43ea-fb4e-4690-8999-4bc666f421f5",
+                        "title": "Imp Parade III"
+                    }
+                ]
+            },
+            {
+                "name": "Royalty",
+                "upgrades": [
+                    {
+                        "internal": "ShardtailRallyBuff",
+                        "id": "44c23e85-cc98-49ca-a54c-92b1aae3a367",
+                        "title": "Royalty"
+                    },
+                    {
+                        "internal": "ShardtailRallyBuff2",
+                        "id": "0ee32709-3e94-4447-98ad-a810c48bbe84",
+                        "title": "Royalty II"
+                    },
+                    {
+                        "internal": "ShardtailRallyBuff3",
+                        "id": "01b23394-aaa3-4d39-8b1b-b5c279865208",
+                        "title": "Royalty III"
+                    }
+                ]
+            },
+            {
+                "name": "Imperialist",
+                "upgrades": [
+                    {
+                        "internal": "ShardtailSacrificeImps",
+                        "id": "8bf00bfe-347c-41c6-8ce8-a6f998e2393c",
+                        "title": "Imperialist"
+                    },
+                    {
+                        "internal": "ShardtailSacrificeImps2",
+                        "id": "6bb263bd-22f5-4893-bc13-6624188e96e8",
+                        "title": "Imperialist II"
+                    },
+                    {
+                        "internal": "ShardtailSacrificeImps3",
+                        "id": "dd997c0f-f913-451f-8011-1f5dd6fd9a54",
+                        "title": "Imperialist III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionUmbraPenumbra",
+        "upgrades": [
+            {
+                "name": "Architect",
+                "upgrades": [
+                    {
+                        "internal": "PenumbraCapacityOnKill",
+                        "id": "cd4363b1-3d2d-4fca-9c8f-b2add13bf929",
+                        "title": "Architect"
+                    },
+                    {
+                        "internal": "PenumbraCapacityOnKill2",
+                        "id": "cd0de392-000c-46d5-9ed0-c5c0e50ab24f",
+                        "title": "Architect II"
+                    },
+                    {
+                        "internal": "PenumbraCapacityOnKill3",
+                        "id": "de7a72f5-c278-49fc-b396-cae1233d0c24",
+                        "title": "Architect III"
+                    }
+                ]
+            },
+            {
+                "name": "Monstrous",
+                "upgrades": [
+                    {
+                        "internal": "PenumbraIncreaseStatsCapacity",
+                        "id": "52fcb0d7-2a46-44ef-8ea6-7cafa44b25df",
+                        "title": "Monstrous"
+                    },
+                    {
+                        "internal": "PenumbraIncreaseStatsCapacity2",
+                        "id": "208f3fb4-72cc-4eda-b970-fb5b5cd7b194",
+                        "title": "Monstrous II"
+                    },
+                    {
+                        "internal": "PenumbraIncreaseStatsCapacity3",
+                        "id": "6e0b7f50-ed86-4658-bad4-c353421f5444",
+                        "title": "Monstrous III"
+                    }
+                ]
+            },
+            {
+                "name": "Glutton",
+                "upgrades": [
+                    {
+                        "internal": "PenumbraStatsOnEat",
+                        "id": "5a85e2f8-8197-4cc0-a4b8-02cd8ed0a20e",
+                        "title": "Glutton"
+                    },
+                    {
+                        "internal": "PenumbraStatsOnEat2",
+                        "id": "c37e7693-e0f7-4149-be80-7091715be579",
+                        "title": "Glutton II"
+                    },
+                    {
+                        "internal": "PenumbraStatsOnEat3",
+                        "id": "bd4485de-039e-41f9-b174-9212f8fc2ca7",
+                        "title": "Glutton III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionUnderlegion1",
+        "upgrades": [
+            {
+                "name": "Headsman",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion1FunguyOnSlay",
+                        "id": "80d63140-dbe0-4eaa-b84f-21f192794af2",
+                        "title": "Headsman"
+                    },
+                    {
+                        "internal": "Underlegion1FunguyOnSlay2",
+                        "id": "5800b592-019c-4a2b-8884-4c520fefd37a",
+                        "title": "Headsman II"
+                    },
+                    {
+                        "internal": "Underlegion1FunguyOnSlay3",
+                        "id": "234ce611-e6f6-4d80-9ef1-6b8b2f409dc6",
+                        "title": "Headsman III"
+                    }
+                ]
+            },
+            {
+                "name": "Executioner",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion1RegenOnHarvest1",
+                        "id": "6ab69569-15d2-4902-a934-539858021760",
+                        "title": "Executioner"
+                    },
+                    {
+                        "internal": "Underlegion1RegenOnHarvest2",
+                        "id": "6bf3f96e-21b0-4afa-b8e4-b4f0725e0731",
+                        "title": "Executioner II"
+                    },
+                    {
+                        "internal": "Underlegion1RegenOnHarvest3",
+                        "id": "0e5c13f8-0b55-4239-bc16-9961e2900f12",
+                        "title": "Executioner III"
+                    }
+                ]
+            },
+            {
+                "name": "Hive Minder",
+                "upgrades": [
+                    {
+                        "internal": "Underlegion1StatsOnRally1",
+                        "id": "7329f92e-55ae-456b-9098-d275e5f7e475",
+                        "title": "Hive Minder"
+                    },
+                    {
+                        "internal": "Underlegion1StatsOnRally2",
+                        "id": "b9450c16-e2b9-454e-9759-5a891f204970",
+                        "title": "Hive Minder II"
+                    },
+                    {
+                        "internal": "Underlegion1StatsOnRally3",
+                        "id": "de79c220-6db7-4acd-95bf-82536497fc59",
+                        "title": "Hive Minder III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionUmbraPrimordium",
+        "upgrades": [
+            {
+                "name": "Aggressive Edible",
+                "upgrades": [
+                    {
+                        "internal": "PrimordiumAttackStat",
+                        "id": "8fe99a49-7f4a-4884-ab76-249b04089bac",
+                        "title": "Aggressive Edible"
+                    },
+                    {
+                        "internal": "PrimordiumAttackStat2",
+                        "id": "dfefaf5a-cc8b-4206-8b80-8f658cd021d6",
+                        "title": "Aggressive Edible II"
+                    },
+                    {
+                        "internal": "PrimordiumAttackStat3",
+                        "id": "979c74ac-9854-443d-b70b-84adae711cdf",
+                        "title": "Aggressive Edible III"
+                    }
+                ]
+            },
+            {
+                "name": "Stalwart Snack",
+                "upgrades": [
+                    {
+                        "internal": "PrimordiumEatMany",
+                        "id": "05a69f55-1e8b-49ad-927d-88d41a6fffa6",
+                        "title": "Stalwart Snack"
+                    },
+                    {
+                        "internal": "PrimordiumEatMany2",
+                        "id": "f41b5501-8e6c-429b-a0f6-b0fe737d7927",
+                        "title": "Stalwart Snack II"
+                    },
+                    {
+                        "internal": "PrimordiumEatMany3",
+                        "id": "a4c5f903-3a18-41ad-a8a1-c61d705a8a89",
+                        "title": "Stalwart Snack III"
+                    }
+                ]
+            },
+            {
+                "name": "Superfood",
+                "upgrades": [
+                    {
+                        "internal": "PrimordiumStatusEffects",
+                        "id": "001f38cc-8ec6-4fdf-a24b-31c6d688b889",
+                        "title": "Superfood"
+                    },
+                    {
+                        "internal": "PrimordiumStatusEffects2",
+                        "id": "46bf51a2-e00b-4c9f-8ecb-980c8cc07415",
+                        "title": "Superfood II"
+                    },
+                    {
+                        "internal": "PrimordiumStatusEffects3",
+                        "id": "6676d9a1-3261-4122-8a5a-0ab0924650eb",
+                        "title": "Superfood III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionPyreborne2",
+        "upgrades": [
+            {
+                "name": "Lady Avarice",
+                "upgrades": [
+                    {
+                        "internal": "AttackPerGold1",
+                        "id": "8a57e738-1c69-4f4a-9923-c1a87f4d384d",
+                        "title": "Lady Avarice"
+                    },
+                    {
+                        "internal": "AttackPerGold2",
+                        "id": "4c556357-3e7c-485a-be75-f73af843a706",
+                        "title": "Lady Avarice II"
+                    },
+                    {
+                        "internal": "AttackPerGold3",
+                        "id": "3b76d3a9-c3c4-4f00-aec9-981724d5c7df",
+                        "title": "Lady Avarice III"
+                    }
+                ]
+            },
+            {
+                "name": "Gildmother",
+                "upgrades": [
+                    {
+                        "internal": "EggAtStart1",
+                        "id": "be036cdc-6572-4ced-9bd4-5bcbcc45adff",
+                        "title": "Gildmother"
+                    },
+                    {
+                        "internal": "EggAtStart2",
+                        "id": "975470a7-7107-4483-93b7-4b624b5d20d4",
+                        "title": "Gildmother II"
+                    },
+                    {
+                        "internal": "EggAtStart3",
+                        "id": "97ecad52-bdd4-432e-b454-379c0e76ac57",
+                        "title": "Gildmother III"
+                    }
+                ]
+            },
+            {
+                "name": "Bloat Matron",
+                "upgrades": [
+                    {
+                        "internal": "PyregelRevenge1",
+                        "id": "79b5aa00-cc51-4a8f-84be-cbf1e30c1824",
+                        "title": "Bloat Matron"
+                    },
+                    {
+                        "internal": "PyregelRevenge2",
+                        "id": "e74ad29d-4d4b-4909-b4ee-5d6dd074a661",
+                        "title": "Bloat Matron II"
+                    },
+                    {
+                        "internal": "PyregelRevenge3",
+                        "id": "db13034e-200f-44c9-9b90-14b4064539fc",
+                        "title": "Bloat Matron III"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "champion": "MonsterChampionPyreborne1",
+        "upgrades": [
+            {
+                "name": "Overlord",
+                "upgrades": [
+                    {
+                        "internal": "Lavamancer",
+                        "id": "e8b29eaa-f8d8-4b1b-aacc-3e03a8337594",
+                        "title": "Overlord"
+                    },
+                    {
+                        "internal": "Lavamancer2",
+                        "id": "2eedeae6-a10c-4352-84a4-f17133cbf19b",
+                        "title": "Overlord II"
+                    },
+                    {
+                        "internal": "Lavamancer3",
+                        "id": "ffe6b010-cf20-45b0-9925-f8be5eb44830",
+                        "title": "Overlord III"
+                    }
+                ]
+            },
+            {
+                "name": "Golden Crown",
+                "upgrades": [
+                    {
+                        "internal": "Goldbeam1",
+                        "id": "567e6ea6-513e-4985-bfad-f4dc854ee7e6",
+                        "title": "Golden Crown"
+                    },
+                    {
+                        "internal": "Goldbeam2",
+                        "id": "89627143-0dc1-4a9d-aaa1-d9253c367391",
+                        "title": "Golden Crown II"
+                    },
+                    {
+                        "internal": "Goldbeam3",
+                        "id": "4ab70bf6-3174-41a0-aa47-0d2067974c58",
+                        "title": "Golden Crown III"
+                    }
+                ]
+            },
+            {
+                "name": "Pyremaniac",
+                "upgrades": [
+                    {
+                        "internal": "Pyremaniac1",
+                        "id": "4f13682e-4612-4754-9c36-e1539daec4f8",
+                        "title": "Pyremaniac"
+                    },
+                    {
+                        "internal": "Pyremaniac2",
+                        "id": "558d88f0-52dd-4cae-ba90-da9e1381ff5f",
+                        "title": "Pyremaniac II"
+                    },
+                    {
+                        "internal": "Pyremaniac3",
+                        "id": "8558f9db-1ca2-4f3a-8312-c94b4e6de592",
+                        "title": "Pyremaniac III"
+                    }
+                ]
+            }
+        ]
+    }
+]

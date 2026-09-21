@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from pathlib import Path
 
 import json
 import os
@@ -16,8 +17,9 @@ _replace_str = " -'()."
 
 __all__ = ["query", "get", "load_mt1", "load_mt2"]
 
-_internal_cache: dict[str, Base] = {}
-_query_cache: dict[str, list[Base]] = defaultdict(list)
+_id_cache: dict[str, Base | Base2] = {}
+_internal_cache: dict[str, Base | Base2] = {}
+_query_cache: dict[str, list[Base | Base2]] = defaultdict(list)
 _mutators: dict[str, Mutator] = {}
 
 def sanitize(x: str) -> str:
@@ -36,14 +38,20 @@ def query(name: str):
     return None
 
 def get(name: str) -> Base:
+    """Get the class for the given data. Matches either internal name or ID."""
     if name in _internal_cache:
         return _internal_cache[name]
+    if name in _id_cache:
+        return _id_cache[name]
 
     return Unknown(name)
 
 def get_safe(name: str) -> str:
+    """Get the name matching the ID or internal name, or the input back if none found."""
     if name in _internal_cache:
         return _internal_cache[name].name
+    if name in _id_cache:
+        return _id_cache[name].name
     return name
 
 class Base:
@@ -305,6 +313,55 @@ class Reward(Base2):
         super().__init__(data)
         self.trial_modifiers = data["trial_modifiers"]
 
+_upgrades: dict[str, UpgradePath] = {}
+
+class UpgradePath:
+    """Store all the Champion upgrade paths.
+    
+    The JSON file had to be manually edited from data in both characters.json and upgrades.json
+    
+    This *will* need manual intervention if and when new classes get added, or the upgrade paths modified."""
+
+    def __init__(self, data: dict[str, list[dict]]):
+        self._champion = data["champion"]
+        _upgrades[self._champion] = self
+        self._upgrades = data["upgrades"]
+        self.names = [x["name"] for x in self._upgrades]
+
+    @property
+    def champion(self):
+        """Which champion the upgrades belong to."""
+        return _internal_cache[self._champion]
+
+    def get_upgrade(self, *, name: str | None = None, index: int | None = None):
+        """Get the matching upgrade or upgrade path.
+
+        :param name: The name of the upgrade, defaults to None
+        :type name: str | None, optional
+        :param index: Which upgrade level to get, defaults to None. Has no effect if :param name: is None.
+        :type index: int | None, optional
+        :returns: The specific upgrade, a list of the three matching upgrades, or all if not specified.
+        :rtype: dict[str, list[Upgrade]] | list[Upgrade] | Upgrade
+        """
+        if name is None:
+            final = {}
+            for path in self._upgrades:
+                ups = []
+                for d in path["upgrades"]:
+                    ups.append(_id_cache[d["id"]])
+                final[path["name"]] = ups
+            return final
+
+        name = name.casefold()
+        for path in self._upgrades:
+            if path["name"] != name:
+                continue
+            if index is not None:
+                return _id_cache[path["upgrades"][index]["id"]]
+            return [_id_cache[x["id"]] for x in path["upgrades"]]
+
+        raise ValueError(f"No upgrade called {name} exists.")
+
 class Misc2(Base2):
     """Store information for unknown data."""
 
@@ -323,11 +380,12 @@ _map2 = {
     "souls": Soul,
     "sins": Sin,
     "rewards": Reward,
+    "upgrade_paths": UpgradePath,
 }
 
 def load_mt1():
     return
-    _internal_cache.clear()
+    _id_cache.clear()
     _query_cache.clear()
     for file in os.listdir(os.path.join("argo", "mt1")):
         if not file.endswith(".json"):
@@ -336,20 +394,25 @@ def load_mt1():
             data = json.load(f)
             for d in data:
                 value = _map1.get(file[:-5], Misc)(d)
-                _internal_cache[value.internal] = value
+                _id_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
 
 def load_mt2():
     # TODO: make clans and units as proper objects that others can use
+    _id_cache.clear()
     _internal_cache.clear()
     _query_cache.clear()
-    for file in os.listdir(os.path.join("argo", "mt2")):
-        if not file.endswith(".json"):
+    base = Path(".") / "argo" / "mt2"
+    for file in base.iterdir():
+        if not file.name.endswith(".json"):
             continue
-        with open(os.path.join("argo", "mt2", file)) as f:
+        with file.open() as f:
             data = json.load(f)
             for d in data:
-                value = _map2.get(file.partition(".")[0], Misc2)(d)
+                value = _map2.get(file.name.partition(".")[0], Misc2)(d)
+                if not isinstance(value, Base2):
+                    continue
                 if value.id: # temporary fix while some units have a blank ID
-                    _internal_cache[value.id] = value
+                    _id_cache[value.id] = value
+                _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
