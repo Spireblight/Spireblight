@@ -388,6 +388,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -397,8 +398,9 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"query"</span><span class="p">,</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"load_mt1"</span><span class="p">,</span> <span class="s2">"load_mt2"</span><span class="p">]</span>
 
-<span class="n">_internal_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">_query_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Base</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="n">_id_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_internal_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_query_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 <span class="n">_mutators</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">sanitize</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -422,15 +424,21 @@
 <div class="viewcode-block" id="get">
 <a class="viewcode-back" href="../../../monster.html#src.monster.static.get">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Base</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Get the class for the given data. Matches either internal name or ID."""</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_internal_cache</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_id_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_id_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">Unknown</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_safe</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Get the name matching the ID or internal name, or the input back if none found."""</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_internal_cache</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_id_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_id_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
     <span class="k">return</span> <span class="n">name</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">:</span>
@@ -517,7 +525,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Base2</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"description"</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"raw"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"description"</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"raw"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"internal"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lore</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"lore"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
@@ -526,6 +534,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="c1"># TODO: quick-replace stuff like [ember] with an image (online)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">_descriptions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_descriptions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Card2</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -548,14 +562,22 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ability</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"ability"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"attack"</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"health"</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grafted</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"grafted"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"size"</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attack</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"attack"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">health</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"health"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grafted</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"grafted_equipment"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artist</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"artist"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gender</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"gender"</span><span class="p">]</span> <span class="c1"># why is that a field</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> pips] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attack</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">health</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">upgrades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UpgradePath</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_upgrades</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">_upgrades</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Clan</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store data for clans.</span>
@@ -692,6 +714,60 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trial_modifiers</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"trial_modifiers"</span><span class="p">]</span>
 
+<span class="n">_upgrades</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">UpgradePath</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UpgradePath</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Store all the Champion upgrade paths.</span>
+<span class="sd">    </span>
+<span class="sd">    The JSON file had to be manually edited from data in both characters.json and upgrades.json</span>
+<span class="sd">    </span>
+<span class="sd">    This *will* need manual intervention if and when new classes get added, or the upgrade paths modified."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_champion</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"champion"</span><span class="p">]</span>
+        <span class="n">_upgrades</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_champion</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upgrades</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"upgrades"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upgrades</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">champion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Which champion the upgrades belong to."""</span>
+        <span class="k">return</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_champion</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get the matching upgrade or upgrade path.</span>
+
+<span class="sd">        :param name: The name of the upgrade, defaults to None</span>
+<span class="sd">        :type name: str | None, optional</span>
+<span class="sd">        :param index: Which upgrade level to get, defaults to None. Has no effect if :param name: is None.</span>
+<span class="sd">        :type index: int | None, optional</span>
+<span class="sd">        :returns: The specific upgrade, a list of the three matching upgrades, or all if not specified.</span>
+<span class="sd">        :rtype: dict[str, list[Upgrade]] | list[Upgrade] | Upgrade</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upgrades</span><span class="p">:</span>
+                <span class="n">ups</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="s2">"upgrades"</span><span class="p">]:</span>
+                    <span class="n">ups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_id_cache</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]])</span>
+                <span class="n">final</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ups</span>
+            <span class="k">return</span> <span class="n">final</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upgrades</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">_id_cache</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="s2">"upgrades"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]]</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">_id_cache</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="s2">"upgrades"</span><span class="p">]]</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No upgrade called </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> exists."</span><span class="p">)</span>
+
+<span class="n">_descriptions</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">card_description</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+    <span class="n">_descriptions</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"description"</span><span class="p">]</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Misc2</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store information for unknown data."""</span>
 
@@ -710,13 +786,15 @@
     <span class="s2">"souls"</span><span class="p">:</span> <span class="n">Soul</span><span class="p">,</span>
     <span class="s2">"sins"</span><span class="p">:</span> <span class="n">Sin</span><span class="p">,</span>
     <span class="s2">"rewards"</span><span class="p">:</span> <span class="n">Reward</span><span class="p">,</span>
+    <span class="s2">"upgrade_paths"</span><span class="p">:</span> <span class="n">UpgradePath</span><span class="p">,</span>
+    <span class="s2">"card_text"</span><span class="p">:</span> <span class="n">card_description</span><span class="p">,</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="load_mt1">
 <a class="viewcode-back" href="../../../monster.html#src.monster.static.load_mt1">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_mt1</span><span class="p">():</span>
     <span class="k">return</span>
-    <span class="n">_internal_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">_id_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">_query_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"argo"</span><span class="p">,</span> <span class="s2">"mt1"</span><span class="p">)):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".json"</span><span class="p">):</span>
@@ -725,7 +803,7 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">_map1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="n">Misc</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
-                <span class="n">_internal_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">_id_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
 
@@ -733,17 +811,22 @@
 <a class="viewcode-back" href="../../../monster.html#src.monster.static.load_mt2">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_mt2</span><span class="p">():</span>
     <span class="c1"># TODO: make clans and units as proper objects that others can use</span>
+    <span class="n">_id_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">_internal_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">_query_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"argo"</span><span class="p">,</span> <span class="s2">"mt2"</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".json"</span><span class="p">):</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"argo"</span> <span class="o">/</span> <span class="s2">"mt2"</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">base</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".json"</span><span class="p">):</span>
             <span class="k">continue</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"argo"</span><span class="p">,</span> <span class="s2">"mt2"</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">_map2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Misc2</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">_map2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Misc2</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Base2</span><span class="p">):</span>
+                    <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="c1"># temporary fix while some units have a blank ID</span>
-                    <span class="n">_internal_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">_id_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">_internal_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
 </pre></div>
