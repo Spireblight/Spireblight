@@ -143,6 +143,7 @@ class Base2:
         self.id: str = data.get("id")
         self.lore: str = data.get("lore", "")
         self.is_hidden: bool = data.get("hidden", False)
+        self.dlc: str | None = data.get("dlc")
 
     @property
     def info(self):
@@ -197,10 +198,6 @@ class Clan(Base2):
     
     We also added "Clanless" to the list for easier access."""
 
-    def __init__(self, data):
-        super().__init__(data)
-        self.dlc: str | None = data["dlc"]
-
     @property
     def info(self):
         return self.name
@@ -249,7 +246,6 @@ class Relic(Base2):
         self.story_event: bool = data["is_story_event"]
         self.dragons_hoard: bool = data["is_dragons_hoard"]
         self.boss_artifact: bool = data["is_boss_artifact"]
-        self.dlc: str | None = data["dlc"]
 
 class Trial(Base2):
     """Store trial information."""
@@ -320,6 +316,14 @@ class Soul(Base2):
 
 class Sin(Base2):
     """Store sin information from fight trials."""
+
+class Mutator(Base2):
+    def __init__(self, data):
+        super().__init__(data)
+        self.boon_value: int = data["boon_value"]
+        self.tags: str = data["tags"]
+        self.soul_savior_only: bool = data["soul_savior_only"]
+        self.daily_disabled: bool = data["daily_disabled"]
 
 class Reward(Base2):
     """Store some kind of reward information?"""
@@ -398,6 +402,7 @@ _map2 = {
     "status": Status,
     "souls": Soul,
     "sins": Sin,
+    "mutators": Mutator,
     "rewards": Reward,
     "upgrade_paths": UpgradePath,
     "card_text": card_description,
