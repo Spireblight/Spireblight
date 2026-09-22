@@ -159,14 +159,14 @@ class Card2(Base2):
     def __init__(self, data: dict):
         super().__init__(data)
         self.clan: str = data["clan"]
-        self.type: str = data["type"]
+        self.type: str = data["card_type"]
         self.rarity: str = data["rarity"]
-        self.cost = int(data["cost"])
-        self.unlock = int(data["unlock"])
+        self.cost: int = data["cost"] # X-cost cards are marked as 0
+        self.unlock: int = data["unlock_level"]
         self.artist: str = data["artist"]
-        self.has_ability: bool = data["ability"]
-        self.initial_cooldown = int(data["init_cooldown"])
-        self.ability_cooldown = int(data["ability_cooldown"])
+        self.has_ability: bool = data["unit_ability"]
+        self.initial_cooldown: int = data["initial_cooldown"]
+        self.ability_cooldown: int = data["ability_cooldown"]
 
     @property
     def info(self) -> str:
