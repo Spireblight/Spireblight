@@ -530,6 +530,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lore</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"lore"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"hidden"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"dlc"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -545,14 +546,14 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clan</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"clan"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"card_type"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"rarity"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cost</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"cost"</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"unlock"</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"cost"</span><span class="p">]</span> <span class="c1"># X-cost cards are marked as 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"unlock_level"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">artist</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"artist"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_ability</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"ability"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">initial_cooldown</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"init_cooldown"</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ability_cooldown</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"ability_cooldown"</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_ability</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"unit_ability"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_cooldown</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"initial_cooldown"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ability_cooldown</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"ability_cooldown"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -583,10 +584,6 @@
 <span class="w">    </span><span class="sd">"""Store data for clans.</span>
 <span class="sd">    </span>
 <span class="sd">    We also added "Clanless" to the list for easier access."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"dlc"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -636,7 +633,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">story_event</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_story_event"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dragons_hoard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_dragons_hoard"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">boss_artifact</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_boss_artifact"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"dlc"</span><span class="p">]</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Trial</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store trial information."""</span>
@@ -707,6 +703,14 @@
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Sin</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store sin information from fight trials."""</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Mutator</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boon_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"boon_value"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"tags"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">soul_savior_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"soul_savior_only"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">daily_disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"daily_disabled"</span><span class="p">]</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Reward</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store some kind of reward information?"""</span>
@@ -785,6 +789,7 @@
     <span class="s2">"status"</span><span class="p">:</span> <span class="n">Status</span><span class="p">,</span>
     <span class="s2">"souls"</span><span class="p">:</span> <span class="n">Soul</span><span class="p">,</span>
     <span class="s2">"sins"</span><span class="p">:</span> <span class="n">Sin</span><span class="p">,</span>
+    <span class="s2">"mutators"</span><span class="p">:</span> <span class="n">Mutator</span><span class="p">,</span>
     <span class="s2">"rewards"</span><span class="p">:</span> <span class="n">Reward</span><span class="p">,</span>
     <span class="s2">"upgrade_paths"</span><span class="p">:</span> <span class="n">UpgradePath</span><span class="p">,</span>
     <span class="s2">"card_text"</span><span class="p">:</span> <span class="n">card_description</span><span class="p">,</span>
