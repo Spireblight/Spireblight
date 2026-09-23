@@ -321,12 +321,16 @@ class Sin(Base2):
     """Store sin information from fight trials."""
 
 class Mutator(Base2):
+    """Contain mutators for Daily and Challenge modes."""
     def __init__(self, data):
         super().__init__(data)
         self.boon_value: int = data["boon_value"]
         self.tags: str = data["tags"]
         self.soul_savior_only: bool = data["soul_savior_only"]
         self.daily_disabled: bool = data["daily_disabled"]
+
+class EndlessMutator(Base2):
+    """Contain mutators for Endless mode."""
 
 class Reward(Base2):
     """Store some kind of reward information?"""
@@ -406,6 +410,7 @@ _map2 = {
     "souls": Soul,
     "sins": Sin,
     "mutators": Mutator,
+    "endless_mutators": EndlessMutator,
     "rewards": Reward,
     "upgrade_paths": UpgradePath,
     "card_text": card_description,

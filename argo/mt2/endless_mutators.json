@@ -1,0 +1,82 @@
+[
+    {
+        "internal": "MoreCommons_Artifact_EndlessMutatorData",
+        "name": "Commonizer",
+        "id": "ab88d230-b9ed-4191-b85f-a9dd4fe873cb",
+        "description": "Common cards are more frequent in drafts",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "DamagePerCardUnderX_Artifact_EndlessMutatorData",
+        "name": "Curse of the Empty Mind",
+        "id": "8e9444da-bd9b-4f00-b348-bb3e21ad1d1d",
+        "description": "At the start of battle, take 1 Pyre damage per card fewer than [effect0.power] in your deck.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SavageCurse_Artifact_EndlessMutatorData",
+        "name": "Curse of Pacifism",
+        "id": "f06a9375-12e6-45ef-a7d0-44aca468093c",
+        "description": "-6[attack] to all friendly units.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "MoreExpensiveUnits_Artifact_EndlessMutatorData",
+        "name": "Curse of the Laden Soul",
+        "id": "f1d05507-8124-4bc5-be10-8a9853dbfeeb",
+        "description": "Units cost 1 more [ember].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "MoreExpensiveSpells_Artifact_EndlessMutatorData",
+        "name": "Curse of Forgetfulness",
+        "id": "a06e389c-73bd-4658-a70a-39eb19f41742",
+        "description": "After casting a spell increase the cost of a random spell in hand by 1[ember] for the rest of the battle.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "MoreExpensiveChampions_Artifact_EndlessMutatorData",
+        "name": "Curse of Arrogance",
+        "id": "4a502fe4-6496-4448-aee5-d91edf2001df",
+        "description": "Champions cost 3 more [ember].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "DamageFromCardsUnderEndlessMutatorData",
+        "name": "Too Few Cards",
+        "id": "2fd1f357-9e96-409a-8979-2f3d1f5e776c",
+        "description": "At start of battle take damage for each card under [effect0.power] in your deck.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "EntropyCurse_Artifact_EndlessMutatorData",
+        "name": "Curse of Fading Light",
+        "id": "baace5d0-88df-4342-9816-b44c6541f7f7",
+        "description": "Each summoned unit gains [emberdrain] 1.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "MoreRares_EndlessMutatorData",
+        "name": "Rarify",
+        "id": "965ee2a3-fca6-4ff9-a183-1c87e7a333ae",
+        "description": "Rare cards are more frequent in drafts",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "DominionCurse_Artifact_EndlessMutatorData",
+        "name": "Curse of Friendly Fire",
+        "id": "a6dcabda-83c6-494c-b3c8-0957283d1f27",
+        "description": "All Friendly units take 3 damage when a unit is summoned.",
+        "lore": "",
+        "hidden": false
+    }
+]
