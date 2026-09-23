@@ -159,7 +159,7 @@ class Base2:
     def escaped_description(self) -> str:
         desc = self.description.replace("\n", "<br>").replace("'", "\\'")
         for name, uri in _autoreplace.items(): # XXX restrict image size?
-            desc = desc.replace(name, f'<img src="/static/mt2/{uri}" alt="{self.name}">')
+            desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{self.name}">')
         return desc
 
 class Card2(Base2):
@@ -225,7 +225,7 @@ class Enhancer(Base2):
         super().__init__(data)
         self.clan: str = data["clan"]
         self.rarity: str = data["rarity"]
-        self.unlock = int(data["unlock"])
+        self.unlock: int = data["unlock_level"]
 
 class Event(Base2):
     def __init__(self, data):

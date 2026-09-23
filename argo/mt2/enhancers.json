@@ -1,13 +1,47 @@
 [
     {
+        "internal": "SoulSavior_UnitUpgradeClanLunaCovenAddConduit",
+        "name": "Glimmerslab",
+        "id": "55698758-21e8-4e9a-b48d-f6a6569ba531",
+        "clan": "Luna Coven",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [conduit] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
         "internal": "SpellUpgradeReduceCostTraitAddIntrinsic",
         "name": "Seekstone",
         "id": "4b0b9a81-0234-4152-9ef3-9ce0f90f267c",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to cost -1 Ember and gain Intrinsic.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember] and gain [inherent].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeEndless",
+        "name": "Immortalslab",
+        "id": "b0c6529e-40f3-4d0a-86dc-4d2f98e0680b",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Gain [endless] and -[effect0.upgrade.costreduction][ember].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanBanishedAddValor",
+        "name": "Braveslab",
+        "id": "4787851e-3669-4d34-96b2-1c61be585310",
+        "clan": "Banished",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [valor] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "InscryptionEventManyLivesCardUpgrade",
@@ -15,9 +49,10 @@
         "id": "ae6a4497-ee40-4c10-9147-0cb6531d6d87",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Reanimate 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[undying] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "GenericDuplicator",
@@ -25,9 +60,10 @@
         "id": "81be1dda-5523-4e26-af12-03ae8c9ce262",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Duplicate any card except your Champion.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Duplicate any card except your Champion.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTraitAddJuice",
@@ -35,9 +71,10 @@
         "id": "72f61ae8-7e0f-4066-a3fb-a1273f3aa273",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to gain Doublestack.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to gain [juice].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "PathAngelUnitAbilityWrath",
@@ -45,9 +82,21 @@
         "id": "8c414bb6-0c33-45de-b4fe-49c60ba30c9d",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Gain Wrath Ability.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Gain Wrath Ability.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeStatsHealth",
+        "name": "Heartslab",
+        "id": "d5f8302f-4222-4223-827a-66c8318eb227",
+        "clan": "",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeTitanSavageryMultistrike",
@@ -55,9 +104,10 @@
         "id": "022ef148-507a-452f-9901-f3e75767c8e2",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Gain 1 Attack for every missing Health.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "+[effect0.upgrade.bonushp][health]. Gain [effect0.upgrade.roommodifier0.power][attack] for every missing [effect0.upgrade.roommodifier0.secondarypower][health].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitDuplicator",
@@ -65,9 +115,21 @@
         "id": "1f97beaf-81ab-40ad-819f-108ea86780bd",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Copy a unit.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Copy a unit.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanStygianIncantArmor",
+        "name": "Runeslab",
+        "id": "057e51ca-8a7c-46f4-8fef-92adabf71c37",
+        "clan": "Stygian Guard",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [incant]: Gain [armor] [effect0.upgrade.charactertrigger0.effect0.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTitanEntropyReduceCost3",
@@ -75,9 +137,21 @@
         "id": "7c80533f-bdcd-439c-b4cf-5dfa182d0e2b",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a spell to cost -3 Ember.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeQuick",
+        "name": "Speedslab",
+        "id": "130d25cc-2159-4496-ba20-d2ec97336b45",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [quick] and +[effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "CardDuplicator",
@@ -85,9 +159,21 @@
         "id": "88a1c4c8-b3e6-4e1e-8b3f-f65fe5c09882",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Duplicate any card except your Champion.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Duplicate any card except your Champion.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellUpgradeTraitAddPermafrost",
+        "name": "Freezestone+",
+        "id": "bdb51164-fef6-4c90-8ee2-ed3d27b79fcf",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a spell to to cost -[effect0.upgrade.costreduction][ember] and gain [permafrost].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeEndless",
@@ -95,9 +181,10 @@
         "id": "2ce018b5-2b43-4ecf-8567-696d4fd8c119",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Endless.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [endless].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeTitanSavageryRevenge",
@@ -105,9 +192,10 @@
         "id": "5399193e-e835-424f-8cbf-8021df1bd9c4",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Rage 5. Revenge: Permanently gain Rage 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[rage] [effect0.upgrade.status0.power]. [revenge]: Permanently gain [rage] [effect0.upgrade.charactertrigger0.effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "InscryptionEventWorthySacrificeCardUpgrade",
@@ -115,9 +203,10 @@
         "id": "129bc4c7-21e7-48e2-ba82-6a2db6d9b738",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Ability: Worthy Sacrifice.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[ability]: Worthy Sacrifice.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanLunaCovenAddConduit",
@@ -125,9 +214,10 @@
         "id": "9d4d6543-05b9-418e-9989-8e052afa8726",
         "clan": "Luna Coven",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Conduit 5.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [conduit] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "CultOfTheLambRedCrown",
@@ -135,9 +225,10 @@
         "id": "64dcbb35-d025-412b-aab4-0ac92be06097",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Endless. Summon: Equip a random equipment.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Endless. Summon: Equip a random equipment.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeMultistrike",
@@ -145,9 +236,10 @@
         "id": "0016b165-11a9-4a26-8837-3b2895bc39f8",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Multistrike 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [multistrike] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanUnderlegionAddRegen",
@@ -155,9 +247,21 @@
         "id": "fc20f10e-27d7-4c3c-bd7b-7bf80b901655",
         "clan": "Underlegion",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Regen 10.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health] and [regen] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeMultistrike",
+        "name": "Frenzyslab",
+        "id": "5436a0ad-7380-49e4-b888-e5a7c2e3f557",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [multistrike] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellDuplicator",
@@ -165,9 +269,10 @@
         "id": "584ed916-e6b5-4483-b9b7-be25f730b45e",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeDominionStrike",
@@ -175,9 +280,10 @@
         "id": "cc3b1bc1-89fd-455d-a3d6-b86e3e161335",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Add Melee Weakness 1 and Spell Weakness 1 on Strike.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Add [meleeweakness] [effect0.upgrade.charactertrigger0.effect0.status0.power] and [spellweakness] [effect0.upgrade.charactertrigger0.effect1.status0.power] on [strike].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "PathAngelUnitAbilityCourage",
@@ -185,9 +291,21 @@
         "id": "bcba7da6-5f71-4d75-a288-9ecefa003489",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Gain Courage Ability.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Gain Courage Ability.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "UnitUpgradeClanWurmBuffCorruptcost",
+        "name": "Echostone",
+        "id": "9e2d80ca-4035-4610-bfa4-ccd22732dc5a",
+        "clan": "Wurmkin",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.roommodifier0.power][attack] per [corrupt].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellMagicPowerBigExtraCost",
@@ -195,9 +313,10 @@
         "id": "07de18ca-a585-4200-b139-63c5d4661140",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a spell with +20 Magic Power and Consume.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower] and [consume].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "MajorAbsolutionCardUpgrade",
@@ -205,9 +324,10 @@
         "id": "0b1e55e1-1f87-4285-a6db-8ec6370d115f",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Summon: Gain 3 Ember.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Summon: Gain [effect0.upgrade.charactertrigger0.effect0.power][ember].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "MinorPenanceCardUpgrade",
@@ -215,9 +335,10 @@
         "id": "aa576c97-46fa-4ee8-92d8-05be499916ca",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Fragile. Celebrate: Permanently gain +10 Attack.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[fragile]. Celebrate: Permanently gain [effect0.upgrade.charactertrigger0.effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "MajorPenanceCardUpgrade",
@@ -225,9 +346,32 @@
         "id": "e0f285ae-41cb-45cb-931a-9827d1f79cb1",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Emberdrain 3. Summon: Gain 3 Ember.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[emberdrain] [effect0.upgrade.status0.power]. Summon: Gain [effect0.upgrade.charactertrigger0.effect0.power][ember].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeBigger",
+        "name": "Largeslab",
+        "id": "0aad43a6-2504-4bbd-8c2a-d2413badfee9",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonussize][capacity], +[effect0.upgrade.bonusdamage][attack], and +[effect0.upgrade.bonushp][health].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellUpgradeReduceCostTraitAddIntrinsic",
+        "name": "Seekstone+",
+        "id": "cc417cd6-2a2e-4827-879c-a6c5858b2ecd",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember] and gain [inherent].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTitanEntropyMagicPowerIfUnplayed",
@@ -235,9 +379,10 @@
         "id": "c7d2499a-9cc8-4a1d-bfe1-af4df31ede70",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Permafrost. Reserve: Permanently gain +5 Magic Power.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[permafrost]. [reserve]: Permanently gain +[effect0.upgrade.trigger0.effect0.upgrade.bonusdamage] [magicpower].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanStygianIncantArmor",
@@ -245,9 +390,21 @@
         "id": "70dbb13a-a4f0-44bd-bcd5-9c5b94860cf5",
         "clan": "Stygian Guard",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Incant: Gain Armor 2.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [incant]: Gain [armor] [effect0.upgrade.charactertrigger0.effect0.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeDuality",
+        "name": "Dualslab",
+        "id": "b378ae0d-2bfe-44ea-b8c6-f3457a080bf0",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Upgrade a unit to gain [duality], [rage] [effect0.upgrade.status1.power], [regen] [effect0.upgrade.status2.power], and [spikes] [effect0.upgrade.status3.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "CardDuplicator0CostAnnihilate",
@@ -255,9 +412,21 @@
         "id": "15b51631-7f09-42a7-8041-341f676fa491",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Create [effect0.power] copies of any non-Champion card.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Create [effect0.power] copies of any non-Champion card.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanAwokenAddSpikes",
+        "name": "Thornslab",
+        "id": "cddf391b-af9f-43ae-afeb-ad3b11b4e646",
+        "clan": "Awoken",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health] and [spikes] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanPyreborneAddAvarice",
@@ -265,9 +434,32 @@
         "id": "4f08fe45-138e-4fbc-afdf-56bc83c2b4d0",
         "clan": "Pyreborne",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Avarice 3.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [avarice] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanRailforgedForge",
+        "name": "Burstslab",
+        "id": "1fc20a57-e06a-41f7-abbb-808291844492",
+        "clan": "Railforged",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [burst] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeMakeTiny",
+        "name": "Smidgeslab",
+        "id": "ebff1bdd-cf20-447d-873d-456f332fd038",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Reduce [capacity] to 1 and gain [armor] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "PathAngelUnitAbilityBenevolence",
@@ -275,9 +467,10 @@
         "id": "47f4bbd1-cf67-4fa6-b1d9-7cd7912e9cb7",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Gain Benevolence Ability.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Gain Benevolence Ability.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeStatsHealth",
@@ -285,9 +478,10 @@
         "id": "f0c610cd-0b6b-48af-8c61-9d23dbdfea34",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with +20 Health.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "ClippedWingsWing2RewardEnhancer",
@@ -295,9 +489,10 @@
         "id": "e9e8dd0e-e0f6-405c-94fa-21fcaf1c1a64",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "+8 Attack. +15 Health. Ability: Flight.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "+[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flight.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanLazarusLeagueAddReanimate",
@@ -305,9 +500,43 @@
         "id": "f8077d04-2fb2-4b96-9ff8-379ff5cff01d",
         "clan": "Lazarus League",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Reanimate 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [undying] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SpellUpgradeTraitAddCorrupt",
+        "name": "KEY>>EnhancerData_nameKey-4979166a34a64c8c-89bd685b971a99b46a80c8b949a357ca-v2<<",
+        "id": "c172bdb3-bbb2-4332-9248-8f0eb023dcc1",
+        "clan": "",
+        "rarity": "Uncommon",
+        "unlock_level": 0,
+        "description": "",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanUnderlegionAddRegen",
+        "name": "Mossyslab",
+        "id": "5e712157-0e7e-47e3-a1f4-f9bfcb0d5086",
+        "clan": "Underlegion",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health] and [regen] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "UnitUpgradeClanRailforgedForge",
+        "name": "Burststone",
+        "id": "e3ff053a-0c57-49fa-a679-3de7ea6cd848",
+        "clan": "Railforged",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [burst] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeMakeTiny",
@@ -315,9 +544,21 @@
         "id": "1a629876-b068-4f06-b551-49aa89d0c993",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Reduce Capacity to 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Reduce [capacity] to 1.",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanLazarusLeagueAddReanimate",
+        "name": "Frankenslab",
+        "id": "c6fedf2a-9e1a-45fc-b1e5-6452cdc65d30",
+        "clan": "Lazarus League",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [undying] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "MinorAbsolutionCardUpgrade",
@@ -325,9 +566,32 @@
         "id": "0d4db485-50e8-41ca-8c51-4708152c8aa7",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Celebrate: Permanently gain 10 Attack.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Celebrate: Permanently gain [effect0.upgrade.charactertrigger0.effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellUpgradeReduceCostAddConsume",
+        "name": "Smolderstone+",
+        "id": "d89241b0-b1ef-4869-a90a-61e885f131fd",
+        "clan": "",
+        "rarity": "Uncommon",
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember] and gain [consume].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeStatsAttack",
+        "name": "Strengthslab",
+        "id": "6ad242f1-8cad-4bdf-ab41-3d96d714b01b",
+        "clan": "",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeDominionSummonAlly",
@@ -335,9 +599,10 @@
         "id": "9bb19bc9-d1dd-43db-82f6-62bb676eecff",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Summon: Spawn a random friendly unit from your deck.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Summon: Spawn a random friendly unit from your deck.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "ClippedWingsWing3RewardEnhancer",
@@ -345,9 +610,10 @@
         "id": "84cb123a-014c-4d11-b721-85f58c723310",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Titanite. +10 Attack. +20 Health. Ability: Flying Strike.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[titanite]. +[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flying Strike.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTraitAddPyreHealing",
@@ -355,9 +621,10 @@
         "id": "3e513634-3a17-4db0-9756-55f35cc81d53",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Heal your Pyre equal to the spell's Ember cost.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Heal your Pyre equal to the spell's base [ember] cost.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "InscryptionEventFecundityCardUpgrade",
@@ -365,9 +632,10 @@
         "id": "d968e210-0d44-47c9-b783-f0c90dfe757b",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Summon: Add a copy of this unit to your hand that costs +1 Ember.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "When played, add a copy of this unit to your hand. The copy loses Fecundity and costs +[effect0.upgrade.trigger0.effect0.upgrade.costreductionabs][ember].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTraitRemoveConsume",
@@ -375,9 +643,10 @@
         "id": "4cd37328-eb6e-4c4e-aa61-53492dfe8035",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to permanently remove Consume.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to permanently remove [consume].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeCreateCopyWithPurge",
@@ -385,9 +654,10 @@
         "id": "5328c6bf-b1ba-4192-b775-40568d4232d3",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to gain Spellchain.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to gain Spellchain.",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeDominionCorrupt",
@@ -395,9 +665,10 @@
         "id": "19ff816f-5540-4242-8f93-19fa32907b10",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "+10 Attack. Strike: Apply Corruption 20.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "+[effect0.upgrade.bonusdamage][attack]. Strike: Apply [corruption] [effect0.upgrade.charactertrigger0.effect0.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanBanishedAddValor",
@@ -405,9 +676,21 @@
         "id": "f9a886e5-5dd5-4833-aac7-d034b609a0d0",
         "clan": "Banished",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Valor 8.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [valor] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellUpgradeReduceCost",
+        "name": "Emberstone+",
+        "id": "aa091f01-0547-43a2-b34f-bd4800825423",
+        "clan": "",
+        "rarity": "Uncommon",
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTitanEntropyAddJuice3",
@@ -415,9 +698,32 @@
         "id": "0c320860-8da0-4c16-9f2a-9e9f7bad9292",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Upgrade a spell to gain [juice3].",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to gain [juice3].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanPyreborneAddAvarice",
+        "name": "Greedslab",
+        "id": "ad3cb493-47bb-42e4-9e89-4178717f537d",
+        "clan": "Pyreborne",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [avarice] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanWurmBuffCorruptcost",
+        "name": "Echoslab",
+        "id": "3e53b16d-86e9-43c5-b678-408dcfdd3105",
+        "clan": "Wurmkin",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.roommodifier0.power][attack] per [corrupt].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanUmbraDamageShield",
@@ -425,9 +731,10 @@
         "id": "3ec7e45c-0820-45b7-910c-e50e817bcf23",
         "clan": "Umbra",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Damage Shield 3.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [damageshield] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTraitAddPermafrost",
@@ -435,9 +742,10 @@
         "id": "a13a7545-0bc8-4c30-aa0e-da651894cebb",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to gain Permafrost.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to to cost -[effect0.upgrade.costreduction][ember] and gain [permafrost].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeDuality",
@@ -445,9 +753,21 @@
         "id": "7cf6c150-ebb5-4c7b-b58e-bb61277e8799",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit to gain Dualism.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit to gain [duality].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanUmbraDamageShield",
+        "name": "Shieldslab",
+        "id": "7fcb4044-8dd9-4e50-b8e2-487aada92935",
+        "clan": "Umbra",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [damageshield] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeStatsAttack",
@@ -455,9 +775,10 @@
         "id": "e8095d27-518c-4dd8-9f19-4306b42940f9",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with +20 Attack.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeQuick",
@@ -465,9 +786,10 @@
         "id": "74d5a105-cc4a-4de4-8189-d346e2a6de53",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Quick and +10 Attack.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [quick] and +[effect0.upgrade.bonusdamage][attack].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanAwokenAddSpikes",
@@ -475,9 +797,10 @@
         "id": "16beb502-1f53-42c0-b4fb-61da62401475",
         "clan": "Awoken",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with +10 Health and Spikes 3.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonushp][health] and [spikes] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeReduceCostAddConsume",
@@ -485,9 +808,10 @@
         "id": "7087557c-8858-4e2e-a68d-69c2f6bb4cfc",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Upgrade a spell to cost -2 Ember and gain Consume.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember] and gain [consume].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeTitanSavageryTitanskin",
@@ -495,9 +819,10 @@
         "id": "0fdc9b41-3510-48f1-b269-8233479632e6",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Titanskin 5.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "[titanskin] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeBigger",
@@ -505,9 +830,10 @@
         "id": "e1646fd5-9245-431a-a07f-580c3a033347",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit with +1 Capacity, +15 Attack, and +50 Health.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonussize][capacity], +[effect0.upgrade.bonusdamage][attack], and +[effect0.upgrade.bonushp][health].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanHellhornedAddRage",
@@ -515,9 +841,21 @@
         "id": "d00f4776-f11a-4c9c-a62f-bf9a95eaa52a",
         "clan": "Hellhorned",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Rage 10.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [rage] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "PurifyingFlameEnhancer",
+        "name": "Purified Essence",
+        "id": "558792b8-ffb9-454e-b63e-b68e5cd4474d",
+        "clan": "",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "+[effect0.upgrade.bonusdamage][attack] and +[effect0.upgrade.bonushp][health].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeClanRemnantAddBurnout",
@@ -525,9 +863,10 @@
         "id": "ba976851-189e-4499-8e22-3fd76914c382",
         "clan": "Melting Remnant",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a unit with +15 Attack, +15 Health, and Burnout 1.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack], +[effect0.upgrade.bonushp][health], and [burnout] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "UnitUpgradeTitanite",
@@ -535,9 +874,10 @@
         "id": "57df3528-9731-4bf1-b50d-0400a91b47d2",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a unit with Titanite.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [titanite].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeReduceCost",
@@ -545,9 +885,10 @@
         "id": "7301ebb3-4d99-46b9-b4bd-aeabf530fd0a",
         "clan": "",
         "rarity": "Uncommon",
-        "unlock": "0",
-        "raw": "Upgrade a spell to cost -1 Ember.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to cost -[effect0.upgrade.costreduction][ember].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellUpgradeTraitAddRetain",
@@ -555,9 +896,43 @@
         "id": "0454db73-87f1-4767-ae96-053928acc008",
         "clan": "",
         "rarity": "Rare",
-        "unlock": "0",
-        "raw": "Upgrade a spell to gain Permafrost.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell to gain [retain].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeTitanite",
+        "name": "Titanslab",
+        "id": "7aee430d-bff0-4cc6-a869-48ede2e5bb3c",
+        "clan": "",
+        "rarity": "Rare",
+        "unlock_level": 0,
+        "description": "Gain [titanite] and [titanskin] [effect0.upgrade.status1.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellMagicPower",
+        "name": "Powerstone+",
+        "id": "9277f6a2-6bd5-433b-8630-3cfa4192dd29",
+        "clan": "",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanRemnantAddBurnout",
+        "name": "Wickslab",
+        "id": "f66b13aa-5d5f-4ba3-8c8e-a2c59e7c4415",
+        "clan": "Melting Remnant",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with +[effect0.upgrade.bonusdamage][attack], +[effect0.upgrade.bonushp][health], and [burnout] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "SpellMagicPower",
@@ -565,9 +940,32 @@
         "id": "015f4d9d-3a87-4053-8e30-45a80fdf78ee",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "Upgrade a spell with +10 Magic Power.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_UnitUpgradeClanHellhornedAddRage",
+        "name": "Furyslab",
+        "id": "6ca05540-2287-4afd-9126-cd950d00e91f",
+        "clan": "Hellhorned",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a unit with [rage] [effect0.upgrade.status0.power].",
+        "lore": "",
+        "hidden": false
+    },
+    {
+        "internal": "SoulSavior_SpellMagicPowerBigExtraCost",
+        "name": "Surgestone+",
+        "id": "663e3677-8820-411e-98c4-89c7ec8671fe",
+        "clan": "",
+        "rarity": "Common",
+        "unlock_level": 0,
+        "description": "Upgrade a spell with +[effect0.upgrade.bonusdamage] [magicpower] and [consume].",
+        "lore": "",
+        "hidden": false
     },
     {
         "internal": "ClippedWingsWing1RewardEnhancer",
@@ -575,8 +973,9 @@
         "id": "513c9a78-fd4c-432c-9e21-7a66171cf7df",
         "clan": "",
         "rarity": "Common",
-        "unlock": "0",
-        "raw": "+5 Attack. +10 Health. Ability: Flight.",
-        "lore": ""
+        "unlock_level": 0,
+        "description": "+[effect0.upgrade.bonusdamage][attack]. +[effect0.upgrade.bonushp][health]. [ability]: Flight.",
+        "lore": "",
+        "hidden": false
     }
 ]
