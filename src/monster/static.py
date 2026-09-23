@@ -21,6 +21,7 @@ _id_cache: dict[str, Base | Base2] = {}
 _internal_cache: dict[str, Base | Base2] = {}
 _query_cache: dict[str, list[Base | Base2]] = defaultdict(list)
 _mutators: dict[str, Mutator] = {}
+_autoreplace: dict[str, str] = {} # mapping of name: uri (relative to /static/mt2/)
 
 def sanitize(x: str) -> str:
     x = x.lower()
@@ -150,10 +151,16 @@ class Base2:
         return f"{self.__class__.__name__} {self.name}: {self.description}"
 
     @property
-    def description(self) -> str: # TODO: quick-replace stuff like [ember] with an image (online)
+    def description(self) -> str:
         if self.name in _descriptions:
             return _descriptions[self.name]
         return self._description
+
+    def escaped_description(self) -> str:
+        desc = self.description.replace("\n", "<br>").replace("'", "\\'")
+        for name, uri in _autoreplace.items(): # XXX restrict image size?
+            desc = desc.replace(name, f'<img src="/static/mt2/{uri}" alt="{self.name}">')
+        return desc
 
 class Card2(Base2):
     def __init__(self, data: dict):
@@ -211,11 +218,7 @@ class Covenant(Base2):
     def __init__(self, data):
         super().__init__(data)
         self.level: int = data["level"]
-        self.name = f"Covenant {self.level}"
-
-    @property
-    def info(self):
-        return f"Covenant {self.level}: {self.description}"
+        self.name = str(self.level) # description works out!
 
 class Enhancer(Base2):
     def __init__(self, data: dict):
@@ -427,8 +430,8 @@ def load_mt2():
     _id_cache.clear()
     _internal_cache.clear()
     _query_cache.clear()
-    base = Path(".") / "argo" / "mt2"
-    for file in base.iterdir():
+    base = Path(".")
+    for file in (base / "argo" / "mt2").iterdir():
         if not file.name.endswith(".json"):
             continue
         with file.open() as f:
@@ -441,3 +444,11 @@ def load_mt2():
                     _id_cache[value.id] = value
                 _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
+
+    for img in (base / "static" / "mt2").iterdir():
+        if img.name.endswith(".png"):
+            _autoreplace[img.name.partition(".")[0]] = img.name
+        elif img.is_dir():
+            for img2 in img.iterdir():
+                if img2.name.endswith(".png"):
+                    _autoreplace[img2.name.partition(".")[0]] = f"{img.name}/{img2.name}"
