@@ -1338,6 +1338,8 @@
             <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_cmds</span><span class="p">:</span>
                 <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error: cannot delete built-in command </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
                 <span class="k">return</span>
+            <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">_cmds</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"aliases"</span><span class="p">,</span> <span class="p">()):</span>
+                <span class="k">del</span> <span class="n">_cmd_aliases</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">_cmds</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
             <span class="n">update_db</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
