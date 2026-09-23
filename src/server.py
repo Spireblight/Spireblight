@@ -877,6 +877,8 @@ async def command_cmd(ctx: ContextType, action: str, name: str, *args: str):
             if name not in _cmds:
                 await ctx.reply(f"Error: cannot delete built-in command {name}.")
                 return
+            for alias in _cmds[name].get("aliases", ()):
+                del _cmd_aliases[alias]
             del _cmds[name]
             update_db()
             if TConn is not None:
