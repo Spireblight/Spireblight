@@ -601,10 +601,14 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">inner</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">output</span><span class="p">):</span>
+        <span class="n">format_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"user"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span>
+            <span class="s2">"text"</span><span class="p">:</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+            <span class="s2">"words"</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_consts</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">user</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">words</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="o">**</span><span class="n">_consts</span>
-            <span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">format_map</span><span class="p">(</span><span class="n">format_map</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Error: command has unsupported formatting key </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">!r}</span><span class="s2">"</span>
         <span class="n">keywords</span> <span class="o">=</span> <span class="p">{</span>
@@ -633,6 +637,11 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="n">_formatter</span><span class="o">.</span><span class="n">vformat</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">(),</span> <span class="n">keywords</span><span class="p">)</span>
         <span class="c1"># TODO: Add a flag to the command that says whether it's a reply</span>
         <span class="c1"># or a regular message.</span>
+        <span class="c1"># we're doing it again so a readline() result can use them</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">format_map</span><span class="p">(</span><span class="n">format_map</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span> <span class="c1"># don't do anything if it messes up here</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="n">inner</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
