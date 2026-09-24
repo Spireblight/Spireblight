@@ -23,7 +23,7 @@ a Spiker (ouch!)
 Bear (no!)
 a Runic Pyramid
 the Necronomicon
-the chatter and rocks them to sleep
+{user} and rocks them to sleep
 Neow
 Atlas
 Twitch Chat

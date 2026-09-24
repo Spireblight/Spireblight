@@ -1,0 +1,6 @@
+{text} would be good here!
+I don't think {text} would be good here...
+Sources say no
+Signs point to {text} being useful here
+Do you really think so?
+Maybe {text} would be good here

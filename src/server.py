@@ -214,10 +214,14 @@ def _create_cmd(output: str, name: str):
         return str(inner.count)
 
     async def inner(ctx: ContextType, *s, output: str = output):
+        format_map = {
+            "user": ctx.author.display_name,
+            "text": " ".join(s),
+            "words": s,
+            **_consts,
+        }
         try:
-            msg = output.format(
-                user=ctx.author.display_name, text=" ".join(s), words=s, **_consts
-            )
+            msg = output.format_map(format_map)
         except KeyError as e:
             msg = f"Error: command has unsupported formatting key {e.args[0]!r}"
         keywords = {
@@ -246,6 +250,11 @@ def _create_cmd(output: str, name: str):
         msg = _formatter.vformat(msg, (), keywords)
         # TODO: Add a flag to the command that says whether it's a reply
         # or a regular message.
+        # we're doing it again so a readline() result can use them
+        try:
+            msg = msg.format_map(format_map)
+        except KeyError:
+            pass # don't do anything if it messes up here
         await ctx.reply(msg)
 
     inner.count = 0
