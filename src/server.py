@@ -1993,6 +1993,8 @@ async def tier_rankings(ctx: ContextType, name: str = ""):
             link = "23c7557c-f36b-46e8-805d-b2d49242560b"
         case "tasty" | "yummy" | "drink" | "taste":
             link = "7deaa1af-bdb3-4da4-a71b-20f76e1cda76"
+        case "shop" | "shops":
+            link = "6c668fd6-3b63-4940-8f16-29a926d5dc4b"
         case "darv":
             return await ctx.reply("There are two list rankings for Darv: use Darv2 or Darv3 for the relevant act.")
         case _:
