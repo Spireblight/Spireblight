@@ -209,6 +209,8 @@ class Character(Base2):
         sub = ""
         if self.is_champion:
             sub = "champions"
+        elif self.internal.startswith("PyreHeart"):
+            sub = "pyres"
         return f'<img src="/static/mt2/{sub}/{self.internal}" alt="{self.name}">'
 
 class Clan(Base2):
