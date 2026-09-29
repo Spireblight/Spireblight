@@ -1,8 +1,9 @@
 # all static data fetched from:
 # - https://github.com/brendanjhoffman/TrainStewardBot/tree/main (names, descriptions)
 # - https://github.com/KittenAqua/TrainworksModdingTools/tree/master/TrainworksModdingTools/Constants (IDs)
+# - https://monstertrain2.miraheze.org/wiki/Main_Page (images)
 # MT2 data from the modding discord (might become desynced of updates)
-# huge thanks to PattyHoswell from the Shiny Shoe discord for sending me a bunch of JSONs
+# huge thanks to PattyHoswell and Brandon from the Shiny Shoe discord for sending me a bunch of JSONs
 
 from __future__ import annotations
 
@@ -20,7 +21,7 @@ __all__ = ["query", "get", "load_mt1", "load_mt2"]
 _id_cache: dict[str, Base | Base2] = {}
 _internal_cache: dict[str, Base | Base2] = {}
 _query_cache: dict[str, list[Base | Base2]] = defaultdict(list)
-_mutators: dict[str, Mutator] = {}
+_mutators: dict[str, Mutator | Mutator2] = {}
 _autoreplace: dict[str, str] = {} # mapping of name: uri (relative to /static/mt2/)
 
 def sanitize(x: str) -> str:
@@ -357,7 +358,7 @@ class Soul(Base2):
 class Sin(Base2):
     """Store sin information from fight trials."""
 
-class Mutator(Base2):
+class Mutator2(Base2):
     """Contain mutators for Daily and Challenge modes."""
     def __init__(self, data):
         super().__init__(data)
@@ -365,6 +366,11 @@ class Mutator(Base2):
         self.tags: str = data["tags"]
         self.soul_savior_only: bool = data["soul_savior_only"]
         self.daily_disabled: bool = data["daily_disabled"]
+        _mutators[self.name] = self
+
+    @property
+    def image(self) -> str:
+        return f'<img src="/static/mt2/mutators/{self.internal}.png" alt="{self.name}\n{self.description}">'
 
 class EndlessMutator(Base2):
     """Contain mutators for Endless mode."""
@@ -446,7 +452,7 @@ _map2 = {
     "status": Status,
     "souls": Soul,
     "sins": Sin,
-    "mutators": Mutator,
+    "mutators": Mutator2,
     "endless_mutators": EndlessMutator,
     "rewards": Reward,
     "upgrade_paths": UpgradePath,
@@ -467,12 +473,11 @@ def load_mt1():
                 _id_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
 
-def load_mt2():
+def load_mt2(base: Path = Path(".")):
     # TODO: make clans and units as proper objects that others can use
     _id_cache.clear()
     _internal_cache.clear()
     _query_cache.clear()
-    base = Path(".")
     for file in (base / "argo" / "mt2").iterdir():
         if not file.name.endswith(".json"):
             continue
