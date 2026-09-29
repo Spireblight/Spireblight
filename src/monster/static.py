@@ -213,7 +213,20 @@ class Character(Base2):
             sub = "pyres"
         elif self.internal.startswith("Boss_"): # FIXME: Soul Savior boss images are not finalized (wiki doesn't have them)
             sub = "bosses"
-        return f'<img src="/static/mt2/{sub}/{self.internal}.png" alt="{self.name}">'
+        name = self.internal
+        if name.endswith("_TitanTrial"): # Cael and Seraph have identical variants (afaict)
+            name = name[:-11]
+        return f'<img src="/static/mt2/{sub}/{name}.png" alt="{self.name}">'
+
+    @property
+    def trial(self) -> str:
+        """Get a matching trial image for major (flying) bosses."""
+        name = self.internal
+        if name.endswith("_TitanTrial"):
+            name = name[:-11]
+        if "AngelDuo" in name: # Stryx & Hallow
+            name = name.replace("_Savage_", "_Entropic_")
+        return f'<img src="/static/mt2/trials/{name}.png" alt="{self.name}">'
 
 class Clan(Base2):
     """Store data for clans.
@@ -275,6 +288,11 @@ class Trial(Base2):
         super().__init__(data)
         self.trial = data["trial"] # this is like a status effect
         self.rewards = data["rewards"]
+
+    @property
+    def image(self) -> str:
+        name = self.internal[2:] # every name begins with T# where # is [1-3]
+        return f'<img src="/static/mt2/trials/{name}.png" alt="{self.name}">'
 
 class Upgrade(Base2):
     """Store upgrade information."""
