@@ -169,6 +169,8 @@ class Main:
         try:
             with self.last_modified_file.open() as f:
                 data: dict[str, str | float] = json.load(f)
+        except json.decoder.JSONDecodeError:
+            print("last_modified.json is corrupted, ignoring.")
         except FileNotFoundError:
             print("last_modified.json not found, will send everything to server.")
         except PermissionError:
@@ -207,7 +209,7 @@ class Main:
         """
 
         ts = self.timestamps
-        if not force and ts["last_modified"] == ts["last_committed"]: # nothing changed
+        if not force and ts["last_modified"] is not None and ts["last_modified"] == ts["last_committed"]: # nothing changed
             return
         try:
             with self.last_modified_file.open("w") as f:
