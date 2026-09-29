@@ -195,10 +195,21 @@ class Character(Base2):
         return f"{self.name} [{self.size} pips] {self.attack}/{self.health} - {self.description}"
 
     @property
+    def is_champion(self) -> bool:
+        return self.internal in ("MonsterHarvestAttack", "MonsterFirstWaxer") or "Champion" in self.internal
+
+    @property
     def upgrades(self) -> UpgradePath | None:
         if self.internal not in _upgrades:
             return None
         return _upgrades[self.internal]
+
+    @property
+    def image(self) -> str:
+        sub = ""
+        if self.is_champion:
+            sub = "champions"
+        return f'<img src="/static/mt2/{sub}/{self.internal}" alt="{self.name}">'
 
 class Clan(Base2):
     """Store data for clans.
