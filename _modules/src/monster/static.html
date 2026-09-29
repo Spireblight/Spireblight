@@ -581,10 +581,25 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> pips] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attack</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">health</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_champion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"MonsterHarvestAttack"</span><span class="p">,</span> <span class="s2">"MonsterFirstWaxer"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">"Champion"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">upgrades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UpgradePath</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_upgrades</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">_upgrades</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_champion</span><span class="p">:</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="s2">"champions"</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"PyreHeart"</span><span class="p">):</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="s2">"pyres"</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"Boss_"</span><span class="p">):</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="s2">"bosses"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s1">" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Clan</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store data for clans.</span>
@@ -635,6 +650,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">story_event</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_story_event"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dragons_hoard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_dragons_hoard"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">boss_artifact</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"is_boss_artifact"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/artifacts/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Trial</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store trial information."""</span>
