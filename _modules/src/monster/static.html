@@ -597,9 +597,22 @@
             <span class="n">sub</span> <span class="o">=</span> <span class="s2">"champions"</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"PyreHeart"</span><span class="p">):</span>
             <span class="n">sub</span> <span class="o">=</span> <span class="s2">"pyres"</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"Boss_"</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"Boss_"</span><span class="p">):</span> <span class="c1"># FIXME: Soul Savior boss images are not finalized (wiki doesn't have them)</span>
             <span class="n">sub</span> <span class="o">=</span> <span class="s2">"bosses"</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s1">" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"_TitanTrial"</span><span class="p">):</span> <span class="c1"># Cael and Seraph have identical variants (afaict)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get a matching trial image for major (flying) bosses."""</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"_TitanTrial"</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"AngelDuo"</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span> <span class="c1"># Stryx &amp; Hallow</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"_Savage_"</span><span class="p">,</span> <span class="s2">"_Entropic_"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/trials/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Clan</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store data for clans.</span>
@@ -661,6 +674,11 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trial</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"trial"</span><span class="p">]</span> <span class="c1"># this is like a status effect</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"rewards"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="c1"># every name begins with T# where # is [1-3]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/trials/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Upgrade</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store upgrade information."""</span>
