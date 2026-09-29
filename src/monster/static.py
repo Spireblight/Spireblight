@@ -250,6 +250,10 @@ class Relic(Base2):
         self.dragons_hoard: bool = data["is_dragons_hoard"]
         self.boss_artifact: bool = data["is_boss_artifact"]
 
+    @property
+    def image(self) -> str:
+        return f'<img src="/static/mt2/artifacts/{self.internal}.png" alt="{self.name}">'
+
 class Trial(Base2):
     """Store trial information."""
     def __init__(self, data):

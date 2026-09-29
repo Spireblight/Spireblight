@@ -1,5 +1,6 @@
 from typing import Generator
 
+import aiohttp_jinja2
 import json
 import os
 
@@ -7,7 +8,7 @@ from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden
 
 from src.monster.static import get, get_safe, Challenge, Mutator, Artifact, Character
 from src.webpage import router
-from src.utils import get_req_data, getfile
+from src.utils import get_req_data, getfile, catch_error
 
 from src.typehints import ContextType
 
@@ -27,6 +28,15 @@ class MonsterSave:
         self._data = data
 
     @property
+    def in_game(self) -> bool:
+        # XXX: there might be a few more pieces to check
+        return not self._data
+
+    @property
+    def champion(self) -> str:
+        return "not yet implemented"
+
+    @property
     def main_class(self) -> str:
         main = self._data["startingConditions"]["mainClassInfo"]
         if "className" in main:
@@ -38,6 +48,12 @@ class MonsterSave:
         return bool(self._data["startingConditions"]["mainClassInfo"]["championIndex"])
 
     @property
+    def main_clan(self) -> str:
+        if self.main_exiled:
+            return f"{self.main_class} (Exiled)"
+        return self.main_class
+
+    @property
     def sub_class(self) -> str:
         sub = self._data["startingConditions"]["subclassInfo"]
         if "className" in sub:
@@ -47,6 +63,12 @@ class MonsterSave:
     @property
     def sub_exiled(self) -> bool:
         return bool(self._data["startingConditions"]["subclassInfo"]["championIndex"])
+
+    @property
+    def sub_clan(self) -> str:
+        if self.sub_exiled:
+            return f"{self.sub_class} (Exiled)"
+        return self.sub_class
 
     @property
     def artifacts(self) -> Generator[Artifact, None, None]:
@@ -83,6 +105,16 @@ async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
 
     if ctx is not None:
         await ctx.reply("Not in a run.")
+
+@router.get("/mt2/current")
+@catch_error
+@aiohttp_jinja2.template("mt2_current.jinja2")
+async def current_mt2(req: Request):
+    context = {
+        "save": _save2,
+    }
+
+    return context
 
 @router.post("/sync/monster-train/save")
 async def receive_save_data(req: Request):

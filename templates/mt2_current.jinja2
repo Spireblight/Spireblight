@@ -1,0 +1,12 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  {% if save.in_game %}
+    {{ save.champion }} run [{{ save.main_clan }} & {{ save.sub_clan }}]
+  {% else %}
+    No active run
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
