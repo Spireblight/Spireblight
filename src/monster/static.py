@@ -211,9 +211,9 @@ class Character(Base2):
             sub = "champions"
         elif self.internal.startswith("PyreHeart"):
             sub = "pyres"
-        elif self.internal.startswith("Boss_"):
+        elif self.internal.startswith("Boss_"): # FIXME: Soul Savior boss images are not finalized (wiki doesn't have them)
             sub = "bosses"
-        return f'<img src="/static/mt2/{sub}/{self.internal}" alt="{self.name}">'
+        return f'<img src="/static/mt2/{sub}/{self.internal}.png" alt="{self.name}">'
 
 class Clan(Base2):
     """Store data for clans.
