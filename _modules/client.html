@@ -559,6 +559,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_modified_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"last_modified.json is corrupted, ignoring."</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">"last_modified.json not found, will send everything to server."</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
@@ -603,7 +605,7 @@
 <span class="sd">        """</span>
 
         <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamps</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="s2">"last_modified"</span><span class="p">]</span> <span class="o">==</span> <span class="n">ts</span><span class="p">[</span><span class="s2">"last_committed"</span><span class="p">]:</span> <span class="c1"># nothing changed</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="s2">"last_modified"</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ts</span><span class="p">[</span><span class="s2">"last_modified"</span><span class="p">]</span> <span class="o">==</span> <span class="n">ts</span><span class="p">[</span><span class="s2">"last_committed"</span><span class="p">]:</span> <span class="c1"># nothing changed</span>
             <span class="k">return</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_modified_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
