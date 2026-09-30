@@ -58,7 +58,7 @@ from src.cache.run_stats import (
 from src.cache.mastered import get_current_masteries, get_mastered
 from src.nameinternal import get, query, Base, Card, Relic, RelicSet, _internal_cache
 from src.sts_profile import get_profile, get_current_profile
-from src.webpage import router, playlists
+from src.webpage import router, playlists, xcom_roster, xcom_memorial, xcom_tracker, xcom_sheet
 from src.wrapper import wrapper
 from src.monster import query as mt_query, get_savefile as get_mt_save, MonsterSave
 from src.twitch import TwitchCommand
@@ -3375,6 +3375,100 @@ async def Youtube_startup():
                 playlists.extend(reader)
                 prev = text
                 await asyncio.sleep(ref)
+    finally:
+        if close:
+            await client.close()
+
+async def XCOM_startup():
+    ref = 60
+    close = False
+    if TConn is not None:
+        if TConn._session is None:
+            TConn._session = ClientSession()
+        client = TConn._session
+    else:
+        close = True
+        client = ClientSession()
+
+    common_fields = ("First Name", "Nickname", "Last Name", "Original Name", "Date recruited", "Date named", "Nationality", "Class", "XP", "Other", "Chatter", "Missions", "Kills", "Longest Injury", "Total Injury")
+
+    roster_fields = ("Rank", "Billet") + common_fields
+
+    memorial_fields = ("Rank",) + common_fields + ("Final Mission", "Cause of Death", "Ingame Date", "Real Date")
+
+    tracker_fields = ("Stream Date", "Mission Date", "Mission Name/Type", "Location/Result", "Deployed", "EXP Before", "Kills Before", "EXP After", "Kills After", "Mission Count Before", "Wait Time")
+
+    pages = {
+        "XCOM Roster": [1319417923, roster_fields, xcom_roster, ""],
+        "Memorial": [541041144, memorial_fields, xcom_memorial, ""],
+        "Mission Tracker": [1249528775, tracker_fields, xcom_tracker, ""], # mission tracker needs some finer handling
+    }
+
+    try:
+        async with client as session:
+            logger.info(f"Starting XCOM Campaign summary display. Will refresh every {ref}s")
+            while True:
+                for title, (gid, fieldnames, lst, prev) in pages.items():
+                    lst: list[dict]
+                    if title != "XCOM Roster":
+                        continue # only do one for now
+                    text = ""
+                    async with session.get(f"{xcom_sheet}/export?format=csv&gid={gid}") as response:
+                        text = await response.text()
+                    if text == prev or not text: # no need to update anything (or nothing to update)
+                        await asyncio.sleep(ref)
+                        continue
+                    data = text.splitlines()
+
+                    reader = csv.DictReader(data, fieldnames=fieldnames)
+                    next(reader) # skip fieldnames since we just set them
+
+                    if title == "Mission Tracker":
+                        cur_date = None
+                        cur_mission = None
+                        lst.clear()
+                        for content in reader:
+                            pass
+
+                    else:
+                        lst.clear()
+                        for row in reader:
+                            res = {}
+                            for k,v in row.items():
+                                # plan in case we get extra lines
+                                if k in fieldnames and k not in ("Rank", "Billet", "First Name", "Nickname", "Last Name", "Original Name", "Chatter"):
+                                    if v.isdigit():
+                                        v = int(v)
+                                    res[k] = v
+                            first = row["First Name"]
+                            last = row["Last Name"]
+                            nick = row["Nickname"]
+                            orig = row["Original Name"]
+                            user = row["Chatter"]
+                            rank = row["Billet"] or row["Rank"]
+                            words = []
+                            if rank:
+                                words.append(rank)
+                            if first:
+                                words.append(first)
+                            if nick:
+                                words.append(f"'{nick}'")
+                            if last:
+                                words.append(last)
+                            if orig:
+                                if words:
+                                    words.append(f"(was {orig})")
+                                else:
+                                    words.append(orig)
+                            if user and user.lower() != last.lower():
+                                words.append(f"[named by {user}]")
+                            if words:
+                                res["Name"] = " ".join(words)
+                            if res.get("XP") and words:
+                                lst.append(res) # only add a line if there's a name and XP
+                    pages[title][3] = text
+                await asyncio.sleep(ref)
+
     finally:
         if close:
             await client.close()

@@ -24,6 +24,11 @@ router = web.RouteTableDef()
 
 playlists = []
 
+xcom_roster = []
+xcom_memorial = []
+xcom_tracker = []
+xcom_sheet = "https://docs.google.com/spreadsheets/d/1zrwD6daOT9AH1EIk8DPwgGw-X91vU1DD84fz-YF7o2g"
+
 _query_params = {
     "key": config.youtube.api_key,
     "channelId": config.youtube.channel_id,
@@ -134,6 +139,16 @@ async def streaking(req: web.Request):
 async def youtube(req: web.Request):
     return {
         "playlists": json.dumps(playlists),
+    }
+
+@router.get("/xcom")
+@aiohttp_jinja2.template("xcom.jinja2")
+async def xcom(req: web.Request):
+    return {
+        "spreadsheet": xcom_sheet,
+        "roster": xcom_roster,
+        "memorial": xcom_memorial,
+        "tracker": xcom_tracker,
     }
 
 @router.get("/discord")

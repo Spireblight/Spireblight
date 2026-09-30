@@ -1,0 +1,98 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+  XCOM Campaign Progress
+{% endblock %}
+
+{% block head %}
+  <script src=" https://cdn.jsdelivr.net/npm/gridjs@6.1.1/dist/gridjs.production.min.js"></script>
+  <link href=" https://cdn.jsdelivr.net/npm/gridjs@6.1.1/dist/theme/mermaid.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <section class="columns is-centered">
+    <div class="column is-half mt-4 is-size-7">
+      <p>
+        This table contains the XCOM Roster for the current campaign. You can search through it
+        using keywords like "zivairyn" or "canada". <a href="{{ spreadsheet }}" target="_blank">Click here for the full spreadsheet.</a>
+      </p>
+
+      <p class="chart-disclaimer has-text-centered m-4 is-size-7">
+        The table is not excellent on mobile due to using a library without responsive
+        support.  Please view it on desktop or in desktop mode for a better and more interactive
+        experience.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div id="nom-nom-roster" class="container"></div>
+    <script type="text/javascript">
+     // https://gridjs.io/docs/examples/html-cells for the formatter parts.
+     new gridjs.Grid({
+       columns: [
+         {
+           id: "Name",
+           name: "Name",
+           width: '20%', // It's typically too long, and would truncate other columns
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Nationality",
+           name: "Country",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Class",
+           name: "Class", // I want to add coloring and icons to this. later, though
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "XP",
+           name: "XP",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Missions",
+           name: "Missions",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Kills",
+           name: "Kills",
+           formatter: (cell) => gridjs.html(`${cell}`),
+         },
+         {
+           id: "Longest Injury",
+           name: "Longest Injury",
+           formatter: (cell) => gridjs.html(`${cell} days`),
+         },
+         {
+           id: "Total Injury",
+           name: "Cumulative Injury Time",
+           formatter: (cell) => gridjs.html(`${cell} days`),
+         },
+       ],
+       search: true,
+       sort: true,
+       data: {{ roster | safe }},
+       style: {
+         table: {
+           border: '0',
+         },
+         th: {
+           'background-color': '#222229',
+           color: '#dbdbdb',
+           border: 0,
+           'border-radius': '0',
+           'font-size': '1.125rem',
+         },
+         td: {
+           'background-color': '#111117',
+           border: 0,
+           color: '#dbdbdb',
+         }
+       }
+     }).render(document.getElementById("nom-nom-roster"));
+    </script>
+  </section>
+{% endblock %}
