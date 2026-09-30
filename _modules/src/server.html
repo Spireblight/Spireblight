@@ -435,7 +435,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.cache.mastered</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_masteries</span><span class="p">,</span> <span class="n">get_mastered</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.nameinternal</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Card</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">RelicSet</span><span class="p">,</span> <span class="n">_internal_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.sts_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_profile</span><span class="p">,</span> <span class="n">get_current_profile</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span><span class="p">,</span> <span class="n">playlists</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span><span class="p">,</span> <span class="n">playlists</span><span class="p">,</span> <span class="n">xcom_roster</span><span class="p">,</span> <span class="n">xcom_memorial</span><span class="p">,</span> <span class="n">xcom_tracker</span><span class="p">,</span> <span class="n">xcom_sheet</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster</span><span class="w"> </span><span class="kn">import</span> <span class="n">query</span> <span class="k">as</span> <span class="n">mt_query</span><span class="p">,</span> <span class="n">get_savefile</span> <span class="k">as</span> <span class="n">get_mt_save</span><span class="p">,</span> <span class="n">MonsterSave</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.twitch</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwitchCommand</span>
@@ -4099,6 +4099,103 @@
                 <span class="n">playlists</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
                 <span class="n">prev</span> <span class="o">=</span> <span class="n">text</span>
                 <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="XCOM_startup">
+<a class="viewcode-back" href="../../server.html#src.server.XCOM_startup">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">XCOM_startup</span><span class="p">():</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">close</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">TConn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">TConn</span><span class="o">.</span><span class="n">_session</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">close</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
+
+    <span class="n">common_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"First Name"</span><span class="p">,</span> <span class="s2">"Nickname"</span><span class="p">,</span> <span class="s2">"Last Name"</span><span class="p">,</span> <span class="s2">"Original Name"</span><span class="p">,</span> <span class="s2">"Date recruited"</span><span class="p">,</span> <span class="s2">"Date named"</span><span class="p">,</span> <span class="s2">"Nationality"</span><span class="p">,</span> <span class="s2">"Class"</span><span class="p">,</span> <span class="s2">"XP"</span><span class="p">,</span> <span class="s2">"Other"</span><span class="p">,</span> <span class="s2">"Chatter"</span><span class="p">,</span> <span class="s2">"Missions"</span><span class="p">,</span> <span class="s2">"Kills"</span><span class="p">,</span> <span class="s2">"Longest Injury"</span><span class="p">,</span> <span class="s2">"Total Injury"</span><span class="p">)</span>
+
+    <span class="n">roster_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Rank"</span><span class="p">,</span> <span class="s2">"Billet"</span><span class="p">)</span> <span class="o">+</span> <span class="n">common_fields</span>
+
+    <span class="n">memorial_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Rank"</span><span class="p">,)</span> <span class="o">+</span> <span class="n">common_fields</span> <span class="o">+</span> <span class="p">(</span><span class="s2">"Final Mission"</span><span class="p">,</span> <span class="s2">"Cause of Death"</span><span class="p">,</span> <span class="s2">"Ingame Date"</span><span class="p">,</span> <span class="s2">"Real Date"</span><span class="p">)</span>
+
+    <span class="n">tracker_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Stream Date"</span><span class="p">,</span> <span class="s2">"Mission Date"</span><span class="p">,</span> <span class="s2">"Mission Name/Type"</span><span class="p">,</span> <span class="s2">"Location/Result"</span><span class="p">,</span> <span class="s2">"Deployed"</span><span class="p">,</span> <span class="s2">"EXP Before"</span><span class="p">,</span> <span class="s2">"Kills Before"</span><span class="p">,</span> <span class="s2">"EXP After"</span><span class="p">,</span> <span class="s2">"Kills After"</span><span class="p">,</span> <span class="s2">"Mission Count Before"</span><span class="p">,</span> <span class="s2">"Wait Time"</span><span class="p">)</span>
+
+    <span class="n">pages</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"XCOM Roster"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1319417923</span><span class="p">,</span> <span class="n">roster_fields</span><span class="p">,</span> <span class="n">xcom_roster</span><span class="p">,</span> <span class="s2">""</span><span class="p">],</span>
+        <span class="s2">"Memorial"</span><span class="p">:</span> <span class="p">[</span><span class="mi">541041144</span><span class="p">,</span> <span class="n">memorial_fields</span><span class="p">,</span> <span class="n">xcom_memorial</span><span class="p">,</span> <span class="s2">""</span><span class="p">],</span>
+        <span class="s2">"Mission Tracker"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1249528775</span><span class="p">,</span> <span class="n">tracker_fields</span><span class="p">,</span> <span class="n">xcom_tracker</span><span class="p">,</span> <span class="s2">""</span><span class="p">],</span> <span class="c1"># mission tracker needs some finer handling</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Starting XCOM Campaign summary display. Will refresh every </span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pages</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">title</span> <span class="o">!=</span> <span class="s2">"XCOM Roster"</span><span class="p">:</span>
+                        <span class="k">continue</span> <span class="c1"># only do one for now</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="s2">""</span>
+                    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">xcom_sheet</span><span class="si">}</span><span class="s2">/export?format=csv&amp;gid=</span><span class="si">{</span><span class="n">gid</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                        <span class="n">text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">prev</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span> <span class="c1"># no need to update anything (or nothing to update)</span>
+                        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+                        <span class="k">continue</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+                    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span>
+                    <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span> <span class="c1"># skip fieldnames since we just set them</span>
+
+                    <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s2">"Mission Tracker"</span><span class="p">:</span>
+                        <span class="n">cur_date</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">cur_mission</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">lst</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                            <span class="k">pass</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">lst</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                            <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                                <span class="c1"># plan in case we get extra lines</span>
+                                <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fieldnames</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"Rank"</span><span class="p">,</span> <span class="s2">"Billet"</span><span class="p">,</span> <span class="s2">"First Name"</span><span class="p">,</span> <span class="s2">"Nickname"</span><span class="p">,</span> <span class="s2">"Last Name"</span><span class="p">,</span> <span class="s2">"Original Name"</span><span class="p">,</span> <span class="s2">"Chatter"</span><span class="p">):</span>
+                                    <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                                        <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                                    <span class="n">res</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                            <span class="n">first</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"First Name"</span><span class="p">]</span>
+                            <span class="n">last</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Last Name"</span><span class="p">]</span>
+                            <span class="n">nick</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Nickname"</span><span class="p">]</span>
+                            <span class="n">orig</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Original Name"</span><span class="p">]</span>
+                            <span class="n">user</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Chatter"</span><span class="p">]</span>
+                            <span class="n">rank</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Billet"</span><span class="p">]</span> <span class="ow">or</span> <span class="n">row</span><span class="p">[</span><span class="s2">"Rank"</span><span class="p">]</span>
+                            <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="k">if</span> <span class="n">rank</span><span class="p">:</span>
+                                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+                                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">nick</span><span class="p">:</span>
+                                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">nick</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">last</span><span class="p">:</span>
+                                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">orig</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">words</span><span class="p">:</span>
+                                    <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(was </span><span class="si">{</span><span class="n">orig</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[named by </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">]"</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">words</span><span class="p">:</span>
+                                <span class="n">res</span><span class="p">[</span><span class="s2">"Name"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"XP"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">words</span><span class="p">:</span>
+                                <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c1"># only add a line if there's a name and XP</span>
+                    <span class="n">pages</span><span class="p">[</span><span class="n">title</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
             <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
