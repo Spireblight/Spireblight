@@ -1,6 +1,7 @@
 from typing import Generator
 
 import aiohttp_jinja2
+import struct
 import json
 import os
 
@@ -14,6 +15,15 @@ from src.typehints import ContextType
 
 from src.config import config
 
+def parse_value(v: list[int], *, little_endian=True) -> int:
+    """Parse and unpack the various structs used for gold and other values."""
+    assert len(v) % 8 == 0, "can only unpack multiples of 8"
+    val = bytes(v)
+    fs = "<" if little_endian else ">"
+    fs += "d" * len(v) // 8 # one double per 8 bytes
+    unpacked = struct.unpack(fs, val)
+    return int(sum(unpacked))
+
 class MonsterSave:
     def __init__(self, file):
         data = None
@@ -26,6 +36,27 @@ class MonsterSave:
 
     def update_data(self, data: dict):
         self._data = data
+
+    @property
+    def current_gold(self) -> int:
+        """The current count of gold. Ignores in-fight gains."""
+        # TODO: we have a "goldOverTime" array which may be useful for... something
+        return parse_value(self._data["gold"]["_values"])
+
+    @property
+    def dragons_hoard(self) -> int:
+        """The current count of Dragon's Hoard."""
+        return parse_value(self._data["dragonsHoard"]["_values"])
+
+    @property
+    def dragons_hoard_cap(self) -> int:
+        """The current limit of Dragon's Hoard we can hold."""
+        return parse_value(self._data["dragonsHoardCap"]["_values"])
+
+    @property
+    def forge_points(self) -> int:
+        """The current count of Forge Points being held."""
+        return parse_value(self._data["forgePoints"]["_values"])
 
     @property
     def in_game(self) -> bool:
