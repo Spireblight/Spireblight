@@ -97,11 +97,11 @@ _savefile = MonsterSave("monster-train-save.json")
 _save2 = MonsterSave("monster-train-2-save.json")
 
 async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
-    if (_savefile._data is not None and (_savefile.main_class and _savefile.sub_class)):
-        return _savefile
-
     if (_save2._data is not None and (_save2.main_class and _save2.sub_class)):
         return _save2
+
+    if (_savefile._data is not None and (_savefile.main_class and _savefile.sub_class)):
+        return _savefile
 
     if ctx is not None:
         await ctx.reply("Not in a run.")
