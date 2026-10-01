@@ -880,7 +880,8 @@
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="c1"># temporary fix while some units have a blank ID</span>
                     <span class="n">_id_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-                <span class="n">_internal_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span>
+                    <span class="n">_internal_cache</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">internal</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"static"</span> <span class="o">/</span> <span class="s2">"mt2"</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>

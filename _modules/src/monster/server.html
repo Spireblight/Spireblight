@@ -511,6 +511,7 @@
 <div class="viewcode-block" id="receive_save_data">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.receive_save_data">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/monster-train/save"</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_save_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
     <span class="n">save</span><span class="p">,</span> <span class="n">game_version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">,</span> <span class="s2">"game_version"</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
