@@ -489,7 +489,8 @@ def load_mt2(base: Path = Path(".")):
                     continue
                 if value.id: # temporary fix while some units have a blank ID
                     _id_cache[value.id] = value
-                _internal_cache[value.internal] = value
+                if value.internal:
+                    _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
 
     for img in (base / "static" / "mt2").iterdir():
