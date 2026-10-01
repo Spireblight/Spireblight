@@ -117,6 +117,7 @@ async def current_mt2(req: Request):
     return context
 
 @router.post("/sync/monster-train/save")
+@catch_error
 async def receive_save_data(req: Request):
     save, game_version = await get_req_data(req, "save", "game_version")
     data = json.loads(save)
