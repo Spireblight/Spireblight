@@ -381,6 +381,7 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp_jinja2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
@@ -393,6 +394,18 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="parse_value">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.parse_value">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_value</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">little_endian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse and unpack the various structs used for gold and other values."""</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"can only unpack multiples of 8"</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="s2">"&lt;"</span> <span class="k">if</span> <span class="n">little_endian</span> <span class="k">else</span> <span class="s2">"&gt;"</span>
+    <span class="n">fs</span> <span class="o">+=</span> <span class="s2">"d"</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span> <span class="c1"># one double per 8 bytes</span>
+    <span class="n">unpacked</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">unpacked</span><span class="p">))</span></div>
+
 
 <div class="viewcode-block" id="MonsterSave">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave">[docs]</a>
@@ -411,6 +424,27 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span></div>
 
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of gold. Ignores in-fight gains."""</span>
+        <span class="c1"># TODO: we have a "goldOverTime" array which may be useful for... something</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"gold"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of Dragon's Hoard."""</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"dragonsHoard"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard_cap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current limit of Dragon's Hoard we can hold."""</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"dragonsHoardCap"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of Forge Points being held."""</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"forgePoints"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">in_game</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
