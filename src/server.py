@@ -1242,6 +1242,37 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                 else:
                     await ctx.reply("I don't even HAVE that many quotes!")
 
+        case "regex" | "re" | "match":
+            if not line:
+                await ctx.reply("You need to search for something!")
+                return
+
+            try:
+                m = re.compile(line)
+            except Exception as e:
+                return await ctx.reply(f"RegEx compile error: {' | '.join(e.args)}")
+            found = []
+            for i, q in enumerate(_quotes):
+                if m.match(q.line):
+                    found.append(i)
+            match len(found):
+                case 0:
+                    await ctx.reply(
+                        "No quotes match this. Maybe try narrowing it down?"
+                    )
+                case 1:
+                    await ctx.reply(_get_quote(found[0]))
+                case n:
+                    if n > 20:  # sanity threshold
+                        await ctx.reply(
+                            "Too many quotes match this pattern. Try a narrower search."
+                        )
+                    else:
+                        await ctx.reply(
+                            f"The quotes wmatching this pattern are {', '.join(str(x) for x in found)}."
+                        )
+
+
         case "search" | "find":
             if not line:
                 await ctx.reply("You need to search for something!")
