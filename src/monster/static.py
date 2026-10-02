@@ -16,12 +16,13 @@ import os
 # this is an iterable of 1-length str to remove from queries
 _replace_str = " -'()."
 
-__all__ = ["query", "get", "load_mt1", "load_mt2"]
+__all__ = ["query", "get", "get_safe", "get_champion", "load_mt1", "load_mt2"]
 
 _id_cache: dict[str, Base | Base2] = {}
 _internal_cache: dict[str, Base | Base2] = {}
 _query_cache: dict[str, list[Base | Base2]] = defaultdict(list)
 _mutators: dict[str, Mutator | Mutator2] = {}
+_champions: set[Card2] = set()
 _autoreplace: dict[str, str] = {} # mapping of name: uri (relative to /static/mt2/)
 
 def sanitize(x: str) -> str:
@@ -55,6 +56,19 @@ def get_safe(name: str) -> str:
     if name in _id_cache:
         return _id_cache[name].name
     return name
+
+def get_champion(clan: str | Clan, exiled: bool):
+    """Get the matching Champion for the clan and exiled."""
+    if isinstance(clan, Clan):
+        clan = clan.name
+    for champ in _champions:
+        if champ.clan == clan:
+            if champ.unlock == 0 and not exiled:
+                return champ
+            if champ.unlock == 5 and exiled:
+                return champ
+
+    raise ValueError(f"Could not find a Champion for clan {clan!r}.")
 
 class Base:
     def __init__(self, data: dict):
@@ -147,6 +161,9 @@ class Base2:
         self.is_hidden: bool = data.get("hidden", False)
         self.dlc: str | None = data.get("dlc")
 
+    def __hash__(self):
+        return hash(self.id)
+
     @property
     def info(self):
         return f"{self.__class__.__name__} {self.name}: {self.description}"
@@ -175,6 +192,8 @@ class Card2(Base2):
         self.has_ability: bool = data["unit_ability"]
         self.initial_cooldown: int = data["initial_cooldown"]
         self.ability_cooldown: int = data["ability_cooldown"]
+        if self.rarity == "Champion":
+            _champions.add(self)
 
     @property
     def info(self) -> str:

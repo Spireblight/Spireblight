@@ -7,7 +7,7 @@ import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
-from src.monster.static import get, get_safe, Challenge, Mutator, Artifact, Character
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -64,8 +64,8 @@ class MonsterSave:
         return not self._data
 
     @property
-    def champion(self) -> str:
-        return "not yet implemented"
+    def champion(self):
+        return get_champion(self.main_class, self.main_exiled)
 
     @property
     def main_class(self) -> str:
