@@ -1755,6 +1755,11 @@
             <span class="n">i</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">_quotes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">_get_quote</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
+        <span class="k">case</span> <span class="s2">"help"</span> <span class="o">|</span> <span class="s2">"syntax"</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"To add quotes, do '</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">prefix</span><span class="si">}</span><span class="s2">quote add [funny thing here] -- [author here]'; "</span>
+                            <span class="s2">"the '--' is necessary to properly attribute a quote. Don't hesitate to add context with "</span>
+                            <span class="s2">"the author! To modify or fix a quote, ask a moderator."</span><span class="p">)</span>
+
         <span class="k">case</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>

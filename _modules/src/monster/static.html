@@ -396,12 +396,13 @@
 <span class="c1"># this is an iterable of 1-length str to remove from queries</span>
 <span class="n">_replace_str</span> <span class="o">=</span> <span class="s2">" -'()."</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"query"</span><span class="p">,</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"load_mt1"</span><span class="p">,</span> <span class="s2">"load_mt2"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"query"</span><span class="p">,</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"get_safe"</span><span class="p">,</span> <span class="s2">"get_champion"</span><span class="p">,</span> <span class="s2">"load_mt1"</span><span class="p">,</span> <span class="s2">"load_mt2"</span><span class="p">]</span>
 
 <span class="n">_id_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_internal_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_query_cache</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Base</span> <span class="o">|</span> <span class="n">Base2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 <span class="n">_mutators</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mutator</span> <span class="o">|</span> <span class="n">Mutator2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_champions</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Card2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 <span class="n">_autoreplace</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># mapping of name: uri (relative to /static/mt2/)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">sanitize</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -434,13 +435,32 @@
     <span class="k">return</span> <span class="n">Unknown</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="get_safe">
+<a class="viewcode-back" href="../../../monster.html#src.monster.static.get_safe">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_safe</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Get the name matching the ID or internal name, or the input back if none found."""</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_internal_cache</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_id_cache</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_id_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">return</span> <span class="n">name</span>
+    <span class="k">return</span> <span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="get_champion">
+<a class="viewcode-back" href="../../../monster.html#src.monster.static.get_champion">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_champion</span><span class="p">(</span><span class="n">clan</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Clan</span><span class="p">,</span> <span class="n">exiled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Get the matching Champion for the clan and exiled."""</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clan</span><span class="p">,</span> <span class="n">Clan</span><span class="p">):</span>
+        <span class="n">clan</span> <span class="o">=</span> <span class="n">clan</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">for</span> <span class="n">champ</span> <span class="ow">in</span> <span class="n">_champions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">champ</span><span class="o">.</span><span class="n">clan</span> <span class="o">==</span> <span class="n">clan</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">champ</span><span class="o">.</span><span class="n">unlock</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">exiled</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">champ</span>
+            <span class="k">if</span> <span class="n">champ</span><span class="o">.</span><span class="n">unlock</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">exiled</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">champ</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not find a Champion for clan </span><span class="si">{</span><span class="n">clan</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span></div>
+
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -533,6 +553,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"hidden"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"dlc"</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span>
@@ -561,6 +584,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">has_ability</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"unit_ability"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_cooldown</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"initial_cooldown"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ability_cooldown</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"ability_cooldown"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">==</span> <span class="s2">"Champion"</span><span class="p">:</span>
+            <span class="n">_champions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
