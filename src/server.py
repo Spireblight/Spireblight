@@ -1283,6 +1283,11 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
             i = random.randint(0, len(_quotes) - 1)
             await ctx.reply(_get_quote(i))
 
+        case "help" | "syntax":
+            await ctx.reply(f"To add quotes, do '{config.bot.prefix}quote add [funny thing here] -- [author here]'; "
+                            "the '--' is necessary to properly attribute a quote. Don't hesitate to add context with "
+                            "the author! To modify or fix a quote, ask a moderator.")
+
         case e:
             try:
                 i = int(e)
