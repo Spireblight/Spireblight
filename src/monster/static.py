@@ -199,6 +199,9 @@ class Card2(Base2):
     def info(self) -> str:
         return f"{self.name} ({self.rarity} {self.type} {self.clan}): {self.description}"
 
+    def get_image_link(self) -> str:
+        return f"/static/mt2/champions/{self.internal}.png"
+
 class Character(Base2):
     def __init__(self, data: dict):
         super().__init__(data)
