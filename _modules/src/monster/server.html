@@ -387,7 +387,8 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
 
@@ -425,26 +426,46 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_asint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+
+<div class="viewcode-block" id="MonsterSave.get_fight_names">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_fight_names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_fight_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get the list of run snapshots for "over time" stats."""</span>
+        <span class="k">return</span> <span class="p">[]</span> <span class="c1"># TODO</span></div>
+
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">current_gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current count of gold. Ignores in-fight gains."""</span>
         <span class="c1"># TODO: we have a "goldOverTime" array which may be useful for... something</span>
-        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"gold"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"gold"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current count of Dragon's Hoard."""</span>
-        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"dragonsHoard"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"dragonsHoard"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard_cap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current limit of Dragon's Hoard we can hold."""</span>
-        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"dragonsHoardCap"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"dragonsHoardCap"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current count of Forge Points being held."""</span>
-        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"forgePoints"</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"forgePoints"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current Pyre HP."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"towerHP"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_max_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The Pyre Max HP."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"maxTowerHP"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">in_game</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -509,8 +530,16 @@
         <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"pyreCharacterId"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">mutators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mutator</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mutators"</span><span class="p">]]</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mutator</span> <span class="o">|</span> <span class="n">Mutator2</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mutators"</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">souls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Soul</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"souls"</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">parse</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"replayData"</span><span class="p">][</span><span class="s2">"replayEntries"</span><span class="p">]]</span></div>
 
 
 <span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-save.json"</span><span class="p">)</span>
