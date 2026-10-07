@@ -7,7 +7,8 @@ import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character
+from src.monster.replay import parse
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -37,26 +38,43 @@ class MonsterSave:
     def update_data(self, data: dict):
         self._data = data
 
+    def _asint(self, key: str) -> int:
+        return parse_value(self._data[key]["_values"])
+
+    def get_fight_names(self) -> list[str]:
+        """Get the list of run snapshots for "over time" stats."""
+        return [] # TODO
+
     @property
     def current_gold(self) -> int:
         """The current count of gold. Ignores in-fight gains."""
         # TODO: we have a "goldOverTime" array which may be useful for... something
-        return parse_value(self._data["gold"]["_values"])
+        return self._asint("gold")
 
     @property
     def dragons_hoard(self) -> int:
         """The current count of Dragon's Hoard."""
-        return parse_value(self._data["dragonsHoard"]["_values"])
+        return self._asint("dragonsHoard")
 
     @property
     def dragons_hoard_cap(self) -> int:
         """The current limit of Dragon's Hoard we can hold."""
-        return parse_value(self._data["dragonsHoardCap"]["_values"])
+        return self._asint("dragonsHoardCap")
 
     @property
     def forge_points(self) -> int:
         """The current count of Forge Points being held."""
-        return parse_value(self._data["forgePoints"]["_values"])
+        return self._asint("forgePoints")
+
+    @property
+    def pyre_hp(self) -> int:
+        """The current Pyre HP."""
+        return self._asint("towerHP")
+
+    @property
+    def pyre_max_hp(self) -> int:
+        """The Pyre Max HP."""
+        return self._asint("maxTowerHP")
 
     @property
     def in_game(self) -> bool:
@@ -121,8 +139,16 @@ class MonsterSave:
         return get(self._data["startingConditions"]["pyreCharacterId"])
 
     @property
-    def mutators(self) -> list[Mutator]:
+    def mutators(self) -> list[Mutator | Mutator2]:
         return [get(x) for x in self._data["startingConditions"]["mutators"]]
+
+    @property
+    def souls(self) -> list[Soul]:
+        return [get(x) for x in self._data["startingConditions"]["souls"]]
+
+    @property
+    def actions(self) -> list[str]:
+        return [parse(x) for x in self._data["replayData"]["replayEntries"]]
 
 _savefile = MonsterSave("monster-train-save.json")
 _save2 = MonsterSave("monster-train-2-save.json")
