@@ -29,12 +29,12 @@ def parse(value: str):
     match tuple(decoded):
         case (1, ring, side, index):
             ring += 1 # it's 0-indexed
-            side = side and "right" or "left"
+            sside = side and "right" or "left"
             if ring == 1:
                 return f"Take the {number(index)} reward from ring {ring}"
             if side == 255:
                 return f"Take the shared reward from ring {ring}"
-            return f"Take the {number(index)} reward from the {side} side of ring {ring}"
+            return f"Take the {number(index)} reward from the {sside} side of ring {ring}"
         case (2, a):
             return f"Begin Fight {a}"
         case (3, a):
@@ -45,29 +45,29 @@ def parse(value: str):
             return "Take trial"
         case (6,):
             return "End turn"
-        case (7, hand, fnum, c, index, id): # we have card index / target team
+        case (7, hand, fnum, c, index, crc): # we have card index / target team
             # hand in the position in hand of the card before playing it
             # index is the position of the card played, starting at the center of the room(?)
             # I believe c is the card type, but that doesn't seem correct
             return f"Play the {number(hand)} card from hand {floor(fnum)}, targeting the {number(index)} position"
         case (8, fnum, index, c, d, e):
             return f"Activate ability of the {number(index)} unit {floor(fnum)}"
-        case (9, i, id):
+        case (9, i, crc):
             if i == 255:
                 return "Skip unit reward"
-            return f"Acquire unit at position {i} (id #{id})"
-        case (10, i, id):
+            return f"Acquire unit at position {i}"
+        case (10, i, crc):
             if i == 255:
                 return "Skip relic reward"
-            return f"Select relic at position {i} (id #{id})"
-        case (11, i, id):
+            return f"Select relic at position {i}"
+        case (11, i, crc):
             if i == 255:
                 return "Skip Champion upgrade"
-            return f"Pick Champion upgrade at position {i} (id #{id})"
-        case (16, i, id):
-            return f"Buy shop item #{i} (id #{id})"
-        case (19, i, id):
-            return f"Apply upgrade to card at position {i} (id #{id})"
+            return f"Pick Champion upgrade at position {i}"
+        case (16, i, crc):
+            return f"Buy shop item #{i}"
+        case (19, i, crc):
+            return f"Apply upgrade to card at position {i}"
         case (22, a, b, c):
             return "Pick option from event (more details unknown yet)"
         case (28, 0):
