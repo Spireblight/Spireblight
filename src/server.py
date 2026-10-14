@@ -1269,7 +1269,7 @@ async def quote_stuff(ctx: ContextType, arg: str = "random", *rest):
                         )
                     else:
                         await ctx.reply(
-                            f"The quotes wmatching this pattern are {', '.join(str(x) for x in found)}."
+                            f"The quotes matching this pattern are {', '.join(str(x) for x in found)}."
                         )
 
 
