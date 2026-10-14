@@ -8,13 +8,68 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.replay import parse
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
 from src.typehints import ContextType
 
 from src.config import config
+
+_fights = ( # lines with UNSORTED have not been confirmed
+    (   # Ring 1 fight
+        "Dominion's Preservation", # UNSORTED
+        "Forsaken Few", # UNSORTED
+        "Heavenly Toll",
+    ),
+    (   # Ring 2 fight
+        "Knights of Entropy",
+        "Flagellant's March", # UNSORTED
+        "March of the Supplicants", # UNSORTED
+        "Quicksilver Cherubs", # UNSORTED
+    ),
+    (   # First flying boss
+        "Fleshweaver (Corrupted Mass)", # UNSORTED
+        "Fleshweaver (More Mass)", # UNSORTED
+        "Fleshweaver (Spiked Mass)",
+        "Arkion, Scion of Savagery (Furious Frenzy)", # UNSORTED
+        "Arkion, Scion of Savagery (Hard Headed)", # UNSORTED
+        "Arkion, Scion of Savagery (Pyre Hunter)", # UNSORTED
+    ),
+    (   # Ring 4 fight
+        "Dire Defenses", # UNSORTED
+        "Penance Seekers", # UNSORTED
+        "Savagery's Hunters", # UNSORTED
+        "Hordes of Heaven",
+    ),
+    (   # Ring 5 fight
+        "Corrupted Crusade", # UNSORTED
+        "Relentless Zealots", # UNSORTED
+        "Undying Minions", # UNSORTED
+        "Unholy Alliances", # UNSORTED
+    ),
+    (   # Second flying boss
+        "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
+        "Cael, Lord of the Cherubs (Nourishing Feed)", # UNSORTED
+        "Cael, Lord of the Cherubs (Vampiric Feed)", # UNSORTED
+        "Stryx/Hallow (Bloody Harvest)", # UNSORTED
+        "Stryx/Hallow (Doombringers)", # UNSORTED
+        "Stryx/Hallow (Inevitability)", # UNSORTED
+    ),
+    (   # Ring 7 fight
+        "Dominion's Disdain", # UNSORTED
+        "Purified Hordes", # UNSORTED
+        "Savagery's Final Assault", # UNSORTED
+    ),
+    (   # Third flying boss
+        "Seraph Aeternus: The Savage (Champion of Savagery)", # UNSORTED
+        "Seraph Aeternus: The Dominant (Chosen of Dominion)", # UNSORTED
+        "Seraph Aeternus: The Entropic (Harbinger of Entropy)", # UNSORTED
+    ),
+    (   # Titans fight
+        "Clash with the Titans", # do NOT remove this singular comma
+    ),
+)
 
 def parse_value(v: list[int], *, little_endian=True) -> int:
     """Parse and unpack the various structs used for gold and other values."""
@@ -44,6 +99,15 @@ class MonsterSave:
     def get_fight_names(self) -> list[str]:
         """Get the list of run snapshots for "over time" stats."""
         return [] # TODO
+
+    @property
+    def rings(self):
+        furthest = self._data["runState"]["numBattlesCompleted"]
+        for i, data in self._data["runState"]["nodes"]:
+            battle = None
+            if i < furthest:
+                battle = self._data["completedBattles"][i]
+            yield Ring(i, furthest, data, battle)
 
     @property
     def current_gold(self) -> int:
@@ -149,6 +213,78 @@ class MonsterSave:
     @property
     def actions(self) -> list[str]:
         return [parse(x) for x in self._data["replayData"]["replayEntries"]]
+
+class Ring:
+    """Store information for one ring."""
+
+    def __init__(self, ring: int, farthest: int, data: dict, battle: dict | None):
+        self.ring = ring # 0-indexed
+        self.farthest = farthest
+        self._data = data
+        self._battle = battle
+
+    def _get_boss(self, *, allow_future: bool = False) -> Character | None:
+        if not allow_future and not self._battle:
+            return None
+        if not self._data["bossId"]: # flying boss
+            return None # need to use scenarioIndex or whatever
+        return get(self._data["bossId"])
+
+    @property
+    def boss(self):
+        """Get the ring's boss. Does not display major (flying) bosses."""
+        return self._get_boss()
+
+    def get_names(self):
+        """Return names for the before and after."""
+        if self.ring == 8: # Titans
+            return ["Before the Titans"]
+        fight_name = _fights[self.ring][self._data["scenarioIndex"]]
+        if (b := self._get_boss(allow_future=True)) is None: # flying boss
+            boss = fight_name
+        else:
+            boss = b.name
+        match self.ring:
+            case 0:
+                word = "first fight"
+            case 1:
+                word = "second fight"
+            case 2:
+                word = "first flying boss"
+            case 3:
+                word = "fourth fight"
+            case 4:
+                word = "fifth fight"
+            case 5:
+                word = "second flying boss"
+            case 6:
+                word = "seventh fight"
+            case 7:
+                word = "Seraph"
+            case a:
+                raise ValueError(f"Ring #{a} makes no sense")
+        if self.ring < self.farthest or fight_name == boss: # flying bosses are always known
+            return f"Before {fight_name}", f"After beating {boss}"
+        return f"Before {word}", f"After {word}"
+
+    def _get_trial(self, *, allow_future: bool = False, taken_only: bool = True) -> Trial | None:
+        if not allow_future and not self._battle:
+            return None
+        tinfo = self._data["trialInfo"]
+        if taken_only and not tinfo["trialEnabled"]:
+            return None
+        if not tinfo["trialDataId"]:
+            return None
+        return get(tinfo["trialDataId"])
+
+    @property
+    def trial(self) -> Trial | None:
+        """Get the ring's trial, if it was taken."""
+        return self._get_trial()
+
+    @property
+    def is_titan_trial(self) -> bool:
+        return self._data["titanTrialEnabled"]
 
 _savefile = MonsterSave("monster-train-save.json")
 _save2 = MonsterSave("monster-train-2-save.json")
