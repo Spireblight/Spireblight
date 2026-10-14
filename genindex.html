@@ -25,16 +25,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=64cc4de3f052d77215f0" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=64cc4de3f052d77215f0" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=64cc4de3f052d77215f0"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=64cc4de3f052d77215f0" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=64cc4de3f052d77215f0" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
     <script src="_static/documentation_options.js?v=a0e24af7"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -45,6 +45,7 @@
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   
@@ -548,6 +549,8 @@
       <li><a href="nodes.html#src.gamedata.NeowBonus.boons_skipped">boons_skipped (NeowBonus property)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.Boss">Boss (class in src.gamedata)</a>
+</li>
+      <li><a href="monster.html#src.monster.server.Ring.boss">boss (Ring property)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.BossChest">BossChest (class in src.gamedata)</a>
 </li>
@@ -1062,6 +1065,8 @@
 </li>
       <li><a href="score.html#src.score.get_mystery_machine_bonus">get_mystery_machine_bonus() (in module src.score)</a>
 </li>
+      <li><a href="monster.html#src.monster.server.Ring.get_names">get_names() (Ring method)</a>
+</li>
       <li><a href="spotify.html#src.spotify.TokenHandler.get_new_access_token">get_new_access_token() (TokenHandler method)</a>
 </li>
       <li><a href="server.html#src.server.get_new_token">get_new_token() (in module src.server)</a>
@@ -1205,6 +1210,8 @@
       <li><a href="spire2parser.html#src.gamedata2.FileParser.is_seeded">is_seeded (FileParser property)</a>
 </li>
       <li><a href="server.html#src.server.is_seeded">is_seeded() (in module src.server)</a>
+</li>
+      <li><a href="monster.html#src.monster.server.Ring.is_titan_trial">is_titan_trial (Ring property)</a>
 </li>
       <li><a href="spotify.html#src.spotify.Spotify.is_token_valid">is_token_valid() (Spotify method)</a>
 </li>
@@ -1665,15 +1672,19 @@
       </ul></li>
       <li><a href="server.html#src.server.relics_page2">relics_page2() (in module src.server)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="spire2parser.html#src.gamedata2.FileParser.removals">removals (FileParser property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="spire2parser.html#src.gamedata2.FileParser.removals_as_html">removals_as_html() (FileParser method)</a>
 </li>
       <li><a href="spotify.html#src.spotify.TokenHandler.request_authentication_link">request_authentication_link() (TokenHandler method)</a>
 </li>
       <li><a href="server.html#src.server.resolve_prediction">resolve_prediction() (in module src.server)</a>
+</li>
+      <li><a href="monster.html#src.monster.server.Ring">Ring (class in src.monster.server)</a>
+</li>
+      <li><a href="monster.html#src.monster.server.MonsterSave.rings">rings (MonsterSave property)</a>
 </li>
       <li><a href="nodes.html#src.gamedata.Act4Transition.room_type">room_type (Act4Transition attribute)</a>
 
@@ -2108,6 +2119,8 @@
 </li>
       <li><a href="nodes.html#src.gamedata.Treasure">Treasure (class in src.gamedata)</a>
 </li>
+      <li><a href="monster.html#src.monster.server.Ring.trial">trial (Ring property)</a>
+</li>
       <li><a href="trie.html#src.trie.Trie">Trie (class in src.trie)</a>
 </li>
   </ul></td>
@@ -2262,8 +2275,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=64cc4de3f052d77215f0"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=64cc4de3f052d77215f0"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -2296,7 +2309,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.22.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
 </p></div>
       
     </div>

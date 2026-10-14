@@ -25,16 +25,16 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=64cc4de3f052d77215f0" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=64cc4de3f052d77215f0" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=64cc4de3f052d77215f0"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=64cc4de3f052d77215f0" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=64cc4de3f052d77215f0" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
     <script src="../../../_static/documentation_options.js?v=a0e24af7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -45,6 +45,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   
@@ -388,13 +389,68 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">_fights</span> <span class="o">=</span> <span class="p">(</span> <span class="c1"># lines with UNSORTED have not been confirmed</span>
+    <span class="p">(</span>   <span class="c1"># Ring 1 fight</span>
+        <span class="s2">"Dominion's Preservation"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Forsaken Few"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Heavenly Toll"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 2 fight</span>
+        <span class="s2">"Knights of Entropy"</span><span class="p">,</span>
+        <span class="s2">"Flagellant's March"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"March of the Supplicants"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Quicksilver Cherubs"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># First flying boss</span>
+        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Fleshweaver (More Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Fleshweaver (Spiked Mass)"</span><span class="p">,</span>
+        <span class="s2">"Arkion, Scion of Savagery (Furious Frenzy)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Arkion, Scion of Savagery (Hard Headed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Arkion, Scion of Savagery (Pyre Hunter)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 4 fight</span>
+        <span class="s2">"Dire Defenses"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Penance Seekers"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Savagery's Hunters"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Hordes of Heaven"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 5 fight</span>
+        <span class="s2">"Corrupted Crusade"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Relentless Zealots"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Undying Minions"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Unholy Alliances"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Second flying boss</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Holy Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Nourishing Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Vampiric Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Bloody Harvest)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Doombringers)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Inevitability)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 7 fight</span>
+        <span class="s2">"Dominion's Disdain"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Purified Hordes"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Savagery's Final Assault"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Third flying boss</span>
+        <span class="s2">"Seraph Aeternus: The Savage (Champion of Savagery)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Seraph Aeternus: The Dominant (Chosen of Dominion)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Seraph Aeternus: The Entropic (Harbinger of Entropy)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Titans fight</span>
+        <span class="s2">"Clash with the Titans"</span><span class="p">,</span> <span class="c1"># do NOT remove this singular comma</span>
+    <span class="p">),</span>
+<span class="p">)</span>
 
 <div class="viewcode-block" id="parse_value">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.parse_value">[docs]</a>
@@ -435,6 +491,15 @@
 <span class="w">        </span><span class="sd">"""Get the list of run snapshots for "over time" stats."""</span>
         <span class="k">return</span> <span class="p">[]</span> <span class="c1"># TODO</span></div>
 
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">furthest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"numBattlesCompleted"</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"nodes"</span><span class="p">]:</span>
+            <span class="n">battle</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">furthest</span><span class="p">:</span>
+                <span class="n">battle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"completedBattles"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">yield</span> <span class="n">Ring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">furthest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">battle</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">current_gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -540,6 +605,84 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">parse</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"replayData"</span><span class="p">][</span><span class="s2">"replayEntries"</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="Ring">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Ring</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Store information for one ring."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">farthest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">battle</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">=</span> <span class="n">ring</span> <span class="c1"># 0-indexed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span> <span class="o">=</span> <span class="n">farthest</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span> <span class="o">=</span> <span class="n">battle</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_boss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_future</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Character</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_future</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"bossId"</span><span class="p">]:</span> <span class="c1"># flying boss</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1"># need to use scenarioIndex or whatever</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"bossId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get the ring's boss. Does not display major (flying) bosses."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Ring.get_names">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring.get_names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return names for the before and after."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span> <span class="c1"># Titans</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">"Before the Titans"</span><span class="p">]</span>
+        <span class="n">fight_name</span> <span class="o">=</span> <span class="n">_fights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ring</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"scenarioIndex"</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">(</span><span class="n">allow_future</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># flying boss</span>
+            <span class="n">boss</span> <span class="o">=</span> <span class="n">fight_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">boss</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span><span class="p">:</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"first fight"</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"second fight"</span>
+            <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"first flying boss"</span>
+            <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"fourth fight"</span>
+            <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"fifth fight"</span>
+            <span class="k">case</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"second flying boss"</span>
+            <span class="k">case</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"seventh fight"</span>
+            <span class="k">case</span> <span class="mi">7</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"Seraph"</span>
+            <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ring #</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> makes no sense"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span> <span class="ow">or</span> <span class="n">fight_name</span> <span class="o">==</span> <span class="n">boss</span><span class="p">:</span> <span class="c1"># flying bosses are always known</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">boss</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_future</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">taken_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trial</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_future</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">tinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"trialInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">taken_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialEnabled"</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialDataId"</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialDataId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trial</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get the ring's trial, if it was taken."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_trial</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_titan_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"titanTrialEnabled"</span><span class="p">]</span></div>
 
 
 <span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-save.json"</span><span class="p">)</span>
@@ -700,8 +843,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=64cc4de3f052d77215f0"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=64cc4de3f052d77215f0"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -734,7 +877,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.22.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
 </p></div>
       
     </div>
