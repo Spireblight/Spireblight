@@ -98,22 +98,29 @@ class MonsterSave:
 
     def get_fight_names(self) -> list[str]:
         """Get the list of run snapshots for "over time" stats."""
-        return [] # TODO
+        names = []
+        for ring in self.rings:
+            names.extend(ring.get_names())
+        return names
 
     @property
     def rings(self):
         furthest = self._data["runState"]["numBattlesCompleted"]
-        for i, data in self._data["runState"]["nodes"]:
+        for i, data in enumerate(self._data["runState"]["nodes"]):
             battle = None
             if i < furthest:
                 battle = self._data["completedBattles"][i]
             yield Ring(i, furthest, data, battle)
 
     @property
-    def current_gold(self) -> int:
+    def gold(self) -> int:
         """The current count of gold. Ignores in-fight gains."""
-        # TODO: we have a "goldOverTime" array which may be useful for... something
         return self._asint("gold")
+
+    @property
+    def gold_graph(self) -> list[int]:
+        """The gold count at specific snapshots during the run."""
+        return self._data["goldOverTime"]
 
     @property
     def dragons_hoard(self) -> int:
@@ -136,14 +143,24 @@ class MonsterSave:
         return self._asint("towerHP")
 
     @property
+    def pyre_hp_graph(self) -> list[int]:
+        """The Pyre HP at specific snapshots during the run."""
+        return self._data["towerHPOverTime"]
+
+    @property
     def pyre_max_hp(self) -> int:
         """The Pyre Max HP."""
         return self._asint("maxTowerHP")
 
     @property
+    def pyre_max_hp_graph(self) -> list[int]:
+        """The Pyre Max HP at specific snapshots during the run."""
+        return self._data["towerMaxHPOverTime"]
+
+    @property
     def in_game(self) -> bool:
         # XXX: there might be a few more pieces to check
-        return not self._data
+        return self._data and self.main_class
 
     @property
     def champion(self):
@@ -249,18 +266,14 @@ class Ring:
                 word = "first fight"
             case 1:
                 word = "second fight"
-            case 2:
-                word = "first flying boss"
             case 3:
                 word = "fourth fight"
             case 4:
                 word = "fifth fight"
-            case 5:
-                word = "second flying boss"
             case 6:
                 word = "seventh fight"
-            case 7:
-                word = "Seraph"
+            case 2 | 5 | 7:
+                word = boss # handled below
             case a:
                 raise ValueError(f"Ring #{a} makes no sense")
         if self.ring < self.farthest or fight_name == boss: # flying bosses are always known
