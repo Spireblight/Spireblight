@@ -489,23 +489,30 @@
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_fight_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_fight_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Get the list of run snapshots for "over time" stats."""</span>
-        <span class="k">return</span> <span class="p">[]</span> <span class="c1"># TODO</span></div>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ring</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rings</span><span class="p">:</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ring</span><span class="o">.</span><span class="n">get_names</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">names</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">furthest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"numBattlesCompleted"</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"nodes"</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"nodes"</span><span class="p">]):</span>
             <span class="n">battle</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">furthest</span><span class="p">:</span>
                 <span class="n">battle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"completedBattles"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
             <span class="k">yield</span> <span class="n">Ring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">furthest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">battle</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">current_gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current count of gold. Ignores in-fight gains."""</span>
-        <span class="c1"># TODO: we have a "goldOverTime" array which may be useful for... something</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"gold"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gold_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The gold count at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"goldOverTime"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -528,14 +535,24 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"towerHP"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_hp_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The Pyre HP at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"towerHPOverTime"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pyre_max_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The Pyre Max HP."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"maxTowerHP"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_max_hp_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The Pyre Max HP at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"towerMaxHPOverTime"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">in_game</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="c1"># XXX: there might be a few more pieces to check</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_class</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">champion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -646,18 +663,14 @@
                 <span class="n">word</span> <span class="o">=</span> <span class="s2">"first fight"</span>
             <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">word</span> <span class="o">=</span> <span class="s2">"second fight"</span>
-            <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">word</span> <span class="o">=</span> <span class="s2">"first flying boss"</span>
             <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">word</span> <span class="o">=</span> <span class="s2">"fourth fight"</span>
             <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
                 <span class="n">word</span> <span class="o">=</span> <span class="s2">"fifth fight"</span>
-            <span class="k">case</span> <span class="mi">5</span><span class="p">:</span>
-                <span class="n">word</span> <span class="o">=</span> <span class="s2">"second flying boss"</span>
             <span class="k">case</span> <span class="mi">6</span><span class="p">:</span>
                 <span class="n">word</span> <span class="o">=</span> <span class="s2">"seventh fight"</span>
-            <span class="k">case</span> <span class="mi">7</span><span class="p">:</span>
-                <span class="n">word</span> <span class="o">=</span> <span class="s2">"Seraph"</span>
+            <span class="k">case</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">5</span> <span class="o">|</span> <span class="mi">7</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="n">boss</span> <span class="c1"># handled below</span>
             <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ring #</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> makes no sense"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span> <span class="ow">or</span> <span class="n">fight_name</span> <span class="o">==</span> <span class="n">boss</span><span class="p">:</span> <span class="c1"># flying bosses are always known</span>

@@ -457,9 +457,15 @@
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="src.monster.server.MonsterSave.current_gold">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_gold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.current_gold" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.gold">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.gold" title="Link to this definition">#</a></dt>
 <dd><p>The current count of gold. Ignores in-fight gains.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.gold_graph">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gold_graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.monster.server.MonsterSave.gold_graph" title="Link to this definition">#</a></dt>
+<dd><p>The gold count at specific snapshots during the run.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -487,9 +493,21 @@
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.pyre_hp_graph">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pyre_hp_graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.monster.server.MonsterSave.pyre_hp_graph" title="Link to this definition">#</a></dt>
+<dd><p>The Pyre HP at specific snapshots during the run.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="src.monster.server.MonsterSave.pyre_max_hp">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pyre_max_hp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.pyre_max_hp" title="Link to this definition">#</a></dt>
 <dd><p>The Pyre Max HP.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.pyre_max_hp_graph">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pyre_max_hp_graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#src.monster.server.MonsterSave.pyre_max_hp_graph" title="Link to this definition">#</a></dt>
+<dd><p>The Pyre Max HP at specific snapshots during the run.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -725,12 +743,15 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.update_data"><code class="docutils literal notranslate"><span class="pre">MonsterSave.update_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.get_fight_names"><code class="docutils literal notranslate"><span class="pre">MonsterSave.get_fight_names()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.rings"><code class="docutils literal notranslate"><span class="pre">MonsterSave.rings</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.current_gold"><code class="docutils literal notranslate"><span class="pre">MonsterSave.current_gold</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.gold"><code class="docutils literal notranslate"><span class="pre">MonsterSave.gold</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.gold_graph"><code class="docutils literal notranslate"><span class="pre">MonsterSave.gold_graph</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.dragons_hoard"><code class="docutils literal notranslate"><span class="pre">MonsterSave.dragons_hoard</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.dragons_hoard_cap"><code class="docutils literal notranslate"><span class="pre">MonsterSave.dragons_hoard_cap</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.forge_points"><code class="docutils literal notranslate"><span class="pre">MonsterSave.forge_points</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.pyre_hp"><code class="docutils literal notranslate"><span class="pre">MonsterSave.pyre_hp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.pyre_hp_graph"><code class="docutils literal notranslate"><span class="pre">MonsterSave.pyre_hp_graph</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.pyre_max_hp"><code class="docutils literal notranslate"><span class="pre">MonsterSave.pyre_max_hp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.pyre_max_hp_graph"><code class="docutils literal notranslate"><span class="pre">MonsterSave.pyre_max_hp_graph</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.in_game"><code class="docutils literal notranslate"><span class="pre">MonsterSave.in_game</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.champion"><code class="docutils literal notranslate"><span class="pre">MonsterSave.champion</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.main_class"><code class="docutils literal notranslate"><span class="pre">MonsterSave.main_class</span></code></a></li>
