@@ -343,6 +343,25 @@ async def receive_save_data(req: Request):
 
     return Response()
 
+@router.post("/sync/monster-train/meta")
+@catch_error
+async def receive_meta_data(req: Request): # we store the data, but nothing uses it yet
+    meta, game_version = await get_req_data(req, "meta", "game_version")
+    data = json.loads(meta)
+    if game_version == "1":
+        savefile = _savefile
+        filename = "monster-train-meta.json"
+    elif game_version == "2":
+        savefile = _save2
+        filename = "monster-train-2-meta.json"
+    else:
+        raise HTTPForbidden(reason="game_version can only be 1 or 2")
+
+    with getfile(filename, "w") as f:
+        json.dump(data, f, indent=config.server.json_indent)
+
+    return Response()
+
 # TODO: implement MT run sending and parsing
 
 #@router.post("/sync/monster")

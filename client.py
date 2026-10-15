@@ -135,8 +135,10 @@ class Main:
             "profile_11": None,
             "profile_12": None,
             "profile_13": None,
-            "current_mt1": None,
-            "current_mt2": None,
+            "save_mt1": None,
+            "save_mt2": None,
+            "meta_mt1": None,
+            "meta_mt2": None,
         }
 
         self.last_modified_file = pathlib.Path(".") / "last_modified.json"
@@ -179,6 +181,8 @@ class Main:
             print("Could not load data from last_modified.json")
         else:
             for key, value in data.items():
+                if key.startswith("current_mt"):
+                    key = key.replace("current", "save") # changed during an update, don't break stuff
                 if key not in self.last_modified:
                     # it's unlikely to happen, and we store it anyway, just in case
                     print(f"Unrecognized key {key!r} in last_modified.json, will have no effect")
@@ -258,6 +262,9 @@ class Main:
 
                 await self.sync_monster_train_save(1)
                 await self.sync_monster_train_save(2)
+
+                await self.sync_monster_train_meta(1)
+                await self.sync_monster_train_meta(2)
 
             except (ClientError, ServerDisconnectedError):
                 timeout = 10 # give it a bit of time
@@ -577,41 +584,59 @@ class Main:
                         self.update_modified_timestamp("slice_dice", time.time())
 
     def get_monster_train_folder(self, game_version: int):
-        """Get the filepatch for the Monster Train data. May not exist."""
+        """Get the filepath for the Monster Train data. May not exist."""
         file = "MonsterTrain"
         if game_version == 2:
             file += "2"
 
         return cfg.user_profile / "AppData" / "LocalLow" / "Shiny Shoe" / file
 
-    async def sync_monster_train_save(self, game_version: int):
+    async def _get_and_sync_mt_file(self, game_version: int, file: pathlib.Path, key: str):
+        """Fetch a specific file on disc and sync it to the server.
+
+        :param game_version: Which version of Monster Train is being targeted.
+        :type game_version: int
+        :param file: The path to the file to fetch and sync.
+        :type file: pathlib.Path
+        :param key: Which key for syncing (and storing timestamp) to use.
+        :type key: str
+        """
         if not cfg.use_mt:
             return
 
-        mt_folder = self.get_monster_train_folder(game_version)
-        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
-
-        if not mt_file.exists():
-            print(f"We do not have a savefile for Monster Train {game_version}")
+        if not file.exists():
+            print(f"We do not have a {key} file for Monster Train {game_version}")
             return
 
-        mtime = mt_file.stat().st_mtime
-        if mtime != self.last_modified[f"current_mt{game_version}"]:
+        mtime = file.stat().st_mtime
+        if mtime != self.last_modified[f"{key}_mt{game_version}"]:
             data = {"game_version": str(game_version)}
 
             try:
-                with mt_file.open("rb") as f:
-                    data["save"] = f.read()
+                with file.open("rb") as f:
+                    data[key] = f.read()
             except PermissionError:
-                print(f"Could not read Monster Train {game_version} savefile.")
+                print(f"Could not read Monster Train {game_version} {key} file.")
                 return
 
-            async with self.session.post("/sync/monster-train/save", data=data, params={"key": cfg.secret}) as resp:
+            async with self.session.post(f"/sync/monster-train/{key}", data=data, params={"key": cfg.secret}) as resp:
                 if resp.ok:
-                    d = {f"current_mt{game_version}": mtime}
+                    d = {f"{key}_mt{game_version}": mtime}
                     self.update_modified_timestamp(**d)
                 else:
-                    print(f"ERROR: Monster Train {game_version} data not properly sent:\n{resp.reason}")
+                    print(f"ERROR: Monster Train {game_version} {key} data not properly sent:\n{resp.reason}")
+
+    async def sync_monster_train_save(self, game_version: int):
+        mt_folder = self.get_monster_train_folder(game_version)
+        mt_file = mt_folder / "saves" / "save-singlePlayer.json"
+
+        await self._get_and_sync_mt_file(game_version, mt_file, "save")
+
+    async def sync_monster_train_meta(self, game_version: int):
+        mt_folder = self.get_monster_train_folder(game_version)
+        mt_file = mt_folder / "metagameSave.json"
+
+        await self._get_and_sync_mt_file(game_version, mt_file, "meta")
 
     async def get_now_playing(self):
         async with self.session.get("/spotify/now-playing", params={"key": cfg.secret}) as resp:
