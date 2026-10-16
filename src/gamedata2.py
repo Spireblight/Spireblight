@@ -701,8 +701,8 @@ class PathNode:
             to_append[18].extend(f"- {x.name}" for x in self.discarded_potions)
 
         if self.skipped_potions:
-            to_append[20].append("Potions skipped:")
-            to_append[20].extend(f"- {x.name}" for x in self.skipped_potions)
+            to_append[60].append("Potions skipped:") # XXX moving skipped data to the end (specifically for shops)
+            to_append[60].extend(f"- {x.name}" for x in self.skipped_potions)
 
         # used to skip from 20->30; relic entry now lowered to 24
 
@@ -711,8 +711,8 @@ class PathNode:
             to_append[24].extend(f"- {x.name}" for x in self.relics)
 
         if self.skipped_relics:
-            to_append[26].append("Relics skipped:")
-            to_append[26].extend(f"- {x.name}" for x in self.skipped_relics)
+            to_append[66].append("Relics skipped:")
+            to_append[66].extend(f"- {x.name}" for x in self.skipped_relics)
 
         if self.relics_lost:
             to_append[28].append("Relics lost:")
@@ -725,8 +725,8 @@ class PathNode:
             to_append[32].extend(f"- {x}" for x in self.picked)
 
         if self.skipped:
-            to_append[34].append("Skipped:")
-            to_append[34].extend(f"- {x}" for x in self.skipped)
+            to_append[64].append("Skipped:")
+            to_append[64].extend(f"- {x}" for x in self.skipped)
 
         if self.cards_obtained:
             to_append[36].append("Cards obtained:")
@@ -751,16 +751,16 @@ class PathNode:
         # a lot of these options have been moved around; notably, card info comes first now
 
         if self.gold_gained:
-            to_append[44].append(f"Picked up {self.gold_gained} gold")
+            to_append[46].append(f"Picked up {self.gold_gained} gold")
 
         if self.gold_spent:
-            to_append[46].append(f"Spent {self.gold_spent} gold")
+            to_append[48].append(f"Spent {self.gold_spent} gold")
 
         if self.gold_lost:
-            to_append[48].append(f"Lost {self.gold_lost} gold")
+            to_append[50].append(f"Lost {self.gold_lost} gold")
 
         if self.gold_stolen:
-            to_append[50].append(f"Got {self.gold_stolen} gold stolen")
+            to_append[52].append(f"Got {self.gold_stolen} gold stolen")
 
         # and finally, health info
 
