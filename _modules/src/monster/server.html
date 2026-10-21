@@ -467,7 +467,7 @@
 <div class="viewcode-block" id="MonsterSave">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MonsterSave</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -698,6 +698,23 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"titanTrialEnabled"</span><span class="p">]</span></div>
 
 
+<div class="viewcode-block" id="Metasave">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Metasave">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Metasave</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_covenant</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"maxAscensionLevel"</span><span class="p">]</span></div>
+
+
 <span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-save.json"</span><span class="p">)</span>
 <span class="n">_save2</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-2-save.json"</span><span class="p">)</span>
 
@@ -830,7 +847,8 @@
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.mt_current">[docs]</a>
 <span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/mt/debug"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mt_current</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
-    <span class="n">save</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_savefile</span><span class="p">()</span>
+    <span class="c1">#save = await get_savefile()</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="n">_save2</span> <span class="c1"># temporary fix</span>
     <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No savefile present on server"</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">_data</span>
