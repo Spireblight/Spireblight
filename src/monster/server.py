@@ -81,7 +81,7 @@ def parse_value(v: list[int], *, little_endian=True) -> int:
     return int(sum(unpacked))
 
 class MonsterSave:
-    def __init__(self, file):
+    def __init__(self, file: str):
         data = None
         try:
             with getfile(file, "r") as f:
@@ -299,6 +299,20 @@ class Ring:
     def is_titan_trial(self) -> bool:
         return self._data["titanTrialEnabled"]
 
+class Metasave:
+    def __init__(self, filename: str):
+        data = None
+        try:
+            with getfile(filename, "r") as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+        self._data = data
+
+    @property
+    def max_covenant(self) -> int:
+        return self._data["maxAscensionLevel"]
+
 _savefile = MonsterSave("monster-train-save.json")
 _save2 = MonsterSave("monster-train-2-save.json")
 
@@ -414,7 +428,8 @@ async def get_data(req: Request):
 
 @router.get("/mt/debug")
 async def mt_current(req: Request):
-    save = await get_savefile()
+    #save = await get_savefile()
+    save = _save2 # temporary fix
     if save is None:
         raise HTTPServiceUnavailable(reason="No savefile present on server")
     data = save._data
