@@ -2,11 +2,117 @@
 
 {% block title %}
   {% if save.in_game %}
-    {{ save.champion }} run [{{ save.main_clan }} & {{ save.sub_clan }}]
+    {{ save.champion.name }} run [{{ save.main_clan }} & {{ save.sub_clan }}]
   {% else %}
     No active run
   {% endif %}
 {% endblock %}
 
 {% block content %}
+  <script type="text/javascript">
+    const labels = {{ save.get_fight_names() | safe }};
+
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Pyre HP',
+        backgroundColor: '#ff6384',
+        borderColor: '#ff6384',
+        data: {{ save.pyre_hp_graph }},
+        yAxisID: 'y',
+      },{
+        label: 'Pyre Max HP',
+        backgroundColor: '#8463ff',
+        borderColor: '#8463ff',
+        borderWidth: 1,
+        radius: 0,
+        data: {{ save.pyre_max_hp_graph }},
+        yAxisID: 'y',
+      },{
+        label: 'Gold',
+        backgroundColor: '#ffd700',
+        borderColor: '#ffd700',
+        data: {{ save.gold_graph }},
+        yAxisID: 'y1',
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        stacked: false,
+        scales: {
+          x: {
+            grid: {
+              color: "#222229",
+            }
+          },
+          y: {
+            min: 0,
+            grid: {
+              color: "#222229",
+            }
+          },
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+            min: 0,
+            grid: {
+              color: "#222229",
+              drawOnChartArea: false, // only want the grid lines for one axis to show up
+            },
+          },
+        }
+      }
+    };
+  </script>
+
+<section class="section">
+  <div class="box mt2-run is-paddingless">
+    <div class="avatar">
+      <img class="{{ save.champion.name | lower }}"
+        src="{{ save.champion.get_image_link() }}"
+        alt="{{ save.champion.name }}"/>
+        {{ save.main_clan }} / {{ save.sub_clan }} run
+    </div>
+    <div class="mt2-run-content">
+      <div class="run-title pt-4 pr-4 pb-4">
+        <div class="mutators"> {# make it mutators and stuff #}
+          {% if save.mutators %}
+            <i title="Mutators are active. Check left panel for more information."
+              class="fa-solid fa-flask"></i>
+          {% endif %}
+        </div>
+
+        <div class="extra"> {# Add misc info here#}
+        </div>
+
+      </div>
+    </div>
+    <section class="section">
+      <div class="charts">
+        <canvas id="chart"></canvas>
+        <script type="text/javascript">
+         const myChart = new Chart(
+           document.getElementById('chart'),
+           config
+         );
+        </script>
+
+        <p class="chart-disclaimer has-text-centered m-4 is-size-7">
+          This graph is not excellent on mobile yet. View it on desktop for a
+          better and more interactive experience.
+        </p>
+      </div>
+    </section>
+  </div>
+</section>
+
 {% endblock %}
