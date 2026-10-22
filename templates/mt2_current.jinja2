@@ -74,45 +74,60 @@
     };
   </script>
 
-<section class="section">
-  <div class="box mt2-run is-paddingless">
-    <div class="avatar">
-      <img class="{{ save.champion.name | lower }}"
-        src="{{ save.champion.get_image_link() }}"
-        alt="{{ save.champion.name }}"/>
-        {{ save.main_clan }} / {{ save.sub_clan }} run
-    </div>
-    <div class="mt2-run-content">
-      <div class="run-title pt-4 pr-4 pb-4">
-        <div class="mutators"> {# make it mutators and stuff #}
-          {% if save.mutators %}
-            <i title="Mutators are active. Check left panel for more information."
-              class="fa-solid fa-flask"></i>
-          {% endif %}
-        </div>
-
-        <div class="extra"> {# Add misc info here#}
-        </div>
-
-      </div>
-    </div>
+  {% if save.in_game %}
     <section class="section">
-      <div class="charts">
-        <canvas id="chart"></canvas>
-        <script type="text/javascript">
-         const myChart = new Chart(
-           document.getElementById('chart'),
-           config
-         );
-        </script>
+      <div class="box mt2-run is-paddingless">
+        <div class="avatar">
+          <img class="{{ save.champion.name | lower }}"
+            src="{{ save.champion.get_image_link() }}"
+            alt="{{ save.champion.name }}"/>
+            {{ save.main_clan }} / {{ save.sub_clan }} run
+        </div>
+        <div class="mt2-run-content">
+          <div class="run-title pt-4 pr-4 pb-4">
+            <div class="mutators"> {# make it mutators and stuff #}
+              {% if save.mutators %}
+                <i title="Mutators are active. Check left panel for more information."
+                  class="fa-solid fa-flask"></i>
+              {% endif %}
+            </div>
 
-        <p class="chart-disclaimer has-text-centered m-4 is-size-7">
-          This graph is not excellent on mobile yet. View it on desktop for a
-          better and more interactive experience.
-        </p>
+            <div class="extra"> {# Add misc info here#}
+            </div>
+
+          </div>
+        </div>
+        <section class="section">
+          <div class="charts">
+            <canvas id="chart"></canvas>
+            <script type="text/javascript">
+            const myChart = new Chart(
+              document.getElementById('chart'),
+              config
+            );
+            </script>
+
+            <p class="chart-disclaimer has-text-centered m-4 is-size-7">
+              This graph is not excellent on mobile yet. View it on desktop for a
+              better and more interactive experience.
+            </p>
+          </div>
+        </section>
       </div>
     </section>
-  </div>
-</section>
+  {% else %}
+    <section class="section mt-4 mb-4">
+      <div class="columns is-centered has-text-centered mt-4">
+        <div class="column mb-4">
+          <h1 class="title">
+            No run is currently going on!
+          </h1>
+          <p class="block">
+            Stick around until Baalor starts one.
+          </p>
+        </div>
+      </div>
+    </section>
+  {% endif %}
 
 {% endblock %}
