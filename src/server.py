@@ -2527,13 +2527,7 @@ async def score(ctx: ContextType, save: SaveType):
 
 @mt_command("clans")
 async def mt_clans(ctx: ContextType, save: MonsterSave):
-    main = save.main_class
-    if save.main_exiled:
-        main = f"{main} (Exiled)"
-    sub = save.sub_class
-    if save.sub_exiled:
-        sub = f"{sub} (Exiled)"
-    await ctx.reply(f"The clans are {main} and {sub}.")
+    await ctx.reply(f"The clans are {save.main_clan} / {save.sub_clan}.")
 
 
 @mt_command("mutators")
