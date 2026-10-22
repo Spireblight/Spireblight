@@ -3138,13 +3138,7 @@
 <a class="viewcode-back" href="../../server.html#src.server.mt_clans">[docs]</a>
 <span class="nd">@mt_command</span><span class="p">(</span><span class="s2">"clans"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mt_clans</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">MonsterSave</span><span class="p">):</span>
-    <span class="n">main</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">main_class</span>
-    <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">main_exiled</span><span class="p">:</span>
-        <span class="n">main</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">main</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
-    <span class="n">sub</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">sub_class</span>
-    <span class="k">if</span> <span class="n">save</span><span class="o">.</span><span class="n">sub_exiled</span><span class="p">:</span>
-        <span class="n">sub</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
-    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The clans are </span><span class="si">{</span><span class="n">main</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span></div>
+    <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The clans are </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">main_clan</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">save</span><span class="o">.</span><span class="n">sub_clan</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span></div>
 
 
 
