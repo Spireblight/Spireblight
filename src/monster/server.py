@@ -256,7 +256,7 @@ class Ring:
         """Return names for the before and after."""
         if self.ring == 8: # Titans
             return ["Before the Titans"]
-        fight_name = _fights[self.ring][self._data["scenarioIndex"]]
+        fight_name: str = _fights[self.ring][self._data["scenarioIndex"]]
         if (b := self._get_boss(allow_future=True)) is None: # flying boss
             boss = fight_name
         else:
@@ -276,7 +276,10 @@ class Ring:
                 word = boss # handled below
             case a:
                 raise ValueError(f"Ring #{a} makes no sense")
-        if self.ring < self.farthest or fight_name == boss: # flying bosses are always known
+        if fight_name == boss: # flying bosses are always known
+            name = fight_name.partition(" (")[0]
+            return f"Before {name}", f"After beating {fight_name}"
+        if self.ring < self.farthest:
             return f"Before {fight_name}", f"After beating {boss}"
         return f"Before {word}", f"After {word}"
 
