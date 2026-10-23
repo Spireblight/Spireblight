@@ -515,10 +515,8 @@ def load_mt2(base: Path = Path(".")):
                     _internal_cache[value.internal] = value
                 _query_cache[sanitize(value.name)].append(value)
 
-    for img in (base / "static" / "mt2").iterdir():
-        if img.name.endswith(".png"):
-            _autoreplace[img.name.partition(".")[0]] = img.name
-        elif img.is_dir():
-            for img2 in img.iterdir():
-                if img2.name.endswith(".png"):
-                    _autoreplace[img2.name.partition(".")[0]] = f"{img.name}/{img2.name}"
+    for sub in (base / "static" / "mt2").iterdir():
+        if sub.is_dir(): # we only go exactly one level down
+            for img in sub.iterdir():
+                if img.name.endswith(".png"):
+                    _autoreplace[img.name.partition(".")[0].lower()] = f"{sub.name}/{img.name}"
