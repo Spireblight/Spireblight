@@ -312,12 +312,18 @@ class Metasave:
             pass
         self._data = data
 
+    def update_data(self, data: dict):
+        self._data = data
+
     @property
     def max_covenant(self) -> int:
         return self._data["maxAscensionLevel"]
 
 _savefile = MonsterSave("monster-train-save.json")
 _save2 = MonsterSave("monster-train-2-save.json")
+
+_meta1 = Metasave("monster-train-meta.json")
+_meta2 = Metasave("monster-train-2-meta.json")
 
 async def get_savefile(ctx: ContextType | None = None) -> MonsterSave:
     if (_save2._data is not None and (_save2.main_class and _save2.sub_class)):
@@ -366,13 +372,15 @@ async def receive_meta_data(req: Request): # we store the data, but nothing uses
     meta, game_version = await get_req_data(req, "meta", "game_version")
     data = json.loads(meta)
     if game_version == "1":
-        savefile = _savefile
+        savefile = _meta1
         filename = "monster-train-meta.json"
     elif game_version == "2":
-        savefile = _save2
+        savefile = _meta2
         filename = "monster-train-2-meta.json"
     else:
         raise HTTPForbidden(reason="game_version can only be 1 or 2")
+
+    savefile.update_data(data)
 
     with getfile(filename, "w") as f:
         json.dump(data, f, indent=config.server.json_indent)
