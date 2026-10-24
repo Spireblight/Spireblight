@@ -3467,7 +3467,7 @@ async def XCOM_startup():
                             for k,v in row.items():
                                 # plan in case we get extra lines
                                 if k in fieldnames and k not in ("Rank", "Billet", "First Name", "Nickname", "Last Name", "Original Name", "Chatter"):
-                                    if v.isdigit():
+                                    if v and v.isdigit():
                                         v = int(v)
                                     res[k] = v
                             first = row["First Name"]
