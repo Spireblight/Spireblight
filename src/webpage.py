@@ -27,7 +27,7 @@ playlists = []
 xcom_roster = []
 xcom_memorial = []
 xcom_tracker = []
-xcom_sheet = "https://docs.google.com/spreadsheets/d/1zrwD6daOT9AH1EIk8DPwgGw-X91vU1DD84fz-YF7o2g"
+xcom_sheet = "https://docs.google.com/spreadsheets/d/1aKPhHO1-Rp4XAXPYt3vzeIvmzjhthColPS3Vz_5jEqg"
 
 _query_params = {
     "key": config.youtube.api_key,
