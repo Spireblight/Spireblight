@@ -45,7 +45,7 @@
     },
     {
         "name": "Quenching Oil",
-        "description": "Consume. Apply [spellweakness] 1 and [meleeweakness] 1."
+        "description": "Consume. Apply [spell weakness] 1 and [melee weakness] 1."
     },
     {
         "name": "Pyre Light",
@@ -93,7 +93,7 @@
     },
     {
         "name": "Penitent's Deathsuit",
-        "description": "[shift]: Gain [meleeweakness] 1. Can be equipped on enemy units."
+        "description": "[shift]: Gain [melee weakness] 1. Can be equipped on enemy units."
     },
     {
         "name": "Preserve",
@@ -137,7 +137,7 @@
     },
     {
         "name": "Reanimation Lab",
-        "description": "Friendly units gain +7[attack] and +7[health] on Summon and Reanimated."
+        "description": "Friendly units gain +7[attack] and +7[health] on [summon] and [reanimated]."
     },
     {
         "name": "Moonipulate",
@@ -157,7 +157,7 @@
     },
     {
         "name": "Greed Dragon",
-        "description": "Summon: +10[attack] and +10[health] for each [dragonshoardicon]."
+        "description": "[summon]: +10[attack] and +10[health] for each [dragonshoardicon]."
     },
     {
         "name": "Fenix Fire",
@@ -177,7 +177,7 @@
     },
     {
         "name": "Hexscalation",
-        "description": "Ascend. Apply [spellweakness] 2."
+        "description": "Ascend. Apply [spell weakness] 2."
     },
     {
         "name": "Weapons Cache",
@@ -197,7 +197,7 @@
     },
     {
         "name": "Pyre Chomper",
-        "description": "Summon: Gain 4[ember]."
+        "description": "[summon]: Gain 4[ember]."
     },
     {
         "name": "Heroic Dive",
@@ -245,7 +245,7 @@
     },
     {
         "name": "Glugsider",
-        "description": "Inspire: Restore 10 health. Ability: Eat."
+        "description": "[ontransfusion]: Restore 10 [health]. Ability: Eat."
     },
     {
         "name": "Duality",
@@ -337,15 +337,15 @@
     },
     {
         "name": "Reforming Ooze",
-        "description": "[undying] 1. Reanimated: +6[attack] permanently."
+        "description": "[undying] 1. [reanimated]: +6[attack] permanently."
     },
     {
         "name": "Gem Trove",
-        "description": "Apply [damageshield] 1 to friendly units. Add 3 uncommon or rare Morsel units to your hand."
+        "description": "Apply [damage shield] 1 to friendly units. Add 3 uncommon or rare Morsel units to your hand."
     },
     {
         "name": "Avenger",
-        "description": "[revenge]: Apply [meleeweakness] 1 to the attacker."
+        "description": "[revenge]: Apply [melee weakness] 1 to the attacker."
     },
     {
         "name": "Plink",
@@ -389,7 +389,7 @@
     },
     {
         "name": "Begone",
-        "description": "Retreat the front enemy unit. Apply [meleeweakness] 1 to enemy units."
+        "description": "Retreat the front enemy unit. Apply [melee weakness] 1 to enemy units."
     },
     {
         "name": "Moonbeam",
@@ -429,7 +429,7 @@
     },
     {
         "name": "Wyngh's Radiance",
-        "description": "Advance. Apply 1X [meleeweakness]."
+        "description": "Advance. Apply 1X [melee weakness]."
     },
     {
         "name": "Proliferate",
@@ -437,7 +437,7 @@
     },
     {
         "name": "Challenge",
-        "description": "Advance. Apply [meleeweakness] 1."
+        "description": "Advance. Apply [melee weakness] 1."
     },
     {
         "name": "Steel Pulley Claw",
@@ -553,7 +553,7 @@
     },
     {
         "name": "Molting Imp",
-        "description": "Summon: Deal 10 damage to enemy units."
+        "description": "[summon]: Deal 10 damage to enemy units."
     },
     {
         "name": "Silver Ink",
@@ -765,7 +765,7 @@
     },
     {
         "name": "Liquid Courage",
-        "description": "Consume. Apply [damageshield] 1 and [valor] 4."
+        "description": "Consume. Apply [damage shield] 1 and [valor] 4."
     },
     {
         "name": "Echo Vault",
@@ -813,11 +813,11 @@
     },
     {
         "name": "Remnant Host",
-        "description": "[extinguish]: Summon 2 Draff units."
+        "description": "[extinguish]: [summon] 2 Draff units."
     },
     {
         "name": "Selfless Sacrifice",
-        "description": "Consume. Advance. Apply [damageshield] 2."
+        "description": "Consume. Advance. Apply [damage shield] 2."
     },
     {
         "name": "Bloodsoaked Arena",
@@ -849,7 +849,7 @@
     },
     {
         "name": "Crucible Warden",
-        "description": "[gorge]: Gain [damageshield] 1."
+        "description": "[gorge]: Gain [damage shield] 1."
     },
     {
         "name": "Subsuming Blade",
@@ -881,7 +881,7 @@
     },
     {
         "name": "Sanctuary",
-        "description": "Consume. Apply [damageshield] 2 to friendly units."
+        "description": "Consume. Apply [damage shield] 2 to friendly units."
     },
     {
         "name": "Vampire's Tooth",
@@ -909,7 +909,7 @@
     },
     {
         "name": "Energy Siphon",
-        "description": "Apply [spellweakness] 1."
+        "description": "Apply [spell weakness] 1."
     },
     {
         "name": "Funguy in a Suit",
@@ -941,7 +941,7 @@
     },
     {
         "name": "Transcendimp",
-        "description": "When played, repeat all Summon effects triggered so far this battle."
+        "description": "When played, repeat all [summon] effects triggered so far this battle."
     },
     {
         "name": "Echoed Growth",
@@ -981,11 +981,11 @@
     },
     {
         "name": "Impish Scholar",
-        "description": "Summon: Return a random consumed spell to your hand."
+        "description": "[summon]: Return a random consumed spell to your hand."
     },
     {
         "name": "Bogdeep Cocoon",
-        "description": "[hatch] 12. [hatchicon]: Summon Bog Wurmling."
+        "description": "[hatch] 12. [hatchicon]: [summon] Bog Wurmling."
     },
     {
         "name": "Sentry Turret",
@@ -1005,7 +1005,7 @@
     },
     {
         "name": "Prismal Dust",
-        "description": "Consume. Apply 1X [damageshield]."
+        "description": "Consume. Apply 1X [damage shield]."
     },
     {
         "name": "Lunar Echo",
@@ -1029,7 +1029,7 @@
     },
     {
         "name": "Swordmaiden",
-        "description": "Summon: Draw an equipment card from your deck. [artificer]: Gain [valor] 8."
+        "description": "[summon]: Draw an equipment card from your deck. [artificer]: Gain [valor] 8."
     },
     {
         "name": "Packed Morsels",
@@ -1065,7 +1065,7 @@
     },
     {
         "name": "Meddler",
-        "description": "Summon: Phase. Ability: Moonipulate."
+        "description": "[summon]: Phase. Ability: Moonipulate."
     },
     {
         "name": "Invigorating Solution",
@@ -1225,7 +1225,7 @@
     },
     {
         "name": "Bog Chrysalis",
-        "description": "[hatch] 5. [hatchicon]: Summon 2 Bog Fly units."
+        "description": "[hatch] 5. [hatchicon]: [summon] 2 Bog Fly units."
     },
     {
         "name": "Brew",
@@ -1277,7 +1277,7 @@
     },
     {
         "name": "Electricity Chamber",
-        "description": "Friendly units gain [spikes] 8 on Summon and Reanimated."
+        "description": "Friendly units gain [spikes] 8 on [summon] and [reanimated]."
     },
     {
         "name": "Fortified Pauldrons",
@@ -1285,7 +1285,7 @@
     },
     {
         "name": "Apex Imp",
-        "description": "[armor]ed: Gain [buff] equal to gained [armor]. Summon: Gain [armor] 5."
+        "description": "[armor]ed: Gain [buff] equal to gained [armor]. [summon]: Gain [armor] 5."
     },
     {
         "name": "Primitive Mold",
@@ -1313,7 +1313,7 @@
     },
     {
         "name": "Morselmaker",
-        "description": "[resolve]: Summon an Antumbra Morsel and a Magma Morsel."
+        "description": "[resolve]: [summon] an Antumbra Morsel and a Magma Morsel."
     },
     {
         "name": "Eel Gorgon",
@@ -1365,7 +1365,7 @@
     },
     {
         "name": "Forced Contamination",
-        "description": "Extract 3. Apply [meleeweakness] 2."
+        "description": "Extract 3. Apply [melee weakness] 2."
     },
     {
         "name": "Scissor Hands",
@@ -1377,7 +1377,7 @@
     },
     {
         "name": "Railbeater",
-        "description": "[armor] 30. [strike]: Apply [meleeweakness] 1."
+        "description": "[armor] 30. [strike]: Apply [melee weakness] 1."
     },
     {
         "name": "Bog Wurmling",
@@ -1385,7 +1385,7 @@
     },
     {
         "name": "Grovel",
-        "description": "Apply [damageshield] 1. Add 2 uncommon or rare Morsel units to your hand."
+        "description": "Apply [damage shield] 1. Add 2 uncommon or rare Morsel units to your hand."
     },
     {
         "name": "Maneating III",
@@ -1449,7 +1449,7 @@
     },
     {
         "name": "Thorned Hollow",
-        "description": "Summon: Gain 60 max health. [rejuvenate]: Gain [spikes] 4."
+        "description": "[summon]: Gain 60 max health. [rejuvenate]: Gain [spikes] 4."
     },
     {
         "name": "Mix-a-Lot",
@@ -1489,7 +1489,7 @@
     },
     {
         "name": "Welder Helper",
-        "description": "Summon: Apply [armor] 20 to the front friendly unit."
+        "description": "[summon]: Apply [armor] 20 to the front friendly unit."
     },
     {
         "name": "Formless Child",
@@ -1577,7 +1577,7 @@
     },
     {
         "name": "Legion of Wax",
-        "description": "[extinguish]: Summon 2 Twin of Wax and apply this unit's upgrades, equipment, and stat changes."
+        "description": "[extinguish]: [summon] 2 Twin of Wax and apply this unit's upgrades, equipment, and stat changes."
     },
     {
         "name": "Crystalline Seeds",
@@ -1613,7 +1613,7 @@
     },
     {
         "name": "Shard[soul] Carver",
-        "description": "Inspire: +3[attack] and [armor] 3."
+        "description": "[ontransfusion]: +3[attack] and [armor] 3."
     },
     {
         "name": "Deathcapped Prophet",
@@ -1701,7 +1701,7 @@
     },
     {
         "name": "Icy Cilophyte",
-        "description": "[sweep]. [strike]: Apply [spellweakness] 1."
+        "description": "[sweep]. [strike]: Apply [spell weakness] 1."
     },
     {
         "name": "Imp-pressive",
@@ -1761,7 +1761,7 @@
     },
     {
         "name": "Awoken Hollow",
-        "description": "Summon: Gain 60 max health. [rejuvenate]: Cultivate 3."
+        "description": "[summon]: Gain 60 max health. [rejuvenate]: Cultivate 3."
     },
     {
         "name": "Eat",
@@ -1857,7 +1857,7 @@
     },
     {
         "name": "Steelsinger",
-        "description": "Summon: Gain 80 max health. [rejuvenate]: +3[attack] permanently."
+        "description": "[summon]: Gain 80 max health. [rejuvenate]: +3[attack] permanently."
     },
     {
         "name": "Spike of the League",
@@ -1917,7 +1917,7 @@
     },
     {
         "name": "Spell Slam",
-        "description": "Restore to full health. Apply [spellweakness] 1 to enemy units."
+        "description": "Restore to full health. Apply [spell weakness] 1 to enemy units."
     },
     {
         "name": "Potion Kit",
@@ -1940,7 +1940,7 @@
         "description": "Infusion. Persistent. Purge."
     },
     {
-        "name": "Inspire",
+        "name": "[ontransfusion]",
         "description": "Apply [valor] 1 to friendly units."
     },
     {
@@ -2013,7 +2013,7 @@
     },
     {
         "name": "Kinhost Vessel",
-        "description": "[hatch] 8. [hatchicon]: Summon Kinhost Pupa."
+        "description": "[hatch] 8. [hatchicon]: [summon] Kinhost Pupa."
     },
     {
         "name": "Sacrificial Chamber",
@@ -2029,7 +2029,7 @@
     },
     {
         "name": "Hulking Mass",
-        "description": "[armor] 40. Reanimated: Gain [armor] 40."
+        "description": "[armor] 40. [reanimated]: Gain [armor] 40."
     },
     {
         "name": "The Sentient",
@@ -2085,11 +2085,11 @@
     },
     {
         "name": "Fledgling Imp",
-        "description": "Summon: Apply [buff] 5 to friendly units."
+        "description": "[summon]: Apply [buff] 5 to friendly units."
     },
     {
         "name": "Queen's Impling",
-        "description": "Summon: Deal 16 damage to the front enemy unit."
+        "description": "[summon]: Deal 16 damage to the front enemy unit."
     },
     {
         "name": "Ethereal Seelie",
@@ -2193,7 +2193,7 @@
     },
     {
         "name": "Void Binding",
-        "description": "Apply [damageshield] 2, [buff] 6, and [scorch] 3."
+        "description": "Apply [damage shield] 2, [buff] 6, and [scorch] 3."
     },
     {
         "name": "Heavenly Slam",
@@ -2245,7 +2245,7 @@
     },
     {
         "name": "Cheery Deathcap",
-        "description": "Summon: Apply [decay] 7 to enemy units."
+        "description": "[summon]: Apply [decay] 7 to enemy units."
     },
     {
         "name": "Crafted Equipment",
@@ -2253,7 +2253,7 @@
     },
     {
         "name": "Urchin Spines",
-        "description": "Consume. Apply [spellweakness] 2 to enemy units."
+        "description": "Consume. Apply [spell weakness] 2 to enemy units."
     },
     {
         "name": "[buff] Serum",
@@ -2301,7 +2301,7 @@
     },
     {
         "name": "Dante the Dependable",
-        "description": "Summon: Add a permanent Dante's Candle to your deck. Gain a stack of [multistrike] for each Blight card in your deck."
+        "description": "[summon]: Add a permanent Dante's Candle to your deck. Gain a stack of [multistrike] for each Blight card in your deck."
     },
     {
         "name": "Gifts for a Guard",
@@ -2317,7 +2317,7 @@
     },
     {
         "name": "Benediction",
-        "description": "Apply [valor] 2 and [damageshield] 1 to friendly units."
+        "description": "Apply [valor] 2 and [damage shield] 1 to friendly units."
     },
     {
         "name": "Pyreborne Brainspike",
@@ -2349,7 +2349,7 @@
     },
     {
         "name": "Morsel Jeweler",
-        "description": "[eaten]: Eater gains +6[health] and [damageshield] 1."
+        "description": "[eaten]: Eater gains +6[health] and [damage shield] 1."
     },
     {
         "name": "Cover of Night",
@@ -2385,7 +2385,7 @@
     },
     {
         "name": "Waxcap",
-        "description": "Summon: Apply [debuff] 3 to enemy units."
+        "description": "[summon]: Apply [debuff] 3 to enemy units."
     },
     {
         "name": "Replicator Ray",
@@ -2441,7 +2441,7 @@
     },
     {
         "name": "Juggernaut",
-        "description": "Summon: +30X[attack] and +30X[health]."
+        "description": "[summon]: +30X[attack] and +30X[health]."
     },
     {
         "name": "Unearth Treasure",
@@ -2521,7 +2521,7 @@
     },
     {
         "name": "Keeper of Echoes",
-        "description": "Inspire: Apply +2[attack] and +1[health] to friendly units."
+        "description": "[ontransfusion]: Apply +2[attack] and +1[health] to friendly units."
     },
     {
         "name": "Preserved Thorns",
@@ -2549,7 +2549,7 @@
     },
     {
         "name": "Jack in the Box",
-        "description": "[resolve]: Summon a boxed unit."
+        "description": "[resolve]: [summon] a boxed unit."
     },
     {
         "name": "Adaptive Mutation",
@@ -2657,7 +2657,7 @@
     },
     {
         "name": "Demonize",
-        "description": "Descend. Apply [meleeweakness] 2."
+        "description": "Descend. Apply [melee weakness] 2."
     },
     {
         "name": "Zealot",
@@ -2666,5 +2666,869 @@
     {
         "name": "Savior",
         "description": "Advance. Gain [valor] 5. Gain [armor] equal to 1x [valor]."
+    },
+    {
+        "name": "Gel Transfusor",
+        "description": "When any unit dies, their [pyregel] is spread among enemy units."
+    },
+    {
+        "name": "Imp-cicle",
+        "description": "At start of turn, add a random [imp] unit to hand."
+    },
+    {
+        "name": "Attuned Whetstone",
+        "description": "On [deployphase], draw an Equipment card from your deck. Reduce its cost to 0[ember]."
+    },
+    {
+        "name": "Shardsoul",
+        "description": "+1[ember] per turn. +1[deploymentember]. +2[capacity] on each floor. Draw +1 each turn. "
+    },
+    {
+        "name": "Carriage Jack",
+        "description": "When you play a Room card, apply +1[capacity] on the floor."
+    },
+    {
+        "name": "Lightstone Casing",
+        "description": "Spells get an extra upgrade slot."
+    },
+    {
+        "name": "Steel Stockpile",
+        "description": "Conserve up to 10 [forgepoints] between battles."
+    },
+    {
+        "name": "Token of a Traitor",
+        "description": "Playing a spell deals 3 damage to a random enemy unit on that floor."
+    },
+    {
+        "name": "Astrologer's Orrery",
+        "description": "The first time each turn it becomes [full] gain 1[ember]."
+    },
+    {
+        "name": "Traitor's Quill",
+        "description": "When a card with [consume] is played, deal 30 damage to the front enemy unit."
+    },
+    {
+        "name": "Bone Dog's Pendant",
+        "description": "The first time the Pyre reaches 0 [pyrehealth], restore the Pyre to 25% [pyrehealth]. This can only trigger once."
+    },
+    {
+        "name": "Teeth of Gold",
+        "description": "Deal 5 [piercing] damage to the lowest [health] enemy unit when a unit is [eaten]."
+    },
+    {
+        "name": "Blood of the Apex",
+        "description": "Permanently add +2[attack] to a unit's Equipment on [slay]."
+    },
+    {
+        "name": "Scorching Restraints",
+        "description": "Friendly units enter with [rage] 6."
+    },
+    {
+        "name": "Advanced Growth",
+        "description": "When an equipped unit dies, permanently add +4[attack] to their Equipment."
+    },
+    {
+        "name": "Heph's Blueprints",
+        "description": "When you [forge] an equipment, apply +2[attack] and [armor] 2 for each [forgepoint] spent."
+    },
+    {
+        "name": "Refined Void",
+        "description": "Friendly units enter with [lifesteal] 2."
+    },
+    {
+        "name": "Canio",
+        "description": "When you [annihilate] a card outside of combat, gain 75[coin]."
+    },
+    {
+        "name": "Sketches of Salvation",
+        "description": "On the turn after [deployphase], summon a random unit from your deck on each floor."
+    },
+    {
+        "name": "Combustible Wax",
+        "description": "When a friendly unit gains [burnout], it gains +3 stacks."
+    },
+    {
+        "name": "Shaleshell",
+        "description": "After using an ability, friendly units gain [armor] 3."
+    },
+    {
+        "name": "Priory's Cloak",
+        "description": "When a friendly unit is healed, deal damage to the front enemy unit equal to the amount healed."
+    },
+    {
+        "name": "Departure Manifest",
+        "description": "Non-banner units have [deployable]."
+    },
+    {
+        "name": "Pact of the First Armageddon",
+        "description": "Drafts only offer selections from your allied clan."
+    },
+    {
+        "name": "Votive Key",
+        "description": "Apply [endless] to the first friendly unit played each turn."
+    },
+    {
+        "name": "The Clepsydranium",
+        "description": "Friendly units gain [conduit] 1 on [slay]."
+    },
+    {
+        "name": "Everchurning Soil",
+        "description": "Draw +1 each turn per 25 cards in your Deck."
+    },
+    {
+        "name": "Razorthin Crescent",
+        "description": "[mageblade] adds an additional <nobr>+1[attack]</nobr> per stack."
+    },
+    {
+        "name": "Large Mystery Box",
+        "description": "Add a random card to your hand each turn."
+    },
+    {
+        "name": "Lifemother's Seed",
+        "description": "At the end of combat, create a permanent copy of a random non-champion card in your deck."
+    },
+    {
+        "name": "Channelheart",
+        "description": "<b>Sting</b> spells get +20 [magicpower]."
+    },
+    {
+        "name": "Shattered Halo",
+        "description": "Clan card drafts only offer rares."
+    },
+    {
+        "name": "Queen's Tail",
+        "description": "When you summon your first [imp] unit each turn, gain +1[ember] and draw 1."
+    },
+    {
+        "name": "Collection of Tails",
+        "description": "[rage] does not decay on friendly units."
+    },
+    {
+        "name": "Moonstone",
+        "description": "At end of turn, if it is [full], spells in hand gain +10 [magicpower]."
+    },
+    {
+        "name": "Ember Foundry Crucible",
+        "description": "[smelt] grants an additional +1[ember]."
+    },
+    {
+        "name": "Lost Luggage",
+        "description": "On the turn after [deployphase], draw until you have 10 cards."
+    },
+    {
+        "name": "Evolutionary Instinct",
+        "description": "When a unit has a third unique status effect applied to it, [propagate] 2."
+    },
+    {
+        "name": "Lifemother's Remnant",
+        "description": "Create a permanent copy of the first non-champion card played each turn."
+    },
+    {
+        "name": "Hidden Coffers",
+        "description": "Increase max [dragonshoardicon] by 2."
+    },
+    {
+        "name": "Spiritbreaker's Charge",
+        "description": "After using an ability, friendly units gain +5[attack]."
+    },
+    {
+        "name": "Gnarled Root",
+        "description": "Friendly units get +1[attack] per stack of [spikes]."
+    },
+    {
+        "name": "Herzal's Anvil",
+        "description": "When you [forge], gain +1 [forgepoint]."
+    },
+    {
+        "name": "Divine Shard",
+        "description": "Your Pyre gets +25[pyrehealth]."
+    },
+    {
+        "name": "Base Charge",
+        "description": "At the start of battle, add 2[corrupt] to each floor."
+    },
+    {
+        "name": "Sizzling Firecracker",
+        "description": "Spells gain +3 damage for each upgrade on their card."
+    },
+    {
+        "name": "Triboulet",
+        "description": "Friendly units gain +3[health] for each rare card in your deck."
+    },
+    {
+        "name": "Taskmaster's Lash",
+        "description": "When you damage your own unit, reduce [cooldown] by 1."
+    },
+    {
+        "name": "Breath of Heaven",
+        "description": "[advance] the back enemy unit when it enters your train."
+    },
+    {
+        "name": "Petrified Crucible",
+        "description": "[spikes] deal +1 damage per stack."
+    },
+    {
+        "name": "Skysong Trumpet",
+        "description": "[summon]ing a Hymnist applies [valor] 5 to friendly units."
+    },
+    {
+        "name": "Void Fragment",
+        "description": "At the end of the entire battle, purge a card."
+    },
+    {
+        "name": "Dante's Candelabra",
+        "description": "The Pyre gains [titanskin] 2."
+    },
+    {
+        "name": "Exploding Candle",
+        "description": "Deal 5 damage to enemy units when a [burnout] unit dies."
+    },
+    {
+        "name": "Hellfire Bellows",
+        "description": "When a unit gains [pyregel], it gains +1 stacks."
+    },
+    {
+        "name": "Tuning Gear",
+        "description": "Friendly units enter with [burst] 1."
+    },
+    {
+        "name": "Hair of the Hybrid",
+        "description": "Equipping a friendly unit under half [health] applies [armor] 10, otherwise it applies [rage] 5."
+    },
+    {
+        "name": "Commemorative Spike",
+        "description": "On the turn after [deployphase], summon a <b>Morsel Miner</b> on each floor."
+    },
+    {
+        "name": "Encased Ember",
+        "description": "Gain 5[ember] when a [tomb] unit dies."
+    },
+    {
+        "name": "Inga's Beaker",
+        "description": "Increase the number of choices when using [mix] by 1."
+    },
+    {
+        "name": "Wolo's Bloodletter",
+        "description": "Friendly units get +12[attack]. At end of combat, deal 1 damage to friendly units."
+    },
+    {
+        "name": "Titan's Claws",
+        "description": "At end of turn, [freeze] cards are reduced to 0[ember] until played or discarded."
+    },
+    {
+        "name": "Vola's Tuning Fork",
+        "description": "Starter cards cost -1[ember]."
+    },
+    {
+        "name": "Shroomponics",
+        "description": "At start of turn, friendly units [propagate] 1."
+    },
+    {
+        "name": "Volatile Gauge",
+        "description": "When you draw any non-Champion card, its cost is randomized between 0[ember] and 3[ember]. Draw +2 each turn."
+    },
+    {
+        "name": "Resonant Shard",
+        "description": "[rage] adds an additional <nobr>+1[attack]</nobr> per stack."
+    },
+    {
+        "name": "Life Insurer",
+        "description": "Friendly units gain [armor] 14 on reviving with [undying] ."
+    },
+    {
+        "name": "Sapsuckling Spring",
+        "description": "[shroom] units apply [decay] 1 to enemy units on [summon]."
+    },
+    {
+        "name": "Hell's Flame",
+        "description": "+1[ember] per turn. +1[deploymentember]. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Mask of Penumbra",
+        "description": "When you play your first [snack] unit each turn, draw 1."
+    },
+    {
+        "name": "Perkeo",
+        "description": "At the start of battle, gain a <b>Calcified Ember</b> that converts to <b>Excavated Ember</b> after not playing it once."
+    },
+    {
+        "name": "Prismatic Dragonscale",
+        "description": "At the end of battle, gain 3[dragonshoardicon] if your Pyre took no damage."
+    },
+    {
+        "name": "Celestial Sails",
+        "description": "On [deployphase], draw a non-damage spell from your deck. It costs -1[ember]. "
+    },
+    {
+        "name": "Kingdom's Tears",
+        "description": "Increases healing from spells by 10."
+    },
+    {
+        "name": "Sacrificial Kris",
+        "description": "Apply [pyregel] 5 to enemy units when a Whelp dies."
+    },
+    {
+        "name": "Pressurized Boiler",
+        "description": "The Pyre gains [burst] 4."
+    },
+    {
+        "name": "World-ending Strain",
+        "description": "When a unit dies to [decay], their [decay] is spread among enemy units."
+    },
+    {
+        "name": "Looming Darkshard",
+        "description": "When you draw a Blight or Scourge, gain 1[ember] and draw a non-Blight or non-Scourge card."
+    },
+    {
+        "name": "Consumed Crown",
+        "description": "Friendly units gain +3[attack] on [slay]."
+    },
+    {
+        "name": "Icicle Fracture",
+        "description": "At end of turn, apply [freeze] to a random card in your hand."
+    },
+    {
+        "name": "Sharpened Teeth",
+        "description": "Dragons and Whelps gain +8[attack]."
+    },
+    {
+        "name": "Chain of Gems",
+        "description": "Apply [damage shield] 2 to the first friendly unit summoned each turn."
+    },
+    {
+        "name": "Dante's Footstool",
+        "description": "On [deployphase], draw a Room card from your deck. Reduce its cost to 0[ember]."
+    },
+    {
+        "name": "Frenzystesia",
+        "description": "The first time each turn a friendly unit is equipped, gain 1[ember]."
+    },
+    {
+        "name": "Winged Technology",
+        "description": "[snack] units enter with [damage shield] 1."
+    },
+    {
+        "name": "Gros Michel",
+        "description": "Non-champion friendly units gain +10[attack]. At the end of combat on all floors, 10% chance for this artifact to be destroyed."
+    },
+    {
+        "name": "Sigiled Seaweed",
+        "description": "Apply [mute] 1 when an enemy unit enters your train."
+    },
+    {
+        "name": "Fossilized Fangs",
+        "description": "[feed] triggers an additional time."
+    },
+    {
+        "name": "Fae's Nook",
+        "description": "Fae gain [conduit] 1 and +5[attack] on [mooncycle]."
+    },
+    {
+        "name": "Crystallized Wing",
+        "description": "[x] <b>Cost</b> cards and cards that cost 3[ember] or more have [permafrost]."
+    },
+    {
+        "name": "Dun Echo",
+        "description": "One additional card in each draft pack will be [infused]."
+    },
+    {
+        "name": "Mine Jacks",
+        "description": "+2[capacity] on the middle floor."
+    },
+    {
+        "name": "Flicker's Liquor",
+        "description": "After [deployphase], when you play a unit a random card in hand is reduced to 0[ember] until played or discarded."
+    },
+    {
+        "name": "Chain of the Valkyrie",
+        "description": "When you equip an Angel, apply [valor] 3, [rage] 3, and [regen] 3."
+    },
+    {
+        "name": "Versatile Emberstaff",
+        "description": "When you play three different kinds of cards in a turn, draw 1 and gain 1[ember]."
+    },
+    {
+        "name": "Deepwood Oil",
+        "description": "When you equip a friendly unit, apply [armor] 10."
+    },
+    {
+        "name": "Cuttlebeard",
+        "description": "When a unit gains [frostbite], it gains +2 stacks. [frostbite] does not decay."
+    },
+    {
+        "name": "Attuned Manacles",
+        "description": "The first time you summon a Whelp each turn, reduce the [cooldown] of friendly units on all floors by 2."
+    },
+    {
+        "name": "Sparkflint Catalyst",
+        "description": "When a unit without [pyregel] gains [pyregel], it gains +6 stacks."
+    },
+    {
+        "name": "Wing Clippings",
+        "description": "Spell cards with [consume] have a 50% chance to be discarded instead."
+    },
+    {
+        "name": "Titan's Edict",
+        "description": "[valor] grants an additional +1 [armor] per stack."
+    },
+    {
+        "name": "Emblem of the Exiles",
+        "description": "At start of turn, the front friendly unit on each floor gains +15[health]."
+    },
+    {
+        "name": "Crown of the Eternal",
+        "description": "At start of turn, fully heal Champions."
+    },
+    {
+        "name": "Rootsplit Mask",
+        "description": "Apply [rooted] 1 to enemy units when they enter the floor below the Pyre Room."
+    },
+    {
+        "name": "Leaky Pen",
+        "description": "-1[ember] per turn. Draw 2 additional cards per turn."
+    },
+    {
+        "name": "Winged Steel",
+        "description": "After [deployphase], when you play your third card of the turn, draw 1."
+    },
+    {
+        "name": "Sinner's Salve",
+        "description": "Blights and Scourges cost 0[ember]."
+    },
+    {
+        "name": "Encased Divinity",
+        "description": "At the start of battle, the top floor gains 1[permanentechoes] that cannot be removed."
+    },
+    {
+        "name": "Abyssal Prism",
+        "description": "The first time each turn you target a friendly unit with a spell, non-move effects also hit all other friendly units on the floor."
+    },
+    {
+        "name": "Captain's Halo",
+        "description": "At start of turn, the front friendly unit on each floor gains [valor] 2."
+    },
+    {
+        "name": "Hope for Peace",
+        "description": "Spells and Equipment with [annihilate] have [consume] instead."
+    },
+    {
+        "name": "Split Anvil",
+        "description": "When you play a spell, spells in hand that cost less are reduced to 0[ember] for the turn."
+    },
+    {
+        "name": "Mind Hoard",
+        "description": "Increase [emptycorrupt] by 1 on each floor."
+    },
+    {
+        "name": "Ancient Pinion",
+        "description": "When an Angel moves it gains [valor] 2."
+    },
+    {
+        "name": "Nefarious Overflow",
+        "description": "[unstable] explosions deal twice as much damage."
+    },
+    {
+        "name": "Emot Tome",
+        "description": "Create an Ephemeral copy of the first spell you play each turn."
+    },
+    {
+        "name": "Twisting Mycelium",
+        "description": "On turn start [spawn] 1 on each floor per 20 cards in your Deck."
+    },
+    {
+        "name": "Medallion of Superiority",
+        "description": "Units gain +3[health] and +3[attack] for each upgrade on their card."
+    },
+    {
+        "name": "Karmic Censer",
+        "description": "[shift] triggers an additional time."
+    },
+    {
+        "name": "Sap Tap",
+        "description": "The first time each turn a friendly unit is healed, draw 1."
+    },
+    {
+        "name": "Broken Rail",
+        "description": "When you [forge] a unit or equipment, apply +2[health] for each [forgepoint] spent."
+    },
+    {
+        "name": "Molten Manifold",
+        "description": "<b>X Cost</b> cards get +2 to their X value when played."
+    },
+    {
+        "name": "Fade's First Blade",
+        "description": "Friendly units gain [rage] 3 whenever they lose a stack of [burnout]."
+    },
+    {
+        "name": "Resin Block",
+        "description": "When a friendly unit dies, apply +10[attack] to that unit."
+    },
+    {
+        "name": "Magma Core",
+        "description": "Your Pyre applies [pyregel] 2 to enemy units on all floors on [revenge]."
+    },
+    {
+        "name": "Progress Pacemaker",
+        "description": "The first time you [mix] each turn, [mix] again."
+    },
+    {
+        "name": "Carving Corusca",
+        "description": "When <b>Extract</b> is used, gain 1[ember] and 1[corrupt]."
+    },
+    {
+        "name": "Heaven's Light",
+        "description": "+1[capacity] on each floor. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Serrated Mandibles",
+        "description": "When one or more [corrupt] are added to a floor on your turn, apply [corrupt_poison] 1 to a random enemy unit, twice."
+    },
+    {
+        "name": "Unstable Pyresparks",
+        "description": "<b>Shield Steward</b> and <b>Spear Steward</b> units gain the <b>Boom</b> Ability."
+    },
+    {
+        "name": "Burning Feather",
+        "description": "When a friendly unit dies, Angels on the floor gain [rage] 7."
+    },
+    {
+        "name": "Jackstrips",
+        "description": "Deal 3 [piercing] damage whenever an enemy unit moves between floors."
+    },
+    {
+        "name": "Fhyra's Inferno",
+        "description": "Dragons apply [pyregel] 5 on [strike]."
+    },
+    {
+        "name": "Pyrestone Housing",
+        "description": "Units get an extra upgrade slot."
+    },
+    {
+        "name": "Wanderer's Talisman",
+        "description": "At start of turn, friendly units gain +5[attack] and +5[health] if they are the only friendly unit on the floor."
+    },
+    {
+        "name": "Limbo's Solace",
+        "description": "Draw +1 each turn. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Wurmtooth",
+        "description": "Clan starter cards are [infused].<br>One card in each draft pack will be [infused]."
+    },
+    {
+        "name": "Founding Seal",
+        "description": "[incant] triggers an additional time."
+    },
+    {
+        "name": "Surgeon's Suture",
+        "description": "When you equip a friendly unit, restore them to full health."
+    },
+    {
+        "name": "Seer Orb",
+        "description": "When applying [spell weakness], apply 1 more."
+    },
+    {
+        "name": "Manifold Mirror",
+        "description": "The first Room card played each battle is applied to all floors."
+    },
+    {
+        "name": "Boiler Room Mod",
+        "description": "At the start of battle, apply <b>Boiler Room</b> on the first floor."
+    },
+    {
+        "name": "Circle of Cycles",
+        "description": "Restore 10 [health] to the lowest [health] friendly unit on [mooncycle]."
+    },
+    {
+        "name": "Spotted Spore",
+        "description": "[funguy] gain +2[attack] per [troop] stack."
+    },
+    {
+        "name": "Melting Spout",
+        "description": "[tomb] units get +30[health] and [burnout] 1."
+    },
+    {
+        "name": "The Unbroken Horn",
+        "description": "Conserve [ember] between turns and [deployphase]."
+    },
+    {
+        "name": "Memorial Fund",
+        "description": "Gain 5[coin] when a friendly unit dies."
+    },
+    {
+        "name": "Pyreforged Solace",
+        "description": "Draw +1 each turn. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Fused Pyreshard",
+        "description": "When your Pyre defeats an enemy, it permanently gains +5 [attack]."
+    },
+    {
+        "name": "Cursed Vines",
+        "description": "At start of turn, add a <b>Vine Grasp</b> spell with [ephemeral] to your hand."
+    },
+    {
+        "name": "Contingency Plans",
+        "description": "Monstrosities enter with [spikes] 7."
+    },
+    {
+        "name": "Abandoned Antumbra",
+        "description": "At start of turn, add a common or uncommon [snack] unit to hand."
+    },
+    {
+        "name": "Guild Marker",
+        "description": "Merchant costs are reduced by 25%."
+    },
+    {
+        "name": "Fhyra's Breath",
+        "description": "Whelps apply [pyregel] 3 on [strike]."
+    },
+    {
+        "name": "Ashes of the Fallen",
+        "description": "[summon] triggers an additional time."
+    },
+    {
+        "name": "Pyreforged Flame",
+        "description": "+1[ember] per turn. +1[deploymentember]. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Part Factory",
+        "description": "On [deployphase], add a random [graft] unit to your hand."
+    },
+    {
+        "name": "Shadowbox",
+        "description": "When you play your 20th [snack] unit of the battle, deal 200 damage to enemy units on all floors."
+    },
+    {
+        "name": "Kinstone Totem",
+        "description": "When a card is discarded before the end of your turn, gain 1[ember]."
+    },
+    {
+        "name": "Decayed Decoy",
+        "description": "Grant +1 stack of [corrupt_poison] each time it is applied."
+    },
+    {
+        "name": "Totem Fragment",
+        "description": "Apply [spell weakness] 2 to enemy units when they enter the floor below the Pyre Room."
+    },
+    {
+        "name": "Thornfruit",
+        "description": "At start of turn, add a <b>Sting</b> spell to your hand."
+    },
+    {
+        "name": "Catalyzing Agent",
+        "description": "At end of turn, [unstable] increases by 5."
+    },
+    {
+        "name": "Spell Sanctum Mod",
+        "description": "At the start of battle, apply <b>Spell Sanctum</b> on the second floor."
+    },
+    {
+        "name": "The Bloating Fungus",
+        "description": "[regen] restores +1 [health] per stack."
+    },
+    {
+        "name": "Cavendish",
+        "description": "Non-champion friendly units gain 3x base [attack]. At the end of combat on all floors, 1% chance for this artifact to be destroyed."
+    },
+    {
+        "name": "Kwilling Catcher",
+        "description": "At the end of battle, gain 100[coin]."
+    },
+    {
+        "name": "Ancient Roots",
+        "description": "The first spell played each turn has -1[ember] for every 15 cards in your Deck."
+    },
+    {
+        "name": "A Forgotten Name",
+        "description": "When you play your third spell of the turn, all cards gain +1 [magicpower] for the rest of this battle."
+    },
+    {
+        "name": "Cortical Connector",
+        "description": "[shroom] units gain [regen] 1 on [harvest]."
+    },
+    {
+        "name": "Cleansing Water",
+        "description": "50% chance to remove all Buff effects on an enemy unit when it enters your train."
+    },
+    {
+        "name": "Pyreforged Light",
+        "description": "+1 on each floor. <>Your Pyre gets +X[attack] and +Y[pyrehealth].<>"
+    },
+    {
+        "name": "Ancient Pyretap",
+        "description": "When you are out of [ember], cards can be played for their cost in [pyrehealth]."
+    },
+    {
+        "name": "Martyr's Signet",
+        "description": "At the end of battle, the front friendly unit on each floor permanently gains +6[health]."
+    },
+    {
+        "name": "Odi's Totem",
+        "description": "+1[ember] per turn. -3[deploymentember]."
+    },
+    {
+        "name": "Mold Braces",
+        "description": "Friendly units apply [armor] 5 to the front friendly unit on [extinguish]."
+    },
+    {
+        "name": "Rules of Containment",
+        "description": "Enemy units enter with [frostbite] 2."
+    },
+    {
+        "name": "Silent Sigil",
+        "description": "When it becomes [new], apply [armor] 10 to friendly Silent units."
+    },
+    {
+        "name": "Lunar Lantern",
+        "description": "<b>Selene</b> units get +20[attack] during [full]. <b>Silent</b> units get +20[attack] during [moonshade]."
+    },
+    {
+        "name": "Unstable Shard",
+        "description": "Friendly units get +5[attack] and +12[health]."
+    },
+    {
+        "name": "Nim's Oath",
+        "description": "At start of turn, apply [dazed] 1 to the front enemy unit on a random floor."
+    },
+    {
+        "name": "Judge's Scales",
+        "description": "On [deployphase], discard any number of cards, then draw that many."
+    },
+    {
+        "name": "Flaming Talons",
+        "description": "When an enemy unit ascends, they gain [pyregel] 2."
+    },
+    {
+        "name": "Shadow's Sheath",
+        "description": "Friendly units gain [stealth] 1 on [summon] and [slay]. +3[attack] per stack of [stealth]."
+    },
+    {
+        "name": "Purified Soul Shard",
+        "description": "Unit cards without upgrades cost -1[ember]."
+    },
+    {
+        "name": "Fight Club Mod",
+        "description": "At the start of battle, apply <b>Fight Club</b> on the third floor."
+    },
+    {
+        "name": "Verdant Cycle",
+        "description": "The first time each turn a spell card with [consume] is played, draw 1."
+    },
+    {
+        "name": "Echo Seedling",
+        "description": "The first time each battle a card with [consume] is played, add 2 copies to hand."
+    },
+    {
+        "name": "Celestial Cascade",
+        "description": "When a friendly unit gains [valor], it gains +1 stacks."
+    },
+    {
+        "name": "Chicot",
+        "description": "Bosses start with [mute] 3."
+    },
+    {
+        "name": "Expanded Coffers",
+        "description": "Increase max [dragonshoardicon] by 3."
+    },
+    {
+        "name": "Pyreborne's Insignia",
+        "description": "When you equip a friendly unit, apply [conduit] 4."
+    },
+    {
+        "name": "Grrrg's Goad",
+        "description": "[demon] units get [multistrike] 1."
+    },
+    {
+        "name": "Twin Minds",
+        "description": "Create a permanent copy of the first [consume] card played each battle."
+    },
+    {
+        "name": "Hellheart",
+        "description": "Apply [pyregel] 10 to Non-Flying Boss enemy units that enter the floor below the Pyre Room."
+    },
+    {
+        "name": "Radiant Arms",
+        "description": "When you equip a friendly unit, apply [damage shield] 1."
+    },
+    {
+        "name": "Shadelamp",
+        "description": "The first time each turn an enemy unit dies, add 2 [snack] units to hand."
+    },
+    {
+        "name": "Artificial Pyrestone",
+        "description": "+3[deploymentember]."
+    },
+    {
+        "name": "Blank Pages",
+        "description": "At start of turn, if you do not have a Champion in your hand, add a random one to your hand."
+    },
+    {
+        "name": "Yorick",
+        "description": "When a card with [consume] is played, gain 25[coin]."
+    },
+    {
+        "name": "Hardened Hull",
+        "description": "When an Egg unit is summoned, remove 3 [hatch] and apply [armor] 30."
+    },
+    {
+        "name": "Scorched Steel",
+        "description": "Friendly units enter with [armor] 5."
+    },
+    {
+        "name": "Historian's Razor",
+        "description": "Friendly units get +10[attack] but -1[attack] for every non-boss and non-starter Artifact you own."
+    },
+    {
+        "name": "Golden Gloves",
+        "description": "Friendly units gain [avarice] 2."
+    },
+    {
+        "name": "Notice Stone",
+        "description": "When a card with [consume] is played, all cards gain +1 [magicpower] for the rest of this battle."
+    },
+    {
+        "name": "Railhammer",
+        "description": "When a friendly unit gains [armor], it gains +4 stacks."
+    },
+    {
+        "name": "Golden Idol",
+        "description": "Trial [coin] rewards are increased by 50%."
+    },
+    {
+        "name": "Ember Charge",
+        "description": "On your first turn, +2[ember]."
+    },
+    {
+        "name": "Stardust Treat",
+        "description": "The first unit you summon each turn gains [conduit] 4."
+    },
+    {
+        "name": "Capricious Reflection",
+        "description": "Cards in reward packs and unit banners come with a random upgrade."
+    },
+    {
+        "name": "Bog Slime",
+        "description": "When a spell with [consume] is played, gain 1[corrupt]."
+    },
+    {
+        "name": "Tethys' Scales",
+        "description": "50% chance to apply [spell weakness] 1 when an enemy unit enters your train."
+    },
+    {
+        "name": "Pyre Piping",
+        "description": "While the Pyre is at full health, draw +1 each turn."
+    },
+    {
+        "name": "Waxer Snuffer",
+        "description": "[extinguish] triggers an additional time."
+    },
+    {
+        "name": "Lifemother's Bloom",
+        "description": "At the end of combat, create a permanent copy of a non-champion card in your deck."
+    },
+    {
+        "name": "Thorn Casing",
+        "description": "<b>Sting</b> spells get +10 [magicpower] and [piercing]."
     }
 ]

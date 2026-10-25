@@ -35,6 +35,8 @@ _identical: dict[str, str] = {
     "rage": "buff",
     "snack": "morsel",
     "feed": "gorge",
+    "frostbite": "poison",
+    "troop": "horde",
 }
 _localized: dict[str, str] = {
     "full": "Full Moon",
@@ -227,6 +229,9 @@ class Base2:
                 desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{l}" title="{l}" width="30" height="30">{display}')
             for word in _desc_re.findall(desc): # find any remaining words in []
                 desc = desc.replace(word, f"<b>{word[1:-1].title()}<b>") # bold them up
+            if "<>" in desc: # Pyre hearts, include hyperlink
+                desc = desc.replace("<>", '<a href="https://monstertrain2.miraheze.org/wiki/Pyre_Hearts" target="_blank">', count=1)
+                desc = desc.replace("<>", "</a>")
             self._parsed = desc
         return self._parsed
 

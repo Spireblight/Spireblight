@@ -640,7 +640,7 @@
     },
     {
         "internal": "hatch",
-        "name": "[hatch]",
+        "name": "Shell",
         "card_tooltip": "At end of turn, remove [corrupt] from the floor to remove [hatch] from the front unit with [hatch]. When all [hatch] is removed, the unit will [hatched].",
         "character_tooltip": "At end of turn, remove [corrupt] from the floor to remove [hatch] from the front unit with [hatch]. When all [hatch] is removed, the unit will [hatched].",
         "notification": "",
