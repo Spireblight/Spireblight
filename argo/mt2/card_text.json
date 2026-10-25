@@ -1,7 +1,7 @@
 [
     {
         "name": "Contagious",
-        "description": "Consume. Enemy units Propagate 4. Add a copy of this card to your discard pile."
+        "description": "Consume. Enemy units [propagate] 4. Add a copy of this card to your discard pile."
     },
     {
         "name": "Bog Fly",
@@ -12,8 +12,8 @@
         "description": "Add a random equipment with Ephemeral to your hand and apply -1[ember]."
     },
     {
-        "name": "Soulsmelter",
-        "description": "Siphon: Gain Soul 1. Celebrate: Gain 1[dragonshoardicon] for every 4 Soul."
+        "name": "[soul]smelter",
+        "description": "Siphon: Gain [soul] 1. Celebrate: Gain 1[dragonshoardicon] for every 4 [soul]."
     },
     {
         "name": "Cleave",
@@ -21,11 +21,11 @@
     },
     {
         "name": "Windblade",
-        "description": "Shift: Gain Valor 1. Resolve: Trigger Shift."
+        "description": "[shift]: Gain [valor] 1. [resolve]: Trigger [shift]."
     },
     {
         "name": "Frostpiercer",
-        "description": "Strike: Apply Frostbite equal to half the damage dealt."
+        "description": "[strike]: Apply [poison] equal to half the damage dealt."
     },
     {
         "name": "Helical Crystalis",
@@ -33,11 +33,11 @@
     },
     {
         "name": "Crucible Collector",
-        "description": "Gorge: Gain Lifesteal 1."
+        "description": "[gorge]: Gain [lifesteal]  1."
     },
     {
         "name": "Purifying Cleanse",
-        "description": "Restore 15 health and apply Burnout 3 to a friendly unit."
+        "description": "Restore 15 [health] and apply [burnout] 3 to a friendly unit."
     },
     {
         "name": "Spellweave",
@@ -45,7 +45,7 @@
     },
     {
         "name": "Quenching Oil",
-        "description": "Consume. Apply Spell Weakness 1 and Melee Weakness 1."
+        "description": "Consume. Apply [spellweakness] 1 and [meleeweakness] 1."
     },
     {
         "name": "Pyre Light",
@@ -53,19 +53,19 @@
     },
     {
         "name": "Cluster Colonel",
-        "description": "Armor 10. Resolve: Spawn 4."
+        "description": "[armor] 10. [resolve]: Spawn 4."
     },
     {
-        "name": "Golden Touch",
-        "description": "Deal 5 damage. Slay: Gain 1[dragonshoardicon]."
+        "name": "[coin]en Touch",
+        "description": "Deal 5 damage. [slay]: Gain 1[dragonshoardicon]."
     },
     {
         "name": "Nine-Lived Nightmare",
-        "description": "Reanimate 8."
+        "description": "[undying] 8."
     },
     {
         "name": "Gooey Flask",
-        "description": "Consume. Apply Sap 2 to enemy units."
+        "description": "Consume. Apply [debuff] 2 to enemy units."
     },
     {
         "name": "Sacrificial",
@@ -85,15 +85,15 @@
     },
     {
         "name": "Furnace Tap",
-        "description": "Consume. Apply Multistrike 1 and Emberdrain 4 to a friendly unit."
+        "description": "Consume. Apply [multistrike] 1 and [scorch] 4 to a friendly unit."
     },
     {
         "name": "Mushy Room",
-        "description": "Apply Sap 3 to enemy units at the end of combat."
+        "description": "Apply [debuff] 3 to enemy units at the end of combat."
     },
     {
         "name": "Penitent's Deathsuit",
-        "description": "Shift: Gain Melee Weakness 1. Can be equipped on enemy units."
+        "description": "[shift]: Gain [meleeweakness] 1. Can be equipped on enemy units."
     },
     {
         "name": "Preserve",
@@ -101,7 +101,7 @@
     },
     {
         "name": "Shadeguard",
-        "description": "Resolve: If it is New Moon, gain +10[attack] and +15[health]."
+        "description": "[resolve]: If it is [moonshade], gain +10[attack] and +15[health]."
     },
     {
         "name": "Vinewrath",
@@ -113,7 +113,7 @@
     },
     {
         "name": "Wicklash",
-        "description": "Apply +10[attack] and Burnout 2 to a friendly unit."
+        "description": "Apply +10[attack] and [burnout] 2 to a friendly unit."
     },
     {
         "name": "Railforged Spike",
@@ -121,19 +121,19 @@
     },
     {
         "name": "Forgone Power",
-        "description": "Apply Frostbite 8 to the front enemy unit. Discard a card at random."
+        "description": "Apply [poison] 8 to the front enemy unit. Discard a card at random."
     },
     {
         "name": "Dragon's Breath",
-        "description": "Apply Pyregel 10 and deal 10 damage to enemy units."
+        "description": "Apply [pyregel] 10 and deal 10 damage to enemy units."
     },
     {
         "name": "Imprisoned Zephyr",
-        "description": "Friendly units Advance on Strike."
+        "description": "Friendly units Advance on [strike]."
     },
     {
-        "name": "Revenge of the Damned",
-        "description": "Extract 1. Deal 8 damage, twice. Slay: Gain 2[chargedechoes]."
+        "name": "[revenge] of the Damned",
+        "description": "Extract 1. Deal 8 damage, twice. [slay]: Gain 2[chargedechoes]."
     },
     {
         "name": "Reanimation Lab",
@@ -149,11 +149,11 @@
     },
     {
         "name": "Discordant Toll",
-        "description": "Purge. Reserve: Your Pyre takes 3 damage."
+        "description": "Purge. [reserve]: Your Pyre takes 3 damage."
     },
     {
         "name": "Infectory",
-        "description": "Spawn 1 when a unit without Troop dies."
+        "description": "Spawn 1 when a unit without [horde] dies."
     },
     {
         "name": "Greed Dragon",
@@ -161,7 +161,7 @@
     },
     {
         "name": "Fenix Fire",
-        "description": "Deal damage equal to this unit's attack. Apply Pyregel 4 to enemy units."
+        "description": "Deal damage equal to this unit's [attack]. Apply [pyregel] 4 to enemy units."
     },
     {
         "name": "Eager Conscript",
@@ -169,15 +169,15 @@
     },
     {
         "name": "Resin Blades",
-        "description": "Burnout 1. Multistrike 1. Return to hand when equipped unit is destroyed."
+        "description": "[burnout] 1. [multistrike] 1. Return to hand when equipped unit is destroyed."
     },
     {
         "name": "Demonic Fledgling",
-        "description": "Strike: Gain Valor 1. Shift: Gain Rage 2."
+        "description": "[strike]: Gain [valor] 1. [shift]: Gain [buff] 2."
     },
     {
         "name": "Hexscalation",
-        "description": "Ascend. Apply Spell Weakness 2."
+        "description": "Ascend. Apply [spellweakness] 2."
     },
     {
         "name": "Weapons Cache",
@@ -185,11 +185,11 @@
     },
     {
         "name": "Bounty Stalker",
-        "description": "Burnout 1. Stealth 1. Extinguish: +10[attack] permanently."
+        "description": "[burnout] 1. [stealth] 1. [extinguish]: +10[attack] permanently."
     },
     {
         "name": "Shard Channeler",
-        "description": "Spikes on friendly units deal +1 damage per stack."
+        "description": "[spikes] on friendly units deal +1 damage per stack."
     },
     {
         "name": "Dominion's Eye",
@@ -201,7 +201,7 @@
     },
     {
         "name": "Heroic Dive",
-        "description": "Consume. Descend then Advance a friendly unit. Deal damage to the front enemy unit equal to 2x this unit's [health] and Armor."
+        "description": "Consume. Descend then Advance a friendly unit. Deal damage to the front enemy unit equal to 2x this unit's [health] and [armor]."
     },
     {
         "name": "Kindle",
@@ -213,11 +213,11 @@
     },
     {
         "name": "Lady of the Reformed",
-        "description": "Burnout 3. Revenge: Apply Burnout 1 to friendly Burnout units."
+        "description": "[burnout] 3. [revenge]: Apply [burnout] 1 to friendly [burnout] units."
     },
     {
         "name": "Witchweave",
-        "description": "Deal 1 damage to an enemy unit or restore 1 health to a friendly unit."
+        "description": "Deal 1 damage to an enemy unit or restore 1 [health] to a friendly unit."
     },
     {
         "name": "Madame Lionsmane",
@@ -225,15 +225,15 @@
     },
     {
         "name": "Spike of the Banished",
-        "description": "Consume. Apply 4X Valor."
+        "description": "Consume. Apply 4X [valor]."
     },
     {
         "name": "Forge Steward",
-        "description": "Armor 25. Revenge: Forge 1."
+        "description": "[armor] 25. [revenge]: Forge 1."
     },
     {
         "name": "Selene Acolyte",
-        "description": "Mageblade 2. Full Moon: Sweep."
+        "description": "[mageblade] 2. [full]: [sweep]."
     },
     {
         "name": "Crucible Extension",
@@ -241,7 +241,7 @@
     },
     {
         "name": "Moonlit Glaive",
-        "description": "Mageblade 3."
+        "description": "[mageblade] 3."
     },
     {
         "name": "Glugsider",
@@ -249,11 +249,11 @@
     },
     {
         "name": "Duality",
-        "description": "Attuned. Deal 10 damage to an enemy unit or restore 10 health to a friendly unit."
+        "description": "Attuned. Deal 10 damage to an enemy unit or restore 10 [health] to a friendly unit."
     },
     {
         "name": "Emerge",
-        "description": "Remove Stasis. Starts battle on cooldown. Removes ability on use."
+        "description": "Remove [untouchable]. Starts battle on cooldown. Removes ability on use."
     },
     {
         "name": "Weaponcraft II",
@@ -261,15 +261,15 @@
     },
     {
         "name": "Moonrise",
-        "description": "Consume. Gain 1[ember]. Phase to Full Moon."
+        "description": "Consume. Gain 1[ember]. Phase to [full]."
     },
     {
         "name": "Overdrive",
-        "description": "Spend your remaining [ember]. Gain Burst 1 for each ember spent."
+        "description": "Spend your remaining [ember]. Gain [burst] 1 for each ember spent."
     },
     {
         "name": "Resonant Ruin",
-        "description": "Purge. Reserve: Your Pyre takes 5 damage."
+        "description": "Purge. [reserve]: Your Pyre takes 5 damage."
     },
     {
         "name": "Offering Token",
@@ -277,7 +277,7 @@
     },
     {
         "name": "Lava Flow",
-        "description": "Consume. Apply Pyregel 4 to enemy units."
+        "description": "Consume. Apply [pyregel] 4 to enemy units."
     },
     {
         "name": "Culling III",
@@ -288,36 +288,36 @@
         "description": "Friendly units attack immediately."
     },
     {
-        "name": "Wildwood Sap",
-        "description": "Consume. Apply Regen 4 and +4[health]."
+        "name": "Wildwood [debuff]",
+        "description": "Consume. Apply [regen] 4 and +4[health]."
     },
     {
-        "name": "Wurmkin Etchings",
+        "name": "Wurmkin [etch]ings",
         "description": "Consume. Return 5 consumed spells to the top of your draw pile."
     },
     {
         "name": "First of Kin",
-        "description": "Etch: +15[attack]."
+        "description": "[etch]: +15[attack]."
     },
     {
         "name": "Knuckler Steward",
-        "description": "Revenge: Gain Burst 1."
+        "description": "[revenge]: Gain [burst] 1."
     },
     {
         "name": "Twisted Assistant",
-        "description": "Graft: Twisted Back."
+        "description": "[unit_grafted_equipment]: Twisted Back."
     },
     {
         "name": "Bolete the Guillotine",
         "description": ""
     },
     {
-        "name": "Enchantrelle",
-        "description": "Rally: Apply Sap 1 to enemy units."
+        "name": "[enchant]relle",
+        "description": "[rally]: Apply [debuff] 1 to enemy units."
     },
     {
         "name": "Benevolence",
-        "description": "Restore friendly units to full health and grant +5[health]."
+        "description": "Restore friendly units to full [health] and grant +5[health]."
     },
     {
         "name": "Stuck Up Whelp",
@@ -329,7 +329,7 @@
     },
     {
         "name": "Mortal Entrapment",
-        "description": "Attuned. Deal 25 damage and apply Dazed 3 to an already damaged unit."
+        "description": "Attuned. Deal 25 damage and apply [dazed] 3 to an already damaged unit."
     },
     {
         "name": "Blazing Bolts",
@@ -337,27 +337,27 @@
     },
     {
         "name": "Reforming Ooze",
-        "description": "Reanimate 1. Reanimated: +6[attack] permanently."
+        "description": "[undying] 1. Reanimated: +6[attack] permanently."
     },
     {
         "name": "Gem Trove",
-        "description": "Apply Damage Shield 1 to friendly units. Add 3 uncommon or rare Morsel units to your hand."
+        "description": "Apply [damageshield] 1 to friendly units. Add 3 uncommon or rare Morsel units to your hand."
     },
     {
         "name": "Avenger",
-        "description": "Revenge: Apply Melee Weakness 1 to the attacker."
+        "description": "[revenge]: Apply [meleeweakness] 1 to the attacker."
     },
     {
         "name": "Plink",
-        "description": "Deal 2 damage to a random enemy unit, twice. Slay: Add a common or uncommon Morsel unit to your hand."
+        "description": "Deal 2 damage to a random enemy unit, twice. [slay]: Add a common or uncommon Morsel unit to your hand."
     },
     {
         "name": "Mine Collapse",
-        "description": "Deal 3X damage to a unit. Slay: Gain 2[ember]."
+        "description": "Deal 3X damage to a unit. [slay]: Gain 2[ember]."
     },
     {
         "name": "Spike of the Legion",
-        "description": "Consume. Propagate 2X."
+        "description": "Consume. [propagate] 2X."
     },
     {
         "name": "Echo Infusion",
@@ -365,15 +365,15 @@
     },
     {
         "name": "Battering Ram",
-        "description": "Deal damage to the front enemy unit equal to 4x Armor on friendly units."
+        "description": "Deal damage to the front enemy unit equal to 4x [armor] on friendly units."
     },
     {
         "name": "Amorous Enoki",
-        "description": "Rally: Apply Regen 1 and +1[health] to friendly units."
+        "description": "[rally]: Apply [regen] 1 and +1[health] to friendly units."
     },
     {
         "name": "Restore",
-        "description": "Restore 4 health. Apply Regen 2."
+        "description": "Restore 4 health. Apply [regen] 2."
     },
     {
         "name": "Devour III",
@@ -385,11 +385,11 @@
     },
     {
         "name": "Arduhn",
-        "description": "Mageblade 2."
+        "description": "[mageblade] 2."
     },
     {
         "name": "Begone",
-        "description": "Retreat the front enemy unit. Apply Melee Weakness 1 to enemy units."
+        "description": "Retreat the front enemy unit. Apply [meleeweakness] 1 to enemy units."
     },
     {
         "name": "Moonbeam",
@@ -401,11 +401,11 @@
     },
     {
         "name": "Gildmonger",
-        "description": "Extinguish: Gain 1[dragonshoardicon]."
+        "description": "[extinguish]: Gain 1[dragonshoardicon]."
     },
     {
         "name": "Edge Prior",
-        "description": "Healing and Regen spells cost -1[ember] on this floor."
+        "description": "Healing and [regen] spells cost -1[ember] on this floor."
     },
     {
         "name": "Ember Cache",
@@ -413,7 +413,7 @@
     },
     {
         "name": "Unnamed Tome",
-        "description": "Permafrost. Consume. Apply Mute 3 to enemy units."
+        "description": "Permafrost. Consume. Apply [muted] 3 to enemy units."
     },
     {
         "name": "Forever Consumed",
@@ -429,15 +429,15 @@
     },
     {
         "name": "Wyngh's Radiance",
-        "description": "Advance. Apply 1X Melee Weakness."
+        "description": "Advance. Apply 1X [meleeweakness]."
     },
     {
         "name": "Proliferate",
-        "description": "Consume. Propagate 2 on all units."
+        "description": "Consume. [propagate] 2 on all units."
     },
     {
         "name": "Challenge",
-        "description": "Advance. Apply Melee Weakness 1."
+        "description": "Advance. Apply [meleeweakness] 1."
     },
     {
         "name": "Steel Pulley Claw",
@@ -445,27 +445,27 @@
     },
     {
         "name": "Spore Launcher",
-        "description": "Rally: Apply Decay 2 to enemy units."
+        "description": "[rally]: Apply [decay] 2 to enemy units."
     },
     {
         "name": "Magma Morsel",
-        "description": "Eaten: Eater gains +9[attack]."
+        "description": "[eaten]: Eater gains +9[attack]."
     },
     {
         "name": "Dreg",
-        "description": "Burnout 2."
+        "description": "[burnout] 2."
     },
     {
         "name": "Restoration Detonation",
-        "description": "Restore 15 health to a friendly unit. Deal damage to the front enemy unit equal to 5x the amount healed."
+        "description": "Restore 15 [health] to a friendly unit. Deal damage to the front enemy unit equal to 5x the amount healed."
     },
     {
         "name": "Tome of Horrors",
-        "description": "Consume. Apply Unstable 50 and Reanimate 1."
+        "description": "Consume. Apply [unstable] 50 and [undying] 1."
     },
     {
         "name": "Siren's Song",
-        "description": "Pyrebound. At the start of the combat, Ascend non-boss enemy units on this floor and apply Dazed 3."
+        "description": "Pyrebound. At the start of the combat, Ascend non-boss enemy units on this floor and apply [dazed] 3."
     },
     {
         "name": "Meathook",
@@ -473,15 +473,15 @@
     },
     {
         "name": "Shadoweater",
-        "description": "Gorge: Restore 10 health. Deal 20 damage to enemy units."
+        "description": "[gorge]: Restore 10 [health]. Deal 20 damage to enemy units."
     },
     {
         "name": "Engulfed in Smoke",
-        "description": "Apply Stealth 2 to friendly units."
+        "description": "Apply [stealth] 2 to friendly units."
     },
     {
         "name": "Morsel Miner",
-        "description": "Eaten: Eater gains +9[attack] and +9[health]."
+        "description": "[eaten]: Eater gains +9[attack] and +9[health]."
     },
     {
         "name": "Bloated Whelp",
@@ -501,7 +501,7 @@
     },
     {
         "name": "Stoic Platemail",
-        "description": "Silence. Armor 60."
+        "description": "[silenced]. [armor] 60."
     },
     {
         "name": "Time Stop",
@@ -513,27 +513,27 @@
     },
     {
         "name": "The Reaping",
-        "description": "Apply Reap 6 to enemy units on all floors."
+        "description": "Apply [corrupt_poison] 6 to enemy units on all floors."
     },
     {
         "name": "Stasis Crystal",
-        "description": "Stasis. Resolve: Gain +20[attack] and +20[health] while under Stasis. Ability: Emerge."
+        "description": "[untouchable]. [resolve]: Gain +20[attack] and +20[health] while under [untouchable]. Ability: Emerge."
     },
     {
         "name": "Glittering Draught",
-        "description": "Consume. Restore 20 health and apply Conduit 4."
+        "description": "Consume. Restore 20 [health] and apply [conduit] 4."
     },
     {
         "name": "Fenix Fire II",
-        "description": "Explosive. Deal damage equal to this unit's attack. Apply Pyregel 4 to enemy units."
+        "description": "Explosive. Deal damage equal to this unit's attack. Apply [pyregel] 4 to enemy units."
     },
     {
         "name": "Moon Pixie",
-        "description": "Conduit 3. Enchant: Grant Conduit 3."
+        "description": "[conduit] 3. [enchant]: Grant [conduit] 3."
     },
     {
         "name": "Tiresome Climb",
-        "description": "Ascend. Apply Dazed 2."
+        "description": "Ascend. Apply [dazed] 2."
     },
     {
         "name": "Spine Chief",
@@ -541,11 +541,11 @@
     },
     {
         "name": "Overworked Assistant",
-        "description": "Reanimate 1. Incant: Gain Unstable 4."
+        "description": "[undying] 1. [incant]: Gain [unstable] 4."
     },
     {
         "name": "Pyre Plating",
-        "description": "Consume. Apply +4X[attack] and Armor 2X to the Pyre."
+        "description": "Consume. Apply +4X[attack] and [armor] 2X to the Pyre."
     },
     {
         "name": "Ekka",
@@ -561,11 +561,11 @@
     },
     {
         "name": "Grow Room",
-        "description": "All units Propagate 1 at the end of combat."
+        "description": "All units [propagate] 1 at the end of combat."
     },
     {
         "name": "Engraft",
-        "description": "Restore 1 health. Gain 1[ember]. Draw +1 next turn."
+        "description": "Restore 1 [health]. Gain 1[ember]. Draw +1 next turn."
     },
     {
         "name": "Sacrificial",
@@ -573,19 +573,19 @@
     },
     {
         "name": "Cycle of Life",
-        "description": "Apply +10[health] and Spikes 8."
+        "description": "Apply +10[health] and [spikes] 8."
     },
     {
         "name": "Wind-Up Punch",
-        "description": "Attack immediately. Remove all stacks of Burst."
+        "description": "Attack immediately. Remove all stacks of [burst]."
     },
     {
         "name": "Resurgence II",
-        "description": "Remove Stasis and gain +12[attack] and +12[health] per Shard. Removes ability on use."
+        "description": "Remove [untouchable] and gain +12[attack] and +12[health] per [stygian_blessing]. Removes ability on use."
     },
     {
         "name": "Faulty Body",
-        "description": "Consume. Apply Fragile and Spikes 40 to a friendly unit."
+        "description": "Consume. Apply [fragile] and [spikes] 40 to a friendly unit."
     },
     {
         "name": "Rector Flicker",
@@ -601,15 +601,15 @@
     },
     {
         "name": "Offering Monument",
-        "description": "Incant: Draw +1 next turn."
+        "description": "[incant]: Draw +1 next turn."
     },
     {
-        "name": "Silver Strike",
-        "description": "Deal 25 damage to the front enemy unit. Full Moon: Deal damage twice instead."
+        "name": "Silver [strike]",
+        "description": "Deal 25 damage to the front enemy unit. [full]: Deal damage twice instead."
     },
     {
         "name": "Maneating II",
-        "description": "Apply Sap 3, Decay 10, and Mute 1 to a unit."
+        "description": "Apply [debuff] 3, [decay] 10, and [muted] 1 to a unit."
     },
     {
         "name": "Titan's Gratitude",
@@ -617,11 +617,11 @@
     },
     {
         "name": "Conductor Steward",
-        "description": "Rally: Apply +5[attack] and +5[health] to the summoned unit. Ability: Train Whistle."
+        "description": "[rally]: Apply +5[attack] and +5[health] to the summoned unit. Ability: Train Whistle."
     },
     {
         "name": "Spiky Skin",
-        "description": "Revenge: Gain Spikes 3."
+        "description": "[revenge]: Gain [spikes] 3."
     },
     {
         "name": "Hammerfall",
@@ -629,15 +629,15 @@
     },
     {
         "name": "Celestial Storm",
-        "description": "Deal 10 damage to enemy units. Full Moon: Attuned."
+        "description": "Deal 10 damage to enemy units. [full]: Attuned."
     },
     {
         "name": "Wyldenten",
         "description": ""
     },
     {
-        "name": "Zone of Silence",
-        "description": "Grant Silence to non-boss enemy units."
+        "name": "Zone of [silenced]",
+        "description": "Grant [silenced] to non-boss enemy units."
     },
     {
         "name": "Dig Deep",
@@ -653,71 +653,71 @@
     },
     {
         "name": "Tidal Turning",
-        "description": "Consume. Restore 10 health to friendly units. Healing over max health applies Armor instead."
+        "description": "Consume. Restore 10 [health] to friendly units. Healing over max [health] applies [armor] instead."
     },
     {
         "name": "Mooncaller",
-        "description": "Mooncycle triggers an additional time."
+        "description": "[mooncycle] triggers an additional time."
     },
     {
         "name": "Full Throttle",
-        "description": "Apply Burst 1 to friendly units."
+        "description": "Apply [burst] 1 to friendly units."
     },
     {
         "name": "Balmabello",
-        "description": "Regen 6. Spikes 6. Extinguish: Apply this unit's Buff stacks to friendly units."
+        "description": "[regen] 6. [spikes] 6. [extinguish]: Apply this unit's Buff stacks to friendly units."
     },
     {
         "name": "Umbra Stone",
-        "description": "Consume. Apply Trample."
+        "description": "Consume. Apply [trample]."
     },
     {
         "name": "Bone Dog",
-        "description": "Celebrate: Your Pyre permanently gains +10 Pyre Health."
+        "description": "Celebrate: Your Pyre permanently gains +10 [pyrehealth]."
     },
     {
         "name": "Deadly Plunge",
-        "description": "Consume. Deal damage to the front enemy unit equal to 3x this friendly unit's [health] and Armor."
+        "description": "Consume. Deal damage to the front enemy unit equal to 3x this friendly unit's [health] and [armor]."
     },
     {
         "name": "Engine Upgrade",
-        "description": "-1[capacity].+1[ember] per turn."
+        "description": "-1[capacity]. +1[ember] per turn."
     },
     {
         "name": "Alloy of the Ancients",
-        "description": "Consume. Apply Armor 30."
+        "description": "Consume. Apply [armor] 30."
     },
     {
         "name": "Pyre Shards",
-        "description": "Consume. Apply Spikes 10."
+        "description": "Consume. Apply [spikes] 10."
     },
     {
         "name": "Pyrecask",
-        "description": "Consume. Apply Pyregel 10."
+        "description": "Consume. Apply [pyregel] 10."
     },
     {
         "name": "Spreading Spores",
-        "description": "Restore 3 health. Apply Regen 3 and Spikes 3. Add a copy of this card to your discard pile."
+        "description": "Restore 3 [health]. Apply [regen] 3 and [spikes] 3. Add a copy of this card to your discard pile."
     },
     {
         "name": "Machinist's Tome",
-        "description": "Consume. Apply Steelguard to a friendly unit."
+        "description": "Consume. Apply [steelguard] to a friendly unit."
     },
     {
         "name": "Slam",
-        "description": "Advance. Deal damage to the front enemy unit equal to this unit's current [health] and Armor."
+        "description": "Advance. Deal damage to the front enemy unit equal to this unit's current [health] and [armor]."
     },
     {
         "name": "Risky Operation",
-        "description": "Reduce friendly unit to 1 health. Apply +10[attack] and Lifesteal 2."
+        "description": "Reduce friendly unit to 1 [health]. Apply +10[attack] and [lifesteal]  2."
     },
     {
         "name": "Shelter",
-        "description": "Consume. Apply Armor 2 per [chargedechoes] to friendly units."
+        "description": "Consume. Apply [armor] 2 per [chargedechoes] to friendly units."
     },
     {
-        "name": "Shattered Shell",
-        "description": "Sweep. Slay: +3[attack]."
+        "name": "Shattered [hatch]",
+        "description": "[sweep]. [slay]: +3[attack]."
     },
     {
         "name": "Sting",
@@ -729,7 +729,7 @@
     },
     {
         "name": "Soldier of Fortune",
-        "description": "Consume. Draw a unit. If you have 30 Gold, spend it to apply +30[attack], Avarice 15, and Armor 15."
+        "description": "Consume. Draw a unit. If you have 30 [coin], spend it to apply +30[attack], [avarice] 15, and [armor] 15."
     },
     {
         "name": "Steadfast Crusader",
@@ -741,7 +741,7 @@
     },
     {
         "name": "Titanstooth",
-        "description": "Offering. Deal 5 damage to enemy units and apply Frostbite 10."
+        "description": "Offering. Deal 5 damage to enemy units and apply [poison] 10."
     },
     {
         "name": "Spider Assembly",
@@ -761,11 +761,11 @@
     },
     {
         "name": "Bramble Lash",
-        "description": "Deal damage to the front enemy unit equal to 10x Spikes on friendly units."
+        "description": "Deal damage to the front enemy unit equal to 10x [spikes] on friendly units."
     },
     {
         "name": "Liquid Courage",
-        "description": "Consume. Apply Damage Shield 1 and Valor 4."
+        "description": "Consume. Apply [damageshield] 1 and [valor] 4."
     },
     {
         "name": "Echo Vault",
@@ -773,7 +773,7 @@
     },
     {
         "name": "Steelworker",
-        "description": "Resolve: Apply Armor 6 to friendly units."
+        "description": "[resolve]: Apply [armor] 6 to friendly units."
     },
     {
         "name": "Inferno Room",
@@ -789,47 +789,47 @@
     },
     {
         "name": "Molluscmage",
-        "description": "Conduit 10."
+        "description": "[conduit] 10."
     },
     {
         "name": "Forevermore Serum",
-        "description": "Consume. Apply Reanimate 1."
+        "description": "Consume. Apply [undying] 1."
     },
     {
         "name": "Follower",
-        "description": "Multistrike 2."
+        "description": "[multistrike] 2."
     },
     {
         "name": "Steward's Quarters",
-        "description": "+1[capacity]. Shield Steward and Spear Steward units gain Multistrike 1 and +20[attack]."
+        "description": "+1[capacity]. Shield Steward and Spear Steward units gain [multistrike] 1 and +20[attack]."
     },
     {
         "name": "Inhale",
-        "description": "Deal 10 damage. Slay: Spawn 2."
+        "description": "Deal 10 damage. [slay]: Spawn 2."
     },
     {
         "name": "Smith",
-        "description": "Forge 2. Apply Armor 2 to the front friendly unit."
+        "description": "Forge 2. Apply [armor] 2 to the front friendly unit."
     },
     {
         "name": "Remnant Host",
-        "description": "Extinguish: Summon 2 Draff units."
+        "description": "[extinguish]: Summon 2 Draff units."
     },
     {
         "name": "Selfless Sacrifice",
-        "description": "Consume. Advance. Apply Damage Shield 2."
+        "description": "Consume. Advance. Apply [damageshield] 2."
     },
     {
         "name": "Bloodsoaked Arena",
-        "description": "Friendly units gain Valor 6 on Slay."
+        "description": "Friendly units gain [valor] 6 on [slay]."
     },
     {
         "name": "Rage Room",
-        "description": "Friendly units gain Rage 2 on Strike and Revenge."
+        "description": "Friendly units gain [buff] 2 on [strike] and [revenge]."
     },
     {
         "name": "Rubble Morsel",
-        "description": "Eaten: Gain 1[ember]. Eater gains +3[attack] and +3[health]."
+        "description": "[eaten]: Gain 1[ember]. Eater gains +3[attack] and +3[health]."
     },
     {
         "name": "Razorsharp Edge",
@@ -849,15 +849,15 @@
     },
     {
         "name": "Crucible Warden",
-        "description": "Gorge: Gain Damage Shield 1."
+        "description": "[gorge]: Gain [damageshield] 1."
     },
     {
         "name": "Subsuming Blade",
-        "description": "Piercing. Deal 5 damage. Slay: Increase damage by 3 permanently."
+        "description": "Piercing. Deal 5 damage. [slay]: Increase damage by 3 permanently."
     },
     {
         "name": "Test Subject Alpha",
-        "description": "Quick. Sweep."
+        "description": "[ambush]. [sweep]."
     },
     {
         "name": "Tome of Contracts",
@@ -865,31 +865,31 @@
     },
     {
         "name": "Bloody Moon",
-        "description": "Deal 25 damage. Slay: Gain 2[ember]."
+        "description": "Deal 25 damage. [slay]: Gain 2[ember]."
     },
     {
         "name": "Meat Shield",
-        "description": "Resolve: Restore 10 health."
+        "description": "[resolve]: Restore 10 [health]."
     },
     {
-        "name": "Surgical Strike",
-        "description": "Piercing. Deal 4 damage. Slay: Add a copy of this card with Ephemeral to your hand."
+        "name": "Surgical [strike]",
+        "description": "Piercing. Deal 4 damage. [slay]: Add a copy of this card with Ephemeral to your hand."
     },
     {
         "name": "Divine Dancer",
-        "description": "Shift: Apply Armor 5 to friendly units."
+        "description": "[shift]: Apply [armor] 5 to friendly units."
     },
     {
         "name": "Sanctuary",
-        "description": "Consume. Apply Damage Shield 2 to friendly units."
+        "description": "Consume. Apply [damageshield] 2 to friendly units."
     },
     {
         "name": "Vampire's Tooth",
-        "description": "Lifesteal 1. Resolve: Gain Lifesteal 1."
+        "description": "[lifesteal]  1. [resolve]: Gain [lifesteal]  1."
     },
     {
         "name": "Deathroar",
-        "description": "Transfer all Pyregel on this floor to a unit then deal 5 damage five times."
+        "description": "Transfer all [pyregel] on this floor to a unit then deal 5 damage five times."
     },
     {
         "name": "Imp Toss",
@@ -897,11 +897,11 @@
     },
     {
         "name": "Cursed Twinblade",
-        "description": "Multistrike 1. Strike: -1[attack]."
+        "description": "[multistrike] 1. [strike]: -1[attack]."
     },
     {
         "name": "Greed",
-        "description": "Deal 20 damage to all units. Slay: Gain 10 Gold."
+        "description": "Deal 20 damage to all units. [slay]: Gain 10 [coin]."
     },
     {
         "name": "Fertile Ground",
@@ -909,35 +909,35 @@
     },
     {
         "name": "Energy Siphon",
-        "description": "Apply Spell Weakness 1."
+        "description": "Apply [spellweakness] 1."
     },
     {
         "name": "Funguy in a Suit",
-        "description": "Consume. Spawn 3. Apply Armor to Funguy equal to 4x Troop."
+        "description": "Consume. Spawn 3. Apply [armor] to Funguy equal to 4x [horde]."
     },
     {
         "name": "Enflame",
-        "description": "Apply Rage 6 and Armor 10."
+        "description": "Apply [buff] 6 and [armor] 10."
     },
     {
         "name": "Squad Leader",
-        "description": "Grant Trample to Funguy. Troop adds +2[attack] per stack."
+        "description": "Grant [trample] to Funguy. [horde] adds +2[attack] per stack."
     },
     {
         "name": "Firestarter",
-        "description": "Deal 1 damage then apply Pyregel 2."
+        "description": "Deal 1 damage then apply [pyregel] 2."
     },
     {
         "name": "Branded Warrior",
-        "description": "Rage 5. Slay: Apply Rage 5 to friendly units."
+        "description": "[buff] 5. [slay]: Apply [buff] 5 to friendly units."
     },
     {
         "name": "Moon Ritual",
-        "description": "Phase. Apply Conduit 1 to a friendly unit."
+        "description": "Phase. Apply [conduit] 1 to a friendly unit."
     },
     {
         "name": "Entropic Crystals",
-        "description": "Unpurgeable. Reserve: Spells in your deck cost +1[ember]."
+        "description": "Unpurgeable. [reserve]: Spells in your deck cost +1[ember]."
     },
     {
         "name": "Transcendimp",
@@ -949,7 +949,7 @@
     },
     {
         "name": "Pox",
-        "description": "Consume. Deal 20 damage and apply Decay 10 to all units."
+        "description": "Consume. Deal 20 damage and apply [decay] 10 to all units."
     },
     {
         "name": "Alchemy",
@@ -957,27 +957,27 @@
     },
     {
         "name": "Wildwood Tome",
-        "description": "Consume. Apply Quick."
+        "description": "Consume. Apply [ambush]."
     },
     {
         "name": "Big Sludge",
-        "description": "Harvest: Gain Rage 5."
+        "description": "[harvest]: Gain [buff] 5."
     },
     {
         "name": "Guardian Stone",
-        "description": "Incant: Apply Armor 1 to friendly units.[attack] is shared among friendly units."
+        "description": "[incant]: Apply [armor] 1 to friendly units.[attack] is shared among friendly units."
     },
     {
         "name": "Upbeat Warbler",
-        "description": "Enchant: Grant Quick."
+        "description": "[enchant]: Grant [ambush]."
     },
     {
         "name": "Bloodthirsty Blade",
-        "description": "Slay: This equipment gains +1[attack] permanently."
+        "description": "[slay]: This equipment gains +1[attack] permanently."
     },
     {
         "name": "Geared Gauntlet",
-        "description": "Suppressed. Burst 2. Resolve: Gain Burst 1. Ability: Wind-Up Punch."
+        "description": "[restricted]. [burst] 2. [resolve]: Gain [burst] 1. Ability: Wind-Up Punch."
     },
     {
         "name": "Impish Scholar",
@@ -985,11 +985,11 @@
     },
     {
         "name": "Bogdeep Cocoon",
-        "description": "Shell 12. Hatch: Summon Bog Wurmling."
+        "description": "[hatch] 12. [hatchicon]: Summon Bog Wurmling."
     },
     {
         "name": "Sentry Turret",
-        "description": "Immobile. Attacks immediately when an enemy moves."
+        "description": "[immobile]. Attacks immediately when an enemy moves."
     },
     {
         "name": "Pyreclasm",
@@ -1000,12 +1000,12 @@
         "description": "Add a 0[ember]Pyreshot to your hand with Consume."
     },
     {
-        "name": "Soul Siphon",
-        "description": "Consume. Fill [emptyechoes] with [chargedechoes]. Apply Emberdrain 1 to friendly units."
+        "name": "[soul] Siphon",
+        "description": "Consume. Fill [emptyechoes] with [chargedechoes]. Apply [scorch] 1 to friendly units."
     },
     {
         "name": "Prismal Dust",
-        "description": "Consume. Apply 1X Damage Shield."
+        "description": "Consume. Apply 1X [damageshield]."
     },
     {
         "name": "Lunar Echo",
@@ -1013,7 +1013,7 @@
     },
     {
         "name": "Everlasting Light",
-        "description": "Strike: Apply Valor 2 to friendly units."
+        "description": "[strike]: Apply [valor] 2 to friendly units."
     },
     {
         "name": "Calcified Ember",
@@ -1029,7 +1029,7 @@
     },
     {
         "name": "Swordmaiden",
-        "description": "Summon: Draw an equipment card from your deck. Artificer: Gain Valor 8."
+        "description": "Summon: Draw an equipment card from your deck. [artificer]: Gain [valor] 8."
     },
     {
         "name": "Packed Morsels",
@@ -1049,7 +1049,7 @@
     },
     {
         "name": "Awakening Thicket",
-        "description": "Friendly units have +20 max health and restore 10 health on Resolve."
+        "description": "Friendly units have +20 max [health] and restore 10 [health] on [resolve]."
     },
     {
         "name": "Ambient Charge",
@@ -1057,7 +1057,7 @@
     },
     {
         "name": "Last Stand",
-        "description": "Consume. Double the amount of Rage on friendly units."
+        "description": "Consume. Double the amount of [buff] on friendly units."
     },
     {
         "name": "Lord Fenix",
@@ -1077,11 +1077,11 @@
     },
     {
         "name": "Branding Rite",
-        "description": "Piercing. Deal 3 damage. Apply Armor 20."
+        "description": "Piercing. Deal 3 damage. Apply [armor] 20."
     },
     {
         "name": "Sharpen",
-        "description": "Apply +6[attack] and Spikes 6."
+        "description": "Apply +6[attack] and [spikes] 6."
     },
     {
         "name": "Broken Memories",
@@ -1109,11 +1109,11 @@
     },
     {
         "name": "Onehorn's Tome",
-        "description": "Consume. Apply Fragile and Multistrike 1 to a friendly unit."
+        "description": "Consume. Apply [fragile] and [multistrike] 1 to a friendly unit."
     },
     {
         "name": "Dripfall",
-        "description": "Descend. Apply Dazed 1."
+        "description": "Descend. Apply [dazed] 1."
     },
     {
         "name": "Hidden Passage",
@@ -1125,11 +1125,11 @@
     },
     {
         "name": "Greedtouch",
-        "description": "Gain 25 Gold. Pyre takes 10 damage."
+        "description": "Gain 25 [coin]. Pyre takes 10 damage."
     },
     {
         "name": "Drain",
-        "description": "Apply Sap 3. Discard a card at random."
+        "description": "Apply [debuff] 3. Discard a card at random."
     },
     {
         "name": "Retch",
@@ -1141,7 +1141,7 @@
     },
     {
         "name": "Vengeful Shard",
-        "description": "Unpurgeable. Reserve: Your Pyre takes 1 damage."
+        "description": "Unpurgeable. [reserve]: Your Pyre takes 1 damage."
     },
     {
         "name": "Assembly Room",
@@ -1149,11 +1149,11 @@
     },
     {
         "name": "Insatiable Hunger",
-        "description": "Friendly units gain Lifesteal 2."
+        "description": "Friendly units gain [lifesteal] 2."
     },
     {
         "name": "Feast",
-        "description": "Trigger feeding on friendly units with Eaten."
+        "description": "Trigger feeding on friendly units with [eaten]."
     },
     {
         "name": "Blazing Bolts",
@@ -1161,19 +1161,19 @@
     },
     {
         "name": "Chomp",
-        "description": "Destroy a friendly unit and gain +15[attack] and +15[health]. Triggers Gorge and Eaten."
+        "description": "Destroy a friendly unit and gain +15[attack] and +15[health]. Triggers [gorge] and [eaten]."
     },
     {
         "name": "Herzal's Hammer",
-        "description": "Strike: Apply +3 [attack] and Armor 3 to friendly units."
+        "description": "[strike]: Apply +3 [attack] and [armor] 3 to friendly units."
     },
     {
-        "name": "Makeshift Golem",
-        "description": "Armor 12. Extinguish: Apply Armor 12 to friendly units."
+        "name": "Make[shift] Golem",
+        "description": "[armor] 12. [extinguish]: Apply [armor] 12 to friendly units."
     },
     {
         "name": "Make It Rain",
-        "description": "Deal 5 damage to enemy units. Spend 5 Gold and repeat this card's effect, up to three more times."
+        "description": "Deal 5 damage to enemy units. Spend 5 [coin] and repeat this card's effect, up to three more times."
     },
     {
         "name": "Crypt Builder",
@@ -1181,7 +1181,7 @@
     },
     {
         "name": "Fracture",
-        "description": "Apply Reap 2."
+        "description": "Apply [corrupt_poison] 2."
     },
     {
         "name": "Fight Club",
@@ -1189,11 +1189,11 @@
     },
     {
         "name": "Flash Freeze",
-        "description": "Deal 3 damage. Apply Frostbite 8."
+        "description": "Deal 3 damage. Apply [poison] 8."
     },
     {
         "name": "Superheated",
-        "description": "Consume. Double the amount of Pyregel on a unit."
+        "description": "Consume. Double the amount of [pyregel] on a unit."
     },
     {
         "name": "Imp-in-a-Box",
@@ -1201,7 +1201,7 @@
     },
     {
         "name": "Curse of Entropy",
-        "description": "Ephemeral. Apply Sap 4 to friendly units on all floors. Reserve: Your Pyre takes 3 damage."
+        "description": "Ephemeral. Apply [debuff] 4 to friendly units on all floors. [reserve]: Your Pyre takes 3 damage."
     },
     {
         "name": "Scrap for Parts",
@@ -1217,7 +1217,7 @@
     },
     {
         "name": "Horned Warrior",
-        "description": "Multistrike 1."
+        "description": "[multistrike] 1."
     },
     {
         "name": "Runespeak II",
@@ -1225,7 +1225,7 @@
     },
     {
         "name": "Bog Chrysalis",
-        "description": "Shell 5. Hatch: Summon 2 Bog Fly units."
+        "description": "[hatch] 5. [hatchicon]: Summon 2 Bog Fly units."
     },
     {
         "name": "Brew",
@@ -1233,27 +1233,27 @@
     },
     {
         "name": "Draff",
-        "description": "Burnout 1. Multistrike 1."
+        "description": "[burnout] 1. [multistrike] 1."
     },
     {
         "name": "Kinhost Pupa",
-        "description": "Armor 20. Multistrike 2. Strike: Apply Reap 1 to enemy units."
+        "description": "[armor] 20. [multistrike] 2. [strike]: Apply [corrupt_poison] 1 to enemy units."
     },
     {
         "name": "Ritual Tome",
-        "description": "Consume. Apply Titanskin 2 to a friendly unit."
+        "description": "Consume. Apply [titanskin] 2 to a friendly unit."
     },
     {
         "name": "Echo Bloom",
-        "description": "Gain 4[emptyechoes]. Gain 1[chargedechoes]. Ability: Bloomburst."
+        "description": "Gain 4[emptyechoes]. Gain 1[chargedechoes]. Ability: Bloom[burst]."
     },
     {
         "name": "Hellfurnace",
-        "description": "When a unit gains Pyregel, it gains +3 stacks."
+        "description": "When a unit gains [pyregel], it gains +3 stacks."
     },
     {
         "name": "Immortal Trade",
-        "description": "Apply Lifesteal 4 and Emberdrain 2 to a friendly unit."
+        "description": "Apply [lifesteal]  4 and [scorch] 2 to a friendly unit."
     },
     {
         "name": "Resin Removal",
@@ -1265,11 +1265,11 @@
     },
     {
         "name": "Empower",
-        "description": "Gain [attack] equal to Pyregel stacks on all units."
+        "description": "Gain [attack] equal to [pyregel] stacks on all units."
     },
     {
         "name": "Spike of the Stygian",
-        "description": "Consume. Apply 1X Sap and 5X Frostbite."
+        "description": "Consume. Apply 1X [debuff] and 5X [poison]."
     },
     {
         "name": "Minds Of Their Own",
@@ -1277,15 +1277,15 @@
     },
     {
         "name": "Electricity Chamber",
-        "description": "Friendly units gain Spikes 8 on Summon and Reanimated."
+        "description": "Friendly units gain [spikes] 8 on Summon and Reanimated."
     },
     {
         "name": "Fortified Pauldrons",
-        "description": "Armor 6. Resolve: Gain Armor 6."
+        "description": "[armor] 6. [resolve]: Gain [armor] 6."
     },
     {
         "name": "Apex Imp",
-        "description": "Armored: Gain Rage equal to gained Armor. Summon: Gain Armor 5."
+        "description": "[armor]ed: Gain [buff] equal to gained [armor]. Summon: Gain [armor] 5."
     },
     {
         "name": "Primitive Mold",
@@ -1293,19 +1293,19 @@
     },
     {
         "name": "Shadowsiege",
-        "description": "Emberdrain 3."
+        "description": "[scorch] 3."
     },
     {
         "name": "Void Armament",
-        "description": "Multistrike 1. Extinguish: Purge this unit from your deck."
+        "description": "[multistrike] 1. [extinguish]: Purge this unit from your deck."
     },
     {
         "name": "Glass Cannon",
-        "description": "Fragile."
+        "description": "[fragile]."
     },
     {
-        "name": "Organ Harvester",
-        "description": "Slay: Gain Reanimate 1."
+        "name": "Organ [harvest]er",
+        "description": "[slay]: Gain [undying] 1."
     },
     {
         "name": "Focused Growth",
@@ -1313,15 +1313,15 @@
     },
     {
         "name": "Morselmaker",
-        "description": "Resolve: Summon an Antumbra Morsel and a Magma Morsel."
+        "description": "[resolve]: Summon an Antumbra Morsel and a Magma Morsel."
     },
     {
         "name": "Eel Gorgon",
-        "description": "Incant: Gain Multistrike 1. Resolve: Remove all status effects."
+        "description": "[incant]: Gain [multistrike] 1. [resolve]: Remove all status effects."
     },
     {
         "name": "Wickless Tycoon",
-        "description": "Harvest: Gain 10 Gold."
+        "description": "[harvest]: Gain 10 [coin]."
     },
     {
         "name": "Boom",
@@ -1329,7 +1329,7 @@
     },
     {
         "name": "Rot",
-        "description": "Deal 15 damage. Apply Decay 15."
+        "description": "Deal 15 damage. Apply [decay] 15."
     },
     {
         "name": "Talos",
@@ -1337,15 +1337,15 @@
     },
     {
         "name": "Battle Dancer",
-        "description": "Shift: Gain Valor 3."
+        "description": "[shift]: Gain [valor] 3."
     },
     {
-        "name": "Returned Soul",
+        "name": "Returned [soul]",
         "description": "Distinct. Return a spell from the discard pile to your hand. Apply Infused and Consume."
     },
     {
         "name": "Expensive Taste",
-        "description": "Apply Avarice 2 to friendly units."
+        "description": "Apply [avarice] 2 to friendly units."
     },
     {
         "name": "Dante's Inferno",
@@ -1361,11 +1361,11 @@
     },
     {
         "name": "Coldcaelia",
-        "description": "Sweep. Strike: Apply Frostbite 6."
+        "description": "[sweep]. [strike]: Apply [poison] 6."
     },
     {
         "name": "Forced Contamination",
-        "description": "Extract 3. Apply Melee Weakness 2."
+        "description": "Extract 3. Apply [meleeweakness] 2."
     },
     {
         "name": "Scissor Hands",
@@ -1373,23 +1373,23 @@
     },
     {
         "name": "Metallurgy",
-        "description": "Smelt a card in hand. Apply Armor 4 to friendly units."
+        "description": "Smelt a card in hand. Apply [armor] 4 to friendly units."
     },
     {
         "name": "Railbeater",
-        "description": "Armor 30. Strike: Apply Melee Weakness 1."
+        "description": "[armor] 30. [strike]: Apply [meleeweakness] 1."
     },
     {
         "name": "Bog Wurmling",
-        "description": "Trample. Etch: +15[attack] and +15[health]."
+        "description": "[trample]. [etch]: +15[attack] and +15[health]."
     },
     {
         "name": "Grovel",
-        "description": "Apply Damage Shield 1. Add 2 uncommon or rare Morsel units to your hand."
+        "description": "Apply [damageshield] 1. Add 2 uncommon or rare Morsel units to your hand."
     },
     {
         "name": "Maneating III",
-        "description": "Apply Sap 4, Decay 15, and Mute 2 to a unit."
+        "description": "Apply [debuff] 4, [decay] 15, and [muted] 2 to a unit."
     },
     {
         "name": "Sacrificial",
@@ -1397,11 +1397,11 @@
     },
     {
         "name": "Punk Shredder",
-        "description": "Enchant: Grant Trample."
+        "description": "[enchant]: Grant [trample]."
     },
     {
         "name": "Death's Dancer",
-        "description": "Shift: Apply +4[attack] to friendly units."
+        "description": "[shift]: Apply +4[attack] to friendly units."
     },
     {
         "name": "Culling II",
@@ -1417,7 +1417,7 @@
     },
     {
         "name": "Weldling",
-        "description": "Resolve: Apply Armor equal to half [attack] to the front friendly unit."
+        "description": "[resolve]: Apply [armor] equal to half [attack] to the front friendly unit."
     },
     {
         "name": "Shadesplitter",
@@ -1425,19 +1425,19 @@
     },
     {
         "name": "Lodestone Totem",
-        "description": "Incant: Apply Sap 1 to enemy units."
+        "description": "[incant]: Apply [debuff] 1 to enemy units."
     },
     {
         "name": "Pandemic",
-        "description": "Consume. Apply Decay 8 and Sap 2. Add a copy of this card to your discard pile."
+        "description": "Consume. Apply [decay] 8 and [debuff] 2. Add a copy of this card to your discard pile."
     },
     {
         "name": "Magma Cultist",
-        "description": "Incant: Apply Pyregel 1 to enemy units."
+        "description": "[incant]: Apply [pyregel] 1 to enemy units."
     },
     {
         "name": "Dante's Candle",
-        "description": "Unpurgeable. Reserve: Your Pyre takes 3 damage."
+        "description": "Unpurgeable. [reserve]: Your Pyre takes 3 damage."
     },
     {
         "name": "Truffles",
@@ -1445,11 +1445,11 @@
     },
     {
         "name": "Fel",
-        "description": "Multistrike 1."
+        "description": "[multistrike] 1."
     },
     {
         "name": "Thorned Hollow",
-        "description": "Summon: Gain 60 max health. Rejuvenate: Gain Spikes 4."
+        "description": "Summon: Gain 60 max health. [rejuvenate]: Gain [spikes] 4."
     },
     {
         "name": "Mix-a-Lot",
@@ -1457,23 +1457,23 @@
     },
     {
         "name": "Evergrowth",
-        "description": "Apply Regen 3 and Sap 3."
+        "description": "Apply [regen] 3 and [debuff] 3."
     },
     {
-        "name": "Bloomburst",
+        "name": "Bloom[burst]",
         "description": "Gain 4 [chargedechoes]."
     },
     {
         "name": "Wickless Baron",
-        "description": "Harvest: +5[attack] and +5[health]."
+        "description": "[harvest]: +5[attack] and +5[health]."
     },
     {
         "name": "Votivary",
-        "description": "Endless. Extinguish: Draw +2 next turn."
+        "description": "[endless]. [extinguish]: Draw +2 next turn."
     },
     {
         "name": "Lunar Priestess",
-        "description": "Resolve: Add a Moon Ritual spell with Ephemeral to your hand."
+        "description": "[resolve]: Add a Moon Ritual spell with Ephemeral to your hand."
     },
     {
         "name": "Tome of the Lost Path",
@@ -1481,7 +1481,7 @@
     },
     {
         "name": "Morel Mistress",
-        "description": "Etch: Apply Decay 8 to enemy units."
+        "description": "[etch]: Apply [decay] 8 to enemy units."
     },
     {
         "name": "Shardtail Queen",
@@ -1489,23 +1489,23 @@
     },
     {
         "name": "Welder Helper",
-        "description": "Summon: Apply Armor 20 to the front friendly unit."
+        "description": "Summon: Apply [armor] 20 to the front friendly unit."
     },
     {
         "name": "Formless Child",
-        "description": "Extinguish: Return a random defeated unit to your hand and apply +40[attack]."
+        "description": "[extinguish]: Return a random defeated unit to your hand and apply +40[attack]."
     },
     {
         "name": "Iron-tongue",
-        "description": "Sweep. This unit's [attack] is set to 30 and cannot be changed."
+        "description": "[sweep]. This unit's [attack] is set to 30 and cannot be changed."
     },
     {
         "name": "Primordium",
-        "description": "Buffet 3. Eaten: Add this unit's [attack] and [health] to the eater."
+        "description": "[eatmany] 3. [eaten]: Add this unit's [attack] and [health] to the eater."
     },
     {
         "name": "Animus of Speed",
-        "description": "Quick. Ability: Swiftshot."
+        "description": "[ambush]. Ability: Swiftshot."
     },
     {
         "name": "Echo Transfer",
@@ -1517,7 +1517,7 @@
     },
     {
         "name": "Siren of the Sea",
-        "description": "Incant: +3[attack] and +3[health]."
+        "description": "[incant]: +3[attack] and +3[health]."
     },
     {
         "name": "Tome of Evergrowth",
@@ -1525,7 +1525,7 @@
     },
     {
         "name": "Lead Songbird",
-        "description": "Valor on friendly units adds +1[attack] per stack."
+        "description": "[valor] on friendly units adds +1[attack] per stack."
     },
     {
         "name": "Magnetic Relay",
@@ -1533,7 +1533,7 @@
     },
     {
         "name": "Deranged Brute",
-        "description": "Rage on friendly units adds +3[attack] per stack."
+        "description": "[buff] on friendly units adds +3[attack] per stack."
     },
     {
         "name": "Icestorm",
@@ -1541,15 +1541,15 @@
     },
     {
         "name": "Memorial for the Melted",
-        "description": "Friendly units have Endless."
+        "description": "Friendly units have [endless]."
     },
     {
         "name": "Forgotten Trade",
-        "description": "Emberdrain 2. Revenge: Gain 1[chargedechoes]."
+        "description": "[scorch] 2. [revenge]: Gain 1[chargedechoes]."
     },
     {
         "name": "Railgun",
-        "description": "Immobile. Burst 1. Ability: Overdrive."
+        "description": "[immobile]. [burst] 1. Ability: Overdrive."
     },
     {
         "name": "Inequivalent Exchange",
@@ -1557,31 +1557,31 @@
     },
     {
         "name": "Astrologer",
-        "description": "Mooncycle: +5[attack]."
+        "description": "[mooncycle]: +5[attack]."
     },
     {
         "name": "Plague Doctor",
-        "description": "Strike: Apply Unstable equal to the damage dealt."
+        "description": "[strike]: Apply [unstable] equal to the damage dealt."
     },
     {
         "name": "Savior II",
-        "description": "Advance. Gain Valor 15. Gain Armor equal to 1x Valor."
+        "description": "Advance. Gain [valor] 15. Gain [armor] equal to 1x [valor]."
     },
     {
         "name": "Accelerated Incubation",
-        "description": "Consume. Remove 3 Shell from Eggs."
+        "description": "Consume. Remove 3 [hatch] from Eggs."
     },
     {
         "name": "Boilerplate",
-        "description": "Forged: Gain Armor 2 permanently for each Forge Point spent."
+        "description": "Forged: Gain [armor] 2 permanently for each Forge Point spent."
     },
     {
         "name": "Legion of Wax",
-        "description": "Extinguish: Summon 2 Twin of Wax and apply this unit's upgrades, equipment, and stat changes."
+        "description": "[extinguish]: Summon 2 Twin of Wax and apply this unit's upgrades, equipment, and stat changes."
     },
     {
         "name": "Crystalline Seeds",
-        "description": "Consume. Apply Frostbite 8 to enemy units."
+        "description": "Consume. Apply [poison] 8 to enemy units."
     },
     {
         "name": "Unleash the Wildwood",
@@ -1589,11 +1589,11 @@
     },
     {
         "name": "Nightingale",
-        "description": "Stealth 2. New Moon: Multistrike 2."
+        "description": "[stealth] 2. [moonshade]: [multistrike] 2."
     },
     {
         "name": "Deadly Variant",
-        "description": "Consume. Apply Decay equal to 5x Sap."
+        "description": "Consume. Apply [decay] equal to 5x [debuff]."
     },
     {
         "name": "Scrap Metal",
@@ -1601,7 +1601,7 @@
     },
     {
         "name": "Entombed Explosive",
-        "description": "Extinguish: Deal 65 damage to the front enemy unit."
+        "description": "[extinguish]: Deal 65 damage to the front enemy unit."
     },
     {
         "name": "Moonipulate",
@@ -1612,16 +1612,16 @@
         "description": "The Pyre immediately attacks enemy units on this floor."
     },
     {
-        "name": "Shardsoul Carver",
-        "description": "Inspire: +3[attack] and Armor 3."
+        "name": "Shard[soul] Carver",
+        "description": "Inspire: +3[attack] and [armor] 3."
     },
     {
         "name": "Deathcapped Prophet",
-        "description": "Rally: Draw +1 next turn."
+        "description": "[rally]: Draw +1 next turn."
     },
     {
         "name": "Ritual of Battle",
-        "description": "Apply Rage 12."
+        "description": "Apply [buff] 12."
     },
     {
         "name": "Heavensward",
@@ -1629,23 +1629,23 @@
     },
     {
         "name": "Green Recruit",
-        "description": "Extinguish: Spawn 4."
+        "description": "[extinguish]: Spawn 4."
     },
     {
         "name": "Glimmer",
-        "description": "Restore 3 health to friendly units and deal 3 damage to enemy units."
+        "description": "Restore 3 [health] to friendly units and deal 3 damage to enemy units."
     },
     {
         "name": "Eagleheart",
-        "description": "Consume. Advance. Apply Valor 5 to a friendly unit, then it attacks immediately."
+        "description": "Consume. Advance. Apply [valor] 5 to a friendly unit, then it attacks immediately."
     },
     {
         "name": "Ensnare",
-        "description": "Apply Rooted 1. Draw +1 next turn."
+        "description": "Apply [rooted] 1. Draw +1 next turn."
     },
     {
         "name": "Resurgence III",
-        "description": "Remove Stasis and gain +15[attack] and +15[health] per Shard. Removes ability on use."
+        "description": "Remove [untouchable] and gain +15[attack] and +15[health] per [stygian_blessing]. Removes ability on use."
     },
     {
         "name": "Stardust Invocation",
@@ -1653,7 +1653,7 @@
     },
     {
         "name": "Morsel-Made",
-        "description": "Hunger: Feed on units with Eaten. Gorge: +4[attack] and +4[health]."
+        "description": "Hunger: Feed on units with [eaten]. [gorge]: +4[attack] and +4[health]."
     },
     {
         "name": "Enfeebling Infusion",
@@ -1661,11 +1661,11 @@
     },
     {
         "name": "Explosive Reaction",
-        "description": "Apply Unstable 25. Deal 5 damage."
+        "description": "Apply [unstable] 25. Deal 5 damage."
     },
     {
         "name": "Loamcoat",
-        "description": "Resolve: Gain Regen 1. Propagate 2."
+        "description": "[resolve]: Gain [regen] 1. [propagate] 2."
     },
     {
         "name": "Cannibalize",
@@ -1673,7 +1673,7 @@
     },
     {
         "name": "Waxen Spike",
-        "description": "Consume. Apply +4X[attack] and Burnout 4 to friendly units."
+        "description": "Consume. Apply +4X[attack] and [burnout] 4 to friendly units."
     },
     {
         "name": "Salvage",
@@ -1681,27 +1681,27 @@
     },
     {
         "name": "Paraffin Enforcer",
-        "description": "Strike: Apply Rage 3 to friendly Burnout units."
+        "description": "[strike]: Apply [buff] 3 to friendly [burnout] units."
     },
     {
         "name": "Double-Edged Arms",
-        "description": "Multistrike 1."
+        "description": "[multistrike] 1."
     },
     {
         "name": "Maneating",
-        "description": "Apply Sap 2 and Decay 5 to a unit."
+        "description": "Apply [debuff] 2 and [decay] 5 to a unit."
     },
     {
         "name": "Crucible Steward",
-        "description": "Etch: Deal damage equal to this unit's attack to the front enemy unit. Ability: Smelt."
+        "description": "[etch]: Deal damage equal to this unit's attack to the front enemy unit. Ability: Smelt."
     },
     {
-        "name": "Scrap Harvest",
+        "name": "Scrap [harvest]",
         "description": "Add a Scrap Metal to your hand."
     },
     {
         "name": "Icy Cilophyte",
-        "description": "Sweep. Strike: Apply Spell Weakness 1."
+        "description": "[sweep]. [strike]: Apply [spellweakness] 1."
     },
     {
         "name": "Imp-pressive",
@@ -1717,15 +1717,15 @@
     },
     {
         "name": "Lady of the House",
-        "description": "Burnout 3.+5[attack] for every stack of Burnout."
+        "description": "[burnout] 3.+5[attack] for every stack of [burnout]."
     },
     {
         "name": "Eternal Kinstone",
-        "description": "Add 1[chargedechoes] that cannot be removed."
+        "description": "Add 1[permanentechoes] that cannot be removed."
     },
     {
         "name": "Steel Steward",
-        "description": "Armor 50. Steelguard."
+        "description": "[armor] 50. [steelguard]."
     },
     {
         "name": "Blast Infusion",
@@ -1733,7 +1733,7 @@
     },
     {
         "name": "Beacon's Light",
-        "description": "Apply Dazed 1 to enemy units on all floors."
+        "description": "Apply [dazed] 1 to enemy units on all floors."
     },
     {
         "name": "Fire Breathing",
@@ -1741,7 +1741,7 @@
     },
     {
         "name": "Divinity",
-        "description": "Apply Valor 10."
+        "description": "Apply [valor] 10."
     },
     {
         "name": "Scrivener",
@@ -1749,7 +1749,7 @@
     },
     {
         "name": "Wurmkin Spike",
-        "description": "Consume. Apply 6X Reap to enemy units."
+        "description": "Consume. Apply 6X [corrupt_poison] to enemy units."
     },
     {
         "name": "Savage Shackles",
@@ -1761,7 +1761,7 @@
     },
     {
         "name": "Awoken Hollow",
-        "description": "Summon: Gain 60 max health. Rejuvenate: Cultivate 3."
+        "description": "Summon: Gain 60 max health. [rejuvenate]: Cultivate 3."
     },
     {
         "name": "Eat",
@@ -1769,11 +1769,11 @@
     },
     {
         "name": "Animus of Will",
-        "description": "Multistrike 2."
+        "description": "[multistrike] 2."
     },
     {
         "name": "Oldgrowth",
-        "description": "Rejuvenate: Gain 10 max health.+10 max health."
+        "description": "[rejuvenate]: Gain 10 max health.+10 max health."
     },
     {
         "name": "Excavated Ember",
@@ -1797,7 +1797,7 @@
     },
     {
         "name": "Hoarfrost Effigy",
-        "description": "Transfer all Frostbite on this floor to a unit, then double the amount of Frostbite."
+        "description": "Transfer all [poison] on this floor to a unit, then double the amount of [poison]."
     },
     {
         "name": "Mitosis Cap",
@@ -1805,19 +1805,19 @@
     },
     {
         "name": "Demon Fiend",
-        "description": "Trample."
+        "description": "[trample]."
     },
     {
         "name": "Intent on Death",
-        "description": "Consume. Trigger a unit's Extinguish ability without killing it."
+        "description": "Consume. Trigger a unit's [extinguish] ability without killing it."
     },
     {
         "name": "Antumbra Assault",
-        "description": "Deal 5 damage. Slay: Add 2 uncommon or rare Morsel units to your hand."
+        "description": "Deal 5 damage. [slay]: Add 2 uncommon or rare Morsel units to your hand."
     },
     {
         "name": "Heavenfall",
-        "description": "Deal 80 damage to enemy units. Full Moon: Deal damage on all floors instead."
+        "description": "Deal 80 damage to enemy units. [full]: Deal damage on all floors instead."
     },
     {
         "name": "Hall of Mirrors",
@@ -1829,7 +1829,7 @@
     },
     {
         "name": "Solgard the Martyr",
-        "description": "Incant: Gain Shard 1."
+        "description": "[incant]: Gain [stygian_blessing] 1."
     },
     {
         "name": "Echoburn",
@@ -1841,11 +1841,11 @@
     },
     {
         "name": "Mushroom Cloud",
-        "description": "Consume. Sacrifice 1 Funguy. Deal 10 damage and apply Decay 10 to enemy units."
+        "description": "Consume. Sacrifice 1 Funguy. Deal 10 damage and apply [decay] 10 to enemy units."
     },
     {
         "name": "Devourer of Death",
-        "description": "Harvest: Gain Soul 1. Extinguish: Deal damage to enemy units equal to 15x the Soul count."
+        "description": "[harvest]: Gain [soul] 1. [extinguish]: Deal damage to enemy units equal to 15x the [soul] count."
     },
     {
         "name": "Herzal",
@@ -1853,11 +1853,11 @@
     },
     {
         "name": "Shadowcast",
-        "description": "Phase to New Moon."
+        "description": "Phase to [moonshade]."
     },
     {
         "name": "Steelsinger",
-        "description": "Summon: Gain 80 max health. Rejuvenate: +3[attack] permanently."
+        "description": "Summon: Gain 80 max health. [rejuvenate]: +3[attack] permanently."
     },
     {
         "name": "Spike of the League",
@@ -1865,7 +1865,7 @@
     },
     {
         "name": "Fae's Blessing",
-        "description": "Restore 5 health. Healing over max health applies Armor instead."
+        "description": "Restore 5 health. Healing over max [health] applies [armor] instead."
     },
     {
         "name": "Worthy Sacrifice",
@@ -1881,11 +1881,11 @@
     },
     {
         "name": "Pyre Steward",
-        "description": "Slay: Restore 2 Pyre health."
+        "description": "[slay]: Restore 2 Pyre health."
     },
     {
         "name": "Lunacy",
-        "description": "Phase X times. Apply 1X Conduit."
+        "description": "Phase X times. Apply 1X [conduit]."
     },
     {
         "name": "Kinhost Carapace",
@@ -1897,15 +1897,11 @@
     },
     {
         "name": "Nameless Siren",
-        "description": "Incant: Gain Rage 3."
+        "description": "[incant]: Gain [buff] 3."
     },
     {
         "name": "Sanguine Assistant",
-        "description": "Graft: Vampire's Tooth."
-    },
-    {
-        "name": "",
-        "description": ""
+        "description": "[unit_grafted_equipment]: Vampire's Tooth."
     },
     {
         "name": "Chamber of Recall",
@@ -1921,7 +1917,7 @@
     },
     {
         "name": "Spell Slam",
-        "description": "Restore to full health. Apply Spell Weakness 1 to enemy units."
+        "description": "Restore to full health. Apply [spellweakness] 1 to enemy units."
     },
     {
         "name": "Potion Kit",
@@ -1933,7 +1929,7 @@
     },
     {
         "name": "Gellysneeze",
-        "description": "Deal 1 damage then apply Pyregel 12 to the front enemy unit."
+        "description": "Deal 1 damage then apply [pyregel] 12 to the front enemy unit."
     },
     {
         "name": "Mulch",
@@ -1945,11 +1941,11 @@
     },
     {
         "name": "Inspire",
-        "description": "Apply Valor 1 to friendly units."
+        "description": "Apply [valor] 1 to friendly units."
     },
     {
         "name": "Hallowed Drippings",
-        "description": "Consume. Apply Burnout 5 and +5[attack] to friendly Burnout units."
+        "description": "Consume. Apply [burnout] 5 and +5[attack] to friendly [burnout] units."
     },
     {
         "name": "Cuttlehex",
@@ -1961,7 +1957,7 @@
     },
     {
         "name": "Remnant Pact",
-        "description": "Consume. Apply Endless to a friendly unit for the rest of battle."
+        "description": "Consume. Apply [endless] to a friendly unit for the rest of battle."
     },
     {
         "name": "Masterwork",
@@ -1972,16 +1968,16 @@
         "description": "Apply +4[attack] and +4[health]."
     },
     {
-        "name": "Soulcrushing Guilt",
-        "description": "Extract 3. Retreat. Apply Dazed 2."
+        "name": "[soul]crushing Guilt",
+        "description": "Extract 3. Retreat. Apply [dazed] 2."
     },
     {
         "name": "Spike of the Hellhorned",
-        "description": "Consume. Apply 4X Rage and 4X Armor."
+        "description": "Consume. Apply 4X [buff] and 4X [armor]."
     },
     {
         "name": "Swiftsteel Dagger",
-        "description": "Quick."
+        "description": "[ambush]."
     },
     {
         "name": "Pincushion",
@@ -2001,11 +1997,11 @@
     },
     {
         "name": "It's Alive!",
-        "description": "Advance. Apply Lifesteal 1 and +7[attack]."
+        "description": "Advance. Apply [lifesteal]  1 and +7[attack]."
     },
     {
         "name": "Molten Encasement",
-        "description": "Extinguish: Apply Stealth 2 to friendly units."
+        "description": "[extinguish]: Apply [stealth] 2 to friendly units."
     },
     {
         "name": "Snotty Whelp",
@@ -2013,15 +2009,15 @@
     },
     {
         "name": "Fenix Fire III",
-        "description": "Explosive. Deal damage equal to 2X this unit's attack. Apply Pyregel 4 to enemy units."
+        "description": "Explosive. Deal damage equal to 2X this unit's attack. Apply [pyregel] 4 to enemy units."
     },
     {
         "name": "Kinhost Vessel",
-        "description": "Shell 8. Hatch: Summon Kinhost Pupa."
+        "description": "[hatch] 8. [hatchicon]: Summon Kinhost Pupa."
     },
     {
         "name": "Sacrificial Chamber",
-        "description": "Gain 10 Gold when a unit dies."
+        "description": "Gain 10 [coin] when a unit dies."
     },
     {
         "name": "Awoken's Rail Spike",
@@ -2033,7 +2029,7 @@
     },
     {
         "name": "Hulking Mass",
-        "description": "Armor 40. Reanimated: Gain Armor 40."
+        "description": "[armor] 40. Reanimated: Gain [armor] 40."
     },
     {
         "name": "The Sentient",
@@ -2049,27 +2045,27 @@
     },
     {
         "name": "Antumbra Morsel",
-        "description": "Eaten: Eater gains +9[health]."
+        "description": "[eaten]: Eater gains +9[health]."
     },
     {
         "name": "Starstruck",
-        "description": "Deal 5 damage. Full Moon: Apply Dazed 1."
+        "description": "Deal 5 damage. [full]: Apply [dazed] 1."
     },
     {
         "name": "Spikedriver Spider",
-        "description": "Burst 2."
+        "description": "[burst] 2."
     },
     {
         "name": "Guard of the Unnamed",
-        "description": "Incant: Gain Armor 3."
+        "description": "[incant]: Gain [armor] 3."
     },
     {
         "name": "Ice and Pyre",
         "description": "Pyrebound. Attuned. Deal 90 damage to the front enemy unit."
     },
     {
-        "name": "Wilting Sapwood",
-        "description": "Revenge: Gain 1[ember]."
+        "name": "Wilting [debuff]wood",
+        "description": "[revenge]: Gain 1[ember]."
     },
     {
         "name": "Glareminder",
@@ -2077,11 +2073,11 @@
     },
     {
         "name": "Moonguard",
-        "description": "Mageblade 3. New Moon: Mageblade 3."
+        "description": "[mageblade] 3. [moonshade]: [mageblade] 3."
     },
     {
         "name": "Reinforce",
-        "description": "Consume. Double the amount of Armor on a unit."
+        "description": "Consume. Double the amount of [armor] on a unit."
     },
     {
         "name": "Swiftshot",
@@ -2089,7 +2085,7 @@
     },
     {
         "name": "Fledgling Imp",
-        "description": "Summon: Apply Rage 5 to friendly units."
+        "description": "Summon: Apply [buff] 5 to friendly units."
     },
     {
         "name": "Queen's Impling",
@@ -2097,7 +2093,7 @@
     },
     {
         "name": "Ethereal Seelie",
-        "description": "Conduit 5. Apply +1 stack of Conduit each time it is applied."
+        "description": "[conduit] 5. Apply +1 stack of [conduit] each time it is applied."
     },
     {
         "name": "Imp Toss III",
@@ -2105,7 +2101,7 @@
     },
     {
         "name": "Coven's Spike",
-        "description": "Consume. Apply 3X Conduit."
+        "description": "Consume. Apply 3X [conduit]."
     },
     {
         "name": "Little Fade",
@@ -2113,7 +2109,7 @@
     },
     {
         "name": "Sunset",
-        "description": "Phase to New Moon."
+        "description": "Phase to [moonshade]."
     },
     {
         "name": "Hornbreaker Prince",
@@ -2124,12 +2120,12 @@
         "description": "Ability: Heavenly Slam."
     },
     {
-        "name": "The Great Decay",
+        "name": "The Great [decay]",
         "description": "Consume. Apply Consume and -1[ember] to all spells in your deck."
     },
     {
         "name": "Shield of Wyngh",
-        "description": "Revenge: Deal damage to the attacker equal to this unit's [health]."
+        "description": "[revenge]: Deal damage to the attacker equal to this unit's [health]."
     },
     {
         "name": "Tethys Titansbane",
@@ -2137,7 +2133,7 @@
     },
     {
         "name": "Pay Off",
-        "description": "Consume. Restore 2 Pyre health for each [dragonshoardicon]."
+        "description": "Consume. Restore 2 [pyrehealth] for each [dragonshoardicon]."
     },
     {
         "name": "Imp-olate",
@@ -2145,7 +2141,7 @@
     },
     {
         "name": "Excavation Eruption",
-        "description": "Deal 25 damage to a random enemy unit, three times. Slay: Gain 2[ember]."
+        "description": "Deal 25 damage to a random enemy unit, three times. [slay]: Gain 2[ember]."
     },
     {
         "name": "Culling",
@@ -2165,15 +2161,15 @@
     },
     {
         "name": "Alloyed Construct",
-        "description": "Inert. Multistrike 1. Fuel 2. Gorge: Gain Fuel 1."
+        "description": "[inert]. [multistrike] 1. [spark] 2. [gorge]: Gain [spark] 1."
     },
     {
         "name": "Aurora Weaver",
-        "description": "Mooncycle: Gain Conduit 1."
+        "description": "[mooncycle]: Gain [conduit] 1."
     },
     {
         "name": "Overgorger",
-        "description": "Gorge: +2[attack] permanently."
+        "description": "[gorge]: +2[attack] permanently."
     },
     {
         "name": "Car Collapse",
@@ -2185,7 +2181,7 @@
     },
     {
         "name": "Firebrand",
-        "description": "Revenge: Gain Valor 2."
+        "description": "[revenge]: Gain [valor] 2."
     },
     {
         "name": "Needlebloom",
@@ -2193,15 +2189,15 @@
     },
     {
         "name": "Courage",
-        "description": "Advance. Restore to full health and gain Armor equal to amount healed."
+        "description": "Advance. Restore to full [health] and gain [armor] equal to amount healed."
     },
     {
         "name": "Void Binding",
-        "description": "Apply Damage Shield 2, Rage 6, and Emberdrain 3."
+        "description": "Apply [damageshield] 2, [buff] 6, and [scorch] 3."
     },
     {
         "name": "Heavenly Slam",
-        "description": "Move to a targeted location on any floor. Deal damage to the front enemy unit equal to this unit's [health] and Armor."
+        "description": "Move to a targeted location on any floor. Deal damage to the front enemy unit equal to this unit's [health] and [armor]."
     },
     {
         "name": "Sacrificial Resurrection",
@@ -2217,7 +2213,7 @@
     },
     {
         "name": "Paraffin Thug",
-        "description": "Slay: Gain 30 Gold."
+        "description": "[slay]: Gain 30 [coin]."
     },
     {
         "name": "Train Whistle III",
@@ -2225,7 +2221,7 @@
     },
     {
         "name": "Luna Cyclestaff",
-        "description": "Mooncycle: This equipment gains +1[attack] permanently."
+        "description": "[mooncycle]: This equipment gains +1[attack] permanently."
     },
     {
         "name": "Weaponcraft",
@@ -2237,11 +2233,11 @@
     },
     {
         "name": "Combustion Suit",
-        "description": "Strike: Apply Unstable 5 to enemy units."
+        "description": "[strike]: Apply [unstable] 5 to enemy units."
     },
     {
         "name": "March of Shields",
-        "description": "Advance. Apply Armor 12."
+        "description": "Advance. Apply [armor] 12."
     },
     {
         "name": "Glutton's Maw",
@@ -2249,7 +2245,7 @@
     },
     {
         "name": "Cheery Deathcap",
-        "description": "Summon: Apply Decay 7 to enemy units."
+        "description": "Summon: Apply [decay] 7 to enemy units."
     },
     {
         "name": "Crafted Equipment",
@@ -2257,27 +2253,27 @@
     },
     {
         "name": "Urchin Spines",
-        "description": "Consume. Apply Spell Weakness 2 to enemy units."
+        "description": "Consume. Apply [spellweakness] 2 to enemy units."
     },
     {
-        "name": "Rage Serum",
-        "description": "Consume. Apply Rage 5."
+        "name": "[buff] Serum",
+        "description": "Consume. Apply [buff] 5."
     },
     {
         "name": "Dark Deal",
-        "description": "Deal 5 damage. Apply Rage 7."
+        "description": "Deal 5 damage. Apply [buff] 7."
     },
     {
         "name": "Resurgence",
-        "description": "Remove Stasis and gain +8[attack] and +8[health] per Shard. Removes ability on use."
+        "description": "Remove [untouchable] and gain +8[attack] and +8[health] per [stygian_blessing]. Removes ability on use."
     },
     {
         "name": "Heph's Hammer",
-        "description": "Slay: +1[capacity]."
+        "description": "[slay]: +1[capacity]."
     },
     {
         "name": "Goldtooth",
-        "description": "Avarice 5.+15[attack] per 100 Gold you started the turn with."
+        "description": "[avarice] 5. +15[attack] per 100 [coin] you started the turn with."
     },
     {
         "name": "Aquath's Reservation",
@@ -2285,11 +2281,11 @@
     },
     {
         "name": "Hydra Armed Horror",
-        "description": "Equipped: The equipment is removed. Gain Multistrike 1."
+        "description": "Equipped: The equipment is removed. Gain [multistrike] 1."
     },
     {
         "name": "Planetarium",
-        "description": "Grant friendly units Conduit 5."
+        "description": "Grant friendly units [conduit] 5."
     },
     {
         "name": "Shroud Mitosis",
@@ -2297,15 +2293,15 @@
     },
     {
         "name": "Gravity",
-        "description": "Deal 5 damage. New Moon: Descend. Full Moon: Ascend."
+        "description": "Deal 5 damage. [moonshade]: Descend. [full]: Ascend."
     },
     {
         "name": "Deathmetal Hymnist",
-        "description": "Enchant: Grant Multistrike 1."
+        "description": "[enchant]: Grant [multistrike] 1."
     },
     {
         "name": "Dante the Dependable",
-        "description": "Summon: Add a permanent Dante's Candle to your deck. Gain a stack of Multistrike for each Blight card in your deck."
+        "description": "Summon: Add a permanent Dante's Candle to your deck. Gain a stack of [multistrike] for each Blight card in your deck."
     },
     {
         "name": "Gifts for a Guard",
@@ -2317,23 +2313,23 @@
     },
     {
         "name": "Wickless Recruitment",
-        "description": "Remove all Burnout and Debuff effects from a unit."
+        "description": "Remove all [burnout] and Debuff effects from a unit."
     },
     {
         "name": "Benediction",
-        "description": "Apply Valor 2 and Damage Shield 1 to friendly units."
+        "description": "Apply [valor] 2 and [damageshield] 1 to friendly units."
     },
     {
         "name": "Pyreborne Brainspike",
-        "description": "Consume. Reduce Cooldown by X. Apply 2X Avarice."
+        "description": "Consume. Reduce Cooldown by X. Apply 2X [avarice]."
     },
     {
         "name": "Pyre Repair",
-        "description": "Spend your remaining [ember]. Restore health to the Pyre equal to [ember] spent."
+        "description": "Spend your remaining [ember]. Restore [health] to the Pyre equal to [ember] spent."
     },
     {
         "name": "Hookhand",
-        "description": "Advance. Apply Dazed 1."
+        "description": "Advance. Apply [dazed] 1."
     },
     {
         "name": "Exile's Diadem",
@@ -2349,23 +2345,23 @@
     },
     {
         "name": "Pufferflesh",
-        "description": "Graft: Spiky Skin."
+        "description": "[unit_grafted_equipment]: Spiky Skin."
     },
     {
         "name": "Morsel Jeweler",
-        "description": "Eaten: Eater gains +6[health] and Damage Shield 1."
+        "description": "[eaten]: Eater gains +6[health] and [damageshield] 1."
     },
     {
         "name": "Cover of Night",
-        "description": "Consume. Phase to New Moon. Apply +5[attack] and Stealth 1 to friendly units."
+        "description": "Consume. Phase to [moonshade]. Apply +5[attack] and [stealth] 1 to friendly units."
     },
     {
         "name": "Dusk Mantle",
-        "description": "New Moon: Titanskin 5."
+        "description": "[moonshade]: [titanskin] 5."
     },
     {
         "name": "Trapdoor",
-        "description": "Descend enemy units to the bottom floor. Apply Dazed 2."
+        "description": "Descend enemy units to the bottom floor. Apply [dazed] 2."
     },
     {
         "name": "Spikedriver Factory",
@@ -2373,15 +2369,15 @@
     },
     {
         "name": "Tivi's Scourge",
-        "description": "Purge. Reserve: Add a copy of this card to your discard pile."
+        "description": "Purge. [reserve]: Add a copy of this card to your discard pile."
     },
     {
         "name": "Erratic Assistant",
-        "description": "Graft: Scissor Hands."
+        "description": "[unit_grafted_equipment]: Scissor Hands."
     },
     {
         "name": "Fanning the Flame",
-        "description": "Explosive. Deal 3 damage to a random enemy unit. Slay: Increase damage by 3 permanently."
+        "description": "Explosive. Deal 3 damage to a random enemy unit. [slay]: Increase damage by 3 permanently."
     },
     {
         "name": "Making of a Morsel",
@@ -2389,7 +2385,7 @@
     },
     {
         "name": "Waxcap",
-        "description": "Summon: Apply Sap 3 to enemy units."
+        "description": "Summon: Apply [debuff] 3 to enemy units."
     },
     {
         "name": "Replicator Ray",
@@ -2405,15 +2401,15 @@
     },
     {
         "name": "Acid Shower",
-        "description": "Apply Unstable 10 and deal 1 damage to enemy units."
+        "description": "Apply [unstable] 10 and deal 1 damage to enemy units."
     },
     {
         "name": "Soul Cripple",
-        "description": "Consume. Apply Reap 15 and Rooted 1."
+        "description": "Consume. Apply [corrupt_poison] 15 and [rooted] 1."
     },
     {
         "name": "Just Cause",
-        "description": "Advance. Apply Valor 2."
+        "description": "Advance. Apply [valor] 2."
     },
     {
         "name": "Crushing Demise",
@@ -2421,11 +2417,11 @@
     },
     {
         "name": "Pseudoscience",
-        "description": "Randomly apply either Lifesteal 2, Reanimate 1, or Spikes 6."
+        "description": "Randomly apply either [lifesteal]  2, [undying] 1, or [spikes] 6."
     },
     {
         "name": "Twisted Back",
-        "description": "Trample. Strike: Gain Rage 2."
+        "description": "[trample]. [strike]: Gain [buff] 2."
     },
     {
         "name": "Weaponized Prosthetic",
@@ -2453,23 +2449,23 @@
     },
     {
         "name": "Mind Cage",
-        "description": "Resolve: Reduce Cooldown by 1."
+        "description": "[resolve]: Reduce Cooldown by 1."
     },
     {
         "name": "Glow Up",
-        "description": "Advance. Propagate 2."
+        "description": "Advance. [propagate] 2."
     },
     {
         "name": "Double-Edged Bearer",
-        "description": "Graft: Double-Edged Arms."
+        "description": "[unit_grafted_equipment]: Double-Edged Arms."
     },
     {
         "name": "Bonk",
-        "description": "Deal 9 damage. Slay: Forge 3."
+        "description": "Deal 9 damage. [slay]: Forge 3."
     },
     {
         "name": "Titan Sentry",
-        "description": "Revenge: Apply Frostbite 3 to enemy units."
+        "description": "[revenge]: Apply [poison] 3 to enemy units."
     },
     {
         "name": "Mass Production",
@@ -2477,27 +2473,27 @@
     },
     {
         "name": "Husk Hermit",
-        "description": "Sweep. Revenge: +3[attack]."
+        "description": "[sweep]. [revenge]: +3[attack]."
     },
     {
         "name": "Miser",
-        "description": "Avarice 10."
+        "description": "[avarice] 10."
     },
     {
         "name": "Sporetouch",
-        "description": "Apply Decay 2."
+        "description": "Apply [decay] 2."
     },
     {
-        "name": "Lava Armor",
-        "description": "Revenge: Apply Pyregel 3 to the attacker."
+        "name": "Lava [armor]",
+        "description": "[revenge]: Apply [pyregel] 3 to the attacker."
     },
     {
         "name": "Magma Mauler",
-        "description": "Strike: Apply Pyregel 8."
+        "description": "[strike]: Apply [pyregel] 8."
     },
     {
         "name": "Salvage Machine",
-        "description": "Harvest: Forge 1. Ability: Scrap Harvest."
+        "description": "[harvest]: Forge 1. Ability: Scrap [harvest]."
     },
     {
         "name": "Sacred Wicks",
@@ -2513,11 +2509,11 @@
     },
     {
         "name": "Restoring Retreat",
-        "description": "Restore 10 health. Descend."
+        "description": "Restore 10 [health]. Descend."
     },
     {
         "name": "Prickly Puffball",
-        "description": "Revenge: Apply Decay 5 to the attacker."
+        "description": "[revenge]: Apply [decay] 5 to the attacker."
     },
     {
         "name": "Echoes of the Past",
@@ -2533,11 +2529,11 @@
     },
     {
         "name": "Horrify",
-        "description": "Retreat. Apply Dazed 1."
+        "description": "Retreat. Apply [dazed] 1."
     },
     {
         "name": "Savior III",
-        "description": "Advance. Gain Valor 15. Friendly units gain Armor equal to 1x Fel's Valor."
+        "description": "Advance. Gain [valor] 15. Friendly units gain [armor] equal to 1x Fel's [valor]."
     },
     {
         "name": "Shield Steward",
@@ -2545,19 +2541,19 @@
     },
     {
         "name": "Pyre-Gro",
-        "description": "Consume. Draw -2 next turn.+1[ember] per turn for the rest of battle."
+        "description": "Consume. Draw -2 next turn. +1[ember] per turn for the rest of battle."
     },
     {
         "name": "Eclipse Chamber",
-        "description": "New Moon effects are always active. Silent units gain +15[attack] on Resolve."
+        "description": "[moonshade] effects are always active. Silent units gain +15[attack] on [resolve]."
     },
     {
         "name": "Jack in the Box",
-        "description": "Resolve: Summon a boxed unit."
+        "description": "[resolve]: Summon a boxed unit."
     },
     {
         "name": "Adaptive Mutation",
-        "description": "Consume. Restore a friendly unit to full health then swap [attack] and [health]."
+        "description": "Consume. Restore a friendly unit to full [health] then swap [attack] and [health]."
     },
     {
         "name": "Harness the Titan",
@@ -2569,7 +2565,7 @@
     },
     {
         "name": "Cursed Dragonstaff",
-        "description": "Incant: Deal 1 damage to enemy units."
+        "description": "[incant]: Deal 1 damage to enemy units."
     },
     {
         "name": "Echoflight",
@@ -2577,11 +2573,11 @@
     },
     {
         "name": "Guardian's Amulet",
-        "description": "Offering. Apply Sap 2 to enemy units."
+        "description": "Offering. Apply [debuff] 2 to enemy units."
     },
     {
         "name": "Smelted Treasure",
-        "description": "Spend 50 Gold. Apply Armor 50 to a friendly unit."
+        "description": "Spend 50 [coin]. Apply [armor] 50 to a friendly unit."
     },
     {
         "name": "Molded",
@@ -2593,7 +2589,7 @@
     },
     {
         "name": "Moneymaker",
-        "description": "Gain 5  Gold for each [dragonshoardicon]."
+        "description": "Gain 5 [coin] for each [dragonshoardicon]."
     },
     {
         "name": "Flight",
@@ -2601,7 +2597,7 @@
     },
     {
         "name": "Frenzied Swarm",
-        "description": "Apply Dazed 1 to enemy units. Discard your hand."
+        "description": "Apply [dazed] 1 to enemy units. Discard your hand."
     },
     {
         "name": "Anvil Breaker",
@@ -2609,7 +2605,7 @@
     },
     {
         "name": "Morsel Excavator",
-        "description": "Eaten: Eater gains +6[attack] and Lifesteal 1."
+        "description": "[eaten]: Eater gains +6[attack] and [lifesteal]  1."
     },
     {
         "name": "Vent",
@@ -2617,23 +2613,23 @@
     },
     {
         "name": "Echo Snare",
-        "description": "Consume. Apply Reap 5 to enemy units."
+        "description": "Consume. Apply [corrupt_poison] 5 to enemy units."
     },
     {
         "name": "Alpha Fiend",
-        "description": "Strike: +15[attack]."
+        "description": "[strike]: +15[attack]."
     },
     {
         "name": "Glacial Seal",
-        "description": "Incant: Apply Frostbite 2 to enemy units."
+        "description": "[incant]: Apply [poison] 2 to enemy units."
     },
     {
         "name": "Penitent's Bloodsuit",
-        "description": "Shift: Take 30 damage. Can be equipped on enemy units."
+        "description": "[shift]: Take 30 damage. Can be equipped on enemy units."
     },
     {
-        "name": "Symphony of the Soul",
-        "description": "Extract 5. Double buffs and Armor on a unit."
+        "name": "Symphony of the [soul]",
+        "description": "Extract 5. Double buffs and [armor] on a unit."
     },
     {
         "name": "Space Prism",
@@ -2649,7 +2645,7 @@
     },
     {
         "name": "Overgrowth Carapace",
-        "description": "Resolve: Gain +1[capacity], +20[attack], and +20[health] if there is [capacity] available."
+        "description": "[resolve]: Gain +1[capacity], +20[attack], and +20[health] if there is [capacity] available."
     },
     {
         "name": "Rising Rage",
@@ -2657,18 +2653,18 @@
     },
     {
         "name": "Perils of Production",
-        "description": "Apply Rage 3 and Emberdrain 2 to a friendly unit. Gain 3[ember]."
+        "description": "Apply [buff] 3 and [scorch] 2 to a friendly unit. Gain 3[ember]."
     },
     {
         "name": "Demonize",
-        "description": "Descend. Apply Melee Weakness 2."
+        "description": "Descend. Apply [meleeweakness] 2."
     },
     {
         "name": "Zealot",
-        "description": "Sweep. Action: Apply Pyregel 5 to enemy units."
+        "description": "[sweep]. Action: Apply [pyregel] 5 to enemy units."
     },
     {
         "name": "Savior",
-        "description": "Advance. Gain Valor 5. Gain Armor equal to 1x Valor."
+        "description": "Advance. Gain [valor] 5. Gain [armor] equal to 1x [valor]."
     }
 ]
