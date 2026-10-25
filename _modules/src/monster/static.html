@@ -392,6 +392,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="c1"># this is an iterable of 1-length str to remove from queries</span>
@@ -405,6 +406,44 @@
 <span class="n">_mutators</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mutator</span> <span class="o">|</span> <span class="n">Mutator2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_champions</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Card2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 <span class="n">_autoreplace</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># mapping of name: uri (relative to /static/mt2/)</span>
+<span class="n">_desc_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\[[^\]]*\])"</span><span class="p">)</span>
+<span class="n">_identical</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"burnout"</span><span class="p">:</span> <span class="s2">"ephemeral"</span><span class="p">,</span>
+    <span class="s2">"quick"</span><span class="p">:</span> <span class="s2">"ambush"</span><span class="p">,</span>
+    <span class="s2">"corrupt"</span><span class="p">:</span> <span class="s2">"chargedechoes"</span><span class="p">,</span>
+    <span class="s2">"emptycorrupt"</span><span class="p">:</span> <span class="s2">"emptyechoes"</span><span class="p">,</span>
+    <span class="s2">"annihilate"</span><span class="p">:</span> <span class="s2">"purge"</span><span class="p">,</span>
+    <span class="s2">"rage"</span><span class="p">:</span> <span class="s2">"buff"</span><span class="p">,</span>
+    <span class="s2">"snack"</span><span class="p">:</span> <span class="s2">"morsel"</span><span class="p">,</span>
+    <span class="s2">"feed"</span><span class="p">:</span> <span class="s2">"gorge"</span><span class="p">,</span>
+    <span class="s2">"frostbite"</span><span class="p">:</span> <span class="s2">"poison"</span><span class="p">,</span>
+    <span class="s2">"troop"</span><span class="p">:</span> <span class="s2">"horde"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">_localized</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"full"</span><span class="p">:</span> <span class="s2">"Full Moon"</span><span class="p">,</span>
+    <span class="s2">"moonshade"</span><span class="p">:</span> <span class="s2">"New Moon"</span><span class="p">,</span>
+    <span class="s2">"emptyechoes"</span><span class="p">:</span> <span class="s2">"Empty Echoes"</span><span class="p">,</span>
+    <span class="s2">"chargedechoes"</span><span class="p">:</span> <span class="s2">"Charged Echoes"</span><span class="p">,</span>
+    <span class="s2">"permanentechoes"</span><span class="p">:</span> <span class="s2">"Permanent Charged Echoes"</span><span class="p">,</span>
+    <span class="s2">"deployphase"</span><span class="p">:</span> <span class="s2">"Deployment Phase"</span><span class="p">,</span>
+    <span class="s2">"forgepoint"</span><span class="p">:</span> <span class="s2">"Forge Point"</span><span class="p">,</span>
+    <span class="s2">"forgepoints"</span><span class="p">:</span> <span class="s2">"Forge Points"</span><span class="p">,</span>
+    <span class="s2">"magicpower"</span><span class="p">:</span> <span class="s2">"Magic Power"</span><span class="p">,</span>
+    <span class="s2">"mooncycle"</span><span class="p">:</span> <span class="s2">"MoonCycle"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">_unnamed_icons</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"coin"</span><span class="p">,</span>
+    <span class="s2">"ember"</span><span class="p">,</span>
+    <span class="s2">"capacity"</span><span class="p">,</span>
+    <span class="s2">"deploymentember"</span><span class="p">,</span>
+    <span class="s2">"dragonshoardicon"</span><span class="p">,</span>
+    <span class="s2">"permanentechoes"</span><span class="p">,</span>
+    <span class="s2">"chargedechoes"</span><span class="p">,</span>
+    <span class="s2">"emptyechoes"</span><span class="p">,</span>
+    <span class="s2">"attack"</span><span class="p">,</span>
+    <span class="s2">"health"</span><span class="p">,</span>
+    <span class="s2">"pyrehealth"</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">sanitize</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -553,6 +592,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lore</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"lore"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"hidden"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dlc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"dlc"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parsed</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -568,10 +608,25 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">escaped_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"&lt;br&gt;"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">'"</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">uri</span> <span class="ow">in</span> <span class="n">_autoreplace</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="c1"># XXX restrict image size?</span>
-            <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">uri</span><span class="si">}</span><span class="s1">" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">desc</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parsed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"&lt;br&gt;"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">'"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">_identical</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">]"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">uri</span> <span class="ow">in</span> <span class="n">_autoreplace</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">_localized</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_internal_cache</span><span class="p">:</span> <span class="c1"># we might already have a translation of it</span>
+                    <span class="n">l</span> <span class="o">=</span> <span class="n">_internal_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">display</span> <span class="o">=</span> <span class="s2">""</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_unnamed_icons</span><span class="p">:</span>
+                    <span class="n">display</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2">"</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">uri</span><span class="si">}</span><span class="s1">" alt="</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">" title="</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">" width="30" height="30"&gt;</span><span class="si">{</span><span class="n">display</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">_desc_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">desc</span><span class="p">):</span> <span class="c1"># find any remaining words in []</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"&lt;b&gt;</span><span class="si">{</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;b&gt;"</span><span class="p">)</span> <span class="c1"># bold them up</span>
+            <span class="k">if</span> <span class="s2">"&lt;&gt;"</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span> <span class="c1"># Pyre hearts, include hyperlink</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&lt;&gt;"</span><span class="p">,</span> <span class="s1">'&lt;a href="https://monstertrain2.miraheze.org/wiki/Pyre_Hearts" target="_blank"&gt;'</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&lt;&gt;"</span><span class="p">,</span> <span class="s2">"&lt;/a&gt;"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parsed</span> <span class="o">=</span> <span class="n">desc</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parsed</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Card2</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -684,6 +739,11 @@
     <span class="c1"># and 2 which are completely unnecessary for us</span>
     <span class="c1"># but I don't wanna fuck around with regex to clear them atm</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The map node icon."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/map/</span><span class="si">{</span><span class="n">sanitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.png"</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Relic</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -696,7 +756,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/artifacts/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/artifacts/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s2">.png"</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Trial</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Store trial information."""</span>
@@ -914,6 +974,8 @@
                 <span class="n">_query_cache</span><span class="p">[</span><span class="n">sanitize</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"static"</span> <span class="o">/</span> <span class="s2">"mt2"</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"trials"</span><span class="p">,</span> <span class="s2">"mutators"</span><span class="p">):</span>
+            <span class="k">continue</span> <span class="c1"># only include what can be in a card or artifact description</span>
         <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span> <span class="c1"># we only go exactly one level down</span>
             <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">sub</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".png"</span><span class="p">):</span>
