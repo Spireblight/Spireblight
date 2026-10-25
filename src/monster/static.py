@@ -11,6 +11,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import json
+import re
 import os
 
 # this is an iterable of 1-length str to remove from queries
@@ -24,6 +25,42 @@ _query_cache: dict[str, list[Base | Base2]] = defaultdict(list)
 _mutators: dict[str, Mutator | Mutator2] = {}
 _champions: set[Card2] = set()
 _autoreplace: dict[str, str] = {} # mapping of name: uri (relative to /static/mt2/)
+_desc_re = re.compile(r"(\[[^\]]*\])")
+_identical: dict[str, str] = {
+    "burnout": "ephemeral",
+    "quick": "ambush",
+    "corrupt": "chargedechoes",
+    "emptycorrupt": "emptyechoes",
+    "annihilate": "purge",
+    "rage": "buff",
+    "snack": "morsel",
+    "feed": "gorge",
+}
+_localized: dict[str, str] = {
+    "full": "Full Moon",
+    "moonshade": "New Moon",
+    "emptyechoes": "Empty Echoes",
+    "chargedechoes": "Charged Echoes",
+    "permanentechoes": "Permanent Charged Echoes",
+    "deployphase": "Deployment Phase",
+    "forgepoint": "Forge Point",
+    "forgepoints": "Forge Points",
+    "magicpower": "Magic Power",
+    "mooncycle": "MoonCycle",
+}
+_unnamed_icons: tuple[str, ...] = (
+    "coin",
+    "ember",
+    "capacity",
+    "deploymentember",
+    "dragonshoardicon",
+    "permanentechoes",
+    "chargedechoes",
+    "emptyechoes",
+    "attack",
+    "health",
+    "pyrehealth",
+)
 
 def sanitize(x: str) -> str:
     x = x.lower()
@@ -160,6 +197,7 @@ class Base2:
         self.lore: str = data.get("lore", "")
         self.is_hidden: bool = data.get("hidden", False)
         self.dlc: str | None = data.get("dlc")
+        self._parsed: str | None = None
 
     def __hash__(self):
         return hash(self.id)
@@ -175,10 +213,22 @@ class Base2:
         return self._description
 
     def escaped_description(self) -> str:
-        desc = self.description.replace("\n", "<br>").replace("'", "\\'")
-        for name, uri in _autoreplace.items(): # XXX restrict image size?
-            desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{self.name}">')
-        return desc
+        if self._parsed is None:
+            desc = self.description.replace("\n", "<br>").replace("'", "\\'")
+            for a, b in _identical.items():
+                desc = desc.replace(f"[{a}]", f"[{b}]")
+            for name, uri in _autoreplace.items():
+                l = _localized.get(name, name.title())
+                if name in _internal_cache: # we might already have a translation of it
+                    l = _internal_cache[name].name
+                display = ""
+                if name not in _unnamed_icons:
+                    display = f" {l}"
+                desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{l}" title="{l}" width="30" height="30">{display}')
+            for word in _desc_re.findall(desc): # find any remaining words in []
+                desc = desc.replace(word, f"<b>{word[1:-1].title()}<b>") # bold them up
+            self._parsed = desc
+        return self._parsed
 
 class Card2(Base2):
     def __init__(self, data: dict):
@@ -308,7 +358,7 @@ class Relic(Base2):
 
     @property
     def image(self) -> str:
-        return f'<img src="/static/mt2/artifacts/{self.internal}.png" alt="{self.name}">'
+        return f"/static/mt2/artifacts/{self.internal}.png"
 
 class Trial(Base2):
     """Store trial information."""
@@ -521,6 +571,8 @@ def load_mt2(base: Path = Path(".")):
                 _query_cache[sanitize(value.name)].append(value)
 
     for sub in (base / "static" / "mt2").iterdir():
+        if sub.name in ("trials", "mutators"):
+            continue # only include what can be in a card or artifact description
         if sub.is_dir(): # we only go exactly one level down
             for img in sub.iterdir():
                 if img.name.endswith(".png"):
