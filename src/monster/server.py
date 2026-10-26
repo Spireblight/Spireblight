@@ -8,7 +8,7 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.replay import parse
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Clan
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -168,6 +168,28 @@ class MonsterSave:
     def champion(self):
         return get_champion(self.main_class, self.main_exiled)
 
+    def get_clan_image(self, *, is_main: bool) -> str:
+        """Generate an SVG with the clan with or without exiled symbol.
+
+        :param is_main: Whether this is the main clan we want.
+        :type is_main: bool
+        :return: A full SVG matching the clan.
+        :rtype: str
+        """
+
+        key = ("subclassInfo", "mainClassInfo")[is_main]
+        clan: Clan = get(self._data["startingConditions"][key]["classId"])
+        exiled = ""
+        if self._data["startingConditions"][key]["championIndex"] == 1: # exiled
+            exiled = f'<image width="16" height="16" xlink:href="{config.server.url}/static/mt2/clan/Exiled.png" x="40" y="96"></image>'
+        name = clan.name
+        if exiled:
+            name = f"{name} (Exiled)"
+        return (
+            f'<svg width="96" height="112"><title>{name}</title>'
+            f'<image width="96" height="96" xlink:href="{config.server.url}{clan.image}"></image>{exiled}</svg>'
+        )
+
     @property
     def main_class(self) -> str:
         main = self._data["startingConditions"]["mainClassInfo"]
@@ -186,6 +208,10 @@ class MonsterSave:
         return self.main_class
 
     @property
+    def main_clan_icon(self) -> str:
+        return self.get_clan_image(is_main=True)
+
+    @property
     def sub_class(self) -> str:
         sub = self._data["startingConditions"]["subclassInfo"]
         if "className" in sub:
@@ -201,6 +227,10 @@ class MonsterSave:
         if self.sub_exiled:
             return f"{self.sub_class} (Exiled)"
         return self.sub_class
+
+    @property
+    def sub_clan_icon(self) -> str:
+        return self.get_clan_image(is_main=False)
 
     @property
     def artifacts(self) -> Generator[Artifact, None, None]:
