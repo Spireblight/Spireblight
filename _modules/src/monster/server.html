@@ -459,7 +459,7 @@
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"can only unpack multiples of 8"</span>
     <span class="n">val</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="s2">"&lt;"</span> <span class="k">if</span> <span class="n">little_endian</span> <span class="k">else</span> <span class="s2">"&gt;"</span>
-    <span class="n">fs</span> <span class="o">+=</span> <span class="s2">"d"</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span> <span class="c1"># one double per 8 bytes</span>
+    <span class="n">fs</span> <span class="o">+=</span> <span class="s2">"d"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span><span class="p">)</span> <span class="c1"># one double per 8 bytes</span>
     <span class="n">unpacked</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">unpacked</span><span class="p">))</span></div>
 
@@ -527,9 +527,17 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"dragonsHoardCap"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"Pyreborne"</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""The current count of Forge Points being held."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"forgePoints"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"Railforged"</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pyre_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
