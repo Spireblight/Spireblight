@@ -49,6 +49,7 @@ _localized: dict[str, str] = {
     "forgepoints": "Forge Points",
     "magicpower": "Magic Power",
     "mooncycle": "MoonCycle",
+    "abilityactive": "Ability",
 }
 _unnamed_icons: tuple[str, ...] = (
     "coin",
@@ -294,7 +295,7 @@ class Character(Base2):
         name = self.internal
         if name.endswith("_TitanTrial"): # Cael and Seraph have identical variants (afaict)
             name = name[:-11]
-        return f'<img src="/static/mt2/{sub}/{name}.png" alt="{self.name}">'
+        return f"/static/mt2/{sub}/{name}.png"
 
     @property
     def trial(self) -> str:

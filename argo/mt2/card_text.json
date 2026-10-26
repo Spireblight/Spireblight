@@ -3530,5 +3530,57 @@
     {
         "name": "Thorn Casing",
         "description": "<b>Sting</b> spells get +10 [magicpower] and [piercing]."
+    },
+    {
+        "name": "Aquath's Reservation",
+        "description": "Once per battle, activate the Pyre's [abilityactive] to gain 3[ember]."
+    },
+    {
+        "name": "Wyngh's Spirit",
+        "description": "Once per battle, activate the Pyre's [abilityactive] to restore the front friendly units on all floors to full health."
+    },
+    {
+        "name": "Bogwurm's Growth",
+        "description": "Permanently add +1 [capacity] to a random floor after battle."
+    },
+    {
+        "name": "Pyre of Entropy",
+        "description": "Add a Vengeful Shard to your deck after each battle. Draw 1 extra card for every 2 Blights in your deck."
+    },
+    {
+        "name": "Malicka's Shifting Pyre",
+        "description": "All drafted cards appear with an upgrade."
+    },
+    {
+        "name": "Proto Heartcage",
+        "description": "No special effect."
+    },
+    {
+        "name": "Pyre of Savagery",
+        "description": "Friendly units gain [slay]: +1[attack] permanently."
+    },
+    {
+        "name": "Heart of the Pact",
+        "description": "After playing a card from your Primary and Allied clan, draw +1 next turn."
+    },
+    {
+        "name": "Herzal's Horde",
+        "description": "Gain 4[deploymentember]. Deployable upgrade is 50% cheaper."
+    },
+    {
+        "name": "Fhyra's Greed",
+        "description": "When your Pyre takes damage, gain 10[coin]."
+    },
+    {
+        "name": "Pyre of Dominion",
+        "description": "Remove Train Stewards and starting cards. Immediately draft four packs, and double each card picked."
+    },
+    {
+        "name": "Echo of the Time Father",
+        "description": "Once per battle, activate the Pyre's [abilityactive] to apply [frozen] to all non-Blight and non-Scourge cards in hand."
+    },
+    {
+        "name": "Lifemother's Pyre",
+        "description": "Adds the option to copy cards at the Merchants of Steel, Magic, and Trinkets."
     }
 ]
