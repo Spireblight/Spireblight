@@ -76,7 +76,7 @@ def parse_value(v: list[int], *, little_endian=True) -> int:
     assert len(v) % 8 == 0, "can only unpack multiples of 8"
     val = bytes(v)
     fs = "<" if little_endian else ">"
-    fs += "d" * len(v) // 8 # one double per 8 bytes
+    fs += "d" * (len(v) // 8) # one double per 8 bytes
     unpacked = struct.unpack(fs, val)
     return int(sum(unpacked))
 
@@ -135,9 +135,17 @@ class MonsterSave:
         return self._asint("dragonsHoardCap")
 
     @property
+    def use_dragons_hoard(self) -> bool:
+        return "Pyreborne" in (self.main_class, self.sub_class)
+
+    @property
     def forge_points(self) -> int:
         """The current count of Forge Points being held."""
         return self._asint("forgePoints")
+
+    @property
+    def use_forge_points(self) -> bool:
+        return "Railforged" in (self.main_class, self.sub_class)
 
     @property
     def pyre_hp(self) -> int:
