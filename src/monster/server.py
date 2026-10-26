@@ -105,12 +105,14 @@ class MonsterSave:
 
     @property
     def rings(self):
-        furthest = self._data["runState"]["numBattlesCompleted"]
+        snapshots = len(self._data["goldOverTime"])
+        furthest, in_fight = snapshots // 2, bool(snapshots % 2)
+        assert furthest == self._data["runState"]["numBattlesCompleted"], "battle count data mismatch"
         for i, data in enumerate(self._data["runState"]["nodes"]):
             battle = None
             if i < furthest:
                 battle = self._data["completedBattles"][i]
-            yield Ring(i, furthest, data, battle)
+            yield Ring(i, furthest, in_fight, data, battle)
 
     @property
     def gold(self) -> int:
@@ -234,9 +236,10 @@ class MonsterSave:
 class Ring:
     """Store information for one ring."""
 
-    def __init__(self, ring: int, farthest: int, data: dict, battle: dict | None):
+    def __init__(self, ring: int, farthest: int, in_fight: bool, data: dict, battle: dict | None):
         self.ring = ring # 0-indexed
         self.farthest = farthest
+        self.in_fight = in_fight
         self._data = data
         self._battle = battle
 
@@ -279,6 +282,8 @@ class Ring:
         if fight_name == boss: # flying bosses are always known
             name = fight_name.partition(" (")[0]
             return f"Before {name}", f"After beating {fight_name}"
+        if self.in_fight and self.ring == self.farthest: # we're in the fight and it has begun
+            return f"Before {fight_name}", f"After {word}"
         if self.ring < self.farthest:
             return f"Before {fight_name}", f"After beating {boss}"
         return f"Before {word}", f"After {word}"
