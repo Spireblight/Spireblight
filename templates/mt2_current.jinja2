@@ -115,6 +115,18 @@
                 onclick="neowText('{{ save.pyre.name | replace("'", "\\'") }}', '{{ save.pyre.escaped_description() }}')">
               {{ save.sub_clan_icon | safe }}
             </p>
+            {% if save.mutators %}
+              <p>
+              {% for mutator in save.mutators %}
+                <img class="mutator"
+                  src="{{ mutator.image }}"
+                  alt="{{ mutator.name }}"
+                  title="{{ mutator.name }}"
+                  width="64" height="64"
+                  onclick="neowText('{{ mutator.name | replace("'", "\\'") }}', '{{ mutator.escaped_description() }}')">
+              {% endfor %}
+              </p>
+            {% endif %}
           </div><br>
           <div class="hint" onclick="neowReset()">
           <p>Hint: you can click on artifacts, cards, map nodes, Pyre, and mutators.</p>
@@ -143,12 +155,6 @@
       <div class="box mt2-run is-paddingless">
         <div class="mt2-run-content">
           <div class="run-title pt-4 pr-4 pb-4">
-            <div class="mutators"> {# make it mutators and stuff #}
-              {% if save.mutators %}
-                <i title="Mutators are active. Check left panel for more information."
-                  class="fa-solid fa-flask"></i>
-              {% endif %}
-            </div>
 
             <div class="extra"> {# Add misc info here#}
             </div>
