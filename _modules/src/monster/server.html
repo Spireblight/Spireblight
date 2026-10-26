@@ -389,7 +389,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Clan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
 
@@ -497,12 +497,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">furthest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"numBattlesCompleted"</span><span class="p">]</span>
+        <span class="n">snapshots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"goldOverTime"</span><span class="p">])</span>
+        <span class="n">furthest</span><span class="p">,</span> <span class="n">in_fight</span> <span class="o">=</span> <span class="n">snapshots</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">snapshots</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">furthest</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"numBattlesCompleted"</span><span class="p">],</span> <span class="s2">"battle count data mismatch"</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"nodes"</span><span class="p">]):</span>
             <span class="n">battle</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">furthest</span><span class="p">:</span>
                 <span class="n">battle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"completedBattles"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">yield</span> <span class="n">Ring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">furthest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">battle</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">Ring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">furthest</span><span class="p">,</span> <span class="n">in_fight</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">battle</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -558,6 +560,31 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">champion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">get_champion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_exiled</span><span class="p">)</span>
 
+<div class="viewcode-block" id="MonsterSave.get_clan_image">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_clan_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_clan_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_main</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Generate an SVG with the clan with or without exiled symbol.</span>
+
+<span class="sd">        :param is_main: Whether this is the main clan we want.</span>
+<span class="sd">        :type is_main: bool</span>
+<span class="sd">        :return: A full SVG matching the clan.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        """</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"subclassInfo"</span><span class="p">,</span> <span class="s2">"mainClassInfo"</span><span class="p">)[</span><span class="n">is_main</span><span class="p">]</span>
+        <span class="n">clan</span><span class="p">:</span> <span class="n">Clan</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s2">"classId"</span><span class="p">])</span>
+        <span class="n">exiled</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># exiled</span>
+            <span class="n">exiled</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'&lt;image width="16" height="16" xlink:href="</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s1">/static/mt2/clan/Exiled.png" x="40" y="96"&gt;&lt;/image&gt;'</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">clan</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">exiled</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">'&lt;svg width="96" height="112"&gt;&lt;title&gt;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&lt;/title&gt;'</span>
+            <span class="sa">f</span><span class="s1">'&lt;image width="96" height="96" xlink:href="</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}{</span><span class="n">clan</span><span class="o">.</span><span class="n">image</span><span class="si">}</span><span class="s1">"&gt;&lt;/image&gt;</span><span class="si">{</span><span class="n">exiled</span><span class="si">}</span><span class="s1">&lt;/svg&gt;'</span>
+        <span class="p">)</span></div>
+
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">main_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mainClassInfo"</span><span class="p">]</span>
@@ -576,6 +603,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_class</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">main_clan_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clan_image</span><span class="p">(</span><span class="n">is_main</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sub_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"subclassInfo"</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">"className"</span> <span class="ow">in</span> <span class="n">sub</span><span class="p">:</span>
@@ -591,6 +622,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_exiled</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sub_clan_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clan_image</span><span class="p">(</span><span class="n">is_main</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Artifact</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
@@ -629,9 +664,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Ring</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Store information for one ring."""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">farthest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">battle</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">farthest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">in_fight</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">battle</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">=</span> <span class="n">ring</span> <span class="c1"># 0-indexed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span> <span class="o">=</span> <span class="n">farthest</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_fight</span> <span class="o">=</span> <span class="n">in_fight</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span> <span class="o">=</span> <span class="n">battle</span>
 
@@ -676,6 +712,8 @@
         <span class="k">if</span> <span class="n">fight_name</span> <span class="o">==</span> <span class="n">boss</span><span class="p">:</span> <span class="c1"># flying bosses are always known</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">fight_name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">" ("</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_fight</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span><span class="p">:</span> <span class="c1"># we're in the fight and it has begun</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">boss</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span></div>

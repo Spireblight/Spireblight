@@ -520,6 +520,23 @@
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">champion</span></span><a class="headerlink" href="#src.monster.server.MonsterSave.champion" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.get_clan_image">
+<span class="sig-name descname"><span class="pre">get_clan_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_main</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/monster/server.html#MonsterSave.get_clan_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.monster.server.MonsterSave.get_clan_image" title="Link to this definition">#</a></dt>
+<dd><p>Generate an SVG with the clan with or without exiled symbol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>is_main</strong> (<em>bool</em>) – Whether this is the main clan we want.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A full SVG matching the clan.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="src.monster.server.MonsterSave.main_class">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.main_class" title="Link to this definition">#</a></dt>
@@ -536,6 +553,11 @@
 <dd></dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.main_clan_icon">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main_clan_icon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.main_clan_icon" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="src.monster.server.MonsterSave.sub_class">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sub_class</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.sub_class" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -548,6 +570,11 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="src.monster.server.MonsterSave.sub_clan">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sub_clan</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.sub_clan" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.monster.server.MonsterSave.sub_clan_icon">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sub_clan_icon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.monster.server.MonsterSave.sub_clan_icon" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -589,7 +616,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.monster.server.Ring">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">farthest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">battle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/monster/server.html#Ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.monster.server.Ring" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">farthest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_fight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">battle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/monster/server.html#Ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.monster.server.Ring" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Store information for one ring.</p>
 <dl class="py property">
@@ -775,12 +802,15 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.pyre_max_hp_graph"><code class="docutils literal notranslate"><span class="pre">MonsterSave.pyre_max_hp_graph</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.in_game"><code class="docutils literal notranslate"><span class="pre">MonsterSave.in_game</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.champion"><code class="docutils literal notranslate"><span class="pre">MonsterSave.champion</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.get_clan_image"><code class="docutils literal notranslate"><span class="pre">MonsterSave.get_clan_image()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.main_class"><code class="docutils literal notranslate"><span class="pre">MonsterSave.main_class</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.main_exiled"><code class="docutils literal notranslate"><span class="pre">MonsterSave.main_exiled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.main_clan"><code class="docutils literal notranslate"><span class="pre">MonsterSave.main_clan</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.main_clan_icon"><code class="docutils literal notranslate"><span class="pre">MonsterSave.main_clan_icon</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.sub_class"><code class="docutils literal notranslate"><span class="pre">MonsterSave.sub_class</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.sub_exiled"><code class="docutils literal notranslate"><span class="pre">MonsterSave.sub_exiled</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.sub_clan"><code class="docutils literal notranslate"><span class="pre">MonsterSave.sub_clan</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.sub_clan_icon"><code class="docutils literal notranslate"><span class="pre">MonsterSave.sub_clan_icon</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.artifacts"><code class="docutils literal notranslate"><span class="pre">MonsterSave.artifacts</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.challenge"><code class="docutils literal notranslate"><span class="pre">MonsterSave.challenge</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.monster.server.MonsterSave.covenant_level"><code class="docutils literal notranslate"><span class="pre">MonsterSave.covenant_level</span></code></a></li>

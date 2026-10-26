@@ -430,6 +430,7 @@
     <span class="s2">"forgepoints"</span><span class="p">:</span> <span class="s2">"Forge Points"</span><span class="p">,</span>
     <span class="s2">"magicpower"</span><span class="p">:</span> <span class="s2">"Magic Power"</span><span class="p">,</span>
     <span class="s2">"mooncycle"</span><span class="p">:</span> <span class="s2">"MoonCycle"</span><span class="p">,</span>
+    <span class="s2">"abilityactive"</span><span class="p">:</span> <span class="s2">"Ability"</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">_unnamed_icons</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">"coin"</span><span class="p">,</span>
@@ -687,7 +688,7 @@
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"_TitanTrial"</span><span class="p">):</span> <span class="c1"># Cael and Seraph have identical variants (afaict)</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">'&lt;img src="/static/mt2/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.png" alt="</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">"&gt;'</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.png"</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
