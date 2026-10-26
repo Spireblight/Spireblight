@@ -8,6 +8,15 @@
   {% endif %}
 {% endblock %}
 
+{% block head %}
+  {% if autorefresh %}
+    <!-- Refresh the page every 15 seconds; savefile gets regularly updated.
+         Actual code will properly cache the savefile and serve latest -->
+    <meta http-equiv="refresh" content="15">
+  {% endif %}
+  <script src="/static/js/run.js"></script>
+{% endblock %}
+
 {% block content %}
   <script type="text/javascript">
     const labels = {{ save.get_fight_names() | safe }};
@@ -75,14 +84,63 @@
   </script>
 
   {% if save.in_game %}
-    <section class="section">
-      <div class="box mt2-run is-paddingless">
+    <section id="top-section" class="section">
         <div class="avatar">
           <img class="{{ save.champion.name | lower }}"
             src="{{ save.champion.get_image_link() }}"
             alt="{{ save.champion.name }}"/>
-            {{ save.main_clan }} / {{ save.sub_clan }} run
+            {{ save.main_class }} / {{ save.sub_class }} run
+        </div><br>
+      <div id="run-info" class="columns is-marginless">
+        <div class="column message neow is-paddingless is-marginless box">
+            <div class="message-header">
+              <p id="neow-header">Starting bonus</p>
+            </div>
+            <div id="neow-body-original" class="message-body">
+            {# no way I can tell to see the cards given to us at the start #}
+          </div>
+          <div id="neow-body-new" class="message-body hidden">
+            <p id="neow-body-content"></p>
+          </div>
         </div>
+
+        <div class="column is-one-fifth">
+          <div class="clans pyre columns is-centered">
+            <p>
+              {{ save.main_clan_icon | safe }}
+              <img class="pyre"
+                src="{{ save.pyre.image }}"
+                alt="{{ save.pyre.name }}"
+                title="{{ save.pyre.name }}"
+                onclick="neowText('{{ save.pyre.name | replace("'", "\\'") }}', '{{ save.pyre.escaped_description() }}')">
+              {{ save.sub_clan_icon | safe }}
+            </p>
+          </div><br>
+          <div class="hint" onclick="neowReset()">
+          <p>Hint: you can click on artifacts, cards, map nodes, Pyre, and mutators.</p>
+          </div>
+        </div>
+
+        <div class="column message relics-message is-paddingless is-marginless box">
+          <div class="message-header">
+            <p>Artifacts</p>
+          </div>
+          <div class="message-body relics">
+            {% for relic in save.artifacts %}
+              <div>
+                <img src="{{ relic.image }}"
+                  alt="{{ relic.name }}"
+                  title="{{ relic.name }}"
+                  onclick="neowText('{{ relic.name | replace("'", "\\'") }}', '{{ relic.escaped_description() }}')" >
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="box mt2-run is-paddingless">
         <div class="mt2-run-content">
           <div class="run-title pt-4 pr-4 pb-4">
             <div class="mutators"> {# make it mutators and stuff #}
