@@ -115,19 +115,29 @@
                 onclick="neowText('{{ save.pyre.name | replace("'", "\\'") }}', '{{ save.pyre.escaped_description() }}')">
               {{ save.sub_clan_icon | safe }}
             </p>
-            {% if save.mutators %}
-              <p>
-              {% for mutator in save.mutators %}
-                <img class="mutator"
-                  src="{{ mutator.image }}"
-                  alt="{{ mutator.name }}"
-                  title="{{ mutator.name }}"
-                  width="64" height="64"
-                  onclick="neowText('{{ mutator.name | replace("'", "\\'") }}', '{{ mutator.escaped_description() }}')">
-              {% endfor %}
-              </p>
-            {% endif %}
-          </div><br>
+          </div>
+          <div class="pyre-hp columns is-centered">
+            {{ save.pyre_hp }} / {{ save.pyre_max_hp }}
+            <img class="pyre-hp"
+              src="/static/mt2/icons/PyreHealth.png"
+              alt="Pyre Health"
+              height="32"
+              width="32"/>
+          </div>
+          {% if save.mutators %}
+          <div>
+            <p>
+            {% for mutator in save.mutators %}
+              <img class="mutator"
+                src="{{ mutator.image }}"
+                alt="{{ mutator.name }}"
+                title="{{ mutator.name }}"
+                width="64" height="64"
+                onclick="neowText('{{ mutator.name | replace("'", "\\'") }}', '{{ mutator.escaped_description() }}')">
+            {% endfor %}
+            </p>
+          </div>
+          {% endif %}
           <div class="hint" onclick="neowReset()">
           <p>Hint: you can click on artifacts, cards, map nodes, Pyre, and mutators.</p>
           </div>
