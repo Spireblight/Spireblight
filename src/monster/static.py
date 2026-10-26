@@ -37,6 +37,7 @@ _identical: dict[str, str] = {
     "feed": "gorge",
     "frostbite": "poison",
     "troop": "horde",
+    "sap": "debuff",
 }
 _localized: dict[str, str] = {
     "full": "Full Moon",
@@ -50,6 +51,10 @@ _localized: dict[str, str] = {
     "magicpower": "Magic Power",
     "mooncycle": "MoonCycle",
     "abilityactive": "Ability",
+    "abilitycooldown": "Cooldown",
+    "deploymentember": "Deployment Ember",
+    "dragonshoardicon": "Dragon's Hoard",
+    "pyrehealth": "Pyre Health",
 }
 _unnamed_icons: tuple[str, ...] = (
     "coin",
@@ -453,7 +458,7 @@ class Mutator2(Base2):
 
     @property
     def image(self) -> str:
-        return f'<img src="/static/mt2/mutators/{self.internal}.png" alt="{self.name}\n{self.description}">'
+        return f"/static/mt2/mutators/{self.internal}.png"
 
 class EndlessMutator(Base2):
     """Contain mutators for Endless mode."""

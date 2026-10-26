@@ -3582,5 +3582,529 @@
     {
         "name": "Lifemother's Pyre",
         "description": "Adds the option to copy cards at the Merchants of Steel, Magic, and Trinkets."
+    },
+    {
+        "name": "Levity",
+        "description": "Enemy units get [haste]."
+    },
+    {
+        "name": "Return on Investment",
+        "description": "Spawn an additional Collector in battles that already have a Collector."
+    },
+    {
+        "name": "Enchanted Armory",
+        "description": "Equipment cards cost 0[ember]. Add 3 random Equipment cards to your starting deck."
+    },
+    {
+        "name": "Amplified Armaments",
+        "description": "Attack and health benefits from equipment are doubled."
+    },
+    {
+        "name": "Lonely Rooms",
+        "description": "There can only ever be one friendly unit in a room."
+    },
+    {
+        "name": "Pain Train",
+        "description": "Enemy units enter with [spikes] 1."
+    },
+    {
+        "name": "Shields Up",
+        "description": "Enemy units enter with [damageshield]."
+    },
+    {
+        "name": "Cure Light Wounds",
+        "description": "Restore 5 health to all units after combat."
+    },
+    {
+        "name": "Early Boarding",
+        "description": "On the turn after [deployphase], the first enemy wave ascends and the second wave enters."
+    },
+    {
+        "name": "Heavy",
+        "description": "Add 5 <b>Deadweights</b> to your starting deck."
+    },
+    {
+        "name": "Dominion's Reign",
+        "description": "Friendly units have one of Dominion's Boons at random."
+    },
+    {
+        "name": "Ninja's Best Friend",
+        "description": "Start with <b>Shadow's Sheath</b>."
+    },
+    {
+        "name": "Bloodlust",
+        "description": "All non-boss units fully heal on [slay]."
+    },
+    {
+        "name": "Soul Exchange",
+        "description": "Start with <b>Soulsmelter</b> and it has [deployable]."
+    },
+    {
+        "name": "It's Free Real Estate",
+        "description": "Room cards cost 0[ember]. Add 2 random Room cards to your starting deck."
+    },
+    {
+        "name": "More Damage, Less Time",
+        "description": "[frostbite] and [decay] deal an extra 1 damage per stack."
+    },
+    {
+        "name": "Ninja Training",
+        "description": "Minor bosses enter with [stealth] 5."
+    },
+    {
+        "name": "Empty Pockets",
+        "description": "No longer gain card packs from non-Flying Boss battles."
+    },
+    {
+        "name": "Brawl",
+        "description": "All units gain +5[attack] and +10[health]. Your Pyre gains +10[attack]."
+    },
+    {
+        "name": "Buying Power",
+        "description": "Merchants provide a card duplication service."
+    },
+    {
+        "name": "Volatile Spells",
+        "description": "The targets of spells are chosen randomly and Undo is disabled."
+    },
+    {
+        "name": "Spellcraft",
+        "description": "Start with <b>Lightstone Casing</b>."
+    },
+    {
+        "name": "Our Powers Combined",
+        "description": "Drafts can have cards from any clan."
+    },
+    {
+        "name": "Redhot Renovations",
+        "description": "At the start of battle, apply <b>Inferno Room</b> on all floors."
+    },
+    {
+        "name": "Frontline Fighter",
+        "description": "Enemy units get [titanite] when they are in the front."
+    },
+    {
+        "name": "Team Up",
+        "description": "Gain the Champion of the allied clan. It gains a random upgrade and levels up after each flying boss."
+    },
+    {
+        "name": "Gladiatior's Boon",
+        "description": "Start with <b>Golden Idol</b>."
+    },
+    {
+        "name": "Hollow",
+        "description": "Friendly units get [heal immunity]."
+    },
+    {
+        "name": "Hammer Time",
+        "description": "Start with <b>Heph's Hammer</b> and it has [deployable]."
+    },
+    {
+        "name": "Recurrent",
+        "description": "All spells gain [retain]."
+    },
+    {
+        "name": "Brains and Brawn",
+        "description": "Your units gain +2[attack] and +2[health] per 10 cards in your deck."
+    },
+    {
+        "name": "Gravity",
+        "description": "At end of turn, [descend] friendly units."
+    },
+    {
+        "name": "Half a Heart",
+        "description": "Friendly units have double health, but it is unhealed."
+    },
+    {
+        "name": "Full Of It",
+        "description": "The [full] is always active."
+    },
+    {
+        "name": "Race Ya There",
+        "description": "Ascend friendly units at the end of each turn."
+    },
+    {
+        "name": "Come Prepared",
+        "description": "Add 12 additional random cards to your starting deck."
+    },
+    {
+        "name": "Grubbery",
+        "description": "Friendly units enter with [avarice] 5."
+    },
+    {
+        "name": "Gluttonous",
+        "description": "Each upgrade you purchase for a unit increases its [capacity] by 1."
+    },
+    {
+        "name": "Circle of Life",
+        "description": "Friendly units [propagate] 1 on [slay]."
+    },
+    {
+        "name": "Top Heavy",
+        "description": "+10[capacity] on the top floor and -5[capacity] on the other two."
+    },
+    {
+        "name": "Upgraded Drafts",
+        "description": "Cards in reward packs and unit banners come with a random upgrade."
+    },
+    {
+        "name": "Moneybags",
+        "description": "Double [coin] earned."
+    },
+    {
+        "name": "The Math Challenge",
+        "description": "Room combat previews are disabled."
+    },
+    {
+        "name": "The Floor is Lava",
+        "description": "All units get [pyregel] 5."
+    },
+    {
+        "name": "Not So Free Range",
+        "description": "Start with 4 copies of <b>Alchemy</b>."
+    },
+    {
+        "name": "Time for Trials",
+        "description": "Trials are always enabled in battles that have them."
+    },
+    {
+        "name": "Cursed Treasure",
+        "description": "Units get -5[attack] for each upgrade on their card."
+    },
+    {
+        "name": "Die By the Sword",
+        "description": "Friendly units gain [corruption] 2 on [strike]."
+    },
+    {
+        "name": "Wave Shuffle",
+        "description": "Enemy waves before [respite] will be randomized. Battles have additional enemies."
+    },
+    {
+        "name": "Chronic Pain",
+        "description": "Add <b>Curse of Entropy</b> to your deck at the start of every battle."
+    },
+    {
+        "name": "Fallen Champion",
+        "description": "Remove the Champion from your starting deck."
+    },
+    {
+        "name": "Big Chungus",
+        "description": "All friendly units get +1[capacity]."
+    },
+    {
+        "name": "Attrition",
+        "description": "Friendly units' health persists between battles."
+    },
+    {
+        "name": "Economy Class",
+        "description": "-2[capacity] on each floor."
+    },
+    {
+        "name": "Besties",
+        "description": "You must duplicate a card after every battle."
+    },
+    {
+        "name": "Organic",
+        "description": "Replace <b>Train Stewards</b> with Graft units."
+    },
+    {
+        "name": "Artificial Intelligence",
+        "description": "Pyre Abilities now have a two turn [abilitycooldown]."
+    },
+    {
+        "name": "Soul Harvesters",
+        "description": "Enemy units gain +3[health] on [harvest]."
+    },
+    {
+        "name": "Explosive Personality",
+        "description": "When enemy units die they deal 5 damage to the front friendly unit."
+    },
+    {
+        "name": "Yeetpocalypse",
+        "description": "You must purge two cards after every battle."
+    },
+    {
+        "name": "Arduous Arcana",
+        "description": "Spells cost +1[ember]."
+    },
+    {
+        "name": "Imaginary Armor",
+        "description": "All damage is now [piercing]."
+    },
+    {
+        "name": "Paid in Blood",
+        "description": "Take 4 Pyre damage when purchasing any merchant option."
+    },
+    {
+        "name": "Final Shard",
+        "description": "At the start of battle, apply [fragile] and [damage shield] 2 to your Pyre."
+    },
+    {
+        "name": "Downright Deployable",
+        "description": "-1[ember] per turn. +10[deploymentember]."
+    },
+    {
+        "name": "No Fluff",
+        "description": "All cards have 1 fewer upgrade slot."
+    },
+    {
+        "name": "A New Challenger",
+        "description": "Your Champion is randomly replaced by one that is not from your primary or allied clan."
+    },
+    {
+        "name": "Grow Up Big and Strong",
+        "description": "Friendly units gain +1[attack] permanently when healed."
+    },
+    {
+        "name": "Hashtag Blessed",
+        "description": "Gain a random artifact after every battle."
+    },
+    {
+        "name": "Heavy Burden",
+        "description": "Units cost 1 more [ember]."
+    },
+    {
+        "name": "Hivemind",
+        "description": "Friendly units count as all subtypes."
+    },
+    {
+        "name": "Never Say Die",
+        "description": "Friendly non-Morsel units get [endless]."
+    },
+    {
+        "name": "Money is Power",
+        "description": "Spells gain 1 [magicpower] per 100[coin] you start the turn with."
+    },
+    {
+        "name": "One Track Mind",
+        "description": "The path you take on the map is chosen automatically."
+    },
+    {
+        "name": "Musical Chairs",
+        "description": "Shuffle the position of all units in the train after combat."
+    },
+    {
+        "name": "Stoneform",
+        "description": "Enemy units enter with [armor] equal to 50% of their [health]."
+    },
+    {
+        "name": "Pay to Win",
+        "description": "Start with <b>Ancient Pyretap</b>."
+    },
+    {
+        "name": "Fabulous Four",
+        "description": "Gain all other Champions for your clans. They gain a random upgrade each time you use the Light Forge."
+    },
+    {
+        "name": "Scrumptious Snacks",
+        "description": "Summon three Morsel units on random floors at the start of each turn."
+    },
+    {
+        "name": "Broken Valve",
+        "description": "Start with <b>Volatile Gauge</b>."
+    },
+    {
+        "name": "Influential",
+        "description": "At start of turn, spawn a Follower unit on a random floor."
+    },
+    {
+        "name": "Seeing Double",
+        "description": "When the first friendly unit is summoned each turn, summon that same unit again."
+    },
+    {
+        "name": "Zoom, Enhance",
+        "description": "All cards have 1 additional upgrade slot."
+    },
+    {
+        "name": "Zombies!",
+        "description": "Enemy units enter with [undying] 3. Friendly units enter with [undying] 1."
+    },
+    {
+        "name": "Frontloaded",
+        "description": "-3[ember] per turn. Gain 20[ember] at the beginning of each battle. Start with <b>The Unbroken Horn</b>."
+    },
+    {
+        "name": "Tithe",
+        "description": "Halve [coin] earned."
+    },
+    {
+        "name": "Uncoordinated",
+        "description": "Friendly non-Champion units' [attack] is halved."
+    },
+    {
+        "name": "Savagery's Champion",
+        "description": "Your Champion gains all of Savagery's Boons."
+    },
+    {
+        "name": "Small Hands",
+        "description": "-2 cards per turn."
+    },
+    {
+        "name": "Banner-ed",
+        "description": "Banners no longer give Banner units."
+    },
+    {
+        "name": "Weapon Master",
+        "description": "Draft 2 cards added in <b>Lost Arsenal</b>."
+    },
+    {
+        "name": "Skull Collectors",
+        "description": "Collectors no longer retreat, and have increased stats."
+    },
+    {
+        "name": "Strike Hard",
+        "description": "All units get [multistrike] 1."
+    },
+    {
+        "name": "Rising Retribution",
+        "description": "Enemy units gain [spikes] 3 when they move."
+    },
+    {
+        "name": "A Simple Plan",
+        "description": "Non-Champion units cost +2[ember]. Start with <b>Sketches of Salvation</b>."
+    },
+    {
+        "name": "Cardcuffs",
+        "description": "Purging costs much more gold."
+    },
+    {
+        "name": "Mansion",
+        "description": "+[effect0.power][capacity] on each floor."
+    },
+    {
+        "name": "At Your Service",
+        "description": "Upgrading Steward units gives them an additional +10[attack] and +10[health]."
+    },
+    {
+        "name": "Bulked Up",
+        "description": "Enemy units have double health."
+    },
+    {
+        "name": "Bleeding Cash",
+        "description": "Lose 1[coin] whenever a friendly unit takes damage."
+    },
+    {
+        "name": "Super Glue",
+        "description": "Train Rooms can not be replaced."
+    },
+    {
+        "name": "Point of Entry",
+        "description": "During [deploy] friendly units can only be summoned on the top floor."
+    },
+    {
+        "name": "Cheap Trick",
+        "description": "Spells cost -1[ember]."
+    },
+    {
+        "name": "Fancy Footwork",
+        "description": "All units gain +2[attack] on movement."
+    },
+    {
+        "name": "Starry Suffering",
+        "description": "Friendly units enter with [dazed] 2."
+    },
+    {
+        "name": "Gear Up",
+        "description": "A Merchant of Arms appears in the middle of the tracks after the first battle."
+    },
+    {
+        "name": "Soft Handed",
+        "description": "Your units no longer deal any damage to enemy units."
+    },
+    {
+        "name": "Duality",
+        "description": "Double stacks of all status effects."
+    },
+    {
+        "name": "Perma Scaling",
+        "description": "Start with <b>Blood of the Apex</b> and <b>Advanced Growth</b>."
+    },
+    {
+        "name": "Magic Hands",
+        "description": "Cards are not discarded at end of turn. -2 cards per turn."
+    },
+    {
+        "name": "Cult of the Moon",
+        "description": "Friendly units gain [conduit] 1 and lose -2[attack] on [mooncycle]."
+    },
+    {
+        "name": "Pyre of Glass",
+        "description": "Your Pyre takes an additional 3 damage from all sources."
+    },
+    {
+        "name": "Slow and Steady",
+        "description": "Friendly units enter with +10[attack] and [sap] 7."
+    },
+    {
+        "name": "Fast Draw",
+        "description": "Friendly units get [quick]."
+    },
+    {
+        "name": "Permadeath",
+        "description": "When a non-Champion unit dies, it is purged from your deck."
+    },
+    {
+        "name": "Gilded Skip",
+        "description": "The Skip option in drafts grants 50[coin]."
+    },
+    {
+        "name": "Highly Reactive",
+        "description": "Triggers on friendly units activate an additional time."
+    },
+    {
+        "name": "On Strike",
+        "description": "Steward units are removed from the deck."
+    },
+    {
+        "name": "Armchair General",
+        "description": "Your Champion enters with [sap] 10 and [heal immunity]."
+    },
+    {
+        "name": "Vampiric Touch",
+        "description": "All units enter with [lifesteal] 3."
+    },
+    {
+        "name": "Divine Flame",
+        "description": "Start with 2 copies of <b>Torch</b> that have <b>Entropic Growth</b>."
+    },
+    {
+        "name": "Voidborn",
+        "description": "Start with <b>Void Armament</b> and it has [deployable]."
+    },
+    {
+        "name": "No Skip For You",
+        "description": "Drafts do not have a skip option."
+    },
+    {
+        "name": "Junked Up",
+        "description": "Add 8 <b>Calcified Ember</b> to your starting deck."
+    },
+    {
+        "name": "Agony",
+        "description": "All your units gain [corruption] 1 after combat."
+    },
+    {
+        "name": "Lootsplosion",
+        "description": "Gain an extra card pack for each clan from Flying Bosses."
+    },
+    {
+        "name": "Elite",
+        "description": "Units get +10[attack] and +5[health] for each upgrade on their card."
+    },
+    {
+        "name": "Two for One",
+        "description": "Each time you draft a card, gain a second copy."
+    },
+    {
+        "name": "Acid Rain",
+        "description": "Deal 2 damage to all units after combat."
+    },
+    {
+        "name": "Moth Magic",
+        "description": "When a damage spell hits a unit, [ascend] it."
+    },
+    {
+        "name": "Joker",
+        "description": "At the start of battle, spawn a Jeermask unit on each floor."
     }
 ]
