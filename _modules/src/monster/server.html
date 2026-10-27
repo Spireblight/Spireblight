@@ -389,7 +389,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Clan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Clan</span><span class="p">,</span> <span class="n">Node</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
 
@@ -690,6 +690,57 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Get the ring's boss. Does not display major (flying) bosses."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">%</span> <span class="mi">2</span> <span class="ow">and</span> <span class="s2">"right"</span> <span class="ow">or</span> <span class="s2">"left"</span>
+
+<div class="viewcode-block" id="Ring.get_nodes">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring.get_nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get the nodes on left, center, and right respectively."""</span>
+        <span class="n">shared</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">left_nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">right_nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">"active"</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"chosenBranch"</span><span class="p">]:</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="s2">"active"</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="s2">"inactive"</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="s2">"inactive"</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="s2">"active"</span>
+            <span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">ss</span> <span class="o">=</span> <span class="s2">"frozen"</span>
+
+        <span class="n">unparsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"mapNodes"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unparsed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># either very first or very last ring</span>
+            <span class="n">side</span> <span class="o">=</span> <span class="n">unparsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">side</span><span class="p">[</span><span class="s2">"_nodes"</span><span class="p">]:</span> <span class="c1"># we have any nodes at all</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">side</span><span class="p">[</span><span class="s2">"_nodes"</span><span class="p">]:</span>
+                    <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                        <span class="n">shared</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">ss</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">unparsed</span>
+            <span class="k">for</span> <span class="n">side</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">sub</span> <span class="ow">in</span> <span class="p">((</span><span class="n">left</span><span class="p">,</span> <span class="n">left_nodes</span><span class="p">,</span> <span class="n">ls</span><span class="p">),</span> <span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">right_nodes</span><span class="p">,</span> <span class="n">rs</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"_nodes"</span><span class="p">,</span> <span class="s2">"_randomizedNodes"</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">side</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                        <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="c1"># some are empty</span>
+                            <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">sub</span><span class="p">))</span>
+
+            <span class="c1"># handle shared nodes</span>
+            <span class="n">shared_node</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">left_nodes</span><span class="p">}</span> <span class="o">&amp;</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">right_nodes</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">shared_node</span><span class="p">:</span> <span class="c1"># there will only be 0 or 1 items</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">:</span>
+                    <span class="n">shared</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">ss</span><span class="p">))</span>
+                <span class="n">left_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">left_nodes</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">]</span>
+                <span class="n">right_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">right_nodes</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">left_nodes</span><span class="p">,</span> <span class="n">shared</span><span class="p">,</span> <span class="n">right_nodes</span></div>
+
 
 <div class="viewcode-block" id="Ring.get_names">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring.get_names">[docs]</a>

@@ -745,10 +745,9 @@
     <span class="c1"># and 2 which are completely unnecessary for us</span>
     <span class="c1"># but I don't wanna fuck around with regex to clear them atm</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""The map node icon."""</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/map/</span><span class="si">{</span><span class="n">sanitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.png"</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get the map node icon."""</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/map/</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sanitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.png"</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Relic</span><span class="p">(</span><span class="n">Base2</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
