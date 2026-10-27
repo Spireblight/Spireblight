@@ -73,6 +73,36 @@ section.section {
   margin-left: 0.2em;
 }
 
+.mt2-rings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.mt2-ring-left {
+  display: inline-block;
+  width: 45%;
+  vertical-align: middle;
+  align-self: normal;
+  align-content: normal;
+}
+.mt2-ring-right {
+  display: inline-block;
+  width: 45%;
+  vertical-align: middle;
+  align-self: flex-end;
+  align-content: end;
+}
+.mt2-node {
+  overflow: hidden;
+  max-height: 265px;
+  max-width: 265px;
+}
+.mt2-node img {
+  width: 77px;
+  height: 77px;
+}
+
 @media only screen and (min-width: 768px) {
   .card {
     font-size: 25px;

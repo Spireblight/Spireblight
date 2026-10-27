@@ -8,7 +8,7 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.replay import parse
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Clan
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Clan, Node
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -292,6 +292,54 @@ class Ring:
     def boss(self):
         """Get the ring's boss. Does not display major (flying) bosses."""
         return self._get_boss()
+
+    @property
+    def align(self) -> bool:
+        return self.ring % 2 and "right" or "left"
+
+    def get_nodes(self):
+        """Get the nodes on left, center, and right respectively."""
+        shared: set[tuple[Node, str]] = set()
+        left_nodes: list[tuple[Node, str]] = []
+        right_nodes: list[tuple[Node, str]] = []
+        ss = "active"
+        match self._data["chosenBranch"]:
+            case 0:
+                ls = "active"
+                rs = "inactive"
+            case 1:
+                ls = "inactive"
+                rs = "active"
+            case -1:
+                ls = rs = ss = "frozen"
+
+        unparsed = self._data["mapNodes"]
+        if len(unparsed) == 1: # either very first or very last ring
+            side = unparsed[0]
+            if side["_nodes"]: # we have any nodes at all
+                for x in side["_nodes"]:
+                    node: Node = get(x)
+                    if node.name:
+                        shared.add((node, ss))
+
+        else:
+            left, right = unparsed
+            for side, lst, sub in ((left, left_nodes, ls), (right, right_nodes, rs)):
+                for key in ("_nodes", "_randomizedNodes"):
+                    for x in side[key]:
+                        node: Node = get(x)
+                        if node.name: # some are empty
+                            lst.append((node, sub))
+
+            # handle shared nodes
+            shared_node = {x[0] for x in left_nodes} & {x[0] for x in right_nodes}
+            if shared_node: # there will only be 0 or 1 items
+                for x in shared_node:
+                    shared.add((x, ss))
+                left_nodes = [x for x in left_nodes if x[0] not in shared_node]
+                right_nodes = [x for x in right_nodes if x[0] not in shared_node]
+
+        return left_nodes, shared, right_nodes
 
     def get_names(self):
         """Return names for the before and after."""

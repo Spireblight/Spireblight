@@ -352,10 +352,9 @@ class Node(Base2):
     # and 2 which are completely unnecessary for us
     # but I don't wanna fuck around with regex to clear them atm
 
-    @property
-    def image(self) -> str:
-        """The map node icon."""
-        return f"/static/mt2/map/{sanitize(self.name)}.png"
+    def get_image(self, sub: str) -> str:
+        """Get the map node icon."""
+        return f"/static/mt2/map/{sub}/{sanitize(self.name)}.png"
 
 class Relic(Base2):
     def __init__(self, data):

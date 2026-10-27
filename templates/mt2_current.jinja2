@@ -163,13 +163,25 @@
 
     <section class="section">
       <div class="box mt2-run is-paddingless">
-        <div class="mt2-run-content">
-          <div class="run-title pt-4 pr-4 pb-4">
-
-            <div class="extra"> {# Add misc info here#}
-            </div>
-
+        <div class="mt2-rings">
+          <div class="message-header">
+            <p id="mt2-path-header">Path taken</p>
           </div>
+        {% for ring in save.rings %}
+          <p class="mt2-ring-{{ ring.align }}">
+          {% for side in ring.get_nodes() %}
+            {% for node, sub in side %}
+              <img class="mt2-node"
+                src="{{ node.get_image(sub) }}"
+                alt="{{ node.name }} ({{ sub }})"
+                title="{{ node.name }} ({{ sub }})"
+                width="128"
+                height="128"
+                onclick="neowText('{{ node.name | replace("'", "\\'") }}', '{{ node.escaped_description() }}')"/>
+            {% endfor %}
+          {% endfor %}
+          </p>
+        {% endfor %}
         </div>
         <section class="section">
           <div class="charts">
