@@ -580,6 +580,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lore</span> <span class="o">=</span> <span class="s2">"Once upon a time, there was something I could not find."</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Unknown item </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span>
+
 <span class="n">_map1</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"cards"</span><span class="p">:</span> <span class="n">Card</span><span class="p">,</span>
     <span class="s2">"artifacts"</span><span class="p">:</span> <span class="n">Artifact</span><span class="p">,</span>

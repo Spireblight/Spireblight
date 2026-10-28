@@ -747,7 +747,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Return names for the before and after."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span> <span class="c1"># Titans</span>
-            <span class="k">return</span> <span class="p">[</span><span class="s2">"Before the Titans"</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">"After beating the Titans"</span><span class="p">]</span>
         <span class="n">fight_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">_fights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ring</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"scenarioIndex"</span><span class="p">]]</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">(</span><span class="n">allow_future</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># flying boss</span>
             <span class="n">boss</span> <span class="o">=</span> <span class="n">fight_name</span>
