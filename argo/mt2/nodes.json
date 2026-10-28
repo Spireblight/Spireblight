@@ -11,6 +11,17 @@
         "updateMapIconImmediatelyOnClick": true
     },
     {
+        "id": "f6764726-d4b7-4344-ab1b-7522b6c18d1d",
+        "skipCheckSettings": 0,
+        "ignoreIfNodesPresent": [],
+        "isBannerNode": true,
+        "name": "Wurmkin Banner",
+        "description": "Gain a Wurmkin unit.",
+        "usePyreHeartHpTooltipKey": false,
+        "nodeSelectedSfxCue": "Node_Banner",
+        "updateMapIconImmediatelyOnClick": true
+    },
+    {
         "id": "2e1f2c35-6e08-465e-985d-beac5200a3d3",
         "skipCheckSettings": 2,
         "ignoreIfNodesPresent": [],
