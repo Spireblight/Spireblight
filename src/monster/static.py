@@ -234,7 +234,9 @@ class Base2:
                     display = f" {l}"
                 desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{l}" title="{l}" width="30" height="30">{display}')
             for word in _desc_re.findall(desc): # find any remaining words in []
-                desc = desc.replace(word, f"<b>{word[1:-1].title()}<b>") # bold them up
+                value: str = word[1:-1]
+                value = _localized.get(value, value.title())
+                desc = desc.replace(word, f"<b>{value}<b>") # bold them up
             if "<>" in desc: # Pyre hearts, include hyperlink
                 desc = desc.replace("<>", '<a href="https://monstertrain2.miraheze.org/wiki/Pyre_Hearts" target="_blank">', 1)
                 desc = desc.replace("<>", "</a>")

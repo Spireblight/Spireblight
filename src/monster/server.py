@@ -370,9 +370,7 @@ class Ring:
             if self._data["titanTrialEnabled"]:
                 fight_name = fight_name[:-1] + " II)"
             return f"Before {name}", f"After beating {fight_name}"
-        if self.in_fight and self.ring == self.farthest: # we're in the fight and it has begun
-            return f"Before {fight_name}", f"After {word}"
-        if self.ring < self.farthest:
+        if (self.ring < self.farthest) or (self.in_fight and self.ring == self.farthest):
             return f"Before {fight_name}", f"After beating {boss}"
         return f"Before {word}", f"After {word}"
 
