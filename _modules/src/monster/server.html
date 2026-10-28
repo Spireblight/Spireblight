@@ -410,8 +410,8 @@
         <span class="s2">"Quicksilver Cherubs"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># First flying boss</span>
-        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
-        <span class="s2">"Fleshweaver (More Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED but almost guaranteed to be correct</span>
+        <span class="s2">"Fleshweaver (More Mass)"</span><span class="p">,</span>
         <span class="s2">"Fleshweaver (Spiked Mass)"</span><span class="p">,</span>
         <span class="s2">"Arkion, Scion of Savagery (Furious Frenzy)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
         <span class="s2">"Arkion, Scion of Savagery (Hard Headed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
@@ -770,6 +770,8 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ring #</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> makes no sense"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fight_name</span> <span class="o">==</span> <span class="n">boss</span><span class="p">:</span> <span class="c1"># flying bosses are always known</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">fight_name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">" ("</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"titanTrialEnabled"</span><span class="p">]:</span>
+                <span class="n">fight_name</span> <span class="o">=</span> <span class="n">fight_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">" II)"</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_fight</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span><span class="p">:</span> <span class="c1"># we're in the fight and it has begun</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span>
