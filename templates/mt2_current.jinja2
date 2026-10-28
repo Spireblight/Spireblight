@@ -168,7 +168,7 @@
             <p id="mt2-path-header">Path taken</p>
           </div>
         {% for ring in save.rings %}
-          <p class="mt2-ring-{{ ring.align }}">
+          <p class="mt2-ring">
           {% for side in ring.get_nodes() %}
             {% for node, sub in side %}
               <img class="mt2-node"

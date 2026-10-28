@@ -79,19 +79,10 @@ section.section {
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.mt2-ring-left {
+.mt2-ring {
   display: inline-block;
   width: 45%;
   vertical-align: middle;
-  align-self: normal;
-  align-content: normal;
-}
-.mt2-ring-right {
-  display: inline-block;
-  width: 45%;
-  vertical-align: middle;
-  align-self: flex-end;
-  align-content: end;
 }
 .mt2-node {
   overflow: hidden;

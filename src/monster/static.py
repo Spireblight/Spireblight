@@ -354,7 +354,8 @@ class Node(Base2):
 
     def get_image(self, sub: str) -> str:
         """Get the map node icon."""
-        return f"/static/mt2/map/{sub}/{sanitize(self.name)}.png"
+        name = self.name.replace(" ", "").replace("'", "")
+        return f"/static/mt2/map/{sub}/{name}.png"
 
 class Relic(Base2):
     def __init__(self, data):
