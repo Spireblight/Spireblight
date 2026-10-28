@@ -46,25 +46,25 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Corrupted Crusade", # UNSORTED
         "Relentless Zealots", # UNSORTED
         "Undying Minions", # UNSORTED
-        "Unholy Alliances", # UNSORTED
+        "Unholy Alliances",
     ),
     (   # Second flying boss
-        "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
-        "Cael, Lord of the Cherubs (Nourishing Feed)", # UNSORTED
-        "Cael, Lord of the Cherubs (Vampiric Feed)", # UNSORTED
         "Stryx/Hallow (Bloody Harvest)", # UNSORTED
         "Stryx/Hallow (Doombringers)", # UNSORTED
         "Stryx/Hallow (Inevitability)", # UNSORTED
+        "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
+        "Cael, Lord of the Cherubs (Nourishing Feed)", # UNSORTED
+        "Cael, Lord of the Cherubs (Vampiric Feed)",
     ),
     (   # Ring 7 fight
+        "Savagery's Final Assault",
         "Dominion's Disdain", # UNSORTED
         "Purified Hordes", # UNSORTED
-        "Savagery's Final Assault", # UNSORTED
     ),
     (   # Third flying boss
         "Seraph Aeternus: The Savage (Champion of Savagery)", # UNSORTED
-        "Seraph Aeternus: The Dominant (Chosen of Dominion)", # UNSORTED
         "Seraph Aeternus: The Entropic (Harbinger of Entropy)", # UNSORTED
+        "Seraph Aeternus: The Dominant (Chosen of Dominion)",
     ),
     (   # Titans fight
         "Clash with the Titans", # do NOT remove this singular comma
