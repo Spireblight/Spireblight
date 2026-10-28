@@ -29,8 +29,8 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Quicksilver Cherubs", # UNSORTED
     ),
     (   # First flying boss
-        "Fleshweaver (Corrupted Mass)", # UNSORTED
-        "Fleshweaver (More Mass)", # UNSORTED
+        "Fleshweaver (Corrupted Mass)", # UNSORTED but almost guaranteed to be correct
+        "Fleshweaver (More Mass)",
         "Fleshweaver (Spiked Mass)",
         "Arkion, Scion of Savagery (Furious Frenzy)", # UNSORTED
         "Arkion, Scion of Savagery (Hard Headed)", # UNSORTED
@@ -367,6 +367,8 @@ class Ring:
                 raise ValueError(f"Ring #{a} makes no sense")
         if fight_name == boss: # flying bosses are always known
             name = fight_name.partition(" (")[0]
+            if self._data["titanTrialEnabled"]:
+                fight_name = fight_name[:-1] + " II)"
             return f"Before {name}", f"After beating {fight_name}"
         if self.in_fight and self.ring == self.farthest: # we're in the fight and it has begun
             return f"Before {fight_name}", f"After {word}"
