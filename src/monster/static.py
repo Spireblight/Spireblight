@@ -187,6 +187,9 @@ class Unknown:
         self.id = name
         self.lore = "Once upon a time, there was something I could not find."
 
+    def get_image(self, sub: str):
+        return f"Unknown item {self.name}"
+
 _map1 = {
     "cards": Card,
     "artifacts": Artifact,

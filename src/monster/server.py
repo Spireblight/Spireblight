@@ -344,7 +344,7 @@ class Ring:
     def get_names(self):
         """Return names for the before and after."""
         if self.ring == 8: # Titans
-            return ["Before the Titans"]
+            return ["After beating the Titans"]
         fight_name: str = _fights[self.ring][self._data["scenarioIndex"]]
         if (b := self._get_boss(allow_future=True)) is None: # flying boss
             boss = fight_name
