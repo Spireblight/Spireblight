@@ -18,8 +18,8 @@ from src.config import config
 
 _fights = ( # lines with UNSORTED have not been confirmed
     (   # Ring 1 fight
-        "Dominion's Preservation", # UNSORTED
-        "Forsaken Few", # UNSORTED
+        "Dominion's Preservation",
+        "Forsaken Few",
         "Heavenly Toll",
     ),
     (   # Ring 2 fight
@@ -62,8 +62,8 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Purified Hordes", # UNSORTED
     ),
     (   # Third flying boss
-        "Seraph Aeternus: The Savage (Champion of Savagery)", # UNSORTED
-        "Seraph Aeternus: The Entropic (Harbinger of Entropy)", # UNSORTED
+        "Seraph Aeternus: The Entropic (Harbinger of Entropy)",
+        "Seraph Aeternus: The Savage (Champion of Savagery)",
         "Seraph Aeternus: The Dominant (Chosen of Dominion)",
     ),
     (   # Titans fight

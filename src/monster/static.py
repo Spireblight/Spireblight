@@ -187,8 +187,14 @@ class Unknown:
         self.id = name
         self.lore = "Once upon a time, there was something I could not find."
 
+    def __getattr__(self, name):
+        return f"Unknown attribute {name} for unknown item {self.name}"
+
+    def escaped_description(self):
+        return f"Unknown description of item {self.name}"
+
     def get_image(self, sub: str):
-        return f"Unknown item {self.name}"
+        return f"Unknown image {self.name}"
 
 _map1 = {
     "cards": Card,
