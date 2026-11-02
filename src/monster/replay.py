@@ -22,6 +22,7 @@ class GameState:
         self._data = None
         self.in_fight = False
         self.fight_num = 0
+        self.is_player_turn = False
         self.cur_turns = 0
         self.total_turns = 0
         if data is not None:
@@ -31,6 +32,7 @@ class GameState:
         return {
             "in_fight": self.in_fight,
             "fight_num": self.fight_num,
+            "player_turn": self.player_turn,
             "cur_turns": self.cur_turns,
             "total_turns": self.total_turns,
             "actions": self.actions,
@@ -128,6 +130,7 @@ class FightBegin(Action):
     def update_state(self, state: GameState):
         state.in_fight = True
         state.fight_num = self.num
+        state.is_player_turn = True
         state.cur_turns = 1 # first turn, though it hasn't started yet
         state.total_turns += 1
         return True
@@ -145,7 +148,7 @@ class FightEnd(Action):
 
     def update_state(self, state: GameState):
         state.in_fight = False
-        if isinstance(state.actions[-1], (EndTurn, UnitReward)):
+        if not state.is_player_turn:
             # we increment turns taken on turn end for the *next* turn
             # so if the fight ends during combat (e.g. Relentless), we'll be off by 1
             state.cur_turns -= 1
@@ -173,6 +176,7 @@ class EndTurn(Action):
     def update_state(self, state: GameState):
         state.cur_turns += 1
         state.total_turns += 1
+        state.is_player_turn = False
         return True
 
 class PlayCard(Action):
@@ -194,6 +198,10 @@ class PlayCard(Action):
     def _get_args(self):
         return {"hand_pos": self.hand_pos, "floor": self.floor, "<a>": self._a, "index": self.index}
 
+    def update_state(self, state: GameState):
+        state.is_player_turn = True
+        return True
+
 class ActivateAbility(Action):
     """Activating an ability."""
     opcode = 8
@@ -208,6 +216,10 @@ class ActivateAbility(Action):
 
     def _get_args(self):
         return {"floor": self.floor, "index": self.index, "<a>": self._a, "<b>": self._b, "<c>": self._c}
+
+    def update_state(self, state: GameState):
+        state.is_player_turn = True
+        return True
 
 class UnitReward(Action):
     """Picking a unit (banner?) reward."""
