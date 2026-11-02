@@ -28,7 +28,7 @@ from twitchio.ext.commands import (
 )
 from twitchio.ext.routines import routine, Routine
 # from twitchio.ext.eventsub import EventSubClient
-#from twitchio.channel import Channel
+# from twitchio.channel import Channel
 from twitchio import Chatter, StreamOffline, StreamOnline, PartialUser, ChatNotification, ChatRaid, ChannelRaid
 from twitchio.exceptions import HTTPException
 from twitchio.models import Stream, Prediction, Clip as TClip
@@ -3420,13 +3420,63 @@ async def XCOM_startup():
         close = True
         client = ClientSession()
 
-    common_fields = ("First Name", "Nickname", "Last Name", "Original Name", "Date recruited", "Date named", "Nationality", "Class", "XP", "Other", "Chatter", "Missions", "Kills", "Longest Injury", "Total Injury")
+    roster_fields = (
+        "Rank",
+        "Billet",
+        "First Name",
+        "Nickname",
+        "Last Name",
+        "Original Name",
+        "Code",
+        "Date recruited",
+        "Date named",
+        "Nationality",
+        "Class",
+        "XP",
+        "Other",
+        "Chatter",
+        "Missions",
+        "Kills",
+        "Longest Injury",
+        "Total Injury",
+    )
 
-    roster_fields = ("Rank", "Billet") + common_fields
+    memorial_fields = (
+        "Rank",
+        "First Name",
+        "Nickname",
+        "Last Name",
+        "Original Name",
+        "Date recruited",
+        "Date named",
+        "Nationality",
+        "Class",
+        "XP",
+        "Other",
+        "Chatter",
+        "Missions",
+        "Kills",
+        "Longest Injury",
+        "Total Injury",
+        "Final Mission",
+        "Cause of Death",
+        "Ingame Date",
+        "Real Date",
+    )
 
-    memorial_fields = ("Rank",) + common_fields + ("Final Mission", "Cause of Death", "Ingame Date", "Real Date")
-
-    tracker_fields = ("Stream Date", "Mission Date", "Mission Name/Type", "Location/Result", "Deployed", "EXP Before", "Kills Before", "EXP After", "Kills After", "Mission Count Before", "Wait Time")
+    tracker_fields = (
+        "Stream Date",
+        "Mission Date",
+        "Mission Name/Type",
+        "Location/Result",
+        "Deployed",
+        "EXP Before",
+        "Kills Before",
+        "EXP After",
+        "Kills After",
+        "Mission Count Before",
+        "Wait Time",
+    )
 
     pages = {
         "XCOM Roster": [1319417923, roster_fields, xcom_roster, ""],
