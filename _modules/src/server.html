@@ -406,7 +406,7 @@
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.ext.routines</span><span class="w"> </span><span class="kn">import</span> <span class="n">routine</span><span class="p">,</span> <span class="n">Routine</span>
 <span class="c1"># from twitchio.ext.eventsub import EventSubClient</span>
-<span class="c1">#from twitchio.channel import Channel</span>
+<span class="c1"># from twitchio.channel import Channel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chatter</span><span class="p">,</span> <span class="n">StreamOffline</span><span class="p">,</span> <span class="n">StreamOnline</span><span class="p">,</span> <span class="n">PartialUser</span><span class="p">,</span> <span class="n">ChatNotification</span><span class="p">,</span> <span class="n">ChatRaid</span><span class="p">,</span> <span class="n">ChannelRaid</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">twitchio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stream</span><span class="p">,</span> <span class="n">Prediction</span><span class="p">,</span> <span class="n">Clip</span> <span class="k">as</span> <span class="n">TClip</span>
@@ -4148,13 +4148,63 @@
         <span class="n">close</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">ClientSession</span><span class="p">()</span>
 
-    <span class="n">common_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"First Name"</span><span class="p">,</span> <span class="s2">"Nickname"</span><span class="p">,</span> <span class="s2">"Last Name"</span><span class="p">,</span> <span class="s2">"Original Name"</span><span class="p">,</span> <span class="s2">"Date recruited"</span><span class="p">,</span> <span class="s2">"Date named"</span><span class="p">,</span> <span class="s2">"Nationality"</span><span class="p">,</span> <span class="s2">"Class"</span><span class="p">,</span> <span class="s2">"XP"</span><span class="p">,</span> <span class="s2">"Other"</span><span class="p">,</span> <span class="s2">"Chatter"</span><span class="p">,</span> <span class="s2">"Missions"</span><span class="p">,</span> <span class="s2">"Kills"</span><span class="p">,</span> <span class="s2">"Longest Injury"</span><span class="p">,</span> <span class="s2">"Total Injury"</span><span class="p">)</span>
+    <span class="n">roster_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"Rank"</span><span class="p">,</span>
+        <span class="s2">"Billet"</span><span class="p">,</span>
+        <span class="s2">"First Name"</span><span class="p">,</span>
+        <span class="s2">"Nickname"</span><span class="p">,</span>
+        <span class="s2">"Last Name"</span><span class="p">,</span>
+        <span class="s2">"Original Name"</span><span class="p">,</span>
+        <span class="s2">"Code"</span><span class="p">,</span>
+        <span class="s2">"Date recruited"</span><span class="p">,</span>
+        <span class="s2">"Date named"</span><span class="p">,</span>
+        <span class="s2">"Nationality"</span><span class="p">,</span>
+        <span class="s2">"Class"</span><span class="p">,</span>
+        <span class="s2">"XP"</span><span class="p">,</span>
+        <span class="s2">"Other"</span><span class="p">,</span>
+        <span class="s2">"Chatter"</span><span class="p">,</span>
+        <span class="s2">"Missions"</span><span class="p">,</span>
+        <span class="s2">"Kills"</span><span class="p">,</span>
+        <span class="s2">"Longest Injury"</span><span class="p">,</span>
+        <span class="s2">"Total Injury"</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="n">roster_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Rank"</span><span class="p">,</span> <span class="s2">"Billet"</span><span class="p">)</span> <span class="o">+</span> <span class="n">common_fields</span>
+    <span class="n">memorial_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"Rank"</span><span class="p">,</span>
+        <span class="s2">"First Name"</span><span class="p">,</span>
+        <span class="s2">"Nickname"</span><span class="p">,</span>
+        <span class="s2">"Last Name"</span><span class="p">,</span>
+        <span class="s2">"Original Name"</span><span class="p">,</span>
+        <span class="s2">"Date recruited"</span><span class="p">,</span>
+        <span class="s2">"Date named"</span><span class="p">,</span>
+        <span class="s2">"Nationality"</span><span class="p">,</span>
+        <span class="s2">"Class"</span><span class="p">,</span>
+        <span class="s2">"XP"</span><span class="p">,</span>
+        <span class="s2">"Other"</span><span class="p">,</span>
+        <span class="s2">"Chatter"</span><span class="p">,</span>
+        <span class="s2">"Missions"</span><span class="p">,</span>
+        <span class="s2">"Kills"</span><span class="p">,</span>
+        <span class="s2">"Longest Injury"</span><span class="p">,</span>
+        <span class="s2">"Total Injury"</span><span class="p">,</span>
+        <span class="s2">"Final Mission"</span><span class="p">,</span>
+        <span class="s2">"Cause of Death"</span><span class="p">,</span>
+        <span class="s2">"Ingame Date"</span><span class="p">,</span>
+        <span class="s2">"Real Date"</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="n">memorial_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Rank"</span><span class="p">,)</span> <span class="o">+</span> <span class="n">common_fields</span> <span class="o">+</span> <span class="p">(</span><span class="s2">"Final Mission"</span><span class="p">,</span> <span class="s2">"Cause of Death"</span><span class="p">,</span> <span class="s2">"Ingame Date"</span><span class="p">,</span> <span class="s2">"Real Date"</span><span class="p">)</span>
-
-    <span class="n">tracker_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Stream Date"</span><span class="p">,</span> <span class="s2">"Mission Date"</span><span class="p">,</span> <span class="s2">"Mission Name/Type"</span><span class="p">,</span> <span class="s2">"Location/Result"</span><span class="p">,</span> <span class="s2">"Deployed"</span><span class="p">,</span> <span class="s2">"EXP Before"</span><span class="p">,</span> <span class="s2">"Kills Before"</span><span class="p">,</span> <span class="s2">"EXP After"</span><span class="p">,</span> <span class="s2">"Kills After"</span><span class="p">,</span> <span class="s2">"Mission Count Before"</span><span class="p">,</span> <span class="s2">"Wait Time"</span><span class="p">)</span>
+    <span class="n">tracker_fields</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"Stream Date"</span><span class="p">,</span>
+        <span class="s2">"Mission Date"</span><span class="p">,</span>
+        <span class="s2">"Mission Name/Type"</span><span class="p">,</span>
+        <span class="s2">"Location/Result"</span><span class="p">,</span>
+        <span class="s2">"Deployed"</span><span class="p">,</span>
+        <span class="s2">"EXP Before"</span><span class="p">,</span>
+        <span class="s2">"Kills Before"</span><span class="p">,</span>
+        <span class="s2">"EXP After"</span><span class="p">,</span>
+        <span class="s2">"Kills After"</span><span class="p">,</span>
+        <span class="s2">"Mission Count Before"</span><span class="p">,</span>
+        <span class="s2">"Wait Time"</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">pages</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">"XCOM Roster"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1319417923</span><span class="p">,</span> <span class="n">roster_fields</span><span class="p">,</span> <span class="n">xcom_roster</span><span class="p">,</span> <span class="s2">""</span><span class="p">],</span>
