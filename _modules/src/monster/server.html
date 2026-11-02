@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.monster.server &#8212; Spireblight 0.8 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../../_static/documentation_options.js?v=a0e24af7"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/monster/server';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spireblight 0.8 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../intro.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../owners.html">
+    For bot owners
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../modules.html">
+    Full Spireblight API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../client.html">
+    Streamer client for game files transfer
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Spireblight/Spireblight" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../monster.html" class="nav-link">src.monster</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.monster.server</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.monster.server</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp_jinja2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">GameState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Clan</span><span class="p">,</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextType</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">_fights</span> <span class="o">=</span> <span class="p">(</span> <span class="c1"># lines with UNSORTED have not been confirmed</span>
+    <span class="p">(</span>   <span class="c1"># Ring 1 fight</span>
+        <span class="s2">"Dominion's Preservation"</span><span class="p">,</span>
+        <span class="s2">"Forsaken Few"</span><span class="p">,</span>
+        <span class="s2">"Heavenly Toll"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 2 fight</span>
+        <span class="s2">"Knights of Entropy"</span><span class="p">,</span>
+        <span class="s2">"Flagellant's March"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"March of the Supplicants"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Quicksilver Cherubs"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># First flying boss</span>
+        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED but almost guaranteed to be correct</span>
+        <span class="s2">"Fleshweaver (More Mass)"</span><span class="p">,</span>
+        <span class="s2">"Fleshweaver (Spiked Mass)"</span><span class="p">,</span>
+        <span class="s2">"Arkion, Scion of Savagery (Furious Frenzy)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Arkion, Scion of Savagery (Hard Headed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Arkion, Scion of Savagery (Pyre Hunter)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 4 fight</span>
+        <span class="s2">"Penance Seekers"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Savagery's Hunters"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Dire Defenses"</span><span class="p">,</span>
+        <span class="s2">"Hordes of Heaven"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 5 fight</span>
+        <span class="s2">"Corrupted Crusade"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Relentless Zealots"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Undying Minions"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Unholy Alliances"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Second flying boss</span>
+        <span class="s2">"Stryx/Hallow (Bloody Harvest)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Doombringers)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Inevitability)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Holy Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Nourishing Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Vampiric Feed)"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Ring 7 fight</span>
+        <span class="s2">"Savagery's Final Assault"</span><span class="p">,</span>
+        <span class="s2">"Dominion's Disdain"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Purified Hordes"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Third flying boss</span>
+        <span class="s2">"Seraph Aeternus: The Entropic (Harbinger of Entropy)"</span><span class="p">,</span>
+        <span class="s2">"Seraph Aeternus: The Savage (Champion of Savagery)"</span><span class="p">,</span>
+        <span class="s2">"Seraph Aeternus: The Dominant (Chosen of Dominion)"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span>   <span class="c1"># Titans fight</span>
+        <span class="s2">"Clash with the Titans"</span><span class="p">,</span> <span class="c1"># do NOT remove this singular comma</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<div class="viewcode-block" id="parse_value">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.parse_value">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_value</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">little_endian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse and unpack the various structs used for gold and other values."""</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"can only unpack multiples of 8"</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="s2">"&lt;"</span> <span class="k">if</span> <span class="n">little_endian</span> <span class="k">else</span> <span class="s2">"&gt;"</span>
+    <span class="n">fs</span> <span class="o">+=</span> <span class="s2">"d"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span><span class="p">)</span> <span class="c1"># one double per 8 bytes</span>
+    <span class="n">unpacked</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">unpacked</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="MonsterSave">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MonsterSave</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">and</span> <span class="s2">"replayData"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"replayData"</span><span class="p">][</span><span class="s2">"replayEntries"</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MonsterSave.update_data">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.update_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">and</span> <span class="s2">"replayData"</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">update_replay_data</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"replayData"</span><span class="p">][</span><span class="s2">"replayEntries"</span><span class="p">])</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_asint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parse_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"_values"</span><span class="p">])</span>
+
+<div class="viewcode-block" id="MonsterSave.get_fight_names">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_fight_names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_fight_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get the list of run snapshots for "over time" stats."""</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ring</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rings</span><span class="p">:</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ring</span><span class="o">.</span><span class="n">get_names</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">names</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">snapshots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"goldOverTime"</span><span class="p">])</span>
+        <span class="n">furthest</span><span class="p">,</span> <span class="n">in_fight</span> <span class="o">=</span> <span class="n">snapshots</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">snapshots</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">furthest</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"numBattlesCompleted"</span><span class="p">],</span> <span class="s2">"battle count data mismatch"</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"runState"</span><span class="p">][</span><span class="s2">"nodes"</span><span class="p">]):</span>
+            <span class="n">battle</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">furthest</span><span class="p">:</span>
+                <span class="n">battle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"completedBattles"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">yield</span> <span class="n">Ring</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">furthest</span><span class="p">,</span> <span class="n">in_fight</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">battle</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of gold. Ignores in-fight gains."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"gold"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gold_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The gold count at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"goldOverTime"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of Dragon's Hoard."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"dragonsHoard"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dragons_hoard_cap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current limit of Dragon's Hoard we can hold."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"dragonsHoardCap"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_dragons_hoard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"Pyreborne"</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current count of Forge Points being held."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"forgePoints"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_forge_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"Railforged"</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The current Pyre HP."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"towerHP"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_hp_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The Pyre HP at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"towerHPOverTime"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_max_hp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The Pyre Max HP."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asint</span><span class="p">(</span><span class="s2">"maxTowerHP"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre_max_hp_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The Pyre Max HP at specific snapshots during the run."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"towerMaxHPOverTime"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">in_game</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="c1"># XXX: there might be a few more pieces to check</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_class</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">champion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_champion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_exiled</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MonsterSave.get_clan_image">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_clan_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_clan_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_main</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Generate an SVG with the clan with or without exiled symbol.</span>
+
+<span class="sd">        :param is_main: Whether this is the main clan we want.</span>
+<span class="sd">        :type is_main: bool</span>
+<span class="sd">        :return: A full SVG matching the clan.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        """</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"subclassInfo"</span><span class="p">,</span> <span class="s2">"mainClassInfo"</span><span class="p">)[</span><span class="n">is_main</span><span class="p">]</span>
+        <span class="n">clan</span><span class="p">:</span> <span class="n">Clan</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s2">"classId"</span><span class="p">])</span>
+        <span class="n">exiled</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># exiled</span>
+            <span class="n">exiled</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'&lt;image width="16" height="16" xlink:href="</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s1">/static/mt2/clan/Exiled.png" x="40" y="96"&gt;&lt;/image&gt;'</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">clan</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">exiled</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">'&lt;svg width="96" height="112"&gt;&lt;title&gt;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&lt;/title&gt;'</span>
+            <span class="sa">f</span><span class="s1">'&lt;image width="96" height="96" xlink:href="</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="si">}{</span><span class="n">clan</span><span class="o">.</span><span class="n">image</span><span class="si">}</span><span class="s1">"&gt;&lt;/image&gt;</span><span class="si">{</span><span class="n">exiled</span><span class="si">}</span><span class="s1">&lt;/svg&gt;'</span>
+        <span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">main_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mainClassInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"className"</span> <span class="ow">in</span> <span class="n">main</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">"className"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="s2">"classId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">main_exiled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mainClassInfo"</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">main_clan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_exiled</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_class</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_class</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">main_clan_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clan_image</span><span class="p">(</span><span class="n">is_main</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sub_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"subclassInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"className"</span> <span class="ow">in</span> <span class="n">sub</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">"className"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">"classId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sub_exiled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"subclassInfo"</span><span class="p">][</span><span class="s2">"championIndex"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sub_clan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_exiled</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span><span class="si">}</span><span class="s2"> (Exiled)"</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_class</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sub_clan_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clan_image</span><span class="p">(</span><span class="n">is_main</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Artifact</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">art</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"blessings"</span><span class="p">]:</span>
+            <span class="k">yield</span> <span class="n">get</span><span class="p">(</span><span class="n">art</span><span class="p">[</span><span class="s2">"relicDataID"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">challenge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Challenge</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"spChallengeId"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">ch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">covenant_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"ascensionLevel"</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pyre</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Character</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"pyreCharacterId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mutator</span> <span class="o">|</span> <span class="n">Mutator2</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"mutators"</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">souls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Soul</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"startingConditions"</span><span class="p">][</span><span class="s2">"souls"</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="Ring">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Ring</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Store information for one ring."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">farthest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">in_fight</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">battle</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">=</span> <span class="n">ring</span> <span class="c1"># 0-indexed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span> <span class="o">=</span> <span class="n">farthest</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_fight</span> <span class="o">=</span> <span class="n">in_fight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span> <span class="o">=</span> <span class="n">battle</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_boss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_future</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Character</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_future</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"bossId"</span><span class="p">]:</span> <span class="c1"># flying boss</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1"># need to use scenarioIndex or whatever</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"bossId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">boss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get the ring's boss. Does not display major (flying) bosses."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">%</span> <span class="mi">2</span> <span class="ow">and</span> <span class="s2">"right"</span> <span class="ow">or</span> <span class="s2">"left"</span>
+
+<div class="viewcode-block" id="Ring.get_nodes">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring.get_nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get the nodes on left, center, and right respectively."""</span>
+        <span class="n">shared</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">left_nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">right_nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">"active"</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"chosenBranch"</span><span class="p">]:</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="s2">"active"</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="s2">"inactive"</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="s2">"inactive"</span>
+                <span class="n">rs</span> <span class="o">=</span> <span class="s2">"active"</span>
+            <span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">ss</span> <span class="o">=</span> <span class="s2">"frozen"</span>
+
+        <span class="n">unparsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"mapNodes"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unparsed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># either very first or very last ring</span>
+            <span class="n">side</span> <span class="o">=</span> <span class="n">unparsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">side</span><span class="p">[</span><span class="s2">"_nodes"</span><span class="p">]:</span> <span class="c1"># we have any nodes at all</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">side</span><span class="p">[</span><span class="s2">"_nodes"</span><span class="p">]:</span>
+                    <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                        <span class="n">shared</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">ss</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">unparsed</span>
+            <span class="k">for</span> <span class="n">side</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">sub</span> <span class="ow">in</span> <span class="p">((</span><span class="n">left</span><span class="p">,</span> <span class="n">left_nodes</span><span class="p">,</span> <span class="n">ls</span><span class="p">),</span> <span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">right_nodes</span><span class="p">,</span> <span class="n">rs</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"_nodes"</span><span class="p">,</span> <span class="s2">"_randomizedNodes"</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">side</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                        <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="c1"># some are empty</span>
+                            <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">sub</span><span class="p">))</span>
+
+            <span class="c1"># handle shared nodes</span>
+            <span class="n">shared_node</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">left_nodes</span><span class="p">}</span> <span class="o">&amp;</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">right_nodes</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">shared_node</span><span class="p">:</span> <span class="c1"># there will only be 0 or 1 items</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">:</span>
+                    <span class="n">shared</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">ss</span><span class="p">))</span>
+                <span class="n">left_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">left_nodes</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">]</span>
+                <span class="n">right_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">right_nodes</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shared_node</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">left_nodes</span><span class="p">,</span> <span class="n">shared</span><span class="p">,</span> <span class="n">right_nodes</span></div>
+
+
+<div class="viewcode-block" id="Ring.get_names">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Ring.get_names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return names for the before and after."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span> <span class="c1"># Titans</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">"After beating the Titans"</span><span class="p">]</span>
+        <span class="n">fight_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">_fights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ring</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"scenarioIndex"</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boss</span><span class="p">(</span><span class="n">allow_future</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># flying boss</span>
+            <span class="n">boss</span> <span class="o">=</span> <span class="n">fight_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">boss</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span><span class="p">:</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"first fight"</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"second fight"</span>
+            <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"fourth fight"</span>
+            <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"fifth fight"</span>
+            <span class="k">case</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="s2">"seventh fight"</span>
+            <span class="k">case</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">5</span> <span class="o">|</span> <span class="mi">7</span><span class="p">:</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="n">boss</span> <span class="c1"># handled below</span>
+            <span class="k">case</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ring #</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> makes no sense"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fight_name</span> <span class="o">==</span> <span class="n">boss</span><span class="p">:</span> <span class="c1"># flying bosses are always known</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">fight_name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">" ("</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"titanTrialEnabled"</span><span class="p">]:</span>
+                <span class="n">fight_name</span> <span class="o">=</span> <span class="n">fight_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">" II)"</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_fight</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ring</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">farthest</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">fight_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After beating </span><span class="si">{</span><span class="n">boss</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Before </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_future</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">taken_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trial</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_future</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_battle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">tinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"trialInfo"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">taken_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialEnabled"</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialDataId"</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">tinfo</span><span class="p">[</span><span class="s2">"trialDataId"</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trial</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get the ring's trial, if it was taken."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_trial</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_titan_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"titanTrialEnabled"</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Metasave">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Metasave">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Metasave</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+
+<div class="viewcode-block" id="Metasave.update_data">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.Metasave.update_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_covenant</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"maxAscensionLevel"</span><span class="p">]</span></div>
+
+
+<span class="n">_savefile</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-save.json"</span><span class="p">)</span>
+<span class="n">_save2</span> <span class="o">=</span> <span class="n">MonsterSave</span><span class="p">(</span><span class="s2">"monster-train-2-save.json"</span><span class="p">)</span>
+
+<span class="n">_meta1</span> <span class="o">=</span> <span class="n">Metasave</span><span class="p">(</span><span class="s2">"monster-train-meta.json"</span><span class="p">)</span>
+<span class="n">_meta2</span> <span class="o">=</span> <span class="n">Metasave</span><span class="p">(</span><span class="s2">"monster-train-2-meta.json"</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_savefile">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.get_savefile">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_savefile</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ContextType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MonsterSave</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_save2</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">_save2</span><span class="o">.</span><span class="n">main_class</span> <span class="ow">and</span> <span class="n">_save2</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">_save2</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">_savefile</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">_savefile</span><span class="o">.</span><span class="n">main_class</span> <span class="ow">and</span> <span class="n">_savefile</span><span class="o">.</span><span class="n">sub_class</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">_savefile</span>
+
+    <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">"Not in a run."</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="current_mt2">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.current_mt2">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/mt2/current"</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
+<span class="nd">@aiohttp_jinja2</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">"mt2_current.jinja2"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">current_mt2</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"save"</span><span class="p">:</span> <span class="n">_save2</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">context</span></div>
+
+
+<div class="viewcode-block" id="receive_save_data">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.receive_save_data">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/monster-train/save"</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_save_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">save</span><span class="p">,</span> <span class="n">game_version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">,</span> <span class="s2">"game_version"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">game_version</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">:</span>
+        <span class="n">savefile</span> <span class="o">=</span> <span class="n">_savefile</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">"monster-train-save.json"</span>
+    <span class="k">elif</span> <span class="n">game_version</span> <span class="o">==</span> <span class="s2">"2"</span><span class="p">:</span>
+        <span class="n">savefile</span> <span class="o">=</span> <span class="n">_save2</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">"monster-train-2-save.json"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPForbidden</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"game_version can only be 1 or 2"</span><span class="p">)</span>
+
+    <span class="n">savefile</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="receive_meta_data">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.receive_meta_data">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/sync/monster-train/meta"</span><span class="p">)</span>
+<span class="nd">@catch_error</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_meta_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span> <span class="c1"># we store the data, but nothing uses it yet</span>
+    <span class="n">meta</span><span class="p">,</span> <span class="n">game_version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"meta"</span><span class="p">,</span> <span class="s2">"game_version"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">game_version</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">:</span>
+        <span class="n">savefile</span> <span class="o">=</span> <span class="n">_meta1</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">"monster-train-meta.json"</span>
+    <span class="k">elif</span> <span class="n">game_version</span> <span class="o">==</span> <span class="s2">"2"</span><span class="p">:</span>
+        <span class="n">savefile</span> <span class="o">=</span> <span class="n">_meta2</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">"monster-train-2-meta.json"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPForbidden</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"game_version can only be 1 or 2"</span><span class="p">)</span>
+
+    <span class="n">savefile</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">getfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
+
+
+<span class="c1"># TODO: implement MT run sending and parsing</span>
+
+<span class="c1">#@router.post("/sync/monster")</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
+    <span class="n">_savefile</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"monster-train-save.json"</span><span class="p">),</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
+
+    <span class="c1"># handle database stuff</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="k">await</span> <span class="n">req</span><span class="o">.</span><span class="n">post</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_db</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"mt-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3"</span><span class="p">),</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">post</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"main"</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".db"</span><span class="p">):</span>
+            <span class="n">write_db</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span>
+
+<span class="c1">#@router.post("/sync/monster-2")</span>
+<div class="viewcode-block" id="get_data">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.get_data">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">get_req_data</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"save"</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
+    <span class="n">_save2</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"monster-train-2-save.json"</span><span class="p">),</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">json_indent</span><span class="p">)</span>
+
+    <span class="c1"># handle database stuff</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="k">await</span> <span class="n">req</span><span class="o">.</span><span class="n">post</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_db</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">post</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FileField</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"mt2-runs-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.sqlite3"</span><span class="p">),</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">post</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"main"</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".db"</span><span class="p">):</span>
+            <span class="n">write_db</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="mt_current">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.mt_current">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/mt/debug"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mt_current</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="c1">#save = await get_savefile()</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="n">_save2</span> <span class="c1"># temporary fix</span>
+    <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No savefile present on server"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">_data</span>
+    <span class="k">if</span> <span class="s2">"raw"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">query</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mt_state">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.mt_state">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/mt/state"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mt_state</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="c1">#save = await get_savefile()</span>
+    <span class="n">save</span> <span class="o">=</span> <span class="n">_save2</span> <span class="c1"># temporary fix</span>
+    <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPServiceUnavailable</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s2">"No savefile present on server"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">save</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">_asdict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">)</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_sanitized</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">x</span><span class="p">:</span>
+        <span class="k">case</span> <span class="nb">str</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">get_safe</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">case</span> <span class="nb">list</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">_get_sanitized</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+        <span class="k">case</span> <span class="nb">dict</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_get_sanitized</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022-2025, Anilyka Barry, Olivia Thiderman, Spireblight Development Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
