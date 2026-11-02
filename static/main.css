@@ -74,24 +74,24 @@ section.section {
 }
 
 .mt2-rings {
-  display: flex;
+  display: flexbox;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.mt2-ring {
-  display: inline-block;
+.mt2-rings.mt2-ring {
+  /* display: inline-block; */
   width: 45%;
   vertical-align: middle;
 }
-.mt2-node {
+.mt2-rings.mt2-ring.mt2-node {
+  object-fit: none;
   overflow: hidden;
   max-height: 265px;
   max-width: 265px;
 }
-.mt2-node img {
-  width: 77px;
-  height: 77px;
+.mt2-rings.mt2-ring.mt2-node img {
+  object-position: 77px 77px;
 }
 
 @media only screen and (min-width: 768px) {

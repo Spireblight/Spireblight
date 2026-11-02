@@ -280,7 +280,7 @@
         "ignoreIfNodesPresent": [],
         "isBannerNode": false,
         "name": "Forgotten Boons",
-        "description": "",
+        "description": "Gain 100 gold.",
         "usePyreHeartHpTooltipKey": false,
         "nodeSelectedSfxCue": "Node_Coins",
         "updateMapIconImmediatelyOnClick": false
@@ -401,7 +401,7 @@
         "ignoreIfNodesPresent": [],
         "isBannerNode": false,
         "name": "Forgotten Boons",
-        "description": "",
+        "description": "Gain 100 gold.",
         "usePyreHeartHpTooltipKey": false,
         "nodeSelectedSfxCue": "Node_Coins",
         "updateMapIconImmediatelyOnClick": false
@@ -709,7 +709,7 @@
         "ignoreIfNodesPresent": [],
         "isBannerNode": false,
         "name": "Forgotten Boons",
-        "description": "",
+        "description": "Gain 100 gold.",
         "usePyreHeartHpTooltipKey": false,
         "nodeSelectedSfxCue": "Node_Coins",
         "updateMapIconImmediatelyOnClick": false
@@ -755,7 +755,7 @@
         ],
         "isBannerNode": false,
         "name": "Forgotten Boons",
-        "description": "",
+        "description": "Gain 100 gold.",
         "usePyreHeartHpTooltipKey": false,
         "nodeSelectedSfxCue": "Node_Coins",
         "updateMapIconImmediatelyOnClick": false

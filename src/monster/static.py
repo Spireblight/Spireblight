@@ -242,7 +242,7 @@ class Base2:
                 if name not in _unnamed_icons:
                     display = f" {l}"
                 desc = desc.replace(f"[{name}]", f'<img src="/static/mt2/{uri}" alt="{l}" title="{l}" width="30" height="30">{display}')
-            for word in _desc_re.findall(desc): # find any remaining words in []
+            for word in set(_desc_re.findall(desc)): # find any *unique* remaining words inside []
                 value: str = word[1:-1]
                 value = _localized.get(value, value.title())
                 desc = desc.replace(word, f"<b>{value}<b>") # bold them up
