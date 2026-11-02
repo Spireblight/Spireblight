@@ -1,78 +1,307 @@
 import base64
 
-def number(x: int):
-    x += 1
-    match x:
-        case 1:
-            return "1st"
-        case 2:
-            return "2nd"
-        case 3:
-            return "3rd"
-        case a:
-            return f"{a}th"
+__all__ = ["GameState"]
 
-def floor(x: int):
+_floors = ("on the bottom floor", "on the middle floor", "on the top floor", "in the Pyre room")
+
+def number(x: int):
     match x:
         case 0:
-            return "on the bottom floor"
+            return "1st"
         case 1:
-            return "on the middle floor"
+            return "2nd"
         case 2:
-            return "on the top floor"
-        case 3:
-            return "in the Pyre room"
-
-def parse(value: str):
-    """Parse a replay entry into a human-readable format."""
-    decoded = base64.b64decode(value.encode())
-    match tuple(decoded):
-        case (1, ring, side, index):
-            ring += 1 # it's 0-indexed
-            sside = side and "right" or "left"
-            if ring == 1:
-                return f"Take the {number(index)} reward from ring {ring}"
-            if side == 255:
-                return f"Take the shared reward from ring {ring}"
-            return f"Take the {number(index)} reward from the {sside} side of ring {ring}"
-        case (2, a):
-            return f"Begin Fight {a}"
-        case (3, a):
-            return f"End fight with {a} turns remaining"
-        case (5, a):
-            if a == 0:
-                return "Skip trial"
-            return "Take trial"
-        case (6,):
-            return "End turn"
-        case (7, hand, fnum, c, index, crc): # we have card index / target team
-            # hand in the position in hand of the card before playing it
-            # index is the position of the card played, starting at the center of the room(?)
-            # I believe c is the card type, but that doesn't seem correct
-            return f"Play the {number(hand)} card from hand {floor(fnum)}, targeting the {number(index)} position"
-        case (8, fnum, index, c, d, e):
-            return f"Activate ability of the {number(index)} unit {floor(fnum)}"
-        case (9, i, crc):
-            if i == 255:
-                return "Skip unit reward"
-            return f"Acquire unit at position {i}"
-        case (10, i, crc):
-            if i == 255:
-                return "Skip relic reward"
-            return f"Select relic at position {i}"
-        case (11, i, crc):
-            if i == 255:
-                return "Skip Champion upgrade"
-            return f"Pick Champion upgrade at position {i}"
-        case (16, i, crc):
-            return f"Buy shop item #{i}"
-        case (19, i, crc):
-            return f"Apply upgrade to card at position {i}"
-        case (22, a, b, c):
-            return "Pick option from event (more details unknown yet)"
-        case (28, 0):
-            return "Enter event node"
-        case (38, 0):
-            return "Begin run"
+            return "3rd"
         case a:
-            return f"Unrecognized action {a}"
+            return f"{a+1}th"
+
+class GameState:
+    """Keep track of the current game state."""
+    def __init__(self, data: list[str] | None = None):
+        self.actions = []
+        self._data = None
+        self.in_fight = False
+        self.fight_num = 0
+        self.cur_turns = 0
+        self.total_turns = 0
+        if data is not None:
+            self.update_replay_data(data)
+
+    def update_replay_data(self, data: list[str]):
+        data = data[len(self.actions):]
+
+        for value in data:
+            opcode, *data = base64.b64decode(value.encode())
+            cls = _actions_mapping.get(opcode, Unknown)
+            action = cls(*data)
+            if not action.update_state(self):
+                break # updating went wrong, try again next time
+            self.actions.append(action)
+
+class Action:
+    """Store information for one action. Subclasses define behaviour."""
+    opcode: int
+    text: str
+
+    def __init_subclass__(cls):
+        if cls.__name__ == "Unknown":
+            return # allow it for unknown ones
+        if cls.opcode in _actions_mapping:
+            raise RuntimeError(f"Error: Opcode {cls.opcode} is registered more than once.")
+        _actions_mapping[cls.opcode] = cls
+
+    def _get_args(self) -> dict[str, int | str | bool]:
+        return {}
+
+    def __str__(self):
+        args = [f"{x}={y!r}" for x, y in self._get_args().items()]
+        return f"{self.__class__.__name__}({', '.join(args)})"
+
+    def update_state(self, state: GameState):
+        """Update the known game state from this action.
+
+        :param state: The game state we're a part of.
+        :type state: GameState
+        :return: True if state was successfully updated, False if not.
+        :rtype: bool
+        """
+        return True
+
+class Unknown(Action):
+    def __init__(self, opcode: int, *data: int):
+        self._data = data
+        self.opcode = opcode
+        self.text = f"Unknown action with opcode {opcode}"
+
+    def _get_args(self):
+        return {f"<{i}>": x for i, x in enumerate(self._data)}
+
+_actions_mapping: dict[int, Action] = {}
+
+class RingReward(Action):
+    """Reward from the map in a given ring."""
+    opcode = 1
+
+    def __init__(self, ring: int, side: int, index: int):
+        self.ring = ring # 0-indexed
+        self.index = index
+        if not side:
+            self.side = "left"
+        elif side == 1:
+            self.side = "right"
+        elif side == 0xff:
+            self.side = "shared"
+        else:
+            raise ValueError(f"Could not parse side {side}")
+
+    def _get_args(self):
+        return {"ring": self.ring, "side": self.side, "index": self.index}
+
+    @property
+    def text(self) -> str:
+        if not self.ring:
+            return f"Take the {number(self.index)} reward from ring 1."
+        if self.side == "shared":
+            return f"Take the shared reward from ring {self.ring+1}."
+        return f"Take the {number(self.index)} reward from the {self.side} side of ring {self.ring+1}."
+
+class FightBegin(Action):
+    """Enter a fight."""
+    opcode = 2
+
+    def __init__(self, num: int):
+        self.num = num
+        self.text = f"Begin Fight {num}"
+
+    def _get_args(self):
+        return {"num": self.num}
+
+    def update_state(self, state: GameState):
+        state.in_fight = True
+        state.fight_num = self.num
+        state.cur_turns = 1 # first turn, though it hasn't started yet
+        state.total_turns += 1
+        return True
+
+class FightEnd(Action):
+    """Terminate fight."""
+    opcode = 3
+
+    def __init__(self, num: int):
+        self.num = num
+        self.text = f"End fight with {num} turns remaining"
+
+    def _get_args(self):
+        return {"num": self.num}
+
+    def update_state(self, state: GameState):
+        state.in_fight = False
+        if isinstance(state.actions[-1], EndTurn):
+            # we increment turns taken on turn end for the *next* turn
+            # so if the fight ends during combat (e.g. Relentless), we'll be off by 1
+            state.cur_turns -= 1
+            state.total_turns -= 1
+        return True
+
+class TakeTrial(Action):
+    """Whether we take a trial."""
+    opcode = 5
+
+    def __init__(self, taken: int):
+        self.taken = bool(taken)
+        if taken:
+            self.text = "Take trial"
+        else:
+            self.text = "Skip trial"
+
+    def _get_args(self):
+        return {"taken": self.taken}
+
+class EndTurn(Action):
+    """Ending a turn."""
+    opcode = 6
+
+    def update_state(self, state: GameState):
+        state.cur_turns += 1
+        state.total_turns += 1
+        return True
+
+class PlayCard(Action):
+    """Playing a single card."""
+    opcode = 7
+
+    def __init__(self, hand_pos: int, floor_num: int, a: int, index: int, crc: int):
+        # we have card index / target team
+        # hand in the position in hand of the card before playing it
+        # index is the position of the card played, starting at the center of the room(?)
+        # I believe c is the card type, but that doesn't seem correct
+        self.hand_pos = hand_pos
+        self.floor = _floors[floor_num]
+        self.index = index
+        self._a = a
+        self.crc = crc
+        self.text = f"Play the {number(hand_pos)} card from hand {self.floor}, targeting the {number(index)} position."
+
+    def _get_args(self):
+        return {"hand_pos": self.hand_pos, "floor": self.floor, "<a>": self._a, "index": self.index}
+
+class ActivateAbility(Action):
+    """Activating an ability."""
+    opcode = 8
+
+    def __init__(self, floor_num: int, index: int, a: int, b: int, c: int):
+        self.floor = _floors[floor_num]
+        self.index = index
+        self._a = a
+        self._b = b
+        self._c = c
+        self.text = f"Activate ability of the {number(index)} unit {self.floor}."
+
+    def _get_args(self):
+        return {"floor": self.floor, "index": self.index, "<a>": self._a, "<b>": self._b, "<c>": self._c}
+
+class UnitReward(Action):
+    """Picking a unit (banner?) reward."""
+    opcode = 9
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        if index == 0xff:
+            self.text = "Skip unit reward."
+        else:
+            self.text = f"Acquire unit at position {index}."
+
+    def _get_args(self):
+        if self.index == 0xff:
+            return {"reward": "skipped"}
+        return {"reward": "picked", "index": self.index}
+
+class ArtifactReward(Action):
+    """Pick an artifact from some reward."""
+    opcode = 10
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        if index == 0xff:
+            self.text = "Skip artifact reward."
+        else:
+            self.text = f"Acquire artifact at position {index}."
+
+    def _get_args(self):
+        if self.index == 0xff:
+            return {"reward": "skipped"}
+        return {"reward": "picked", "index": self.index}
+
+class ChampionUpgrade(Action):
+    """Upgrade your Champion."""
+    opcode = 11
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        if not index:
+            self.text = "Pick the left Champion upgrade."
+        elif index == 1:
+            self.text = "Pick the right Champion upgrade."
+        elif index == 0xff:
+            self.text = "Skip Champion upgrade."
+        else:
+            raise ValueError(f"Unrecognized index {index}")
+
+    def _get_args(self):
+        if self.index == 0xff:
+            return {"reward": "skipped"}
+        return {"reward": "picked", "index": self.index}
+
+class BuyShopItem(Action):
+    """Buy a single item from a shop."""
+    opcode = 16
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Buy shop item at position {index}."
+
+    def _get_args(self):
+        return {"index": self.index}
+
+class ApplyUpgrade(Action):
+    """Apply a single upgrade to a card."""
+    opcode = 19
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Apply upgrade to card at position {index}."
+
+    def _get_args(self):
+        return {"index": self.index}
+
+class EventOption(Action):
+    """Choose an event option."""
+    opcode = 22
+
+    def __init__(self, a: int, b: int, c: int):
+        self._a = a
+        self._b = b
+        self._c = c
+        self.text = "Pick option from event (more details unknown yet)"
+
+    def _get_args(self):
+        return {"<a>": self._a, "<b>": self._b, "<c>": self._c}
+
+class EnterEvent(Action):
+    """Enter the Celestial Alcove."""
+    opcode = 28
+
+    def __init__(self, a: int): # a is always 0, I think
+        self.text = "Enter event node"
+
+class BeginRun(Action):
+    """Begin the run."""
+    opcode = 38
+
+    def __init__(self, a: int): # a is always 0, I think
+        self.text = "Begin run"
