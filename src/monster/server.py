@@ -7,7 +7,7 @@ import os
 
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
-from src.monster.replay import parse
+from src.monster.replay import GameState
 from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Clan, Node
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
@@ -89,9 +89,15 @@ class MonsterSave:
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         self._data = data
+        if "replayData" in data:
+            self.game_state = GameState(data["replayData"]["replayEntries"])
+        else:
+            self.game_state = GameState()
 
     def update_data(self, data: dict):
         self._data = data
+        if "replayData" in data:
+            self.game_state.update_replay_data(data["replayData"]["replayEntries"])
 
     def _asint(self, key: str) -> int:
         return parse_value(self._data[key]["_values"])
@@ -266,10 +272,6 @@ class MonsterSave:
     @property
     def souls(self) -> list[Soul]:
         return [get(x) for x in self._data["startingConditions"]["souls"]]
-
-    @property
-    def actions(self) -> list[str]:
-        return [parse(x) for x in self._data["replayData"]["replayEntries"]]
 
 class Ring:
     """Store information for one ring."""
@@ -538,6 +540,15 @@ async def mt_current(req: Request):
     if "raw" not in req.query:
         data = _get_sanitized(data)
     return Response(text=json.dumps(data, indent=4), content_type="application/json")
+
+@router.get("/mt/state")
+async def mt_state(req: Request):
+    #save = await get_savefile()
+    save = _save2 # temporary fix
+    if save is None:
+        raise HTTPServiceUnavailable(reason="No savefile present on server")
+    data = save.game_state._asdict()
+    return Response(text=json.dumps(data, indent=4, default=str), content_type="application/json")
 
 def _get_sanitized(x):
     match x:

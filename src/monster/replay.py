@@ -27,6 +27,15 @@ class GameState:
         if data is not None:
             self.update_replay_data(data)
 
+    def _asdict(self):
+        return {
+            "in_fight": self.in_fight,
+            "fight_num": self.fight_num,
+            "cur_turns": self.cur_turns,
+            "total_turns": self.total_turns,
+            "actions": self.actions,
+        }
+
     def update_replay_data(self, data: list[str]):
         data = data[len(self.actions):]
 
@@ -78,8 +87,8 @@ class Unknown(Action):
 
 _actions_mapping: dict[int, Action] = {}
 
-class RingReward(Action):
-    """Reward from the map in a given ring."""
+class SelectNode(Action):
+    """Enter a specific node on the map."""
     opcode = 1
 
     def __init__(self, ring: int, side: int, index: int):
@@ -136,7 +145,7 @@ class FightEnd(Action):
 
     def update_state(self, state: GameState):
         state.in_fight = False
-        if isinstance(state.actions[-1], EndTurn):
+        if isinstance(state.actions[-1], (EndTurn, UnitReward)):
             # we increment turns taken on turn end for the *next* turn
             # so if the fight ends during combat (e.g. Relentless), we'll be off by 1
             state.cur_turns -= 1
