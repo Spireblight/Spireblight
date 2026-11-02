@@ -89,14 +89,14 @@ class MonsterSave:
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         self._data = data
-        if "replayData" in data:
+        if data and "replayData" in data:
             self.game_state = GameState(data["replayData"]["replayEntries"])
         else:
             self.game_state = GameState()
 
     def update_data(self, data: dict):
         self._data = data
-        if "replayData" in data:
+        if data and "replayData" in data:
             self.game_state.update_replay_data(data["replayData"]["replayEntries"])
 
     def _asint(self, key: str) -> int:
