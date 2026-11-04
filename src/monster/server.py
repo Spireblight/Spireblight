@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Generator
 
 import aiohttp_jinja2
@@ -8,7 +10,7 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.replay import GameState
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Clan, Node
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Card2, Upgrade, Clan, Node
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -81,14 +83,22 @@ def parse_value(v: list[int], *, little_endian=True) -> int:
     return int(sum(unpacked))
 
 class MonsterSave:
-    def __init__(self, file: str):
+    def __init__(self, file: str, sfile: str):
         data = None
         try:
             with getfile(file, "r") as f:
                 data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
+        self.started_with = []
+        self._sfile = sfile
+        try:
+            with getfile(sfile, "r") as f:
+                self.started_with.extend(json.load(f))
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
         self._data = data
+        
         if data and "replayData" in data:
             self.game_state = GameState(data["replayData"]["replayEntries"])
         else:
@@ -98,9 +108,33 @@ class MonsterSave:
         self._data = data
         if data and "replayData" in data:
             self.game_state.update_replay_data(data["replayData"]["replayEntries"])
+        if not data or not self.main_class:
+            self.clear_starter_cards()
+        elif not self.started_with:
+            self.store_starter_cards()
 
     def _asint(self, key: str) -> int:
         return parse_value(self._data[key]["_values"])
+
+    def store_starter_cards(self):
+        """Keep track of the cards we start with."""
+        if self.started_with:
+            raise RuntimeError("Starters are already known")
+        for card in self.deck:
+            if not card.card.is_starter:
+                self.started_with.append(card) # TODO: handle it if we do it during run?
+
+        with getfile(self._sfile, "w") as f:
+            json.dump(self.started_with, f)
+
+    def clear_starter_cards(self):
+        self.started_with.clear()
+        with getfile(self._sfile, "w") as f:
+            json.dump(self.started_with, f)
+
+    @property
+    def deck(self):
+        return [CardData(x) for x in self._data["deckState"]]
 
     def get_fight_names(self) -> list[str]:
         """Get the list of run snapshots for "over time" stats."""
@@ -395,6 +429,28 @@ class Ring:
     def is_titan_trial(self) -> bool:
         return self._data["titanTrialEnabled"]
 
+class CardData:
+    def __init__(self, data: dict):
+        self._data = data
+
+    @property
+    def card(self) -> Card2:
+        return get(self._data["cardDataID"])
+
+    @property
+    def upgrades(self) -> list[CardUpgrade]:
+        if self.card.rarity == "Champion":
+            return [] # we do NOT want to display Champion upgrades in deck list
+        return [CardUpgrade(x) for x in self._data["cardModifiers"]["cardUpgrades"]]
+
+class CardUpgrade:
+    def __init__(self, data: dict):
+        self._data = data
+
+    @property
+    def upgrade(self) -> Upgrade:
+        return get(self._data["cardUpgradeDataId"])
+
 class Metasave:
     def __init__(self, filename: str):
         data = None
@@ -412,8 +468,8 @@ class Metasave:
     def max_covenant(self) -> int:
         return self._data["maxAscensionLevel"]
 
-_savefile = MonsterSave("monster-train-save.json")
-_save2 = MonsterSave("monster-train-2-save.json")
+_savefile = MonsterSave("monster-train-save.json", "mt-starters.json")
+_save2 = MonsterSave("monster-train-2-save.json", "mt2-starters.json")
 
 _meta1 = Metasave("monster-train-meta.json")
 _meta2 = Metasave("monster-train-2-meta.json")

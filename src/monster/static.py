@@ -271,6 +271,16 @@ class Card2(Base2):
     def info(self) -> str:
         return f"{self.name} ({self.rarity} {self.type} {self.clan}): {self.description}"
 
+    @property
+    def is_starter(self) -> bool:
+        """Determine if the card is a starter-only card, including champions."""
+        if "Starter" in self.internal:
+            return True
+        if self.rarity == "Champion":
+            return True
+        return self.internal in ("JustCause", "BloatedWhelp", "Witchweave", "MoonRitual",
+                                 "EagerConscript", "Sporetouch", "SecretIngredient")
+
     def get_image_link(self) -> str:
         return f"/static/mt2/champions/{self.internal}.png"
 
