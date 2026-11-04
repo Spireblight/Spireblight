@@ -85,6 +85,7 @@ def parse_value(v: list[int], *, little_endian=True) -> int:
 class MonsterSave:
     def __init__(self, file: str, sfile: str):
         data = None
+        sdata = None
         try:
             with getfile(file, "r") as f:
                 data = json.load(f)
@@ -98,8 +99,9 @@ class MonsterSave:
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         self._data = data
-        for x in sdata:
-            self.started_with.append(get(x))
+        if sdata:
+            for x in sdata:
+                self.started_with.append(get(x))
         
         if data and "replayData" in data:
             self.game_state = GameState(data["replayData"]["replayEntries"])
