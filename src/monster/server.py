@@ -90,14 +90,16 @@ class MonsterSave:
                 data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
-        self.started_with = []
+        self.started_with: list[Card2] = []
         self._sfile = sfile
         try:
             with getfile(sfile, "r") as f:
-                self.started_with.extend(json.load(f))
+                sdata = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         self._data = data
+        for x in sdata:
+            self.started_with.append(get(x))
         
         if data and "replayData" in data:
             self.game_state = GameState(data["replayData"]["replayEntries"])
@@ -122,10 +124,10 @@ class MonsterSave:
             raise RuntimeError("Starters are already known")
         for card in self.deck:
             if not card.card.is_starter:
-                self.started_with.append(card) # TODO: handle it if we do it during run?
+                self.started_with.append(card.card) # TODO: handle it if we do it during run?
 
         with getfile(self._sfile, "w") as f:
-            json.dump(self.started_with, f)
+            json.dump([x.id for x in self.started_with], f)
 
     def clear_starter_cards(self):
         self.started_with.clear()

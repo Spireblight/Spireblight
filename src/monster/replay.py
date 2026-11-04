@@ -221,17 +221,17 @@ class ActivateAbility(Action):
         state.is_player_turn = True
         return True
 
-class UnitReward(Action):
-    """Picking a unit (banner?) reward."""
+class CardReward(Action):
+    """Picking a card reward, including Banners."""
     opcode = 9
 
     def __init__(self, index: int, crc: int):
         self.index = index
         self.crc = crc
         if index == 0xff:
-            self.text = "Skip unit reward."
+            self.text = "Skip card reward."
         else:
-            self.text = f"Acquire unit at position {index}."
+            self.text = f"Acquire card at position {index}."
 
     def _get_args(self):
         if self.index == 0xff:
