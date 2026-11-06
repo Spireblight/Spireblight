@@ -28,15 +28,20 @@ class GameState:
         if data is not None:
             self.update_replay_data(data)
 
-    def _asdict(self):
+    def get_current_state(self):
+        """Keep a snapshot of the state at this given action."""
         return {
             "in_fight": self.in_fight,
             "fight_num": self.fight_num,
-            "player_turn": self.player_turn,
+            "is_player_turn": self.is_player_turn,
             "cur_turns": self.cur_turns,
             "total_turns": self.total_turns,
-            "actions": self.actions,
         }
+
+    def _asdict(self):
+        d = self.get_current_state()
+        d["actions"] = self.actions
+        return d
 
     def update_replay_data(self, data: list[str]):
         data = data[len(self.actions):]
@@ -45,6 +50,7 @@ class GameState:
             opcode, *data = base64.b64decode(value.encode())
             cls = _actions_mapping.get(opcode, Unknown)
             action = cls(*data)
+            action.state = self.get_current_state()
             if not action.update_state(self):
                 break # updating went wrong, try again next time
             self.actions.append(action)
@@ -52,6 +58,7 @@ class GameState:
 class Action:
     """Store information for one action. Subclasses define behaviour."""
     opcode: int
+    state: dict[str, int | bool]
     text: str
 
     def __init_subclass__(cls):
