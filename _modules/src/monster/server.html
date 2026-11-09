@@ -381,9 +381,11 @@
   <h1>Source code for src.monster.server</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp_jinja2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -533,7 +535,34 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deck</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">CardData</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"deckState"</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">CardData</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"deckState"</span><span class="p">])</span>
+
+<div class="viewcode-block" id="MonsterSave.deck_as_html">
+<a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.deck_as_html">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deck_as_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">'&lt;a class="card" href="https://monstertrain2.miraheze.org/wiki/</span><span class="si">{card_name}</span><span class="s1">" target="_blank"&gt;'</span>
+            <span class="s1">'&lt;span&gt;</span><span class="si">{display_name}</span><span class="s1"> </span><span class="si">{upgrades}</span><span class="s1">&lt;/span&gt;&lt;/a&gt;'</span>
+        <span class="p">)</span>
+        <span class="n">up_text</span> <span class="o">=</span> <span class="s1">'&lt;image width="32" height="32" xlink:href="</span><span class="si">{website}{url}</span><span class="s1">" x="</span><span class="si">{pos}</span><span class="s1">"&gt;&lt;/image&gt;'</span>
+
+        <span class="k">for</span> <span class="n">card</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">upgrades</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">upg</span> <span class="o">=</span> <span class="s2">""</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">card</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">card</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">display_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">x </span><span class="si">{</span><span class="n">display_name</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">for</span> <span class="n">up</span> <span class="ow">in</span> <span class="n">card</span><span class="o">.</span><span class="n">upgrades</span><span class="p">:</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">//</span> <span class="mi">8</span>
+                <span class="n">pos</span> <span class="o">+=</span> <span class="n">offset</span>
+                <span class="n">upgrades</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">up_text</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">website</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">up</span><span class="o">.</span><span class="n">upgrade</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">upgrades</span><span class="p">:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span>
+                <span class="n">upg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'&lt;svg width="</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s1">" height="32"&gt;</span><span class="si">{</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/svg&gt;'</span>
+            <span class="k">yield</span> <span class="n">text</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">card_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span> <span class="n">upgrades</span><span class="o">=</span><span class="n">upg</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="MonsterSave.get_fight_names">
 <a class="viewcode-back" href="../../../monster.html#src.monster.server.MonsterSave.get_fight_names">[docs]</a>
@@ -850,6 +879,14 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">CardData</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">card</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">card</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">upgrades</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">upgrades</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"cardDataID"</span><span class="p">])</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">card</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Card2</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"cardDataID"</span><span class="p">])</span>
@@ -866,6 +903,18 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">CardUpgrade</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="s2">"cardUpgradeDataId"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="s2">""</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># weird issue where it would sometimes not have the key</span>
+            <span class="c1"># I have no idea what causes it, but this should fix it</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">"cardUpgradeDataId"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">CardUpgrade</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upgrade</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">upgrade</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"cardUpgradeDataId"</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Upgrade</span><span class="p">:</span>
