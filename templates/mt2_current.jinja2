@@ -162,6 +162,14 @@
     </section>
 
     <section class="section">
+      <div class="cards">
+        {% for card_text in save.deck_as_html() %}
+          {{ card_text | safe }}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section">
       <div class="box mt2-run is-paddingless">
         <div class="mt2-rings">
           <div class="message-header">

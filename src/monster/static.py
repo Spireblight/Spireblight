@@ -216,8 +216,21 @@ class Base2:
         self.dlc: str | None = data.get("dlc")
         self._parsed: str | None = None
 
+    def __eq__(self, other):
+        if not isinstance(other, Base2):
+            return NotImplemented
+        if self.internal and self.internal:
+            return self.internal == self.internal
+        if self.id and other.id:
+            return self.id == other.id
+        return False
+
     def __hash__(self):
-        return hash(self.id)
+        if self.internal:
+            return hash(self.internal)
+        if self.id:
+            return hash(self.id)
+        return hash(self.name)
 
     @property
     def info(self):

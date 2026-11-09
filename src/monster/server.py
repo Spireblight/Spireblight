@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from collections import Counter
 from typing import Generator
 
 import aiohttp_jinja2
+import urllib.parse
 import struct
 import json
 import os
@@ -138,7 +140,31 @@ class MonsterSave:
 
     @property
     def deck(self):
-        return [CardData(x) for x in self._data["deckState"]]
+        return Counter(CardData(x) for x in self._data["deckState"])
+
+    def deck_as_html(self):
+        text = (
+            '<a class="card" href="https://monstertrain2.miraheze.org/wiki/{card_name}" target="_blank">'
+            '<span>{display_name} {upgrades}</span></a>'
+        )
+        up_text = '<image width="32" height="32" xlink:href="{website}{url}" x="{pos}"></image>'
+
+        for card, count in self.deck.items():
+            upgrades = []
+            upg = ""
+            name = urllib.parse.quote(card.card.name)
+            display_name = card.card.name
+            if count > 1:
+                display_name = f"{count}x {display_name}"
+            for up in card.upgrades:
+                pos = len(upgrades) * 32
+                offset = pos // 8
+                pos += offset
+                upgrades.append(up_text.format(website=config.server.url, url=up.upgrade.image, pos=pos))
+            if upgrades:
+                size = len(upgrades) * 32
+                upg = f'<svg width="{size}" height="32">{"".join(upgrades)}</svg>'
+            yield text.format(card_name=name, display_name=display_name, upgrades=upg)
 
     def get_fight_names(self) -> list[str]:
         """Get the list of run snapshots for "over time" stats."""
@@ -437,6 +463,14 @@ class CardData:
     def __init__(self, data: dict):
         self._data = data
 
+    def __eq__(self, other):
+        if not isinstance(other, CardData):
+            return NotImplemented
+        return self.card == other.card and self.upgrades == other.upgrades
+
+    def __hash__(self):
+        return hash(self._data["cardDataID"])
+
     @property
     def card(self) -> Card2:
         return get(self._data["cardDataID"])
@@ -450,6 +484,18 @@ class CardData:
 class CardUpgrade:
     def __init__(self, data: dict):
         self._data = data
+        if "cardUpgradeDataId" not in data and "" in data:
+            # weird issue where it would sometimes not have the key
+            # I have no idea what causes it, but this should fix it
+            data["cardUpgradeDataId"] = data.pop("")
+
+    def __eq__(self, other):
+        if not isinstance(other, CardUpgrade):
+            return NotImplemented
+        return self.upgrade == other.upgrade
+
+    def __hash__(self):
+        return hash(self._data["cardUpgradeDataId"])
 
     @property
     def upgrade(self) -> Upgrade:
