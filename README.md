@@ -1,4 +1,4 @@
-# TwitchCordBot
+# Spireblight
 
 This is a program meant as a Twitch-Discord hybrid bot that also is a website.
 Made for [Baalorlord on Twitch](https://twitch.tv/baalorlord), so quite a few
@@ -56,6 +56,10 @@ There will be no runs on the client initially. In order to sync your runs, while
 For any issues, feel free to open an issue or submit a PR.
 
 Development discord: https://discord.gg/RHYrs3Nsve
+
+## Legal disclaimer
+
+This repository contains data and assets belonging to MegaCrit and Shiny Shoe. This project is fan-made and not associated with MegaCrit or Shiny Shoe.
 
 ---
 
