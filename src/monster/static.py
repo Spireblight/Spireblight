@@ -207,13 +207,14 @@ _map1 = {
 
 class Base2:
     def __init__(self, data: dict):
-        self.name: str = data.get("name", data.get("title", ""))
-        self._description: str = data.get("description", data.get("raw", ""))
-        self.internal: str = data.get("internal", "")
-        self.id: str = data.get("id")
-        self.lore: str = data.get("lore", "")
+        self.name: str = data.get("name", data.get("title", data.get("Name")))
+        self._description: str = data.get("description", data.get("raw", data.get("Raw Description", "")))
+        self._base_desc: str | None = data.get("Base Description")
+        self.internal: str = data.get("internal", data.get("Asset name", ""))
+        self.id: str = data.get("id", data.get("ID"))
+        self.lore: str = data.get("lore", data.get("Lore", ""))
         self.is_hidden: bool = data.get("hidden", False)
-        self.dlc: str | None = data.get("dlc")
+        self.dlc: str | None = data.get("dlc", data.get("DLC"))
         self._parsed: str | None = None
 
     def __eq__(self, other):
@@ -240,6 +241,8 @@ class Base2:
     def description(self) -> str:
         if self.name in _descriptions:
             return _descriptions[self.name]
+        if self._base_desc:
+            return self._base_desc
         return self._description
 
     def escaped_description(self) -> str:
@@ -268,15 +271,15 @@ class Base2:
 class Card2(Base2):
     def __init__(self, data: dict):
         super().__init__(data)
-        self.clan: str = data["clan"]
-        self.type: str = data["card_type"]
-        self.rarity: str = data["rarity"]
-        self.cost: int = data["cost"] # X-cost cards are marked as 0
-        self.unlock: int = data["unlock_level"]
-        self.artist: str = data["artist"]
-        self.has_ability: bool = data["unit_ability"]
-        self.initial_cooldown: int = data["initial_cooldown"]
-        self.ability_cooldown: int = data["ability_cooldown"]
+        self.clan: str = data["Clan"]
+        self.type: str = data["Card Type"]
+        self.rarity: str = data["Rarity"]
+        self.cost: int = data["Cost"] # X-cost cards are marked as 0
+        self.unlock: int = data["Unlock Level"]
+        self.artist: str = data["Artist"]
+        self.has_ability: bool = data["Unit Ability"]
+        self.initial_cooldown: int = data["Initial Cooldown"]
+        self.ability_cooldown: int = data["Ability Cooldown"]
         if self.rarity == "Champion":
             _champions.add(self)
 

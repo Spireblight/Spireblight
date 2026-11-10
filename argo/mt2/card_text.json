@@ -2057,14 +2057,14 @@
     },
     {
         "name": "Guard of the Unnamed",
-        "description": "[incant]: Gain [armor] 3."
+        "description": "[incant]: Gain [armor] 4."
     },
     {
         "name": "Ice and Pyre",
         "description": "Pyrebound. Attuned. Deal 90 damage to the front enemy unit."
     },
     {
-        "name": "Wilting [debuff]wood",
+        "name": "Wilting Sapwood",
         "description": "[revenge]: Gain 1[ember]."
     },
     {
@@ -2777,7 +2777,7 @@
     },
     {
         "name": "Razorthin Crescent",
-        "description": "[mageblade] adds an additional <nobr>+1[attack]</nobr> per stack."
+        "description": "[mageblade] adds an additional +1[attack] per stack."
     },
     {
         "name": "Large Mystery Box",
@@ -2789,7 +2789,7 @@
     },
     {
         "name": "Channelheart",
-        "description": "<b>Sting</b> spells get +20 [magicpower]."
+        "description": "[Sting] spells get +20 [magicpower]."
     },
     {
         "name": "Shattered Halo",
@@ -2897,7 +2897,7 @@
     },
     {
         "name": "Commemorative Spike",
-        "description": "On the turn after [deployphase], summon a <b>Morsel Miner</b> on each floor."
+        "description": "On the turn after [deployphase], summon a [Morsel Miner] on each floor."
     },
     {
         "name": "Encased Ember",
@@ -2929,7 +2929,7 @@
     },
     {
         "name": "Resonant Shard",
-        "description": "[rage] adds an additional <nobr>+1[attack]</nobr> per stack."
+        "description": "[rage] adds an additional +1[attack] per stack."
     },
     {
         "name": "Life Insurer",
@@ -2949,7 +2949,7 @@
     },
     {
         "name": "Perkeo",
-        "description": "At the start of battle, gain a <b>Calcified Ember</b> that converts to <b>Excavated Ember</b> after not playing it once."
+        "description": "At the start of battle, gain a [Calcified Ember] that converts to [Excavated Ember] after not playing it once."
     },
     {
         "name": "Prismatic Dragonscale",
@@ -3025,7 +3025,7 @@
     },
     {
         "name": "Crystallized Wing",
-        "description": "[x] <b>Cost</b> cards and cards that cost 3[ember] or more have [permafrost]."
+        "description": "[x] [Cost] cards and cards that cost 3[ember] or more have [permafrost]."
     },
     {
         "name": "Dun Echo",
@@ -3153,7 +3153,7 @@
     },
     {
         "name": "Molten Manifold",
-        "description": "<b>X Cost</b> cards get +2 to their X value when played."
+        "description": "[X Cost] cards get +2 to their X value when played."
     },
     {
         "name": "Fade's First Blade",
@@ -3173,7 +3173,7 @@
     },
     {
         "name": "Carving Corusca",
-        "description": "When <b>Extract</b> is used, gain 1[ember] and 1[corrupt]."
+        "description": "When [Extract] is used, gain 1[ember] and 1[corrupt]."
     },
     {
         "name": "Heaven's Light",
@@ -3185,7 +3185,7 @@
     },
     {
         "name": "Unstable Pyresparks",
-        "description": "<b>Shield Steward</b> and <b>Spear Steward</b> units gain the <b>Boom</b> Ability."
+        "description": "[Shield Steward] and [Spear Steward] units gain the [Boom] Ability."
     },
     {
         "name": "Burning Feather",
@@ -3233,7 +3233,7 @@
     },
     {
         "name": "Boiler Room Mod",
-        "description": "At the start of battle, apply <b>Boiler Room</b> on the first floor."
+        "description": "At the start of battle, apply [Boiler Room] on the first floor."
     },
     {
         "name": "Circle of Cycles",
@@ -3265,7 +3265,7 @@
     },
     {
         "name": "Cursed Vines",
-        "description": "At start of turn, add a <b>Vine Grasp</b> spell with [ephemeral] to your hand."
+        "description": "At start of turn, add a [Vine Grasp] spell with [ephemeral] to your hand."
     },
     {
         "name": "Contingency Plans",
@@ -3313,7 +3313,7 @@
     },
     {
         "name": "Thornfruit",
-        "description": "At start of turn, add a <b>Sting</b> spell to your hand."
+        "description": "At start of turn, add a [Sting] spell to your hand."
     },
     {
         "name": "Catalyzing Agent",
@@ -3321,7 +3321,7 @@
     },
     {
         "name": "Spell Sanctum Mod",
-        "description": "At the start of battle, apply <b>Spell Sanctum</b> on the second floor."
+        "description": "At the start of battle, apply [Spell Sanctum] on the second floor."
     },
     {
         "name": "The Bloating Fungus",
@@ -3361,7 +3361,7 @@
     },
     {
         "name": "Martyr's Signet",
-        "description": "At the end of battle, the front friendly unit on each floor permanently gains +6[health]."
+        "description": "At the end of battle, the front friendly unit on each floor permanently gains +8[health]."
     },
     {
         "name": "Odi's Totem",
@@ -3381,7 +3381,7 @@
     },
     {
         "name": "Lunar Lantern",
-        "description": "<b>Selene</b> units get +20[attack] during [full]. <b>Silent</b> units get +20[attack] during [moonshade]."
+        "description": "[Selene] units get +20[attack] during [full]. [Silent] units get +20[attack] during [moonshade]."
     },
     {
         "name": "Unstable Shard",
@@ -3409,7 +3409,7 @@
     },
     {
         "name": "Fight Club Mod",
-        "description": "At the start of battle, apply <b>Fight Club</b> on the third floor."
+        "description": "At the start of battle, apply [Fight Club] on the third floor."
     },
     {
         "name": "Verdant Cycle",
@@ -3529,7 +3529,7 @@
     },
     {
         "name": "Thorn Casing",
-        "description": "<b>Sting</b> spells get +10 [magicpower] and [piercing]."
+        "description": "[Sting] spells get +10 [magicpower] and [piercing]."
     },
     {
         "name": "Aquath's Reservation",
@@ -3621,7 +3621,7 @@
     },
     {
         "name": "Heavy",
-        "description": "Add 5 <b>Deadweights</b> to your starting deck."
+        "description": "Add 5 [Deadweights] to your starting deck."
     },
     {
         "name": "Dominion's Reign",
@@ -3629,7 +3629,7 @@
     },
     {
         "name": "Ninja's Best Friend",
-        "description": "Start with <b>Shadow's Sheath</b>."
+        "description": "Start with [Shadow's Sheath]."
     },
     {
         "name": "Bloodlust",
@@ -3637,7 +3637,7 @@
     },
     {
         "name": "Soul Exchange",
-        "description": "Start with <b>Soulsmelter</b> and it has [deployable]."
+        "description": "Start with [Soulsmelter] and it has [deployable]."
     },
     {
         "name": "It's Free Real Estate",
@@ -3669,7 +3669,7 @@
     },
     {
         "name": "Spellcraft",
-        "description": "Start with <b>Lightstone Casing</b>."
+        "description": "Start with [Lightstone Casing]."
     },
     {
         "name": "Our Powers Combined",
@@ -3677,7 +3677,7 @@
     },
     {
         "name": "Redhot Renovations",
-        "description": "At the start of battle, apply <b>Inferno Room</b> on all floors."
+        "description": "At the start of battle, apply [Inferno Room] on all floors."
     },
     {
         "name": "Frontline Fighter",
@@ -3689,7 +3689,7 @@
     },
     {
         "name": "Gladiatior's Boon",
-        "description": "Start with <b>Golden Idol</b>."
+        "description": "Start with [Golden Idol]."
     },
     {
         "name": "Hollow",
@@ -3697,7 +3697,7 @@
     },
     {
         "name": "Hammer Time",
-        "description": "Start with <b>Heph's Hammer</b> and it has [deployable]."
+        "description": "Start with [Heph's Hammer] and it has [deployable]."
     },
     {
         "name": "Recurrent",
@@ -3761,7 +3761,7 @@
     },
     {
         "name": "Not So Free Range",
-        "description": "Start with 4 copies of <b>Alchemy</b>."
+        "description": "Start with 4 copies of [Alchemy]."
     },
     {
         "name": "Time for Trials",
@@ -3781,7 +3781,7 @@
     },
     {
         "name": "Chronic Pain",
-        "description": "Add <b>Curse of Entropy</b> to your deck at the start of every battle."
+        "description": "Add [Curse of Entropy] to your deck at the start of every battle."
     },
     {
         "name": "Fallen Champion",
@@ -3805,7 +3805,7 @@
     },
     {
         "name": "Organic",
-        "description": "Replace <b>Train Stewards</b> with Graft units."
+        "description": "Replace [Train Stewards] with Graft units."
     },
     {
         "name": "Artificial Intelligence",
@@ -3889,7 +3889,7 @@
     },
     {
         "name": "Pay to Win",
-        "description": "Start with <b>Ancient Pyretap</b>."
+        "description": "Start with [Ancient Pyretap]."
     },
     {
         "name": "Fabulous Four",
@@ -3901,7 +3901,7 @@
     },
     {
         "name": "Broken Valve",
-        "description": "Start with <b>Volatile Gauge</b>."
+        "description": "Start with [Volatile Gauge]."
     },
     {
         "name": "Influential",
@@ -3921,7 +3921,7 @@
     },
     {
         "name": "Frontloaded",
-        "description": "-3[ember] per turn. Gain 20[ember] at the beginning of each battle. Start with <b>The Unbroken Horn</b>."
+        "description": "-3[ember] per turn. Gain 20[ember] at the beginning of each battle. Start with [The Unbroken Horn]."
     },
     {
         "name": "Tithe",
@@ -3945,7 +3945,7 @@
     },
     {
         "name": "Weapon Master",
-        "description": "Draft 2 cards added in <b>Lost Arsenal</b>."
+        "description": "Draft 2 cards added in [Lost Arsenal]."
     },
     {
         "name": "Skull Collectors",
@@ -3961,7 +3961,7 @@
     },
     {
         "name": "A Simple Plan",
-        "description": "Non-Champion units cost +2[ember]. Start with <b>Sketches of Salvation</b>."
+        "description": "Non-Champion units cost +2[ember]. Start with [Sketches of Salvation]."
     },
     {
         "name": "Cardcuffs",
@@ -4017,7 +4017,7 @@
     },
     {
         "name": "Perma Scaling",
-        "description": "Start with <b>Blood of the Apex</b> and <b>Advanced Growth</b>."
+        "description": "Start with [Blood of the Apex] and [Advanced Growth]."
     },
     {
         "name": "Magic Hands",
@@ -4065,11 +4065,11 @@
     },
     {
         "name": "Divine Flame",
-        "description": "Start with 2 copies of <b>Torch</b> that have <b>Entropic Growth</b>."
+        "description": "Start with 2 copies of [Torch] that have [Entropic Growth]."
     },
     {
         "name": "Voidborn",
-        "description": "Start with <b>Void Armament</b> and it has [deployable]."
+        "description": "Start with [Void Armament] and it has [deployable]."
     },
     {
         "name": "No Skip For You",
@@ -4077,7 +4077,7 @@
     },
     {
         "name": "Junked Up",
-        "description": "Add 8 <b>Calcified Ember</b> to your starting deck."
+        "description": "Add 8 [Calcified Ember] to your starting deck."
     },
     {
         "name": "Agony",
@@ -4106,5 +4106,209 @@
     {
         "name": "Joker",
         "description": "At the start of battle, spawn a Jeermask unit on each floor."
+    },
+    {
+        "name": "Penitent Sentinel",
+        "description": "[heal immunity]. [immobile]. [Revenge]: Gain [+1][Health] permanently."
+    },
+    {
+        "name": "Wicked Fervor",
+        "description": "Discard your hand. Apply [zeal] to a friendly unit equal to [effect0.status0.power]x the number of cards discarded."
+    },
+    {
+        "name": "Punished Spike",
+        "description": "Apply [trait2.statusmultiplier][X] [zeal] and deal [effect1.power] damage [X] times."
+    },
+    {
+        "name": "Collective Punishment",
+        "description": "Deal [effect0.power] damage to all units, twice."
+    },
+    {
+        "name": "Venerate",
+        "description": "Gain [effect0.power] [devotion]."
+    },
+    {
+        "name": "Looming Darkshard II",
+        "description": "[Summon]: [Retreat].\n[Bloodshed]: Apply [+2] [Attack] to friendly units."
+    },
+    {
+        "name": "Archus",
+        "description": "[Ability]: Flight."
+    },
+    {
+        "name": "Forsaken Berserker",
+        "description": "[Summon]: Gain [Multistrike] [1] for every [2] [Monolith Levels]."
+    },
+    {
+        "name": "Scarred Justicar",
+        "description": "[Punish]: [+15][Attack]."
+    },
+    {
+        "name": "Sineater",
+        "description": "[Ability]: Backlash."
+    },
+    {
+        "name": "Agonize",
+        "description": "Deal [trait0.power] damage to the front enemy unit per [devotionlevel]."
+    },
+    {
+        "name": "Solemn Cantor",
+        "description": "[Resolve]: Apply [Lifesteal] [1] to damaged friendly units."
+    },
+    {
+        "name": "Shared Sentence",
+        "description": "Apply [chained] [effect0.status0.power] to an enemy unit."
+    },
+    {
+        "name": "Zealot's Halo",
+        "description": "Gain +[effect0.upgrade.roommodifier0.power][attack] for every missing [effect0.upgrade.roommodifier0.secondarypower][health]."
+    },
+    {
+        "name": "Initiate Sermon",
+        "description": "Apply [zeal] [trait1.statusmultiplier] to friendly units per [devotionlevel]."
+    },
+    {
+        "name": "Forbidden Covenant",
+        "description": "Deal [effect0.power] damage to enemy units."
+    },
+    {
+        "name": "Mournguard",
+        "description": "[Zeal] 10.[Resolve]: Gain [Attack] equal to missing [Health]."
+    },
+    {
+        "name": "Imprison",
+        "description": "Apply [chained] [effect0.status0.power] and [immobile] to an enemy unit."
+    },
+    {
+        "name": "Scourged Zealot",
+        "description": "[Revenge]: Gain [Zeal] equal to damage taken."
+    },
+    {
+        "name": "Shattering Darkshard",
+        "description": "[Summon]: [Retreat]. [Ability]: Shatter."
+    },
+    {
+        "name": "Blinding Darkshard II",
+        "description": "[Summon]: [Retreat].\n[Enchant]: Enemy units have [-5][Attack]."
+    },
+    {
+        "name": "Cloister of Chains",
+        "description": "Apply [chained] [effect0.upgrade.roommodifier0.status0.power] to enemy units when they enter the floor."
+    },
+    {
+        "name": "Branded Apostate",
+        "description": "[Bloodshed]: Apply [Zeal] [5] to the damaged unit."
+    },
+    {
+        "name": "Flagellate",
+        "description": "Deal [effect0.power] damage. Restore [effect1.power] health."
+    },
+    {
+        "name": "Trial by Fire",
+        "description": "Deal [effect0.power] damage."
+    },
+    {
+        "name": "Looming Darkshard III",
+        "description": "[Summon]: [Retreat].\n[Bloodshed]: Apply [+3] [Attack] to friendly units."
+    },
+    {
+        "name": "Reaper of Suffering",
+        "description": "[Sweep]. [Suppressed]. [Revenge]: Reduce [Cooldown] by [1]. [Ability]: Sow Suffering."
+    },
+    {
+        "name": "Anointing Oil",
+        "description": "Apply [armor] equal to missing [health] to friendly units."
+    },
+    {
+        "name": "Shattering Darkshard III",
+        "description": "[Summon]: [Retreat]. [Ability]: Shatter III."
+    },
+    {
+        "name": "Spur the Faithful",
+        "description": "Deal [effect0.power] damage to a friendly unit, then it attacks immediately."
+    },
+    {
+        "name": "Divine Punishment",
+        "description": "Deal [trait1.power] damage to enemy units on all floors per [devotionlevel]."
+    },
+    {
+        "name": "The Condemned",
+        "description": "[Tenacious]. [Punish]: Deal damage to the front enemy unit equal to [4x] damage taken."
+    },
+    {
+        "name": "Blinding Darkshard III",
+        "description": "[Summon]: [Retreat].\n[Enchant]: Enemy units have [-7][Attack]."
+    },
+    {
+        "name": "Collector of Sorrows",
+        "description": "[Zeal 5]. [Ability]: Restitution."
+    },
+    {
+        "name": "Looming Darkshard",
+        "description": "[Summon]: [Retreat].\n[Bloodshed]: Apply [+1] [Attack] to friendly units."
+    },
+    {
+        "name": "Shattering Darkshard II",
+        "description": "[Summon]: [Retreat]. [Ability]: Shatter II."
+    },
+    {
+        "name": "Drag Them Down",
+        "description": "Apply [chained] [effect0.status0.power] to enemy units. Deal [effect0.power] damage to a friendly unit."
+    },
+    {
+        "name": "Tome of Atonement",
+        "description": "Apply [tenacious] and [zeal] [effect1.status0.power]."
+    },
+    {
+        "name": "Exaltation",
+        "description": "Restore a unit to full health. Deal [effect0.power] damage to all other units."
+    },
+    {
+        "name": "Shackles of Spite",
+        "description": "Deal double damage while at half [health] or below."
+    },
+    {
+        "name": "Pain Tithe",
+        "description": "Deal [effect0.power] damage."
+    },
+    {
+        "name": "Cruel Lesson",
+        "description": "Apply +[effect0.upgrade.bonusdamage][attack]. Deal [effect1.power] damage. "
+    },
+    {
+        "name": "Dark Initiate",
+        "description": "[Offering]. [Summon]: Gain [+15][Attack] and [+5][Health] per [Monolith Level]."
+    },
+    {
+        "name": "Penitent's Sanctuary",
+        "description": "Friendly units restore [effect0.upgrade.charactertrigger0.effect0.paramint] health and gain +[effect0.upgrade.charactertrigger0.effect1.upgrade.bonusdamage][attack] on [punish]."
+    },
+    {
+        "name": "Blinding Darkshard",
+        "description": "[Summon]: [Retreat].\n[Enchant]: Enemy units have [-3][Attack]."
+    },
+    {
+        "name": "Lasher",
+        "description": "[Strike]: Deal [1] damage to friendly units in front of this unit."
+    },
+    {
+        "name": "Unholy Communion",
+        "description": "Apply [lifesteal] [effect0.status0.power] to a damaged friendly unit."
+    },
+    {
+        "name": "Zariel",
+        "description": ""
+    },
+    {
+        "name": "Arbitrary Verdict",
+        "description": "Set health of all non-boss units to half [health]."
+    },
+    {
+        "name": "Chainbearer",
+        "description": "[Strike]: Apply [Chained] [2]. [Ability]: Shackled Fury."
+    },
+    {
+        "name": "Echo of Pain",
+        "description": "Deal damage equal to the total damage dealt to friendly units this battle."
     }
 ]
