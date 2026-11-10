@@ -298,6 +298,12 @@ class Card2(Base2):
         return self.internal in ("JustCause", "BloatedWhelp", "Witchweave", "MoonRitual",
                                  "EagerConscript", "Sporetouch", "SecretIngredient")
 
+    @property
+    def image(self) -> str:
+        """Get an image link to the card."""
+        name = self.name.replace("'", "")
+        return f"/static/mt2/cards/{self.clan}/{name}.png"
+
     def get_image_link(self) -> str:
         return f"/static/mt2/champions/{self.internal}.png"
 
