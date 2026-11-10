@@ -95,7 +95,10 @@ class Unknown(Action):
         self.text = f"Unknown action with opcode {opcode}"
 
     def _get_args(self):
-        return {f"<{i}>": x for i, x in enumerate(self._data)}
+        d = {"opcode": self.opcode}
+        for i, x in enumerate(self._data):
+            d[f"<{i}>"] = x
+        return d
 
 _actions_mapping: dict[int, Action] = {}
 
