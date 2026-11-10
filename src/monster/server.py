@@ -47,8 +47,8 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Hordes of Heaven",
     ),
     (   # Ring 5 fight
+        "Relentless Zealots",
         "Corrupted Crusade", # UNSORTED
-        "Relentless Zealots", # UNSORTED
         "Undying Minions", # UNSORTED
         "Unholy Alliances",
     ),

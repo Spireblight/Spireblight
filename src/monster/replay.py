@@ -333,6 +333,18 @@ class EnterEvent(Action):
     def __init__(self, a: int): # a is always 0, I think
         self.text = "Enter event node"
 
+class PickDarkShard(Action):
+    """Select a Darkshard to use."""
+    opcode =  29
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Select Darkshard at position {index}"
+
+    def _get_args(self):
+        return {"index": self.index}
+
 class BeginRun(Action):
     """Begin the run."""
     opcode = 38
@@ -340,6 +352,14 @@ class BeginRun(Action):
     def __init__(self, a: int): # a is always 0, I think
         self.text = "Begin run"
 
-class Devotion(Action):
-    """Increase the Devotion."""
+class ApplyZeal(Action):
+    """Apply Zeal to friendly units."""
     opcode = 39
+
+class MonolithDiscard(Action):
+    """Discard a card to increase the Devotion."""
+    opcode = 49
+
+    def __init__(self, a: int):
+        self.text = "Discard a card with the Monolith"
+
