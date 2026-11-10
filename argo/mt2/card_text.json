@@ -4113,19 +4113,19 @@
     },
     {
         "name": "Wicked Fervor",
-        "description": "Discard your hand. Apply [zeal] to a friendly unit equal to [effect0.status0.power]x the number of cards discarded."
+        "description": "Discard your hand. Apply [zeal] to a friendly unit equal to 5x the number of cards discarded."
     },
     {
         "name": "Punished Spike",
-        "description": "Apply [trait2.statusmultiplier][X] [zeal] and deal [effect1.power] damage [X] times."
+        "description": "Apply 8[X] [zeal] and deal 1 damage [X] times."
     },
     {
         "name": "Collective Punishment",
-        "description": "Deal [effect0.power] damage to all units, twice."
+        "description": "Deal 3 damage to all units, twice."
     },
     {
         "name": "Venerate",
-        "description": "Gain [effect0.power] [devotion]."
+        "description": "[Consume]. Gain 6 [devotion]."
     },
     {
         "name": "Looming Darkshard II",
@@ -4149,7 +4149,7 @@
     },
     {
         "name": "Agonize",
-        "description": "Deal [trait0.power] damage to the front enemy unit per [devotionlevel]."
+        "description": "Deal 30 damage to the front enemy unit per [devotionlevel]."
     },
     {
         "name": "Solemn Cantor",
@@ -4157,27 +4157,27 @@
     },
     {
         "name": "Shared Sentence",
-        "description": "Apply [chained] [effect0.status0.power] to an enemy unit."
+        "description": "Apply [chained] 1 to an enemy unit."
     },
     {
         "name": "Zealot's Halo",
-        "description": "Gain +[effect0.upgrade.roommodifier0.power][attack] for every missing [effect0.upgrade.roommodifier0.secondarypower][health]."
+        "description": "Gain +1[attack] for every missing 1[health]."
     },
     {
         "name": "Initiate Sermon",
-        "description": "Apply [zeal] [trait1.statusmultiplier] to friendly units per [devotionlevel]."
+        "description": "Apply [zeal] 2 to friendly units per [devotionlevel]."
     },
     {
         "name": "Forbidden Covenant",
-        "description": "Deal [effect0.power] damage to enemy units."
+        "description": "Deal 30 damage to enemy units. [Reserve]: Deal 5 damage to friendly units on all floors."
     },
     {
         "name": "Mournguard",
-        "description": "[Zeal] 10.[Resolve]: Gain [Attack] equal to missing [Health]."
+        "description": "[Zeal] 10. [Resolve]: Gain [Attack] equal to missing [Health]."
     },
     {
         "name": "Imprison",
-        "description": "Apply [chained] [effect0.status0.power] and [immobile] to an enemy unit."
+        "description": "Apply [chained] 4 and [immobile] to an enemy unit."
     },
     {
         "name": "Scourged Zealot",
@@ -4193,7 +4193,7 @@
     },
     {
         "name": "Cloister of Chains",
-        "description": "Apply [chained] [effect0.upgrade.roommodifier0.status0.power] to enemy units when they enter the floor."
+        "description": "Apply [chained] 1 to enemy units when they enter the floor."
     },
     {
         "name": "Branded Apostate",
@@ -4201,11 +4201,11 @@
     },
     {
         "name": "Flagellate",
-        "description": "Deal [effect0.power] damage. Restore [effect1.power] health."
+        "description": "Deal 5 damage. Restore 25 health."
     },
     {
         "name": "Trial by Fire",
-        "description": "Deal [effect0.power] damage."
+        "description": "Deal 10 damage. [Spare]: Gain 2[ember] if the target was a friendly unit."
     },
     {
         "name": "Looming Darkshard III",
@@ -4225,7 +4225,7 @@
     },
     {
         "name": "Spur the Faithful",
-        "description": "Deal [effect0.power] damage to a friendly unit, then it attacks immediately."
+        "description": "Deal 10 damage to a friendly unit, then it attacks immediately."
     },
     {
         "name": "Divine Punishment",
@@ -4241,7 +4241,7 @@
     },
     {
         "name": "Collector of Sorrows",
-        "description": "[Zeal 5]. [Ability]: Restitution."
+        "description": "[Zeal] 5. [Ability]: Restitution."
     },
     {
         "name": "Looming Darkshard",
@@ -4253,15 +4253,15 @@
     },
     {
         "name": "Drag Them Down",
-        "description": "Apply [chained] [effect0.status0.power] to enemy units. Deal [effect0.power] damage to a friendly unit."
+        "description": "Apply [chained] 4 to enemy units. Deal 25 damage to a friendly unit."
     },
     {
         "name": "Tome of Atonement",
-        "description": "Apply [tenacious] and [zeal] [effect1.status0.power]."
+        "description": "Apply [tenacious] and [zeal] 15."
     },
     {
         "name": "Exaltation",
-        "description": "Restore a unit to full health. Deal [effect0.power] damage to all other units."
+        "description": "Restore a unit to full health. Deal 10 damage to all other units."
     },
     {
         "name": "Shackles of Spite",
@@ -4269,11 +4269,11 @@
     },
     {
         "name": "Pain Tithe",
-        "description": "Deal [effect0.power] damage."
+        "description": "Deal 5 damage. [Spare]: Increase damage by 5 permanently."
     },
     {
         "name": "Cruel Lesson",
-        "description": "Apply +[effect0.upgrade.bonusdamage][attack]. Deal [effect1.power] damage. "
+        "description": "Apply +3[attack]. Deal 2 damage. "
     },
     {
         "name": "Dark Initiate",
@@ -4281,7 +4281,7 @@
     },
     {
         "name": "Penitent's Sanctuary",
-        "description": "Friendly units restore [effect0.upgrade.charactertrigger0.effect0.paramint] health and gain +[effect0.upgrade.charactertrigger0.effect1.upgrade.bonusdamage][attack] on [punish]."
+        "description": "Friendly units restore 3 [health] and gain +3[attack] on [punish]."
     },
     {
         "name": "Blinding Darkshard",
@@ -4293,7 +4293,7 @@
     },
     {
         "name": "Unholy Communion",
-        "description": "Apply [lifesteal] [effect0.status0.power] to a damaged friendly unit."
+        "description": "Apply [lifesteal] 4 to a damaged friendly unit."
     },
     {
         "name": "Zariel",
