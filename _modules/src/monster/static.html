@@ -429,6 +429,7 @@
     <span class="s2">"deployphase"</span><span class="p">:</span> <span class="s2">"Deployment Phase"</span><span class="p">,</span>
     <span class="s2">"forgepoint"</span><span class="p">:</span> <span class="s2">"Forge Point"</span><span class="p">,</span>
     <span class="s2">"forgepoints"</span><span class="p">:</span> <span class="s2">"Forge Points"</span><span class="p">,</span>
+    <span class="s2">"devotionlevel"</span><span class="p">:</span> <span class="s2">"Monolith Level"</span><span class="p">,</span>
     <span class="s2">"magicpower"</span><span class="p">:</span> <span class="s2">"Magic Power"</span><span class="p">,</span>
     <span class="s2">"mooncycle"</span><span class="p">:</span> <span class="s2">"MoonCycle"</span><span class="p">,</span>
     <span class="s2">"abilityactive"</span><span class="p">:</span> <span class="s2">"Ability"</span><span class="p">,</span>
@@ -689,6 +690,12 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"JustCause"</span><span class="p">,</span> <span class="s2">"BloatedWhelp"</span><span class="p">,</span> <span class="s2">"Witchweave"</span><span class="p">,</span> <span class="s2">"MoonRitual"</span><span class="p">,</span>
                                  <span class="s2">"EagerConscript"</span><span class="p">,</span> <span class="s2">"Sporetouch"</span><span class="p">,</span> <span class="s2">"SecretIngredient"</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get an image link to the card."""</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/cards/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">clan</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.png"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_image_link</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"/static/mt2/champions/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="si">}</span><span class="s2">.png"</span>
