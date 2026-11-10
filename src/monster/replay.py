@@ -49,7 +49,10 @@ class GameState:
         for value in data:
             opcode, *data = base64.b64decode(value.encode())
             cls = _actions_mapping.get(opcode, Unknown)
-            action = cls(*data)
+            if cls is Unknown:
+                action = cls(opcode, *data)
+            else:
+                action = cls(*data)
             action.state = self.get_current_state()
             if not action.update_state(self):
                 break # updating went wrong, try again next time
@@ -333,3 +336,7 @@ class BeginRun(Action):
 
     def __init__(self, a: int): # a is always 0, I think
         self.text = "Begin run"
+
+class Devotion(Action):
+    """Increase the Devotion."""
+    opcode = 39
