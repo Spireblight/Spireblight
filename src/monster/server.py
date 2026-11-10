@@ -53,9 +53,9 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Unholy Alliances",
     ),
     (   # Second flying boss
+        "Stryx/Hallow (Inevitability)",
         "Stryx/Hallow (Bloody Harvest)", # UNSORTED
         "Stryx/Hallow (Doombringers)", # UNSORTED
-        "Stryx/Hallow (Inevitability)", # UNSORTED
         "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
         "Cael, Lord of the Cherubs (Nourishing Feed)", # UNSORTED
         "Cael, Lord of the Cherubs (Vampiric Feed)",

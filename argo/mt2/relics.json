@@ -2100,6 +2100,32 @@
         "hidden": false
     },
     {
+        "internal": "Monolith",
+        "name": "Monolith",
+        "id": "ecb009cc-30c5-47ba-93dd-91b8eab5c78f",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Starter",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "You may use the Monolith to discard a card and gain Devotion.",
+        "hidden": false
+    },
+    {
+        "internal": "TriptychFragment",
+        "name": "Triptych Fragment",
+        "id": "970f699b-052e-4eec-ad98-ce32b9c5dc21",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "At start of turn, if you have a damaged friendly unit on each floor, gain +1[ember].",
+        "hidden": false
+    },
+    {
         "internal": "ExtraSpellCastTrigger",
         "name": "Founding Seal",
         "id": "410ba540-7c4f-4dc5-a84f-b1d8af508891",
