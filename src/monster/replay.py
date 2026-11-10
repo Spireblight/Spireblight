@@ -352,14 +352,13 @@ class BeginRun(Action):
     def __init__(self, a: int): # a is always 0, I think
         self.text = "Begin run"
 
-class ApplyZeal(Action):
-    """Apply Zeal to friendly units."""
-    opcode = 39
-
 class MonolithDiscard(Action):
     """Discard a card to increase the Devotion."""
     opcode = 49
 
-    def __init__(self, a: int):
+    def __init__(self, level: int):
         self.text = "Discard a card with the Monolith"
+        self.level = level
 
+    def _get_args(self):
+        return {"level": self.level}
