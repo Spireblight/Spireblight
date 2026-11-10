@@ -48,6 +48,7 @@ _localized: dict[str, str] = {
     "deployphase": "Deployment Phase",
     "forgepoint": "Forge Point",
     "forgepoints": "Forge Points",
+    "devotionlevel": "Devotion Level",
     "magicpower": "Magic Power",
     "mooncycle": "MoonCycle",
     "abilityactive": "Ability",
