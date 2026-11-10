@@ -72,6 +72,12 @@
         "dlc": null
     },
     {
+        "internal": "ClassPunished",
+        "name": "The Punished",
+        "id": "b9dc21e2-e31a-4f74-b03d-09495c61e54b",
+        "dlc": "Punished"
+    },
+    {
         "internal": "ClassClanless",
         "name": "Clanless",
         "dlc": null

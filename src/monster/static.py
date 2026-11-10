@@ -295,7 +295,7 @@ class Card2(Base2):
             return True
         if self.rarity == "Champion":
             return True
-        return self.internal in ("JustCause", "BloatedWhelp", "Witchweave", "MoonRitual",
+        return self.internal in ("JustCause", "BloatedWhelp", "Witchweave", "MoonRitual", "CruelLesson",
                                  "EagerConscript", "Sporetouch", "SecretIngredient")
 
     @property
