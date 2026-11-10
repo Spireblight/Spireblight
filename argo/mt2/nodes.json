@@ -605,6 +605,17 @@
         "updateMapIconImmediatelyOnClick": true
     },
     {
+        "id": "d7f71706-e51f-4d95-bf4f-4ec44d713665",
+        "skipCheckSettings": 0,
+        "ignoreIfNodesPresent": [],
+        "isBannerNode": true,
+        "name": "Punished Banner",
+        "description": "Gain a Punished unit.",
+        "usePyreHeartHpTooltipKey": false,
+        "nodeSelectedSfxCue": "Node_Banner",
+        "updateMapIconImmediatelyOnClick": true
+    },
+    {
         "id": "064d624d-726a-40b9-84d3-69454d9cb479",
         "skipCheckSettings": 0,
         "ignoreIfNodesPresent": [],
