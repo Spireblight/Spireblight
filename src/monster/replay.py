@@ -356,9 +356,9 @@ class MonolithDiscard(Action):
     """Discard a card to increase the Devotion."""
     opcode = 49
 
-    def __init__(self, level: int):
+    def __init__(self, floor: int):
         self.text = "Discard a card with the Monolith"
-        self.level = level
+        self.floor = _floors[floor]
 
     def _get_args(self):
-        return {"level": self.level}
+        return {"floor": self.floor}

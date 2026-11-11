@@ -2110,7 +2110,7 @@
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
         "description": "You may use the Monolith to discard a card and gain Devotion.",
-        "hidden": false
+        "hidden": true
     },
     {
         "internal": "TriptychFragment",
