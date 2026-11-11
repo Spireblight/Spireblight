@@ -2126,6 +2126,45 @@
         "hidden": false
     },
     {
+        "internal": "ArenaArmaments",
+        "name": "Arena Armaments",
+        "id": "437ca81a-8c1b-4e53-adfd-e64381e1b0d9",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "Friendly units have +15[attack] at half [health] or below.",
+        "hidden": false
+    },
+    {
+        "internal": "Gloomstone",
+        "name": "Gloomstone",
+        "id": "2d68b9db-bcbc-487e-96de-b6398ad3c36b",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "Friendly units enter with [Tenacious].",
+        "hidden": false
+    },
+    {
+        "internal": "DarkenedPlume",
+        "name": "Darkened Plume",
+        "id": "ee429978-fa41-4c66-93c6-3d3c7d5a4733",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "[Zeal] adds an additional +1[attack] per stack..",
+        "hidden": false
+    },
+    {
         "internal": "ExtraSpellCastTrigger",
         "name": "Founding Seal",
         "id": "410ba540-7c4f-4dc5-a84f-b1d8af508891",

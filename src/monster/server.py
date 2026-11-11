@@ -48,22 +48,22 @@ _fights = ( # lines with UNSORTED have not been confirmed
     ),
     (   # Ring 5 fight
         "Relentless Zealots",
-        "Corrupted Crusade", # UNSORTED
-        "Undying Minions", # UNSORTED
+        "Undying Minions",
+        "Corrupted Crusade",
         "Unholy Alliances",
     ),
     (   # Second flying boss
         "Stryx/Hallow (Inevitability)",
         "Stryx/Hallow (Bloody Harvest)", # UNSORTED
         "Stryx/Hallow (Doombringers)", # UNSORTED
+        "Cael, Lord of the Cherubs (Nourishing Feed)",
         "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
-        "Cael, Lord of the Cherubs (Nourishing Feed)", # UNSORTED
         "Cael, Lord of the Cherubs (Vampiric Feed)",
     ),
     (   # Ring 7 fight
         "Savagery's Final Assault",
-        "Dominion's Disdain", # UNSORTED
-        "Purified Hordes", # UNSORTED
+        "Purified Hordes",
+        "Dominion's Disdain",
     ),
     (   # Third flying boss
         "Seraph Aeternus: The Entropic (Harbinger of Entropy)",
@@ -162,7 +162,7 @@ class MonsterSave:
                 pos += offset
                 upgrades.append(up_text.format(website=config.server.url, url=up.upgrade.image, pos=pos))
             if upgrades:
-                size = len(upgrades) * 32
+                size = (len(upgrades) + offset) * 32
                 upg = f'<svg width="{size}" height="32">{"".join(upgrades)}</svg>'
             yield text.format(card_name=name, display_name=display_name, upgrades=upg)
 
