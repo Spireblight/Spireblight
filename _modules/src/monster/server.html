@@ -429,22 +429,22 @@
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Ring 5 fight</span>
         <span class="s2">"Relentless Zealots"</span><span class="p">,</span>
-        <span class="s2">"Corrupted Crusade"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
-        <span class="s2">"Undying Minions"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Undying Minions"</span><span class="p">,</span>
+        <span class="s2">"Corrupted Crusade"</span><span class="p">,</span>
         <span class="s2">"Unholy Alliances"</span><span class="p">,</span>
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Second flying boss</span>
         <span class="s2">"Stryx/Hallow (Inevitability)"</span><span class="p">,</span>
         <span class="s2">"Stryx/Hallow (Bloody Harvest)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
         <span class="s2">"Stryx/Hallow (Doombringers)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Cael, Lord of the Cherubs (Nourishing Feed)"</span><span class="p">,</span>
         <span class="s2">"Cael, Lord of the Cherubs (Holy Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
-        <span class="s2">"Cael, Lord of the Cherubs (Nourishing Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
         <span class="s2">"Cael, Lord of the Cherubs (Vampiric Feed)"</span><span class="p">,</span>
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Ring 7 fight</span>
         <span class="s2">"Savagery's Final Assault"</span><span class="p">,</span>
-        <span class="s2">"Dominion's Disdain"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
-        <span class="s2">"Purified Hordes"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Purified Hordes"</span><span class="p">,</span>
+        <span class="s2">"Dominion's Disdain"</span><span class="p">,</span>
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Third flying boss</span>
         <span class="s2">"Seraph Aeternus: The Entropic (Harbinger of Entropy)"</span><span class="p">,</span>
@@ -559,7 +559,7 @@
                 <span class="n">pos</span> <span class="o">+=</span> <span class="n">offset</span>
                 <span class="n">upgrades</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">up_text</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">website</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">up</span><span class="o">.</span><span class="n">upgrade</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">upgrades</span><span class="p">:</span>
-                <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span>
                 <span class="n">upg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'&lt;svg width="</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s1">" height="32"&gt;</span><span class="si">{</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">upgrades</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/svg&gt;'</span>
             <span class="k">yield</span> <span class="n">text</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">card_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span> <span class="n">upgrades</span><span class="o">=</span><span class="n">upg</span><span class="p">)</span></div>
 
