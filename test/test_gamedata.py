@@ -1739,7 +1739,7 @@ class _multiplayer_contents:
         ],
         [
             "Ring of the Snake",
-            "Relic.Dowsing Rod",
+            "Dowsing Rod",
             "Pen Nib",
             "Bronze Scales",
             "Oddly Smooth Stone",
