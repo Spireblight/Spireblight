@@ -18,6 +18,7 @@ class Character(Enum):
     WATCHER = "Watcher"
     NECROBINDER = "Necrobinder"
     REGENT = "Regent"
+    FOOL = "Fool"
 
 class CharDict(defaultdict):
     def __missing__(self, key):
