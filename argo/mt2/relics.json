@@ -2109,7 +2109,7 @@
         "is_story_event": false,
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
-        "description": "You may use the Monolith to discard a card and gain Devotion.",
+        "description": "Click the Monolith to offer tribute: spend 1[ember] and discard a card at random to gain [Devotion].\nFriendly units enter with [Zeal] 2 per [devotionlevel].\nSome Punished cards grow stronger with your [devotionlevel].",
         "hidden": true
     },
     {
@@ -2123,6 +2123,7 @@
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
         "description": "At start of turn, if you have a damaged friendly unit on each floor, gain +1[ember].",
+        "lore": "In an angel's cage-turned-home, I found a smashed relic of their time in Heaven: an old painting, divided into three sections, lay in pieces on the iron floor. My heart felt for this poor angel who, despite the pain Heaven had caused them, still slept with a piece of their past.",
         "hidden": false
     },
     {
@@ -2136,6 +2137,7 @@
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
         "description": "Friendly units have +15[attack] at half [health] or below.",
+        "lore": "Before they are thrown into the Maw, Seraph allows the condemned angels one last chance to prove themselves in the Crimson Arena. The fight, however, is all for Seraph's amusement. From the moment they step into the arena, the odds are stacked against them. They are given the choice between dulled blades, chipped shields, and broken lances, and should they best their opponent, new opponents arrive until they meet their eventual fate.",
         "hidden": false
     },
     {
@@ -2149,6 +2151,7 @@
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
         "description": "Friendly units enter with [Tenacious].",
+        "lore": "Deep within the pit of Heaven's Maw are veins of dark crystal, with much similarity to the Shardsouls, except older and more primordial. Unlike the Wurmkin's Echoes, which use Shardsouls to store memories, these crystals seem to hold raw emotion itself. Pain. Regret. Misery. Enmity. I still feel the phantom ache from the briefest touch of one of these crystals.",
         "hidden": false
     },
     {
@@ -2161,7 +2164,106 @@
         "is_story_event": false,
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
-        "description": "[Zeal] adds an additional +1[attack] per stack..",
+        "description": "[Zeal] adds an additional +1[attack] per stack.",
+        "lore": "When I first descended into the Maw, I met a young angel recently thrown from the Crimson Arena. He was kind, and the light reflected off his white wings helped guide our way. Later, as I prepared to leave, I saw him once more. He spoke solely of the path of pain, Archus, and how his life had a new purpose. And those pure white wings? Well, now they were as dark as shadow.",
+        "hidden": false
+    },
+    {
+        "internal": "UnheardConfession",
+        "name": "Unheard Confession",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "When you deal 10 damage to friendly units, gain 1 [Devotion].",
+        "lore": "When my journey through the Maw came to an end, an angel reached out towards me from within a cage. She handed me a small, bloodied note. She whispered the name of who I should give it to, 'Ba...el...' I could not make out the rest. I've searched all throughout Heaven for an angel with such a name. I have yet to find them.",
+        "hidden": false
+    },
+    {
+        "internal": "CeremonialFlogger",
+        "name": "Ceremonial Flogger",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "When you deal damage to a friendly unit, deal 5 damage to the front enemy unit.",
+        "lore": "After their anguished parade during which the Punished strike one another for days, I have watched their wounds heal into strange scards. The marks on their bodies seem to glow in the shadows. I wonder if there is more to the damage they experience than meets the eye.",
+        "hidden": false
+    },
+    {
+        "internal": "DarkshardSplinter",
+        "name": "Darkshard Splinter",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "At the end of battle, damaged friendly units permanently gain +6[health].",
+        "lore": "The Monolith is clearly the largest and most powerful crystal within the Maw, but the Darkshards and other smaller crystals within the Maw are likely parts of the same large piece. Studying these crystals' form, the parallels between the Monolith, the Beacon, and the Pyre become impossivle to ignore. Yet something within it leads me to believe that it's far more ancient than even our divine crystals.",
+        "hidden": false
+    },
+    {
+        "internal": "DungeonMooring",
+        "name": "Dungeon Mooring",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "Enemy units enter with [Chained] 1.",
+        "lore": "Seraph is not without pity. For angels who still had their flight, he made cages that could float in the air and mimic the sensation of flight. Of course, a prison is still a prison, and the cages were secured to prevent the angels from going too far.",
+        "hidden": false
+    },
+    {
+        "internal": "LitanyofthePunished",
+        "name": "Litany of the Punished",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "The first time each turn you deal 10 or more damage to friendly units, draw 1 card.",
+        "lore": "One of the duties of the Head Priestess of the Punished is to lead those who follow the path of pain in prayer. They kneel by her side for days and only stops when Archus proclaims that their bodies have suffered enough.",
+        "hidden": false
+    },
+    {
+        "internal": "PotentChalice",
+        "name": "Potent Chalice",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "Friendly units enter with an additional [Zeal] +1 per [devotionlevel].",
+        "lore": "Once those who follow the path of pain are done with their prayers, their challenge is not yet over. They are then given a drink that burns their very souls but leaves the body healed.",
+        "hidden": false
+    },
+    {
+        "internal": "TatteredVestments",
+        "name": "Tattered Vestments",
+        "id": "",
+        "clan": "Punished",
+        "unlock_level": 0,
+        "rarity": "Uncommon",
+        "is_story_event": false,
+        "is_dragons_hoard": false,
+        "is_boss_artifact": false,
+        "description": "[Revenge] triggers an additional time.",
+        "lore": "The Punished take pride in their clothing, exhibiting the marks their bodies have suffered. A Punished adorned with a well-tattered cloth is as beautiful to them as golden armor is to Seraph's guards.",
         "hidden": false
     },
     {

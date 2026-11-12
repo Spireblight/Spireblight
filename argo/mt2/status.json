@@ -288,6 +288,33 @@
         "status_class": "StatusEffectHealImmunityState"
     },
     {
+        "internal": "zeal",
+        "name": "Zeal",
+        "card_tooltip": "+1[attack] and +1[health] per stack. Decreases every turn.",
+        "character_tooltip": "+1[attack] and +1[health] per stack. Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": ""
+    },
+    {
+        "internal": "tenacious",
+        "name": "Tenacious",
+        "card_tooltip": "Cannot be killed by friendly damage.",
+        "character_tooltip": "Cannot be killed by friendly damage.",
+        "notification": "",
+        "hidden": false,
+        "status_class": ""
+    },
+    {
+        "internal": "chained",
+        "name": "Chained",
+        "card_tooltip": "When your units take damage, [Chained] enemy units take half that much damage for each stack of [Chained]. Decreases every turn.",
+        "character_tooltip": "When your units take damage, [Chained] enemy units take half that much damage for each stack of [Chained]. Decreases every turn.",
+        "notification": "",
+        "hidden": false,
+        "status_class": ""
+    },
+    {
         "internal": "rooted",
         "name": "Rooted",
         "card_tooltip": "Prevents the next time a unit would move between floors. Bosses are immune.",
