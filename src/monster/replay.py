@@ -305,13 +305,13 @@ class RerollShop(Action):
     opcode = 14
 
 class BuyShopItem(Action):
-    """Buy a single item from a shop (not Merchant of Arms)."""
+    """Buy a single upgrade from the Merchants of Steel or Magic."""
     opcode = 16
 
     def __init__(self, index: int, crc: int):
         self.index = index
         self.crc = crc
-        self.text = f"Buy shop item at position {index}."
+        self.text = f"Buy shop upgrade at position {index}."
 
     def _get_args(self):
         return {"index": self.index}
@@ -361,6 +361,8 @@ class DuplicateCard(Action):
         self.crc = crc
         self.text = f"Duplicate card at index {index}."
 
+    def _get_args(self):
+        return {"index": self.index}
 
 class EventOption(Action):
     """Choose an event option."""
@@ -374,6 +376,18 @@ class EventOption(Action):
 
     def _get_args(self):
         return {"<a>": self._a, "<b>": self._b, "<c>": self._c}
+
+class ReformUnit(Action):
+    """Reform a unit."""
+    opcode = 25
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Reform unit at index {index}."
+
+    def _get_args(self):
+        return {"index": self.index}
 
 class EnterEvent(Action):
     """Enter the Celestial Alcove."""
@@ -390,6 +404,18 @@ class PickDarkShard(Action):
         self.index = index
         self.crc = crc
         self.text = f"Select Darkshard at position {index}"
+
+    def _get_args(self):
+        return {"index": self.index}
+
+class BuyArtifact(Action):
+    """Buy an Artifact from the Merchant of Trinkets."""
+    opcode = 31
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Buy artifact at position {index}."
 
     def _get_args(self):
         return {"index": self.index}

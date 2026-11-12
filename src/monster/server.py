@@ -162,7 +162,7 @@ class MonsterSave:
                 pos += offset
                 upgrades.append(up_text.format(website=config.server.url, url=up.upgrade.image, pos=pos))
             if upgrades:
-                size = (len(upgrades) + offset) * 32
+                size = len(upgrades) * 32 + len(upgrades) * offset
                 upg = f'<svg width="{size}" height="32">{"".join(upgrades)}</svg>'
             yield text.format(card_name=name, display_name=display_name, upgrades=upg)
 
