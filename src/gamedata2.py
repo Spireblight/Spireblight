@@ -396,7 +396,7 @@ class RelicData:
         """Escape the description for HTML display."""
         escaped = self.description().replace("\n", "<br>").replace("'", "\\'")
         char = self._parser.character.lower()
-        escaped = escaped.replace("[E]", f'<img src="/static/symbols/{char}_energy_2.png" alt="Energy symbol">')
+        escaped = escaped.replace("[E]", f'<img src="/static/symbols/{char}_energy_2.png" alt="Energy symbol" width="32" height="32">')
         escaped = escaped.replace("[STAR]", '<img src="/static/symbols/star.png" alt="Star symbol">')
         return escaped
 
