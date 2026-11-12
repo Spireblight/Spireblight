@@ -20,13 +20,18 @@ class GameState:
     def __init__(self, data: list[str] | None = None):
         self.actions = []
         self._data = None
+        self.reset_state()
+        if data is not None:
+            self.update_replay_data(data)
+
+    def reset_state(self):
+        """Reset the game state."""
+        self.actions.clear()
         self.in_fight = False
         self.fight_num = 0
         self.is_player_turn = False
         self.cur_turns = 0
         self.total_turns = 0
-        if data is not None:
-            self.update_replay_data(data)
 
     def get_current_state(self):
         """Keep a snapshot of the state at this given action."""
@@ -44,6 +49,8 @@ class GameState:
         return d
 
     def update_replay_data(self, data: list[str]):
+        if len(data) < len(self.actions): # new run, reset state
+            self.reset_state()
         data = data[len(self.actions):]
 
         for value in data:
