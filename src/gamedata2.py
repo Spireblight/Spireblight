@@ -241,7 +241,7 @@ class FileParser:
         def new_color() -> dict[str | None, list[CardData]]:
             return {"Rare": [], "Uncommon": [], "Common": [], "Event": [], "Ancient": [], "Curse": [], "Quest": [], None: []}
 
-        order = ["ironclad", "silent", "regent", "necrobinder", "defect", "colorless", "curse"]
+        order = ["ironclad", "silent", "regent", "necrobinder", "defect", "fool", "colorless", "curse"]
         content = collections.defaultdict(new_color)
         for card in cards:
             color = card.color
