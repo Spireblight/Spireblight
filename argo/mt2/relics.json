@@ -2109,7 +2109,7 @@
         "is_story_event": false,
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
-        "description": "Click the Monolith to offer tribute: spend 1[ember] and discard a card at random to gain [Devotion].\nFriendly units enter with [Zeal] 2 per [devotionlevel].\nSome Punished cards grow stronger with your [devotionlevel].",
+        "description": "Click the Monolith to offer tribute: spend 1[ember] and discard a card at random to gain [Devotion].\nFriendly units enter with [zeal] 2 per [devotionlevel].\nSome Punished cards grow stronger with your [devotionlevel].",
         "hidden": true
     },
     {
@@ -2164,7 +2164,7 @@
         "is_story_event": false,
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
-        "description": "[Zeal] adds an additional +1[attack] per stack.",
+        "description": "[zeal] adds an additional +1[attack] per stack.",
         "lore": "When I first descended into the Maw, I met a young angel recently thrown from the Crimson Arena. He was kind, and the light reflected off his white wings helped guide our way. Later, as I prepared to leave, I saw him once more. He spoke solely of the path of pain, Archus, and how his life had a new purpose. And those pure white wings? Well, now they were as dark as shadow.",
         "hidden": false
     },
@@ -2248,7 +2248,7 @@
         "is_story_event": false,
         "is_dragons_hoard": false,
         "is_boss_artifact": false,
-        "description": "Friendly units enter with an additional [Zeal] +1 per [devotionlevel].",
+        "description": "Friendly units enter with an additional [zeal] +1 per [devotionlevel].",
         "lore": "Once those who follow the path of pain are done with their prayers, their challenge is not yet over. They are then given a drink that burns their very souls but leaves the body healed.",
         "hidden": false
     },
