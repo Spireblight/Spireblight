@@ -262,7 +262,7 @@ class Base2:
             for word in set(_desc_re.findall(desc)): # find any *unique* remaining words inside []
                 value: str = word[1:-1]
                 value = _localized.get(value, value.title())
-                desc = desc.replace(word, f"<b>{value}<b>") # bold them up
+                desc = desc.replace(word, f"<b>{value}</b>") # bold them up
             if "<>" in desc: # Pyre hearts, include hyperlink
                 desc = desc.replace("<>", '<a href="https://monstertrain2.miraheze.org/wiki/Pyre_Hearts" target="_blank">', 1)
                 desc = desc.replace("<>", "</a>")
