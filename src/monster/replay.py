@@ -54,12 +54,12 @@ class GameState:
         data = data[len(self.actions):]
 
         for value in data:
-            opcode, *data = base64.b64decode(value.encode())
+            opcode, *args = base64.b64decode(value.encode())
             cls = _actions_mapping.get(opcode, Unknown)
             if cls is Unknown:
-                action = cls(opcode, *data)
+                action = cls(opcode, *args)
             else:
-                action = cls(*data)
+                action = cls(*args)
             action.state = self.get_current_state()
             if not action.update_state(self):
                 break # updating went wrong, try again next time
@@ -164,7 +164,7 @@ class FightEnd(Action):
         self.text = f"End fight with {num} turns remaining"
 
     def _get_args(self):
-        return {"num": self.num}
+        return {"turns": self.num}
 
     def update_state(self, state: GameState):
         state.in_fight = False
@@ -296,14 +296,34 @@ class ChampionUpgrade(Action):
             return {"reward": "skipped"}
         return {"reward": "picked", "index": self.index}
 
+class BuyPurge(Action):
+    """Buy a Purge Card option."""
+    opcode = 13
+
+class RerollShop(Action):
+    """Reroll the shop's options."""
+    opcode = 14
+
 class BuyShopItem(Action):
-    """Buy a single item from a shop."""
+    """Buy a single item from a shop (not Merchant of Arms)."""
     opcode = 16
 
     def __init__(self, index: int, crc: int):
         self.index = index
         self.crc = crc
         self.text = f"Buy shop item at position {index}."
+
+    def _get_args(self):
+        return {"index": self.index}
+
+class BuyRoomOrEquipment(Action):
+    """Buy a Room or Equipment from the Merchant of Arms."""
+    opcode = 17
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Buy room or equipment at position {index}."
 
     def _get_args(self):
         return {"index": self.index}
@@ -319,6 +339,28 @@ class ApplyUpgrade(Action):
 
     def _get_args(self):
         return {"index": self.index}
+
+class PurgeCard(Action):
+    """Remove a specific card from the deck."""
+    opcode = 20
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Purge card at index {index}."
+
+    def _get_args(self):
+        return {"index": self.index}
+
+class DuplicateCard(Action):
+    """Duplicate a single card."""
+    opcode = 21
+
+    def __init__(self, index: int, crc: int):
+        self.index = index
+        self.crc = crc
+        self.text = f"Duplicate card at index {index}."
+
 
 class EventOption(Action):
     """Choose an event option."""
@@ -351,6 +393,10 @@ class PickDarkShard(Action):
 
     def _get_args(self):
         return {"index": self.index}
+
+class Deployable(Action):
+    """Buy the Deployable upgrade."""
+    opcode = 37
 
 class BeginRun(Action):
     """Begin the run."""
