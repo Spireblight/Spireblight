@@ -2786,7 +2786,7 @@ async def _send_standard_run_stats_message(
 
 
 _display = []
-_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher", "Necrobinder", "Regent")
+_words = ("Rotating", "Ironclad", "Silent", "Defect", "Watcher", "Necrobinder", "Regent", "Fool")
 
 
 def _get_set_display():
@@ -2805,7 +2805,7 @@ def _get_set_display():
 @command("rotation", "display", flag="m")
 async def streak_display(ctx: ContextType, new: str):
     """Change the !streak command display."""
-    value = "risdwne"
+    value = "risdwnef"
     word = []
     _display.clear()
     for i, l in enumerate(value):
@@ -2842,7 +2842,16 @@ async def calculate_streak_cmd(ctx: ContextType):
 async def calculate_pb_cmd(ctx: ContextType, date_string: Optional[str] = None):
     """Display Baalor's Personal Best streaks for Ascension 20 Heart kills for an optional date range."""
     #msg = "Baalor's PB A20H Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.ironclad_count} - Silent: {1.silent_count} - Defect: {1.defect_count} - Watcher: {1.watcher_count}"
-    msg = "Baalor's PB A10 Streaks ({0.date_range_string}) | Rotating: {1.all_character_count} - Ironclad: {1.character_counts[Ironclad]} - Silent: {1.character_counts[Silent]} - Regent: {1.character_counts[Regent]} - Necrobinder: {1.character_counts[Necrobinder]} - Defect: {1.character_counts[Defect]}"
+    msg = (
+        "Baalor's PB A10 Streaks ({0.date_range_string}) | "
+        "Rotating: {1.all_character_count} - "
+        "Ironclad: {1.character_counts[Ironclad]} - "
+        "Silent: {1.character_counts[Silent]} - "
+        "Regent: {1.character_counts[Regent]} - "
+        "Necrobinder: {1.character_counts[Necrobinder]} - "
+        "Defect: {1.character_counts[Defect]} - "
+        "Fool: {1.character_counts[Fool]}"
+    )
     run_stats = None
     if date_string is None:
         run_stats = get_all_run_stats()
@@ -3032,7 +3041,14 @@ async def calculate_winrate_cmd(ctx: ContextType, date_string: Optional[str] = N
     rate = [0 if (a + b == 0) else a / (a + b) for a, b in zip(wins, losses)]
     await ctx.reply(
         #f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Defect: {rate[3]:.2%} - Watcher: {rate[4]:.2%}"
-        f"Baalor's winrate ({run_stats.date_range_string}): Overall: {rate[0]:.2%} - Ironclad: {rate[1]:.2%} - Silent: {rate[2]:.2%} - Regent: {rate[6]:.2%} - Necrobinder: {rate[5]:.2%} - Defect: {rate[3]:.2%}"
+        f"Baalor's winrate ({run_stats.date_range_string}): "
+        f"Overall: {rate[0]:.2%} - "
+        f"Ironclad: {rate[1]:.2%} - "
+        f"Silent: {rate[2]:.2%} - "
+        f"Regent: {rate[6]:.2%} - "
+        f"Necrobinder: {rate[5]:.2%} - "
+        f"Defect: {rate[3]:.2%} - "
+        f"Fool: {rate[7]:.2%}"
     )
 
 
