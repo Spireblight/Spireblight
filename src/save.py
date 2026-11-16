@@ -85,7 +85,7 @@ class Savefile(FileParser):
             character = character[2:]
         if data is None and has_run == "true" and self._data is not None:
             maybe_run = get_latest_run(None, None)
-            if maybe_run is not None and "path" in self._cache and maybe_run._data["seed_played"] == self._data["metric_seed_played"]:
+            if maybe_run is not None and "path" in self._cache and maybe_run._data.get("seed_played") == self._data["metric_seed_played"]:
                 self._matches = True
 
         self._data = data

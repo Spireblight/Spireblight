@@ -961,6 +961,7 @@ class FileParser(ABC):
     prefix: str = ""            #: String to prepend to most data access.
     done: bool = False          #: Whether the run is over.
     game_version: int = 1       #: Which game version we're using.
+    game_mode: str = "Standard" #: Which game mode we're playing (may not be accurate for Spire 1).
 
     def __init__(self, data: dict[str, Any]):
         self._data = data

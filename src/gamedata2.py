@@ -125,6 +125,11 @@ class FileParser:
         return False
 
     @property
+    def game_mode(self) -> str:
+        """Output the current game mode."""
+        return self._data["game_mode"].title()
+
+    @property
     def seed(self) -> str:
         try:
             return self._data["seed"]
