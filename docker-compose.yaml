@@ -1,0 +1,17 @@
+version: '2.32'
+services:
+  spireblight:
+    build:
+      context: ./
+      network: host # no bridge without carefully testing - likely has lots of side-effects
+    ports:
+      - "80:80" # http port
+      - "8080:8080" # local http port
+      - "443:443" # https port
+      # FIXME: I am not 100% certain that this is a complete list of ports that need to be exposed.
+    volumes:
+      # Mapping the host dir directly ensures that there are no (at least not as many) side-effects from running inside Docker container.
+      # Ideally there would be a working directory where state is stored mapped and then copy all of the necessary Python files into the container.
+      - ./:/app
+    restart: unless-stopped
+  # TODO: add postgres, reddis, w/e, etc.
