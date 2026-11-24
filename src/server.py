@@ -1845,7 +1845,7 @@ async def now_playing(ctx: ContextType):
         await ctx.reply(
             f"Something went wrong with the Spotify API ({j['status']}: {j['message']})"
         )
-    elif j["is_playing"]:
+    elif j.get("is_playing"):
         await ctx.reply(
             f"We are listening to {j['item']['name']} on the album {j['item']['album']['name']}."
         )

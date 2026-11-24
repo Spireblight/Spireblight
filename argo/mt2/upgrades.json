@@ -5454,6 +5454,24 @@
         "blocks_ability": false
     },
     {
+        "internal": "DarkStone",
+        "id": "f55a8dba-1494-4dfe-92ec-894e106fa6cf",
+        "title": "Dark Stone",
+        "description": "",
+        "bonus_atk_pwr": 0,
+        "bonus_hp": 0,
+        "cost_reduction": 0,
+        "x_cost_reduction": 0,
+        "bonus_heal": 0,
+        "bonus_size": 0,
+        "unique": false,
+        "clone_excluded": false,
+        "ability": "",
+        "do_not_replace_ability": false,
+        "rarity": false,
+        "blocks_ability": false
+    },
+    {
         "internal": "WurmReturnEnhanceCorrupt",
         "id": "2d744be5-cf16-4126-83fa-d6df9d99229c",
         "title": "",
