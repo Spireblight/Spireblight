@@ -2366,7 +2366,7 @@
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"Something went wrong with the Spotify API (</span><span class="si">{</span><span class="n">j</span><span class="p">[</span><span class="s1">'status'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">j</span><span class="p">[</span><span class="s1">'message'</span><span class="p">]</span><span class="si">}</span><span class="s2">)"</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">j</span><span class="p">[</span><span class="s2">"is_playing"</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="n">j</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_playing"</span><span class="p">):</span>
         <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"We are listening to </span><span class="si">{</span><span class="n">j</span><span class="p">[</span><span class="s1">'item'</span><span class="p">][</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2"> on the album </span><span class="si">{</span><span class="n">j</span><span class="p">[</span><span class="s1">'item'</span><span class="p">][</span><span class="s1">'album'</span><span class="p">][</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2">."</span>
         <span class="p">)</span>
