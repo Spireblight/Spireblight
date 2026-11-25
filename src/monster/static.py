@@ -86,7 +86,7 @@ def query(name: str):
         return ret
     return None
 
-def get(name: str) -> Base:
+def get(name: str) -> Base | Base2:
     """Get the class for the given data. Matches either internal name or ID."""
     if name in _internal_cache:
         return _internal_cache[name]
@@ -117,6 +117,7 @@ def get_champion(clan: str | Clan, exiled: bool):
     raise ValueError(f"Could not find a Champion for clan {clan!r}.")
 
 class Base:
+    is_hidden = False
     def __init__(self, data: dict):
         self.name: str = data["Name"]
         self.description = data.get("Description", "")

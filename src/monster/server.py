@@ -12,7 +12,7 @@ import os
 from aiohttp.web import Request, Response, HTTPServiceUnavailable, HTTPForbidden, FileField
 
 from src.monster.replay import GameState
-from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Card2, Upgrade, Clan, Node
+from src.monster.static import get, get_safe, get_champion, Challenge, Mutator, Artifact, Character, Mutator2, Soul, Trial, Card2, Relic, Upgrade, Clan, Node
 from src.webpage import router
 from src.utils import get_req_data, getfile, catch_error
 
@@ -28,12 +28,12 @@ _fights = ( # lines with UNSORTED have not been confirmed
     ),
     (   # Ring 2 fight
         "Knights of Entropy",
-        "Flagellant's March", # UNSORTED
+        "Flagellant's March",
         "March of the Supplicants", # UNSORTED
         "Quicksilver Cherubs", # UNSORTED
     ),
     (   # First flying boss
-        "Fleshweaver (Corrupted Mass)", # UNSORTED but almost guaranteed to be correct
+        "Fleshweaver (Corrupted Mass)",
         "Fleshweaver (More Mass)",
         "Fleshweaver (Spiked Mass)",
         "Arkion, Scion of Savagery (Furious Frenzy)", # UNSORTED
@@ -54,7 +54,7 @@ _fights = ( # lines with UNSORTED have not been confirmed
     ),
     (   # Second flying boss
         "Stryx/Hallow (Inevitability)",
-        "Stryx/Hallow (Bloody Harvest)", # UNSORTED
+        "Stryx/Hallow (Bloody Harvest)",
         "Stryx/Hallow (Doombringers)", # UNSORTED
         "Cael, Lord of the Cherubs (Nourishing Feed)",
         "Cael, Lord of the Cherubs (Holy Feed)", # UNSORTED
@@ -311,9 +311,12 @@ class MonsterSave:
         return self.get_clan_image(is_main=False)
 
     @property
-    def artifacts(self) -> Generator[Artifact, None, None]:
+    def artifacts(self) -> Generator[Artifact | Relic, None, None]:
         for art in self._data["blessings"]:
-            yield get(art["relicDataID"])
+            artifact = get(art["relicDataID"])
+            if artifact.is_hidden:
+                continue
+            yield artifact
 
     @property
     def challenge(self) -> Challenge | None:
