@@ -393,7 +393,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">aiohttp.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">HTTPServiceUnavailable</span><span class="p">,</span> <span class="n">HTTPForbidden</span><span class="p">,</span> <span class="n">FileField</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.replay</span><span class="w"> </span><span class="kn">import</span> <span class="n">GameState</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Card2</span><span class="p">,</span> <span class="n">Upgrade</span><span class="p">,</span> <span class="n">Clan</span><span class="p">,</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.monster.static</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_safe</span><span class="p">,</span> <span class="n">get_champion</span><span class="p">,</span> <span class="n">Challenge</span><span class="p">,</span> <span class="n">Mutator</span><span class="p">,</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="n">Mutator2</span><span class="p">,</span> <span class="n">Soul</span><span class="p">,</span> <span class="n">Trial</span><span class="p">,</span> <span class="n">Card2</span><span class="p">,</span> <span class="n">Relic</span><span class="p">,</span> <span class="n">Upgrade</span><span class="p">,</span> <span class="n">Clan</span><span class="p">,</span> <span class="n">Node</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.webpage</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_req_data</span><span class="p">,</span> <span class="n">getfile</span><span class="p">,</span> <span class="n">catch_error</span>
 
@@ -409,12 +409,12 @@
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Ring 2 fight</span>
         <span class="s2">"Knights of Entropy"</span><span class="p">,</span>
-        <span class="s2">"Flagellant's March"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Flagellant's March"</span><span class="p">,</span>
         <span class="s2">"March of the Supplicants"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
         <span class="s2">"Quicksilver Cherubs"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># First flying boss</span>
-        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span> <span class="c1"># UNSORTED but almost guaranteed to be correct</span>
+        <span class="s2">"Fleshweaver (Corrupted Mass)"</span><span class="p">,</span>
         <span class="s2">"Fleshweaver (More Mass)"</span><span class="p">,</span>
         <span class="s2">"Fleshweaver (Spiked Mass)"</span><span class="p">,</span>
         <span class="s2">"Arkion, Scion of Savagery (Furious Frenzy)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
@@ -435,7 +435,7 @@
     <span class="p">),</span>
     <span class="p">(</span>   <span class="c1"># Second flying boss</span>
         <span class="s2">"Stryx/Hallow (Inevitability)"</span><span class="p">,</span>
-        <span class="s2">"Stryx/Hallow (Bloody Harvest)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
+        <span class="s2">"Stryx/Hallow (Bloody Harvest)"</span><span class="p">,</span>
         <span class="s2">"Stryx/Hallow (Doombringers)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
         <span class="s2">"Cael, Lord of the Cherubs (Nourishing Feed)"</span><span class="p">,</span>
         <span class="s2">"Cael, Lord of the Cherubs (Holy Feed)"</span><span class="p">,</span> <span class="c1"># UNSORTED</span>
@@ -715,9 +715,12 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clan_image</span><span class="p">(</span><span class="n">is_main</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Artifact</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Artifact</span> <span class="o">|</span> <span class="n">Relic</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="k">for</span> <span class="n">art</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s2">"blessings"</span><span class="p">]:</span>
-            <span class="k">yield</span> <span class="n">get</span><span class="p">(</span><span class="n">art</span><span class="p">[</span><span class="s2">"relicDataID"</span><span class="p">])</span>
+            <span class="n">artifact</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">art</span><span class="p">[</span><span class="s2">"relicDataID"</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">artifact</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">yield</span> <span class="n">artifact</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">challenge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Challenge</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
