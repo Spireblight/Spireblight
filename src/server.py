@@ -2011,6 +2011,8 @@ async def tier_rankings(ctx: ContextType, name: str = ""):
             link = "43d0b41f-7d6d-4ce9-928e-c1310a413983"
         case "defect":
             link = "5a512e04-4583-4a16-9271-d46864c6cb4c"
+        case "fool":
+            link = "44145869-19ea-4c59-8f1d-d2353f1c7b03"
         case "colorless":
             link = "0a626c22-dc49-433e-ac6e-76cc9abf5684"
         case "neow" | "act1":
