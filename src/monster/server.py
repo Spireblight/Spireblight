@@ -41,8 +41,8 @@ _fights = ( # lines with UNSORTED have not been confirmed
         "Arkion, Scion of Savagery (Pyre Hunter)", # UNSORTED
     ),
     (   # Ring 4 fight
-        "Penance Seekers", # UNSORTED
-        "Savagery's Hunters", # UNSORTED
+        "Penance Seekers",
+        "Savagery's Hunters",
         "Dire Defenses",
         "Hordes of Heaven",
     ),
