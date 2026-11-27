@@ -96,25 +96,25 @@ def _update_run_stats(run_stats: RunStats, start_date: datetime | None = None, e
         if not run_stats.is_loaded:
             run_stats.is_loaded =  True
             run_stats.streaks.all_character_count = 0
-            for run in runs[1:]:
+            for run in runs[1:]: # list is sorted with most recent first, so we exclude it for this update
                 if run.modded or run.modifiers:
                     logger.info(f"Found modded or custom run in stats: {run.name}")
-                elif run.ascension_level < 20:
-                    logger.info(f"Found non-A20 run in stats: {run.name}")
+                elif (run.game_version == 1 and run.ascension_level < 20) or (run.game_version == 2 and run.ascension_level < 10):
+                    logger.info(f"Found non-max Ascension run in stats: {run.name}")
 
                 if start_date is not None and run.timestamp < start_date:
                     continue
                 if end_date is not None and run.timestamp > end_date:
                     continue
 
+                if run.ascension_level != 10 or run.game_mode != "Standard": # do not add to streaks if not on A10 Standard
+                    # TODO: Add Dread counter, but this will need a bigger refactor
+                    continue # FIXME: this is temporary until we can implement a better fix (or it's been long enough that it doesn't matter)
                 run_stats.check_pb(run)
                 if run.won:
                     run_stats.add_win(run.character, run.timestamp)
                 else:
                     run_stats.add_loss(run.character, run.timestamp)
-                if run.ascension_level != 10 or run.game_mode != "Standard": # do not add to streaks if not on A10 Standard
-                    # TODO: Add Dread counter, but this will need a bigger refactor
-                    continue # FIXME: this is temporary until we can implement a better fix (or it's been long enough that it doesn't matter)
                 character = Character(run.character)
                 if run_stats.streaks.character_counts[character] is None:
                     run_stats.streaks.character_counts[character] = run.character_streak.streak
